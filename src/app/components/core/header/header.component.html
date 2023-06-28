@@ -1,0 +1,43 @@
+<nav class="mat-elevation-z6">
+    <mat-toolbar color="primary">
+        <button mat-button [routerLink]="['\home']">
+            <mat-icon>group_work</mat-icon>
+            Mikroservices
+        </button>
+        <ng-container *ngIf="!user">
+            <div class="flex-spacer"></div>
+            <button mat-button [routerLink]="['/login']">Sign in</button>
+        </ng-container>
+        <ng-container *ngIf="user">
+            <div fxHide fxShow.gt-xs>
+                <button mat-button [routerLink]="['/account']" aria-label="Account">Account</button>
+            </div>
+            <div class="flex-spacer"></div>
+            <div fxHide fxShow.gt-xs>
+                <span class="mat-small">Welcome, {{ user.name }}</span>
+                <button mat-button (click)="signOut()">Sign out</button>
+            </div>
+            <div fxShow fxHide.gt-xs>
+                <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu with actions">
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item disabled aria-label="Signed in as">
+                        <mat-icon>face</mat-icon>
+                        <span>{{ user.name }}</span>
+                    </button>
+                    <mat-divider></mat-divider>
+                    <button mat-menu-item [routerLink]="['/account']" aria-label="Account">
+                        <mat-icon>account_circle</mat-icon>
+                        <span>Account</span>
+                    </button>
+                    <mat-divider></mat-divider>
+                    <button mat-menu-item (click)="signOut()" aria-label="Sign out">
+                        <mat-icon>exit_to_app</mat-icon>
+                        <span>Sign out</span>
+                    </button>
+                </mat-menu>
+            </div>
+        </ng-container>
+    </mat-toolbar>
+</nav>
