@@ -1,0 +1,103 @@
+
+<div [hidden]="!isReady" [@fadeIn]>
+    <section class="mat-typography">
+        <h1>User account</h1>
+    </section>
+
+    <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+
+        <mat-card>
+
+            <mat-card-header>
+                <mat-card-title>
+                    Your personal information
+                </mat-card-title>
+            </mat-card-header>
+
+            <mat-card-content>
+                <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px" class="margin-bottom-20">
+                    <mat-form-field fxFlex="50%">
+                        <input matInput name="userName" #userName="ngModel" [(ngModel)]="user.name"
+                            placeholder="Name" aria-label="Name" appMaxLength="50" />
+                        <mat-error *ngIf="userName.invalid && userName.errors?.appMaxLength">
+                            Too long name.
+                        </mat-error>
+                    </mat-form-field>
+        
+                    <mat-form-field fxFlex="50%">
+                        <input matInput name="location" #location="ngModel" [(ngModel)]="user.location"
+                            placeholder="Location" aria-label="Location" appMaxLength="50" />
+                        <mat-error *ngIf="location.invalid && location.errors?.appMaxLength">
+                            Too long location.
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px" class="margin-bottom-20">
+                    <mat-form-field fxFlex="50%">
+                        <input matInput name="website" #website="ngModel" [(ngModel)]="user.website"
+                            placeholder="Website" aria-label="Website" appMaxLength="50" />
+                        <mat-error *ngIf="website.invalid && website.errors?.appMaxLength">
+                            Too long website URL.
+                        </mat-error>
+                    </mat-form-field>
+        
+                    <mat-form-field fxFlex="100%">
+                        <textarea matInput name="bio" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
+                            cdkAutosizeMaxRows="10" placeholder="Bio" #bio="ngModel" [(ngModel)]="user.bio"
+                            aria-label="Bio" appMaxLength="50"></textarea>
+                        <mat-error *ngIf="bio.invalid && bio.errors?.appMaxLength">Too long bio.</mat-error>
+                    </mat-form-field>
+                </div>                
+            </mat-card-content>
+
+            <mat-card-actions>
+                <div class="account-actions">
+                    <button type="submit" mat-raised-button color="primary" aria-label="Save">Save</button>
+                </div>
+            </mat-card-actions>
+
+        </mat-card>
+    </form>
+
+    <mat-card class="margin-top-20">
+        <mat-card-header>
+            <mat-card-title>
+                Change password
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div fxLayout="row" fxLayoutGap="20px">
+                <div fxFlex>
+                    Set a strong password and don't reuse it for other accounts.
+                </div>
+                <div fxFlex="none">
+                    <button type="button" [disabled]="isSubmittingMode()" mat-raised-button color="primary" aria-label="Change password">Change password</button>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card class="margin-top-20">
+        <mat-card-header>
+            <mat-card-title>
+                Delete account
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div fxLayout="row" fxLayoutGap="20px">
+                <div fxFlex>
+                    You can delete your account, this operation is irreversible. Keep in mind that you will
+                    not be able to reactivate your account or retrieve any of the content or information
+                    you have added.
+                </div>
+                <div fxFlex="none">
+                    <button type="button" [disabled]="isSubmittingMode()" mat-raised-button color="accent" aria-label="Delete
+                    account">Delete account</button>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+</div>
+

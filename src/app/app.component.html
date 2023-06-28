@@ -1,1 +1,10 @@
-Hello Marcin!
+<app-header></app-header>
+<main class="content">
+
+  <div *ngIf="showLoader" class="loading-shade">
+    <mat-spinner [diameter]="36"></mat-spinner>
+  </div>
+
+  <router-outlet></router-outlet>
+</main>
+

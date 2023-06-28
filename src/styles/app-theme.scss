@@ -1,0 +1,47 @@
+@use '@angular/material' as mat;
+
+// Styles for the docs app that are based on the current theme.
+@mixin material-app-theme($theme) {
+    $primary: map-get($theme, primary);
+    $foreground: map-get($theme, foreground);
+    $error: mat.define-palette(mat.$red-palette);
+    $warning: mat.define-palette(mat.$orange-palette);
+    $grey: mat.define-palette(mat.$grey-palette);
+
+    body {
+        background-color: mat.get-color-from-palette($foreground);
+    }
+
+    .text-error {
+        color: mat.get-color-from-palette($error);
+    }
+
+    .text-warning {
+        color: mat.get-color-from-palette($warning);
+    }
+
+    .text-muted {
+        color: mat.get-color-from-palette($grey);
+    }
+
+    .separator {
+        display: flex;
+        align-items: center;
+        text-align: center;
+        color: mat.get-color-from-palette($grey);
+    
+        &::before, &::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid mat.get-color-from-palette($grey);
+        }
+    
+        &::before {
+            margin-right: .25em;
+        }
+    
+        &::after {
+            margin-left: .25em;
+        }
+    }
+}

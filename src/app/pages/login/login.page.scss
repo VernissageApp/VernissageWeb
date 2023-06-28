@@ -1,0 +1,28 @@
+.external-sign-in {
+    text-align: center;
+
+    a {
+        min-width: 200px;
+        margin-bottom: 10px;
+
+        .icon {
+            height: 22px;
+            display: inline-grid;
+        }
+    }
+}
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .login-container > * {
+    width: 100%;
+  }
+
+.login-actions {
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 10px;
+}

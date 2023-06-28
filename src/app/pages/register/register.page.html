@@ -1,0 +1,60 @@
+<div class="padding-top-30" fxLayout>
+    <div fxFlex="1%" fxFlex.gt-sm="30%" flFlex.gt-lg="40%"></div>
+    <div fxFlex>
+        <form name="form" (ngSubmit)="f.form.valid && passwordIsValid && onSubmit()" #f="ngForm" novalidate>
+            <mat-card class="form-card">
+                <mat-card-header>
+                    <mat-card-title>Create new account</mat-card-title>
+                </mat-card-header>
+
+                <mat-card-content>
+                    <div fxLayout="column" class="margin-bottom-20">
+                        <mat-form-field  floatLabel="always">
+                            <input matInput name="userName" [(ngModel)]="user.userName" #userName="ngModel" type="text" placeholder="Username"
+                                aria-label="Username" required pattern="^[a-zA-Z0-9]*$" appUniqueUserName appMaxLength="50" />
+                            <mat-error *ngIf="userName.invalid && userName.errors?.required">Enter username.</mat-error>
+                            <mat-error *ngIf="userName.invalid && userName.errors?.pattern">Only alphanumeric characters are allowed in user name.</mat-error>
+                            <mat-error *ngIf="userName.invalid && userName.errors?.appUniqueUserName">Choose a different user name, this one is already taken.</mat-error>
+                            <mat-error *ngIf="userName.invalid && userName.errors?.appMaxLength">Choose a different user name, this one is too long.</mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div fxLayout="column" class="margin-bottom-20">
+                        <mat-form-field floatLabel="always">
+                            <input matInput name="email" [(ngModel)]="user.email" #email="ngModel" type="email" placeholder="Email"
+                            pattern="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
+                            aria-label="Email" appUniqueEmail required />
+                            <mat-error *ngIf="email.invalid && email.errors?.required">Enter email.</mat-error>
+                            <mat-error *ngIf="email.invalid && email.errors?.pattern">Verify that you've entered proper email.</mat-error>
+                            <mat-error *ngIf="email.invalid && email.errors?.appUniqueEmail">Choose other email, this one is already connected to different account.</mat-error>
+                        </mat-form-field>
+
+                        <small class="text-muted text-right">
+                            Don't worry. This info is sacred for us. We won't ever show, sell or abuse it.
+                        </small>
+                    </div>
+
+                    <div fxLayout="column" class="margin-bottom-20">
+                        <mat-form-field floatLabel="always">
+                            <input matInput name="name" [(ngModel)]="user.name" #name="ngModel" type="text" placeholder="Name" aria-label="Name" required appMaxLength="50" />
+                            <mat-error *ngIf="name.invalid && name.errors?.required">Enter name.</mat-error>
+                            <mat-error *ngIf="name.invalid && name.errors?.appMaxLength">Name is too long.</mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div fxLayout="column" class="margin-bottom-20">
+                        <app-password [(passwordText)]="user.password" (passwordValid)="passwordValid($event)" [form]="f"></app-password>
+                    </div>
+                </mat-card-content>
+                <mat-card-actions>
+                    <div class="register-actions">
+                        <button type="submit" mat-flat-button (click)="registerMode = RegisterMode.Register" [disabled]="isSubmittingMode()" color="primary" aria-label="Register">Register</button>
+                        <mat-spinner *ngIf="isSubmittingMode()" [diameter]="24" class="display-inline margin-left-10"></mat-spinner>
+                        <span *ngIf="isErrorMode()" class="mat-small error margin-left-10">{{ errorMessage }}</span>
+                    </div>
+                </mat-card-actions>
+            </mat-card>
+        </form>
+    </div>
+    <div fxFlex="1%" fxFlex.gt-sm="30%" flFlex.gt-lg="40%"></div>
+</div>
