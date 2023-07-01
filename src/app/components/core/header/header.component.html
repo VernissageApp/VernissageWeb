@@ -17,6 +17,7 @@
                 <span class="mat-small">Welcome, {{ user.name }}</span>
                 <button mat-button (click)="signOut()">Sign out</button>
             </div>
+
             <div fxShow fxHide.gt-xs>
                 <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu with actions">
                     <mat-icon>more_vert</mat-icon>

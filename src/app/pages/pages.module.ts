@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { ComponentsModule } from '../components/components.module';
 import { PipesModule } from '../pipes/pipes.module';
 import { PagesRoutingModule } from './pages-routing.module';
+import { DialogsModule } from "../dialogs/dialogs.module";
+
 import { HomePage } from './home/home.page';
 import { PageNotFoundPage } from './errors/page-not-found/page-not-found.page';
 import { AccessForbiddenPage } from './errors/access-forbidden/access-forbidden.page';
@@ -17,6 +19,7 @@ import { LoginCallbackPage } from "./login-callback/login-callback.page";
 @NgModule({
     imports: [
         ComponentsModule,
+        DialogsModule,
         PipesModule,
         PagesRoutingModule
     ],

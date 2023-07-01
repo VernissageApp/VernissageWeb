@@ -41,7 +41,7 @@
 
                 <mat-card-subtitle>Fields</mat-card-subtitle>
                 <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px">
-                    <mat-form-field fxFlex="40%">
+                    <mat-form-field fxFlex="50%">
                         <mat-label>Key</mat-label>
                         <input matInput name="key" #location="ngModel" [(ngModel)]="user.location" placeholder="Key" aria-label="Key" appMaxLength="50" />
                         <mat-error *ngIf="location.invalid && location.errors?.appMaxLength">
@@ -49,7 +49,7 @@
                         </mat-error>
                     </mat-form-field>
 
-                    <mat-form-field fxFlex="40%">
+                    <mat-form-field fxFlex="50%">
                         <mat-label>Value</mat-label>
                         <input matInput name="value" #value="ngModel" [(ngModel)]="user.location" placeholder="Value" aria-label="Value" appMaxLength="50" />
                         <mat-error *ngIf="value.invalid && value.errors?.appMaxLength">
@@ -90,7 +90,7 @@
                     Set a strong password and don't reuse it for other accounts.
                 </div>
                 <div fxFlex="none">
-                    <button type="button" [disabled]="isSubmittingMode()" mat-raised-button color="primary" aria-label="Change password">Change password</button>
+                    <button type="button" [disabled]="isSubmittingMode()" (click)="openChangePasswordDialog()" mat-raised-button color="primary" aria-label="Change password">Change password</button>
                 </div>
             </div>
         </mat-card-content>

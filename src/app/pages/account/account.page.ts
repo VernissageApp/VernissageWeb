@@ -10,6 +10,8 @@ import { MessagesService } from 'src/app/services/common/messages.service';
 import { AccountService } from 'src/app/services/http/account.service';
 import { UsersService } from 'src/app/services/http/users.service';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
+import {MatDialog} from "@angular/material/dialog";
+import {ChangePasswordDialog} from "../../dialogs/change-password-dialog/change-password.dialog";
 
 @Component({
     selector: 'app-account',
@@ -34,6 +36,7 @@ export class AccountPage implements OnInit {
         private authorizationService: AuthorizationService,
         private messageService: MessagesService,
         private router: Router,
+        public dialog: MatDialog,
         private loadingService: LoadingService
     ) { }
 
@@ -76,19 +79,11 @@ export class AccountPage implements OnInit {
         }
     }
 
-    isAccountMode(): boolean {
-        return this.accountMode === AccountMode.Account;
+    openChangePasswordDialog(): void {
+        const dialogRef = this.dialog.open(ChangePasswordDialog);
     }
 
     isSubmittingMode(): boolean {
         return this.accountMode === AccountMode.Submitting;
-    }
-
-    isSuccessMode(): boolean {
-        return this.accountMode === AccountMode.Success;
-    }
-
-    isErrorMode(): boolean {
-        return this.accountMode === AccountMode.Error;
     }
 }
