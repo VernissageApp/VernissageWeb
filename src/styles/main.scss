@@ -80,6 +80,10 @@ $vernissage-accent: mat.define-palette($md-palette2, A200, A100, A400);
 // The "warn" palette is optional and defaults to red if not specified.
 $vernissage-warn: mat.define-palette(mat.$red-palette);
 
+// Enable typography with hierarchy.
+$my-typography: mat.define-typography-config();
+@include mat.typography-hierarchy($my-typography);
+
 // Creating theme based on color palettes.
 $vernissage-theme: mat.define-light-theme((
   color: (
@@ -87,7 +91,7 @@ $vernissage-theme: mat.define-light-theme((
     accent: $vernissage-accent,
     warn: $vernissage-warn,
   ),
-  typography: mat.define-typography-config(),
+  typography: $my-typography,
   density: -1,
 ));
 

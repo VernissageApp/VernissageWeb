@@ -1,6 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { BooleanInput } from '@angular/cdk/coercion';
 import { ReCaptchaV3Service } from 'ngx-captcha';
 
 import { User } from 'src/app/models/user';
@@ -50,15 +49,11 @@ export class RegisterPage implements OnInit {
         }
     }
 
-    isRegisterMode(): BooleanInput {
-        return this.registerMode === RegisterMode.Register;
-    }
-
-    isSubmittingMode(): BooleanInput {
+    isSubmittingMode(): boolean {
         return this.registerMode === RegisterMode.Submitting;
     }
 
-    isErrorMode(): BooleanInput {
+    isErrorMode(): boolean {
         return this.registerMode === RegisterMode.Error;
     }
 

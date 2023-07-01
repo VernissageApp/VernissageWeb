@@ -1,5 +1,5 @@
 
-<div [hidden]="!isReady" [@fadeIn]>
+<div [hidden]="!isReady" [@fadeIn]="true" class="padding-30">
     <section class="mat-typography">
         <h1>User account</h1>
     </section>
@@ -7,7 +7,6 @@
     <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
 
         <mat-card>
-
             <mat-card-header>
                 <mat-card-title>
                     Your personal information
@@ -17,38 +16,57 @@
             <mat-card-content>
                 <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px" class="margin-bottom-20">
                     <mat-form-field fxFlex="50%">
+                        <mat-label>Name</mat-label>
                         <input matInput name="userName" #userName="ngModel" [(ngModel)]="user.name"
-                            placeholder="Name" aria-label="Name" appMaxLength="50" />
+                            placeholder="Name" aria-label="Name" appMaxLength="100" />
                         <mat-error *ngIf="userName.invalid && userName.errors?.appMaxLength">
                             Too long name.
                         </mat-error>
                     </mat-form-field>
-        
-                    <mat-form-field fxFlex="50%">
-                        <input matInput name="location" #location="ngModel" [(ngModel)]="user.location"
-                            placeholder="Location" aria-label="Location" appMaxLength="50" />
+
+                    <div fxFlex="50%"></div>
+                </div>
+
+                <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px" class="margin-bottom-20">
+                    <mat-form-field fxFlex="100%">
+                        <mat-label>Bio</mat-label>
+                        <textarea matInput name="bio" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4"
+                            cdkAutosizeMaxRows="10" placeholder="Bio" #bio="ngModel" [(ngModel)]="user.bio"
+                            aria-label="Bio" appMaxLength="500"></textarea>
+                        <mat-error *ngIf="bio.invalid && bio.errors?.appMaxLength">Too long bio.</mat-error>
+                    </mat-form-field>
+
+                    <div fxFlex="50%"></div>
+                </div>
+
+                <mat-card-subtitle>Fields</mat-card-subtitle>
+                <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px">
+                    <mat-form-field fxFlex="40%">
+                        <mat-label>Key</mat-label>
+                        <input matInput name="key" #location="ngModel" [(ngModel)]="user.location" placeholder="Key" aria-label="Key" appMaxLength="50" />
                         <mat-error *ngIf="location.invalid && location.errors?.appMaxLength">
                             Too long location.
                         </mat-error>
                     </mat-form-field>
-                </div>
 
-                <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px" class="margin-bottom-20">
-                    <mat-form-field fxFlex="50%">
-                        <input matInput name="website" #website="ngModel" [(ngModel)]="user.website"
-                            placeholder="Website" aria-label="Website" appMaxLength="50" />
-                        <mat-error *ngIf="website.invalid && website.errors?.appMaxLength">
-                            Too long website URL.
+                    <mat-form-field fxFlex="40%">
+                        <mat-label>Value</mat-label>
+                        <input matInput name="value" #value="ngModel" [(ngModel)]="user.location" placeholder="Value" aria-label="Value" appMaxLength="50" />
+                        <mat-error *ngIf="value.invalid && value.errors?.appMaxLength">
+                            Too long location.
                         </mat-error>
                     </mat-form-field>
-        
-                    <mat-form-field fxFlex="100%">
-                        <textarea matInput name="bio" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
-                            cdkAutosizeMaxRows="10" placeholder="Bio" #bio="ngModel" [(ngModel)]="user.bio"
-                            aria-label="Bio" appMaxLength="50"></textarea>
-                        <mat-error *ngIf="bio.invalid && bio.errors?.appMaxLength">Too long bio.</mat-error>
-                    </mat-form-field>
-                </div>                
+
+                    <div fxFlex="20%" class="padding-top-10">
+                        <button mat-stroked-button color="primary" type="button" class="margin-right-10">Delete</button>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px" class="margin-bottom-20">
+                    <div fxFlex="80%"></div>
+                        <button mat-stroked-button color="accent" type="button">Add</button>
+                    <div fxFlex="20%">
+                    </div>
+                </div>
             </mat-card-content>
 
             <mat-card-actions>

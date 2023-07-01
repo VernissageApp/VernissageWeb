@@ -1,5 +1,5 @@
 <div class="padding-top-30" fxLayout>
-    <div fxFlex="1%" fxFlex.gt-sm="30%" flFlex.gt-lg="40%"></div>
+    <div fxFlex="1%" fxFlex.gt-sm="30%" fxFlex.gt-lg="40%"></div>
     <div fxFlex>
         <form name="form" (ngSubmit)="f.form.valid && passwordIsValid && onSubmit()" #f="ngForm" novalidate>
             <mat-card class="form-card">
@@ -50,11 +50,11 @@
                     <div class="register-actions">
                         <button type="submit" mat-flat-button (click)="registerMode = RegisterMode.Register" [disabled]="isSubmittingMode()" color="primary" aria-label="Register">Register</button>
                         <mat-spinner *ngIf="isSubmittingMode()" [diameter]="24" class="display-inline margin-left-10"></mat-spinner>
-                        <span *ngIf="isErrorMode()" class="mat-small error margin-left-10">{{ errorMessage }}</span>
+                        <span *ngIf="isErrorMode()" class="mat-small text-error margin-left-10">{{ errorMessage }}</span>
                     </div>
                 </mat-card-actions>
             </mat-card>
         </form>
     </div>
-    <div fxFlex="1%" fxFlex.gt-sm="30%" flFlex.gt-lg="40%"></div>
+    <div fxFlex="1%" fxFlex.gt-sm="30%" fxFlex.gt-lg="40%"></div>
 </div>

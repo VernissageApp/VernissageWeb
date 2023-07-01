@@ -12,6 +12,7 @@ import { ForgotPasswordPage } from './forgot-password/forgot-password.page';
 import { ResetPasswordPage } from './reset-password/reset-password.page';
 import { ConfirmEmailPage } from './confirm-email/confirm-email.page';
 import { AccountPage } from './account/account.page';
+import { LoginCallbackPage } from "./login-callback/login-callback.page";
 
 @NgModule({
     imports: [
@@ -22,6 +23,7 @@ import { AccountPage } from './account/account.page';
     declarations: [
         HomePage,
         LoginPage,
+        LoginCallbackPage,
         PageNotFoundPage,
         AccessForbiddenPage,
         RegisterPage,
@@ -36,6 +38,7 @@ import { AccountPage } from './account/account.page';
         PagesRoutingModule,
         HomePage,
         LoginPage,
+        LoginCallbackPage,
         PageNotFoundPage,
         AccessForbiddenPage,
         RegisterPage,

@@ -19,7 +19,7 @@ export class APIInterceptor implements HttpInterceptor {
 
     private handleAuthError(error: HttpErrorResponse): Observable<any> {
 
-        if (error instanceof HttpErrorResponse) {
+        if (error) {
             if (error.error instanceof ErrorEvent) {
                 console.error('Error Event');
                 console.error(error);

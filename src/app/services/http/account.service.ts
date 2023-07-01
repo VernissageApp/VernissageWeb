@@ -22,25 +22,22 @@ export class AccountService {
 
     public async refreshToken(refreshToken: string): Promise<AccessToken> {
         const event$ = this.httpClient.post<AccessToken>(
-            this.usersService + '/api/v1/account/refresh',
+            this.usersService + '/api/v1/account/refresh-token',
             new RefreshToken(refreshToken)
         );
 
-        const result = await firstValueFrom(event$);
-        return result;
+      return await firstValueFrom(event$);
     }
 
     public async login(login: Login): Promise<AccessToken> {
         const event$ = this.httpClient.post<AccessToken>(this.usersService + '/api/v1/account/login', login);
 
-        const result = await firstValueFrom(event$);
-        return result;
+      return await firstValueFrom(event$);
     }
 
     public async changePassword(changePassword: ChangePassword): Promise<object> {
         const event$ =  this.httpClient.post(this.usersService + '/api/v1/account/change-password', changePassword);
 
-        const result = await firstValueFrom(event$);
-        return result;
+      return await firstValueFrom(event$);
     }
 }

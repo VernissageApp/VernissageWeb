@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { BooleanInput } from '@angular/cdk/coercion';
 
 import { Login } from 'src/app/models/login';
 import { LoginMode } from 'src/app/models/login-mode';
@@ -51,9 +50,9 @@ export class LoginPage implements OnInit {
             this.authorizationService.signIn(accessToken);
 
             if (this.returnUrl) {
-                this.router.navigateByUrl(this.returnUrl);
+                await this.router.navigateByUrl(this.returnUrl);
             } else {
-                this.router.navigate(['/home']);
+                await this.router.navigate(['/home']);
             }
         } catch (error: any) {
 
@@ -75,15 +74,11 @@ export class LoginPage implements OnInit {
         return environment.httpSchema + environment.usersService + '/identity/authenticate/' + authClient.uri;
     }
 
-    isLoginMode(): BooleanInput {
-        return this.loginMode === LoginMode.Login;
-    }
-
-    isSubmittingMode(): BooleanInput {
+    isSubmittingMode(): boolean {
         return this.loginMode === LoginMode.Submitting;
     }
 
-    isErrorMode(): BooleanInput {
+    isErrorMode(): boolean {
         return this.loginMode === LoginMode.Error;
     }
 }

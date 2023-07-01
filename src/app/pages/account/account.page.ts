@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { User } from 'src/app/models/user';
@@ -7,10 +7,9 @@ import { ChangePassword } from 'src/app/models/change-password';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 import { LoadingService } from 'src/app/services/common/loading.service';
 import { MessagesService } from 'src/app/services/common/messages.service';
-// import { AccountService } from 'src/app/services/http/account.service';
+import { AccountService } from 'src/app/services/http/account.service';
 import { UsersService } from 'src/app/services/http/users.service';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
-
 
 @Component({
     selector: 'app-account',
@@ -31,7 +30,7 @@ export class AccountPage implements OnInit {
 
     constructor(
         private usersService: UsersService,
-        // private accountService: AccountService,
+        private accountService: AccountService,
         private authorizationService: AuthorizationService,
         private messageService: MessagesService,
         private router: Router,
@@ -50,7 +49,7 @@ export class AccountPage implements OnInit {
             }
         } catch {
             this.messageService.showError('Error during downloading user settings.');
-            this.router.navigate(['/home']);
+            await this.router.navigate(['/home']);
         } finally {
             this.isReady = true;
             this.loadingService.hideLoader();
@@ -64,7 +63,8 @@ export class AccountPage implements OnInit {
             if (this.user.userName != null) {
                 await this.usersService.update(this.user.userName, this.user);
                 this.accountMode = AccountMode.Success;
-                this.authorizationService.refreshAccessToken();
+                await this.authorizationService.refreshAccessToken();
+
                 this.messageService.showSuccess('Settings was saved.');
             } else {
                 this.errorMessage = 'Cannot save. User name is required.';
@@ -75,46 +75,7 @@ export class AccountPage implements OnInit {
             this.accountMode = AccountMode.Error;
         }
     }
-/*
-    async submitChangePassword(): Promise<void> {
-        try {
-            await this.accountService.changePassword(this.changePassword);
-            this.changePasswordModalRef.hide();
-            this.messageService.showSuccess('Password was changed.');
-        } catch {
-            this.changePasswordErrorMessage = 'Unexpected error occurred. Please try again.';
-        }
-    }
 
-    closeChangePassword(): void {
-        this.changePassword.currentPassword = '';
-        this.changePassword.newPassword = '';
-        this.changePasswordErrorMessage = null;
-
-        this.changePasswordModalRef.hide();
-    }
-
-    async onDeleteAccount(): Promise<void> {
-        try {
-            await this.usersService.delete(this.userNameToDelete);
-            this.deleteAccountModalRef.hide();
-            this.toastrService.success('Your account was deleted.');
-
-            this.authorizationService.signOut();
-            this.router.navigate(['/home']);
-        } catch {
-            this.errorMessage = 'Unexpected error occurred. Please try again.';
-        }
-    }
-
-    openChangePasswordModal(template: TemplateRef<any>) {
-        this.changePasswordModalRef = this.modalService.show(template);
-    }
-
-    openDeleteAccountModal(template: TemplateRef<any>) {
-        this.deleteAccountModalRef = this.modalService.show(template);
-    }
-*/
     isAccountMode(): boolean {
         return this.accountMode === AccountMode.Account;
     }
