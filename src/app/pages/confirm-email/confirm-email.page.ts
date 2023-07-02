@@ -4,11 +4,13 @@ import { ActivatedRoute } from '@angular/router';
 import { ConfirmEmail } from 'src/app/models/confirm-email';
 import { ConfirmEmailMode } from 'src/app/models/confirm-email-mode';
 import { RegisterService } from 'src/app/services/http/register.service';
+import { fadeInAnimation } from "../../animations/fade-in.animation";
 
 @Component({
     selector: 'app-confirm-email',
     templateUrl: './confirm-email.page.html',
-    styleUrls: ['./confirm-email.page.scss']
+    styleUrls: ['./confirm-email.page.scss'],
+    animations: fadeInAnimation
 })
 export class ConfirmEmailPage implements OnInit {
 

@@ -13,6 +13,7 @@ import { AuthorizationService } from '../../../services/authorization/authorizat
 export class HeaderComponent implements OnInit, OnDestroy {
 
     public user?: User | null;
+    public avatarUrl = "assets/avatar.png";
     private userChangeSubscription?: Subscription;
 
     constructor(
@@ -22,8 +23,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.user = this.authorizationService.getUser();
+        this.avatarUrl = this.user?.avatarUrl ?? 'assets/avatar.png';
+
         this.userChangeSubscription = this.authorizationService.changes.subscribe(user => {
             this.user = user;
+            this.avatarUrl = this.user?.avatarUrl ?? 'assets/avatar.png';
         });
     }
 

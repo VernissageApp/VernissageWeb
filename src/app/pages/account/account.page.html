@@ -1,12 +1,11 @@
-
-<div [hidden]="!isReady" [@fadeIn]="true" class="padding-30">
+<div [hidden]="!isReady" @fadeIn class="padding-30">
     <section class="mat-typography">
         <h1>User account</h1>
     </section>
 
     <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
 
-        <mat-card>
+        <mat-card class="margin-bottom-20">
             <mat-card-header>
                 <mat-card-title>
                     Your personal information
@@ -28,7 +27,7 @@
                 </div>
 
                 <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px" class="margin-bottom-20">
-                    <mat-form-field fxFlex="100%">
+                    <mat-form-field fxFlex="50%">
                         <mat-label>Bio</mat-label>
                         <textarea matInput name="bio" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4"
                             cdkAutosizeMaxRows="10" placeholder="Bio" #bio="ngModel" [(ngModel)]="user.bio"
@@ -40,30 +39,30 @@
                 </div>
 
                 <mat-card-subtitle>Fields</mat-card-subtitle>
-                <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px">
+                <div *ngFor="let field of user.fields; let i = index" fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px">
                     <mat-form-field fxFlex="50%">
                         <mat-label>Key</mat-label>
-                        <input matInput name="key" #location="ngModel" [(ngModel)]="user.location" placeholder="Key" aria-label="Key" appMaxLength="50" />
-                        <mat-error *ngIf="location.invalid && location.errors?.appMaxLength">
-                            Too long location.
+                        <input matInput [name]="'key-' + i" #key="ngModel" [(ngModel)]="field.key" placeholder="Key" aria-label="Key" appMaxLength="500" />
+                        <mat-error *ngIf="key.invalid && key.errors?.appMaxLength">
+                            Too long key.
                         </mat-error>
                     </mat-form-field>
 
                     <mat-form-field fxFlex="50%">
                         <mat-label>Value</mat-label>
-                        <input matInput name="value" #value="ngModel" [(ngModel)]="user.location" placeholder="Value" aria-label="Value" appMaxLength="50" />
+                        <input matInput [name]="'value-' + i" #value="ngModel" [(ngModel)]="field.value" placeholder="Value" aria-label="Value" appMaxLength="500" />
                         <mat-error *ngIf="value.invalid && value.errors?.appMaxLength">
-                            Too long location.
+                            Too long value.
                         </mat-error>
                     </mat-form-field>
 
                     <div fxFlex="20%" class="padding-top-10">
-                        <button mat-stroked-button color="primary" type="button" class="margin-right-10">Delete</button>
+                        <button mat-stroked-button [disabled]="user.fields?.length === 1" color="primary" type="button" class="margin-right-10" (click)="onDeleteField(field)">Delete</button>
                     </div>
                 </div>
                 <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px" class="margin-bottom-20">
                     <div fxFlex="80%"></div>
-                        <button mat-stroked-button color="accent" type="button">Add</button>
+                        <button mat-stroked-button color="accent" type="button" (click)="onAddField()">Add</button>
                     <div fxFlex="20%">
                     </div>
                 </div>
@@ -78,7 +77,63 @@
         </mat-card>
     </form>
 
-    <mat-card class="margin-top-20">
+    <form name="avatarForm" (ngSubmit)="avatarForm.form.valid && onAvatarFormSubmit()" #avatarForm="ngForm" novalidate>
+        <mat-card class="margin-bottom-20">
+            <mat-card-header>
+                <mat-card-title>Avatar</mat-card-title>
+                <mat-card-subtitle>PNG, GIF or JPG. At most 2 MB. Will be downscaled to 400x400px</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px" class="margin-bottom-20">
+                    <div fxFlex="40%">
+                        <button type="button" mat-raised-button (click)="avatarFileUpload.click()" class="margin-right-20">Choose file</button>
+                        <input hidden name="avatar" type="file" #avatarFileUpload accept="image/*" (change)="onAvatarSelected($event)">
+                    </div>
+
+                    <div fxFlex="60%">
+                        <img id="avatarImage" [src]="avatarSrc || 'https://placehold.co/400x400'" width="200" height="200" alt="Avatar" />
+                    </div>
+                </div>
+            </mat-card-content>
+
+            <mat-card-actions>
+                <div class="account-actions">
+                    <button type="submit" mat-raised-button color="primary" aria-label="Save" class="margin-right-10">Save</button>
+                    <button type="button" mat-raised-button color="accent" aria-label="Remove avatar" (click)="onRemoveAvatar()">Remove</button>
+                </div>
+            </mat-card-actions>
+        </mat-card>
+    </form>
+
+    <form name="avatarForm" (ngSubmit)="headerForm.form.valid && onHeaderFormSubmit()" #headerForm="ngForm" novalidate>
+        <mat-card class="margin-bottom-20">
+            <mat-card-header>
+                <mat-card-title>Header</mat-card-title>
+                <mat-card-subtitle>PNG, GIF or JPG. At most 2 MB. Will be downscaled to 1500x500px</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px" class="margin-bottom-20">
+                    <div fxFlex="40%">
+                        <button type="button" mat-raised-button (click)="headerFileUpload.click()" class="margin-right-20">Choose file</button>
+                        <input hidden name="header" type="file" #headerFileUpload accept="image/*" (change)="onHeaderSelected($event)">
+                    </div>
+
+                    <div fxFlex="60%">
+                        <img  id="headerImage" [src]="headerSrc || 'https://placehold.co/1500x500'" width="600" height="200" alt="Header" />
+                    </div>
+                </div>
+            </mat-card-content>
+
+            <mat-card-actions>
+                <div class="account-actions">
+                    <button type="submit" mat-raised-button color="primary" aria-label="Save" class="margin-right-10">Save</button>
+                    <button type="button" mat-raised-button color="accent" aria-label="Remove header" (click)="onRemoveHeader()">Remove</button>
+                </div>
+            </mat-card-actions>
+        </mat-card>
+    </form>
+
+    <mat-card class="margin-bottom-20">
         <mat-card-header>
             <mat-card-title>
                 Change password
@@ -96,7 +151,7 @@
         </mat-card-content>
     </mat-card>
 
-    <mat-card class="margin-top-20">
+    <mat-card class="margin-bottom-20">
         <mat-card-header>
             <mat-card-title>
                 Delete account

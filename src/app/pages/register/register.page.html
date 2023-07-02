@@ -1,4 +1,4 @@
-<div class="padding-top-30" fxLayout>
+<div class="padding-top-30" @fadeIn fxLayout>
     <div fxFlex="1%" fxFlex.gt-sm="30%" fxFlex.gt-lg="40%"></div>
     <div fxFlex>
         <form name="form" (ngSubmit)="f.form.valid && passwordIsValid && onSubmit()" #f="ngForm" novalidate>

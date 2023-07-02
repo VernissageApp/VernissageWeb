@@ -6,11 +6,13 @@ import { ResetPassword } from 'src/app/models/reset-password';
 import { ResetPasswordMode } from 'src/app/models/reset-password-mode';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { ForgotPasswordService } from 'src/app/services/http/forgot-password.service';
+import { fadeInAnimation } from "../../animations/fade-in.animation";
 
 @Component({
     selector: 'app-reset-password',
     templateUrl: './reset-password.page.html',
-    styleUrls: ['./reset-password.page.scss']
+    styleUrls: ['./reset-password.page.scss'],
+    animations: fadeInAnimation
 })
 export class ResetPasswordPage implements OnInit, OnDestroy {
 

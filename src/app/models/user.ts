@@ -1,3 +1,5 @@
+import { FlexiField } from "./flexi-field";
+
 export class User {
     public id?: string;
     public userName?: string;
@@ -5,11 +7,12 @@ export class User {
     public password?: string;
     public name?: string;
     public bio?: string;
-    public location?: string;
-    public website?: string;
     public securityToken?: string;
     public gravatarHash?: string;
     public redirectBaseUrl?: string;
     public locale?: string;
+    public avatarUrl?: string;
+    public headerUrl?: string;
     public agreement?: boolean;
+    public fields?: FlexiField[];
 }

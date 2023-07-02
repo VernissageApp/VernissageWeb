@@ -9,11 +9,13 @@ import { environment } from 'src/environments/environment';
 import { WindowService } from 'src/app/services/common/window.service';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { Router } from '@angular/router';
+import { fadeInAnimation } from "../../animations/fade-in.animation";
 
 @Component({
     selector: 'app-register',
     templateUrl: './register.page.html',
-    styleUrls: ['./register.page.scss']
+    styleUrls: ['./register.page.scss'],
+    animations: fadeInAnimation
 })
 export class RegisterPage implements OnInit {
     readonly RegisterMode = RegisterMode;

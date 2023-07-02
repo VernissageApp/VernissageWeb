@@ -5,11 +5,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { NgOptimizedImage } from "@angular/common";
 
 import { ValidationsModule } from '../validators/validations.module';
 import { HeaderComponent } from './core/header/header.component';
 import { PasswordComponent } from './widgets/password/password.component';
 import { AngularMaterialModule } from './angular-material.module';
+
 
 @NgModule({
     declarations: [
@@ -25,7 +27,8 @@ import { AngularMaterialModule } from './angular-material.module';
         FlexLayoutModule,
         AngularMaterialModule,
         RouterModule,
-        ValidationsModule
+        ValidationsModule,
+        NgOptimizedImage
     ],
     exports: [
         BrowserModule,
@@ -38,7 +41,8 @@ import { AngularMaterialModule } from './angular-material.module';
         RouterModule,
         ValidationsModule,
         HeaderComponent,
-        PasswordComponent
+        PasswordComponent,
+        NgOptimizedImage
     ]
 })
 export class ComponentsModule { }

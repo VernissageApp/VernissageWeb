@@ -10,3 +10,22 @@ app-navbar {
     right: 0;
     z-index: 2;
 }
+
+.avatar {
+    border-radius: 50%;
+}
+
+a.logo {
+    font-family: 'Fleur De Leah', cursive;
+    font-size:38px;
+    margin-right: 20px;
+}
+
+a:hover.logo,
+a:visited.logo,
+a:active.logo,
+a:link.logo {
+    font-style: normal;
+    text-decoration: none;
+    color: #fff;
+}
