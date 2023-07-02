@@ -1,17 +1,20 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
 
+import { ChangeEmailDialog } from 'src/app/dialogs/change-email-dialog/change-email.dialog';
+import { DeleteAccountDialog } from 'src/app/dialogs/delete-account-dialog/delete-account.dialog';
 import { User } from 'src/app/models/user';
-import { AccountMode } from 'src/app/models/account-mode';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 import { LoadingService } from 'src/app/services/common/loading.service';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { AccountService } from 'src/app/services/http/account.service';
 import { UsersService } from 'src/app/services/http/users.service';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
-import { MatDialog } from "@angular/material/dialog";
-import { ChangePasswordDialog } from "../../dialogs/change-password-dialog/change-password.dialog";
-import { FlexiField } from "../../models/flexi-field";
+import { WindowService } from 'src/app/services/common/window.service';
+import { FlexiField } from 'src/app/models/flexi-field';
+import { ResendEmailConfirmation } from 'src/app/models/resend-email-confirmation';
+import { ChangePasswordDialog } from 'src/app/dialogs/change-password-dialog/change-password.dialog';
 
 @Component({
     selector: 'app-account',
@@ -36,6 +39,7 @@ export class AccountPage implements OnInit {
         private accountService: AccountService,
         private authorizationService: AuthorizationService,
         private messageService: MessagesService,
+        private windowService: WindowService,
         private router: Router,
         public dialog: MatDialog,
         private loadingService: LoadingService
@@ -164,8 +168,41 @@ export class AccountPage implements OnInit {
         }
     }
 
+    async resentConfirmationEmail(): Promise<void> {
+        try {
+            const resendEmailConfirmation = new ResendEmailConfirmation();
+            resendEmailConfirmation.redirectBaseUrl = this.windowService.getApplicationUrl();
+
+            await this.accountService.resend(resendEmailConfirmation);
+        } catch (error) {
+            console.error(error);
+            this.messageService.showServerError(error);
+        }
+    }
+
     openChangePasswordDialog(): void {
         this.dialog.open(ChangePasswordDialog);
+    }
+
+    openChangeEmailDialog(): void {
+        const dialogRef = this.dialog.open(ChangeEmailDialog);
+        dialogRef.afterClosed().subscribe(async (result) => {
+            await this.loadUserData()
+        });
+    }
+
+    openDeleteAccountDialog(): void {
+        const dialogRef = this.dialog.open(DeleteAccountDialog, {
+            data: this.user
+        });
+
+        dialogRef.afterClosed().subscribe(async (result) => {
+            if (result?.confirmed && this.user.userName) {
+                await this.usersService.delete(this.user.userName);
+                this.authorizationService.signOut()
+                await this.router.navigate(['/']);
+            }
+        });
     }
 
     private async loadUserData(): Promise<void> {

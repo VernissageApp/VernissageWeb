@@ -1,0 +1,20 @@
+<form name="form" (ngSubmit)="f.form.valid && this.data.email === email && onSubmit()" #f="ngForm" novalidate>
+    <div mat-dialog-title>Delete account</div>
+    <div mat-dialog-content>
+
+        <small class="text-error text-right">
+            The operation will delete your account and all related data. The operation is irreversible.
+        </small>
+
+        <div fxLayout="column" class="margin-bottom-20 padding-top-5">
+            <mat-form-field appearance="outline">
+                <mat-label>Email</mat-label>
+                <input matInput name="email" [(ngModel)]="email" type="text" aria-label="Email" required />
+            </mat-form-field>
+        </div>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button (click)="onNoClick()">Cancel</button>
+        <button mat-raised-button color="accent" cdkFocusInitial>Delete</button>
+    </div>
+</form>

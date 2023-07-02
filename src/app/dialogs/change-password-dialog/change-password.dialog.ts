@@ -1,9 +1,8 @@
-import {Component} from '@angular/core';
-import {MatDialogRef} from "@angular/material/dialog";
-import {UsersService} from "../../services/http/users.service";
-import {AccountService} from "../../services/http/account.service";
-import {ChangePassword} from "../../models/change-password";
-import {MessagesService} from "../../services/common/messages.service";
+import { Component } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
+import { ChangePassword } from 'src/app/models/change-password';
+import { MessagesService } from 'src/app/services/common/messages.service';
+import { AccountService } from 'src/app/services/http/account.service';
 
 @Component({
     selector: 'change-password',

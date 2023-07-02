@@ -1,11 +1,11 @@
 <div [hidden]="!isReady" @fadeIn class="padding-30">
     <section class="mat-typography">
-        <h1>User account</h1>
+        <h1>Account</h1>
     </section>
 
     <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
 
-        <mat-card class="margin-bottom-20">
+        <mat-card class="margin-bottom-20" appearance="outlined">
             <mat-card-header>
                 <mat-card-title>
                     Your personal information
@@ -33,6 +33,18 @@
                             cdkAutosizeMaxRows="10" placeholder="Bio" #bio="ngModel" [(ngModel)]="user.bio"
                             aria-label="Bio" appMaxLength="500"></textarea>
                         <mat-error *ngIf="bio.invalid && bio.errors?.appMaxLength">Too long bio.</mat-error>
+                    </mat-form-field>
+
+                    <div fxFlex="50%"></div>
+                </div>
+
+                <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px" class="margin-bottom-20">
+                    <mat-form-field fxFlex="50%" appearance="outline">
+                        <mat-label>Language</mat-label>
+                        <mat-select [(value)]="user.locale">
+                            <mat-option value="en_US">English (English)</mat-option>
+                            <mat-option value="pl_PL">Polish (polski)</mat-option>
+                        </mat-select>
                     </mat-form-field>
 
                     <div fxFlex="50%"></div>
@@ -78,7 +90,7 @@
     </form>
 
     <form name="avatarForm" (ngSubmit)="avatarForm.form.valid && onAvatarFormSubmit()" #avatarForm="ngForm" novalidate>
-        <mat-card class="margin-bottom-20">
+        <mat-card class="margin-bottom-20" appearance="outlined">
             <mat-card-header>
                 <mat-card-title>Avatar</mat-card-title>
                 <mat-card-subtitle>PNG, GIF or JPG. At most 2 MB. Will be downscaled to 600x600px</mat-card-subtitle>
@@ -86,7 +98,7 @@
             <mat-card-content>
                 <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px" class="margin-bottom-20">
                     <div fxFlex="40%">
-                        <button type="button" mat-raised-button (click)="avatarFileUpload.click()" class="margin-right-20">Choose file</button>
+                        <button type="button" mat-stroked-button (click)="avatarFileUpload.click()" class="margin-right-20">Choose file</button>
                         <input hidden name="avatar" type="file" #avatarFileUpload accept="image/*" (change)="onAvatarSelected($event)">
                     </div>
 
@@ -106,7 +118,7 @@
     </form>
 
     <form name="avatarForm" (ngSubmit)="headerForm.form.valid && onHeaderFormSubmit()" #headerForm="ngForm" novalidate>
-        <mat-card class="margin-bottom-20">
+        <mat-card class="margin-bottom-20" appearance="outlined">
             <mat-card-header>
                 <mat-card-title>Header</mat-card-title>
                 <mat-card-subtitle>PNG, GIF or JPG. At most 2 MB. Will be downscaled to 1500x500px</mat-card-subtitle>
@@ -114,7 +126,7 @@
             <mat-card-content>
                 <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px" class="margin-bottom-20">
                     <div fxFlex="40%">
-                        <button type="button" mat-raised-button (click)="headerFileUpload.click()" class="margin-right-20">Choose file</button>
+                        <button type="button" mat-stroked-button (click)="headerFileUpload.click()" class="margin-right-20">Choose file</button>
                         <input hidden name="header" type="file" #headerFileUpload accept="image/*" (change)="onHeaderSelected($event)">
                     </div>
 
@@ -133,7 +145,27 @@
         </mat-card>
     </form>
 
-    <mat-card class="margin-bottom-20">
+    <mat-card class="margin-bottom-20" appearance="outlined">
+        <mat-card-header>
+            <mat-card-title>
+                Change email
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div fxLayout="row" fxLayoutGap="20px">
+                <div fxFlex>
+                    Your current email: <strong>{{ user.email }}</strong>
+                    <span *ngIf="!user.emailWasConfirmed" class="text-error margin-left-5">(not confirmed)</span>
+                </div>
+                <div fxFlex="none">
+                    <button *ngIf="!user.emailWasConfirmed" type="button" (click)="resentConfirmationEmail()" mat-stroked-button color="primary" class="margin-right-10" aria-label="Resend confirmation email">Resend confirmation email</button>
+                    <button type="button" (click)="openChangeEmailDialog()" mat-raised-button color="primary" aria-label="Change email">Change email</button>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card class="margin-bottom-20" appearance="outlined">
         <mat-card-header>
             <mat-card-title>
                 Change password
@@ -151,7 +183,7 @@
         </mat-card-content>
     </mat-card>
 
-    <mat-card class="margin-bottom-20">
+    <mat-card class="margin-bottom-20" appearance="outlined">
         <mat-card-header>
             <mat-card-title>
                 Delete account
@@ -165,8 +197,7 @@
                     you have added.
                 </div>
                 <div fxFlex="none">
-                    <button type="button" mat-raised-button color="accent" aria-label="Delete
-                    account">Delete account</button>
+                    <button type="button" mat-raised-button color="accent" aria-label="Delete account" (click)="openDeleteAccountDialog()">Delete account</button>
                 </div>
             </div>
         </mat-card-content>

@@ -37,6 +37,7 @@ export class RegisterPage implements OnInit {
 
     ngOnInit(): void {
         this.user.redirectBaseUrl = this.windowService.getApplicationUrl();
+        this.user.locale = 'en_US';
     }
 
     async onSubmit(): Promise<void> {
@@ -66,7 +67,6 @@ export class RegisterPage implements OnInit {
     private async registerUser(token: string) {
         try {
             this.user.securityToken = token;
-            this.user.locale = 'pl_PL';
             this.user.agreement = true;
 
             await this.registerService.register(this.user);

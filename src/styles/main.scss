@@ -77,6 +77,39 @@ $md-palette2: (
   )
 );
 
+$md-white: (
+  50 : #ffffff,
+  100 : #ffffff,
+  200 : #ffffff,
+  300 : #ffffff,
+  400 : #ffffff,
+  500 : #ffffff,
+  600 : #f0f0f0,
+  700 : #e0e0e0,
+  800 : #d1d1d1,
+  900 : #c2c2c2,
+  A100 : #ffffff,
+  A200 : #ffffff,
+  A400 : #ffffff,
+  A700 : #ffffff,
+  contrast: (
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #000000,
+    400 : #000000,
+    500 : #000000,
+    600 : #000000,
+    700 : #000000,
+    800 : #000000,
+    900 : #000000,
+    A100 : #000000,
+    A200 : #000000,
+    A400 : #000000,
+    A700 : #000000,
+  )
+);
+
 // Primary color palette.
 $vernissage-primary: mat.define-palette($md-palette1, 500);
 
@@ -85,6 +118,9 @@ $vernissage-accent: mat.define-palette($md-palette2, A200, A100, A400);
 
 // The "warn" palette is optional and defaults to red if not specified.
 $vernissage-warn: mat.define-palette(mat.$red-palette);
+
+// White palette.
+$vernissage-white: mat.define-palette($md-white);
 
 // Enable typography with hierarchy.
 $my-typography: mat.define-typography-config();
@@ -101,9 +137,17 @@ $vernissage-theme: mat.define-light-theme((
   density: -2,
 ));
 
+$vernissage-toolbar-theme: mat.define-light-theme((
+  color: (primary: $vernissage-white, accent: $vernissage-accent),
+));
+
 // User theme for all components.
 @include mat.all-component-themes($vernissage-theme);
 
+// Toolbar color set to white.
+@include mat.toolbar-color($vernissage-toolbar-theme);
+
 // Include custom vernissage components themes.
 @include material-app-theme($vernissage-theme);
-@include messages-theme($vernissage-theme)
+@include messages-theme($vernissage-theme);
+

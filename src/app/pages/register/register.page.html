@@ -2,7 +2,7 @@
     <div fxFlex="1%" fxFlex.gt-sm="30%" fxFlex.gt-lg="40%"></div>
     <div fxFlex>
         <form name="form" (ngSubmit)="f.form.valid && passwordIsValid && onSubmit()" #f="ngForm" novalidate>
-            <mat-card class="form-card">
+            <mat-card appearance="outlined">
                 <mat-card-header>
                     <mat-card-title>Create new account</mat-card-title>
                 </mat-card-header>
@@ -42,6 +42,16 @@
                             <input matInput name="name" [(ngModel)]="user.name" #name="ngModel" type="text" aria-label="Name" required appMaxLength="50" />
                             <mat-error *ngIf="name.invalid && name.errors?.required">Enter name.</mat-error>
                             <mat-error *ngIf="name.invalid && name.errors?.appMaxLength">Name is too long.</mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div fxLayout="column" class="margin-bottom-20">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Language</mat-label>
+                            <mat-select [(value)]="user.locale">
+                                <mat-option value="en_US">English (English)</mat-option>
+                                <mat-option value="pl_PL">Polish (polski)</mat-option>
+                            </mat-select>
                         </mat-form-field>
                     </div>
 

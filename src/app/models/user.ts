@@ -14,5 +14,6 @@ export class User {
     public avatarUrl?: string;
     public headerUrl?: string;
     public agreement?: boolean;
+    public emailWasConfirmed?: boolean;
     public fields?: FlexiField[];
 }

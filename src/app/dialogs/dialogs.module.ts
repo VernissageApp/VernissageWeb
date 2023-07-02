@@ -5,14 +5,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { DeleteAccountDialog } from 'src/app/dialogs/delete-account-dialog/delete-account.dialog';
 import { ValidationsModule } from '../validators/validations.module';
-import { ComponentsModule } from "../components/components.module";
+import { ComponentsModule } from '../components/components.module';
 
-import { ChangePasswordDialog } from "./change-password-dialog/change-password.dialog";
+import { ChangePasswordDialog } from './change-password-dialog/change-password.dialog';
+import { ChangeEmailDialog } from './change-email-dialog/change-email.dialog';
 
 @NgModule({
     declarations: [
-        ChangePasswordDialog
+        ChangePasswordDialog,
+        ChangeEmailDialog,
+        DeleteAccountDialog
     ],
     imports: [
         BrowserModule,
@@ -26,7 +30,9 @@ import { ChangePasswordDialog } from "./change-password-dialog/change-password.d
         ComponentsModule
     ],
     exports: [
-        ChangePasswordDialog
+        ChangePasswordDialog,
+        ChangeEmailDialog,
+        DeleteAccountDialog
     ]
 })
 export class DialogsModule { }

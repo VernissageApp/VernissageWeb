@@ -1,7 +1,7 @@
 <div *ngIf="isValidatingMode()" @fadeIn fxLayout>
     <div fxFlex="1%" fxFlex.gt-sm="30%" fxFlex.gt-lg="40%"></div>
     <div fxFlex>
-        <mat-card>
+        <mat-card appearance="outlined">
             <mat-card-header>
                 <mat-card-title>
                     <mat-icon inline="true" class="vertical-align-bottom">email</mat-icon>
@@ -19,7 +19,7 @@
 <div *ngIf="isSuccessMode()" fxLayout>
     <div fxFlex="1%" fxFlex.gt-sm="30%" fxFlex.gt-lg="40%"></div>
     <div fxFlex>
-        <mat-card>
+        <mat-card appearance="outlined">
             <mat-card-header>
                 <mat-card-title>
                     <mat-icon inline="true" class="vertical-align-bottom">check_circle</mat-icon>
@@ -39,7 +39,7 @@
 <div *ngIf="isErrorMode()" fxLayout>
     <div fxFlex="1%" fxFlex.gt-sm="30%" fxFlex.gt-lg="40%"></div>
     <div fxFlex>
-        <mat-card>
+        <mat-card appearance="outlined">
             <mat-card-header>
                 <mat-card-title>
                     <mat-icon inline="true" class="vertical-align-bottom">error</mat-icon>

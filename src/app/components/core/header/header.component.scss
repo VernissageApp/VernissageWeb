@@ -3,12 +3,8 @@
     flex-grow: 1;
 }
 
-app-navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 2;
+mat-toolbar {
+  border: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 .avatar {
@@ -27,5 +23,5 @@ a:active.logo,
 a:link.logo {
     font-style: normal;
     text-decoration: none;
-    color: #fff;
+    color: #000;
 }
