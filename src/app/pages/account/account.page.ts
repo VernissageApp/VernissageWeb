@@ -23,9 +23,7 @@ export class AccountPage implements OnInit {
 
     userName = '';
     user: User = new User();
-    accountMode = AccountMode.Account;
     isReady = false;
-    errorMessage?: string;
 
     selectedAvatarFile: any = null;
     avatarSrc?: string;
@@ -48,7 +46,7 @@ export class AccountPage implements OnInit {
             this.loadingService.showLoader();
 
             const userFromToken = this.authorizationService.getUser();
-            if (userFromToken?.userName != null) {
+            if (userFromToken?.userName) {
                 this.userName = userFromToken?.userName;
                 await this.loadUserData()
             } else {
@@ -65,21 +63,15 @@ export class AccountPage implements OnInit {
 
     async onSubmit(): Promise<void> {
         try {
-            this.accountMode = AccountMode.Submitting;
-
             if (this.user.userName != null) {
                 await this.usersService.update(this.user.userName, this.user);
-                this.accountMode = AccountMode.Success;
                 await this.authorizationService.refreshAccessToken();
 
                 this.messageService.showSuccess('Settings was saved.');
-            } else {
-                this.errorMessage = 'Cannot save. User name is required.';
             }
         } catch (error) {
             console.error(error);
-            this.errorMessage = 'Unexpected error occurred. Please try again.';
-            this.accountMode = AccountMode.Error;
+            this.messageService.showServerError(error);
         }
     }
 
@@ -95,8 +87,7 @@ export class AccountPage implements OnInit {
             }
         } catch (error) {
             console.error(error);
-            this.errorMessage = 'Unexpected error occurred. Please try again.';
-            this.accountMode = AccountMode.Error;
+            this.messageService.showServerError(error);
         }
     }
 
@@ -109,8 +100,7 @@ export class AccountPage implements OnInit {
             }
         } catch (error) {
             console.error(error);
-            this.errorMessage = 'Unexpected error occurred. Please try again.';
-            this.accountMode = AccountMode.Error;
+            this.messageService.showServerError(error);
         }
     }
 
@@ -126,8 +116,7 @@ export class AccountPage implements OnInit {
             }
         } catch (error) {
             console.error(error);
-            this.errorMessage = 'Unexpected error occurred. Please try again.';
-            this.accountMode = AccountMode.Error;
+            this.messageService.showServerError(error);
         }
     }
 
@@ -140,8 +129,7 @@ export class AccountPage implements OnInit {
             }
         } catch (error) {
             console.error(error);
-            this.errorMessage = 'Unexpected error occurred. Please try again.';
-            this.accountMode = AccountMode.Error;
+            this.messageService.showServerError(error);
         }
     }
 
@@ -178,10 +166,6 @@ export class AccountPage implements OnInit {
 
     openChangePasswordDialog(): void {
         this.dialog.open(ChangePasswordDialog);
-    }
-
-    isSubmittingMode(): boolean {
-        return this.accountMode === AccountMode.Submitting;
     }
 
     private async loadUserData(): Promise<void> {

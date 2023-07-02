@@ -14,7 +14,7 @@
 
             <mat-card-content>
                 <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px" class="margin-bottom-20">
-                    <mat-form-field fxFlex="50%">
+                    <mat-form-field fxFlex="50%" appearance="outline">
                         <mat-label>Name</mat-label>
                         <input matInput name="userName" #userName="ngModel" [(ngModel)]="user.name"
                             placeholder="Name" aria-label="Name" appMaxLength="100" />
@@ -27,7 +27,7 @@
                 </div>
 
                 <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px" class="margin-bottom-20">
-                    <mat-form-field fxFlex="50%">
+                    <mat-form-field fxFlex="50%" appearance="outline">
                         <mat-label>Bio</mat-label>
                         <textarea matInput name="bio" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4"
                             cdkAutosizeMaxRows="10" placeholder="Bio" #bio="ngModel" [(ngModel)]="user.bio"
@@ -40,7 +40,7 @@
 
                 <mat-card-subtitle>Fields</mat-card-subtitle>
                 <div *ngFor="let field of user.fields; let i = index" fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px">
-                    <mat-form-field fxFlex="50%">
+                    <mat-form-field fxFlex="50%" appearance="outline">
                         <mat-label>Key</mat-label>
                         <input matInput [name]="'key-' + i" #key="ngModel" [(ngModel)]="field.key" placeholder="Key" aria-label="Key" appMaxLength="500" />
                         <mat-error *ngIf="key.invalid && key.errors?.appMaxLength">
@@ -48,7 +48,7 @@
                         </mat-error>
                     </mat-form-field>
 
-                    <mat-form-field fxFlex="50%">
+                    <mat-form-field fxFlex="50%" appearance="outline">
                         <mat-label>Value</mat-label>
                         <input matInput [name]="'value-' + i" #value="ngModel" [(ngModel)]="field.value" placeholder="Value" aria-label="Value" appMaxLength="500" />
                         <mat-error *ngIf="value.invalid && value.errors?.appMaxLength">
@@ -81,7 +81,7 @@
         <mat-card class="margin-bottom-20">
             <mat-card-header>
                 <mat-card-title>Avatar</mat-card-title>
-                <mat-card-subtitle>PNG, GIF or JPG. At most 2 MB. Will be downscaled to 400x400px</mat-card-subtitle>
+                <mat-card-subtitle>PNG, GIF or JPG. At most 2 MB. Will be downscaled to 600x600px</mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>
                 <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px" class="margin-bottom-20">
@@ -91,7 +91,7 @@
                     </div>
 
                     <div fxFlex="60%">
-                        <img id="avatarImage" [src]="avatarSrc || 'https://placehold.co/400x400'" width="200" height="200" alt="Avatar" />
+                        <img id="avatarImage" [src]="avatarSrc" width="200" height="200" alt="Avatar" />
                     </div>
                 </div>
             </mat-card-content>
@@ -119,7 +119,7 @@
                     </div>
 
                     <div fxFlex="60%">
-                        <img  id="headerImage" [src]="headerSrc || 'https://placehold.co/1500x500'" width="600" height="200" alt="Header" />
+                        <img  id="headerImage" [src]="headerSrc" width="600" height="200" alt="Header" />
                     </div>
                 </div>
             </mat-card-content>
@@ -145,7 +145,7 @@
                     Set a strong password and don't reuse it for other accounts.
                 </div>
                 <div fxFlex="none">
-                    <button type="button" [disabled]="isSubmittingMode()" (click)="openChangePasswordDialog()" mat-raised-button color="primary" aria-label="Change password">Change password</button>
+                    <button type="button" (click)="openChangePasswordDialog()" mat-raised-button color="primary" aria-label="Change password">Change password</button>
                 </div>
             </div>
         </mat-card-content>
@@ -165,7 +165,7 @@
                     you have added.
                 </div>
                 <div fxFlex="none">
-                    <button type="button" [disabled]="isSubmittingMode()" mat-raised-button color="accent" aria-label="Delete
+                    <button type="button" mat-raised-button color="accent" aria-label="Delete
                     account">Delete account</button>
                 </div>
             </div>

@@ -9,8 +9,9 @@
 
                 <mat-card-content>
                     <div fxLayout="column" class="margin-bottom-20">
-                        <mat-form-field  floatLabel="always">
-                            <input matInput name="userName" [(ngModel)]="user.userName" #userName="ngModel" type="text" placeholder="Username"
+                        <mat-form-field  appearance="outline">
+                            <mat-label>Username</mat-label>
+                            <input matInput name="userName" [(ngModel)]="user.userName" #userName="ngModel" type="text"
                                 aria-label="Username" required pattern="^[a-zA-Z0-9]*$" appUniqueUserName appMaxLength="50" />
                             <mat-error *ngIf="userName.invalid && userName.errors?.required">Enter username.</mat-error>
                             <mat-error *ngIf="userName.invalid && userName.errors?.pattern">Only alphanumeric characters are allowed in user name.</mat-error>
@@ -20,8 +21,9 @@
                     </div>
 
                     <div fxLayout="column" class="margin-bottom-20">
-                        <mat-form-field floatLabel="always">
-                            <input matInput name="email" [(ngModel)]="user.email" #email="ngModel" type="email" placeholder="Email"
+                        <mat-form-field appearance="outline">
+                            <mat-label>Email</mat-label>
+                            <input matInput name="email" [(ngModel)]="user.email" #email="ngModel" type="email"
                             pattern="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
                             aria-label="Email" appUniqueEmail required />
                             <mat-error *ngIf="email.invalid && email.errors?.required">Enter email.</mat-error>
@@ -35,8 +37,9 @@
                     </div>
 
                     <div fxLayout="column" class="margin-bottom-20">
-                        <mat-form-field floatLabel="always">
-                            <input matInput name="name" [(ngModel)]="user.name" #name="ngModel" type="text" placeholder="Name" aria-label="Name" required appMaxLength="50" />
+                        <mat-form-field appearance="outline">
+                            <mat-label>Display name</mat-label>
+                            <input matInput name="name" [(ngModel)]="user.name" #name="ngModel" type="text" aria-label="Name" required appMaxLength="50" />
                             <mat-error *ngIf="name.invalid && name.errors?.required">Enter name.</mat-error>
                             <mat-error *ngIf="name.invalid && name.errors?.appMaxLength">Name is too long.</mat-error>
                         </mat-form-field>

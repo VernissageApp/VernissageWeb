@@ -10,11 +10,13 @@
                 </mat-card-header>
                 <mat-card-content>
                     <div class="login-container">
-                        <mat-form-field floatLabel="always">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Username or email</mat-label>
                             <input matInput [errorStateMatcher]="dirtyErrorStateMatcher" name="userNameOrEmail" [(ngModel)]="login.userNameOrEmail" #userNameOrEmail="ngModel" type="text" placeholder="Username or email" aria-label="Username or email" required />
                             <mat-error *ngIf="userNameOrEmail.dirty && userNameOrEmail.invalid && userNameOrEmail.errors?.required">Enter username or email.</mat-error>
                         </mat-form-field>
-                        <mat-form-field floatLabel="always">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Password</mat-label>
                             <input matInput [errorStateMatcher]="dirtyErrorStateMatcher" name="password" [(ngModel)]="login.password" #password="ngModel" type="password" placeholder="Password" aria-label="Password" required />
                             <mat-error *ngIf="password.dirty && password.invalid && password.errors?.required">Enter password.</mat-error>
                         </mat-form-field>

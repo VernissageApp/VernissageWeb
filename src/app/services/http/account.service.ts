@@ -36,7 +36,7 @@ export class AccountService {
     }
 
     public async changePassword(changePassword: ChangePassword): Promise<object> {
-        const event$ =  this.httpClient.post(this.usersService + '/api/v1/account/change-password', changePassword);
+        const event$ =  this.httpClient.put(this.usersService + '/api/v1/account/password', changePassword);
 
       return await firstValueFrom(event$);
     }
