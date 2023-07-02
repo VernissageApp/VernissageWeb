@@ -5,6 +5,8 @@
 
 mat-toolbar {
   border: 1px solid rgba(0, 0, 0, 0.12);
+  min-height: 64px !important;
+  height: 64px !important;
 }
 
 .avatar {

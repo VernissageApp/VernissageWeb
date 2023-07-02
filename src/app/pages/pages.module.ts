@@ -1,4 +1,6 @@
 import { NgModule } from '@angular/core';
+import { ProfilePage } from 'src/app/pages/profile/profile.page';
+import { UploadPage } from 'src/app/pages/upload/upload.page';
 
 import { ComponentsModule } from '../components/components.module';
 import { PipesModule } from '../pipes/pipes.module';
@@ -33,7 +35,9 @@ import { LoginCallbackPage } from "./login-callback/login-callback.page";
         ForgotPasswordPage,
         ResetPasswordPage,
         ConfirmEmailPage,
-        AccountPage
+        AccountPage,
+        ProfilePage,
+        UploadPage
     ],
     exports: [
         ComponentsModule,
@@ -48,7 +52,9 @@ import { LoginCallbackPage } from "./login-callback/login-callback.page";
         ForgotPasswordPage,
         ResetPasswordPage,
         ConfirmEmailPage,
-        AccountPage
+        AccountPage,
+        ProfilePage,
+        UploadPage
     ]
 })
 export class PagesModule { }

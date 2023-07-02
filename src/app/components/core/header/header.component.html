@@ -7,6 +7,15 @@
         </ng-container>
         <ng-container *ngIf="user">
             <div class="flex-spacer"></div>
+            <button mat-stroked-button color="primary" class="margin-right-10" [routerLink]="['/upload']">
+                <mat-icon>arrow_upward</mat-icon>
+                Upload
+            </button>
+
+            <button mat-icon-button color="primary" aria-label="Example icon button with a home icon">
+                <mat-icon>notifications_none</mat-icon>
+            </button>
+
             <div>
                 <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu with actions">
                     <img class="avatar" [src]="avatarUrl" alt="Avatar">
@@ -21,6 +30,11 @@
                         <mat-icon>home</mat-icon>
                         <span>Home</span>
                     </button>
+                    <button mat-menu-item [routerLink]="['/@' + user.userName]" aria-label="Home">
+                        <mat-icon>face</mat-icon>
+                        <span>Profile</span>
+                    </button>
+                    <mat-divider></mat-divider>
                     <button mat-menu-item [routerLink]="['/account']" aria-label="Account">
                         <mat-icon>account_circle</mat-icon>
                         <span>Account</span>

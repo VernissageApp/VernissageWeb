@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { ProfilePage } from 'src/app/pages/profile/profile.page';
+import { UploadPage } from 'src/app/pages/upload/upload.page';
 
 import { LoggedOutGuardService } from '../services/authorization/logged-out-guard.service';
 import { AuthorizationGuardService } from '../services/authorization/authorization-guard.service';
@@ -21,10 +23,11 @@ const routes: Routes = [
     { path: 'reset-password', component: ResetPasswordPage, canActivate: [ LoggedOutGuardService ] },
     { path: 'register', component: RegisterPage, canActivate: [ LoggedOutGuardService ] },
     { path: 'confirm-email', component: ConfirmEmailPage, canActivate: [ LoggedOutGuardService ] },
-    // { path: 'profile/:userName', component: ProfileComponent, canActivate: [ AuthorizationGuardService ]  },
     { path: 'account', component: AccountPage, canActivate: [ AuthorizationGuardService ] },
     { path: 'home', component: HomePage },
     { path: 'access-forbidden', component: AccessForbiddenPage },
+    { path: 'upload', component: UploadPage, canActivate: [ AuthorizationGuardService ] },
+    { path: ':userName', component: ProfilePage },
     { path: '', redirectTo: '/home', pathMatch: 'full' },
     { path: '**', component: PageNotFoundPage }
 ];
