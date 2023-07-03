@@ -1,3 +1,50 @@
-<div @fadeIn>
-    <h1 class="padding-30">Profile</h1>
+<div *ngIf="user" @fadeIn>
+    <div>
+        <img style="width: 100%; max-height: 300px; object-fit: cover;" alt="header" [src]="user.headerUrl" />
+        <img style="width: 120px; height: 120px; border-radius: 50%; border: 3px solid white; margin-top: -60px; display: block; margin-left: auto; margin-right: auto;" alt="header" [src]="user.avatarUrl" />
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="space-around none" class="padding-left-10 padding-right-10">
+        <div class="max-width: 600px;">
+            <div class="text-center padding-bottom-15">
+                <div class="mat-h1" style="font-weight: 600; margin: 0;">{{ user.name }}</div>
+                <div class="mat-h4" style="font-weight: 400;">@{{ user.userName }}</div>
+                <div style="max-width: 400px; margin-left: auto; margin-right: auto; opacity: 0.7;" [innerHTML]="user.bio"></div>
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="space-around center" class="text-center padding-bottom-10">
+                <div><span style="font-weight: 200;">123</span><span style="font-weight: 500;"> Posts</span></div>
+                <div><span style="font-weight: 200;">534</span><span style="font-weight: 500;"> Followers</span></div>
+                <div><span style="font-weight: 200;">32</span><span style="font-weight: 500;"> Following</span></div>
+            </div>
+
+            <mat-card appearance="outlined">
+                <mat-card-content>
+                    <div *ngFor="let item of user.fields" fxLayout="row" fxLayoutAlign="space-between center" class="margin-bottom-10">
+                        <div>
+                            <div class="text-muted">{{ item.key }}</div>
+                            <div style="word-break: break-all;">{{ item.value }}</div>
+                        </div>
+                        <div class="margin-left-30">
+                            <mat-icon *ngIf="item.isVerified" class="text-success">check_circle</mat-icon>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+
+            <div class="text-center padding-top-10 padding-bottom-10">
+                <div class="text-muted padding-bottom-5">LATEST FOLLOWERS</div>
+                <img style="width: 32px; height: 32px; border-radius: 50%;" src="https://picsum.photos/64/64?v1" />
+                <img style="width: 32px; height: 32px; border-radius: 50%; margin-left: -6px;" src="https://picsum.photos/64/64?v2" />
+                <img style="width: 32px; height: 32px; border-radius: 50%; margin-left: -6px;" src="https://picsum.photos/64/64?v3" />
+                <img style="width: 32px; height: 32px; border-radius: 50%; margin-left: -6px;" src="https://picsum.photos/64/64?v4" />
+                <img style="width: 32px; height: 32px; border-radius: 50%; margin-left: -6px;" src="https://picsum.photos/64/64?v5" />
+                <img style="width: 32px; height: 32px; border-radius: 50%; margin-left: -6px;" src="https://picsum.photos/64/64?v6" />
+                <img style="width: 32px; height: 32px; border-radius: 50%; margin-left: -6px;" src="https://picsum.photos/64/64?v7" />
+                <img style="width: 32px; height: 32px; border-radius: 50%; margin-left: -6px;" src="https://picsum.photos/64/64?v8" />
+                <img style="width: 32px; height: 32px; border-radius: 50%; margin-left: -6px;" src="https://picsum.photos/64/64?v9" />
+                <img style="width: 32px; height: 32px; border-radius: 50%; margin-left: -6px;" src="https://picsum.photos/64/64?v0" />
+            </div>
+        </div>
+    </div>
 </div>

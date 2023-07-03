@@ -7,6 +7,7 @@
     $error: mat.define-palette(mat.$red-palette);
     $warning: mat.define-palette(mat.$orange-palette);
     $grey: mat.define-palette(mat.$grey-palette);
+    $green: mat.define-palette(mat.$green-palette);
 
     body {
         background-color: mat.get-color-from-palette($foreground);
@@ -18,6 +19,10 @@
 
     .text-warning {
         color: mat.get-color-from-palette($warning);
+    }
+
+    .text-success {
+        color: mat.get-color-from-palette($green, 800);
     }
 
     .text-muted {
