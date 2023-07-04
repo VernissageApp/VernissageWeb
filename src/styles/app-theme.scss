@@ -34,17 +34,17 @@
         align-items: center;
         text-align: center;
         color: mat.get-color-from-palette($grey);
-    
+
         &::before, &::after {
             content: '';
             flex: 1;
             border-bottom: 1px solid mat.get-color-from-palette($grey);
         }
-    
+
         &::before {
             margin-right: .25em;
         }
-    
+
         &::after {
             margin-left: .25em;
         }

@@ -27,6 +27,14 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   justify-content: center;
 }
 
+.cdk-visually-hidden {
+    width: 0;
+    height: 0;
+    position: fixed;
+    overflow: hidden;
+    top: -500px;
+}
+
 /*
  * Utilities.
  */

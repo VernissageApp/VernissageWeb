@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { MatStepperModule } from '@angular/material/stepper';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -49,7 +50,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
         MatSortModule,
         MatDatepickerModule,
         MatNativeDateModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        MatStepperModule
     ],
     exports: [
         MatToolbarModule,
@@ -75,7 +77,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
         MatSortModule,
         MatDatepickerModule,
         MatNativeDateModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        MatStepperModule
     ]
 })
 export class AngularMaterialModule { }

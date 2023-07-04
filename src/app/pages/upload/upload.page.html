@@ -1,3 +1,109 @@
-<div @fadeIn>
-    <h1 class="padding-30">Upload</h1>
+<div @fadeIn class="padding-30">
+    <h1>Upload a photos</h1>
+
+    <div fxLayout="row">
+        <div fxFlex="50%" class="margin-bottom-10">
+            <img style="width: 225px; height: 150px;" class="margin-right-15" src="https://picsum.photos/225/150?v1" />
+            <img style="width: 225px; height: 150px;" class="margin-right-15" src="https://picsum.photos/225/150?v2" />
+            <img style="width: 225px; height: 150px;" class="margin-right-15" src="https://picsum.photos/225/150?v3" />
+        </div>
+
+        <mat-card fxFlex="50%" class="margin-bottom-20" appearance="outlined">
+            <mat-card-header>
+                <mat-card-title>
+                    Status details
+                </mat-card-title>
+            </mat-card-header>
+
+            <mat-card-content>
+                <mat-stepper orientation="vertical" #stepper>
+                    <mat-step *ngFor="let item of options; let i = index;">
+                        <form>
+                            <ng-template matStepLabel>Image data #{{ i + 1 }}</ng-template>
+
+                            <div fxLayout="column" fxLayoutGap="0px" class="margin-top-5">
+
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Alt text</mat-label>
+                                    <textarea matInput name="altText" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4"
+                                              cdkAutosizeMaxRows="10"  #altTextInput="ngModel" [(ngModel)]="altText"
+                                              aria-label="Alt text" appMaxLength="500"></textarea>
+                                    <mat-error *ngIf="altTextInput.invalid && altTextInput.errors?.appMaxLength">Too long alt text.</mat-error>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline">
+                                    <mat-label>License</mat-label>
+                                    <mat-select>
+                                        <mat-option value="one">First option</mat-option>
+                                        <mat-option value="two">Second option</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Location</mat-label>
+                                    <input type="text"
+                                           placeholder="Enter location"
+                                           aria-label="Number"
+                                           matInput
+                                           [formControl]="myControl"
+                                           [matAutocomplete]="auto">
+                                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                                        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                                            {{option}}
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                </mat-form-field>
+
+                                <div class="text-muted">Exif metadata</div>
+                                <mat-checkbox name="camera" color="primary" [disableRipple]="true" [(ngModel)]="commentsDisabled">Sony A7M4</mat-checkbox>
+                                <mat-checkbox name="lens" color="primary" [disableRipple]="true" [(ngModel)]="commentsDisabled">Viltrox 85mm f1.8 Mark II</mat-checkbox>
+                                <mat-checkbox name="commentsDisabled" color="primary" [disableRipple]="true" [(ngModel)]="commentsDisabled">85mm, f/1.8, 1/250s, ISO 200</mat-checkbox>
+                                <mat-checkbox name="commentsDisabled" color="primary" [disableRipple]="true" [(ngModel)]="commentsDisabled">2023-01-21 12:31</mat-checkbox>
+                            </div>
+                            <div class="margin-top-15">
+                                <button *ngIf="i > 0" class="margin-right-10" mat-stroked-button matStepperPrevious>Back</button>
+                                <button mat-stroked-button color="primary" matStepperNext>Next</button>
+                            </div>
+                        </form>
+                    </mat-step>
+                    <mat-step>
+                        <form>
+                            <ng-template matStepLabel>Status</ng-template>
+                            <div fxLayout="column" fxLayoutGap="0px" class="margin-top-5">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Text</mat-label>
+                                    <textarea matInput name="statusText" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4"
+                                              cdkAutosizeMaxRows="10"  #statusInput="ngModel" [(ngModel)]="statusText"
+                                              aria-label="Status" appMaxLength="500"></textarea>
+                                    <mat-error *ngIf="statusInput.invalid && statusInput.errors?.appMaxLength">Too long status.</mat-error>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Visibility</mat-label>
+                                    <mat-select>
+                                        <mat-option value="one">Everyone</mat-option>
+                                        <mat-option value="two">Unlisted</mat-option>
+                                        <mat-option value="two">Followers</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <mat-checkbox name="commentsDisabled" color="primary" [disableRipple]="true" [(ngModel)]="commentsDisabled">Disable comments</mat-checkbox>
+                                <mat-checkbox name="isSensitive" color="primary" [disableRipple]="true" [(ngModel)]="isSensitive">Sensitive/NSFW media</mat-checkbox>
+
+                                <mat-form-field appearance="outline" class="margin-top-10" >
+                                    <mat-label>Content warning</mat-label>
+                                    <input [disabled]="!isSensitive" matInput name="status" [(ngModel)]="contentWarning" type="text" aria-label="Content warning" />
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <button class="margin-right-10" mat-stroked-button matStepperPrevious>Back</button>
+                                <button mat-flat-button color="primary" matStepperNext>Upload</button>
+                            </div>
+                        </form>
+                    </mat-step>
+                </mat-stepper>
+
+            </mat-card-content>
+        </mat-card>
+    </div>
 </div>
