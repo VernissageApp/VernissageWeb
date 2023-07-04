@@ -1,0 +1,48 @@
+.header-image {
+    width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+}
+
+.avatar-image {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 3px solid white;
+    margin-top: -60px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.profile {
+    .mat-h1 {
+        font-weight: 600;
+        margin: 0;
+    }
+
+    .mat-h4 {
+        font-weight: 400;
+    }
+
+    .bio {
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+        opacity: 0.7;
+    }
+
+    .field-value {
+        word-break: break-all;
+    }
+
+    .follower-image {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+    }
+
+    .follower-image-next {
+        margin-left: -6px;
+    }
+}
