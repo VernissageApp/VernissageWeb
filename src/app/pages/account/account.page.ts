@@ -9,6 +9,8 @@ import { AuthorizationService } from 'src/app/services/authorization/authorizati
 import { LoadingService } from 'src/app/services/common/loading.service';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { AccountService } from 'src/app/services/http/account.service';
+import { AvatarsService } from 'src/app/services/http/avatars.service';
+import { HeadersService } from 'src/app/services/http/headers.service';
 import { UsersService } from 'src/app/services/http/users.service';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { WindowService } from 'src/app/services/common/window.service';
@@ -36,6 +38,8 @@ export class AccountPage implements OnInit {
 
     constructor(
         private usersService: UsersService,
+        private avatarsService: AvatarsService,
+        private headersService: HeadersService,
         private accountService: AccountService,
         private authorizationService: AuthorizationService,
         private messageService: MessagesService,
@@ -85,7 +89,7 @@ export class AccountPage implements OnInit {
                 const formData = new FormData();
                 formData.append('file', this.selectedAvatarFile);
 
-                await this.usersService.uploadAvatar(this.userName, formData);
+                await this.avatarsService.uploadAvatar(this.userName, formData);
                 await this.loadUserData()
                 this.messageService.showSuccess('Avatar has ben saved.');
             }
@@ -98,7 +102,7 @@ export class AccountPage implements OnInit {
     async onRemoveAvatar(): Promise<void> {
         try {
             if (this.user.avatarUrl) {
-                await this.usersService.deleteAvatar(this.userName);
+                await this.avatarsService.deleteAvatar(this.userName);
                 await this.loadUserData()
                 this.messageService.showSuccess('Avatar has ben deleted.');
             }
@@ -114,7 +118,7 @@ export class AccountPage implements OnInit {
                 const formData = new FormData();
                 formData.append('file', this.selectedHeaderFile);
 
-                await this.usersService.uploadHeader(this.userName, formData);
+                await this.headersService.uploadHeader(this.userName, formData);
                 await this.loadUserData()
                 this.messageService.showSuccess('Header has ben saved.');
             }
@@ -127,7 +131,7 @@ export class AccountPage implements OnInit {
     async onRemoveHeader(): Promise<void> {
         try {
             if (this.user.headerUrl) {
-                await this.usersService.deleteHeader(this.userName);
+                await this.headersService.deleteHeader(this.userName);
                 await this.loadUserData()
                 this.messageService.showSuccess('Header has ben deleted.');
             }
@@ -153,7 +157,7 @@ export class AccountPage implements OnInit {
 
         if (this.selectedAvatarFile) {
             const reader = new FileReader();
-            reader.onload = e => this.avatarSrc = reader.result as string;
+            reader.onload = () => this.avatarSrc = reader.result as string;
             reader.readAsDataURL(this.selectedAvatarFile);
         }
     }
@@ -163,7 +167,7 @@ export class AccountPage implements OnInit {
 
         if (this.selectedHeaderFile) {
             const reader = new FileReader();
-            reader.onload = e => this.headerSrc = reader.result as string;
+            reader.onload = () => this.headerSrc = reader.result as string;
             reader.readAsDataURL(this.selectedHeaderFile);
         }
     }
@@ -186,7 +190,7 @@ export class AccountPage implements OnInit {
 
     openChangeEmailDialog(): void {
         const dialogRef = this.dialog.open(ChangeEmailDialog);
-        dialogRef.afterClosed().subscribe(async (result) => {
+        dialogRef.afterClosed().subscribe(async () => {
             await this.loadUserData()
         });
     }

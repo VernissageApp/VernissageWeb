@@ -27,26 +27,6 @@ export class UsersService {
         return await firstValueFrom(event$);
     }
 
-    public async uploadAvatar(userName: string, formData: FormData): Promise<void> {
-        const event$ = this.httpClient.post(this.usersService + '/api/v1/users/@' + userName + "/avatar", formData);
-        await firstValueFrom(event$);
-    }
-
-    public async deleteAvatar(userName: string): Promise<void> {
-        const event$ = this.httpClient.delete(this.usersService + '/api/v1/users/@' + userName + "/avatar");
-        await firstValueFrom(event$);
-    }
-
-    public async uploadHeader(userName: string, formData: FormData): Promise<void> {
-        const event$ = this.httpClient.post(this.usersService + '/api/v1/users/@' + userName + "/header", formData);
-        await firstValueFrom(event$);
-    }
-
-    public async deleteHeader(userName: string): Promise<void> {
-        const event$ = this.httpClient.delete(this.usersService + '/api/v1/users/@' + userName + "/header");
-        await firstValueFrom(event$);
-    }
-
     public async delete(userName: string): Promise<object> {
         const event$ = this.httpClient.delete<User>(this.usersService + '/api/v1/users/@' + userName);
         return await firstValueFrom(event$);
