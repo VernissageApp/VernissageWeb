@@ -9,7 +9,7 @@
             <div class="text-center padding-bottom-15">
                 <div class="mat-h1">{{ user.name }}</div>
                 <div class="mat-h4">@{{ user.userName }}</div>
-                <div class="bio" [innerHTML]="user.bio"></div>
+                <div class="bio" [innerHTML]="user.bioHtml"></div>
             </div>
 
             <div fxLayout="row" fxLayoutAlign="space-around center" class="text-center padding-bottom-10">
@@ -23,7 +23,7 @@
                     <div *ngFor="let item of user.fields" fxLayout="row" fxLayoutAlign="space-between center" class="margin-bottom-10">
                         <div>
                             <div class="field-key text-muted">{{ item.key }}</div>
-                            <div class="field-value">{{ item.value }}</div>
+                            <div class="field-value" [innerHTML]="item.valueHtml"></div>
                         </div>
                         <div class="margin-left-30">
                             <mat-icon *ngIf="item.isVerified" class="text-success">check_circle</mat-icon>

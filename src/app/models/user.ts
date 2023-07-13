@@ -16,4 +16,5 @@ export class User {
     public agreement?: boolean;
     public emailWasConfirmed?: boolean;
     public fields?: FlexiField[];
+    public bioHtml?: string;
 }

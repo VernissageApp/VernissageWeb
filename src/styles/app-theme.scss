@@ -13,6 +13,28 @@
         background-color: mat.get-color-from-palette($foreground);
     }
 
+    a {
+        &:link {
+            color: mat.get-color-from-palette($primary);
+            text-decoration: none;
+        }
+
+        &:visited {
+            color: mat.get-color-from-palette($primary);
+            text-decoration: none;
+        }
+
+        &:hover {
+            color: mat.get-color-from-palette($primary);
+            text-decoration: none;
+        }
+
+        &:active {
+            color: mat.get-color-from-palette($primary);
+            text-decoration: none;
+        }
+    }
+
     .text-error {
         color: mat.get-color-from-palette($error);
     }
@@ -48,5 +70,11 @@
         &::after {
             margin-left: .25em;
         }
+    }
+
+    .dashed {
+        border-bottom-width: 1px;
+        border-bottom-style: dashed;
+        border-bottom-color: mat.get-color-from-palette($primary);
     }
 }
