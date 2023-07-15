@@ -6,6 +6,13 @@
             <img style="width: 225px; height: 150px;" class="margin-right-15" src="https://picsum.photos/225/150?v1" />
             <img style="width: 225px; height: 150px;" class="margin-right-15" src="https://picsum.photos/225/150?v2" />
             <img style="width: 225px; height: 150px;" class="margin-right-15" src="https://picsum.photos/225/150?v3" />
+
+            <form name="avatarForm" (ngSubmit)="avatarForm.form.valid && onPhotoFormSubmit()" #avatarForm="ngForm" novalidate>
+                <button type="button" mat-stroked-button (click)="avatarFileUpload.click()" class="margin-right-20">Choose file</button>
+                <input hidden name="avatar" type="file" #avatarFileUpload accept="image/*" (change)="onPhotoSelected($event)">
+
+                <img id="avatarImage" [src]="photoSrc" width="200" height="200" alt="Avatar" />
+            </form>
         </div>
 
         <mat-card fxFlex="50%" class="margin-bottom-20" appearance="outlined">
