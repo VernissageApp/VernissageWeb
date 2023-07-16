@@ -3,6 +3,7 @@
 // Styles for the docs app that are based on the current theme.
 @mixin material-app-theme($theme) {
     $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
     $foreground: map-get($theme, foreground);
     $error: mat.define-palette(mat.$red-palette);
     $warning: mat.define-palette(mat.$orange-palette);
@@ -76,5 +77,32 @@
         border-bottom-width: 1px;
         border-bottom-style: dashed;
         border-bottom-color: mat.get-color-from-palette($primary);
+    }
+
+    .dropzone {
+        width: 223px;
+        height: 148px;
+        background-color: white;
+        cursor: pointer;
+        border-width: 1px;
+        border-style: dashed;
+        border-color: mat.get-color-from-palette($grey);
+
+        path {
+            fill: mat.get-color-from-palette($primary);
+        }
+
+        .plus {
+            text-align: center;
+            padding-top: 48px;
+            font-size: 64px;
+        }
+
+        &:hover {
+            background-color: mat.get-color-from-palette($primary);
+            path {
+                fill: white;
+            }
+        }
     }
 }

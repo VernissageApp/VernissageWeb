@@ -3,16 +3,16 @@
 
     <div fxLayout="row">
         <div fxFlex="50%" class="margin-bottom-10">
-            <img style="width: 225px; height: 150px;" class="margin-right-15" src="https://picsum.photos/225/150?v1" />
-            <img style="width: 225px; height: 150px;" class="margin-right-15" src="https://picsum.photos/225/150?v2" />
-            <img style="width: 225px; height: 150px;" class="margin-right-15" src="https://picsum.photos/225/150?v3" />
+            <div fxLayout="row wrap" fxLayoutAlign="start top" fxLayoutGap="15px">
+                <img *ngFor="let photo of photos" [src]="photo.photoSrc" style="width: 225px; height: 150px;" class="padding-bottom-15" />
 
-            <form name="avatarForm" (ngSubmit)="avatarForm.form.valid && onPhotoFormSubmit()" #avatarForm="ngForm" novalidate>
-                <button type="button" mat-stroked-button (click)="avatarFileUpload.click()" class="margin-right-20">Choose file</button>
-                <input hidden name="avatar" type="file" #avatarFileUpload accept="image/*" (change)="onPhotoSelected($event)">
-
-                <img id="avatarImage" [src]="photoSrc" width="200" height="200" alt="Avatar" />
-            </form>
+                <div class="dropzone" (click)="photoFileUpload.click()">
+                    <div class="plus">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M20.889 10.889H13.111V3.11097C13.111 2.4974 12.6136 2 12 2C11.3864 2 10.889 2.4974 10.889 3.11097V10.889H3.11097C2.4974 10.889 2 11.3864 2 12C2 12.6136 2.4974 13.111 3.11097 13.111H10.889V20.889C10.889 21.5026 11.3864 22 12 22C12.6136 22 13.111 21.5026 13.111 20.889V13.111H20.889C21.5026 13.111 22 12.6136 22 12C22 11.3864 21.5026 10.889 20.889 10.889Z" fill="#0870D1"></path></svg>
+                    </div>
+                    <input hidden name="avatar" type="file" #photoFileUpload accept="image/*" (change)="onPhotoSelected($event)">
+                </div>
+            </div>
         </div>
 
         <mat-card fxFlex="50%" class="margin-bottom-20" appearance="outlined">
@@ -24,7 +24,7 @@
 
             <mat-card-content>
                 <mat-stepper orientation="vertical" #stepper>
-                    <mat-step *ngFor="let item of options; let i = index;">
+                    <mat-step *ngFor="let photo of photos; let i = index;">
                         <form>
                             <ng-template matStepLabel>Image data #{{ i + 1 }}</ng-template>
 
@@ -32,9 +32,16 @@
 
                                 <mat-form-field appearance="outline">
                                     <mat-label>Alt text</mat-label>
-                                    <textarea matInput name="altText" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4"
-                                              cdkAutosizeMaxRows="10"  #altTextInput="ngModel" [(ngModel)]="altText"
-                                              aria-label="Alt text" appMaxLength="500"></textarea>
+                                    <textarea
+                                            matInput [name]="'altText-' + i"
+                                            cdkTextareaAutosize
+                                            #autosize="cdkTextareaAutosize"
+                                            cdkAutosizeMinRows="4"
+                                            cdkAutosizeMaxRows="10"
+                                            #altTextInput="ngModel"
+                                            [(ngModel)]="photo.description"
+                                            aria-label="Alt text"
+                                            appMaxLength="500"></textarea>
                                     <mat-error *ngIf="altTextInput.invalid && altTextInput.errors?.appMaxLength">Too long alt text.</mat-error>
                                 </mat-form-field>
 
@@ -56,16 +63,36 @@
                                            [matAutocomplete]="auto">
                                     <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
                                         <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                                            {{option}}
+                                            {{ option }}
                                         </mat-option>
                                     </mat-autocomplete>
                                 </mat-form-field>
 
-                                <div class="text-muted">Exif metadata</div>
-                                <mat-checkbox name="camera" color="primary" [disableRipple]="true" [(ngModel)]="commentsDisabled">Sony A7M4</mat-checkbox>
-                                <mat-checkbox name="lens" color="primary" [disableRipple]="true" [(ngModel)]="commentsDisabled">Viltrox 85mm f1.8 Mark II</mat-checkbox>
-                                <mat-checkbox name="commentsDisabled" color="primary" [disableRipple]="true" [(ngModel)]="commentsDisabled">85mm, f/1.8, 1/250s, ISO 200</mat-checkbox>
-                                <mat-checkbox name="commentsDisabled" color="primary" [disableRipple]="true" [(ngModel)]="commentsDisabled">2023-01-21 12:31</mat-checkbox>
+                                <div *ngIf="photo.make || photo.model || photo.lens || photo.createDate || photo.focalLenIn35mmFilm || photo.fNumber || photo.exposureTime || photo.photographicSensitivity" class="text-muted">Exif metadata</div>
+                                <mat-checkbox *ngIf="photo.make" [name]="'make' + i" color="primary" [disableRipple]="true" [(ngModel)]="photo.showMake">
+                                    <span class="text-muted">Manufacturer:</span> {{ photo.make }}
+                                </mat-checkbox>
+                                <mat-checkbox *ngIf="photo.model" [name]="'model' + i" color="primary" [disableRipple]="true" [(ngModel)]="photo.showModel">
+                                    <span class="text-muted">Model:</span> {{ photo.model }}
+                                </mat-checkbox>
+                                <mat-checkbox *ngIf="photo.lens" [name]="'lens' + i" color="primary" [disableRipple]="true" [(ngModel)]="photo.showLens">
+                                    <span class="text-muted">Lens:</span> {{ photo.lens }}
+                                </mat-checkbox>
+                                <mat-checkbox *ngIf="photo.createDate" [name]="'createDate' + i" color="primary" [disableRipple]="true" [(ngModel)]="photo.showCreateDate">
+                                    <span class="text-muted">Create date:</span> {{ photo.createDate }}
+                                </mat-checkbox>
+                                <mat-checkbox *ngIf="photo.focalLenIn35mmFilm" [name]="'focalLenIn35mmFilm' + i" color="primary" [disableRipple]="true" [(ngModel)]="photo.showFocalLenIn35mmFilm">
+                                    <span class="text-muted">Focal length:</span> {{ photo.focalLenIn35mmFilm }}
+                                </mat-checkbox>
+                                <mat-checkbox *ngIf="photo.fNumber" [name]="'fNumber' + i" color="primary" [disableRipple]="true" [(ngModel)]="photo.showFNumber">
+                                    <span class="text-muted">Aperture:</span> {{ photo.fNumber }}
+                                </mat-checkbox>
+                                <mat-checkbox *ngIf="photo.exposureTime" [name]="'exposureTime' + i" color="primary" [disableRipple]="true" [(ngModel)]="photo.showExposureTime">
+                                    <span class="text-muted">Exposure time:</span> {{ photo.exposureTime }}
+                                </mat-checkbox>
+                                <mat-checkbox *ngIf="photo.photographicSensitivity" [name]="'photographicSensitivity' + i" color="primary" [disableRipple]="true" [(ngModel)]="photo.showPhotographicSensitivity">
+                                    <span class="text-muted">ISO:</span> {{ photo.photographicSensitivity }}
+                                </mat-checkbox>
                             </div>
                             <div class="margin-top-15">
                                 <button *ngIf="i > 0" class="margin-right-10" mat-stroked-button matStepperPrevious>Back</button>
@@ -74,7 +101,7 @@
                         </form>
                     </mat-step>
                     <mat-step>
-                        <form>
+                        <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
                             <ng-template matStepLabel>Status</ng-template>
                             <div fxLayout="column" fxLayoutGap="0px" class="margin-top-5">
                                 <mat-form-field appearance="outline">
@@ -104,7 +131,7 @@
                             </div>
                             <div>
                                 <button class="margin-right-10" mat-stroked-button matStepperPrevious>Back</button>
-                                <button mat-flat-button color="primary" matStepperNext>Upload</button>
+                                <button mat-flat-button color="primary" [disabled]="!allPhotosUploaded()" matStepperNext>Upload</button>
                             </div>
                         </form>
                     </mat-step>

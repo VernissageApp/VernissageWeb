@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
+import { TemporaryAttachment } from 'src/app/models/temporary-attachment';
 
 import {environment} from 'src/environments/environment';
 
@@ -16,8 +17,13 @@ export class AttachmentsService {
     constructor(private httpClient: HttpClient) {
     }
 
-    public async uploadAttachment(formData: FormData): Promise<void> {
-        const event$ = this.httpClient.post(this.usersService + '/api/v1/attachments', formData);
+    public async uploadAttachment(formData: FormData): Promise<TemporaryAttachment> {
+        const event$ = this.httpClient.post<TemporaryAttachment>(this.usersService + '/api/v1/attachments', formData);
+        return await firstValueFrom(event$);
+    }
+
+    public async updateAttachment(temporaryAttachmentDto: TemporaryAttachment): Promise<void> {
+        const event$ = this.httpClient.put(this.usersService + '/api/v1/attachments/' + temporaryAttachmentDto.id, temporaryAttachmentDto);
         await firstValueFrom(event$);
     }
 
