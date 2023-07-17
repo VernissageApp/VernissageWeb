@@ -1,9 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
 import { encode } from 'blurhash';
-import { startWith } from 'rxjs';
-import { Observable } from 'rxjs/internal/Observable';
-import { map } from 'rxjs/operators';
 import * as ExifReader from 'exifreader';
 
 import { TemporaryAttachment } from 'src/app/models/temporary-attachment';
@@ -20,25 +16,17 @@ import { fadeInAnimation } from '../../animations/fade-in.animation';
 })
 export class UploadPage implements OnInit {
     statusText = '';
-    altText = '';
     commentsDisabled = false;
     isSensitive = false;
     contentWarning = '';
 
-    myControl = new FormControl('');
-    options: string[] = ['Wrocław', 'Legnica', 'London'];
-    filteredOptions?: Observable<string[]>;
-
     photos: UploadPhoto[] = [];
 
-    constructor(private messageService: MessagesService, private attachmentsService: AttachmentsService) {
+    constructor(private messageService: MessagesService,
+                private attachmentsService: AttachmentsService) {
     }
 
     ngOnInit(): void {
-        this.filteredOptions = this.myControl.valueChanges.pipe(
-            startWith(''),
-            map(value => this.filterLocations(value || '')),
-        );
     }
 
     async onPhotoSelected(event: any): Promise<void> {
@@ -81,6 +69,7 @@ export class UploadPage implements OnInit {
                 temporaryAttachment.fNumber = photo.fNumber
                 temporaryAttachment.exposureTime = photo.exposureTime
                 temporaryAttachment.photographicSensitivity = photo.photographicSensitivity
+                temporaryAttachment.locationId = photo.locationId;
 
                 await this.attachmentsService.updateAttachment(temporaryAttachment);
             }
@@ -88,11 +77,6 @@ export class UploadPage implements OnInit {
             console.error(error);
             this.messageService.showServerError(error);
         }
-    }
-
-    private filterLocations(value: string): string[] {
-        const filterValue = value.toLowerCase();
-        return this.options.filter(option => option.toLowerCase().includes(filterValue));
     }
 
     private setPhotoData(uploadPhoto: UploadPhoto): void {

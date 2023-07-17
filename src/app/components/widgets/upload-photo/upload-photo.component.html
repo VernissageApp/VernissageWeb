@@ -1,0 +1,73 @@
+<div fxLayout="column" fxLayoutGap="0px" class="margin-top-5">
+    <mat-form-field appearance="outline">
+        <mat-label>Alt text</mat-label>
+        <textarea
+                matInput [name]="'altText-' + index"
+                cdkTextareaAutosize
+                #autosize="cdkTextareaAutosize"
+                cdkAutosizeMinRows="4"
+                cdkAutosizeMaxRows="10"
+                #altTextInput="ngModel"
+                [(ngModel)]="photo.description"
+                aria-label="Alt text"
+                appMaxLength="500"></textarea>
+        <mat-error *ngIf="altTextInput.invalid && altTextInput.errors?.appMaxLength">Too long alt text.</mat-error>
+    </mat-form-field>
+
+    <div class="text-muted">Location</div>
+    <mat-form-field appearance="outline" class="margin-top-10">
+        <mat-label>Country</mat-label>
+        <input type="text"
+               placeholder="Enter location"
+               aria-label="Number"
+               matInput
+               [formControl]="countriesControl"
+               [matAutocomplete]="autoCountry">
+        <mat-autocomplete autoActiveFirstOption #autoCountry="matAutocomplete" [displayWith]="displayCountryFn" (optionSelected)="selectedCountry($event.option.value)">
+            <mat-option *ngFor="let option of filteredCountries | async" [value]="option">
+                {{ option.name }} <small class="text-muted">({{ option.code }})</small>
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>City</mat-label>
+        <input type="text"
+               placeholder="Enter location"
+               aria-label="Number"
+               matInput
+               [formControl]="citiesControl"
+               [matAutocomplete]="auto">
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayCityFn" (optionSelected)="selectedCity($event.option.value)">
+            <mat-option *ngFor="let option of cities$ | async" [value]="option">
+                {{ option.name }}
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+
+    <div *ngIf="photo.make || photo.model || photo.lens || photo.createDate || photo.focalLenIn35mmFilm || photo.fNumber || photo.exposureTime || photo.photographicSensitivity" class="text-muted">Exif metadata</div>
+    <mat-checkbox *ngIf="photo.make" [name]="'make' + index" color="primary" [disableRipple]="true" [(ngModel)]="photo.showMake">
+        <span class="text-muted">Manufacturer:</span> {{ photo.make }}
+    </mat-checkbox>
+    <mat-checkbox *ngIf="photo.model" [name]="'model' + index" color="primary" [disableRipple]="true" [(ngModel)]="photo.showModel">
+        <span class="text-muted">Model:</span> {{ photo.model }}
+    </mat-checkbox>
+    <mat-checkbox *ngIf="photo.lens" [name]="'lens' + index" color="primary" [disableRipple]="true" [(ngModel)]="photo.showLens">
+        <span class="text-muted">Lens:</span> {{ photo.lens }}
+    </mat-checkbox>
+    <mat-checkbox *ngIf="photo.createDate" [name]="'createDate' + index" color="primary" [disableRipple]="true" [(ngModel)]="photo.showCreateDate">
+        <span class="text-muted">Create date:</span> {{ photo.createDate }}
+    </mat-checkbox>
+    <mat-checkbox *ngIf="photo.focalLenIn35mmFilm" [name]="'focalLenIn35mmFilm' + index" color="primary" [disableRipple]="true" [(ngModel)]="photo.showFocalLenIn35mmFilm">
+        <span class="text-muted">Focal length:</span> {{ photo.focalLenIn35mmFilm }}
+    </mat-checkbox>
+    <mat-checkbox *ngIf="photo.fNumber" [name]="'fNumber' + index" color="primary" [disableRipple]="true" [(ngModel)]="photo.showFNumber">
+        <span class="text-muted">Aperture:</span> {{ photo.fNumber }}
+    </mat-checkbox>
+    <mat-checkbox *ngIf="photo.exposureTime" [name]="'exposureTime' + index" color="primary" [disableRipple]="true" [(ngModel)]="photo.showExposureTime">
+        <span class="text-muted">Exposure time:</span> {{ photo.exposureTime }}
+    </mat-checkbox>
+    <mat-checkbox *ngIf="photo.photographicSensitivity" [name]="'photographicSensitivity' + index" color="primary" [disableRipple]="true" [(ngModel)]="photo.showPhotographicSensitivity">
+        <span class="text-muted">ISO:</span> {{ photo.photographicSensitivity }}
+    </mat-checkbox>
+</div>

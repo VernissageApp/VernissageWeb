@@ -6,17 +6,18 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgOptimizedImage } from "@angular/common";
+import { UploadPhotoComponent } from './widgets/upload-photo/upload-photo.component';
 
 import { ValidationsModule } from '../validators/validations.module';
 import { HeaderComponent } from './core/header/header.component';
 import { PasswordComponent } from './widgets/password/password.component';
 import { AngularMaterialModule } from './angular-material.module';
 
-
 @NgModule({
     declarations: [
         HeaderComponent,
-        PasswordComponent
+        PasswordComponent,
+        UploadPhotoComponent
     ],
     imports: [
         BrowserModule,
@@ -42,7 +43,8 @@ import { AngularMaterialModule } from './angular-material.module';
         ValidationsModule,
         HeaderComponent,
         PasswordComponent,
-        NgOptimizedImage
+        NgOptimizedImage,
+        UploadPhotoComponent
     ]
 })
 export class ComponentsModule { }
