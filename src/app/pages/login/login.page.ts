@@ -73,7 +73,7 @@ export class LoginPage implements OnInit {
     }
 
     getExternalProviderUrl(authClient: AuthClient): string {
-        return environment.httpSchema + environment.usersService + '/identity/authenticate/' + authClient.uri;
+        return environment.httpSchema + environment.apiService + '/identity/authenticate/' + authClient.uri;
     }
 
     isSubmittingMode(): boolean {

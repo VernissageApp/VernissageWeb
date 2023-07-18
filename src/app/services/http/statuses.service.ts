@@ -11,15 +11,15 @@ import {environment} from 'src/environments/environment';
 })
 export class StatusesService {
 
-    private get usersService(): string {
-        return environment.httpSchema + environment.usersService;
+    private get apiService(): string {
+        return environment.httpSchema + environment.apiService;
     }
 
     constructor(private httpClient: HttpClient) {
     }
 
     public async create(statusRequest: StatusRequest): Promise<Status> {
-        const event$ = this.httpClient.post<Status>(this.usersService + '/api/v1/statuses', statusRequest);
+        const event$ = this.httpClient.post<Status>(this.apiService + '/api/v1/statuses', statusRequest);
         return await firstValueFrom(event$);
     }
 }

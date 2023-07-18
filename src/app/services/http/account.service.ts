@@ -15,8 +15,8 @@ import {ResendEmailConfirmation} from "../../models/resend-email-confirmation";
 })
 export class AccountService {
 
-    private get usersService(): string {
-        return environment.httpSchema + environment.usersService;
+    private get apiService(): string {
+        return environment.httpSchema + environment.apiService;
     }
 
     constructor(private httpClient: HttpClient) {
@@ -24,7 +24,7 @@ export class AccountService {
 
     public async refreshToken(refreshToken: string): Promise<AccessToken> {
         const event$ = this.httpClient.post<AccessToken>(
-            this.usersService + '/api/v1/account/refresh-token',
+            this.apiService + '/api/v1/account/refresh-token',
             new RefreshToken(refreshToken)
         );
 
@@ -32,22 +32,22 @@ export class AccountService {
     }
 
     public async login(login: Login): Promise<AccessToken> {
-        const event$ = this.httpClient.post<AccessToken>(this.usersService + '/api/v1/account/login', login);
+        const event$ = this.httpClient.post<AccessToken>(this.apiService + '/api/v1/account/login', login);
         return await firstValueFrom(event$);
     }
 
     public async changePassword(changePassword: ChangePassword): Promise<object> {
-        const event$ =  this.httpClient.put(this.usersService + '/api/v1/account/password', changePassword);
+        const event$ =  this.httpClient.put(this.apiService + '/api/v1/account/password', changePassword);
         return await firstValueFrom(event$);
     }
 
     public async changeEmail(changeEmail: ChangeEmail): Promise<object> {
-        const event$ =  this.httpClient.put(this.usersService + '/api/v1/account/email', changeEmail);
+        const event$ =  this.httpClient.put(this.apiService + '/api/v1/account/email', changeEmail);
         return await firstValueFrom(event$);
     }
 
     public async resend(resendEmailConfirmation: ResendEmailConfirmation): Promise<void> {
-        const event$ =  this.httpClient.post(this.usersService + '/api/v1/account/email/resend', resendEmailConfirmation);
+        const event$ =  this.httpClient.post(this.apiService + '/api/v1/account/email/resend', resendEmailConfirmation);
         await firstValueFrom(event$);
     }
 }

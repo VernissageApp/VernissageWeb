@@ -6,7 +6,7 @@ export const environment = {
     production: false,
     recaptchaKey: '',
     httpSchema: 'http://',
-    usersService: 'localhost:8080'
+    apiService: 'localhost:8080'
   };
 
 /*

@@ -10,20 +10,20 @@ import {User} from 'src/app/models/user';
 })
 export class HeadersService {
 
-    private get usersService(): string {
-        return environment.httpSchema + environment.usersService;
+    private get apiService(): string {
+        return environment.httpSchema + environment.apiService;
     }
 
     constructor(private httpClient: HttpClient) {
     }
 
     public async uploadHeader(userName: string, formData: FormData): Promise<void> {
-        const event$ = this.httpClient.post(this.usersService + '/api/v1/headers/@' + userName, formData);
+        const event$ = this.httpClient.post(this.apiService + '/api/v1/headers/@' + userName, formData);
         await firstValueFrom(event$);
     }
 
     public async deleteHeader(userName: string): Promise<void> {
-        const event$ = this.httpClient.delete(this.usersService + '/api/v1/headers/@' + userName);
+        const event$ = this.httpClient.delete(this.apiService + '/api/v1/headers/@' + userName);
         await firstValueFrom(event$);
     }
 }

@@ -17,7 +17,7 @@ import { APIInterceptor } from './interceptors/api.interceptor';
 const jwtOptionsFactory = (persistanceService: PersistanceService) => {
   return {
     tokenGetter: () => persistanceService.getAccessToken(),
-    allowedDomains: [environment.usersService]
+    allowedDomains: [environment.apiService]
   };
 };
 

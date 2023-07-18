@@ -10,25 +10,25 @@ import {environment} from 'src/environments/environment';
 })
 export class AttachmentsService {
 
-    private get usersService(): string {
-        return environment.httpSchema + environment.usersService;
+    private get apiService(): string {
+        return environment.httpSchema + environment.apiService;
     }
 
     constructor(private httpClient: HttpClient) {
     }
 
     public async uploadAttachment(formData: FormData): Promise<TemporaryAttachment> {
-        const event$ = this.httpClient.post<TemporaryAttachment>(this.usersService + '/api/v1/attachments', formData);
+        const event$ = this.httpClient.post<TemporaryAttachment>(this.apiService + '/api/v1/attachments', formData);
         return await firstValueFrom(event$);
     }
 
     public async updateAttachment(temporaryAttachmentDto: TemporaryAttachment): Promise<void> {
-        const event$ = this.httpClient.put(this.usersService + '/api/v1/attachments/' + temporaryAttachmentDto.id, temporaryAttachmentDto);
+        const event$ = this.httpClient.put(this.apiService + '/api/v1/attachments/' + temporaryAttachmentDto.id, temporaryAttachmentDto);
         await firstValueFrom(event$);
     }
 
     public async deleteAttachment(id: string): Promise<void> {
-        const event$ = this.httpClient.delete(this.usersService + '/api/v1/attachments/' + id);
+        const event$ = this.httpClient.delete(this.apiService + '/api/v1/attachments/' + id);
         await firstValueFrom(event$);
     }
 }

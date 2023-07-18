@@ -9,8 +9,8 @@ import { environment } from 'src/environments/environment';
 })
 export class LocationsService {
 
-    private get usersService(): string {
-        return environment.httpSchema + environment.usersService;
+    private get apiService(): string {
+        return environment.httpSchema + environment.apiService;
     }
 
     constructor(private httpClient: HttpClient) {
@@ -21,7 +21,7 @@ export class LocationsService {
             return [];
         }
 
-        const event$ = this.httpClient.get<Location[]>(this.usersService +  `/api/v1/locations?code=${code}&query=${query}`);
+        const event$ = this.httpClient.get<Location[]>(this.apiService +  `/api/v1/locations?code=${code}&query=${query}`);
         return await firstValueFrom(event$);
     }
 }

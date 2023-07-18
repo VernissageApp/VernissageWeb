@@ -10,15 +10,15 @@ import {environment} from 'src/environments/environment';
 })
 export class CountriesService {
 
-    private get usersService(): string {
-        return environment.httpSchema + environment.usersService;
+    private get apiService(): string {
+        return environment.httpSchema + environment.apiService;
     }
 
     constructor(private httpClient: HttpClient) {
     }
 
     public async all(): Promise<Country[]> {
-        const event$ = this.httpClient.get<Country[]>(this.usersService +  '/api/v1/countries');
+        const event$ = this.httpClient.get<Country[]>(this.apiService +  '/api/v1/countries');
         return await firstValueFrom(event$);
     }
 }

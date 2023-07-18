@@ -11,20 +11,20 @@ import {ResetPassword} from 'src/app/models/reset-password';
 })
 export class ForgotPasswordService {
 
-    private get usersService(): string {
-        return environment.httpSchema + environment.usersService;
+    private get apiService(): string {
+        return environment.httpSchema + environment.apiService;
     }
 
     constructor(private httpClient: HttpClient) {
     }
 
     public async token(forgotPassword: ForgotPassword): Promise<object> {
-        const event$ = this.httpClient.post(this.usersService + '/api/v1/account/forgot/token', forgotPassword);
+        const event$ = this.httpClient.post(this.apiService + '/api/v1/account/forgot/token', forgotPassword);
         return await firstValueFrom(event$);
     }
 
     public async confirm(resetPassword: ResetPassword): Promise<object> {
-        const event$ = this.httpClient.post(this.usersService + '/api/v1/account/forgot/confirm', resetPassword);
+        const event$ = this.httpClient.post(this.apiService + '/api/v1/account/forgot/confirm', resetPassword);
         return await firstValueFrom(event$);
     }
 }
