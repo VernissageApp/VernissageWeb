@@ -39,17 +39,17 @@
                                 <mat-form-field appearance="outline">
                                     <mat-label>Text</mat-label>
                                     <textarea matInput name="statusText" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4"
-                                              cdkAutosizeMaxRows="10"  #statusInput="ngModel" [(ngModel)]="statusText"
+                                              cdkAutosizeMaxRows="10"  #statusInput="ngModel" [(ngModel)]="statusText" required
                                               aria-label="Status" appMaxLength="500"></textarea>
                                     <mat-error *ngIf="statusInput.invalid && statusInput.errors?.appMaxLength">Too long status.</mat-error>
                                 </mat-form-field>
 
                                 <mat-form-field appearance="outline">
                                     <mat-label>Visibility</mat-label>
-                                    <mat-select>
-                                        <mat-option value="one">Everyone</mat-option>
-                                        <mat-option value="two">Unlisted</mat-option>
-                                        <mat-option value="two">Followers</mat-option>
+                                    <mat-select required [(value)]="visibility">
+                                        <mat-option [value]="StatusVisibility.Public">Everyone</mat-option>
+                                        <mat-option [value]="StatusVisibility.Unlisted">Unlisted</mat-option>
+                                        <mat-option [value]="StatusVisibility.Followers">Followers</mat-option>
                                     </mat-select>
                                 </mat-form-field>
 

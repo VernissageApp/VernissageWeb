@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { encode } from 'blurhash';
 import * as ExifReader from 'exifreader';
+import { StatusRequest } from 'src/app/models/status-request';
+import { StatusVisibility } from 'src/app/models/status-visibility';
 
 import { TemporaryAttachment } from 'src/app/models/temporary-attachment';
 import { UploadPhoto } from 'src/app/models/upload-photo';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { AttachmentsService } from 'src/app/services/http/attachments.service';
+import { StatusesService } from 'src/app/services/http/statuses.service';
 import { fadeInAnimation } from '../../animations/fade-in.animation';
 
 @Component({
@@ -15,7 +19,11 @@ import { fadeInAnimation } from '../../animations/fade-in.animation';
     animations: fadeInAnimation
 })
 export class UploadPage implements OnInit {
+    readonly StatusVisibility = StatusVisibility;
+
     statusText = '';
+    visibility = StatusVisibility.Public;
+
     commentsDisabled = false;
     isSensitive = false;
     contentWarning = '';
@@ -23,7 +31,9 @@ export class UploadPage implements OnInit {
     photos: UploadPhoto[] = [];
 
     constructor(private messageService: MessagesService,
-                private attachmentsService: AttachmentsService) {
+                private attachmentsService: AttachmentsService,
+                private statusesService: StatusesService,
+                private router: Router) {
     }
 
     ngOnInit(): void {
@@ -73,6 +83,22 @@ export class UploadPage implements OnInit {
 
                 await this.attachmentsService.updateAttachment(temporaryAttachment);
             }
+
+            const status = new StatusRequest();
+            status.note = this.statusText;
+            status.visibility = StatusVisibility.Public;
+            status.commentsDisabled = this.commentsDisabled;
+            status.sensitive = this.isSensitive;
+            status.contentWarning = this.contentWarning;
+
+            for(let photo of this.photos) {
+                status.attachmentIds.push(photo.id);
+            }
+
+            await this.statusesService.create(status)
+
+            this.messageService.showSuccess('Status has been saved.');
+            await this.router.navigate(['/']);
         } catch (error) {
             console.error(error);
             this.messageService.showServerError(error);
