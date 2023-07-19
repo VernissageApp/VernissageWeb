@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { fadeInAnimation } from "../../../animations/fade-in.animation";
+import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 
 @Component({
     selector: 'app-page-not-found',

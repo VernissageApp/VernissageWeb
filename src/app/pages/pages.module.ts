@@ -1,4 +1,6 @@
 import { NgModule } from '@angular/core';
+import { ConnectionLostPage } from 'src/app/pages/errors/connection-lost/connection-lost.page';
+import { UnexpectedErrorPage } from 'src/app/pages/errors/unexpected-error/unexpected-error.page';
 import { ProfilePage } from 'src/app/pages/profile/profile.page';
 import { UploadPage } from 'src/app/pages/upload/upload.page';
 
@@ -30,7 +32,9 @@ import { LoginCallbackPage } from "./login-callback/login-callback.page";
         LoginPage,
         LoginCallbackPage,
         PageNotFoundPage,
+        UnexpectedErrorPage,
         AccessForbiddenPage,
+        ConnectionLostPage,
         RegisterPage,
         ForgotPasswordPage,
         ResetPasswordPage,
@@ -48,6 +52,8 @@ import { LoginCallbackPage } from "./login-callback/login-callback.page";
         LoginCallbackPage,
         PageNotFoundPage,
         AccessForbiddenPage,
+        ConnectionLostPage,
+        UnexpectedErrorPage,
         RegisterPage,
         ForgotPasswordPage,
         ResetPasswordPage,

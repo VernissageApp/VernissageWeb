@@ -8,6 +8,7 @@ import { AuthorizationService } from 'src/app/services/authorization/authorizati
 import { DirtyErrorStateMatcher } from 'src/app/common/DirtyErrorStateMatcher';
 import { AuthClientsService } from 'src/app/services/http/auth-clients.service';
 import { AuthClient } from 'src/app/models/auth-client';
+import { InstanceService } from 'src/app/services/http/instance.service';
 import { environment } from 'src/environments/environment';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 
@@ -32,6 +33,7 @@ export class LoginPage implements OnInit {
         private accountService: AccountService,
         private router: Router,
         private authorizationService: AuthorizationService,
+        private instanceService: InstanceService,
         private route: ActivatedRoute,
         private authClientsService: AuthClientsService) {
     }
@@ -82,5 +84,9 @@ export class LoginPage implements OnInit {
 
     isErrorMode(): boolean {
         return this.loginMode === LoginMode.Error;
+    }
+
+    isRegistrationEnabled(): boolean {
+        return this.instanceService.isRegistrationEnabled();
     }
 }

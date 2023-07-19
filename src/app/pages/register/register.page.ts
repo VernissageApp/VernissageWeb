@@ -1,9 +1,11 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { ReCaptchaV3Service } from 'ngx-captcha';
+import { ForbiddenError } from 'src/app/errors/forbidden-error';
 
 import { User } from 'src/app/models/user';
 import { RegisterMode } from 'src/app/models/register-mode';
+import { InstanceService } from 'src/app/services/http/instance.service';
 import { RegisterService } from 'src/app/services/http/register.service';
 import { environment } from 'src/environments/environment';
 import { WindowService } from 'src/app/services/common/window.service';
@@ -30,12 +32,17 @@ export class RegisterPage implements OnInit {
         private registerService: RegisterService,
         private router: Router,
         private messageService: MessagesService,
+        private instanceService: InstanceService,
         private reCaptchaV3Service: ReCaptchaV3Service,
         private windowService: WindowService,
         @Inject(DOCUMENT) private document: Document
     ) { }
 
     ngOnInit(): void {
+        if (!this.instanceService.isRegistrationEnabled()) {
+            throw new ForbiddenError();
+        }
+
         this.user.redirectBaseUrl = this.windowService.getApplicationUrl();
         this.user.locale = 'en_US';
     }

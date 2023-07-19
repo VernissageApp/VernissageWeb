@@ -55,7 +55,7 @@
     <div fxFlex="1%" fxFlex.gt-sm="30%" fxFlex.gt-lg="40%"></div>
 </div>
 
-<div fxLayout>
+<div *ngIf="isRegistrationEnabled()" fxLayout>
     <div fxFlex="1%" fxFlex.gt-sm="30%" fxFlex.gt-lg="40%"></div>
     <div fxFlex>
         You don't have an account yet? Don't worry,

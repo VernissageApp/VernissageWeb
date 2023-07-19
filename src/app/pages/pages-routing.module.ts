@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { ConnectionLostPage } from 'src/app/pages/errors/connection-lost/connection-lost.page';
+import { UnexpectedErrorPage } from 'src/app/pages/errors/unexpected-error/unexpected-error.page';
 import { ProfilePage } from 'src/app/pages/profile/profile.page';
 import { UploadPage } from 'src/app/pages/upload/upload.page';
 
@@ -26,6 +28,8 @@ const routes: Routes = [
     { path: 'account', component: AccountPage, canActivate: [ AuthorizationGuardService ] },
     { path: 'home', component: HomePage },
     { path: 'access-forbidden', component: AccessForbiddenPage },
+    { path: 'unexpected-error', component: UnexpectedErrorPage },
+    { path: 'connection-lost', component: ConnectionLostPage },
     { path: 'upload', component: UploadPage, canActivate: [ AuthorizationGuardService ] },
     { path: ':userName', component: ProfilePage },
     { path: '', redirectTo: '/home', pathMatch: 'full' },
