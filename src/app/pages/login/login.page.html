@@ -1,66 +1,59 @@
-<div class="padding-top-30" @fadeIn fxLayout>
-    <div fxFlex="1%" fxFlex.gt-sm="30%" fxFlex.gt-lg="40%"></div>
-    <div fxFlex>
+<div class="padding-top-30" @fadeIn>
+    <div class="flex-row flex-center">
+        <div class="login-container margin-left-10 margin-right-10">
+            <!-- Sign in via username and password. -->
+            <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+                <mat-card appearance="outlined">
+                    <mat-card-header>
+                        <mat-card-title>Log in to Vernissage</mat-card-title>
+                        <mat-card-subtitle>Enter your credentials to sign in to the system</mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <div class="login-content">
+                            <!-- Username. -->
+                            <mat-form-field appearance="outline">
+                                <mat-label>Username or email</mat-label>
+                                <input matInput [errorStateMatcher]="dirtyErrorStateMatcher" name="userNameOrEmail" [(ngModel)]="login.userNameOrEmail" #userNameOrEmail="ngModel" type="text" placeholder="Username or email" aria-label="Username or email" required />
+                                <mat-error *ngIf="userNameOrEmail.dirty && userNameOrEmail.invalid && userNameOrEmail.errors?.required">Enter username or email.</mat-error>
+                            </mat-form-field>
 
-        <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
-            <mat-card appearance="outlined">
-                <mat-card-header>
-                    <mat-card-title >Sign in</mat-card-title>
-                    <mat-card-subtitle>Enter your credentials to sign in to the system</mat-card-subtitle>
-                </mat-card-header>
-                <mat-card-content>
-                    <div class="login-container">
-                        <mat-form-field appearance="outline">
-                            <mat-label>Username or email</mat-label>
-                            <input matInput [errorStateMatcher]="dirtyErrorStateMatcher" name="userNameOrEmail" [(ngModel)]="login.userNameOrEmail" #userNameOrEmail="ngModel" type="text" placeholder="Username or email" aria-label="Username or email" required />
-                            <mat-error *ngIf="userNameOrEmail.dirty && userNameOrEmail.invalid && userNameOrEmail.errors?.required">Enter username or email.</mat-error>
-                        </mat-form-field>
-                        <mat-form-field appearance="outline">
-                            <mat-label>Password</mat-label>
-                            <input matInput [errorStateMatcher]="dirtyErrorStateMatcher" name="password" [(ngModel)]="login.password" #password="ngModel" type="password" placeholder="Password" aria-label="Password" required />
-                            <mat-error *ngIf="password.dirty && password.invalid && password.errors?.required">Enter password.</mat-error>
-                        </mat-form-field>
-                    </div>
-                </mat-card-content>
-                <mat-card-actions>
-                    <div class="login-actions">
-                        <button type="submit" mat-flat-button (click)="loginMode = LoginMode.Login" [disabled]="isSubmittingMode()" color="primary" aria-label="Login">Login</button>
-                        <mat-spinner *ngIf="isSubmittingMode()" [diameter]="24" class="display-inline margin-left-10"></mat-spinner>
-                        <span *ngIf="isErrorMode()" class="mat-small text-error margin-left-10">{{ errorMessage }}</span>
-                    </div>
-                </mat-card-actions>
-            </mat-card>
-        </form>
+                            <!-- Password. -->
+                            <div class="text-right">
+                                <a routerLink="/forgot-password">Forgot password?</a>
+                            </div>
+                            <mat-form-field appearance="outline">
+                                <mat-label>Password</mat-label>
+                                <input matInput [errorStateMatcher]="dirtyErrorStateMatcher" name="password" [(ngModel)]="login.password" #password="ngModel" type="password" placeholder="Password" aria-label="Password" required />
+                                <mat-error *ngIf="password.dirty && password.invalid && password.errors?.required">Enter password.</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <div class="login-actions">
+                            <button type="submit" mat-flat-button (click)="loginMode = LoginMode.Login" [disabled]="isSubmittingMode()" color="primary" aria-label="Login">Login</button>
+                            <mat-spinner *ngIf="isSubmittingMode()" [diameter]="24" class="display-inline margin-left-10"></mat-spinner>
+                            <span *ngIf="isErrorMode()" class="mat-small text-error margin-left-10">{{ errorMessage }}</span>
+                        </div>
+                    </mat-card-actions>
+                    <mat-card-footer *ngIf="isRegistrationEnabled()">
+                        <!-- Register new account. -->
+                        <div class="text-center">
+                            <p>You don't have an account yet? <a routerLink="/register">Sign up</a>.</p>
+                        </div>
+                    </mat-card-footer>
+                </mat-card>
+            </form>
 
-        <div *ngIf="authClients && authClients.length > 0" class="separator margin-top-20 margin-bottom-20">Or via Social Account</div>
-
-        <div class="external-sign-in">
-            <div *ngFor="let authClient of authClients">
-                <a [href]="getExternalProviderUrl(authClient)" type="button" mat-flat-button color="basic">
-                    <div *ngIf="authClient.svgIcon" class='icon' [innerHTML]="authClient.svgIcon | sanitizeHtml"></div>
-                    &nbsp;{{ authClient.name }}
-                </a>
+            <!-- Sign in via external account. -->
+            <div *ngIf="authClients && authClients.length > 0" class="separator margin-top-20 margin-bottom-20">Or via Social Account</div>
+            <div class="external-sign-in">
+                <div *ngFor="let authClient of authClients">
+                    <a [href]="getExternalProviderUrl(authClient)" type="button" mat-flat-button color="basic">
+                        <div *ngIf="authClient.svgIcon" class='icon' [innerHTML]="authClient.svgIcon | sanitizeHtml"></div>
+                        &nbsp;{{ authClient.name }}
+                    </a>
+                </div>
             </div>
         </div>
     </div>
-    <div fxFlex="1%" fxFlex.gt-sm="30%" fxFlex.gt-lg="40%"></div>
 </div>
-
-
-<div class="padding-top-30" fxLayout>
-    <div fxFlex="1%" fxFlex.gt-sm="30%" fxFlex.gt-lg="40%"></div>
-    <div fxFlex>
-        Forgot your password? <a routerLink="/forgot-password">Here</a> you can change it.
-    </div>
-    <div fxFlex="1%" fxFlex.gt-sm="30%" fxFlex.gt-lg="40%"></div>
-</div>
-
-<div *ngIf="isRegistrationEnabled()" fxLayout>
-    <div fxFlex="1%" fxFlex.gt-sm="30%" fxFlex.gt-lg="40%"></div>
-    <div fxFlex>
-        You don't have an account yet? Don't worry,
-        you can create a new account <a routerLink="/register">here</a>.
-    </div>
-    <div fxFlex="1%" fxFlex.gt-sm="30%" fxFlex.gt-lg="40%"></div>
-</div>
-

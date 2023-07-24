@@ -1,3 +1,4 @@
+import { Attachment } from 'src/app/models/attachment';
 import { StatusVisibility } from 'src/app/models/status-visibility';
 
 export class Status {
@@ -8,4 +9,6 @@ export class Status {
     public contentWarning?: string;
     public commentsDisabled = false;
     public replyToStatusId?: string;
+
+    public attachments?: Attachment[];
 }

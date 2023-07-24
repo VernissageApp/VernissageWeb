@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { User } from 'src/app/models/user';
+import { InstanceService } from 'src/app/services/http/instance.service';
 import { AuthorizationService } from '../../../services/authorization/authorization.service';
 
 @Component({
@@ -18,6 +19,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     constructor(
         private authorizationService: AuthorizationService,
+        private instanceService: InstanceService,
         private router: Router) {
     }
 
@@ -38,5 +40,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     async signOut(): Promise<void> {
         await this.authorizationService.signOut();
         await this.router.navigate(['/login']);
+    }
+
+    isRegistrationEnabled(): boolean {
+        return this.instanceService.isRegistrationEnabled();
     }
 }

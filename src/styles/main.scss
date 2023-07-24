@@ -5,6 +5,7 @@
 @import '@angular/cdk/overlay-prebuilt.css';
 
 // Own custom styles.
+@import './flex-layout';
 @import './app-theme';
 @import './messages-theme';
 @import './general';
@@ -133,8 +134,7 @@ $vernissage-theme: mat.define-light-theme((
     accent: $vernissage-accent,
     warn: $vernissage-warn,
   ),
-  typography: $my-typography,
-  density: -2,
+  typography: $my-typography
 ));
 
 $vernissage-toolbar-theme: mat.define-light-theme((

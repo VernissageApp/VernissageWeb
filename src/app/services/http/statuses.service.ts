@@ -22,4 +22,9 @@ export class StatusesService {
         const event$ = this.httpClient.post<Status>(this.apiService + '/api/v1/statuses', statusRequest);
         return await firstValueFrom(event$);
     }
+
+    public async get(): Promise<Status[]> {
+        const event$ = this.httpClient.get<Status[]>(this.apiService + '/api/v1/statuses');
+        return await firstValueFrom(event$);
+    }
 }

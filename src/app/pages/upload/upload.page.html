@@ -4,7 +4,7 @@
     <div fxLayout="row">
         <div fxFlex="50%" class="margin-bottom-10">
             <div fxLayout="row wrap" fxLayoutAlign="start top" fxLayoutGap="15px">
-                <img *ngFor="let photo of photos" [src]="photo.photoSrc" style="width: 225px; height: 150px;" class="padding-bottom-15" />
+                <img *ngFor="let photo of photos; let i = index;" (click)="selectedIndex = i" [src]="photo.photoSrc" alt="Uploaded photo" [ngClass]="{ 'selected': selectedIndex === i }" class="photo-thumbnail" />
 
                 <div class="dropzone" (click)="photoFileUpload.click()">
                     <div class="plus">
@@ -23,7 +23,7 @@
             </mat-card-header>
 
             <mat-card-content>
-                <mat-stepper orientation="vertical" #stepper>
+                <mat-stepper orientation="vertical" [(selectedIndex)]="selectedIndex" #stepper>
                     <mat-step *ngFor="let photo of photos; let i = index;">
                         <ng-template matStepLabel>Image data #{{ i + 1 }}</ng-template>
                         <app-upload-photo [photo]="photo" [index]="i"></app-upload-photo>

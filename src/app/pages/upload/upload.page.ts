@@ -27,6 +27,7 @@ export class UploadPage implements OnInit {
     commentsDisabled = false;
     isSensitive = false;
     contentWarning = '';
+    selectedIndex = 0;
 
     photos: UploadPhoto[] = [];
 

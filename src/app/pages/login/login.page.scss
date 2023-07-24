@@ -1,28 +1,29 @@
-.external-sign-in {
-    text-align: center;
+.login-container {
+    width: 420px;
 
-    a {
-        min-width: 200px;
+    .login-content > * {
+        width: 100%;
+    }
+
+    .login-actions {
+        margin-left: 8px;
+        margin-right: 8px;
         margin-bottom: 10px;
+    }
 
-        .icon {
-            height: 22px;
-            display: inline-grid;
+    .external-sign-in {
+        text-align: center;
+
+        a {
+            min-width: 200px;
+            margin-bottom: 10px;
+
+            .icon {
+                height: 22px;
+                display: inline-grid;
+            }
         }
     }
 }
 
-.login-container {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .login-container > * {
-    width: 100%;
-  }
 
-.login-actions {
-    margin-left: 8px;
-    margin-right: 8px;
-    margin-bottom: 10px;
-}

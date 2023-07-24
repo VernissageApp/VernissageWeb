@@ -1,73 +1,74 @@
-<div class="padding-top-30" @fadeIn fxLayout>
-    <div fxFlex="1%" fxFlex.gt-sm="30%" fxFlex.gt-lg="40%"></div>
-    <div fxFlex>
-        <form name="form" (ngSubmit)="f.form.valid && passwordIsValid && onSubmit()" #f="ngForm" novalidate>
-            <mat-card appearance="outlined">
-                <mat-card-header>
-                    <mat-card-title>Create new account</mat-card-title>
-                </mat-card-header>
+<div class="padding-top-30" @fadeIn>
+    <div class="flex-row flex-center">
+        <div class="register-container margin-left-10 margin-right-10">
+            <form name="form" (ngSubmit)="f.form.valid && passwordIsValid && onSubmit()" #f="ngForm" novalidate>
+                <mat-card appearance="outlined">
+                    <mat-card-header>
+                        <mat-card-title>Create new account</mat-card-title>
+                    </mat-card-header>
 
-                <mat-card-content>
-                    <div fxLayout="column" class="margin-bottom-20">
-                        <mat-form-field  appearance="outline">
-                            <mat-label>Username</mat-label>
-                            <input matInput name="userName" [(ngModel)]="user.userName" #userName="ngModel" type="text"
-                                aria-label="Username" required pattern="^[a-zA-Z0-9]*$" appUniqueUserName appMaxLength="50" />
-                            <mat-error *ngIf="userName.invalid && userName.errors?.required">Enter username.</mat-error>
-                            <mat-error *ngIf="userName.invalid && userName.errors?.pattern">Only alphanumeric characters are allowed in user name.</mat-error>
-                            <mat-error *ngIf="userName.invalid && userName.errors?.appUniqueUserName">Choose a different user name, this one is already taken.</mat-error>
-                            <mat-error *ngIf="userName.invalid && userName.errors?.appMaxLength">Choose a different user name, this one is too long.</mat-error>
-                        </mat-form-field>
-                    </div>
+                    <mat-card-content>
+                        <div fxLayout="column" class="margin-bottom-20">
+                            <mat-form-field  appearance="outline">
+                                <mat-label>Username</mat-label>
+                                <input matInput name="userName" [(ngModel)]="user.userName" #userName="ngModel" type="text"
+                                    aria-label="Username" required pattern="^[a-zA-Z0-9]*$" appUniqueUserName appMaxLength="50" />
+                                <mat-error *ngIf="userName.invalid && userName.errors?.required">Enter username.</mat-error>
+                                <mat-error *ngIf="userName.invalid && userName.errors?.pattern">Only alphanumeric characters are allowed in user name.</mat-error>
+                                <mat-error *ngIf="userName.invalid && userName.errors?.appUniqueUserName">Choose a different user name, this one is already taken.</mat-error>
+                                <mat-error *ngIf="userName.invalid && userName.errors?.appMaxLength">Choose a different user name, this one is too long.</mat-error>
+                            </mat-form-field>
+                        </div>
 
-                    <div fxLayout="column" class="margin-bottom-20">
-                        <mat-form-field appearance="outline">
-                            <mat-label>Email</mat-label>
-                            <input matInput name="email" [(ngModel)]="user.email" #email="ngModel" type="email"
-                            pattern="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
-                            aria-label="Email" appUniqueEmail required />
-                            <mat-error *ngIf="email.invalid && email.errors?.required">Enter email.</mat-error>
-                            <mat-error *ngIf="email.invalid && email.errors?.pattern">Verify that you've entered proper email.</mat-error>
-                            <mat-error *ngIf="email.invalid && email.errors?.appUniqueEmail">Choose other email, this one is already connected to different account.</mat-error>
-                        </mat-form-field>
+                        <div fxLayout="column" class="margin-bottom-20">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Email</mat-label>
+                                <input matInput name="email" [(ngModel)]="user.email" #email="ngModel" type="email"
+                                pattern="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
+                                aria-label="Email" appUniqueEmail required />
+                                <mat-error *ngIf="email.invalid && email.errors?.required">Enter email.</mat-error>
+                                <mat-error *ngIf="email.invalid && email.errors?.pattern">Verify that you've entered proper email.</mat-error>
+                                <mat-error *ngIf="email.invalid && email.errors?.appUniqueEmail">Choose other email, this one is already connected to different account.</mat-error>
+                            </mat-form-field>
 
-                        <small class="text-muted text-right">
-                            Don't worry. This info is sacred for us. We won't ever show, sell or abuse it.
-                        </small>
-                    </div>
+                            <small class="text-muted text-right">
+                                Don't worry. This info is sacred for us. We won't ever show, sell or abuse it.
+                            </small>
+                        </div>
 
-                    <div fxLayout="column" class="margin-bottom-20">
-                        <mat-form-field appearance="outline">
-                            <mat-label>Display name</mat-label>
-                            <input matInput name="name" [(ngModel)]="user.name" #name="ngModel" type="text" aria-label="Name" required appMaxLength="50" />
-                            <mat-error *ngIf="name.invalid && name.errors?.required">Enter name.</mat-error>
-                            <mat-error *ngIf="name.invalid && name.errors?.appMaxLength">Name is too long.</mat-error>
-                        </mat-form-field>
-                    </div>
+                        <div fxLayout="column" class="margin-bottom-20">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Display name</mat-label>
+                                <input matInput name="name" [(ngModel)]="user.name" #name="ngModel" type="text" aria-label="Name" required appMaxLength="50" />
+                                <mat-error *ngIf="name.invalid && name.errors?.required">Enter name.</mat-error>
+                                <mat-error *ngIf="name.invalid && name.errors?.appMaxLength">Name is too long.</mat-error>
+                            </mat-form-field>
+                        </div>
 
-                    <div fxLayout="column" class="margin-bottom-20">
-                        <mat-form-field appearance="outline">
-                            <mat-label>Language</mat-label>
-                            <mat-select [(value)]="user.locale">
-                                <mat-option value="en_US">English (English)</mat-option>
-                                <mat-option value="pl_PL">Polish (polski)</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </div>
+                        <div fxLayout="column" class="margin-bottom-20">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Language</mat-label>
+                                <mat-select [(value)]="user.locale">
+                                    <mat-option value="en_US">English (English)</mat-option>
+                                    <mat-option value="pl_PL">Polish (polski)</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
 
-                    <div fxLayout="column" class="margin-bottom-20">
-                        <app-password [(passwordText)]="user.password" (passwordValid)="passwordValid($event)" [form]="f"></app-password>
-                    </div>
-                </mat-card-content>
-                <mat-card-actions>
-                    <div class="register-actions">
-                        <button type="submit" mat-flat-button (click)="registerMode = RegisterMode.Register" [disabled]="isSubmittingMode()" color="primary" aria-label="Register">Register</button>
-                        <mat-spinner *ngIf="isSubmittingMode()" [diameter]="24" class="display-inline margin-left-10"></mat-spinner>
-                        <span *ngIf="isErrorMode()" class="mat-small text-error margin-left-10">{{ errorMessage }}</span>
-                    </div>
-                </mat-card-actions>
-            </mat-card>
-        </form>
+                        <div fxLayout="column" class="margin-bottom-20">
+                            <app-password [(passwordText)]="user.password" (passwordValid)="passwordValid($event)" [form]="f"></app-password>
+                        </div>
+                    </mat-card-content>
+
+                    <mat-card-actions>
+                        <div class="register-actions">
+                            <button type="submit" mat-flat-button (click)="registerMode = RegisterMode.Register" [disabled]="isSubmittingMode()" color="primary" aria-label="Register">Register</button>
+                            <mat-spinner *ngIf="isSubmittingMode()" [diameter]="24" class="display-inline margin-left-10"></mat-spinner>
+                            <span *ngIf="isErrorMode()" class="mat-small text-error margin-left-10">{{ errorMessage }}</span>
+                        </div>
+                    </mat-card-actions>
+                </mat-card>
+            </form>
+        </div>
     </div>
-    <div fxFlex="1%" fxFlex.gt-sm="30%" fxFlex.gt-lg="40%"></div>
 </div>
