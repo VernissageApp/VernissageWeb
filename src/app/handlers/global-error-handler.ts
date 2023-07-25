@@ -3,6 +3,7 @@ import { ErrorHandler, Injector, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { ForbiddenError } from 'src/app/errors/forbidden-error';
 import { ObjectNotFoundError } from 'src/app/errors/object-not-found-error';
+import { PageNotFoundError } from 'src/app/errors/page-not-found-error';
 import { IHttpResponse } from 'src/app/models/http-response';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 
@@ -22,7 +23,7 @@ export class GlobalErrorHandler implements ErrorHandler {
         await this.zone.run(async () => {
             console.error(error);
 
-            if (this.isObjectNotFoundError(error)) {
+            if (this.isObjectNotFoundError(error) || this.isPageNotFoundError(error)) {
                 await this.router.navigate(['/page-not-found']);
                 return;
             }
@@ -65,6 +66,10 @@ export class GlobalErrorHandler implements ErrorHandler {
 
     private isObjectNotFoundError(error: any): boolean {
         return error instanceof ObjectNotFoundError || (error.rejection && error.rejection instanceof ObjectNotFoundError);
+    }
+
+    private isPageNotFoundError(error: any): boolean {
+        return error instanceof PageNotFoundError || (error.rejection && error.rejection instanceof PageNotFoundError);
     }
 
     private isForbiddenError(error: any): boolean {

@@ -1,9 +1,9 @@
 <div @fadeIn class="padding-30">
     <h1>Upload a photos</h1>
 
-    <div fxLayout="row">
-        <div fxFlex="50%" class="margin-bottom-10">
-            <div fxLayout="row wrap" fxLayoutAlign="start top" fxLayoutGap="15px">
+    <div class="flex-row flex-stretch">
+        <div>
+            <div class="flex-row flex-wrap gap-10">
                 <img *ngFor="let photo of photos; let i = index;" (click)="selectedIndex = i" [src]="photo.photoSrc" alt="Uploaded photo" [ngClass]="{ 'selected': selectedIndex === i }" class="photo-thumbnail" />
 
                 <div class="dropzone" (click)="photoFileUpload.click()">
@@ -15,7 +15,7 @@
             </div>
         </div>
 
-        <mat-card fxFlex="50%" class="margin-bottom-20" appearance="outlined">
+        <mat-card class="margin-bottom-20" appearance="outlined">
             <mat-card-header>
                 <mat-card-title>
                     Status details
@@ -35,7 +35,7 @@
                     <mat-step>
                         <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
                             <ng-template matStepLabel>Status</ng-template>
-                            <div fxLayout="column" fxLayoutGap="0px" class="margin-top-5">
+                            <div class="flex-col gap-0 margin-top-5">
                                 <mat-form-field appearance="outline">
                                     <mat-label>Text</mat-label>
                                     <textarea matInput name="statusText" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4"

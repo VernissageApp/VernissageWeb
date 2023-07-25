@@ -6,8 +6,8 @@
             Don't worry. This info is sacred for us. We won't ever show, sell or abuse it.
         </small>
 
-        <div fxLayout="column" class="margin-bottom-20 padding-top-5">
-            <mat-form-field appearance="outline">
+        <div class="margin-bottom-20 padding-top-5">
+            <mat-form-field class="width-100" appearance="outline">
                 <mat-label>Email</mat-label>
                 <input matInput name="email" [(ngModel)]="email" #emailInput="ngModel" type="email"
                        pattern="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"

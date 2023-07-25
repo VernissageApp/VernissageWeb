@@ -1,6 +1,5 @@
-<div *ngIf="isValidatingMode()" @fadeIn fxLayout>
-    <div fxFlex="1%" fxFlex.gt-sm="30%" fxFlex.gt-lg="40%"></div>
-    <div fxFlex>
+<div *ngIf="isValidatingMode()" @fadeIn class="flex-row flex-center">
+    <div class="confirm-container margin-left-10 margin-right-10">
         <mat-card appearance="outlined">
             <mat-card-header>
                 <mat-card-title>
@@ -13,12 +12,10 @@
             </mat-card-content>
         </mat-card>
     </div>
-    <div fxFlex="1%" fxFlex.gt-sm="30%" fxFlex.gt-lg="40%"></div>
 </div>
 
-<div *ngIf="isSuccessMode()" fxLayout>
-    <div fxFlex="1%" fxFlex.gt-sm="30%" fxFlex.gt-lg="40%"></div>
-    <div fxFlex>
+<div *ngIf="isSuccessMode()" class="flex-row flex-center">
+    <div class="confirm-container margin-left-10 margin-right-10">
         <mat-card appearance="outlined">
             <mat-card-header>
                 <mat-card-title>
@@ -33,12 +30,10 @@
             </mat-card-content>
         </mat-card>
     </div>
-    <div fxFlex="1%" fxFlex.gt-sm="30%" fxFlex.gt-lg="40%"></div>
 </div>
 
-<div *ngIf="isErrorMode()" fxLayout>
-    <div fxFlex="1%" fxFlex.gt-sm="30%" fxFlex.gt-lg="40%"></div>
-    <div fxFlex>
+<div *ngIf="isErrorMode()" class="flex-row flex-center">
+    <div class="confirm-container margin-left-10 margin-right-10">
         <mat-card appearance="outlined">
             <mat-card-header>
                 <mat-card-title>
@@ -53,5 +48,4 @@
             </mat-card-content>
         </mat-card>
     </div>
-    <div fxFlex="1%" fxFlex.gt-sm="30%" fxFlex.gt-lg="40%"></div>
 </div>

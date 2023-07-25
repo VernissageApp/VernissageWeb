@@ -13,8 +13,8 @@
             </mat-card-header>
 
             <mat-card-content>
-                <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px" class="margin-bottom-20">
-                    <mat-form-field fxFlex="50%" appearance="outline">
+                <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
+                    <mat-form-field appearance="outline">
                         <mat-label>Name</mat-label>
                         <input matInput name="userName" #userName="ngModel" [(ngModel)]="user.name"
                             placeholder="Name" aria-label="Name" appMaxLength="100" />
@@ -22,37 +22,34 @@
                             Too long name.
                         </mat-error>
                     </mat-form-field>
-
-                    <div fxFlex="50%"></div>
+                    <div></div>
                 </div>
 
-                <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px" class="margin-bottom-20">
-                    <mat-form-field fxFlex="50%" appearance="outline">
+                <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
+                    <mat-form-field appearance="outline">
                         <mat-label>Bio</mat-label>
                         <textarea matInput name="bio" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4"
                             cdkAutosizeMaxRows="10" placeholder="Bio" #bio="ngModel" [(ngModel)]="user.bio"
                             aria-label="Bio" appMaxLength="500"></textarea>
                         <mat-error *ngIf="bio.invalid && bio.errors?.appMaxLength">Too long bio.</mat-error>
                     </mat-form-field>
-
-                    <div fxFlex="50%"></div>
+                    <div></div>
                 </div>
 
-                <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px" class="margin-bottom-20">
-                    <mat-form-field fxFlex="50%" appearance="outline">
+                <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
+                    <mat-form-field appearance="outline">
                         <mat-label>Language</mat-label>
                         <mat-select [(value)]="user.locale">
                             <mat-option value="en_US">English (English)</mat-option>
                             <mat-option value="pl_PL">Polish (polski)</mat-option>
                         </mat-select>
                     </mat-form-field>
-
-                    <div fxFlex="50%"></div>
+                    <div></div>
                 </div>
 
                 <mat-card-subtitle>Fields</mat-card-subtitle>
-                <div *ngFor="let field of user.fields; let i = index" fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px">
-                    <mat-form-field fxFlex="50%" appearance="outline">
+                <div *ngFor="let field of user.fields; let i = index" class="flex-row flex-responsive flex-stretch gap-16">
+                    <mat-form-field appearance="outline">
                         <mat-label>Key</mat-label>
                         <input matInput [name]="'key-' + i" #key="ngModel" [(ngModel)]="field.key" placeholder="Key" aria-label="Key" appMaxLength="500" />
                         <mat-error *ngIf="key.invalid && key.errors?.appMaxLength">
@@ -60,7 +57,7 @@
                         </mat-error>
                     </mat-form-field>
 
-                    <mat-form-field fxFlex="50%" appearance="outline">
+                    <mat-form-field appearance="outline">
                         <mat-label>Value</mat-label>
                         <input matInput [name]="'value-' + i" #value="ngModel" [(ngModel)]="field.value" placeholder="Value" aria-label="Value" appMaxLength="500" />
                         <mat-error *ngIf="value.invalid && value.errors?.appMaxLength">
@@ -68,15 +65,16 @@
                         </mat-error>
                     </mat-form-field>
 
-                    <div fxFlex="20%" class="padding-top-10">
+                    <div class="padding-top-10">
                         <button mat-stroked-button [disabled]="user.fields?.length === 1" color="primary" type="button" class="margin-right-10" (click)="onDeleteField(field)">Delete</button>
                     </div>
                 </div>
-                <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px" class="margin-bottom-20">
-                    <div fxFlex="80%"></div>
+                <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
+                    <div></div>
+                    <div class="text-right">
                         <button mat-stroked-button color="accent" type="button" (click)="onAddField()">Add</button>
-                    <div fxFlex="20%">
                     </div>
+                    <div></div>
                 </div>
             </mat-card-content>
 
@@ -96,13 +94,13 @@
                 <mat-card-subtitle>PNG, GIF or JPG. At most 2 MB. Will be downscaled to 600x600px</mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>
-                <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px" class="margin-bottom-20">
-                    <div fxFlex="40%">
+                <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
+                    <div>
                         <button type="button" mat-stroked-button (click)="avatarFileUpload.click()" class="margin-right-20">Choose file</button>
                         <input hidden name="avatar" type="file" #avatarFileUpload accept="image/*" (change)="onAvatarSelected($event)">
                     </div>
 
-                    <div fxFlex="60%">
+                    <div>
                         <img id="avatarImage" [src]="avatarSrc" width="200" height="200" alt="Avatar" />
                     </div>
                 </div>
@@ -124,13 +122,13 @@
                 <mat-card-subtitle>PNG, GIF or JPG. At most 2 MB. Will be downscaled to 1500x500px</mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>
-                <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px" class="margin-bottom-20">
-                    <div fxFlex="40%">
+                <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
+                    <div>
                         <button type="button" mat-stroked-button (click)="headerFileUpload.click()" class="margin-right-20">Choose file</button>
                         <input hidden name="header" type="file" #headerFileUpload accept="image/*" (change)="onHeaderSelected($event)">
                     </div>
 
-                    <div fxFlex="60%">
+                    <div>
                         <img  id="headerImage" [src]="headerSrc" width="600" height="200" alt="Header" />
                     </div>
                 </div>
@@ -152,12 +150,12 @@
             </mat-card-title>
         </mat-card-header>
         <mat-card-content>
-            <div fxLayout="row" fxLayoutGap="20px">
-                <div fxFlex>
+            <div class="flex-row flex-responsive flex-space-between gap-16 margin-bottom-20">
+                <div>
                     Your current email: <strong>{{ user.email }}</strong>
                     <span *ngIf="!user.emailWasConfirmed" class="text-error margin-left-5">(not confirmed)</span>
                 </div>
-                <div fxFlex="none">
+                <div>
                     <button *ngIf="!user.emailWasConfirmed" type="button" (click)="resentConfirmationEmail()" mat-stroked-button color="primary" class="margin-right-10" aria-label="Resend confirmation email">Resend confirmation email</button>
                     <button type="button" (click)="openChangeEmailDialog()" mat-raised-button color="primary" aria-label="Change email">Change email</button>
                 </div>
@@ -172,11 +170,11 @@
             </mat-card-title>
         </mat-card-header>
         <mat-card-content>
-            <div fxLayout="row" fxLayoutGap="20px">
-                <div fxFlex>
+            <div class="flex-row flex-responsive flex-space-between gap-16 margin-bottom-20">
+                <div>
                     Set a strong password and don't reuse it for other accounts.
                 </div>
-                <div fxFlex="none">
+                <div>
                     <button type="button" (click)="openChangePasswordDialog()" mat-raised-button color="primary" aria-label="Change password">Change password</button>
                 </div>
             </div>
@@ -190,13 +188,13 @@
             </mat-card-title>
         </mat-card-header>
         <mat-card-content>
-            <div fxLayout="row" fxLayoutGap="20px">
-                <div fxFlex>
+            <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
+                <div>
                     You can delete your account, this operation is irreversible. Keep in mind that you will
                     not be able to reactivate your account or retrieve any of the content or information
                     you have added.
                 </div>
-                <div fxFlex="none">
+                <div class="text-right">
                     <button type="button" mat-raised-button color="accent" aria-label="Delete account" (click)="openDeleteAccountDialog()">Delete account</button>
                 </div>
             </div>

@@ -1,6 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { ForbiddenError } from 'src/app/errors/forbidden-error';
+import { PageNotFoundError } from 'src/app/errors/page-not-found-error';
 import { Status } from 'src/app/models/status';
 import { User } from 'src/app/models/user';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
@@ -31,7 +33,11 @@ export class ProfilePage implements OnInit, OnDestroy {
 
     async ngOnInit(): Promise<void> {
         this.routeParamsSubscription = this.activatedRoute.params.subscribe(async params => {
-            const userName = params['userName'];
+            const userName = params['userName'] as string;
+
+            if (!userName.startsWith('@')) {
+                throw new PageNotFoundError();
+            }
 
             this.user = await this.usersService.profile(userName);
             this.statuses = await this.statusesService.get();

@@ -4,7 +4,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgOptimizedImage } from "@angular/common";
 import { UploadPhotoComponent } from './widgets/upload-photo/upload-photo.component';
 
@@ -25,7 +24,6 @@ import { AngularMaterialModule } from './angular-material.module';
         FormsModule,
         HttpClientModule,
         ReactiveFormsModule,
-        FlexLayoutModule,
         AngularMaterialModule,
         RouterModule,
         ValidationsModule,
@@ -37,7 +35,6 @@ import { AngularMaterialModule } from './angular-material.module';
         FormsModule,
         HttpClientModule,
         ReactiveFormsModule,
-        FlexLayoutModule,
         AngularMaterialModule,
         RouterModule,
         ValidationsModule,

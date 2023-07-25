@@ -30,6 +30,7 @@ const routes: Routes = [
     { path: 'access-forbidden', component: AccessForbiddenPage },
     { path: 'unexpected-error', component: UnexpectedErrorPage },
     { path: 'connection-lost', component: ConnectionLostPage },
+    { path: 'page-not-found', component: PageNotFoundPage },
     { path: 'upload', component: UploadPage, canActivate: [ AuthorizationGuardService ] },
     { path: ':userName', component: ProfilePage },
     { path: '', redirectTo: '/home', pathMatch: 'full' },

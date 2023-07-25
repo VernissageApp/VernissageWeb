@@ -8,8 +8,8 @@
                     </mat-card-header>
 
                     <mat-card-content>
-                        <div fxLayout="column" class="margin-bottom-20">
-                            <mat-form-field  appearance="outline">
+                        <div class="margin-bottom-20">
+                            <mat-form-field appearance="outline">
                                 <mat-label>Username</mat-label>
                                 <input matInput name="userName" [(ngModel)]="user.userName" #userName="ngModel" type="text"
                                     aria-label="Username" required pattern="^[a-zA-Z0-9]*$" appUniqueUserName appMaxLength="50" />
@@ -20,7 +20,7 @@
                             </mat-form-field>
                         </div>
 
-                        <div fxLayout="column" class="margin-bottom-20">
+                        <div class="margin-bottom-20">
                             <mat-form-field appearance="outline">
                                 <mat-label>Email</mat-label>
                                 <input matInput name="email" [(ngModel)]="user.email" #email="ngModel" type="email"
@@ -36,7 +36,7 @@
                             </small>
                         </div>
 
-                        <div fxLayout="column" class="margin-bottom-20">
+                        <div class="margin-bottom-20">
                             <mat-form-field appearance="outline">
                                 <mat-label>Display name</mat-label>
                                 <input matInput name="name" [(ngModel)]="user.name" #name="ngModel" type="text" aria-label="Name" required appMaxLength="50" />
@@ -45,7 +45,7 @@
                             </mat-form-field>
                         </div>
 
-                        <div fxLayout="column" class="margin-bottom-20">
+                        <div class="margin-bottom-20">
                             <mat-form-field appearance="outline">
                                 <mat-label>Language</mat-label>
                                 <mat-select [(value)]="user.locale">
@@ -55,7 +55,7 @@
                             </mat-form-field>
                         </div>
 
-                        <div fxLayout="column" class="margin-bottom-20">
+                        <div class="margin-bottom-20">
                             <app-password [(passwordText)]="user.password" (passwordValid)="passwordValid($event)" [form]="f"></app-password>
                         </div>
                     </mat-card-content>

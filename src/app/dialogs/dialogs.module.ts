@@ -4,7 +4,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { DeleteAccountDialog } from 'src/app/dialogs/delete-account-dialog/delete-account.dialog';
 import { ValidationsModule } from '../validators/validations.module';
 import { ComponentsModule } from '../components/components.module';
@@ -24,7 +23,6 @@ import { ChangeEmailDialog } from './change-email-dialog/change-email.dialog';
         FormsModule,
         HttpClientModule,
         ReactiveFormsModule,
-        FlexLayoutModule,
         RouterModule,
         ValidationsModule,
         ComponentsModule

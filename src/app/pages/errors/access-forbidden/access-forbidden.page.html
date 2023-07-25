@@ -1,11 +1,9 @@
-<div @fadeIn fxLayout>
-    <div fxFlex="auto"></div>
-    <div fxFlex="60%" fxFlex.lt-sm="90%">
-        <h1><mat-icon [inline]="true">https</mat-icon> Access forbidden</h1>
+<div @fadeIn class="flex-row flex-center padding-top-30">
+    <div class="error-container margin-left-10 margin-right-10">
+        <h1><mat-icon [inline]="true" class="text-muted vertical-align-bottom">pan_tool</mat-icon> Access forbidden</h1>
         <p>
             We're sorry, you don't have access to the page.
             Please go back to the <a routerLink="/home" aria-label="Home page">homepage</a> or contact with system administrator.
         </p>
     </div>
-    <div fxFlex="auto"></div>
 </div>

@@ -2,13 +2,34 @@
 .flex-row { display: flex; flex-direction: row; }
 .flex-col { display: flex; flex-direction: column; }
 
+// Fill the remaining horizontal space.
+.flex-stretch > * {
+    flex: 1;
+}
+
+.flex-1 {
+    flex: 1;
+}
+
+.flex-2 {
+    flex: 2;
+}
+
+.flex-responsive {
+}
+
+@media only screen and (max-width: 768px) {
+    .flex-responsive {
+        flex-direction: column;
+    }
+}
+
 // Flex grid.
 .grid { display: grid; }
 
 // Flex-wrap utils.
 .flex-wrap { flex-wrap: wrap; }
 .flex-col-xs { @media screen and (max-width: 599px) { flex-direction: column; } }
-
 
 // Justify content.
 .flex-start { justify-content: flex-start; }
@@ -17,7 +38,15 @@
 .flex-space-between { justify-content: space-between; }
 .flex-space-around { justify-content: space-around }
 
+// Flex align item.
+.flex-align-stretch { align-items: stretch; }
+.flex-align-start { align-items: start; }
+.flex-align-end { align-items: end; }
+.flex-align-center { align-items: center; }
+.flex-align-baseline { align-items: baseline; }
+
 // Gap.
+.gap-0 { gap: 0; }
 .gap-4 { gap: 4px; }
 .gap-8 { gap: 8px; }
 .gap-10 { gap: 10px; }
