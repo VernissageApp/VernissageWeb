@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { ReCaptchaV3Service } from 'ngx-captcha';
 import { ForbiddenError } from 'src/app/errors/forbidden-error';
+import { RegisterUser } from 'src/app/models/register-user';
 
 import { User } from 'src/app/models/user';
 import { RegisterMode } from 'src/app/models/register-mode';
@@ -22,7 +23,7 @@ import { fadeInAnimation } from "../../animations/fade-in.animation";
 export class RegisterPage implements OnInit {
     readonly RegisterMode = RegisterMode;
 
-    user = new User();
+    user = new RegisterUser();
     registerMode = RegisterMode.Register;
     passwordIsValid = false;
 
@@ -45,6 +46,7 @@ export class RegisterPage implements OnInit {
 
         this.user.redirectBaseUrl = this.windowService.getApplicationUrl();
         this.user.locale = 'en_US';
+        this.user.agreement = false;
     }
 
     async onSubmit(): Promise<void> {
@@ -71,12 +73,19 @@ export class RegisterPage implements OnInit {
         this.passwordIsValid = valid;
     }
 
-    private async registerUser(token: string) {
+    isRegistrationByApprovalOpened(): boolean {
+        return this.instanceService.instance?.registrationOpened === false && this.instanceService.instance?.registrationByApprovalOpened === true;
+    }
+
+    isRegistrationByInvitationsOpened(): boolean {
+        return this.instanceService.instance?.registrationOpened === false && this.instanceService.instance?.registrationByInvitationsOpened === true;
+    }
+
+    private async registerUser(token: string): Promise<void> {
         try {
             this.user.securityToken = token;
-            this.user.agreement = true;
 
-            await this.registerService.register(this.user);
+            const user = await this.registerService.register(this.user);
             this.removeGoogleBadge();
 
             this.messageService.showSuccess('Your account has been created.');
@@ -86,9 +95,16 @@ export class RegisterPage implements OnInit {
                 this.errorMessage = 'User name is already taken. Please choose different one.';
             } else if (error.error.code === 'emailIsAlreadyConnected') {
                 this.errorMessage = 'Given email is already connected with other account.';
+            } else if (error.error.code === 'invitationTokenIsInvalid') {
+                this.errorMessage = 'Invitation token is invalid.';
+            } else if (error.error.code === 'invitationTokenHasBeenUsed') {
+                this.errorMessage = 'Invitation token has been used.';
+            } else if (error.error.code === 'userHaveToAcceptAgreement') {
+                this.errorMessage = 'You have to accept server rules.';
             } else {
                 this.errorMessage = 'Unexpected error occurred. Please try again.';
             }
+
 
             this.registerMode = RegisterMode.Error;
         }

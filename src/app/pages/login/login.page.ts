@@ -66,6 +66,8 @@ export class LoginPage implements OnInit {
                 this.errorMessage = 'Your email is not confirmed. Check your inbox or reset your password.';
             } else if (error.error.code === 'userAccountIsBlocked') {
                 this.errorMessage = 'Your account is blocked. Contact with our support.';
+            } else if (error.error.code === 'userAccountIsNotApproved') {
+                this.errorMessage = 'Your account is not approved yet.';
             } else {
                 this.errorMessage = 'Unknown login error. Try again later.';
             }

@@ -58,6 +58,29 @@
                         <div class="margin-bottom-20">
                             <app-password [(passwordText)]="user.password" (passwordValid)="passwordValid($event)" [form]="f"></app-password>
                         </div>
+
+                        <div class="margin-bottom-20">
+                            <mat-checkbox name="agreement" [disableRipple]="true" [(ngModel)]="user.agreement">
+                                I accept all server rules.
+                            </mat-checkbox>
+                        </div>
+
+                        <mat-divider *ngIf="isRegistrationByInvitationsOpened() || isRegistrationByApprovalOpened()" class="padding-bottom-20"></mat-divider>
+
+                        <div *ngIf="isRegistrationByInvitationsOpened()">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Invitation code</mat-label>
+                                <input matInput name="inviteToken" [(ngModel)]="user.inviteToken" #inviteToken="ngModel" type="text" aria-label="Invitation token" />
+                            </mat-form-field>
+                        </div>
+
+                        <div *ngIf="isRegistrationByApprovalOpened()">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Reason</mat-label>
+                                <input matInput name="reason" [(ngModel)]="user.reason" #reason="ngModel" type="text" aria-label="Reason" appMaxLength="500" />
+                                <mat-error *ngIf="reason.invalid && reason.errors?.appMaxLength">Reason is too long.</mat-error>
+                            </mat-form-field>
+                        </div>
                     </mat-card-content>
 
                     <mat-card-actions>

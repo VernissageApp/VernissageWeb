@@ -28,12 +28,6 @@ export class APIInterceptor implements HttpInterceptor {
                     case 401:
                         this.router.navigateByUrl('/login');
                         break;
-                    case 403:
-                        this.router.navigateByUrl('/access-forbidden');
-                        break;
-                    case 404:
-                        this.router.navigateByUrl('/page-not-found');
-                        break;
                 }
             }
         } else {

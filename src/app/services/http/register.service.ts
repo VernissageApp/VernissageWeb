@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/internal/Observable';
 import {firstValueFrom} from 'rxjs';
+import { RegisterUser } from 'src/app/models/register-user';
 
 import {environment} from 'src/environments/environment';
 import {ConfirmEmail} from 'src/app/models/confirm-email';
@@ -20,8 +21,8 @@ export class RegisterService {
     constructor(private httpClient: HttpClient) {
     }
 
-    public async register(user: User): Promise<User> {
-        const event$ = this.httpClient.post<User>(this.apiService + '/api/v1/register', user);
+    public async register(user: RegisterUser): Promise<User> {
+        const event$= this.httpClient.post<User>(this.apiService + '/api/v1/register', user);
         return await firstValueFrom(event$);
     }
 
