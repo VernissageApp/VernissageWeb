@@ -77,8 +77,10 @@
                         <div *ngIf="isRegistrationByApprovalOpened()">
                             <mat-form-field appearance="outline">
                                 <mat-label>Reason</mat-label>
-                                <input matInput name="reason" [(ngModel)]="user.reason" #reason="ngModel" type="text" aria-label="Reason" appMaxLength="500" />
-                                <mat-error *ngIf="reason.invalid && reason.errors?.appMaxLength">Reason is too long.</mat-error>
+                                <textarea matInput name="reason" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2"
+                                          cdkAutosizeMaxRows="6"  #reasonInput="ngModel" [(ngModel)]="user.reason"
+                                          aria-label="Reason" appMaxLength="500"></textarea>
+                                <mat-error *ngIf="reasonInput.invalid && reasonInput.errors?.appMaxLength">Reason is too long.</mat-error>
                             </mat-form-field>
                         </div>
                     </mat-card-content>
