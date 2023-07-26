@@ -58,7 +58,7 @@ export class ProfilePage implements OnInit, OnDestroy {
             return '';
         }
 
-        return status.attachments[0].originalFile?.url ?? '';
+        return status.attachments[0].smallFile?.url ?? '';
     }
 
     private buildGallery(): void {

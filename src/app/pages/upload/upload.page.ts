@@ -60,6 +60,13 @@ export class UploadPage implements OnInit {
         }
     }
 
+    onPhotoDelete(photo: UploadPhoto): void {
+        const index = this.photos.indexOf(photo, 0);
+        if (index > -1) {
+            this.photos.splice(index, 1);
+        }
+    }
+
     protected allPhotosUploaded(): boolean {
         return !this.photos.some(x => !x.isUploaded);
     }
