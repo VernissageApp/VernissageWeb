@@ -21,12 +21,12 @@
             <div class="margin-auto fields-container">
                 <mat-card *ngIf="(user.fields?.length ?? 0) > 0" appearance="outlined">
                     <mat-card-content>
-                        <div *ngFor="let item of user.fields" class="margin-bottom-10">
+                        <div *ngFor="let item of user.fields" class="flex-row flex-align-center flex-space-between margin-bottom-10">
                             <div>
                                 <div class="field-key text-muted">{{ item.key }}</div>
                                 <div class="field-value" [innerHTML]="item.valueHtml"></div>
                             </div>
-                            <div class="margin-left-30">
+                            <div class="margin-left-10">
                                 <mat-icon *ngIf="item.isVerified" class="text-success">check_circle</mat-icon>
                             </div>
                         </div>
