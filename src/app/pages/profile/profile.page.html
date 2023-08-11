@@ -1,15 +1,23 @@
 <div *ngIf="user" @fadeIn>
     <div>
-        <img class="header-image" alt="header" [src]="user.headerUrl" />
-        <img class="avatar-image" alt="header" [src]="user.avatarUrl" />
+        <img class="header-image" alt="header" [src]="headerUrl" />
+        <img class="avatar-image" alt="header" [src]="avatarUrl" />
     </div>
 
     <div class="flex-row flex-space-around padding-left-10 padding-right-10">
         <div class="profile">
-            <div class="text-center padding-bottom-15">
+            <div class="text-center">
                 <div class="mat-h1">{{ user.name }}</div>
                 <div class="mat-h4">@{{ user.userName }}</div>
                 <div class="bio" [innerHTML]="user.bioHtml"></div>
+            </div>
+
+            <div class="flex-row flex-center padding-bottom-10 gap-8">
+                <button @fadeIn *ngIf="isDuringRelationshipAction" type="button" mat-raised-button aria-label="Processing" disabled="disabled">Processing...</button>
+                <button @fadeIn *ngIf="showFollowButton && !isDuringRelationshipAction" type="button" (click)="onFollow()" mat-raised-button color="primary" aria-label="Follow">{{ relationship?.followedBy ? "Follow back" : "Follow" }}</button>
+                <button @fadeIn *ngIf="showUnfollowButton && !isDuringRelationshipAction" type="button" (click)="onUnfollow()" mat-raised-button color="accent" aria-label="Unfollow"> {{ relationship?.following ? "Unfollow" : "Cancel request" }}</button>
+                <button @fadeIn *ngIf="showApproveFollowButton && !isDuringRelationshipAction" type="button" (click)="onApproveFollow()" mat-raised-button aria-label="Approve follow">Approve follow</button>
+                <button @fadeIn *ngIf="showApproveFollowButton && !isDuringRelationshipAction" type="button" (click)="onRejectFollow()" mat-raised-button aria-label="Approve follow">Reject follow</button>
             </div>
 
             <div class="flex-row flex-center padding-bottom-10">
