@@ -32,7 +32,10 @@ const routes: Routes = [
     { path: 'connection-lost', component: ConnectionLostPage },
     { path: 'page-not-found', component: PageNotFoundPage },
     { path: 'upload', component: UploadPage, canActivate: [ AuthorizationGuardService ] },
-    { path: ':userName', component: ProfilePage },
+    { path: ':userName', component: ProfilePage, children: [
+        { path: 'following', component: ProfilePage },
+        { path: 'followers', component: ProfilePage },
+    ] },
     { path: '', redirectTo: '/home', pathMatch: 'full' },
     { path: '**', component: PageNotFoundPage }
 ];

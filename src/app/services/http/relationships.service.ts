@@ -24,4 +24,10 @@ export class RelationshipsService {
 
         return relationships.length === 1 ? relationships[0] : new Relationship();
     }
+
+    public async getAll(userIds: string[]): Promise<Relationship[]> {
+        const queryParams = userIds.join('&id[]=')
+        const event$ = this.httpClient.get<Relationship[]>(this.apiService + '/api/v1/relationships?id[]=' + queryParams);
+        return await firstValueFrom(event$);
+    }
 }

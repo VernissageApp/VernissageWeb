@@ -24,6 +24,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 @NgModule({
     imports: [
@@ -51,7 +52,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
         MatDatepickerModule,
         MatNativeDateModule,
         MatCheckboxModule,
-        MatStepperModule
+        MatStepperModule,
+        MatButtonToggleModule
     ],
     exports: [
         MatToolbarModule,
@@ -78,7 +80,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
         MatDatepickerModule,
         MatNativeDateModule,
         MatCheckboxModule,
-        MatStepperModule
+        MatStepperModule,
+        MatButtonToggleModule
     ]
 })
 export class AngularMaterialModule { }

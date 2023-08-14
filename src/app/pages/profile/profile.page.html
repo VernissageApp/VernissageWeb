@@ -1,8 +1,6 @@
-<div *ngIf="user" @fadeIn>
-    <div>
-        <img class="header-image" alt="header" [src]="headerUrl" />
-        <img class="avatar-image" alt="header" [src]="avatarUrl" />
-    </div>
+<div *ngIf="user && isReady" @fadeIn>
+    <img class="header-image" alt="header" [src]="headerUrl" />
+    <img class="avatar-image" alt="header" [src]="avatarUrl" />
 
     <div class="flex-row flex-space-around padding-left-10 padding-right-10">
         <div class="profile">
@@ -12,18 +10,13 @@
                 <div class="bio" [innerHTML]="user.bioHtml"></div>
             </div>
 
-            <div class="flex-row flex-center padding-bottom-10 gap-8">
-                <button @fadeIn *ngIf="isDuringRelationshipAction" type="button" mat-raised-button aria-label="Processing" disabled="disabled">Processing...</button>
-                <button @fadeIn *ngIf="showFollowButton && !isDuringRelationshipAction" type="button" (click)="onFollow()" mat-raised-button color="primary" aria-label="Follow">{{ relationship?.followedBy ? "Follow back" : "Follow" }}</button>
-                <button @fadeIn *ngIf="showUnfollowButton && !isDuringRelationshipAction" type="button" (click)="onUnfollow()" mat-raised-button color="accent" aria-label="Unfollow"> {{ relationship?.following ? "Unfollow" : "Cancel request" }}</button>
-                <button @fadeIn *ngIf="showApproveFollowButton && !isDuringRelationshipAction" type="button" (click)="onApproveFollow()" mat-raised-button aria-label="Approve follow">Approve follow</button>
-                <button @fadeIn *ngIf="showApproveFollowButton && !isDuringRelationshipAction" type="button" (click)="onRejectFollow()" mat-raised-button aria-label="Approve follow">Reject follow</button>
-            </div>
+            <app-follow-buttons-section [user]="user" [relationship]="relationship" (relationChanged)="onMainRelationChanged()"></app-follow-buttons-section>
 
-            <div class="flex-row flex-center padding-bottom-10">
-                <div class="margin-left-20 margin-right-20"><span class="fw-500">{{ user.statusesCount }}</span><span class="fw-200 margin-left-5">Posts</span></div>
-                <div class="margin-left-20 margin-right-20"><span class="fw-500">{{ user.followersCount }}</span><span class="fw-200 margin-left-5"> Followers</span></div>
-                <div class="margin-left-20 margin-right-20"><span class="fw-500">{{ user.followingCount }}</span><span class="fw-200 margin-left-5"> Following</span></div>
+            <div *ngIf="(latestFollowers?.length ?? 0) > 0" class="text-center padding-top-10 padding-bottom-10">
+                <div class="text-muted padding-bottom-5">LATEST FOLLOWERS</div>
+                <ng-container *ngFor="let item of latestFollowers">
+                    <img class="follower-image" [src]="item.avatarUrl ?? '/assets/avatar.png'" [matTooltip]="item.name ?? item.userName ?? ''" />
+                </ng-container>
             </div>
 
             <div class="margin-auto fields-container">
@@ -42,30 +35,31 @@
                 </mat-card>
             </div>
 
-            <div class="text-center padding-top-10 padding-bottom-10">
-                <div class="text-muted padding-bottom-5">LATEST FOLLOWERS</div>
-                <img class="follower-image" src="https://picsum.photos/64/64?v1" />
-                <img class="follower-image follower-image-next" src="https://picsum.photos/64/64?v2" />
-                <img class="follower-image follower-image-next" src="https://picsum.photos/64/64?v3" />
-                <img class="follower-image follower-image-next" src="https://picsum.photos/64/64?v4" />
-                <img class="follower-image follower-image-next" src="https://picsum.photos/64/64?v5" />
-                <img class="follower-image follower-image-next" src="https://picsum.photos/64/64?v6" />
-                <img class="follower-image follower-image-next" src="https://picsum.photos/64/64?v7" />
-                <img class="follower-image follower-image-next" src="https://picsum.photos/64/64?v8" />
-                <img class="follower-image follower-image-next" src="https://picsum.photos/64/64?v9" />
-                <img class="follower-image follower-image-next" src="https://picsum.photos/64/64?v0" />
+            <div class="flex-row flex-center padding-top-10 padding-bottom-10">
+                <div class="margin-left-20 margin-right-20"><span class="fw-500">{{ user.statusesCount }}</span><span class="fw-200 margin-left-5" [ngClass]="{ 'dashed': profilePageTab === ProfilePageTab.Statuses}"><a [routerLink]="['/', userName]">Posts</a></span></div>
+                <div class="margin-left-20 margin-right-20"><span class="fw-500">{{ user.followingCount }}</span><span class="fw-200 margin-left-5" [ngClass]="{ 'dashed': profilePageTab === ProfilePageTab.Following}"><a [routerLink]="['following']">Following</a></span></div>
+                <div class="margin-left-20 margin-right-20"><span class="fw-500">{{ user.followersCount }}</span><span class="fw-200 margin-left-5" [ngClass]="{ 'dashed': profilePageTab === ProfilePageTab.Followers}"><a [routerLink]="['followers']">Followers</a></span></div>
             </div>
 
-            <div class="gallery-container">
-                <div class="image-gallery">
-                    <div class="column" *ngFor="let items of gallery">
-                        <div class="image-item" *ngFor="let status of items">
-                            <img *ngIf="getMainAttachmentSrc(status)" [src]="getMainAttachmentSrc(status)" />
+            <div [ngSwitch]="profilePageTab" class="padding-bottom-20">
+                <div *ngSwitchDefault>
+                    <div class="gallery-container">
+                        <div class="image-gallery">
+                            <div class="column" *ngFor="let items of gallery">
+                                <div class="image-item" *ngFor="let status of items">
+                                    <img *ngIf="getMainAttachmentSrc(status)" [src]="getMainAttachmentSrc(status)" />
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <div *ngSwitchCase="ProfilePageTab.Followers">
+                    <app-users-card *ngIf="(followers?.length ?? 0) > 0" [users]="followers" [relationships]="followersRelationships" (relationChanged)="onRelationChanged()"></app-users-card>
+                </div>
+                <div *ngSwitchCase="ProfilePageTab.Following">
+                    <app-users-card *ngIf="(following?.length ?? 0) > 0" [users]="following" [relationships]="followingRelationships" (relationChanged)="onRelationChanged()"></app-users-card>
+                </div>
             </div>
-
         </div>
     </div>
 </div>

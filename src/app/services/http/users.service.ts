@@ -42,4 +42,14 @@ export class UsersService {
         const event$ = this.httpClient.post<Relationship>(this.apiService + '/api/v1/users/@' + userName + '/unfollow', null);
         return await firstValueFrom(event$);
     }
+
+    public async following(userName: string, page = 0, size = 100): Promise<User[]> {
+        const event$ = this.httpClient.get<User[]>(this.apiService +  '/api/v1/users/' + userName + `/following?page=${page}&size${size}`);
+        return await firstValueFrom(event$);
+    }
+
+    public async followers(userName: string, page = 0, size = 100): Promise<User[]> {
+        const event$ = this.httpClient.get<User[]>(this.apiService +  '/api/v1/users/' + userName + `/followers?page=${page}&size${size}`);
+        return await firstValueFrom(event$);
+    }
 }

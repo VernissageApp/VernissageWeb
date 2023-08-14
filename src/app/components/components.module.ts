@@ -11,12 +11,16 @@ import { ValidationsModule } from '../validators/validations.module';
 import { HeaderComponent } from './core/header/header.component';
 import { PasswordComponent } from './widgets/password/password.component';
 import { AngularMaterialModule } from './angular-material.module';
+import { UsersCardComponent } from './widgets/users-card/users-card.component';
+import { FollowButtonsSectionComponent } from './widgets/follow-buttons-section/follow-buttons-section.component';
 
 @NgModule({
     declarations: [
         HeaderComponent,
         PasswordComponent,
-        UploadPhotoComponent
+        UploadPhotoComponent,
+        UsersCardComponent,
+        FollowButtonsSectionComponent
     ],
     imports: [
         BrowserModule,
@@ -41,7 +45,9 @@ import { AngularMaterialModule } from './angular-material.module';
         HeaderComponent,
         PasswordComponent,
         NgOptimizedImage,
-        UploadPhotoComponent
+        UploadPhotoComponent,
+        UsersCardComponent,
+        FollowButtonsSectionComponent
     ]
 })
 export class ComponentsModule { }

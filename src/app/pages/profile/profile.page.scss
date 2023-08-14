@@ -9,13 +9,17 @@
     height: 120px;
     border-radius: 50%;
     border: 3px solid white;
-    margin-top: -60px;
+    position: relative;
+    top: -60px;
     display: block;
     margin-left: auto;
     margin-right: auto;
 }
 
 .profile {
+    position: relative;
+    top: -60px;
+
     .mat-h1 {
         font-weight: 600;
         margin: 0;
@@ -44,9 +48,6 @@
         width: 32px;
         height: 32px;
         border-radius: 50%;
-    }
-
-    .follower-image-next {
         margin-left: -6px;
     }
 }

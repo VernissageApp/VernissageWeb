@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { Subscription, filter } from 'rxjs';
 import { PageNotFoundError } from 'src/app/errors/page-not-found-error';
 import { Status } from 'src/app/models/status';
 import { User } from 'src/app/models/user';
@@ -8,10 +8,9 @@ import { AuthorizationService } from 'src/app/services/authorization/authorizati
 import { StatusesService } from 'src/app/services/http/statuses.service';
 import { UsersService } from 'src/app/services/http/users.service';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
-import { MessagesService } from 'src/app/services/common/messages.service';
 import { Relationship } from 'src/app/models/relationship';
 import { RelationshipsService } from 'src/app/services/http/relationships.service';
-import { FollowRequestsService } from 'src/app/services/http/follow-requests.service';
+import { ProfilePageTab } from 'src/app/models/profile-page-tab';
 
 @Component({
     selector: 'app-profile',
@@ -20,15 +19,25 @@ import { FollowRequestsService } from 'src/app/services/http/follow-requests.ser
     animations: fadeInAnimation
 })
 export class ProfilePage implements OnInit, OnDestroy {
+    readonly ProfilePageTab = ProfilePageTab;
+
+    isReady = false;
+    profilePageTab = ProfilePageTab.Statuses;
+    userName!: string;
+
     user?: User;
     relationship?: Relationship;
-    statuses?: Status[];
-    routeParamsSubscription?: Subscription;
+    latestFollowers?: User[];
 
-    isDuringRelationshipAction = false;
-    showFollowButton = false;
-    showUnfollowButton = false;
-    showApproveFollowButton = false;
+    followers?: User[];
+    followersRelationships?: Relationship[];
+    following?: User[];
+    followingRelationships?: Relationship[];
+    
+    statuses?: Status[];
+
+    routeParamsSubscription?: Subscription;
+    routeUrlSubscription?: Subscription;
 
     headerUrl = '/assets/header.jpg';
     avatarUrl = '/assets/avatar.png';
@@ -41,33 +50,63 @@ export class ProfilePage implements OnInit, OnDestroy {
         private usersService: UsersService,
         private statusesService: StatusesService,
         private relationshipsService: RelationshipsService,
-        private followRequestsService: FollowRequestsService,
-        private messageService: MessagesService,
+        private router: Router,
+        private changeDetectorRef: ChangeDetectorRef,
         private activatedRoute: ActivatedRoute) {
     }
 
     async ngOnInit(): Promise<void> {
-        this.routeParamsSubscription = this.activatedRoute.params.subscribe(async params => {
-            const userName = params['userName'] as string;
 
+        this.routeUrlSubscription = this.router.events
+            .pipe(filter(event => event instanceof NavigationEnd))  
+            .subscribe(async () => {
+                await this.loadPageData();
+            });
+
+        this.routeParamsSubscription = this.activatedRoute.params.subscribe(async params => {
+            this.isReady = false;
+
+            const userName = params['userName'] as string;
             if (!userName.startsWith('@')) {
                 throw new PageNotFoundError();
             }
 
+            this.userName = userName;
+            this.followers = [];
+            this.following = [];
+
             this.user = await this.usersService.profile(userName);
-            this.statuses = await this.statusesService.get();
             this.relationship = await this.downloadRelationship();
-            this.buildGallery();
+            this.latestFollowers = await this.usersService.followers(userName, 0, 20);
 
             this.headerUrl = this.user.headerUrl ?? '/assets/header.jpg';
             this.avatarUrl = this.user.avatarUrl ?? '/assets/avatar.png';
 
-            this.recalculateRelationship();
+            await this.loadPageData();
+
+            this.isReady = true;
         });
     }
 
     ngOnDestroy(): void {
         this.routeParamsSubscription?.unsubscribe();
+        this.routeUrlSubscription?.unsubscribe();
+    }
+
+    async onMainRelationChanged(): Promise<void> {
+        this.user = await this.usersService.profile(this.userName);
+        if (this.profilePageTab === ProfilePageTab.Followers) {
+            const internalFollowers = await this.usersService.followers(this.userName);
+            if ((internalFollowers?.length ?? 0) !== 0) {
+                this.followersRelationships = await this.relationshipsService.getAll(internalFollowers.map(x => x.id ?? ''))
+            }
+
+            this.followers = internalFollowers;
+        }
+    }
+
+    async onRelationChanged(): Promise<void> {
+        this.user = await this.usersService.profile(this.userName);
     }
 
     getMainAttachmentSrc(status: Status): string {
@@ -80,78 +119,6 @@ export class ProfilePage implements OnInit, OnDestroy {
         }
 
         return status.attachments[0].smallFile?.url ?? '';
-    }
-
-    async onFollow(): Promise<void> {
-        if (this.user?.userName) {
-            try {
-                this.isDuringRelationshipAction = true;
-                this.relationship = await this.usersService.follow(this.user?.userName);
-                this.user = await this.usersService.profile(this.user?.userName);
-                this.recalculateRelationship();
-
-                this.messageService.showSuccess('You are following the user.');
-            } catch (error) {
-                console.error(error);
-                this.messageService.showServerError(error);
-            } finally {
-                this.isDuringRelationshipAction = false;
-            }
-        }
-    }
-
-    async onUnfollow(): Promise<void> {
-        if (this.user?.userName) {
-            try {
-                this.isDuringRelationshipAction = true;
-                this.relationship = await this.usersService.unfollow(this.user?.userName);
-                this.user = await this.usersService.profile(this.user?.userName);
-                this.recalculateRelationship();
-
-                this.messageService.showSuccess('You are unfollowed the user.');
-            } catch (error) {
-                console.error(error);
-                this.messageService.showServerError(error);
-            } finally {
-                this.isDuringRelationshipAction = false;
-            }
-        }
-    }
-
-    async onApproveFollow(): Promise<void> {
-        if (this.user?.id && this.user?.userName) {
-            try {
-                this.isDuringRelationshipAction = true;
-                this.relationship = await this.followRequestsService.approve(this.user?.id);
-                this.user = await this.usersService.profile(this.user?.userName);
-                this.recalculateRelationship();
-
-                this.messageService.showSuccess('User is now following you.');
-            } catch (error) {
-                console.error(error);
-                this.messageService.showServerError(error);
-            } finally {
-                this.isDuringRelationshipAction = false;
-            }
-        }
-    }
-
-    async onRejectFollow(): Promise<void> {
-        if (this.user?.id && this.user?.userName) {
-            try {
-                this.isDuringRelationshipAction = true;
-                this.relationship = await this.followRequestsService.reject(this.user?.id);
-                this.user = await this.usersService.profile(this.user?.userName);
-                this.recalculateRelationship();
-
-                this.messageService.showSuccess('User is now following you.');
-            } catch (error) {
-                console.error(error);
-                this.messageService.showServerError(error);
-            } finally {
-                this.isDuringRelationshipAction = false;
-            }
-        }
     }
 
     private buildGallery(): void {
@@ -170,63 +137,6 @@ export class ProfilePage implements OnInit, OnDestroy {
             this.gallery[currentColumn].push(status);
             currentColumn = (currentColumn + 1) % this.columns;
         }
-
-        console.log(this.gallery);
-    }
-
-    private shouldShowFollowButton(): boolean {
-        const signedInUser = this.authorizationService.getUser();
-        if (!signedInUser) {
-            return false;
-        }
-
-        if (signedInUser.id === this.user?.id) {
-            return false;
-        }
-
-        if (this.relationship?.following === true) {
-            return false;
-        }
-
-        if (this.relationship?.requested === true) {
-            return false;
-        }
-
-        return true;
-    }
-
-    private shouldShowUnfollowButton(): boolean {
-        const signedInUser = this.authorizationService.getUser();
-        if (!signedInUser) {
-            return false;
-        }
-
-        if (signedInUser.id === this.user?.id) {
-            return false;
-        }
-
-        if ((this.relationship?.following ?? false) === false && (this.relationship?.requested ?? false) == false) {
-            return false;
-        }
-
-        return true;
-    }
-
-    private shouldShowApproveFollowButton(): boolean {
-        const signedInUser = this.authorizationService.getUser();
-        if (!signedInUser) {
-            return false;
-        }
-
-        if (signedInUser.id === this.user?.id) {
-            return false;
-        }
-
-        if ((this.relationship?.requestedBy ?? false) === false) {
-            return false;
-        }
-
-        return true;
     }
 
     private async downloadRelationship(): Promise<Relationship | undefined> {
@@ -246,9 +156,30 @@ export class ProfilePage implements OnInit, OnDestroy {
         return await this.relationshipsService.get(this.user.id);
     }
 
-    private recalculateRelationship(): void {
-        this.showFollowButton = this.shouldShowFollowButton();
-        this.showUnfollowButton = this.shouldShowUnfollowButton();
-        this.showApproveFollowButton = this.shouldShowApproveFollowButton();
+    private async loadPageData(): Promise<void> {
+        const currentUrl = this.router.routerState.snapshot.url;
+        if (currentUrl.includes('/following')) {
+            this.profilePageTab = ProfilePageTab.Following;
+            const internalFollowing = await this.usersService.following(this.userName);
+
+            if ((internalFollowing?.length ?? 0) !== 0) {
+                this.followingRelationships = await this.relationshipsService.getAll(internalFollowing.map(x => x.id ?? ''))
+            }
+
+            this.following = internalFollowing;
+        } else if (currentUrl.includes('/followers')) {
+            this.profilePageTab = ProfilePageTab.Followers;
+            const internalFollowers = await this.usersService.followers(this.userName);
+
+            if ((internalFollowers?.length ?? 0) !== 0) {
+                this.followersRelationships = await this.relationshipsService.getAll(internalFollowers.map(x => x.id ?? ''))
+            }
+
+            this.followers = internalFollowers;
+        } else {
+            this.profilePageTab = ProfilePageTab.Statuses;
+            this.statuses = await this.statusesService.get();
+            this.buildGallery();
+        }
     }
 }

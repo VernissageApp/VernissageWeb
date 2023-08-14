@@ -1,0 +1,19 @@
+<mat-card class="users-card" appearance="outlined">
+    <mat-card-content>
+        <div *ngFor="let user of users" class="flex-row flex-space-between padding-bottom-5 padding-top-5">
+            <div class="flex-row gap-8">
+                <div>
+                    <img [src]="user.avatarUrl ?? '/assets/avatar.png'" class="" />
+                </div>
+                <div>
+                    <div>
+                        <a [routerLink]="[ '/@' + user.userName ]">{{ user.name }}</a>
+                    </div>
+                    <div class="fw-300 fs-90">{{ user.userName }}</div>
+                </div>
+            </div>
+
+            <app-follow-buttons-section [user]="user" [relationship]="getRelationship(user)" (relationChanged)="onRelationChanged()" [singleButton]="true"></app-follow-buttons-section>
+        </div>
+    </mat-card-content>
+</mat-card>

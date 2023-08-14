@@ -7,23 +7,15 @@ import { NgForm, NgModel } from '@angular/forms';
     styleUrls: ['./password.component.scss']
 })
 export class PasswordComponent {
-
     isPasswordVisible = false;
 
-    @Input()
-    passwordText?: string;
+    @Input() passwordText?: string;
+    @Input() form?: NgForm;
 
-    @Input()
-    form?: NgForm;
+    @Output() passwordTextChange = new EventEmitter<string>();
+    @Output() passwordValid = new EventEmitter<boolean>();
 
-    @Output()
-    passwordTextChange = new EventEmitter<string>();
-
-    @Output()
-    passwordValid = new EventEmitter<boolean>();
-
-    @ViewChild('password')
-    password?: NgModel;
+    @ViewChild('password') password?: NgModel;
 
     togglePassword(): void {
         this.isPasswordVisible = !this.isPasswordVisible;
