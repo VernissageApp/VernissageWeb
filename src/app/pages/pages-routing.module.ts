@@ -17,6 +17,7 @@ import { ForgotPasswordPage } from './forgot-password/forgot-password.page';
 import { ResetPasswordPage } from './reset-password/reset-password.page';
 import { ConfirmEmailPage } from './confirm-email/confirm-email.page';
 import { AccountPage } from './account/account.page';
+import { SearchPage } from './search/search.page';
 
 const routes: Routes = [
     { path: 'login', component: LoginPage, canActivate: [ LoggedOutGuardService ] },
@@ -32,6 +33,7 @@ const routes: Routes = [
     { path: 'connection-lost', component: ConnectionLostPage },
     { path: 'page-not-found', component: PageNotFoundPage },
     { path: 'upload', component: UploadPage, canActivate: [ AuthorizationGuardService ] },
+    { path: 'search', component: SearchPage, canActivate: [ AuthorizationGuardService ] },
     { path: ':userName', component: ProfilePage, children: [
         { path: 'following', component: ProfilePage },
         { path: 'followers', component: ProfilePage },

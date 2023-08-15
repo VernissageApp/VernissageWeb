@@ -19,6 +19,7 @@ import { ResetPasswordPage } from './reset-password/reset-password.page';
 import { ConfirmEmailPage } from './confirm-email/confirm-email.page';
 import { AccountPage } from './account/account.page';
 import { LoginCallbackPage } from "./login-callback/login-callback.page";
+import { SearchPage } from './search/search.page';
 
 @NgModule({
     imports: [
@@ -41,7 +42,8 @@ import { LoginCallbackPage } from "./login-callback/login-callback.page";
         ConfirmEmailPage,
         AccountPage,
         ProfilePage,
-        UploadPage
+        UploadPage,
+        SearchPage
     ],
     exports: [
         ComponentsModule,
@@ -60,7 +62,8 @@ import { LoginCallbackPage } from "./login-callback/login-callback.page";
         ConfirmEmailPage,
         AccountPage,
         ProfilePage,
-        UploadPage
+        UploadPage,
+        SearchPage
     ]
 })
 export class PagesModule { }

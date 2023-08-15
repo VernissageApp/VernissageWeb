@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subscription, filter } from 'rxjs';
 import { PageNotFoundError } from 'src/app/errors/page-not-found-error';
@@ -39,9 +39,6 @@ export class ProfilePage implements OnInit, OnDestroy {
     routeParamsSubscription?: Subscription;
     routeUrlSubscription?: Subscription;
 
-    headerUrl = '/assets/header.jpg';
-    avatarUrl = '/assets/avatar.png';
-
     gallery?: Status[][];
     readonly columns = 3;
 
@@ -51,7 +48,6 @@ export class ProfilePage implements OnInit, OnDestroy {
         private statusesService: StatusesService,
         private relationshipsService: RelationshipsService,
         private router: Router,
-        private changeDetectorRef: ChangeDetectorRef,
         private activatedRoute: ActivatedRoute) {
     }
 
@@ -74,14 +70,15 @@ export class ProfilePage implements OnInit, OnDestroy {
             this.userName = userName;
             this.followers = [];
             this.following = [];
+            this.statuses = [];
+            this.gallery = [];
 
-            this.user = await this.usersService.profile(userName);
+            [this.user, this.latestFollowers] = await Promise.all([
+                this.usersService.profile(userName),
+                this.usersService.followers(userName, 0, 20)
+            ]);
+
             this.relationship = await this.downloadRelationship();
-            this.latestFollowers = await this.usersService.followers(userName, 0, 20);
-
-            this.headerUrl = this.user.headerUrl ?? '/assets/header.jpg';
-            this.avatarUrl = this.user.avatarUrl ?? '/assets/avatar.png';
-
             await this.loadPageData();
 
             this.isReady = true;
