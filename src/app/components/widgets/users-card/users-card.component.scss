@@ -4,4 +4,13 @@
         height: 48px;
         border-radius: 15%;
     }
+
+    .bio {
+        opacity: 0.7;
+
+        ::ng-deep p {
+            margin-top: 4px;
+            margin-bottom: 4px;
+        }        
+    }
 }

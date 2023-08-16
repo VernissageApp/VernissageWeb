@@ -11,6 +11,7 @@ import { User } from 'src/app/models/user';
 export class UsersCardComponent {
     @Input() users?: User[];
     @Input() relationships?: Relationship[];
+    @Input() showBio = false;
     @Output() relationChanged = new EventEmitter();
 
     getRelationship(user: User): Relationship | undefined {

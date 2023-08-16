@@ -11,10 +11,6 @@ export class InstanceService {
     private _instance?: Instance;
 
     public get instance(): Instance | undefined {
-        if (!this._instance) {
-            (async () => this.load())();
-        }
-
         return this._instance;
     }
 

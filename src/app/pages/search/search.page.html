@@ -8,24 +8,21 @@
         <div class="flex-row flex-space-around padding-left-10 padding-right-10">
             <div class="search width-100">
                 <mat-card class="margin-bottom-20" appearance="outlined">
-                    <mat-card-header>
-                        <mat-card-title>
-                            Search
-                        </mat-card-title>
-                    </mat-card-header>
-
                     <mat-card-content>
                         <div class="flex-row flex-responsive flex-align-center gap-16">
                             <mat-form-field appearance="outline">
-                                <mat-label>Query</mat-label>
-                                <input matInput name="query" [(ngModel)]="search" aria-label="Query" />
+                                <input #queryInput matInput name="query" [(ngModel)]="search" cdkFocusInitial aria-label="Query" />
                             </mat-form-field>
                             <button mat-flat-button color="primary">Search</button>
                         </div>
                     </mat-card-content>
                 </mat-card>
 
-                <app-users-card *ngIf="(users?.length ?? 0) > 0" [users]="users" [relationships]="usersRelationships"></app-users-card>
+
+                <app-users-card *ngIf="(users?.length ?? 0) > 0" [users]="users" [relationships]="usersRelationships" [showBio]="true"></app-users-card>
+                <div *ngIf="searchExecuted && (users?.length ?? 0) === 0">
+                    No results found.
+                </div>
             </div>
         </div>
     </form>
