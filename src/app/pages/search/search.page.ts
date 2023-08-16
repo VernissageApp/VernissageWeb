@@ -35,8 +35,12 @@ export class SearchPage implements OnInit, OnDestroy, AfterViewInit {
         this.routeParamsSubscription = this.activatedRoute.queryParams.subscribe(async params => {
             this.loadingService.showLoader();
 
-            const query = params['query']
+            const query = params['query'];
             this.search = query;
+
+            if (!query) {
+                this.searchExecuted = false;
+            }
 
             if ((this.search?.trim().length ?? 0) === 0) {
                 this.usersRelationships = [];

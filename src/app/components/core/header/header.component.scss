@@ -17,6 +17,14 @@ a.logo {
     font-family: 'Fleur De Leah', cursive;
     font-size:32px;
     margin-right: 20px;
+
+    img {
+        position: relative;
+        width: 30px;
+        height: 15px;
+        left: -18px;
+        top: -12px;
+    }
 }
 
 a:hover.logo,
