@@ -1,6 +1,6 @@
 <mat-card class="users-card" appearance="outlined">
     <mat-card-content>
-        <div *ngFor="let user of users" class="flex-row flex-space-between padding-bottom-10 padding-top-10">
+        <div *ngFor="let user of users; trackBy:trackByFn" class="flex-row flex-space-between padding-bottom-10 padding-top-10">
             <div class="flex-row gap-8">
                 <div>
                     <img [src]="user.avatarUrl ?? '/assets/avatar.svg'" class="" />
@@ -18,7 +18,7 @@
                 </div>
             </div>
 
-            <app-follow-buttons-section [user]="user" [relationship]="getRelationship(user)" (relationChanged)="onRelationChanged()" [singleButton]="true"></app-follow-buttons-section>
+            <app-follow-buttons-section [user]="user" [relationship]="getRelationship(user)" (relationChanged)="onRelationChanged($event)" [singleButton]="true"></app-follow-buttons-section>
         </div>
     </mat-card-content>
 </mat-card>

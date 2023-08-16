@@ -53,11 +53,11 @@
                         </div>
                     </div>
                 </div>
-                <div *ngSwitchCase="ProfilePageTab.Followers">
-                    <app-users-card *ngIf="(followers?.length ?? 0) > 0" [users]="followers" [relationships]="followersRelationships" (relationChanged)="onRelationChanged()"></app-users-card>
-                </div>
                 <div *ngSwitchCase="ProfilePageTab.Following">
-                    <app-users-card *ngIf="(following?.length ?? 0) > 0" [users]="following" [relationships]="followingRelationships" (relationChanged)="onRelationChanged()"></app-users-card>
+                    <app-users-card *ngIf="(following?.length ?? 0) > 0" [users]="following" [relationships]="followingRelationships" (relationChanged)="onRelationChanged($event)"></app-users-card>
+                </div>
+                <div *ngSwitchCase="ProfilePageTab.Followers">
+                    <app-users-card *ngIf="(followers?.length ?? 0) > 0" [users]="followers" [relationships]="followersRelationships" (relationChanged)="onRelationChanged($event)"></app-users-card>
                 </div>
             </div>
         </div>

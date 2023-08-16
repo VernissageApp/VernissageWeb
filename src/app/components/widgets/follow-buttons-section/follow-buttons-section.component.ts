@@ -18,7 +18,7 @@ export class FollowButtonsSectionComponent implements OnInit {
     @Input() user?: User;
     @Input() relationship?: Relationship;
     @Input() singleButton = false;
-    @Output() relationChanged = new EventEmitter();
+    @Output() relationChanged = new EventEmitter<Relationship>();
 
     isDuringRelationshipAction = false;
     showFollowButton = false;
@@ -44,7 +44,7 @@ export class FollowButtonsSectionComponent implements OnInit {
                 this.recalculateRelationship();
 
                 this.changeDetectorRef.detectChanges();
-                this.relationChanged.emit();
+                this.relationChanged.emit(this.relationship);
                 this.messageService.showSuccess('You are following the user.');
             } catch (error) {
                 console.error(error);
@@ -63,7 +63,7 @@ export class FollowButtonsSectionComponent implements OnInit {
                 this.recalculateRelationship();
 
                 this.changeDetectorRef.detectChanges();
-                this.relationChanged.emit();
+                this.relationChanged.emit(this.relationship);
                 this.messageService.showSuccess('You are unfollowed the user.');
             } catch (error) {
                 console.error(error);
@@ -82,7 +82,7 @@ export class FollowButtonsSectionComponent implements OnInit {
                 this.recalculateRelationship();
 
                 this.changeDetectorRef.detectChanges();
-                this.relationChanged.emit();
+                this.relationChanged.emit(this.relationship);
                 this.messageService.showSuccess('User is now following you.');
             } catch (error) {
                 console.error(error);
@@ -101,7 +101,7 @@ export class FollowButtonsSectionComponent implements OnInit {
                 this.recalculateRelationship();
 
                 this.changeDetectorRef.detectChanges();
-                this.relationChanged.emit();
+                this.relationChanged.emit(this.relationship);
                 this.messageService.showSuccess('User is now following you.');
             } catch (error) {
                 console.error(error);

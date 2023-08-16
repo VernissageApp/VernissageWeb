@@ -102,8 +102,13 @@ export class ProfilePage implements OnInit, OnDestroy {
         }
     }
 
-    async onRelationChanged(): Promise<void> {
+    async onRelationChanged(relationship: Relationship): Promise<void> {
         this.user = await this.usersService.profile(this.userName);
+
+        const index = this.following?.findIndex(x => x.id === relationship.userId) ?? -1;
+        if (index > -1) {
+            this.following?.splice(index, 1);
+        }
     }
 
     getMainAttachmentSrc(status: Status): string {
