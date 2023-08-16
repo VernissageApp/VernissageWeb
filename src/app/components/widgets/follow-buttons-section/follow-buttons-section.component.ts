@@ -6,6 +6,7 @@ import { AuthorizationService } from 'src/app/services/authorization/authorizati
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { FollowRequestsService } from 'src/app/services/http/follow-requests.service';
 import { UsersService } from 'src/app/services/http/users.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
     selector: 'app-follow-buttons-section',
@@ -24,6 +25,7 @@ export class FollowButtonsSectionComponent implements OnInit {
     showFollowButton = false;
     showUnfollowButton = false;
     showApproveFollowButton = false;
+    showOpenOriginalProfileButton = false;
 
     constructor(
         private usersService: UsersService,
@@ -34,6 +36,12 @@ export class FollowButtonsSectionComponent implements OnInit {
     }
     ngOnInit(): void {
         this.recalculateRelationship();
+    }
+
+    onOriginalProfile(): void {
+        if (this.user?.activityPubProfile) {
+            window.open(this.user.activityPubProfile, "_blank");
+        }
     }
 
     async onFollow(): Promise<void> {
@@ -167,9 +175,23 @@ export class FollowButtonsSectionComponent implements OnInit {
         return true;
     }
 
+    private shouldShowOpenOriginalProfileButton(): boolean {
+        const signedInUser = this.authorizationService.getUser();
+        if (signedInUser?.id === this.user?.id) {
+            return false;
+        }
+
+        if (this.user?.activityPubProfile?.startsWith(environment.httpSchema + environment.apiService)) {
+            return false;
+        }
+
+        return true;
+    }
+
     private recalculateRelationship(): void {
         this.showFollowButton = this.shouldShowFollowButton();
         this.showUnfollowButton = this.shouldShowUnfollowButton();
         this.showApproveFollowButton = this.shouldShowApproveFollowButton();
+        this.showOpenOriginalProfileButton = this.shouldShowOpenOriginalProfileButton();
     }
 }

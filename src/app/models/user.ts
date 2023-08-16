@@ -17,6 +17,7 @@ export class User {
     public emailWasConfirmed?: boolean;
     public fields?: FlexiField[];
     public bioHtml?: string;
+    public activityPubProfile?: string;
     public statusesCount = 0;
     public followersCount = 0;
     public followingCount = 0;

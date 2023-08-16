@@ -1,9 +1,21 @@
-<div *ngIf="!singleButton" class="flex-row flex-center gap-8">
+<div *ngIf="!singleButton" class="multiple-buttons flex-row flex-center gap-8">
     <button @fadeIn *ngIf="isDuringRelationshipAction" type="button" mat-raised-button aria-label="Processing" disabled="disabled">Processing...</button>
     <button @fadeIn *ngIf="showFollowButton && !isDuringRelationshipAction" type="button" (click)="onFollow()" mat-raised-button color="primary" aria-label="Follow">{{ relationship?.followedBy ? "Follow back" : "Follow" }}</button>
     <button @fadeIn *ngIf="showUnfollowButton && !isDuringRelationshipAction" type="button" (click)="onUnfollow()" mat-raised-button color="accent" aria-label="Unfollow"> {{ relationship?.following ? "Unfollow" : "Cancel request" }}</button>
     <button @fadeIn *ngIf="showApproveFollowButton && !isDuringRelationshipAction" type="button" (click)="onApproveFollow()" mat-raised-button aria-label="Approve follow">Approve follow</button>
     <button @fadeIn *ngIf="showApproveFollowButton && !isDuringRelationshipAction" type="button" (click)="onRejectFollow()" mat-raised-button aria-label="Approve follow">Reject follow</button>
+
+    <ng-container *ngIf="showOpenOriginalProfileButton">
+        <mat-button-toggle-group>
+            <mat-button-toggle [matMenuTriggerFor]="dropdownMenuOne2">
+                <mat-icon>more_vert</mat-icon>
+            </mat-button-toggle>
+        </mat-button-toggle-group>
+        
+        <mat-menu #dropdownMenuOne2="matMenu" xPosition="before">
+            <button *ngIf="showOpenOriginalProfileButton" (click)="onOriginalProfile()" mat-menu-item>Open original profile</button>
+        </mat-menu>
+    </ng-container>
 </div>
 
 <ng-container *ngIf="singleButton && (showFollowButton || showUnfollowButton || showApproveFollowButton || showApproveFollowButton)">

@@ -4,5 +4,12 @@
   }
 
 .mat-button-toggle-checked {
-    background-color: unset !important;
+    background-color: white;
+}
+
+.multiple-buttons {
+  .mat-button-toggle-group {
+    height: 34px;
+    align-items: center;
+  }
 }
