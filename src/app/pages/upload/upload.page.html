@@ -53,8 +53,8 @@
                                     <mat-label>Visibility</mat-label>
                                     <mat-select required [(value)]="visibility">
                                         <mat-option [value]="StatusVisibility.Public">Everyone</mat-option>
-                                        <mat-option [value]="StatusVisibility.Unlisted">Unlisted</mat-option>
-                                        <mat-option [value]="StatusVisibility.Followers">Followers</mat-option>
+                                        <mat-option [value]="StatusVisibility.Followers">Followers only</mat-option>
+                                        <mat-option [value]="StatusVisibility.Mentioned">Mentioned people only</mat-option>
                                     </mat-select>
                                 </mat-form-field>
 

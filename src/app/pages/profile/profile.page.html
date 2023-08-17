@@ -43,15 +43,7 @@
 
             <div [ngSwitch]="profilePageTab" class="padding-bottom-20">
                 <div *ngSwitchDefault>
-                    <div class="gallery-container">
-                        <div class="image-gallery">
-                            <div class="column" *ngFor="let items of gallery">
-                                <div class="image-item" *ngFor="let status of items">
-                                    <img *ngIf="getMainAttachmentSrc(status)" [src]="getMainAttachmentSrc(status)" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <app-gallery [statuses]="statuses"></app-gallery>
                 </div>
                 <div *ngSwitchCase="ProfilePageTab.Following">
                     <app-users-card *ngIf="(following?.length ?? 0) > 0" [users]="following" [relationships]="followingRelationships" (relationChanged)="onRelationChanged($event)"></app-users-card>

@@ -13,6 +13,7 @@ import { PasswordComponent } from './widgets/password/password.component';
 import { AngularMaterialModule } from './angular-material.module';
 import { UsersCardComponent } from './widgets/users-card/users-card.component';
 import { FollowButtonsSectionComponent } from './widgets/follow-buttons-section/follow-buttons-section.component';
+import { GalleryComponent } from './widgets/gallery/gallery.component';
 
 @NgModule({
     declarations: [
@@ -20,7 +21,8 @@ import { FollowButtonsSectionComponent } from './widgets/follow-buttons-section/
         PasswordComponent,
         UploadPhotoComponent,
         UsersCardComponent,
-        FollowButtonsSectionComponent
+        FollowButtonsSectionComponent,
+        GalleryComponent
     ],
     imports: [
         BrowserModule,
@@ -47,7 +49,8 @@ import { FollowButtonsSectionComponent } from './widgets/follow-buttons-section/
         NgOptimizedImage,
         UploadPhotoComponent,
         UsersCardComponent,
-        FollowButtonsSectionComponent
+        FollowButtonsSectionComponent,
+        GalleryComponent
     ]
 })
 export class ComponentsModule { }

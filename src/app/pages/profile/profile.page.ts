@@ -39,9 +39,6 @@ export class ProfilePage implements OnInit, OnDestroy {
     routeParamsSubscription?: Subscription;
     routeUrlSubscription?: Subscription;
 
-    gallery?: Status[][];
-    readonly columns = 3;
-
     constructor(
         private authorizationService: AuthorizationService,
         private usersService: UsersService,
@@ -71,7 +68,6 @@ export class ProfilePage implements OnInit, OnDestroy {
             this.followers = [];
             this.following = [];
             this.statuses = [];
-            this.gallery = [];
 
             [this.user, this.latestFollowers] = await Promise.all([
                 this.usersService.profile(userName),
@@ -108,36 +104,6 @@ export class ProfilePage implements OnInit, OnDestroy {
         const index = this.following?.findIndex(x => x.id === relationship.userId) ?? -1;
         if (index > -1) {
             this.following?.splice(index, 1);
-        }
-    }
-
-    getMainAttachmentSrc(status: Status): string {
-        if (!status.attachments) {
-            return '';
-        }
-
-        if (status.attachments?.length === 0) {
-            return '';
-        }
-
-        return status.attachments[0].smallFile?.url ?? '';
-    }
-
-    private buildGallery(): void {
-        this.gallery = [];
-
-        for(let i = 0; i < this.columns; i++) {
-            this.gallery?.push([]);
-        }
-
-        if (!this.statuses) {
-            return;
-        }
-
-        let currentColumn = 0;
-        for (let status of this.statuses) {
-            this.gallery[currentColumn].push(status);
-            currentColumn = (currentColumn + 1) % this.columns;
         }
     }
 
@@ -181,7 +147,6 @@ export class ProfilePage implements OnInit, OnDestroy {
         } else {
             this.profilePageTab = ProfilePageTab.Statuses;
             this.statuses = await this.statusesService.get();
-            this.buildGallery();
         }
     }
 }

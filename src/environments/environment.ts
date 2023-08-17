@@ -5,8 +5,8 @@
 export const environment = {
     production: false,
     recaptchaKey: '',
-    httpSchema: 'https://',
-    apiService: 'vernissage.photos'
+    httpSchema: 'http://',
+    apiService: 'localhost:8080'
   };
 
 /*

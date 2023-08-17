@@ -1,0 +1,9 @@
+<div class="gallery-container">
+    <div class="image-gallery">
+        <div class="column" *ngFor="let items of gallery">
+            <div class="image-item" *ngFor="let status of items">
+                <img *ngIf="getMainAttachmentSrc(status)" [src]="getMainAttachmentSrc(status)" />
+            </div>
+        </div>
+    </div>
+</div>
