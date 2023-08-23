@@ -126,11 +126,13 @@ export class ProfilePage implements OnInit, OnDestroy {
 
     private async loadPageData(): Promise<void> {
         const currentUrl = this.router.routerState.snapshot.url;
+        const signedInUser = this.authorizationService.getUser();
+
         if (currentUrl.includes('/following')) {
             this.profilePageTab = ProfilePageTab.Following;
             const internalFollowing = await this.usersService.following(this.userName);
 
-            if ((internalFollowing?.length ?? 0) !== 0) {
+            if (signedInUser && (internalFollowing?.length ?? 0) !== 0) {
                 this.followingRelationships = await this.relationshipsService.getAll(internalFollowing.map(x => x.id ?? ''))
             }
 
@@ -139,14 +141,14 @@ export class ProfilePage implements OnInit, OnDestroy {
             this.profilePageTab = ProfilePageTab.Followers;
             const internalFollowers = await this.usersService.followers(this.userName);
 
-            if ((internalFollowers?.length ?? 0) !== 0) {
+            if (signedInUser && (internalFollowers?.length ?? 0) !== 0) {
                 this.followersRelationships = await this.relationshipsService.getAll(internalFollowers.map(x => x.id ?? ''))
             }
 
             this.followers = internalFollowers;
         } else {
             this.profilePageTab = ProfilePageTab.Statuses;
-            this.statuses = await this.statusesService.get();
+            this.statuses = await this.usersService.statuses(this.userName);
         }
     }
 }

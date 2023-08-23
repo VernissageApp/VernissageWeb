@@ -5,6 +5,7 @@ import {firstValueFrom} from 'rxjs';
 import {environment} from 'src/environments/environment';
 import {User} from 'src/app/models/user';
 import { Relationship } from 'src/app/models/relationship';
+import { Status } from 'src/app/models/status';
 
 @Injectable({
     providedIn: 'root'
@@ -50,6 +51,11 @@ export class UsersService {
 
     public async followers(userName: string, page = 0, size = 100): Promise<User[]> {
         const event$ = this.httpClient.get<User[]>(this.apiService +  '/api/v1/users/' + userName + `/followers?page=${page}&size${size}`);
+        return await firstValueFrom(event$);
+    }
+
+    public async statuses(userName: string, page = 0, size = 100): Promise<Status[]> {
+        const event$ = this.httpClient.get<Status[]>(this.apiService +  '/api/v1/users/' + userName + `/statuses?page=${page}&size${size}`);
         return await firstValueFrom(event$);
     }
 }
