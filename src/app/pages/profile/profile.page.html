@@ -29,7 +29,7 @@
                                     <div class="field-value" [innerHTML]="item.valueHtml"></div>
                                 </div>
                                 <div class="margin-left-10">
-                                    <mat-icon *ngIf="item.isVerified" class="text-success margin-top-5">check_circle</mat-icon>
+                                    <mat-icon *ngIf="item.isVerified" class="text-success margin-top-5" matTooltip="Verified">check_circle</mat-icon>
                                 </div>
                             </div>
                             <mat-divider *ngIf="(i + 1) < (user.fields?.length ?? 0)" class="padding-bottom-5"></mat-divider>
