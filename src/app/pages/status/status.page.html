@@ -1,0 +1,87 @@
+<div *ngIf="status && isReady" @fadeIn>
+    <div class="photoMargin"></div>
+    <div class="photoContainer">
+        <img [src]="status.attachments![0].smallFile?.url" />
+    </div>
+    <div class="photoMargin"></div>
+
+    <div class="padding-30">
+        <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
+            <mat-card class="flex-grow-2" appearance="outlined">
+                <!-- <mat-card-header>
+                    <mat-card-title>
+                        Your personal information
+                    </mat-card-title>
+                </mat-card-header> -->
+                <mat-card-content>
+                    <div>
+                        <button mat-icon-button class="margin-right-10" color="primary" aria-label="Boost">
+                            <mat-icon>swap_vert</mat-icon> <!-- swap_vertical_circle -->
+                        </button>
+
+                        <button mat-icon-button class="margin-right-10" color="primary" aria-label="Like">
+                            <mat-icon>star_border</mat-icon> <!-- star -->
+                        </button>
+
+                        <button mat-icon-button class="margin-right-10" color="primary" aria-label="Bookmark">
+                            <mat-icon>bookmark_border</mat-icon> <!-- bookmark -->
+                        </button>
+
+                        <button mat-icon-button [matMenuTriggerFor]="menu" class="margin-right-10" color="primary" aria-label="More options">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item>
+                                <mat-icon>swap_vertical_circle</mat-icon>
+                                <span>Boosted by</span>
+                            </button>
+                            <button mat-menu-item>
+                                <mat-icon>star</mat-icon>
+                                <span>Favourited by</span>
+                            </button>
+                            <mat-divider></mat-divider>
+                            <button mat-menu-item>
+                                <mat-icon>warning</mat-icon>
+                                <span>Report</span>
+                            </button>
+                          </mat-menu>
+                    </div>
+
+                    <app-user-card [user]="status.user"></app-user-card>
+
+                    <div class="note margin-top-10 margin-bottom-20" [innerHTML]="status.noteHtml"></div>
+
+                    <div *ngIf="getExif(0)" class="exif">
+                        <div *ngIf="getExif(0)?.make || getExif(0)?.model" class="margin-bottom-10">
+                            <mat-icon class="margin-right-10" inline="true">camera_alt</mat-icon>
+                            <span class="exif-label">
+                                <span *ngIf="getExif(0)?.make">{{ getExif(0)?.make }}</span> <span *ngIf="getExif(0)?.model">{{ getExif(0)?.model }}</span>
+                            </span>
+                        </div>
+
+                        <div *ngIf="getExif(0)?.lens" class="margin-bottom-10">
+                            <mat-icon class="margin-right-10" inline="true">camera</mat-icon>
+                            <span *ngIf="getExif(0)?.lens" class="exif-label">{{ getExif(0)?.lens }}</span>
+                        </div>
+
+                        <div *ngIf="getExif(0)?.focalLenIn35mmFilm || getExif(0)?.fNumber || getExif(0)?.exposureTime || getExif(0)?.photographicSensitivity" class="margin-bottom-10">
+                            <mat-icon class="margin-right-10" inline="true">brightness_7</mat-icon>
+                            <span *ngIf="getExif(0)?.focalLenIn35mmFilm" class="margin-right-15 exif-label">{{ getExif(0)?.focalLenIn35mmFilm }}mm</span>
+                            <span *ngIf="getExif(0)?.fNumber" class="margin-right-15 exif-label">{{ getExif(0)?.fNumber }}</span>
+                            <span *ngIf="getExif(0)?.exposureTime" class="margin-right-15 exif-label">{{ getExif(0)?.exposureTime }}s</span>
+                            <span *ngIf="getExif(0)?.photographicSensitivity" class="margin-right-15 exif-label">ISO {{ getExif(0)?.photographicSensitivity }}</span>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+            <mat-card appearance="outlined">
+                <mat-card-header>
+                    <mat-card-title>Comments</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    Ble ble
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>

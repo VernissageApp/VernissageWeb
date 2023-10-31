@@ -1,4 +1,16 @@
 <div @fadeIn>
+
+    <div class="flex-row flex-align-center flex-space-between margin-bottom-10">
     <h1 class="padding-30">Timeline</h1>
+
+    <section class="padding-30 small-button-toggle">
+        <mat-button-toggle-group [(ngModel)]="timeline" aria-label="Font Style">
+          <mat-button-toggle value="home"><mat-icon>home</mat-icon> Home</mat-button-toggle>
+          <mat-button-toggle value="local"><mat-icon>location_city</mat-icon> Local</mat-button-toggle>
+          <mat-button-toggle value="global"><mat-icon>public</mat-icon> Global</mat-button-toggle>
+        </mat-button-toggle-group>
+      </section>
+    </div>
+
     <app-gallery [statuses]="statuses"></app-gallery>
 </div>

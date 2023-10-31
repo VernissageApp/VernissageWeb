@@ -39,8 +39,6 @@ export class GalleryComponent implements OnChanges {
     }
 
     getMainAttachmentSrc(status: Status): string {
-        console.log(status);
-
         if (!status.attachments) {
             return '';
         }

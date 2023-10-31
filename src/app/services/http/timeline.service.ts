@@ -17,8 +17,13 @@ export class TimelineService {
     constructor(private httpClient: HttpClient) {
     }
 
-    public async home(page: number, size: number): Promise<Status[]> {
-        const event$ = this.httpClient.get<Status[]>(this.apiService +  `/api/v1/timelines/home?page=${page}&size=${size}`);
+    public async home(minId?: string, maxId?: string, sinceId?: string, limit?: number): Promise<Status[]> {
+        const event$ = this.httpClient.get<Status[]>(this.apiService +  `/api/v1/timelines/home?minId=${minId}&maxId=${maxId}&sinceId=${sinceId}&limit=${limit}`);
+        return await firstValueFrom(event$);
+    }
+
+    public async public(minId?: string, maxId?: string, sinceId?: string, limit?: number): Promise<Status[]> {
+        const event$ = this.httpClient.get<Status[]>(this.apiService +  `/api/v1/timelines/public?minId=${minId}&maxId=${maxId}&sinceId=${sinceId}&limit=${limit}`);
         return await firstValueFrom(event$);
     }
 }

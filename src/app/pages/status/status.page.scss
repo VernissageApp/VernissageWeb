@@ -1,0 +1,28 @@
+.photoMargin {
+    height: 20px;
+    background-color: #202020;
+}
+
+.photoContainer {
+    width: 100%;
+    height: 600px;
+    background-color: #202020;
+
+    img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        height: 100%;
+    }
+}
+
+.exif {
+    mat-icon {
+        transform: scale(1.6);
+        color: rgb(113, 113, 113);
+    }
+
+    .exif-label {
+        vertical-align: top;
+    }
+}

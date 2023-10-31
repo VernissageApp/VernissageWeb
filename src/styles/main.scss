@@ -151,3 +151,6 @@ $vernissage-toolbar-theme: mat.define-light-theme((
 @include material-app-theme($vernissage-theme);
 @include messages-theme($vernissage-theme);
 
+.small-button-toggle {
+  @include mat.button-toggle-density(-3);
+}

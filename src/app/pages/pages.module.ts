@@ -20,6 +20,7 @@ import { ConfirmEmailPage } from './confirm-email/confirm-email.page';
 import { AccountPage } from './account/account.page';
 import { LoginCallbackPage } from "./login-callback/login-callback.page";
 import { SearchPage } from './search/search.page';
+import { StatusPage } from './status/status.page';
 
 @NgModule({
     imports: [
@@ -43,7 +44,8 @@ import { SearchPage } from './search/search.page';
         AccountPage,
         ProfilePage,
         UploadPage,
-        SearchPage
+        SearchPage,
+        StatusPage
     ],
     exports: [
         ComponentsModule,

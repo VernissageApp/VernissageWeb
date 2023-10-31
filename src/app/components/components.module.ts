@@ -14,12 +14,14 @@ import { AngularMaterialModule } from './angular-material.module';
 import { UsersCardComponent } from './widgets/users-card/users-card.component';
 import { FollowButtonsSectionComponent } from './widgets/follow-buttons-section/follow-buttons-section.component';
 import { GalleryComponent } from './widgets/gallery/gallery.component';
+import { UserCardComponent } from './widgets/user-card/user-card.component';
 
 @NgModule({
     declarations: [
         HeaderComponent,
         PasswordComponent,
         UploadPhotoComponent,
+        UserCardComponent,
         UsersCardComponent,
         FollowButtonsSectionComponent,
         GalleryComponent
@@ -49,6 +51,7 @@ import { GalleryComponent } from './widgets/gallery/gallery.component';
         NgOptimizedImage,
         UploadPhotoComponent,
         UsersCardComponent,
+        UserCardComponent,
         FollowButtonsSectionComponent,
         GalleryComponent
     ]

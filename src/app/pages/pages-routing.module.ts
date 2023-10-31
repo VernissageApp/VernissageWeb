@@ -18,6 +18,7 @@ import { ResetPasswordPage } from './reset-password/reset-password.page';
 import { ConfirmEmailPage } from './confirm-email/confirm-email.page';
 import { AccountPage } from './account/account.page';
 import { SearchPage } from './search/search.page';
+import { StatusPage } from './status/status.page';
 
 const routes: Routes = [
     { path: 'login', component: LoginPage, canActivate: [ LoggedOutGuardService ] },
@@ -38,6 +39,7 @@ const routes: Routes = [
         { path: 'following', component: ProfilePage },
         { path: 'followers', component: ProfilePage },
     ] },
+    { path: 'statuses/:id', component: StatusPage },
     { path: '', redirectTo: '/home', pathMatch: 'full' },
     { path: '**', component: PageNotFoundPage }
 ];

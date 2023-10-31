@@ -1,4 +1,4 @@
-import { HttpStatusCode } from '@angular/common/http';
+import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { ErrorHandler, Injector, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { ForbiddenError } from 'src/app/errors/forbidden-error';
@@ -35,7 +35,7 @@ export class GlobalErrorHandler implements ErrorHandler {
 
             const httpResponse = this.getErrorResponse(error);
             if (httpResponse) {
-                switch (httpResponse.statusCode) {
+                switch (httpResponse.status) {
                     case 0:
                         await this.router.navigate(['/connection-lost'], { skipLocationChange: true });
                         break;
@@ -59,9 +59,8 @@ export class GlobalErrorHandler implements ErrorHandler {
         });
     }
 
-    private getErrorResponse(error: any): IHttpResponse {
-        const data = error.rejection ? error.rejection.data : error.data;
-        return data && data[0] ? data[0].response : null;
+    private getErrorResponse(error: any): HttpErrorResponse {
+        return error.rejection;
     }
 
     private isObjectNotFoundError(error: any): boolean {

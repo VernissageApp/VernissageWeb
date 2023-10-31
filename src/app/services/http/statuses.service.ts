@@ -23,8 +23,13 @@ export class StatusesService {
         return await firstValueFrom(event$);
     }
 
-    public async get(): Promise<Status[]> {
+    public async getAll(): Promise<Status[]> {
         const event$ = this.httpClient.get<Status[]>(this.apiService + '/api/v1/statuses');
+        return await firstValueFrom(event$);
+    }
+
+    public async get(id: string): Promise<Status> {
+        const event$ = this.httpClient.get<Status>(this.apiService + '/api/v1/statuses/' + id);
         return await firstValueFrom(event$);
     }
 }

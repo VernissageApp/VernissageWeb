@@ -5,7 +5,6 @@ import { PageNotFoundError } from 'src/app/errors/page-not-found-error';
 import { Status } from 'src/app/models/status';
 import { User } from 'src/app/models/user';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
-import { StatusesService } from 'src/app/services/http/statuses.service';
 import { UsersService } from 'src/app/services/http/users.service';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { Relationship } from 'src/app/models/relationship';
@@ -42,7 +41,6 @@ export class ProfilePage implements OnInit, OnDestroy {
     constructor(
         private authorizationService: AuthorizationService,
         private usersService: UsersService,
-        private statusesService: StatusesService,
         private relationshipsService: RelationshipsService,
         private router: Router,
         private activatedRoute: ActivatedRoute) {
