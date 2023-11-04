@@ -97,7 +97,7 @@ export class UploadPage implements OnInit {
             status.visibility = StatusVisibility.Public;
             status.commentsDisabled = this.commentsDisabled;
             status.sensitive = this.isSensitive;
-            status.contentWarning = this.contentWarning;
+            status.contentWarning = this.contentWarning === '' ? undefined : this.contentWarning;
 
             for(let photo of this.photos) {
                 status.attachmentIds.push(photo.id);

@@ -22,8 +22,8 @@ export class TimelineService {
         return await firstValueFrom(event$);
     }
 
-    public async public(minId?: string, maxId?: string, sinceId?: string, limit?: number): Promise<Status[]> {
-        const event$ = this.httpClient.get<Status[]>(this.apiService +  `/api/v1/timelines/public?minId=${minId}&maxId=${maxId}&sinceId=${sinceId}&limit=${limit}`);
+    public async public(minId?: string, maxId?: string, sinceId?: string, limit?: number, onlyLocal?: boolean): Promise<Status[]> {
+        const event$ = this.httpClient.get<Status[]>(this.apiService +  `/api/v1/timelines/public?minId=${minId}&maxId=${maxId}&sinceId=${sinceId}&limit=${limit}&onlyLocal=${onlyLocal}`);
         return await firstValueFrom(event$);
     }
 }

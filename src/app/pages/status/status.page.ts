@@ -1,11 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { Subscription } from 'rxjs';
-import { PageNotFoundError } from 'src/app/errors/page-not-found-error';
 import { StatusesService } from 'src/app/services/http/statuses.service';
 import { ActivatedRoute } from '@angular/router';
 import { Status } from 'src/app/models/status';
 import { Exif } from 'src/app/models/exif';
+import { Location } from 'src/app/models/location';
 
 @Component({
     selector: 'app-status',
@@ -39,10 +39,40 @@ export class StatusPage implements OnInit, OnDestroy {
         this.routeParamsSubscription?.unsubscribe();
     }
 
+    getAltStatus(index: number): String | undefined {
+        const attachment = this.status?.attachments?.at(index);
+        if (attachment) {
+            return attachment.description;
+        }
+
+        return undefined;        
+    }
+
     getExif(index: number): Exif | undefined {
         const attachment = this.status?.attachments?.at(index);
         if (attachment) {
             return attachment.metadata?.exif;
+        }
+
+        return undefined;
+    }
+
+    getLocation(index: number): Location | undefined {
+        const attachment = this.status?.attachments?.at(index);
+        if (attachment) {
+            return attachment.location;
+        }
+
+        return undefined;
+    }
+
+    getMapsUrl(index: number): String | undefined {
+        const location = this.getLocation(index);
+        if (location) {
+            const latitude = location.latitude?.replace(',', '.');
+            const longitude  = location.longitude?.replace(',', '.');
+            
+            return `https://www.openstreetmap.org/?mlat=${latitude}&mlon=${longitude}#map=10/${latitude}/${longitude}`;
         }
 
         return undefined;

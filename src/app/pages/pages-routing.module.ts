@@ -37,8 +37,9 @@ const routes: Routes = [
     { path: 'search', component: SearchPage, canActivate: [ AuthorizationGuardService ] },
     { path: ':userName', component: ProfilePage, children: [
         { path: 'following', component: ProfilePage },
-        { path: 'followers', component: ProfilePage },
-    ] },
+        { path: 'followers', component: ProfilePage }
+    ]},
+    { path: ':userName/:id', component: StatusPage },
     { path: 'statuses/:id', component: StatusPage },
     { path: '', redirectTo: '/home', pathMatch: 'full' },
     { path: '**', component: PageNotFoundPage }

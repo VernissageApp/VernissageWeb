@@ -51,21 +51,35 @@
 
                     <div class="note margin-top-10 margin-bottom-20" [innerHTML]="status.noteHtml"></div>
 
+                    <div *ngIf="getAltStatus(0)" class="flex-row alt margin-bottom-10">
+                        <div>
+                            <mat-icon class="margin-right-10" inline="true" matTooltip="Alt">remove_red_eye</mat-icon>
+                        </div>
+                        <div>
+                            <span class="alt-label text-muted">{{ getAltStatus(0) }}</span>
+                        </div>
+                    </div>
+
+                    <div *ngIf="getLocation(0)" class="location margin-bottom-10">
+                        <mat-icon class="margin-right-10" inline="true" matTooltip="Place">place</mat-icon>
+                        <span *ngIf="getLocation(0)?.name" class="location-label"><a class="dashed" target="_blank" [href]="getMapsUrl(0)">{{ getLocation(0)?.name }}</a> ({{ getLocation(0)?.country?.name }})</span>
+                    </div>
+
                     <div *ngIf="getExif(0)" class="exif">
                         <div *ngIf="getExif(0)?.make || getExif(0)?.model" class="margin-bottom-10">
-                            <mat-icon class="margin-right-10" inline="true">camera_alt</mat-icon>
+                            <mat-icon class="margin-right-10" inline="true" matTooltip="Camera">camera_alt</mat-icon>
                             <span class="exif-label">
-                                <span *ngIf="getExif(0)?.make">{{ getExif(0)?.make }}</span> <span *ngIf="getExif(0)?.model">{{ getExif(0)?.model }}</span>
+                                <span *ngIf="getExif(0)?.make">{{ getExif(0)?.make }}</span>&nbsp;<span *ngIf="getExif(0)?.model">{{ getExif(0)?.model }}</span>
                             </span>
                         </div>
 
                         <div *ngIf="getExif(0)?.lens" class="margin-bottom-10">
-                            <mat-icon class="margin-right-10" inline="true">camera</mat-icon>
+                            <mat-icon class="margin-right-10" inline="true" matTooltip="Lens">camera</mat-icon>
                             <span *ngIf="getExif(0)?.lens" class="exif-label">{{ getExif(0)?.lens }}</span>
                         </div>
 
                         <div *ngIf="getExif(0)?.focalLenIn35mmFilm || getExif(0)?.fNumber || getExif(0)?.exposureTime || getExif(0)?.photographicSensitivity" class="margin-bottom-10">
-                            <mat-icon class="margin-right-10" inline="true">brightness_7</mat-icon>
+                            <mat-icon class="margin-right-10" inline="true" matTooltip="Exposure">brightness_7</mat-icon>
                             <span *ngIf="getExif(0)?.focalLenIn35mmFilm" class="margin-right-15 exif-label">{{ getExif(0)?.focalLenIn35mmFilm }}mm</span>
                             <span *ngIf="getExif(0)?.fNumber" class="margin-right-15 exif-label">{{ getExif(0)?.fNumber }}</span>
                             <span *ngIf="getExif(0)?.exposureTime" class="margin-right-15 exif-label">{{ getExif(0)?.exposureTime }}s</span>

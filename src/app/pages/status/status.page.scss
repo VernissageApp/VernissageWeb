@@ -16,13 +16,35 @@
     }
 }
 
+.location {
+    mat-icon {
+        transform: scale(1.6);
+        color: #202020;
+    }
+
+    .location-label {
+        vertical-align: top;
+    } 
+}
+
 .exif {
     mat-icon {
         transform: scale(1.6);
-        color: rgb(113, 113, 113);
+        color: #202020;
     }
 
     .exif-label {
+        vertical-align: top;
+    }
+}
+
+.alt {
+    mat-icon {
+        transform: scale(1.6);
+        color: #202020;
+    }
+
+    .alt-label {
         vertical-align: top;
     }
 }
