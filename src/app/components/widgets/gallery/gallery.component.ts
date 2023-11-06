@@ -39,14 +39,16 @@ export class GalleryComponent implements OnChanges {
     }
 
     getMainAttachmentSrc(status: Status): string {
-        if (!status.attachments) {
+        const mainStatus = status.reblog ?? status;
+
+        if (!mainStatus.attachments) {
             return '';
         }
     
-        if (status.attachments?.length === 0) {
+        if (mainStatus.attachments?.length === 0) {
             return '';
         }
     
-        return status.attachments[0].smallFile?.url ?? '';
+        return mainStatus.attachments[0].smallFile?.url ?? '';
     }
 }

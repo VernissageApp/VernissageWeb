@@ -19,6 +19,7 @@ import { ConfirmEmailPage } from './confirm-email/confirm-email.page';
 import { AccountPage } from './account/account.page';
 import { SearchPage } from './search/search.page';
 import { StatusPage } from './status/status.page';
+import { NotificationsPage } from './notifications/notifications.page';
 
 const routes: Routes = [
     { path: 'login', component: LoginPage, canActivate: [ LoggedOutGuardService ] },
@@ -35,6 +36,7 @@ const routes: Routes = [
     { path: 'page-not-found', component: PageNotFoundPage },
     { path: 'upload', component: UploadPage, canActivate: [ AuthorizationGuardService ] },
     { path: 'search', component: SearchPage, canActivate: [ AuthorizationGuardService ] },
+    { path: 'notifications', component: NotificationsPage, canActivate: [ AuthorizationGuardService ] },
     { path: ':userName', component: ProfilePage, children: [
         { path: 'following', component: ProfilePage },
         { path: 'followers', component: ProfilePage }

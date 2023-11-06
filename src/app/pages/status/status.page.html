@@ -1,70 +1,89 @@
-<div *ngIf="status && isReady" @fadeIn>
+<div *ngIf="mainStatus && isReady" @fadeIn>
     <div class="photoMargin"></div>
     <div class="photoContainer">
-        <img [src]="status.attachments![0].smallFile?.url" />
+        <img [src]="mainStatus.attachments![0].smallFile?.url" />
     </div>
     <div class="photoMargin"></div>
 
     <div class="padding-30">
         <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
             <mat-card class="flex-grow-2" appearance="outlined">
-                <!-- <mat-card-header>
-                    <mat-card-title>
-                        Your personal information
-                    </mat-card-title>
-                </mat-card-header> -->
                 <mat-card-content>
-                    <div>
-                        <button mat-icon-button class="margin-right-10" color="primary" aria-label="Boost">
-                            <mat-icon>swap_vert</mat-icon> <!-- swap_vertical_circle -->
-                        </button>
 
-                        <button mat-icon-button class="margin-right-10" color="primary" aria-label="Like">
-                            <mat-icon>star_border</mat-icon> <!-- star -->
-                        </button>
+                    <div class="flex-row flex-responsive flex-space-between">
+                        <!-- Actions panel -->
+                        <div>
+                            <button *ngIf="!mainStatus.reblogged" mat-icon-button class="margin-right-10" color="primary" matTooltip="Boost" matTooltipPosition="above" aria-label="Boost" (click)="reblog()">
+                                <mat-icon>swap_vert</mat-icon>
+                            </button>
 
-                        <button mat-icon-button class="margin-right-10" color="primary" aria-label="Bookmark">
-                            <mat-icon>bookmark_border</mat-icon> <!-- bookmark -->
-                        </button>
-
-                        <button mat-icon-button [matMenuTriggerFor]="menu" class="margin-right-10" color="primary" aria-label="More options">
-                            <mat-icon>more_vert</mat-icon>
-                        </button>
-                        <mat-menu #menu="matMenu">
-                            <button mat-menu-item>
+                            <button *ngIf="mainStatus.reblogged" mat-icon-button class="margin-right-10" color="primary" matTooltip="Unboost" matTooltipPosition="above" aria-label="Unboost" (click)="unreblog()">
                                 <mat-icon>swap_vertical_circle</mat-icon>
-                                <span>Boosted by</span>
                             </button>
-                            <button mat-menu-item>
+
+                            <button *ngIf="!mainStatus.favourited" mat-icon-button class="margin-right-10" color="primary" matTooltip="Like" matTooltipPosition="above" aria-label="Like" (click)="favourite()">
+                                <mat-icon>star_border</mat-icon>
+                            </button>
+
+                            <button *ngIf="mainStatus.favourited" mat-icon-button class="margin-right-10" color="primary" matTooltip="Like" matTooltipPosition="above" aria-label="Like" (click)="unfavourite()">
                                 <mat-icon>star</mat-icon>
-                                <span>Favourited by</span>
                             </button>
-                            <mat-divider></mat-divider>
-                            <button mat-menu-item>
-                                <mat-icon>warning</mat-icon>
-                                <span>Report</span>
+
+                            <button *ngIf="!mainStatus.bookmarked" mat-icon-button class="margin-right-10" color="primary" matTooltip="Bookmark" matTooltipPosition="above" aria-label="Bookmark" (click)="bookmark()">
+                                <mat-icon>bookmark_border</mat-icon>
                             </button>
-                          </mat-menu>
+
+                            <button *ngIf="mainStatus.bookmarked" mat-icon-button class="margin-right-10" color="primary" matTooltip="Bookmark" matTooltipPosition="above" aria-label="Bookmark" (click)="unbookmark()">
+                                <mat-icon>bookmark</mat-icon>
+                            </button>
+
+                            <button mat-icon-button [matMenuTriggerFor]="menu" class="margin-right-10" color="primary" aria-label="More options">
+                                <mat-icon>more_vert</mat-icon>
+                            </button>
+                            <mat-menu #menu="matMenu">
+                                <button mat-menu-item>
+                                    <mat-icon>swap_vertical_circle</mat-icon>
+                                    <span>Boosted by</span>
+                                </button>
+                                <button mat-menu-item>
+                                    <mat-icon>star</mat-icon>
+                                    <span>Favourited by</span>
+                                </button>
+                                <mat-divider></mat-divider>
+                                <button mat-menu-item>
+                                    <mat-icon>warning</mat-icon>
+                                    <span>Report</span>
+                                </button>
+                            </mat-menu>
+                        </div>
+
+                        <!-- Reblog user card -->
+                        <app-mini-user-card *ngIf="status?.reblog" [user]="status?.user"></app-mini-user-card>
                     </div>
 
-                    <app-user-card [user]="status.user"></app-user-card>
+                    <!-- User card -->
+                    <app-user-card [user]="mainStatus.user"></app-user-card>
 
-                    <div class="note margin-top-10 margin-bottom-20" [innerHTML]="status.noteHtml"></div>
+                    <!-- Note -->
+                    <div class="note margin-top-10 margin-bottom-20" [innerHTML]="mainStatus.noteHtml"></div>
 
+                    <!-- Alt text -->
                     <div *ngIf="getAltStatus(0)" class="flex-row alt margin-bottom-10">
                         <div>
                             <mat-icon class="margin-right-10" inline="true" matTooltip="Alt">remove_red_eye</mat-icon>
                         </div>
                         <div>
-                            <span class="alt-label text-muted">{{ getAltStatus(0) }}</span>
+                            <span class="alt-label">{{ getAltStatus(0) }}</span>
                         </div>
                     </div>
 
+                    <!-- Location -->
                     <div *ngIf="getLocation(0)" class="location margin-bottom-10">
                         <mat-icon class="margin-right-10" inline="true" matTooltip="Place">place</mat-icon>
                         <span *ngIf="getLocation(0)?.name" class="location-label"><a class="dashed" target="_blank" [href]="getMapsUrl(0)">{{ getLocation(0)?.name }}</a> ({{ getLocation(0)?.country?.name }})</span>
                     </div>
 
+                    <!-- Exif -->
                     <div *ngIf="getExif(0)" class="exif">
                         <div *ngIf="getExif(0)?.make || getExif(0)?.model" class="margin-bottom-10">
                             <mat-icon class="margin-right-10" inline="true" matTooltip="Camera">camera_alt</mat-icon>
@@ -85,6 +104,21 @@
                             <span *ngIf="getExif(0)?.exposureTime" class="margin-right-15 exif-label">{{ getExif(0)?.exposureTime }}s</span>
                             <span *ngIf="getExif(0)?.photographicSensitivity" class="margin-right-15 exif-label">ISO {{ getExif(0)?.photographicSensitivity }}</span>
                         </div>
+                    </div>
+
+                    <!-- Status properties -->
+                    <div class="flex-row properties text-muted">
+                        <div class="margin-right-15" matTooltip="Published date" aria-label="Published date">{{ mainStatus.createdAt | date: 'short' }}</div>
+                        <ng-container [ngSwitch]="mainStatus.visibility">
+                            <mat-icon class="margin-right-15" *ngSwitchCase="statusVisibility.Public" matTooltip="Public">public</mat-icon>
+                            <mat-icon class="margin-right-15" *ngSwitchCase="statusVisibility.Followers" matTooltip="Followers">people</mat-icon>
+                            <mat-icon class="margin-right-15" *ngSwitchCase="statusVisibility.Mentioned" matTooltip="Mentioned">person</mat-icon>
+                        </ng-container>
+                        <div *ngIf="mainStatus.application" class="margin-right-15" matTooltip="Application" aria-label="Application">{{ mainStatus.application }}</div>
+                        <mat-icon matTooltip="Number of reblogs" aria-label="Number of reblogs">swap_vertical_circle</mat-icon>
+                        <div  class="margin-right-15">{{ mainStatus.reblogsCount }}</div>
+                        <mat-icon matTooltip="Number of likes" aria-label="Number of likes">star</mat-icon>
+                        <div>{{ mainStatus.favouritesCount }}</div>
                     </div>
                 </mat-card-content>
             </mat-card>

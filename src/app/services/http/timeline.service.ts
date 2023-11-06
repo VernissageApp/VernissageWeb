@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
-import { Location } from 'src/app/models/location';
 import { environment } from 'src/environments/environment';
 import { Status } from 'src/app/models/status';
 

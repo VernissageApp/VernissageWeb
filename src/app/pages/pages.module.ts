@@ -21,6 +21,7 @@ import { AccountPage } from './account/account.page';
 import { LoginCallbackPage } from "./login-callback/login-callback.page";
 import { SearchPage } from './search/search.page';
 import { StatusPage } from './status/status.page';
+import { NotificationsPage } from './notifications/notifications.page';
 
 @NgModule({
     imports: [
@@ -45,7 +46,8 @@ import { StatusPage } from './status/status.page';
         ProfilePage,
         UploadPage,
         SearchPage,
-        StatusPage
+        StatusPage,
+        NotificationsPage
     ],
     exports: [
         ComponentsModule,
@@ -65,7 +67,8 @@ import { StatusPage } from './status/status.page';
         AccountPage,
         ProfilePage,
         UploadPage,
-        SearchPage
+        SearchPage,
+        NotificationsPage
     ]
 })
 export class PagesModule { }

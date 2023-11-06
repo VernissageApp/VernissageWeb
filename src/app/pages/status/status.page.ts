@@ -6,6 +6,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Status } from 'src/app/models/status';
 import { Exif } from 'src/app/models/exif';
 import { Location } from 'src/app/models/location';
+import { StatusVisibility } from 'src/app/models/status-visibility';
+import { MessagesService } from 'src/app/services/common/messages.service';
 
 @Component({
     selector: 'app-status',
@@ -14,13 +16,16 @@ import { Location } from 'src/app/models/location';
     animations: fadeInAnimation
 })
 export class StatusPage implements OnInit, OnDestroy {
+    readonly statusVisibility = StatusVisibility;
     isReady = false;
 
     status?: Status;
+    mainStatus?: Status;
     routeParamsSubscription?: Subscription;
 
     constructor(
         private statusesService: StatusesService,
+        private messageService: MessagesService,
         private activatedRoute: ActivatedRoute) {
     }
 
@@ -40,7 +45,7 @@ export class StatusPage implements OnInit, OnDestroy {
     }
 
     getAltStatus(index: number): String | undefined {
-        const attachment = this.status?.attachments?.at(index);
+        const attachment = this.mainStatus?.attachments?.at(index);
         if (attachment) {
             return attachment.description;
         }
@@ -49,7 +54,7 @@ export class StatusPage implements OnInit, OnDestroy {
     }
 
     getExif(index: number): Exif | undefined {
-        const attachment = this.status?.attachments?.at(index);
+        const attachment = this.mainStatus?.attachments?.at(index);
         if (attachment) {
             return attachment.metadata?.exif;
         }
@@ -58,7 +63,7 @@ export class StatusPage implements OnInit, OnDestroy {
     }
 
     getLocation(index: number): Location | undefined {
-        const attachment = this.status?.attachments?.at(index);
+        const attachment = this.mainStatus?.attachments?.at(index);
         if (attachment) {
             return attachment.location;
         }
@@ -78,7 +83,93 @@ export class StatusPage implements OnInit, OnDestroy {
         return undefined;
     }
 
+    getCreatedAt(): Date | undefined {
+        if (this.mainStatus?.createdAt) {
+            return new Date(this.mainStatus.createdAt);
+        }
+
+        return undefined;
+    }
+
+    async reblog(): Promise<void> {
+        try {
+            if (this.mainStatus) {
+                this.mainStatus = await this.statusesService.reblog(this.mainStatus.id)
+                this.messageService.showSuccess('Status boosted.');
+            }
+        } catch (error) {
+            console.error(error);
+            this.messageService.showServerError(error);
+        }
+    }
+
+    async unreblog(): Promise<void> {
+        try {
+            if (this.mainStatus) {
+                this.mainStatus = await this.statusesService.unreblog(this.mainStatus.id)
+                this.messageService.showSuccess('Status unboosted.');
+            }
+        } catch (error) {
+            console.error(error);
+            this.messageService.showServerError(error);
+        }
+    }
+
+    async favourite(): Promise<void> {
+        try {
+            if (this.mainStatus) {
+                this.mainStatus = await this.statusesService.favourite(this.mainStatus.id)
+                this.messageService.showSuccess('Status favourited.');
+            }
+        } catch (error) {
+            console.error(error);
+            this.messageService.showServerError(error);
+        }
+    }
+
+    async unfavourite(): Promise<void> {
+        try {
+            if (this.mainStatus) {
+                this.mainStatus = await this.statusesService.unfavourite(this.mainStatus.id)
+                this.messageService.showSuccess('Status unfavorited.');
+            }
+        } catch (error) {
+            console.error(error);
+            this.messageService.showServerError(error);
+        }
+    }
+
+    async bookmark(): Promise<void> {
+        try {
+            if (this.mainStatus) {
+                this.mainStatus = await this.statusesService.bookmark(this.mainStatus.id)
+                this.messageService.showSuccess('Status bookmarked.');
+            }
+        } catch (error) {
+            console.error(error);
+            this.messageService.showServerError(error);
+        }
+    }
+
+    async unbookmark(): Promise<void> {
+        try {
+            if (this.mainStatus) {
+                this.mainStatus = await this.statusesService.unbookmark(this.mainStatus.id)
+                this.messageService.showSuccess('Status unbookmarked.');
+            }
+        } catch (error) {
+            console.error(error);
+            this.messageService.showServerError(error);
+        }
+    }
+
     private async loadPageData(statusId: string): Promise<void> {
         this.status = await this.statusesService.get(statusId)
+
+        if (this.status.reblog) {
+            this.mainStatus = this.status.reblog;
+        } else {
+            this.mainStatus = this.status;
+        }
     }
 }

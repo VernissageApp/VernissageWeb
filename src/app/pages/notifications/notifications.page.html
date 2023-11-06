@@ -1,0 +1,95 @@
+<div *ngIf="isReady && notifications" @fadeIn class="padding-30">
+    <div class="flex-row flex-space-around padding-left-10 padding-right-10">
+        <div class="notifications-container width-100">
+            <section class="mat-typography">
+                <h1>Notifications</h1>
+            </section>
+
+            <!-- List of notifications. -->
+            <mat-card *ngIf="notifications.length > 0" class="notifications-card" appearance="outlined">
+                <mat-card-content>
+                    <div *ngFor="let notification of notifications; trackBy:trackByFn" class="padding-bottom-10 padding-top-10">
+                        <div class="flex-row flex-space-between">
+                            <div class="flex-row gap-8">
+                                <div class="user">
+                                    <img [src]="notification.byUser?.avatarUrl ?? '/assets/avatar.svg'" class="" />
+                                </div>
+                                <div>
+                                    <div>
+                                        <a [routerLink]="[ '/@' + notification.byUser?.userName ]" class="margin-right-5 fw-600">{{ notification.byUser?.name }}</a><span class="fw-400 fs-90 text-muted">@{{ notification.byUser?.userName }}</span>
+                                    </div>
+                                    <ng-container [ngSwitch]="notification.notificationType">
+                                        <!-- Mentioned. -->
+                                        <div *ngSwitchCase="notificationType.Mention" class="flex-row flex-align-center">
+                                            <mat-icon>alternate_email</mat-icon>
+                                            <div>Mentioned</div>
+                                        </div>
+
+                                        <!-- Status. -->
+                                        <div *ngSwitchCase="notificationType.Status" class="flex-row flex-align-center">
+                                            <mat-icon>fiber_new</mat-icon>
+                                            <div>New status</div>
+                                        </div>
+
+                                        <!-- Reblog. -->
+                                        <div *ngSwitchCase="notificationType.Reblog" class="flex-row flex-align-center">
+                                            <mat-icon>swap_vertical_circle</mat-icon>
+                                            <div>Reblogged</div>
+                                        </div>
+
+                                        <!-- Follow. -->
+                                        <div *ngSwitchCase="notificationType.Follow" class="flex-row flex-align-center">
+                                            <mat-icon>person_add</mat-icon>
+                                            <div>Followed you</div>
+                                        </div>
+
+                                        <!-- FollowRequest. -->
+                                        <div *ngSwitchCase="notificationType.FollowRequest" class="flex-row flex-align-center">
+                                            <mat-icon>person_outline</mat-icon>
+                                            <div>Follow request</div>
+                                        </div>
+
+                                        <!-- Favourite. -->
+                                        <div *ngSwitchCase="notificationType.Favourite" class="flex-row flex-align-center">
+                                            <mat-icon>star</mat-icon>
+                                            <div>Favorited</div>
+                                        </div>
+
+                                        <!-- Update. -->
+                                        <div *ngSwitchCase="notificationType.Update" class="flex-row flex-align-center">
+                                            <mat-icon>edit</mat-icon>
+                                            <div>Status updated</div>
+                                        </div>
+
+                                        <!-- AdminSignUp. -->
+                                        <div *ngSwitchCase="notificationType.AdminSignUp" class="flex-row flex-align-center">
+                                            <mat-icon>account_box</mat-icon>
+                                            <div>New account created</div>
+                                        </div>
+
+                                        <!-- AdminReport. -->
+                                        <div *ngSwitchCase="notificationType.AdminReport" class="flex-row flex-align-center">
+                                            <mat-icon>report_problem</mat-icon>
+                                            <div>New report</div>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </div>
+
+                            <div *ngIf="notification.status && getAttachemntUrl(notification.status)" class="status">
+                                <a [routerLink]="['/statuses', notification.status.id]">
+                                    <img [src]="getAttachemntUrl(notification.status)" class="" />
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+
+            <!-- No results found. -->
+            <div *ngIf="notifications.length === 0">
+                No results found.
+            </div>
+        </div>
+    </div>
+</div>

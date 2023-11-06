@@ -15,6 +15,7 @@ import { UsersCardComponent } from './widgets/users-card/users-card.component';
 import { FollowButtonsSectionComponent } from './widgets/follow-buttons-section/follow-buttons-section.component';
 import { GalleryComponent } from './widgets/gallery/gallery.component';
 import { UserCardComponent } from './widgets/user-card/user-card.component';
+import { MiniUserCardComponent } from './widgets/mini-user-card/mini-user-card.component';
 
 @NgModule({
     declarations: [
@@ -24,7 +25,8 @@ import { UserCardComponent } from './widgets/user-card/user-card.component';
         UserCardComponent,
         UsersCardComponent,
         FollowButtonsSectionComponent,
-        GalleryComponent
+        GalleryComponent,
+        MiniUserCardComponent
     ],
     imports: [
         BrowserModule,
@@ -53,7 +55,8 @@ import { UserCardComponent } from './widgets/user-card/user-card.component';
         UsersCardComponent,
         UserCardComponent,
         FollowButtonsSectionComponent,
-        GalleryComponent
+        GalleryComponent,
+        MiniUserCardComponent
     ]
 })
 export class ComponentsModule { }
