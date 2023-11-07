@@ -12,7 +12,7 @@
 
                     <div class="flex-row flex-responsive flex-space-between">
                         <!-- Actions panel -->
-                        <div>
+                        <div *ngIf="isLoggedIn()">
                             <button *ngIf="!mainStatus.reblogged" mat-icon-button class="margin-right-10" color="primary" matTooltip="Boost" matTooltipPosition="above" aria-label="Boost" (click)="reblog()">
                                 <mat-icon>swap_vert</mat-icon>
                             </button>
@@ -127,7 +127,7 @@
                     <mat-card-title>Comments</mat-card-title>
                 </mat-card-header>
                 <mat-card-content>
-                    Ble ble
+                    There is nothing to read here yet.
                 </mat-card-content>
             </mat-card>
         </div>

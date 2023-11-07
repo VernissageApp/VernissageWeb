@@ -59,6 +59,17 @@
                             <app-password [(passwordText)]="user.password" (passwordValid)="passwordValid($event)" [form]="f"></app-password>
                         </div>
 
+                        <mat-divider class="padding-bottom-20"></mat-divider>
+
+                        <div>
+                            <h4>Server rules</h4>
+                            <ul>
+                                <li *ngFor="let rule of serverRules()">
+                                    {{ rule.text }}
+                                </li>
+                            </ul>
+                        </div>
+
                         <div class="margin-bottom-20">
                             <mat-checkbox name="agreement" [disableRipple]="true" [(ngModel)]="user.agreement">
                                 I accept all server rules.

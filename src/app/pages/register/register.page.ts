@@ -13,6 +13,7 @@ import { WindowService } from 'src/app/services/common/window.service';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { Router } from '@angular/router';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
+import { Rule } from 'src/app/models/rule';
 
 @Component({
     selector: 'app-register',
@@ -79,6 +80,10 @@ export class RegisterPage implements OnInit {
 
     isRegistrationByInvitationsOpened(): boolean {
         return this.instanceService.instance?.registrationOpened === false && this.instanceService.instance?.registrationByInvitationsOpened === true;
+    }
+
+    serverRules(): Rule[] {
+        return this.instanceService.instance?.rules ?? [];
     }
 
     private async registerUser(token: string): Promise<void> {

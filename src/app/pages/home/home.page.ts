@@ -26,20 +26,25 @@ export class HomePage implements OnInit, OnDestroy {
     }
 
     async ngOnInit(): Promise<void> {
-        this.timeline = this.isLoggedIn() ? 'private' : 'local';
-
         this.routeParamsSubscription = this.activatedRoute.queryParams.subscribe(async (params) => {
             const pageType = params['t'] as string;
-
-            switch(this.timeline) {
-                case 'private':
-                    this.statuses = await this.timelineService.home();
-                    break;
+            switch(pageType) {
                 case 'local':
+                    this.timeline = 'local';
                     this.statuses = await this.timelineService.public(undefined, undefined, undefined, undefined, true);
                     break;
                 case 'global':
+                    this.timeline = 'global';
                     this.statuses = await this.timelineService.public(undefined, undefined, undefined, undefined, false);
+                    break;
+                default:
+                    if (this.isLoggedIn()) {
+                        this.timeline = 'private';
+                        this.statuses = await this.timelineService.home();
+                    } else {
+                        this.timeline = 'local';
+                        this.statuses = await this.timelineService.public(undefined, undefined, undefined, undefined, true);
+                    }
                     break;
             }
 

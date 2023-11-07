@@ -8,6 +8,7 @@ import { Exif } from 'src/app/models/exif';
 import { Location } from 'src/app/models/location';
 import { StatusVisibility } from 'src/app/models/status-visibility';
 import { MessagesService } from 'src/app/services/common/messages.service';
+import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 
 @Component({
     selector: 'app-status',
@@ -26,6 +27,7 @@ export class StatusPage implements OnInit, OnDestroy {
     constructor(
         private statusesService: StatusesService,
         private messageService: MessagesService,
+        private authorizationService: AuthorizationService,
         private activatedRoute: ActivatedRoute) {
     }
 
@@ -42,6 +44,10 @@ export class StatusPage implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         this.routeParamsSubscription?.unsubscribe();
+    }
+
+    isLoggedIn(): Boolean {
+        return this.authorizationService.isLoggedIn();
     }
 
     getAltStatus(index: number): String | undefined {

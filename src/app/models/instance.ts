@@ -1,6 +1,7 @@
-import { Configuration } from 'src/app/models/configuration';
-import { InstanceStatistics } from 'src/app/models/instance-statistics';
-import { User } from 'src/app/models/user';
+import { Configuration } from './configuration';
+import { InstanceStatistics } from './instance-statistics';
+import { User } from './user';
+import { Rule } from './rule';
 
 export class Instance {
     public uri?: string;
@@ -10,7 +11,7 @@ export class Instance {
     public version?: string;
     public thumbnail?: string;
     public languages?: string[];
-    public rules?: string[];
+    public rules?: Rule[];
 
     public registrationOpened = false;
     public registrationByApprovalOpened = false;

@@ -3,14 +3,24 @@
     <div mat-dialog-content>
 
         <small class="text-error text-right">
-            The operation will delete your account and all related data. The operation is irreversible.
+            The operation will delete your account and all related data.
         </small>
 
-        <div class="margin-bottom-20 padding-top-5">
+        <div class="padding-top-5">
             <mat-form-field class="width-100" appearance="outline">
                 <mat-label>Email</mat-label>
                 <input matInput name="email" [(ngModel)]="email" type="text" aria-label="Email" required />
             </mat-form-field>
+        </div>
+
+        <div class="margin-bottom-20 fs-90">
+            Before proceeding, please read these notes carefully:
+            <ul>
+                <li>You will not be able to restore or reactivate your account</li>
+                <li>Your username will remain unavailable</li>
+                <li>Your posts and other data will be permanently removed</li>
+                <li>Content that has been cached by other servers may persist</li>
+            </ul>
         </div>
     </div>
     <div mat-dialog-actions>
