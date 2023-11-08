@@ -22,6 +22,8 @@ import { LoginCallbackPage } from "./login-callback/login-callback.page";
 import { SearchPage } from './search/search.page';
 import { StatusPage } from './status/status.page';
 import { NotificationsPage } from './notifications/notifications.page';
+import { InvitationsPage } from './invitations/invitations.page';
+import { SettingsPage } from './settings/settings.page';
 
 @NgModule({
     imports: [
@@ -47,7 +49,9 @@ import { NotificationsPage } from './notifications/notifications.page';
         UploadPage,
         SearchPage,
         StatusPage,
-        NotificationsPage
+        NotificationsPage,
+        InvitationsPage,
+        SettingsPage
     ],
     exports: [
         ComponentsModule,
@@ -68,7 +72,9 @@ import { NotificationsPage } from './notifications/notifications.page';
         ProfilePage,
         UploadPage,
         SearchPage,
-        NotificationsPage
+        NotificationsPage,
+        InvitationsPage,
+        SettingsPage
     ]
 })
 export class PagesModule { }

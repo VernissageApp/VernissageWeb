@@ -10,6 +10,7 @@ import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { Relationship } from 'src/app/models/relationship';
 import { RelationshipsService } from 'src/app/services/http/relationships.service';
 import { ProfilePageTab } from 'src/app/models/profile-page-tab';
+import { LoadingService } from 'src/app/services/common/loading.service';
 
 @Component({
     selector: 'app-profile',
@@ -42,6 +43,7 @@ export class ProfilePage implements OnInit, OnDestroy {
         private authorizationService: AuthorizationService,
         private usersService: UsersService,
         private relationshipsService: RelationshipsService,
+        private loadingService: LoadingService,
         private router: Router,
         private activatedRoute: ActivatedRoute) {
     }
@@ -56,6 +58,7 @@ export class ProfilePage implements OnInit, OnDestroy {
 
         this.routeParamsSubscription = this.activatedRoute.params.subscribe(async params => {
             this.isReady = false;
+            this.loadingService.showLoader();
 
             const userName = params['userName'] as string;
             if (!userName.startsWith('@')) {
@@ -76,6 +79,7 @@ export class ProfilePage implements OnInit, OnDestroy {
             await this.loadPageData();
 
             this.isReady = true;
+            this.loadingService.hideLoader();
         });
     }
 

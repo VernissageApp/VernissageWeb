@@ -4,6 +4,7 @@ import { Notification } from '../../models/notification';
 import { NotificationsService } from 'src/app/services/http/notifications.service';
 import { Status } from 'src/app/models/status';
 import { NotificationType } from 'src/app/models/notification-type';
+import { LoadingService } from 'src/app/services/common/loading.service';
 
 @Component({
     selector: 'app-notifications',
@@ -17,12 +18,16 @@ export class NotificationsPage implements OnInit {
     isReady = false;
     notifications?: Notification[];
 
-    constructor(private notificationsService: NotificationsService) {
+    constructor(
+        private notificationsService: NotificationsService,
+        private loadingService: LoadingService) {
     }
 
     async ngOnInit(): Promise<void> {
+        this.loadingService.showLoader();
         this.notifications = await this.notificationsService.get();
         this.isReady = true;
+        this.loadingService.hideLoader();
     }
 
     getAttachemntUrl(status: Status): string | undefined {

@@ -1,0 +1,17 @@
+.settings-container {
+    max-width: 640px;
+
+    mat-form-field {
+        width: 100%;
+    }
+    
+    ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+        height: 0;
+    }
+
+    .actions {
+        margin-left: 8px;
+        margin-right: 8px;
+        margin-bottom: 10px;
+    }
+}

@@ -15,6 +15,7 @@ import { PersistanceService } from './services/persistance/persistance.service';
 import { AuthorizationService } from './services/authorization/authorization.service';
 import { PagesModule } from './pages/pages.module';
 import { APIInterceptor } from './interceptors/api.interceptor';
+import { LoadingService } from './services/common/loading.service';
 // import { NgxCaptchaModule } from 'ngx-captcha';
 
 const jwtOptionsFactory = (persistanceService: PersistanceService) => {
@@ -59,7 +60,7 @@ const httpInterceptor = (router: Router) => new APIInterceptor(router);
             multi: true
         },
         {
-            provide: ErrorHandler, useClass: GlobalErrorHandler, deps: [Injector, NgZone, AuthorizationService]
+            provide: ErrorHandler, useClass: GlobalErrorHandler, deps: [Injector, NgZone, AuthorizationService, LoadingService]
         }
     ],
     bootstrap: [AppComponent]

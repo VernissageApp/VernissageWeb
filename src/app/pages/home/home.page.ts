@@ -5,6 +5,7 @@ import { TimelineService } from 'src/app/services/http/timeline.service';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { LoadingService } from 'src/app/services/common/loading.service';
 
 @Component({
     selector: 'app-home',
@@ -21,13 +22,16 @@ export class HomePage implements OnInit, OnDestroy {
     constructor(
         private authorizationService: AuthorizationService,
         private timelineService: TimelineService,
+        private loadingService: LoadingService,
         private router: Router,
         private activatedRoute: ActivatedRoute) {
     }
 
     async ngOnInit(): Promise<void> {
         this.routeParamsSubscription = this.activatedRoute.queryParams.subscribe(async (params) => {
+            this.loadingService.showLoader();
             const pageType = params['t'] as string;
+
             switch(pageType) {
                 case 'local':
                     this.timeline = 'local';
@@ -49,6 +53,7 @@ export class HomePage implements OnInit, OnDestroy {
             }
 
             this.isReady = true;
+            this.loadingService.hideLoader();
         });
     }
 

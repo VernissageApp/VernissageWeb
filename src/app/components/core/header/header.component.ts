@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { User } from 'src/app/models/user';
 import { InstanceService } from 'src/app/services/http/instance.service';
 import { AuthorizationService } from '../../../services/authorization/authorization.service';
+import { Role } from 'src/app/models/role';
 
 @Component({
     selector: 'app-header',
@@ -44,5 +45,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     isRegistrationEnabled(): boolean {
         return this.instanceService.isRegistrationEnabled();
+    }
+
+    isAdministrator(): boolean {
+        return this.authorizationService.hasRole(Role.Administrator);
+    }
+
+    isRegistrationByInvitationsOpened(): boolean {
+        return this.instanceService.instance?.registrationOpened === false && this.instanceService.instance?.registrationByInvitationsOpened === true;
     }
 }

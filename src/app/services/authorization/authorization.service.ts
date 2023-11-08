@@ -6,6 +6,7 @@ import { User } from 'src/app/models/user';
 import { PersistanceService } from '../persistance/persistance.service';
 import { AccountService } from '../http/account.service';
 import { AccessToken } from '../../models/access-token';
+import { Role } from 'src/app/models/role';
 
 @Injectable({
     providedIn: 'root'
@@ -56,6 +57,23 @@ export class AuthorizationService {
         user.headerUrl = decodedToken.headerUrl;
 
         return user;
+    }
+
+    hasRole(role: Role): boolean {
+        const actionToken = this.persistanceService.getAccessToken();
+        if (!actionToken) {
+            return false;
+        }
+
+        const decodedToken = this.jwtHelperService.decodeToken(actionToken);
+
+        if (Array.isArray(decodedToken.roles)) {
+            const castedRoles = decodedToken.roles as string[];
+            return castedRoles.includes(role);
+        } else {
+            const castedRole = decodedToken.roles as string;
+            return castedRole == role;
+        }
     }
 
     signIn(accessToken: AccessToken): void {

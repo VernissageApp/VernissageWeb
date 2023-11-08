@@ -20,6 +20,8 @@ import { AccountPage } from './account/account.page';
 import { SearchPage } from './search/search.page';
 import { StatusPage } from './status/status.page';
 import { NotificationsPage } from './notifications/notifications.page';
+import { InvitationsPage } from './invitations/invitations.page';
+import { SettingsPage } from './settings/settings.page';
 
 const routes: Routes = [
     { path: 'login', component: LoginPage, canActivate: [ LoggedOutGuardService ] },
@@ -37,6 +39,8 @@ const routes: Routes = [
     { path: 'upload', component: UploadPage, canActivate: [ AuthorizationGuardService ] },
     { path: 'search', component: SearchPage, canActivate: [ AuthorizationGuardService ] },
     { path: 'notifications', component: NotificationsPage, canActivate: [ AuthorizationGuardService ] },
+    { path: 'invitations', component: InvitationsPage, canActivate: [ AuthorizationGuardService ] },
+    { path: 'settings', component: SettingsPage, canActivate: [ AuthorizationGuardService ] },
     { path: ':userName', component: ProfilePage, children: [
         { path: 'following', component: ProfilePage },
         { path: 'followers', component: ProfilePage }

@@ -4,15 +4,16 @@ import { Router } from '@angular/router';
 import { ForbiddenError } from 'src/app/errors/forbidden-error';
 import { ObjectNotFoundError } from 'src/app/errors/object-not-found-error';
 import { PageNotFoundError } from 'src/app/errors/page-not-found-error';
-import { IHttpResponse } from 'src/app/models/http-response';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
+import { LoadingService } from '../services/common/loading.service';
 
 export class GlobalErrorHandler implements ErrorHandler {
 
     constructor(
         private injector: Injector,
         private zone: NgZone,
-        private authorizationService: AuthorizationService
+        private authorizationService: AuthorizationService,
+        private loadingService: LoadingService
     ) { }
 
     private get router(): Router {
@@ -22,6 +23,7 @@ export class GlobalErrorHandler implements ErrorHandler {
     async handleError(error: any): Promise<void> {
         await this.zone.run(async () => {
             console.error(error);
+            this.loadingService.hideLoader();
 
             if (this.isObjectNotFoundError(error) || this.isPageNotFoundError(error)) {
                 await this.router.navigate(['/page-not-found']);
