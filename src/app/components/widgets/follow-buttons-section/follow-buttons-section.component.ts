@@ -4,6 +4,7 @@ import { Relationship } from 'src/app/models/relationship';
 import { User } from 'src/app/models/user';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 import { MessagesService } from 'src/app/services/common/messages.service';
+import { WindowService } from 'src/app/services/common/window.service';
 import { FollowRequestsService } from 'src/app/services/http/follow-requests.service';
 import { UsersService } from 'src/app/services/http/users.service';
 import { environment } from 'src/environments/environment';
@@ -32,6 +33,7 @@ export class FollowButtonsSectionComponent implements OnInit {
         private messageService: MessagesService,
         private authorizationService: AuthorizationService,
         private followRequestsService: FollowRequestsService,
+        private windowService: WindowService,
         private changeDetectorRef: ChangeDetectorRef) {
     }
     ngOnInit(): void {
@@ -181,7 +183,7 @@ export class FollowButtonsSectionComponent implements OnInit {
             return false;
         }
 
-        if (this.user?.activityPubProfile?.startsWith(environment.httpSchema + environment.apiService)) {
+        if (this.user?.activityPubProfile?.startsWith(this.windowService.apiUrl())) {
             return false;
         }
 

@@ -11,6 +11,7 @@ import { AuthClient } from 'src/app/models/auth-client';
 import { InstanceService } from 'src/app/services/http/instance.service';
 import { environment } from 'src/environments/environment';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
+import { WindowService } from 'src/app/services/common/window.service';
 
 @Component({
     selector: 'app-login',
@@ -35,6 +36,7 @@ export class LoginPage implements OnInit {
         private authorizationService: AuthorizationService,
         private instanceService: InstanceService,
         private route: ActivatedRoute,
+        private windowService: WindowService,
         private authClientsService: AuthClientsService) {
     }
 
@@ -77,7 +79,7 @@ export class LoginPage implements OnInit {
     }
 
     getExternalProviderUrl(authClient: AuthClient): string {
-        return environment.httpSchema + environment.apiService + '/identity/authenticate/' + authClient.uri;
+        return this.windowService.apiUrl() + '/identity/authenticate/' + authClient.uri;
     }
 
     isSubmittingMode(): boolean {

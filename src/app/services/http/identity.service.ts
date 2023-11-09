@@ -3,23 +3,17 @@ import { Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { AccessToken } from 'src/app/models/access-token';
 import { IdentityToken } from 'src/app/models/identity-token';
-
-import { environment } from 'src/environments/environment';
+import { WindowService } from '../common/window.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class IdentityService {
-
-    private get apiService(): string {
-        return environment.httpSchema + environment.apiService;
-    }
-
-    constructor(private httpClient: HttpClient) {
+    constructor(private httpClient: HttpClient, private windowService: WindowService) {
     }
 
     public async login(identityToken: IdentityToken): Promise<AccessToken> {
-        const event$ = this.httpClient.post<AccessToken>(this.apiService + '/api/v1/identity/login', identityToken);
+        const event$ = this.httpClient.post<AccessToken>(this.windowService.apiUrl() + '/api/v1/identity/login', identityToken);
         return await firstValueFrom(event$);
     }
 }

@@ -1,26 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
-import { StatusRequest } from 'src/app/models/status-request';
-
-import {environment} from 'src/environments/environment';
-import { Relationship } from 'src/app/models/relationship';
 import { SearchResults } from 'src/app/models/search-results';
+import { WindowService } from '../common/window.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class SearchService {
-
-    private get apiService(): string {
-        return environment.httpSchema + environment.apiService;
-    }
-
-    constructor(private httpClient: HttpClient) {
+    constructor(private httpClient: HttpClient, private windowService: WindowService) {
     }
 
     public async search(query: string): Promise<SearchResults> {
-        const event$ = this.httpClient.get<SearchResults>(this.apiService + '/api/v1/search?query=' + query);
+        const event$ = this.httpClient.get<SearchResults>(this.windowService.apiUrl() + '/api/v1/search?query=' + query);
         return await firstValueFrom(event$);
     }
 }

@@ -1,25 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
-import { StatusRequest } from 'src/app/models/status-request';
-
-import {environment} from 'src/environments/environment';
 import { Relationship } from 'src/app/models/relationship';
+import { WindowService } from '../common/window.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class RelationshipsService {
-
-    private get apiService(): string {
-        return environment.httpSchema + environment.apiService;
-    }
-
-    constructor(private httpClient: HttpClient) {
+    constructor(private httpClient: HttpClient, private windowService: WindowService) {
     }
 
     public async get(userId: string): Promise<Relationship> {
-        const event$ = this.httpClient.get<Relationship[]>(this.apiService + '/api/v1/relationships?id[]=' + userId);
+        const event$ = this.httpClient.get<Relationship[]>(this.windowService.apiUrl() + '/api/v1/relationships?id[]=' + userId);
         const relationships = await firstValueFrom(event$);
 
         return relationships.length === 1 ? relationships[0] : new Relationship();
@@ -27,7 +20,7 @@ export class RelationshipsService {
 
     public async getAll(userIds: string[]): Promise<Relationship[]> {
         const queryParams = userIds.join('&id[]=')
-        const event$ = this.httpClient.get<Relationship[]>(this.apiService + '/api/v1/relationships?id[]=' + queryParams);
+        const event$ = this.httpClient.get<Relationship[]>(this.windowService.apiUrl() + '/api/v1/relationships?id[]=' + queryParams);
         return await firstValueFrom(event$);
     }
 }

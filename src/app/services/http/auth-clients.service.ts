@@ -2,23 +2,17 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { AuthClient } from 'src/app/models/auth-client';
-
-import { environment } from 'src/environments/environment';
+import { WindowService } from '../common/window.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthClientsService {
-
-    private get apiService(): string {
-        return environment.httpSchema + environment.apiService;
-    }
-
-    constructor(private httpClient: HttpClient) {
+    constructor(private httpClient: HttpClient, private windowService: WindowService) {
     }
 
     public async getList(): Promise<AuthClient[]> {
-        const event$ = this.httpClient.get<AuthClient[]>(this.apiService + '/api/v1/auth-clients');
+        const event$ = this.httpClient.get<AuthClient[]>(this.windowService.apiUrl() + '/api/v1/auth-clients');
         return await firstValueFrom(event$);
     }
 }

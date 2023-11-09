@@ -32,4 +32,21 @@ export class WindowService {
 
         return url + applicationFolder;
     }
+
+    apiService(): string {
+        const host = getWindow().document.location.host;
+        if (host.startsWith('localhost:')) {
+            return 'localhost:8080';
+        }
+    
+        return host;
+    }
+
+    apiProtocol(): string {
+        return getWindow().document.location.protocol;
+    }
+
+    apiUrl(): string {
+        return this.apiProtocol() + '//' + this.apiService();
+    }
 }

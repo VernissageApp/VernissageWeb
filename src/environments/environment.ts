@@ -4,10 +4,8 @@
 
 export const environment = {
     production: false,
-    recaptchaKey: '',
-    httpSchema: 'http://',
-    apiService: 'localhost:8080'
-  };
+    recaptchaKey: ''
+};
 
 /*
  * For easier debugging in development mode, you can import the following file

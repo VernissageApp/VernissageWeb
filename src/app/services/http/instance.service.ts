@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { Instance } from 'src/app/models/instance';
-import { environment } from 'src/environments/environment';
+import { WindowService } from '../common/window.service';
 
 @Injectable({
     providedIn: 'root'
@@ -14,11 +14,7 @@ export class InstanceService {
         return this._instance;
     }
 
-    private get apiService(): string {
-        return environment.httpSchema + environment.apiService;
-    }
-
-    constructor(private httpClient: HttpClient) {
+    constructor(private httpClient: HttpClient, private windowService: WindowService) {
     }
 
     public async load(): Promise<void> {
@@ -32,7 +28,7 @@ export class InstanceService {
     }
 
     private async get(): Promise<Instance> {
-        const event$ = this.httpClient.get<Instance>(this.apiService +  '/api/v1/instance');
+        const event$ = this.httpClient.get<Instance>(this.windowService.apiUrl() +  '/api/v1/instance');
         return await firstValueFrom(event$);
     }
 }

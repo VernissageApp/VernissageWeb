@@ -16,12 +16,13 @@ import { AuthorizationService } from './services/authorization/authorization.ser
 import { PagesModule } from './pages/pages.module';
 import { APIInterceptor } from './interceptors/api.interceptor';
 import { LoadingService } from './services/common/loading.service';
+import { WindowService } from './services/common/window.service';
 // import { NgxCaptchaModule } from 'ngx-captcha';
 
-const jwtOptionsFactory = (persistanceService: PersistanceService) => {
+const jwtOptionsFactory = (persistanceService: PersistanceService, windowService: WindowService) => {
     return {
         tokenGetter: () => persistanceService.getAccessToken(),
-        allowedDomains: [environment.apiService]
+        allowedDomains: [windowService.apiService()]
     };
 };
 
@@ -39,7 +40,7 @@ const httpInterceptor = (router: Router) => new APIInterceptor(router);
             jwtOptionsProvider: {
                 provide: JWT_OPTIONS,
                 useFactory: jwtOptionsFactory,
-                deps: [PersistanceService]
+                deps: [PersistanceService, WindowService]
             }
         }),
         // NgxCaptchaModule,

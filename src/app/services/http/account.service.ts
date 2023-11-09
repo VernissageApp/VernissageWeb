@@ -2,29 +2,24 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { ChangeEmail } from 'src/app/models/change-email';
-
-import { environment } from 'src/environments/environment';
 import { AccessToken } from 'src/app/models/access-token';
 import { Login } from 'src/app/models/login';
 import { ChangePassword } from 'src/app/models/change-password';
 import { RefreshToken } from 'src/app/models/refresh-token';
-import {ResendEmailConfirmation} from "../../models/resend-email-confirmation";
+import { ResendEmailConfirmation } from "../../models/resend-email-confirmation";
+import { WindowService } from '../common/window.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AccountService {
 
-    private get apiService(): string {
-        return environment.httpSchema + environment.apiService;
-    }
-
-    constructor(private httpClient: HttpClient) {
+    constructor(private httpClient: HttpClient, private windowService: WindowService) {
     }
 
     public async refreshToken(refreshToken: string): Promise<AccessToken> {
         const event$ = this.httpClient.post<AccessToken>(
-            this.apiService + '/api/v1/account/refresh-token',
+            this.windowService.apiUrl() + '/api/v1/account/refresh-token',
             new RefreshToken(refreshToken)
         );
 
@@ -32,22 +27,22 @@ export class AccountService {
     }
 
     public async login(login: Login): Promise<AccessToken> {
-        const event$ = this.httpClient.post<AccessToken>(this.apiService + '/api/v1/account/login', login);
+        const event$ = this.httpClient.post<AccessToken>(this.windowService.apiUrl() + '/api/v1/account/login', login);
         return await firstValueFrom(event$);
     }
 
     public async changePassword(changePassword: ChangePassword): Promise<object> {
-        const event$ =  this.httpClient.put(this.apiService + '/api/v1/account/password', changePassword);
+        const event$ =  this.httpClient.put(this.windowService.apiUrl() + '/api/v1/account/password', changePassword);
         return await firstValueFrom(event$);
     }
 
     public async changeEmail(changeEmail: ChangeEmail): Promise<object> {
-        const event$ =  this.httpClient.put(this.apiService + '/api/v1/account/email', changeEmail);
+        const event$ =  this.httpClient.put(this.windowService.apiUrl() + '/api/v1/account/email', changeEmail);
         return await firstValueFrom(event$);
     }
 
     public async resend(resendEmailConfirmation: ResendEmailConfirmation): Promise<void> {
-        const event$ =  this.httpClient.post(this.apiService + '/api/v1/account/email/resend', resendEmailConfirmation);
+        const event$ =  this.httpClient.post(this.windowService.apiUrl() + '/api/v1/account/email/resend', resendEmailConfirmation);
         await firstValueFrom(event$);
     }
 }
