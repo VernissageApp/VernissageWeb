@@ -27,4 +27,4 @@ COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /usr/local/app/dist/vernissage-web /usr/share/nginx/html
 
 # Expose port 80
-EXPOSE 80
+EXPOSE 8080
