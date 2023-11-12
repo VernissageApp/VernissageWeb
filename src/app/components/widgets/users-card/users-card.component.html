@@ -6,9 +6,11 @@
                     <img [src]="user.avatarUrl ?? '/assets/avatar.svg'" class="" />
                 </div>
                 <div>
-                    <div>
-                        <a [routerLink]="[ '/@' + user.userName ]" class="margin-right-5 fw-600">{{ user.name }}</a><span class="fw-400 fs-90 text-muted">@{{ user.userName }}</span>
+                    <div [ngClass]="{ 'flex-row': !isHandset, 'flex-column': isHandset }">
+                        <div><a [routerLink]="[ '/@' + user.userName ]" class="margin-right-5 fw-600">{{ user.name }}</a></div>
+                        <div class="fw-400 fs-90 text-muted">@{{ user.userName }}</div>
                     </div>
+
                     <div *ngIf="showBio" class="bio" [innerHTML]="user.bioHtml"></div>
                     <div class="fw-300 fs-90">
                         <span class="margin-right-15"><span class="fw-500">{{ user.statusesCount }}</span> Posts</span>

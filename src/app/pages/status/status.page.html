@@ -5,7 +5,7 @@
     </div>
     <div class="photoMargin"></div>
 
-    <div class="padding-30">
+    <div [ngClass]="{ 'padding-30': !isHandset, 'padding-10': isHandset }">
         <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
             <mat-card class="flex-grow-2" appearance="outlined">
                 <mat-card-content>

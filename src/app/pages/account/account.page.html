@@ -1,4 +1,4 @@
-<div [hidden]="!isReady" @fadeIn class="padding-30">
+<div [hidden]="!isReady" @fadeIn [ngClass]="{ 'padding-30': !isHandset, 'padding-10': isHandset }">
     <section>
         <h1>Account</h1>
     </section>
@@ -129,7 +129,7 @@
                     </div>
 
                     <div>
-                        <img  id="headerImage" [src]="headerSrc" width="600" height="200" alt="Header" />
+                        <img id="headerImage" [src]="headerSrc" alt="Header" />
                     </div>
                 </div>
             </mat-card-content>

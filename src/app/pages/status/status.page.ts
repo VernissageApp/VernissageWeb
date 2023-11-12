@@ -9,6 +9,8 @@ import { Location } from 'src/app/models/location';
 import { StatusVisibility } from 'src/app/models/status-visibility';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
+import { Responsive } from 'src/app/common/responsive';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
     selector: 'app-status',
@@ -16,7 +18,7 @@ import { AuthorizationService } from 'src/app/services/authorization/authorizati
     styleUrls: ['./status.page.scss'],
     animations: fadeInAnimation
 })
-export class StatusPage implements OnInit, OnDestroy {
+export class StatusPage extends Responsive {
     readonly statusVisibility = StatusVisibility;
     isReady = false;
 
@@ -28,10 +30,14 @@ export class StatusPage implements OnInit, OnDestroy {
         private statusesService: StatusesService,
         private messageService: MessagesService,
         private authorizationService: AuthorizationService,
-        private activatedRoute: ActivatedRoute) {
+        private activatedRoute: ActivatedRoute,
+        breakpointObserver: BreakpointObserver) {
+            super(breakpointObserver);
     }
 
-    async ngOnInit(): Promise<void> {
+    override async ngOnInit(): Promise<void> {
+        super.ngOnInit();
+
         this.routeParamsSubscription = this.activatedRoute.params.subscribe(async params => {
             this.isReady = false;
 
@@ -42,7 +48,9 @@ export class StatusPage implements OnInit, OnDestroy {
         });
     }
 
-    ngOnDestroy(): void {
+    override ngOnDestroy(): void {
+        super.ngOnDestroy();
+
         this.routeParamsSubscription?.unsubscribe();
     }
 

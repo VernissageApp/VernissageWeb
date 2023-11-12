@@ -1,5 +1,5 @@
-<div *ngIf="isReady && settings" @fadeIn class="padding-30">
-    <div class="flex-row flex-space-around padding-left-10 padding-right-10">
+<div *ngIf="isReady && settings" @fadeIn [ngClass]="{ 'padding-30': !isHandset, 'padding-10': isHandset }">
+    <div class="flex-row flex-space-around">
         <div class="settings-container width-100">
             <section>
                 <h1>Settings</h1>

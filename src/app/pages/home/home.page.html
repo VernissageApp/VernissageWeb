@@ -1,13 +1,13 @@
 <div *ngIf="isReady" @fadeIn>
 
-    <div class="flex-row flex-align-center flex-space-between margin-bottom-10">
-    <h1 class="padding-30">Timeline</h1>
+    <div class="flex-row flex-align-center flex-space-between margin-bottom-10" [ngClass]="{ 'padding-30': !isHandset, 'padding-10': isHandset }">
+      <h1>Timeline</h1>
 
-    <section class="padding-30 small-button-toggle">
+      <section class="small-button-toggle">
         <mat-button-toggle-group [(ngModel)]="timeline" (ngModelChange)="onTimelineChange()" aria-label="Font Style">
-          <mat-button-toggle *ngIf="isLoggedIn()" value="private"><mat-icon>person</mat-icon> Private</mat-button-toggle>
-          <mat-button-toggle value="local"><mat-icon>location_city</mat-icon> Local</mat-button-toggle>
-          <mat-button-toggle value="global"><mat-icon>public</mat-icon> Global</mat-button-toggle>
+          <mat-button-toggle *ngIf="isLoggedIn()" value="private"><mat-icon>person</mat-icon><span *ngIf="!isHandset"> Private</span></mat-button-toggle>
+          <mat-button-toggle value="local"><mat-icon>location_city</mat-icon><span *ngIf="!isHandset"> Local</span></mat-button-toggle>
+          <mat-button-toggle value="global"><mat-icon>public</mat-icon><span *ngIf="!isHandset"> Global</span></mat-button-toggle>
         </mat-button-toggle-group>
       </section>
     </div>

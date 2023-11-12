@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -6,13 +6,16 @@ import { User } from 'src/app/models/user';
 import { InstanceService } from 'src/app/services/http/instance.service';
 import { AuthorizationService } from '../../../services/authorization/authorization.service';
 import { Role } from 'src/app/models/role';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { Resolution, Responsive } from 'src/app/common/responsive';
 
 @Component({
     selector: 'app-header',
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit, OnDestroy {
+export class HeaderComponent extends Responsive {
+    readonly resolution = Resolution;
 
     public user?: User | null;
     public avatarUrl = "assets/avatar.svg";
@@ -21,10 +24,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
     constructor(
         private authorizationService: AuthorizationService,
         private instanceService: InstanceService,
-        private router: Router) {
+        private router: Router,
+        breakpointObserver: BreakpointObserver) {
+            super(breakpointObserver)
     }
 
-    ngOnInit(): void {
+    override ngOnInit(): void {
+        super.ngOnInit();
+
         this.user = this.authorizationService.getUser();
         this.avatarUrl = this.user?.avatarUrl ?? 'assets/avatar.svg';
 
@@ -34,7 +41,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
         });
     }
 
-    ngOnDestroy(): void {
+    override ngOnDestroy(): void {
+        super.ngOnDestroy();
+
         this.userChangeSubscription?.unsubscribe();
     }
 

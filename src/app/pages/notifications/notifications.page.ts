@@ -5,6 +5,8 @@ import { NotificationsService } from 'src/app/services/http/notifications.servic
 import { Status } from 'src/app/models/status';
 import { NotificationType } from 'src/app/models/notification-type';
 import { LoadingService } from 'src/app/services/common/loading.service';
+import { Responsive } from 'src/app/common/responsive';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
     selector: 'app-notifications',
@@ -12,7 +14,7 @@ import { LoadingService } from 'src/app/services/common/loading.service';
     styleUrls: ['./notifications.page.scss'],
     animations: fadeInAnimation
 })
-export class NotificationsPage implements OnInit {
+export class NotificationsPage extends Responsive {
     readonly notificationType = NotificationType;
 
     isReady = false;
@@ -20,10 +22,14 @@ export class NotificationsPage implements OnInit {
 
     constructor(
         private notificationsService: NotificationsService,
-        private loadingService: LoadingService) {
+        private loadingService: LoadingService,
+        breakpointObserver: BreakpointObserver) {
+            super(breakpointObserver);
     }
 
-    async ngOnInit(): Promise<void> {
+    override async ngOnInit(): Promise<void> {
+        super.ngOnInit();
+
         this.loadingService.showLoader();
         this.notifications = await this.notificationsService.get();
         this.isReady = true;

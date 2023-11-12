@@ -17,6 +17,8 @@ import { WindowService } from 'src/app/services/common/window.service';
 import { FlexiField } from 'src/app/models/flexi-field';
 import { ResendEmailConfirmation } from 'src/app/models/resend-email-confirmation';
 import { ChangePasswordDialog } from 'src/app/dialogs/change-password-dialog/change-password.dialog';
+import { Responsive } from 'src/app/common/responsive';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
     selector: 'app-account',
@@ -24,7 +26,7 @@ import { ChangePasswordDialog } from 'src/app/dialogs/change-password-dialog/cha
     styleUrls: ['./account.page.scss'],
     animations: fadeInAnimation
 })
-export class AccountPage implements OnInit {
+export class AccountPage extends Responsive {
 
     userName = '';
     user: User = new User();
@@ -46,10 +48,15 @@ export class AccountPage implements OnInit {
         private windowService: WindowService,
         private router: Router,
         public dialog: MatDialog,
-        private loadingService: LoadingService
-    ) { }
+        private loadingService: LoadingService,
+        breakpointObserver: BreakpointObserver
+    ) {
+        super(breakpointObserver);
+    }
 
-    async ngOnInit(): Promise<void> {
+    override async ngOnInit(): Promise<void> {
+        super.ngOnInit();
+
         try {
             this.loadingService.showLoader();
 

@@ -37,7 +37,7 @@
     }
 
     .fields-container {
-        width: 640px;
+        max-width: 640px;
 
         .field-value {
             word-break: break-all;

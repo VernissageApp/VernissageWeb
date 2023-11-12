@@ -1,4 +1,6 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { Status } from 'src/app/models/status';
 
@@ -8,11 +10,33 @@ import { Status } from 'src/app/models/status';
     styleUrls: ['./gallery.component.scss'],
     animations: fadeInAnimation
 })
-export class GalleryComponent implements OnChanges {
+export class GalleryComponent implements OnInit, OnChanges {
     @Input() statuses?: Status[];
 
     gallery?: Status[][];
-    readonly columns = 3;
+    columns = 3;
+
+    isHandset = false;
+    breakpointSubscription?: Subscription;
+
+    constructor(private breakpointObserver: BreakpointObserver) {
+    }
+
+    ngOnInit(): void {
+        this.breakpointSubscription = this.breakpointObserver.observe([
+            Breakpoints.Handset
+        ]).subscribe(result => {
+            if (result.matches) {
+                this.isHandset = true;
+                this.columns = 1;
+                this.buildGallery();
+            } else {
+                this.isHandset = false;
+                this.columns = 3;
+                this.buildGallery();
+            }
+        });
+    }    
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.statuses) {

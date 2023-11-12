@@ -31,7 +31,7 @@ const routes: Routes = [
     { path: 'register', component: RegisterPage, canActivate: [ LoggedOutGuardService ] },
     { path: 'confirm-email', component: ConfirmEmailPage, canActivate: [ LoggedOutGuardService ] },
     { path: 'account', component: AccountPage, canActivate: [ AuthorizationGuardService ] },
-    { path: 'home', component: HomePage },
+    { path: 'home', component: HomePage, data: { reuse: true } },
     { path: 'access-forbidden', component: AccessForbiddenPage },
     { path: 'unexpected-error', component: UnexpectedErrorPage },
     { path: 'connection-lost', component: ConnectionLostPage },
@@ -44,7 +44,7 @@ const routes: Routes = [
     { path: ':userName', component: ProfilePage, children: [
         { path: 'following', component: ProfilePage },
         { path: 'followers', component: ProfilePage }
-    ]},
+    ], data: { reuse: true }},
     { path: ':userName/:id', component: StatusPage },
     { path: 'statuses/:id', component: StatusPage },
     { path: '', redirectTo: '/home', pathMatch: 'full' },

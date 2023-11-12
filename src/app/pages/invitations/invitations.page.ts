@@ -7,6 +7,8 @@ import { InvitationsService } from 'src/app/services/http/invitations.service';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { LoadingService } from 'src/app/services/common/loading.service';
+import { Responsive } from 'src/app/common/responsive';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
     selector: 'app-invitations',
@@ -14,21 +16,29 @@ import { LoadingService } from 'src/app/services/common/loading.service';
     styleUrls: ['./invitations.page.scss'],
     animations: fadeInAnimation
 })
-export class InvitationsPage implements OnInit {
+export class InvitationsPage extends Responsive {
     isReady = false;
     invitations?: Invitation[];
+    displayedColumns: string[] = [];
 
-    displayedColumns: string[] = ['code', 'createdAt', 'invited', 'actions'];
-
+    private readonly displayedColumnsHandsetPortrait: string[] = ['code'];
+    private readonly displayedColumnsHandserLandscape: string[] = ['code', 'actions'];
+    private readonly displayedColumnsTablet: string[] = ['code', 'invited', 'actions'];
+    private readonly displayedColumnsBrowser: string[] = ['code', 'createdAt', 'invited', 'actions'];
+    
     constructor(
         private instanceService: InstanceService,
         private invitationsService: InvitationsService,
         private messageService: MessagesService,
         private loadingService: LoadingService,
-        private clipboard: Clipboard) {
+        private clipboard: Clipboard,
+        breakpointObserver: BreakpointObserver) {
+            super(breakpointObserver);
     }
 
-    async ngOnInit(): Promise<void> {
+    override async ngOnInit(): Promise<void> {
+        super.ngOnInit();
+
         if (!this.isRegistrationByInvitationsOpened()) {
             throw new ForbiddenError();
         }
@@ -37,6 +47,22 @@ export class InvitationsPage implements OnInit {
         this.invitations = await this.invitationsService.get();
         this.isReady = true;
         this.loadingService.hideLoader();
+    }
+
+    protected override onHandsetPortrait(): void {
+        this.displayedColumns = this.displayedColumnsHandsetPortrait;
+    }
+
+    protected override onHandsetLandscape(): void {
+        this.displayedColumns = this.displayedColumnsHandserLandscape;
+    }
+
+    protected override onTablet(): void {
+        this.displayedColumns = this.displayedColumnsTablet;
+    }
+
+    protected override onBrowser(): void {
+        this.displayedColumns = this.displayedColumnsBrowser;
     }
 
     async generate(): Promise<void> {

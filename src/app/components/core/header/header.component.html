@@ -8,9 +8,13 @@
         </ng-container>
         <ng-container *ngIf="user">
             <div class="flex-spacer"></div>
-            <button mat-stroked-button color="primary" class="margin-right-10" [routerLink]="['/upload']">
+
+            <button *ngIf="deviceResolution === resolution.browser" mat-stroked-button color="primary" class="margin-right-10" [routerLink]="['/upload']">
+                <mat-icon>arrow_upward</mat-icon> Upload
+            </button>
+
+            <button *ngIf="deviceResolution !== resolution.browser" mat-icon-button color="primary" [routerLink]="['/upload']">
                 <mat-icon>arrow_upward</mat-icon>
-                Upload
             </button>
 
             <button mat-icon-button color="primary" [routerLink]="['/search']" aria-label="Search">

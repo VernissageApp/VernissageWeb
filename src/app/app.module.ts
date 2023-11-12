@@ -9,7 +9,7 @@ import { InstanceService } from 'src/app/services/http/instance.service';
 import { appInitialization } from './app-initialization';
 
 import { environment } from 'src/environments/environment';
-import { Router } from '@angular/router';
+import { RouteReuseStrategy, Router } from '@angular/router';
 import { AppComponent } from './app.component';
 import { PersistanceService } from './services/persistance/persistance.service';
 import { AuthorizationService } from './services/authorization/authorization.service';
@@ -17,6 +17,7 @@ import { PagesModule } from './pages/pages.module';
 import { APIInterceptor } from './interceptors/api.interceptor';
 import { LoadingService } from './services/common/loading.service';
 import { WindowService } from './services/common/window.service';
+import { CustomReuseStrategy } from './common/custom-reuse-strategy';
 // import { NgxCaptchaModule } from 'ngx-captcha';
 
 const jwtOptionsFactory = (persistanceService: PersistanceService, windowService: WindowService) => {
@@ -47,6 +48,7 @@ const httpInterceptor = (router: Router) => new APIInterceptor(router);
         PagesModule
     ],
     providers: [
+        { provide: RouteReuseStrategy, useClass: CustomReuseStrategy },
         { provide: MAT_CHECKBOX_DEFAULT_OPTIONS, useValue: { clickAction: 'check' } as MatCheckboxDefaultOptions },
         {
             provide: APP_INITIALIZER,

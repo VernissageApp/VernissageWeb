@@ -1,4 +1,6 @@
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, Input } from '@angular/core';
+import { Responsive } from 'src/app/common/responsive';
 import { User } from 'src/app/models/user';
 
 @Component({
@@ -6,6 +8,10 @@ import { User } from 'src/app/models/user';
     templateUrl: './user-card.component.html',
     styleUrls: ['./user-card.component.scss']
 })
-export class UserCardComponent {
+export class UserCardComponent extends Responsive {
     @Input() user?: User;
+
+    constructor(breakpointObserver: BreakpointObserver) {
+        super(breakpointObserver);
+    }
 }

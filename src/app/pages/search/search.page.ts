@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { User } from 'src/app/models/user';
 import { Relationship } from 'src/app/models/relationship';
@@ -7,6 +7,8 @@ import { RelationshipsService } from 'src/app/services/http/relationships.servic
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { LoadingService } from 'src/app/services/common/loading.service';
+import { Responsive } from 'src/app/common/responsive';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
     selector: 'app-search',
@@ -14,7 +16,7 @@ import { LoadingService } from 'src/app/services/common/loading.service';
     styleUrls: ['./search.page.scss'],
     animations: fadeInAnimation
 })
-export class SearchPage implements OnInit, OnDestroy, AfterViewInit {
+export class SearchPage extends Responsive implements AfterViewInit {
     search = '';
     users: User[] = [];
     usersRelationships: Relationship[] = [];
@@ -28,10 +30,14 @@ export class SearchPage implements OnInit, OnDestroy, AfterViewInit {
         private relationshipsService: RelationshipsService,
         private activatedRoute: ActivatedRoute,
         private loadingService: LoadingService,
-        private router: Router) {
+        private router: Router,
+        breakpointObserver: BreakpointObserver) {
+            super(breakpointObserver);
     }
 
-    ngOnInit(): void {
+    override ngOnInit(): void {
+        super.ngOnInit();
+
         this.routeParamsSubscription = this.activatedRoute.queryParams.subscribe(async params => {
             this.loadingService.showLoader();
 
@@ -66,7 +72,9 @@ export class SearchPage implements OnInit, OnDestroy, AfterViewInit {
         this.queryInput?.nativeElement.focus();
     }
 
-    ngOnDestroy(): void {
+    override ngOnDestroy(): void {
+        super.ngOnDestroy();
+
         this.routeParamsSubscription?.unsubscribe();
     }
 

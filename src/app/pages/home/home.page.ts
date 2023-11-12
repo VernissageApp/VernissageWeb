@@ -6,6 +6,8 @@ import { AuthorizationService } from 'src/app/services/authorization/authorizati
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { LoadingService } from 'src/app/services/common/loading.service';
+import { Responsive } from 'src/app/common/responsive';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
     selector: 'app-home',
@@ -13,21 +15,26 @@ import { LoadingService } from 'src/app/services/common/loading.service';
     styleUrls: ['./home.page.scss'],
     animations: fadeInAnimation
 })
-export class HomePage implements OnInit, OnDestroy {
+export class HomePage extends Responsive {
     statuses?: Status[];
     timeline: String = 'private';
-    routeParamsSubscription?: Subscription;
     isReady = false;
+
+    routeParamsSubscription?: Subscription;
 
     constructor(
         private authorizationService: AuthorizationService,
         private timelineService: TimelineService,
         private loadingService: LoadingService,
         private router: Router,
-        private activatedRoute: ActivatedRoute) {
+        private activatedRoute: ActivatedRoute,
+        breakpointObserver: BreakpointObserver) {
+            super(breakpointObserver);
     }
 
-    async ngOnInit(): Promise<void> {
+    override async ngOnInit(): Promise<void> {
+        super.ngOnInit();
+
         this.routeParamsSubscription = this.activatedRoute.queryParams.subscribe(async (params) => {
             this.loadingService.showLoader();
             const pageType = params['t'] as string;
@@ -57,7 +64,9 @@ export class HomePage implements OnInit, OnDestroy {
         });
     }
 
-    ngOnDestroy(): void {
+    override ngOnDestroy(): void {
+        super.ngOnDestroy();
+
         this.routeParamsSubscription?.unsubscribe();
     }
 
