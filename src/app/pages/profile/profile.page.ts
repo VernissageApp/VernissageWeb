@@ -23,18 +23,21 @@ export class ProfilePage implements OnInit, OnDestroy {
     readonly ProfilePageTab = ProfilePageTab;
 
     isReady = false;
+    allFollowingDisplayed = false;
+    allFollowersDisplayed = false;
     profilePageTab = ProfilePageTab.Statuses;
     userName!: string;
 
+    signedInUser?: User;
     user?: User;
-    relationship?: Relationship;
-    latestFollowers?: LinkableResult<User>;
 
-    followers?: User[];
-    followersRelationships?: Relationship[];
-    following?: User[];
-    followingRelationships?: Relationship[];
+    relationship?: Relationship;
+    followersRelationships?: Relationship[] = [];
+    followingRelationships?: Relationship[] = [];
     
+    following?: LinkableResult<User>;
+    followers?: LinkableResult<User>;
+    latestFollowers?: LinkableResult<User>;
     statuses?: LinkableResult<Status>;
 
     routeParamsSubscription?: Subscription;
@@ -67,9 +70,11 @@ export class ProfilePage implements OnInit, OnDestroy {
             }
 
             this.userName = userName;
-            this.followers = [];
-            this.following = [];
+            this.followers = undefined;
+            this.following = undefined;
             this.statuses = undefined;
+
+            this.signedInUser = this.authorizationService.getUser();
 
             [this.user, this.latestFollowers] = await Promise.all([
                 this.usersService.profile(userName),
@@ -98,16 +103,16 @@ export class ProfilePage implements OnInit, OnDestroy {
                 this.followersRelationships = await this.relationshipsService.getAll(internalFollowers.data.map(x => x.id ?? ''))
             }
 
-            this.followers = internalFollowers.data;
+            this.followers = internalFollowers;
         }
     }
 
     async onRelationChanged(relationship: Relationship): Promise<void> {
         this.user = await this.usersService.profile(this.userName);
 
-        const index = this.following?.findIndex(x => x.id === relationship.userId) ?? -1;
+        const index = this.following?.data.findIndex(x => x.id === relationship.userId) ?? -1;
         if (index > -1) {
-            this.following?.splice(index, 1);
+            this.following?.data.splice(index, 1);
         }
     }
 
@@ -128,28 +133,65 @@ export class ProfilePage implements OnInit, OnDestroy {
         return await this.relationshipsService.get(this.user.id);
     }
 
+    async onLoadMoreFollowing(): Promise<void> {
+        const internalFollowing = await this.usersService.following(this.userName, undefined, this.following?.maxId, undefined);
+
+        if (this.signedInUser && (internalFollowing.data?.length ?? 0) !== 0) {
+            const internalFollowingRelationships = await this.relationshipsService.getAll(internalFollowing.data.map(x => x.id ?? ''));
+            this.followingRelationships?.push(...internalFollowingRelationships);
+        }
+
+        if (this.following) {
+            if (internalFollowing.data.length > 0) {
+                this.following.data.push(...internalFollowing.data);
+                this.following.minId = internalFollowing.minId;
+                this.following.maxId = internalFollowing.maxId;
+            } else {
+                this.allFollowingDisplayed = true;
+            }
+        } else {
+            this.following = internalFollowing;
+
+            if (this.following.data.length === 0) {
+                this.allFollowingDisplayed = true;
+            }
+        }
+    }
+
+    async onLoadMoreFollowers(): Promise<void> {
+        const internalFollowers = await this.usersService.followers(this.userName, undefined, this.followers?.maxId, undefined);
+
+        if (this.signedInUser && (internalFollowers.data?.length ?? 0) !== 0) {
+            const internalFollowersRelationships = await this.relationshipsService.getAll(internalFollowers.data.map(x => x.id ?? ''));
+            this.followersRelationships?.push(...internalFollowersRelationships);
+        }
+
+        if (this.followers) {
+            if (internalFollowers.data.length > 0) {
+                this.followers.data.push(...internalFollowers.data);
+                this.followers.minId = internalFollowers.minId;
+                this.followers.maxId = internalFollowers.maxId;
+            } else {
+                this.allFollowersDisplayed = true;
+            }
+        } else {
+            this.followers = internalFollowers;
+
+            if (this.followers.data.length === 0) {
+                this.allFollowersDisplayed = true;
+            }
+        }
+    }
+
     private async loadPageData(): Promise<void> {
         const currentUrl = this.router.routerState.snapshot.url;
-        const signedInUser = this.authorizationService.getUser();
-
+        
         if (currentUrl.includes('/following')) {
             this.profilePageTab = ProfilePageTab.Following;
-            const internalFollowing = await this.usersService.following(this.userName);
-
-            if (signedInUser && (internalFollowing.data?.length ?? 0) !== 0) {
-                this.followingRelationships = await this.relationshipsService.getAll(internalFollowing.data.map(x => x.id ?? ''))
-            }
-
-            this.following = internalFollowing.data;
+            await this.onLoadMoreFollowing();
         } else if (currentUrl.includes('/followers')) {
             this.profilePageTab = ProfilePageTab.Followers;
-            const internalFollowers = await this.usersService.followers(this.userName);
-
-            if (signedInUser && (internalFollowers.data?.length ?? 0) !== 0) {
-                this.followersRelationships = await this.relationshipsService.getAll(internalFollowers.data.map(x => x.id ?? ''))
-            }
-
-            this.followers = internalFollowers.data;
+            await this.onLoadMoreFollowers();
         } else {
             this.profilePageTab = ProfilePageTab.Statuses;
             this.statuses = await this.usersService.statuses(this.userName);

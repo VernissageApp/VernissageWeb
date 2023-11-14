@@ -40,17 +40,17 @@ export class UsersService {
     }
 
     public async following(userName: string, minId?: string, maxId?: string, sinceId?: string, limit?: number): Promise<LinkableResult<User>> {
-        const event$ = this.httpClient.get<LinkableResult<User>>(this.windowService.apiUrl() +  '/api/v1/users/' + userName + `/following?minId=${minId}&maxId=${maxId}&sinceId=${sinceId}&limit=${limit}`);
+        const event$ = this.httpClient.get<LinkableResult<User>>(this.windowService.apiUrl() +  '/api/v1/users/' + userName + `/following?minId=${minId ?? ''}&maxId=${maxId ?? ''}&sinceId=${sinceId ?? ''}&limit=${limit ?? ''}`);
         return await firstValueFrom(event$);
     }
 
     public async followers(userName: string, minId?: string, maxId?: string, sinceId?: string, limit?: number): Promise<LinkableResult<User>> {
-        const event$ = this.httpClient.get<LinkableResult<User>>(this.windowService.apiUrl() +  '/api/v1/users/' + userName + `/followers?minId=${minId}&maxId=${maxId}&sinceId=${sinceId}&limit=${limit}`);
+        const event$ = this.httpClient.get<LinkableResult<User>>(this.windowService.apiUrl() +  '/api/v1/users/' + userName + `/followers?minId=${minId ?? ''}&maxId=${maxId ?? ''}&sinceId=${sinceId ?? ''}&limit=${limit ?? ''}`);
         return await firstValueFrom(event$);
     }
 
     public async statuses(userName: string, minId?: string, maxId?: string, sinceId?: string, limit?: number): Promise<LinkableResult<Status>> {
-        const event$ = this.httpClient.get<LinkableResult<Status>>(this.windowService.apiUrl() +  '/api/v1/users/' + userName + `/statuses?minId=${minId}&maxId=${maxId}&sinceId=${sinceId}&limit=${limit}`);
+        const event$ = this.httpClient.get<LinkableResult<Status>>(this.windowService.apiUrl() +  '/api/v1/users/' + userName + `/statuses?minId=${minId ?? ''}&maxId=${maxId ?? ''}&sinceId=${sinceId ?? ''}&limit=${limit ?? ''}`);
         return await firstValueFrom(event$);
     }
 }

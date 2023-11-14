@@ -13,12 +13,12 @@ export class TimelineService {
     }
 
     public async home(minId?: string, maxId?: string, sinceId?: string, limit?: number): Promise<LinkableResult<Status>> {
-        const event$ = this.httpClient.get<LinkableResult<Status>>(this.windowService.apiUrl() +  `/api/v1/timelines/home?minId=${minId}&maxId=${maxId}&sinceId=${sinceId}&limit=${limit}`);
+        const event$ = this.httpClient.get<LinkableResult<Status>>(this.windowService.apiUrl() +  `/api/v1/timelines/home?minId=${minId ?? ''}&maxId=${maxId ?? ''}&sinceId=${sinceId ?? ''}&limit=${limit ?? ''}`);
         return await firstValueFrom(event$);
     }
 
     public async public(minId?: string, maxId?: string, sinceId?: string, limit?: number, onlyLocal?: boolean): Promise<LinkableResult<Status>> {
-        const event$ = this.httpClient.get<LinkableResult<Status>>(this.windowService.apiUrl() +  `/api/v1/timelines/public?minId=${minId}&maxId=${maxId}&sinceId=${sinceId}&limit=${limit}&onlyLocal=${onlyLocal}`);
+        const event$ = this.httpClient.get<LinkableResult<Status>>(this.windowService.apiUrl() +  `/api/v1/timelines/public?minId=${minId ?? ''}&maxId=${maxId ?? ''}&sinceId=${sinceId ?? ''}&limit=${limit ?? ''}&onlyLocal=${onlyLocal ?? ''}`);
         return await firstValueFrom(event$);
     }
 }

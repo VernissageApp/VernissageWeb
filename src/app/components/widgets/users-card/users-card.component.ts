@@ -13,7 +13,9 @@ export class UsersCardComponent extends Responsive {
     @Input() users?: User[];
     @Input() relationships?: Relationship[];
     @Input() showBio = false;
+    @Input() showLoadMore = false;
     @Output() relationChanged = new EventEmitter<Relationship>();
+    @Output() loadMore = new EventEmitter();
 
     constructor(breakpointObserver: BreakpointObserver) {
         super(breakpointObserver);
@@ -27,7 +29,11 @@ export class UsersCardComponent extends Responsive {
         this.relationChanged.emit(relationship);
     }
 
+    onLoadMore(): void {
+        this.loadMore.emit();
+    }
+
     trackByFn(_: number, item: User): string | undefined{
         return item.id;
-     }
+    }
 }

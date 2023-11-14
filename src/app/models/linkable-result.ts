@@ -1,5 +1,5 @@
 export class LinkableResult<T>  {
-    public maxId?: String;
-    public minId?: String;
+    public maxId?: string;
+    public minId?: string;
     public data: T[] = [];
 }

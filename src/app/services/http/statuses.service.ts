@@ -21,7 +21,7 @@ export class StatusesService {
     }
 
     public async getAll(minId?: string, maxId?: string, sinceId?: string, limit?: number): Promise<LinkableResult<Status>> {
-        const event$ = this.httpClient.get<LinkableResult<Status>>(this.windowService.apiUrl() + `/api/v1/statuses?minId=${minId}&maxId=${maxId}&sinceId=${sinceId}&limit=${limit}`);
+        const event$ = this.httpClient.get<LinkableResult<Status>>(this.windowService.apiUrl() + `/api/v1/statuses?minId=${minId ?? ''}&maxId=${maxId ?? ''}&sinceId=${sinceId ?? ''}&limit=${limit ?? ''}`);
         return await firstValueFrom(event$);
     }
 

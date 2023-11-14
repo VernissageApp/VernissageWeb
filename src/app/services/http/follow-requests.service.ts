@@ -12,7 +12,7 @@ export class FollowRequestsService {
     }
 
     public async get(page: number, size: number): Promise<Relationship[]> {
-        const event$ = this.httpClient.get<Relationship[]>(this.windowService.apiUrl() + `/api/v1/follow-requests?page=${page}&size=${size}`);
+        const event$ = this.httpClient.get<Relationship[]>(this.windowService.apiUrl() + `/api/v1/follow-requests?page=${page ?? ''}&size=${size ?? ''}`);
         return await firstValueFrom(event$);
     }
 

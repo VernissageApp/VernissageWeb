@@ -13,7 +13,7 @@ import { Role } from 'src/app/models/role';
 })
 export class AuthorizationService {
 
-    public changes = new BehaviorSubject<User | null>(this.getUser());
+    public changes = new BehaviorSubject<User | undefined>(this.getUser());
     private sessionTimeout?: NodeJS.Timeout;
     private tokenProcessingTime = 30;
     private oneSecond = 1000;
@@ -39,11 +39,11 @@ export class AuthorizationService {
         return true;
     }
 
-    getUser(): User | null {
+    getUser(): User | undefined {
 
         const actionToken = this.persistanceService.getAccessToken();
         if (!actionToken) {
-            return null;
+            return undefined;
         }
 
         const decodedToken = this.jwtHelperService.decodeToken(actionToken);
@@ -102,7 +102,7 @@ export class AuthorizationService {
         this.cancelSessionTimeout();
         this.persistanceService.removeAccessToken();
         this.persistanceService.removeRefreshToken();
-        this.changes.next(null);
+        this.changes.next(undefined);
     }
 
     async refreshAccessToken(): Promise<void> {

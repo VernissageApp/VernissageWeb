@@ -22,5 +22,9 @@
 
             <app-follow-buttons-section [user]="user" [relationship]="getRelationship(user)" (relationChanged)="onRelationChanged($event)" [singleButton]="true"></app-follow-buttons-section>
         </div>
+
+        <div *ngIf="showLoadMore" class="flex-row flex-space-around">
+            <button mat-button (click)="onLoadMore()">Load more...</button>
+        </div>
     </mat-card-content>
 </mat-card>

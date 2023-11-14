@@ -13,7 +13,7 @@ export class NotificationsService {
     }
 
     public async get (minId?: string, maxId?: string, sinceId?: string, limit?: number): Promise<LinkableResult<Notification>> {
-        const event$ = this.httpClient.get<LinkableResult<Notification>>(this.windowService.apiUrl() +  `/api/v1/notifications?minId=${minId}&maxId=${maxId}&sinceId=${sinceId}&limit=${limit}`);
+        const event$ = this.httpClient.get<LinkableResult<Notification>>(this.windowService.apiUrl() +  `/api/v1/notifications?minId=${minId ?? ''}&maxId=${maxId ?? ''}&sinceId=${sinceId ?? ''}&limit=${limit ?? ''}`);
         return await firstValueFrom(event$);
     }
 }
