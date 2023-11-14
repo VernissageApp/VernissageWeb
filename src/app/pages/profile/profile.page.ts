@@ -11,6 +11,7 @@ import { Relationship } from 'src/app/models/relationship';
 import { RelationshipsService } from 'src/app/services/http/relationships.service';
 import { ProfilePageTab } from 'src/app/models/profile-page-tab';
 import { LoadingService } from 'src/app/services/common/loading.service';
+import { LinkableResult } from 'src/app/models/linkable-result';
 
 @Component({
     selector: 'app-profile',
@@ -27,14 +28,14 @@ export class ProfilePage implements OnInit, OnDestroy {
 
     user?: User;
     relationship?: Relationship;
-    latestFollowers?: User[];
+    latestFollowers?: LinkableResult<User>;
 
     followers?: User[];
     followersRelationships?: Relationship[];
     following?: User[];
     followingRelationships?: Relationship[];
     
-    statuses?: Status[];
+    statuses?: LinkableResult<Status>;
 
     routeParamsSubscription?: Subscription;
     routeUrlSubscription?: Subscription;
@@ -68,11 +69,11 @@ export class ProfilePage implements OnInit, OnDestroy {
             this.userName = userName;
             this.followers = [];
             this.following = [];
-            this.statuses = [];
+            this.statuses = undefined;
 
             [this.user, this.latestFollowers] = await Promise.all([
                 this.usersService.profile(userName),
-                this.usersService.followers(userName, 0, 20)
+                this.usersService.followers(userName)
             ]);
 
             this.relationship = await this.downloadRelationship();
@@ -92,11 +93,12 @@ export class ProfilePage implements OnInit, OnDestroy {
         this.user = await this.usersService.profile(this.userName);
         if (this.profilePageTab === ProfilePageTab.Followers) {
             const internalFollowers = await this.usersService.followers(this.userName);
-            if ((internalFollowers?.length ?? 0) !== 0) {
-                this.followersRelationships = await this.relationshipsService.getAll(internalFollowers.map(x => x.id ?? ''))
+
+            if ((internalFollowers.data?.length ?? 0) !== 0) {
+                this.followersRelationships = await this.relationshipsService.getAll(internalFollowers.data.map(x => x.id ?? ''))
             }
 
-            this.followers = internalFollowers;
+            this.followers = internalFollowers.data;
         }
     }
 
@@ -134,20 +136,20 @@ export class ProfilePage implements OnInit, OnDestroy {
             this.profilePageTab = ProfilePageTab.Following;
             const internalFollowing = await this.usersService.following(this.userName);
 
-            if (signedInUser && (internalFollowing?.length ?? 0) !== 0) {
-                this.followingRelationships = await this.relationshipsService.getAll(internalFollowing.map(x => x.id ?? ''))
+            if (signedInUser && (internalFollowing.data?.length ?? 0) !== 0) {
+                this.followingRelationships = await this.relationshipsService.getAll(internalFollowing.data.map(x => x.id ?? ''))
             }
 
-            this.following = internalFollowing;
+            this.following = internalFollowing.data;
         } else if (currentUrl.includes('/followers')) {
             this.profilePageTab = ProfilePageTab.Followers;
             const internalFollowers = await this.usersService.followers(this.userName);
 
-            if (signedInUser && (internalFollowers?.length ?? 0) !== 0) {
-                this.followersRelationships = await this.relationshipsService.getAll(internalFollowers.map(x => x.id ?? ''))
+            if (signedInUser && (internalFollowers.data?.length ?? 0) !== 0) {
+                this.followersRelationships = await this.relationshipsService.getAll(internalFollowers.data.map(x => x.id ?? ''))
             }
 
-            this.followers = internalFollowers;
+            this.followers = internalFollowers.data;
         } else {
             this.profilePageTab = ProfilePageTab.Statuses;
             this.statuses = await this.usersService.statuses(this.userName);

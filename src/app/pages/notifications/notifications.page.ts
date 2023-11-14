@@ -7,6 +7,7 @@ import { NotificationType } from 'src/app/models/notification-type';
 import { LoadingService } from 'src/app/services/common/loading.service';
 import { Responsive } from 'src/app/common/responsive';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { LinkableResult } from 'src/app/models/linkable-result';
 
 @Component({
     selector: 'app-notifications',
@@ -18,7 +19,7 @@ export class NotificationsPage extends Responsive {
     readonly notificationType = NotificationType;
 
     isReady = false;
-    notifications?: Notification[];
+    notifications?: LinkableResult<Notification>;
 
     constructor(
         private notificationsService: NotificationsService,

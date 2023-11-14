@@ -5,6 +5,7 @@ import { User } from 'src/app/models/user';
 import { Relationship } from 'src/app/models/relationship';
 import { Status } from 'src/app/models/status';
 import { WindowService } from '../common/window.service';
+import { LinkableResult } from 'src/app/models/linkable-result';
 
 @Injectable({
     providedIn: 'root'
@@ -38,18 +39,18 @@ export class UsersService {
         return await firstValueFrom(event$);
     }
 
-    public async following(userName: string, page = 0, size = 100): Promise<User[]> {
-        const event$ = this.httpClient.get<User[]>(this.windowService.apiUrl() +  '/api/v1/users/' + userName + `/following?page=${page}&size${size}`);
+    public async following(userName: string, minId?: string, maxId?: string, sinceId?: string, limit?: number): Promise<LinkableResult<User>> {
+        const event$ = this.httpClient.get<LinkableResult<User>>(this.windowService.apiUrl() +  '/api/v1/users/' + userName + `/following?minId=${minId}&maxId=${maxId}&sinceId=${sinceId}&limit=${limit}`);
         return await firstValueFrom(event$);
     }
 
-    public async followers(userName: string, page = 0, size = 100): Promise<User[]> {
-        const event$ = this.httpClient.get<User[]>(this.windowService.apiUrl() +  '/api/v1/users/' + userName + `/followers?page=${page}&size${size}`);
+    public async followers(userName: string, minId?: string, maxId?: string, sinceId?: string, limit?: number): Promise<LinkableResult<User>> {
+        const event$ = this.httpClient.get<LinkableResult<User>>(this.windowService.apiUrl() +  '/api/v1/users/' + userName + `/followers?minId=${minId}&maxId=${maxId}&sinceId=${sinceId}&limit=${limit}`);
         return await firstValueFrom(event$);
     }
 
-    public async statuses(userName: string, page = 0, size = 100): Promise<Status[]> {
-        const event$ = this.httpClient.get<Status[]>(this.windowService.apiUrl() +  '/api/v1/users/' + userName + `/statuses?page=${page}&size${size}`);
+    public async statuses(userName: string, minId?: string, maxId?: string, sinceId?: string, limit?: number): Promise<LinkableResult<Status>> {
+        const event$ = this.httpClient.get<LinkableResult<Status>>(this.windowService.apiUrl() +  '/api/v1/users/' + userName + `/statuses?minId=${minId}&maxId=${maxId}&sinceId=${sinceId}&limit=${limit}`);
         return await firstValueFrom(event$);
     }
 }

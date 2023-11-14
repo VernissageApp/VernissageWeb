@@ -8,6 +8,7 @@ import { Subscription } from 'rxjs';
 import { LoadingService } from 'src/app/services/common/loading.service';
 import { Responsive } from 'src/app/common/responsive';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { LinkableResult } from 'src/app/models/linkable-result';
 
 @Component({
     selector: 'app-home',
@@ -16,7 +17,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
     animations: fadeInAnimation
 })
 export class HomePage extends Responsive {
-    statuses?: Status[];
+    statuses?: LinkableResult<Status>;
     timeline: String = 'private';
     isReady = false;
 

@@ -12,9 +12,9 @@
 
             <app-follow-buttons-section [user]="user" [relationship]="relationship" (relationChanged)="onMainRelationChanged()"></app-follow-buttons-section>
 
-            <div *ngIf="(latestFollowers?.length ?? 0) > 0" class="text-center padding-top-10 padding-bottom-10">
+            <div *ngIf="(latestFollowers?.data?.length ?? 0) > 0" class="text-center padding-top-10 padding-bottom-10">
                 <div class="text-muted padding-bottom-5">LATEST FOLLOWERS</div>
-                <ng-container *ngFor="let item of latestFollowers">
+                <ng-container *ngFor="let item of latestFollowers?.data">
                     <img class="follower-image" [src]="item.avatarUrl ?? '/assets/avatar.svg'" [matTooltip]="item.name ?? item.userName ?? ''" />
                 </ng-container>
             </div>

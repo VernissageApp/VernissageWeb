@@ -2,6 +2,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
+import { LinkableResult } from 'src/app/models/linkable-result';
 import { Status } from 'src/app/models/status';
 
 @Component({
@@ -11,7 +12,7 @@ import { Status } from 'src/app/models/status';
     animations: fadeInAnimation
 })
 export class GalleryComponent implements OnInit, OnChanges {
-    @Input() statuses?: Status[];
+    @Input() statuses?: LinkableResult<Status>;
 
     gallery?: Status[][];
     columns = 3;
@@ -56,7 +57,7 @@ export class GalleryComponent implements OnInit, OnChanges {
         }
 
         let currentColumn = 0;
-        for (let status of this.statuses) {
+        for (let status of this.statuses.data) {
             this.gallery[currentColumn].push(status);
             currentColumn = (currentColumn + 1) % this.columns;
         }

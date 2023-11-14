@@ -6,6 +6,7 @@ import { StatusRequest } from 'src/app/models/status-request';
 import { ReblogRequest } from 'src/app/models/reblog-request';
 import { StatusVisibility } from 'src/app/models/status-visibility';
 import { WindowService } from '../common/window.service';
+import { LinkableResult } from 'src/app/models/linkable-result';
 
 @Injectable({
     providedIn: 'root'
@@ -19,8 +20,8 @@ export class StatusesService {
         return await firstValueFrom(event$);
     }
 
-    public async getAll(): Promise<Status[]> {
-        const event$ = this.httpClient.get<Status[]>(this.windowService.apiUrl() + '/api/v1/statuses');
+    public async getAll(minId?: string, maxId?: string, sinceId?: string, limit?: number): Promise<LinkableResult<Status>> {
+        const event$ = this.httpClient.get<LinkableResult<Status>>(this.windowService.apiUrl() + `/api/v1/statuses?minId=${minId}&maxId=${maxId}&sinceId=${sinceId}&limit=${limit}`);
         return await firstValueFrom(event$);
     }
 
