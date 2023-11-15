@@ -39,13 +39,13 @@
                         <mat-icon>home</mat-icon>
                         <span>Home</span>
                     </button>
-                    <button mat-menu-item [routerLink]="['/@' + user.userName]" aria-label="Home">
-                        <mat-icon>face</mat-icon>
-                        <span>Profile</span>
-                    </button>
                     <button *ngIf="isRegistrationByInvitationsOpened()" mat-menu-item [routerLink]="['/invitations']" aria-label="Invite">
                         <mat-icon>person_add</mat-icon>
                         <span>Invite</span>
+                    </button>
+                    <button mat-menu-item [routerLink]="['/@' + user.userName]" aria-label="Home">
+                        <mat-icon>face</mat-icon>
+                        <span>Profile</span>
                     </button>
                     <mat-divider></mat-divider>
                     <button mat-menu-item [routerLink]="['/account']" aria-label="Account">

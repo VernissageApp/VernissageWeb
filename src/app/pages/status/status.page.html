@@ -7,6 +7,8 @@
 
     <div [ngClass]="{ 'padding-30': !isHandset, 'padding-10': isHandset }">
         <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
+
+            <!-- Left main panel -->
             <mat-card class="flex-grow-2" appearance="outlined">
                 <mat-card-content>
 
@@ -25,7 +27,7 @@
                                 <mat-icon>star_border</mat-icon>
                             </button>
 
-                            <button *ngIf="mainStatus.favourited" mat-icon-button class="margin-right-10" color="primary" matTooltip="Like" matTooltipPosition="above" aria-label="Like" (click)="unfavourite()">
+                            <button *ngIf="mainStatus.favourited" mat-icon-button class="margin-right-10" color="primary" matTooltip="Unlike" matTooltipPosition="above" aria-label="Unlike" (click)="unfavourite()">
                                 <mat-icon>star</mat-icon>
                             </button>
 
@@ -33,7 +35,7 @@
                                 <mat-icon>bookmark_border</mat-icon>
                             </button>
 
-                            <button *ngIf="mainStatus.bookmarked" mat-icon-button class="margin-right-10" color="primary" matTooltip="Bookmark" matTooltipPosition="above" aria-label="Bookmark" (click)="unbookmark()">
+                            <button *ngIf="mainStatus.bookmarked" mat-icon-button class="margin-right-10" color="primary" matTooltip="Unbookmark" matTooltipPosition="above" aria-label="Unbookmark" (click)="unbookmark()">
                                 <mat-icon>bookmark</mat-icon>
                             </button>
 
@@ -122,12 +124,67 @@
                     </div>
                 </mat-card-content>
             </mat-card>
+
+            <!-- Right comments panel -->
             <mat-card appearance="outlined">
                 <mat-card-header>
                     <mat-card-title>Comments</mat-card-title>
                 </mat-card-header>
                 <mat-card-content>
-                    There is nothing to read here yet.
+                    <app-comment-reply *ngIf="signedInUser" [signedInUser]="signedInUser" [status]="mainStatus"></app-comment-reply>
+
+                    <ng-container *ngIf="(comments?.length ?? 0) > 0">
+                        <div *ngFor="let comment of comments">
+                            <div class="flex-row gap-8 padding-top-5 comments" [ngClass]="{ 'replies': !comment.showDivider, 'padding-top-15': comment.showDivider }">
+                                <div>
+                                    <img [src]="comment.status.user?.avatarUrl ?? '/assets/avatar.svg'" class="" />
+                                </div>
+                                <div>
+                                    <div>
+                                        <a [routerLink]="[ '/@' + comment.status.user?.userName ]" class="margin-right-5 fw-600">{{ comment.status.user?.name }}</a>
+                                        <span class="fw-400 fs-90 text-muted">@{{ comment.status.user?.userName }}</span>
+                                    </div>
+                                    <div>
+                                        {{ comment.status.note }}
+                                    </div>
+                                </div>
+                                <div *ngIf="signedInUser" class="flex-grow-1 text-right">
+                                    <mat-icon class="favourited" *ngIf="comment.status.favourited">star</mat-icon>
+                                    <button mat-icon-button [matMenuTriggerFor]="menu" class="margin-right-10" color="primary" aria-label="More options">
+                                        <mat-icon>more_vert</mat-icon>
+                                    </button>
+                                    <mat-menu #menu="matMenu">
+                                        <button *ngIf="!comment.status.favourited" mat-menu-item (click)="favouriteComment(comment.status)">
+                                            <mat-icon>star_border</mat-icon>
+                                            <span>Like</span>
+                                        </button>
+                                        <button *ngIf="comment.status.favourited" mat-menu-item (click)="unfavouriteComment(comment.status)">
+                                            <mat-icon>star</mat-icon>
+                                            <span>Unlike</span>
+                                        </button>
+                                        <button mat-menu-item (click)="onReply(comment.status)">
+                                            <mat-icon>reply</mat-icon>
+                                            <span>Reply</span>
+                                        </button>
+                                        <mat-divider></mat-divider>
+                                        <button mat-menu-item>
+                                            <mat-icon>warning</mat-icon>
+                                            <span>Report</span>
+                                        </button>
+                                    </mat-menu>
+                                </div>
+                            </div>
+                            <div *ngIf="replyStatus?.id === comment.status.id" class="text-right">
+                                <app-comment-reply [signedInUser]="signedInUser" [status]="comment.status" (close)="onReply(undefined)"></app-comment-reply>
+                                <button mat-button (click)="onReply(undefined)">Cancel</button>
+                            </div>
+                        </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="(comments?.length ?? 0) === 0">
+                        <div>There is nothing to read here yet.</div>
+                    </ng-container>
+                    
                 </mat-card-content>
             </mat-card>
         </div>

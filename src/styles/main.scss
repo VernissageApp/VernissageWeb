@@ -154,3 +154,7 @@ $vernissage-toolbar-theme: mat.define-light-theme((
 .small-button-toggle {
   @include mat.button-toggle-density(-3);
 }
+
+.small-text-input {
+  @include mat.form-field-density(-3);
+}

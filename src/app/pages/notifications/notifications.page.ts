@@ -19,6 +19,7 @@ export class NotificationsPage extends Responsive {
     readonly notificationType = NotificationType;
 
     isReady = false;
+    showLoadMore = true;
     notifications?: LinkableResult<Notification>;
 
     constructor(
@@ -32,9 +33,30 @@ export class NotificationsPage extends Responsive {
         super.ngOnInit();
 
         this.loadingService.showLoader();
-        this.notifications = await this.notificationsService.get();
+        await this.onLoadMore();
         this.isReady = true;
         this.loadingService.hideLoader();
+    }
+
+    async onLoadMore(): Promise<void> {
+        const internalNotifications = await this.notificationsService.get(undefined, this.notifications?.maxId, undefined);
+
+        if (this.notifications) {
+            if (internalNotifications.data.length > 0) {
+                this.notifications.data.push(...internalNotifications.data);
+                this.notifications.minId = internalNotifications.minId;
+                this.notifications.maxId = internalNotifications.maxId;
+            } else {
+                this.showLoadMore = false;
+            }
+        } else {
+            this.notifications = internalNotifications;
+
+            if (this.notifications.data.length === 0) {
+                this.showLoadMore = false;
+            }
+        }
+
     }
 
     getAttachemntUrl(status: Status): string | undefined {

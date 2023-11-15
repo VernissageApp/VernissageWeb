@@ -7,6 +7,7 @@ import { ReblogRequest } from 'src/app/models/reblog-request';
 import { StatusVisibility } from 'src/app/models/status-visibility';
 import { WindowService } from '../common/window.service';
 import { LinkableResult } from 'src/app/models/linkable-result';
+import { StatusContext } from 'src/app/models/status-context';
 
 @Injectable({
     providedIn: 'root'
@@ -57,6 +58,11 @@ export class StatusesService {
 
     public async unbookmark(id: string): Promise<Status> {
         const event$ = this.httpClient.post<Status>(this.windowService.apiUrl() + '/api/v1/statuses/' + id + '/unbookmark', null);
+        return await firstValueFrom(event$);
+    }
+
+    public async context(id: string): Promise<StatusContext> {
+        const event$ = this.httpClient.get<StatusContext>(this.windowService.apiUrl() + '/api/v1/statuses/' + id + '/context');
         return await firstValueFrom(event$);
     }
 }

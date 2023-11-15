@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { Subscription } from 'rxjs';
 import { StatusesService } from 'src/app/services/http/statuses.service';
@@ -11,6 +11,9 @@ import { MessagesService } from 'src/app/services/common/messages.service';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 import { Responsive } from 'src/app/common/responsive';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { User } from 'src/app/models/user';
+import { StatusRequest } from 'src/app/models/status-request';
+import { StatusComment } from 'src/app/models/status-comment';
 
 @Component({
     selector: 'app-status',
@@ -23,8 +26,12 @@ export class StatusPage extends Responsive {
     isReady = false;
 
     status?: Status;
+    comments?: StatusComment[];
+
     mainStatus?: Status;
     routeParamsSubscription?: Subscription;
+    signedInUser?: User;
+    replyStatus?: Status;
 
     constructor(
         private statusesService: StatusesService,
@@ -42,6 +49,8 @@ export class StatusPage extends Responsive {
             this.isReady = false;
 
             const statusId = params['id'] as string;
+
+            this.signedInUser = this.authorizationService.getUser();
             await this.loadPageData(statusId);
 
             this.isReady = true;
@@ -108,7 +117,7 @@ export class StatusPage extends Responsive {
     async reblog(): Promise<void> {
         try {
             if (this.mainStatus) {
-                this.mainStatus = await this.statusesService.reblog(this.mainStatus.id)
+                this.mainStatus = await this.statusesService.reblog(this.mainStatus.id);
                 this.messageService.showSuccess('Status boosted.');
             }
         } catch (error) {
@@ -120,7 +129,7 @@ export class StatusPage extends Responsive {
     async unreblog(): Promise<void> {
         try {
             if (this.mainStatus) {
-                this.mainStatus = await this.statusesService.unreblog(this.mainStatus.id)
+                this.mainStatus = await this.statusesService.unreblog(this.mainStatus.id);
                 this.messageService.showSuccess('Status unboosted.');
             }
         } catch (error) {
@@ -132,7 +141,7 @@ export class StatusPage extends Responsive {
     async favourite(): Promise<void> {
         try {
             if (this.mainStatus) {
-                this.mainStatus = await this.statusesService.favourite(this.mainStatus.id)
+                this.mainStatus = await this.statusesService.favourite(this.mainStatus.id);
                 this.messageService.showSuccess('Status favourited.');
             }
         } catch (error) {
@@ -144,7 +153,7 @@ export class StatusPage extends Responsive {
     async unfavourite(): Promise<void> {
         try {
             if (this.mainStatus) {
-                this.mainStatus = await this.statusesService.unfavourite(this.mainStatus.id)
+                this.mainStatus = await this.statusesService.unfavourite(this.mainStatus.id);
                 this.messageService.showSuccess('Status unfavorited.');
             }
         } catch (error) {
@@ -156,7 +165,7 @@ export class StatusPage extends Responsive {
     async bookmark(): Promise<void> {
         try {
             if (this.mainStatus) {
-                this.mainStatus = await this.statusesService.bookmark(this.mainStatus.id)
+                this.mainStatus = await this.statusesService.bookmark(this.mainStatus.id);
                 this.messageService.showSuccess('Status bookmarked.');
             }
         } catch (error) {
@@ -168,7 +177,7 @@ export class StatusPage extends Responsive {
     async unbookmark(): Promise<void> {
         try {
             if (this.mainStatus) {
-                this.mainStatus = await this.statusesService.unbookmark(this.mainStatus.id)
+                this.mainStatus = await this.statusesService.unbookmark(this.mainStatus.id);
                 this.messageService.showSuccess('Status unbookmarked.');
             }
         } catch (error) {
@@ -177,13 +186,62 @@ export class StatusPage extends Responsive {
         }
     }
 
+    async favouriteComment(status: Status): Promise<void> {
+        try {
+            await this.statusesService.favourite(status.id);
+            status.favourited = true;
+
+            this.messageService.showSuccess('Comment favourited.');
+        } catch (error) {
+            console.error(error);
+            this.messageService.showServerError(error);
+        }
+    }
+
+    async unfavouriteComment(status: Status): Promise<void> {
+        try {
+            await this.statusesService.unfavourite(status.id);
+            status.favourited = false;
+
+            this.messageService.showSuccess('Comment favourited.');
+        } catch (error) {
+            console.error(error);
+            this.messageService.showServerError(error);
+        }
+    }
+
+    onReply(status?: Status): void {
+        this.replyStatus = status;
+    }
+
     private async loadPageData(statusId: string): Promise<void> {
         this.status = await this.statusesService.get(statusId)
+        this.comments = await this.getAllReplies(statusId);
 
         if (this.status.reblog) {
             this.mainStatus = this.status.reblog;
         } else {
             this.mainStatus = this.status;
+        }
+    }
+
+    private async getAllReplies(statusId: string): Promise<StatusComment[]> {
+        const replies: StatusComment[] = [];
+
+        const context = await this.statusesService.context(statusId);
+        for(let item of context.descendants) {
+            replies.push(new StatusComment(item, true));
+            await this.getReplies(item.id, replies);
+        }
+
+        return replies;
+    }
+
+    private async getReplies(statusId: string, replies: StatusComment[]): Promise<void> {
+        const context = await this.statusesService.context(statusId);
+        for(let item of context.descendants) {
+            replies.push(new StatusComment(item, false));
+            await this.getReplies(item.id, replies);
         }
     }
 }

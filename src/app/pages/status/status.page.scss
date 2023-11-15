@@ -58,3 +58,20 @@
         transform: scale(0.75);
     }
 }
+
+.comments {
+    img {
+        padding-top: 1px;
+        width: 32px;
+        height:32px;
+        border-radius: 15%;
+    }
+
+    .favourited {
+        transform: scale(0.8);
+    }
+}
+
+.replies {
+    padding-left: 40px;
+}

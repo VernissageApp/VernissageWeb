@@ -80,6 +80,7 @@ export enum EventType {
     StatusesUnfavourite = 'statusesUnfavourite',
     StatusesBookmark = 'statusesBookmark',
     StatusesUnbookmark = 'statusesUnbookmark',
+    StatusesContext = 'statusesContext',
     
     TimelinesPublic = 'timelinesPublic',
     TimelinesHome = 'timelinesHome',

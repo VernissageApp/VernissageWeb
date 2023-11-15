@@ -45,6 +45,10 @@
 .flex-align-center { align-items: center; }
 .flex-align-baseline { align-items: baseline; }
 
+// Flex align self.
+.flex-align-self-start { align-self: flex-start; }
+.flex-align-self-end { align-self: flex-end; }
+
 // Gap.
 .gap-0 { gap: 0; }
 .gap-4 { gap: 4px; }

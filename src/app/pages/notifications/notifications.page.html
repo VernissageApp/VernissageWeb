@@ -83,6 +83,10 @@
                             </div>
                         </div>
                     </div>
+
+                    <div *ngIf="showLoadMore" class="flex-row flex-space-around">
+                        <button mat-button (click)="onLoadMore()">Load more...</button>
+                    </div>
                 </mat-card-content>
             </mat-card>
 
