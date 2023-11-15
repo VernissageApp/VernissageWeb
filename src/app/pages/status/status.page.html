@@ -174,9 +174,8 @@
                                     </mat-menu>
                                 </div>
                             </div>
-                            <div *ngIf="replyStatus?.id === comment.status.id" class="text-right">
-                                <app-comment-reply [signedInUser]="signedInUser" [status]="comment.status" (close)="onReply(undefined)"></app-comment-reply>
-                                <button mat-button (click)="onReply(undefined)">Cancel</button>
+                            <div *ngIf="replyStatus?.id === comment.status.id" class="text-right padding-top-5">
+                                <app-comment-reply [signedInUser]="signedInUser" [status]="comment.status" [showCancel]="true" (close)="onReply(undefined)"></app-comment-reply>
                             </div>
                         </div>
                     </ng-container>

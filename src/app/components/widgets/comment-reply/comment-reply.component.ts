@@ -13,6 +13,7 @@ import { StatusesService } from 'src/app/services/http/statuses.service';
 export class CommentReplyComponent {
     @Input() signedInUser?: User;
     @Input() status?: Status;
+    @Input() showCancel = false;
     @Output() close = new EventEmitter();
 
     comment = '';
@@ -36,5 +37,9 @@ export class CommentReplyComponent {
             console.error(error);
             this.messageService.showServerError(error);
         }
+    }
+
+    cancel(): void {
+        this.close.emit();
     }
 }

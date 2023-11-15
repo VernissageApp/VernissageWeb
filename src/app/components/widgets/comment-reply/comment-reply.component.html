@@ -15,7 +15,8 @@
                     Comment required.
                 </mat-error>
             </mat-form-field>
-            <button type="submit" style="display: none;">Submit</button>
+            <a *ngIf="showCancel" href="javascript:void(0)" (click)="cancel()">Cancel</a>
         </div>
+        <button type="submit" mat-flat-button color="primary">Send</button>
     </div>
 </form>

@@ -216,13 +216,14 @@ export class StatusPage extends Responsive {
 
     private async loadPageData(statusId: string): Promise<void> {
         this.status = await this.statusesService.get(statusId)
-        this.comments = await this.getAllReplies(statusId);
 
         if (this.status.reblog) {
             this.mainStatus = this.status.reblog;
         } else {
             this.mainStatus = this.status;
         }
+
+        this.comments = await this.getAllReplies(this.mainStatus.id);
     }
 
     private async getAllReplies(statusId: string): Promise<StatusComment[]> {
