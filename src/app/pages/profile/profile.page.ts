@@ -59,7 +59,7 @@ export class ProfilePage implements OnInit, OnDestroy {
             .pipe(filter(event => event instanceof NavigationStart))  
             .subscribe(async (event) => {
                 const navigationStarEvent = event as NavigationStart;
-                if (navigationStarEvent.url.includes(`/${this.userName}/`) ) {
+                if (navigationStarEvent.url.includes(this.userName) ) {
                     this.loadingDifferentFrofile = false;
                 } else {
                     this.loadingDifferentFrofile = true;
