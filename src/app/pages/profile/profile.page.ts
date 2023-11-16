@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { Subscription, filter } from 'rxjs';
+import { ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, NavigationStart, Router } from '@angular/router';
+import { Subscription, filter, map } from 'rxjs';
 import { PageNotFoundError } from 'src/app/errors/page-not-found-error';
 import { Status } from 'src/app/models/status';
 import { User } from 'src/app/models/user';
@@ -25,6 +25,7 @@ export class ProfilePage implements OnInit, OnDestroy {
     isReady = false;
     allFollowingDisplayed = false;
     allFollowersDisplayed = false;
+    loadingDifferentFrofile = false;
     profilePageTab = ProfilePageTab.Statuses;
     userName!: string;
 
@@ -41,7 +42,8 @@ export class ProfilePage implements OnInit, OnDestroy {
     statuses?: LinkableResult<Status>;
 
     routeParamsSubscription?: Subscription;
-    routeUrlSubscription?: Subscription;
+    routeNavigationEndSubscription?: Subscription;
+    routeNavigationStartSubscription?: Subscription;
 
     constructor(
         private authorizationService: AuthorizationService,
@@ -53,11 +55,40 @@ export class ProfilePage implements OnInit, OnDestroy {
     }
 
     async ngOnInit(): Promise<void> {
+        this.routeNavigationStartSubscription = this.router.events
+            .pipe(filter(event => event instanceof NavigationStart))  
+            .subscribe(async (event) => {
+                const navigationStarEvent = event as NavigationStart;
+                if (navigationStarEvent.url.includes(`/${this.userName}/`) ) {
+                    this.loadingDifferentFrofile = false;
+                } else {
+                    this.loadingDifferentFrofile = true;
+                }
+            });
 
-        this.routeUrlSubscription = this.router.events
+        this.routeNavigationEndSubscription = this.router.events
             .pipe(filter(event => event instanceof NavigationEnd))  
-            .subscribe(async () => {
-                await this.loadPageData();
+            .subscribe(async (event) => {
+                if (!this.loadingDifferentFrofile) {
+                    const navigationEndEvent  = event as NavigationEnd;
+        
+                    if (navigationEndEvent.url.includes('/following')) {
+                        this.profilePageTab = ProfilePageTab.Following;
+                        if (!this.following) {
+                            await this.onLoadMoreFollowing();
+                        }
+                    } else if (navigationEndEvent.url.includes('/followers')) {
+                        this.profilePageTab = ProfilePageTab.Followers;
+                        if (!this.followers) {
+                            await this.onLoadMoreFollowers();
+                        }
+                    } else {
+                        this.profilePageTab = ProfilePageTab.Statuses;
+                        if (!this.statuses) {
+                            this.statuses = await this.usersService.statuses(this.userName);
+                        }
+                    }
+                }
             });
 
         this.routeParamsSubscription = this.activatedRoute.params.subscribe(async params => {
@@ -78,7 +109,7 @@ export class ProfilePage implements OnInit, OnDestroy {
 
             [this.user, this.latestFollowers] = await Promise.all([
                 this.usersService.profile(userName),
-                this.usersService.followers(userName)
+                this.usersService.followers(userName, undefined, undefined, undefined, 10)
             ]);
 
             this.relationship = await this.downloadRelationship();
@@ -91,7 +122,8 @@ export class ProfilePage implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         this.routeParamsSubscription?.unsubscribe();
-        this.routeUrlSubscription?.unsubscribe();
+        this.routeNavigationEndSubscription?.unsubscribe();
+        this.routeNavigationStartSubscription?.unsubscribe()
     }
 
     async onMainRelationChanged(): Promise<void> {
@@ -134,7 +166,7 @@ export class ProfilePage implements OnInit, OnDestroy {
     }
 
     async onLoadMoreFollowing(): Promise<void> {
-        const internalFollowing = await this.usersService.following(this.userName, undefined, this.following?.maxId, undefined);
+        const internalFollowing = await this.usersService.following(this.userName, undefined, this.following?.maxId, undefined, undefined);
 
         if (this.signedInUser && (internalFollowing.data?.length ?? 0) !== 0) {
             const internalFollowingRelationships = await this.relationshipsService.getAll(internalFollowing.data.map(x => x.id ?? ''));
@@ -159,7 +191,7 @@ export class ProfilePage implements OnInit, OnDestroy {
     }
 
     async onLoadMoreFollowers(): Promise<void> {
-        const internalFollowers = await this.usersService.followers(this.userName, undefined, this.followers?.maxId, undefined);
+        const internalFollowers = await this.usersService.followers(this.userName, undefined, this.followers?.maxId, undefined, undefined);
 
         if (this.signedInUser && (internalFollowers.data?.length ?? 0) !== 0) {
             const internalFollowersRelationships = await this.relationshipsService.getAll(internalFollowers.data.map(x => x.id ?? ''));
