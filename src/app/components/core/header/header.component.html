@@ -7,22 +7,83 @@
             <button mat-button [routerLink]="['/login']">Log in</button>
         </ng-container>
         <ng-container *ngIf="user">
+            <ng-container *ngIf="deviceResolution === resolution.handsetLandscape || deviceResolution === resolution.tablet || deviceResolution === resolution.browser">
+                <ng-container *ngIf="deviceResolution === resolution.handsetLandscape">
+                    <button mat-icon-button color="primary" [routerLink]="['/trending']" aria-label="Trending">
+                        <mat-icon>timeline</mat-icon>
+                    </button>
+                    <button mat-icon-button color="primary" [routerLink]="['/editors']" aria-label="Editor's choice">
+                        <mat-icon>stars</mat-icon>
+                    </button>
+                    <button mat-icon-button color="primary" [routerLink]="['/categories']" aria-label="Categories">
+                        <mat-icon>loyalty</mat-icon>
+                    </button>
+                </ng-container>
+
+
+                <ng-container *ngIf="deviceResolution === resolution.tablet || deviceResolution === resolution.browser">
+                    <button mat-button color="primary" [routerLink]="['/trending']" aria-label="Trending" class="margin-right-5">
+                        <mat-icon>timeline</mat-icon> Trending
+                    </button>
+                    <button mat-button color="primary" [routerLink]="['/editors']" aria-label="Editor's choice" class="margin-right-5">
+                        <mat-icon>stars</mat-icon> Editor's choice
+                    </button>
+                    <button mat-button color="primary" [routerLink]="['/categories']" aria-label="Categories" class="margin-right-5">
+                        <mat-icon>loyalty</mat-icon> Categories
+                    </button>
+                </ng-container>
+            </ng-container>
+
             <div class="flex-spacer"></div>
 
-            <button *ngIf="deviceResolution === resolution.browser" mat-stroked-button color="primary" class="margin-right-10" [routerLink]="['/upload']">
-                <mat-icon>arrow_upward</mat-icon> Upload
-            </button>
+            <ng-container *ngIf="deviceResolution === resolution.handsetLandscape || deviceResolution === resolution.tablet || deviceResolution === resolution.browser">
+                <button *ngIf="deviceResolution === resolution.handsetLandscape" mat-icon-button color="primary" [routerLink]="['/upload']" aria-label="Upload">
+                    <mat-icon>arrow_upward</mat-icon>
+                </button>
+                <button *ngIf="deviceResolution === resolution.tablet || deviceResolution === resolution.browser" mat-stroked-button color="primary" class="margin-right-10" [routerLink]="['/upload']">
+                    <mat-icon>arrow_upward</mat-icon> Upload
+                </button>
+            </ng-container>
 
-            <button *ngIf="deviceResolution !== resolution.browser" mat-icon-button color="primary" [routerLink]="['/upload']">
-                <mat-icon>arrow_upward</mat-icon>
-            </button>
+            <ng-container *ngIf="deviceResolution === resolution.handsetPortrait">
+                <button mat-icon-button [matMenuTriggerFor]="discover" color="primary" aria-label="More options">
+                    <mat-icon>menu</mat-icon>
+                </button>
+                <mat-menu #discover="matMenu">
+                    <button mat-menu-item [routerLink]="['/trending']" aria-label="Trending">
+                        <mat-icon>timeline</mat-icon>
+                        <span>Trending</span>
+                    </button>
+                    <button mat-menu-item [routerLink]="['/editors']" aria-label="Editor's choice">
+                        <mat-icon>stars</mat-icon>
+                        <span>Editor's choice</span>
+                    </button>
+                    <button mat-menu-item [routerLink]="['/categories']" aria-label="Categories">
+                        <mat-icon>loyalty</mat-icon>
+                        <span>Categories</span>
+                    </button>
 
-            <button mat-icon-button color="primary" [routerLink]="['/search']" aria-label="Search">
+                    <mat-divider></mat-divider>
+
+                    <button mat-menu-item [routerLink]="['/upload']" aria-label="Upload">
+                        <mat-icon>arrow_upward</mat-icon>
+                        <span>Upload</span>
+                    </button>
+                    <button mat-menu-item [routerLink]="['/search']" aria-label="Search">
+                        <mat-icon>search</mat-icon>
+                        <span>Search</span>
+                    </button>
+                </mat-menu>
+            </ng-container>
+
+            <mat-divider class="menu-divider" [vertical]="true"></mat-divider>
+
+            <button *ngIf="deviceResolution !== resolution.handsetPortrait" mat-icon-button color="primary" [routerLink]="['/search']" aria-label="Search">
                 <mat-icon>search</mat-icon>
             </button>
 
             <button mat-icon-button color="primary" [routerLink]="['/notifications']" aria-label="Notifications">
-                <mat-icon>notifications_none</mat-icon>
+                <mat-icon matBadge="15" matBadgeColor="warn" matBadgeSize="small" aria-hidden="false">notifications_none</mat-icon>
             </button>
 
             <div>
@@ -51,6 +112,10 @@
                     <button mat-menu-item [routerLink]="['/account']" aria-label="Account">
                         <mat-icon>account_circle</mat-icon>
                         <span>Account</span>
+                    </button>
+                    <button mat-menu-item [routerLink]="['/preferences']" aria-label="Preferences">
+                        <mat-icon>build</mat-icon>
+                        <span>Preferences</span>
                     </button>
                     <button *ngIf="isAdministrator()" mat-menu-item [routerLink]="['/settings']" aria-label="Settings">
                         <mat-icon>settings</mat-icon>

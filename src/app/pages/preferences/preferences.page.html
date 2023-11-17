@@ -1,0 +1,89 @@
+<div *ngIf="isReady && preferences" @fadeIn [ngClass]="{ 'padding-30': !isHandset, 'padding-10': isHandset }">
+    <div class="flex-row flex-space-around">
+        <div class="preferences-container width-100">
+            <section>
+                <h1>Preferences</h1>
+            </section>
+
+            <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+
+                <mat-card *ngIf="preferences" class="preferences-card" appearance="outlined">
+                    <mat-card-content>
+                        <h4>Theme</h4>
+                        <div class="margin-bottom-20">
+                            <mat-radio-group name="theme" [(ngModel)]="theme" aria-label="Select theme">
+                                <div>
+                                    <mat-radio-button value="1" [disableRipple]="true"> Light</mat-radio-button>
+                                </div>
+                                <div>
+                                    <mat-radio-button value="2" [disableRipple]="true"> Dark</mat-radio-button>
+                                </div>
+                            </mat-radio-group>
+                        </div>
+
+                        <mat-divider></mat-divider>
+
+                        <div class="margin-top-20">
+                            <h4>Avatar</h4>
+                        </div>
+
+                        <div class="margin-bottom-20">
+                            <mat-radio-group name="avatar" [(ngModel)]="avatar" aria-label="Select avatar">
+                                <div>
+                                    <mat-radio-button value="1" [disableRipple]="true"> Circle</mat-radio-button>
+                                </div>
+                                <div>
+                                    <mat-radio-button value="2" [disableRipple]="true"> Rounded rectangle</mat-radio-button>
+                                </div>
+                            </mat-radio-group>
+                        </div>
+
+                        <mat-divider></mat-divider>
+
+                        <div class="margin-top-20">
+                            <h4>Media settings</h4>
+                        </div>
+
+                        <div class="margin-bottom-20">
+                            <mat-slide-toggle color="warn" [checked]="alwaysShowNSFW">
+                                Always show NSFW <div class="text-muted fs-90">Force show all NSFW (sensitive) media without warnings.</div>
+                            </mat-slide-toggle>
+                        </div>
+
+                        <div class="margin-bottom-20">
+                            <mat-slide-toggle color="warn" [checked]="showAlternativeText">
+                                Show alternative text <div class="text-muted fs-90">Show alternative text if present on status details screen.</div>
+                            </mat-slide-toggle>
+                        </div>
+
+                        <div class="margin-bottom-20">
+                            <mat-slide-toggle color="warn" [checked]="showAvatars">
+                                Show avatars <div class="text-muted fs-90">Avatars will be displayed on timelines.</div>
+                            </mat-slide-toggle>
+                        </div>
+
+                        <div class="margin-bottom-20">
+                            <mat-slide-toggle color="warn" [checked]="showFavourites">
+                                Show favourites <div class="text-muted fs-90">Favourites will be displayed on timelines.</div>
+                            </mat-slide-toggle>
+                        </div>
+
+                        <div class="margin-bottom-20">
+                            <mat-slide-toggle color="warn" [checked]="showAltIcon">
+                                Show ALT icon <div class="text-muted fs-90">ALT icon will be displayed on timelines.</div>
+                            </mat-slide-toggle>
+                        </div>
+                    </mat-card-content>
+
+                    <mat-card-actions>
+                        <div class="actions margin-top-20">
+                            <button type="submit" mat-raised-button color="primary" aria-label="Save">Save</button>
+                        </div>
+                    </mat-card-actions>
+                </mat-card>
+
+            </form>
+
+        </div>
+    </div>
+</div>

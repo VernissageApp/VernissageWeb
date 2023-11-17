@@ -22,6 +22,10 @@ import { StatusPage } from './status/status.page';
 import { NotificationsPage } from './notifications/notifications.page';
 import { InvitationsPage } from './invitations/invitations.page';
 import { SettingsPage } from './settings/settings.page';
+import { TrendingPage } from './trending/trending.page';
+import { EditorsPage } from './editors/editors.page';
+import { CategoriesPage } from './categories/categories.page';
+import { PreferencesPage } from './preferences/preferences.page';
 
 const routes: Routes = [
     { path: 'login', component: LoginPage, canActivate: [ LoggedOutGuardService ] },
@@ -41,6 +45,10 @@ const routes: Routes = [
     { path: 'notifications', component: NotificationsPage, canActivate: [ AuthorizationGuardService ] },
     { path: 'invitations', component: InvitationsPage, canActivate: [ AuthorizationGuardService ] },
     { path: 'settings', component: SettingsPage, canActivate: [ AuthorizationGuardService ] },
+    { path: 'trending', component: TrendingPage, canActivate: [ AuthorizationGuardService ] },
+    { path: 'editors', component: EditorsPage, canActivate: [ AuthorizationGuardService ] },
+    { path: 'categories', component: CategoriesPage, canActivate: [ AuthorizationGuardService ] },
+    { path: 'preferences', component: PreferencesPage, canActivate: [ AuthorizationGuardService ] },
     { path: ':userName', component: ProfilePage, children: [
         { path: 'following', component: ProfilePage },
         { path: 'followers', component: ProfilePage }

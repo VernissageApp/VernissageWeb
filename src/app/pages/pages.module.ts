@@ -24,6 +24,10 @@ import { StatusPage } from './status/status.page';
 import { NotificationsPage } from './notifications/notifications.page';
 import { InvitationsPage } from './invitations/invitations.page';
 import { SettingsPage } from './settings/settings.page';
+import { TrendingPage } from './trending/trending.page';
+import { EditorsPage } from './editors/editors.page';
+import { CategoriesPage } from './categories/categories.page';
+import { PreferencesPage } from './preferences/preferences.page';
 
 @NgModule({
     imports: [
@@ -51,7 +55,11 @@ import { SettingsPage } from './settings/settings.page';
         StatusPage,
         NotificationsPage,
         InvitationsPage,
-        SettingsPage
+        SettingsPage,
+        TrendingPage,
+        EditorsPage,
+        CategoriesPage,
+        PreferencesPage
     ],
     exports: [
         ComponentsModule,
@@ -74,7 +82,11 @@ import { SettingsPage } from './settings/settings.page';
         SearchPage,
         NotificationsPage,
         InvitationsPage,
-        SettingsPage
+        SettingsPage,
+        TrendingPage,
+        EditorsPage,
+        CategoriesPage,
+        PreferencesPage
     ]
 })
 export class PagesModule { }
