@@ -14,6 +14,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { User } from 'src/app/models/user';
 import { StatusRequest } from 'src/app/models/status-request';
 import { StatusComment } from 'src/app/models/status-comment';
+import { Category } from 'src/app/models/category';
 
 @Component({
     selector: 'app-status',

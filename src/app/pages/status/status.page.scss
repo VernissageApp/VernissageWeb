@@ -16,6 +16,18 @@
     }
 }
 
+.category {
+    mat-icon {
+        transform: scale(1.6);
+        color: #202020;
+    }
+
+    .category-label {
+        font-weight: 600;
+        vertical-align: top;
+    } 
+}
+
 .location {
     mat-icon {
         transform: scale(1.6);
@@ -45,6 +57,7 @@
     }
 
     .alt-label {
+        font-style: italic;
         vertical-align: top;
     }
 }

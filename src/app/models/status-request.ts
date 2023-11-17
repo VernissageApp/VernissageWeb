@@ -1,4 +1,5 @@
 import { StatusVisibility } from 'src/app/models/status-visibility';
+import { Category } from './category';
 
 export class StatusRequest {
     public id = '';
@@ -9,4 +10,5 @@ export class StatusRequest {
     public commentsDisabled = false;
     public replyToStatusId?: string;
     public attachmentIds: string[] = [];
+    public categoryId?: string;
 }

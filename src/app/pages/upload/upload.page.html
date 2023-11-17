@@ -50,6 +50,13 @@
                                 </mat-form-field>
 
                                 <mat-form-field appearance="outline">
+                                    <mat-label>Category</mat-label>
+                                    <mat-select required [(value)]="categoryId">
+                                        <mat-option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline">
                                     <mat-label>Visibility</mat-label>
                                     <mat-select required [(value)]="visibility">
                                         <mat-option [value]="StatusVisibility.Public">Everyone</mat-option>

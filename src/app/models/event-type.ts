@@ -37,6 +37,7 @@ export enum EventType {
     UsersUnfollow = 'usersUnfollow',
     UsersFollowers = 'usersFollowers',
     UsersFollowing = 'usersFollowing',
+    UsersStatuses = 'usersStatuses',
     
     AvatarUpdate = 'avatarUpdate',
     AvatarDelete = 'avatarDelete',
@@ -68,6 +69,8 @@ export enum EventType {
     CountriesList = 'countriesList',
     LocationsList = 'locationsList',
     LocationsRead = 'locationsRead',
+
+    CategoriesList = 'categoriesList',
     
     StatusesList = 'statusesList',
     StatusesCreate = 'statusesCreate',

@@ -11,6 +11,8 @@ import { MessagesService } from 'src/app/services/common/messages.service';
 import { AttachmentsService } from 'src/app/services/http/attachments.service';
 import { StatusesService } from 'src/app/services/http/statuses.service';
 import { fadeInAnimation } from '../../animations/fade-in.animation';
+import { CategoriesService } from 'src/app/services/http/categories.service';
+import { Category } from 'src/app/models/category';
 
 @Component({
     selector: 'app-upload',
@@ -20,10 +22,11 @@ import { fadeInAnimation } from '../../animations/fade-in.animation';
 })
 export class UploadPage implements OnInit {
     readonly StatusVisibility = StatusVisibility;
+    categories: Category[] = [];
 
     statusText = '';
+    categoryId?: string;
     visibility = StatusVisibility.Public;
-
     commentsDisabled = false;
     isSensitive = false;
     contentWarning = '';
@@ -33,11 +36,13 @@ export class UploadPage implements OnInit {
 
     constructor(private messageService: MessagesService,
                 private attachmentsService: AttachmentsService,
+                private categoriesService: CategoriesService,
                 private statusesService: StatusesService,
                 private router: Router) {
     }
 
-    ngOnInit(): void {
+    async ngOnInit(): Promise<void> {
+        this.categories = await this.categoriesService.all();
     }
 
     async onPhotoSelected(event: any): Promise<void> {
@@ -94,6 +99,7 @@ export class UploadPage implements OnInit {
 
             const status = new StatusRequest();
             status.note = this.statusText;
+            status.categoryId = this.categoryId;
             status.visibility = StatusVisibility.Public;
             status.commentsDisabled = this.commentsDisabled;
             status.sensitive = this.isSensitive;

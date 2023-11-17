@@ -1,6 +1,7 @@
 import { Attachment } from 'src/app/models/attachment';
 import { StatusVisibility } from 'src/app/models/status-visibility';
 import { User } from './user';
+import { Category } from './category';
 
 export class Status {
     public id = '';
@@ -25,4 +26,5 @@ export class Status {
     public reblog?: Status;
     public attachments?: Attachment[];
     public user?: User;
+    public category?: Category;
 }

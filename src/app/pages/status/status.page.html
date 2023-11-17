@@ -79,6 +79,12 @@
                         </div>
                     </div>
 
+                    <!-- Category -->
+                    <div *ngIf="mainStatus.category" class="category margin-bottom-10">
+                        <mat-icon class="margin-right-10" inline="true" matTooltip="Category">loyalty</mat-icon>
+                        <span class="category-label">{{ mainStatus.category.name }}</span>
+                    </div>
+
                     <!-- Location -->
                     <div *ngIf="getLocation(0)" class="location margin-bottom-10">
                         <mat-icon class="margin-right-10" inline="true" matTooltip="Place">place</mat-icon>
