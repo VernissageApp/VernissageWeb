@@ -8,7 +8,7 @@
                 <div>
                     <div [ngClass]="{ 'flex-row': !isHandset, 'flex-column': isHandset }">
                         <div><a [routerLink]="[ '/@' + user.userName ]" class="margin-right-5 fw-600">{{ user.name }}</a></div>
-                        <div class="fw-400 fs-90 text-muted">@{{ user.userName }}</div>
+                        <div class="fw-400 fs-90 text-muted">&#64;{{ user.userName }}</div>
                     </div>
 
                     <div *ngIf="showBio" class="bio" [innerHTML]="user.bioHtml"></div>

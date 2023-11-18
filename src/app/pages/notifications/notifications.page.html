@@ -16,7 +16,7 @@
                                 </div>
                                 <div>
                                     <div>
-                                        <a [routerLink]="[ '/@' + notification.byUser?.userName ]" class="margin-right-5 fw-600">{{ notification.byUser?.name }}</a><span class="fw-400 fs-90 text-muted">@{{ notification.byUser?.userName }}</span>
+                                        <a [routerLink]="[ '/@' + notification.byUser?.userName ]" class="margin-right-5 fw-600">{{ notification.byUser?.name }}</a><span class="fw-400 fs-90 text-muted">&#64;{{ notification.byUser?.userName }}</span>
                                     </div>
                                     <ng-container [ngSwitch]="notification.notificationType">
                                         <!-- Mentioned. -->

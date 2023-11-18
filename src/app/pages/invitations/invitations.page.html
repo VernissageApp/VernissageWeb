@@ -32,7 +32,7 @@
                 <ng-container matColumnDef="invited">
                     <th mat-header-cell *matHeaderCellDef> Invited user </th>
                     <td mat-cell *matCellDef="let element">
-                        <a *ngIf="element.invited" [routerLink]="['/@' + element.invited.userName ]">@{{ element.invited.userName }}</a>
+                        <a *ngIf="element.invited" [routerLink]="['/@' + element.invited.userName ]">&#64;{{ element.invited.userName }}</a>
                     </td>
                 </ng-container>
               
