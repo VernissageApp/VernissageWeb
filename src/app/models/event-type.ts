@@ -37,6 +37,8 @@ export enum EventType {
     UsersUnfollow = 'usersUnfollow',
     UsersFollowers = 'usersFollowers',
     UsersFollowing = 'usersFollowing',
+    UsersMute = 'usersMute',
+    UsersUnmute = 'usersUnmute',
     UsersStatuses = 'usersStatuses',
     
     AvatarUpdate = 'avatarUpdate',

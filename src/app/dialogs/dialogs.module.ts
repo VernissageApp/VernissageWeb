@@ -10,12 +10,14 @@ import { ComponentsModule } from '../components/components.module';
 
 import { ChangePasswordDialog } from './change-password-dialog/change-password.dialog';
 import { ChangeEmailDialog } from './change-email-dialog/change-email.dialog';
+import { MuteAccountDialog } from './mute-account-dialog/mute-account.dialog';
 
 @NgModule({
     declarations: [
         ChangePasswordDialog,
         ChangeEmailDialog,
-        DeleteAccountDialog
+        DeleteAccountDialog,
+        MuteAccountDialog
     ],
     imports: [
         BrowserModule,
@@ -30,7 +32,8 @@ import { ChangeEmailDialog } from './change-email-dialog/change-email.dialog';
     exports: [
         ChangePasswordDialog,
         ChangeEmailDialog,
-        DeleteAccountDialog
+        DeleteAccountDialog,
+        MuteAccountDialog
     ]
 })
 export class DialogsModule { }

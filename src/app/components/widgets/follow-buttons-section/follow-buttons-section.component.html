@@ -5,15 +5,14 @@
     <button @fadeIn *ngIf="showApproveFollowButton && !isDuringRelationshipAction" type="button" (click)="onApproveFollow()" mat-raised-button aria-label="Approve follow">Approve follow</button>
     <button @fadeIn *ngIf="showApproveFollowButton && !isDuringRelationshipAction" type="button" (click)="onRejectFollow()" mat-raised-button aria-label="Approve follow">Reject follow</button>
 
-    <ng-container *ngIf="showOpenOriginalProfileButton">
-        <mat-button-toggle-group>
-            <mat-button-toggle [matMenuTriggerFor]="dropdownMenuOne2">
-                <mat-icon>more_vert</mat-icon>
-            </mat-button-toggle>
-        </mat-button-toggle-group>
-
+    <ng-container *ngIf="!isProfileOwner">
+        <button class="more-button" mat-stroked-button [matMenuTriggerFor]="dropdownMenuOne2" color="primary" aria-label="More options">
+            <mat-icon>more_vert</mat-icon>
+        </button>
         <mat-menu #dropdownMenuOne2="matMenu" xPosition="before">
             <button *ngIf="showOpenOriginalProfileButton" (click)="onOriginalProfile()" mat-menu-item>Open original profile</button>
+            <button *ngIf="!showUnmuteButton" (click)="openMuteAccountDialog()" mat-menu-item>Mute</button>
+            <button *ngIf="showUnmuteButton" (click)="unmuteAccount()" mat-menu-item>Unmute</button>
         </mat-menu>
     </ng-container>
 </div>

@@ -10,7 +10,9 @@
                 <div class="bio" [innerHTML]="user.bioHtml"></div>
             </div>
 
-            <app-follow-buttons-section [user]="user" [relationship]="relationship" (relationChanged)="onMainRelationChanged()"></app-follow-buttons-section>
+            <div class="padding-top-10">
+                <app-follow-buttons-section [user]="user" [relationship]="relationship" (relationChanged)="onMainRelationChanged()"></app-follow-buttons-section>
+            </div>
 
             <div *ngIf="(latestFollowers?.data?.length ?? 0) > 0" class="text-center padding-top-10 padding-bottom-10">
                 <div class="text-muted padding-bottom-5">LATEST FOLLOWERS</div>

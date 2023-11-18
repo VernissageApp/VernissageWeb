@@ -6,6 +6,7 @@ import { Relationship } from 'src/app/models/relationship';
 import { Status } from 'src/app/models/status';
 import { WindowService } from '../common/window.service';
 import { LinkableResult } from 'src/app/models/linkable-result';
+import { UserMuteRequest } from 'src/app/models/user-mute-request';
 
 @Injectable({
     providedIn: 'root'
@@ -46,6 +47,16 @@ export class UsersService {
 
     public async followers(userName: string, minId?: string, maxId?: string, sinceId?: string, limit?: number): Promise<LinkableResult<User>> {
         const event$ = this.httpClient.get<LinkableResult<User>>(this.windowService.apiUrl() +  '/api/v1/users/' + userName + `/followers?minId=${minId ?? ''}&maxId=${maxId ?? ''}&sinceId=${sinceId ?? ''}&limit=${limit ?? ''}`);
+        return await firstValueFrom(event$);
+    }
+
+    public async mute(userName: string, userMuteRequest: UserMuteRequest): Promise<Relationship> {
+        const event$ = this.httpClient.post<Relationship>(this.windowService.apiUrl() + '/api/v1/users/@' + userName + '/mute', userMuteRequest);
+        return await firstValueFrom(event$);
+    }
+
+    public async unmute(userName: string): Promise<Relationship> {
+        const event$ = this.httpClient.post<Relationship>(this.windowService.apiUrl() + '/api/v1/users/@' + userName + '/unmute', null);
         return await firstValueFrom(event$);
     }
 

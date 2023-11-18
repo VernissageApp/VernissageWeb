@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
+import { MuteAccountDialog } from 'src/app/dialogs/mute-account-dialog/mute-account.dialog';
 import { Relationship } from 'src/app/models/relationship';
 import { User } from 'src/app/models/user';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
@@ -7,7 +9,6 @@ import { MessagesService } from 'src/app/services/common/messages.service';
 import { WindowService } from 'src/app/services/common/window.service';
 import { FollowRequestsService } from 'src/app/services/http/follow-requests.service';
 import { UsersService } from 'src/app/services/http/users.service';
-import { environment } from 'src/environments/environment';
 
 @Component({
     selector: 'app-follow-buttons-section',
@@ -23,10 +24,12 @@ export class FollowButtonsSectionComponent implements OnInit {
     @Output() relationChanged = new EventEmitter<Relationship>();
 
     isDuringRelationshipAction = false;
+    isProfileOwner = false;
     showFollowButton = false;
     showUnfollowButton = false;
     showApproveFollowButton = false;
     showOpenOriginalProfileButton = false;
+    showUnmuteButton = false;
 
     constructor(
         private usersService: UsersService,
@@ -34,15 +37,61 @@ export class FollowButtonsSectionComponent implements OnInit {
         private authorizationService: AuthorizationService,
         private followRequestsService: FollowRequestsService,
         private windowService: WindowService,
+        private dialog: MatDialog,
         private changeDetectorRef: ChangeDetectorRef) {
     }
+
     ngOnInit(): void {
         this.recalculateRelationship();
+
+        const signedInUser = this.authorizationService.getUser();
+        this.isProfileOwner = signedInUser?.id === this.user?.id;
     }
 
     onOriginalProfile(): void {
         if (this.user?.activityPubProfile) {
             window.open(this.user.activityPubProfile, "_blank");
+        }
+    }
+
+    openMuteAccountDialog(): void {
+        const dialogRef = this.dialog.open(MuteAccountDialog, {
+            width: '500px',
+            data: this.user
+        });
+
+        dialogRef.afterClosed().subscribe(async (result) => {
+            if (result) {
+                try {
+                    if (this.user?.userName) {
+                        this.relationship = await this.usersService.mute(this.user?.userName, result);
+                        this.recalculateRelationship();
+
+                        this.changeDetectorRef.detectChanges();
+                        this.relationChanged.emit(this.relationship);
+                        this.messageService.showSuccess('Mute has been saved.');
+                    }
+                } catch (error) {
+                    console.error(error);
+                    this.messageService.showServerError(error);
+                }
+            }
+        });
+    }
+
+    async unmuteAccount(): Promise<void> {
+        try {
+            if (this.user?.userName) {
+                this.relationship = await this.usersService.unmute(this.user?.userName);
+                this.recalculateRelationship();
+
+                this.changeDetectorRef.detectChanges();
+                this.relationChanged.emit(this.relationship);
+                this.messageService.showSuccess('Mute has been canceled.');
+            }
+        } catch (error) {
+            console.error(error);
+            this.messageService.showServerError(error);
         }
     }
 
@@ -195,5 +244,6 @@ export class FollowButtonsSectionComponent implements OnInit {
         this.showUnfollowButton = this.shouldShowUnfollowButton();
         this.showApproveFollowButton = this.shouldShowApproveFollowButton();
         this.showOpenOriginalProfileButton = this.shouldShowOpenOriginalProfileButton();
+        this.showUnmuteButton = (this.relationship?.mutedStatuses ||  this.relationship?.mutedReblogs || this.relationship?.mutedNotifications) ?? false;
     }
 }

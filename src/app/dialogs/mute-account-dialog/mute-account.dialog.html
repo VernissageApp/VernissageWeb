@@ -1,0 +1,41 @@
+<form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+    <div mat-dialog-title>Mute account</div>
+    <div mat-dialog-content>
+
+        <div class="padding-top-5">
+            <div>
+                <mat-checkbox name="isRegistrationOpened" color="primary" [disableRipple]="true" [(ngModel)]="muteStatuses">
+                    Mute new statuses
+                </mat-checkbox>
+            </div>
+
+            <div>
+                <mat-checkbox name="isRegistrationOpened" color="primary" [disableRipple]="true" [(ngModel)]="muteReblogs">
+                    Mute reblogs
+                </mat-checkbox>
+            </div>
+
+            <div class="padding-bottom-20">
+                <mat-checkbox name="isRegistrationOpened" color="primary" [disableRipple]="true" [(ngModel)]="muteNotifications">
+                    Mute notifications
+                </mat-checkbox>
+            </div>
+
+            <mat-divider></mat-divider>
+
+            <div class="padding-top-20">
+                <mat-form-field>
+                    <mat-label>Mute end date</mat-label>
+                    <input name="muteEnd"  matInput [matDatepicker]="picker" [(ngModel)]="muteEnd" [disabled]="!(muteStatuses || muteReblogs ||muteNotifications)">
+                    <mat-hint>Optional date when muting will end.</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button (click)="onNoClick()">Cancel</button>
+        <button mat-raised-button color="accent" cdkFocusInitial>Mute</button>
+    </div>
+</form>

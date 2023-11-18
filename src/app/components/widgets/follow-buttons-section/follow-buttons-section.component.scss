@@ -3,8 +3,12 @@
     align-items: center;
   }
 
-.mat-button-toggle-checked {
-    background-color: white;
+.more-button {
+  padding: 0;
+
+  mat-icon {
+    margin: 0;
+  }
 }
 
 .multiple-buttons {
