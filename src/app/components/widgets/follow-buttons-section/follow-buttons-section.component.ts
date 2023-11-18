@@ -31,7 +31,10 @@ export class FollowButtonsSectionComponent implements OnInit {
     showUnfollowButton = false;
     showApproveFollowButton = false;
     showOpenOriginalProfileButton = false;
+    showMuteButton = false;
     showUnmuteButton = false;
+    showReportButton = false;
+    signedInUser?: User;
 
     constructor(
         private usersService: UsersService,
@@ -47,8 +50,8 @@ export class FollowButtonsSectionComponent implements OnInit {
     ngOnInit(): void {
         this.recalculateRelationship();
 
-        const signedInUser = this.authorizationService.getUser();
-        this.isProfileOwner = signedInUser?.id === this.user?.id;
+        this.signedInUser = this.authorizationService.getUser();
+        this.isProfileOwner = this.signedInUser?.id === this.user?.id;
     }
 
     onOriginalProfile(): void {
@@ -193,12 +196,11 @@ export class FollowButtonsSectionComponent implements OnInit {
     }
 
     private shouldShowFollowButton(): boolean {
-        const signedInUser = this.authorizationService.getUser();
-        if (!signedInUser) {
+        if (!this.signedInUser) {
             return false;
         }
 
-        if (signedInUser.id === this.user?.id) {
+        if (this.signedInUser.id === this.user?.id) {
             return false;
         }
 
@@ -214,12 +216,11 @@ export class FollowButtonsSectionComponent implements OnInit {
     }
 
     private shouldShowUnfollowButton(): boolean {
-        const signedInUser = this.authorizationService.getUser();
-        if (!signedInUser) {
+        if (!this.signedInUser) {
             return false;
         }
 
-        if (signedInUser.id === this.user?.id) {
+        if (this.signedInUser.id === this.user?.id) {
             return false;
         }
 
@@ -231,12 +232,11 @@ export class FollowButtonsSectionComponent implements OnInit {
     }
 
     private shouldShowApproveFollowButton(): boolean {
-        const signedInUser = this.authorizationService.getUser();
-        if (!signedInUser) {
+        if (!this.signedInUser) {
             return false;
         }
 
-        if (signedInUser.id === this.user?.id) {
+        if (this.signedInUser.id === this.user?.id) {
             return false;
         }
 
@@ -248,12 +248,57 @@ export class FollowButtonsSectionComponent implements OnInit {
     }
 
     private shouldShowOpenOriginalProfileButton(): boolean {
-        const signedInUser = this.authorizationService.getUser();
-        if (signedInUser?.id === this.user?.id) {
+        if (this.signedInUser?.id === this.user?.id) {
             return false;
         }
 
         if (this.user?.activityPubProfile?.startsWith(this.windowService.apiUrl())) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private shouldShowMuteButton(): boolean {
+        if (!this.signedInUser) {
+            return false;
+        }
+
+        if (this.signedInUser.id === this.user?.id) {
+            return false;
+        }
+
+        if ((this.relationship?.requestedBy ?? false) === false) {
+            return false;
+        }
+
+        const isMuted = this.relationship?.mutedStatuses ||  this.relationship?.mutedReblogs || this.relationship?.mutedNotifications;
+        return isMuted === false ?? true;
+    }
+
+    private shouldShowUnnuteButton(): boolean {
+        if (!this.signedInUser) {
+            return false;
+        }
+
+        if (this.signedInUser.id === this.user?.id) {
+            return false;
+        }
+
+        if ((this.relationship?.requestedBy ?? false) === false) {
+            return false;
+        }
+
+        const isMuted = this.relationship?.mutedStatuses ||  this.relationship?.mutedReblogs || this.relationship?.mutedNotifications;
+        return isMuted === true ?? false;
+    }
+
+    private shouldShowReportButton(): boolean {
+        if (!this.signedInUser) {
+            return false;
+        }
+
+        if (this.signedInUser.id === this.user?.id) {
             return false;
         }
 
@@ -265,6 +310,8 @@ export class FollowButtonsSectionComponent implements OnInit {
         this.showUnfollowButton = this.shouldShowUnfollowButton();
         this.showApproveFollowButton = this.shouldShowApproveFollowButton();
         this.showOpenOriginalProfileButton = this.shouldShowOpenOriginalProfileButton();
-        this.showUnmuteButton = (this.relationship?.mutedStatuses ||  this.relationship?.mutedReblogs || this.relationship?.mutedNotifications) ?? false;
+        this.showUnmuteButton = this.shouldShowMuteButton();
+        this.showMuteButton = this.shouldShowUnnuteButton();
+        this.showReportButton = this.shouldShowReportButton();
     }
 }
