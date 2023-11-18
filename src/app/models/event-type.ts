@@ -100,5 +100,8 @@ export enum EventType {
 
     InvitationList = 'invitationList',
     InvitationGenerate = 'invitationGenerate',
-    InvitationDelete = 'invitationDelete'
+    InvitationDelete = 'invitationDelete',
+
+    ReportsCreate = 'reportsCreate',
+    ReportsList = 'reportsList'
 }

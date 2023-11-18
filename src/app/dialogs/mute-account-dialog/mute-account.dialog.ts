@@ -14,10 +14,8 @@ export class MuteAccountDialog {
     muteNotifications = false;
     muteEnd?: Date;
 
-    constructor(
-        public dialogRef: MatDialogRef<MuteAccountDialog>,
-        @Inject(MAT_DIALOG_DATA) public data: User
-    ) {}
+    constructor(public dialogRef: MatDialogRef<MuteAccountDialog>) {
+    }
 
     onNoClick(): void {
         this.dialogRef.close();

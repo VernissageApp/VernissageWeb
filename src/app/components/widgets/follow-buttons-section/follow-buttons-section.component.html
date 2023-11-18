@@ -13,6 +13,7 @@
             <button *ngIf="showOpenOriginalProfileButton" (click)="onOriginalProfile()" mat-menu-item>Open original profile</button>
             <button *ngIf="!showUnmuteButton" (click)="openMuteAccountDialog()" mat-menu-item>Mute</button>
             <button *ngIf="showUnmuteButton" (click)="unmuteAccount()" mat-menu-item>Unmute</button>
+            <button (click)="onReportDialog()" mat-menu-item>Report</button>
         </mat-menu>
     </ng-container>
 </div>

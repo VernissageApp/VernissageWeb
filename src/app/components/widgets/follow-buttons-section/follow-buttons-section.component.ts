@@ -2,12 +2,14 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, In
 import { MatDialog } from '@angular/material/dialog';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { MuteAccountDialog } from 'src/app/dialogs/mute-account-dialog/mute-account.dialog';
+import { ReportDialog } from 'src/app/dialogs/report-dialog/report.dialog';
 import { Relationship } from 'src/app/models/relationship';
 import { User } from 'src/app/models/user';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { WindowService } from 'src/app/services/common/window.service';
 import { FollowRequestsService } from 'src/app/services/http/follow-requests.service';
+import { ReportsService } from 'src/app/services/http/reports.service';
 import { UsersService } from 'src/app/services/http/users.service';
 
 @Component({
@@ -36,6 +38,7 @@ export class FollowButtonsSectionComponent implements OnInit {
         private messageService: MessagesService,
         private authorizationService: AuthorizationService,
         private followRequestsService: FollowRequestsService,
+        private reportsService: ReportsService,
         private windowService: WindowService,
         private dialog: MatDialog,
         private changeDetectorRef: ChangeDetectorRef) {
@@ -56,8 +59,7 @@ export class FollowButtonsSectionComponent implements OnInit {
 
     openMuteAccountDialog(): void {
         const dialogRef = this.dialog.open(MuteAccountDialog, {
-            width: '500px',
-            data: this.user
+            width: '500px'
         });
 
         dialogRef.afterClosed().subscribe(async (result) => {
@@ -93,6 +95,25 @@ export class FollowButtonsSectionComponent implements OnInit {
             console.error(error);
             this.messageService.showServerError(error);
         }
+    }
+
+    async onReportDialog(): Promise<void> {
+        const dialogRef = this.dialog.open(ReportDialog, {
+            width: '500px',
+            data: this.user
+        });
+
+        dialogRef.afterClosed().subscribe(async (result) => {
+            if (result) {
+                try {
+                    await this.reportsService.create(result);
+                    this.messageService.showSuccess('Report has been saved.');
+                } catch (error) {
+                    console.error(error);
+                    this.messageService.showServerError(error);
+                }
+            }
+        });
     }
 
     async onFollow(): Promise<void> {
