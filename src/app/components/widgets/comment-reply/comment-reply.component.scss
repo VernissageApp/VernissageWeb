@@ -1,4 +1,8 @@
 .comment-add {
+    ::ng-deep img {
+        padding-top: 1px;
+    }
+
     button {
         margin-top: 4px;
     }
