@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { User } from 'src/app/models/user';
+import { AvatarSize } from '../avatar/avatar-size';
 
 @Component({
     selector: 'app-mini-user-card',
@@ -7,5 +8,7 @@ import { User } from 'src/app/models/user';
     styleUrls: ['./mini-user-card.component.scss']
 })
 export class MiniUserCardComponent {
+    readonly avatarSize = AvatarSize;
+
     @Input() user?: User;
 }

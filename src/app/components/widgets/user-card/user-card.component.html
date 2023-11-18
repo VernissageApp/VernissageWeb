@@ -1,7 +1,7 @@
 <div *ngIf="user" class="flex-row flex-space-between padding-bottom-10 padding-top-10">
     <div class="flex-row gap-8">
         <div>
-            <img [src]="user.avatarUrl ?? '/assets/avatar.svg'" class="" />
+            <app-avatar [user]="user" [size]="avatarSize.huge"></app-avatar>
         </div>
         <div>
             <div [ngClass]="{ 'flex-row': !isHandset, 'flex-column': isHandset }">

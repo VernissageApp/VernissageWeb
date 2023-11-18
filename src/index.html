@@ -48,9 +48,8 @@
       }
     }
   </style>
-
 </head>
-<body class="mat-typography">
+<body id="body" class="mat-app-background mat-typography">
   <app-root>
     <div class="app-loading">
       <svg class="spinner" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.0" width="96px" height="96px" viewBox="0 0 128 128" xml:space="preserve">
@@ -68,5 +67,12 @@
       </svg>
     </div>
   </app-root>
+  <script>
+    const theme = localStorage.getItem('theme');
+    if (theme === "dark") {
+      const body = window.document.getElementById('body');
+      body.classList.add('dark-theme');
+    }
+  </script>
 </body>
 </html>

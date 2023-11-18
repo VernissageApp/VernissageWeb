@@ -8,7 +8,6 @@ import { GlobalErrorHandler } from 'src/app/handlers/global-error-handler';
 import { InstanceService } from 'src/app/services/http/instance.service';
 import { appInitialization } from './app-initialization';
 
-import { environment } from 'src/environments/environment';
 import { RouteReuseStrategy, Router } from '@angular/router';
 import { AppComponent } from './app.component';
 import { PersistanceService } from './services/persistance/persistance.service';

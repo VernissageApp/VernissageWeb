@@ -143,7 +143,7 @@
                         <div *ngFor="let comment of comments">
                             <div class="flex-row gap-8 padding-top-5 comments" [ngClass]="{ 'replies': !comment.showDivider, 'padding-top-15': comment.showDivider }">
                                 <div>
-                                    <img [src]="comment.status.user?.avatarUrl ?? '/assets/avatar.svg'" class="" />
+                                    <app-avatar [user]="comment.status.user" [size]="avatarSize.medium"></app-avatar>
                                 </div>
                                 <div>
                                     <div>

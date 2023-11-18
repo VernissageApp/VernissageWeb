@@ -1,7 +1,7 @@
 <form name="form" (ngSubmit)="f.form.valid && onSubmitComment()" #f="ngForm" novalidate>
     <div class="flex-row gap-8 comment-add small-text-input">
         <div>
-            <img [src]="signedInUser?.avatarUrl ?? '/assets/avatar.svg'" class="" />
+            <app-avatar [user]="signedInUser" [size]="avatarSize.big"></app-avatar>
         </div>
         <div class="flex-grow-1">
             <mat-form-field appearance="outline" class="width-100">

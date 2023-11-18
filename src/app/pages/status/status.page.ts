@@ -12,9 +12,8 @@ import { AuthorizationService } from 'src/app/services/authorization/authorizati
 import { Responsive } from 'src/app/common/responsive';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { User } from 'src/app/models/user';
-import { StatusRequest } from 'src/app/models/status-request';
 import { StatusComment } from 'src/app/models/status-comment';
-import { Category } from 'src/app/models/category';
+import { AvatarSize } from 'src/app/components/widgets/avatar/avatar-size';
 
 @Component({
     selector: 'app-status',
@@ -24,8 +23,9 @@ import { Category } from 'src/app/models/category';
 })
 export class StatusPage extends Responsive {
     readonly statusVisibility = StatusVisibility;
-    isReady = false;
+    readonly avatarSize = AvatarSize;
 
+    isReady = false;
     status?: Status;
     comments?: StatusComment[];
 

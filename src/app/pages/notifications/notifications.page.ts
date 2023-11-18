@@ -8,6 +8,7 @@ import { LoadingService } from 'src/app/services/common/loading.service';
 import { Responsive } from 'src/app/common/responsive';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { LinkableResult } from 'src/app/models/linkable-result';
+import { AvatarSize } from 'src/app/components/widgets/avatar/avatar-size';
 
 @Component({
     selector: 'app-notifications',
@@ -17,6 +18,7 @@ import { LinkableResult } from 'src/app/models/linkable-result';
 })
 export class NotificationsPage extends Responsive {
     readonly notificationType = NotificationType;
+    readonly avatarSize = AvatarSize;
 
     isReady = false;
     showLoadMore = true;

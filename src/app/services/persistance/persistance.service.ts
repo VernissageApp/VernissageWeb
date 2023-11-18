@@ -7,7 +7,11 @@ import { Injectable } from '@angular/core';
 })
 export class PersistanceService {
 
-    set(key: string, data: any): void {
+    set(key: string, value: string): void {
+        localStorage.setItem(key, value);
+    }
+
+    setJson(key: string, data: any): void {
         try {
             localStorage.setItem(key, JSON.stringify(data));
         } catch (e) {
@@ -15,7 +19,11 @@ export class PersistanceService {
         }
     }
 
-    get(key: string): any {
+    get(key: string): string | null {
+        return localStorage.getItem(key);
+    }
+
+    getJson(key: string): any {
         try {
             const value = localStorage.getItem(key);
             if (value == null) {
@@ -39,11 +47,11 @@ export class PersistanceService {
     }
 
     setAccessToken(data: any): void {
-        this.set('access_token', data);
+        this.setJson('access_token', data);
     }
 
     getAccessToken(): any {
-        return this.get('access_token');
+        return this.getJson('access_token');
     }
 
     removeAccessToken(): void {
@@ -51,11 +59,11 @@ export class PersistanceService {
     }
 
     setRefreshToken(data: any): void {
-        this.set('refresh_token', data);
+        this.setJson('refresh_token', data);
     }
 
     getRefreshToken(): any {
-        return this.get('refresh_token');
+        return this.getJson('refresh_token');
     }
 
     removeRefreshToken(): void {

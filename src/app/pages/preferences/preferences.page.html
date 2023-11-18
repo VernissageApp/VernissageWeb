@@ -11,12 +11,12 @@
                     <mat-card-content>
                         <h4>Theme</h4>
                         <div class="margin-bottom-20">
-                            <mat-radio-group name="theme" [(ngModel)]="theme" aria-label="Select theme">
+                            <mat-radio-group name="theme" [(ngModel)]="isLightTheme" (ngModelChange)="onThemeChange()" aria-label="Select theme">
                                 <div>
-                                    <mat-radio-button value="1" [disableRipple]="true"> Light</mat-radio-button>
+                                    <mat-radio-button [value]="true" [disableRipple]="true"> Light</mat-radio-button>
                                 </div>
                                 <div>
-                                    <mat-radio-button value="2" [disableRipple]="true"> Dark</mat-radio-button>
+                                    <mat-radio-button [value]="false" [disableRipple]="true"> Dark</mat-radio-button>
                                 </div>
                             </mat-radio-group>
                         </div>
@@ -28,12 +28,12 @@
                         </div>
 
                         <div class="margin-bottom-20">
-                            <mat-radio-group name="avatar" [(ngModel)]="avatar" aria-label="Select avatar">
+                            <mat-radio-group name="avatar" [(ngModel)]="isCircleAvatar" (ngModelChange)="onAvatarChange()" aria-label="Select avatar">
                                 <div>
-                                    <mat-radio-button value="1" [disableRipple]="true"> Circle</mat-radio-button>
+                                    <mat-radio-button [value]="true" [disableRipple]="true"> Circle</mat-radio-button>
                                 </div>
                                 <div>
-                                    <mat-radio-button value="2" [disableRipple]="true"> Rounded rectangle</mat-radio-button>
+                                    <mat-radio-button [value]="false" [disableRipple]="true"> Rounded rectangle</mat-radio-button>
                                 </div>
                             </mat-radio-group>
                         </div>
@@ -74,12 +74,6 @@
                             </mat-slide-toggle>
                         </div>
                     </mat-card-content>
-
-                    <mat-card-actions>
-                        <div class="actions margin-top-20">
-                            <button type="submit" mat-raised-button color="primary" aria-label="Save">Save</button>
-                        </div>
-                    </mat-card-actions>
                 </mat-card>
 
             </form>

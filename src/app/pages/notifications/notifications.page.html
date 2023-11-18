@@ -12,7 +12,7 @@
                         <div class="flex-row flex-space-between">
                             <div class="flex-row gap-8">
                                 <div class="user">
-                                    <img [src]="notification.byUser?.avatarUrl ?? '/assets/avatar.svg'" class="" />
+                                    <app-avatar [user]="notification.byUser" [size]="avatarSize.huge"></app-avatar>
                                 </div>
                                 <div>
                                     <div>

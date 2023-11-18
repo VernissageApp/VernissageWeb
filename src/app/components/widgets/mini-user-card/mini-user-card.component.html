@@ -1,6 +1,6 @@
 <div *ngIf="user" class="flex-row gap-8">
     <div>
-        <img [src]="user.avatarUrl ?? '/assets/avatar.svg'" class="" />
+        <app-avatar [user]="user" [size]="avatarSize.small"></app-avatar>
     </div>
     <div>
         <a [routerLink]="[ '/@' + user.userName ]" class="margin-right-5 fw-400">{{ user.name }}</a><span class="fw-400 fs-90 text-muted">&#64;{{ user.userName }}</span>

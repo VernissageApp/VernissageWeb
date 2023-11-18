@@ -4,6 +4,7 @@ import { StatusRequest } from 'src/app/models/status-request';
 import { User } from 'src/app/models/user';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { StatusesService } from 'src/app/services/http/statuses.service';
+import { AvatarSize } from '../avatar/avatar-size';
 
 @Component({
     selector: 'app-comment-reply',
@@ -11,6 +12,8 @@ import { StatusesService } from 'src/app/services/http/statuses.service';
     styleUrls: ['./comment-reply.component.scss']
 })
 export class CommentReplyComponent {
+    readonly avatarSize = AvatarSize;
+
     @Input() signedInUser?: User;
     @Input() status?: Status;
     @Input() showCancel = false;
