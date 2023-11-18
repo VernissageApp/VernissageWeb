@@ -5,8 +5,9 @@ import { UnexpectedErrorPage } from 'src/app/pages/errors/unexpected-error/unexp
 import { ProfilePage } from 'src/app/pages/profile/profile.page';
 import { UploadPage } from 'src/app/pages/upload/upload.page';
 
-import { LoggedOutGuardService } from '../services/authorization/logged-out-guard.service';
-import { AuthorizationGuardService } from '../services/authorization/authorization-guard.service';
+import { loggedOutGuard } from '../services/authorization/logged-out-guard.service';
+import { authorizationGuard } from '../services/authorization/authorization-guard.service';
+
 import { HomePage } from './home/home.page';
 import { AccessForbiddenPage } from './errors/access-forbidden/access-forbidden.page';
 import { PageNotFoundPage } from './errors/page-not-found/page-not-found.page';
@@ -28,27 +29,27 @@ import { CategoriesPage } from './categories/categories.page';
 import { PreferencesPage } from './preferences/preferences.page';
 
 const routes: Routes = [
-    { path: 'login', component: LoginPage, canActivate: [ LoggedOutGuardService ] },
-    { path: 'forgot-password', component: ForgotPasswordPage, canActivate: [ LoggedOutGuardService ] },
-    { path: 'login-callback', component: LoginCallbackPage, canActivate: [ LoggedOutGuardService ] },
-    { path: 'reset-password', component: ResetPasswordPage, canActivate: [ LoggedOutGuardService ] },
-    { path: 'register', component: RegisterPage, canActivate: [ LoggedOutGuardService ] },
-    { path: 'confirm-email', component: ConfirmEmailPage, canActivate: [ LoggedOutGuardService ] },
-    { path: 'account', component: AccountPage, canActivate: [ AuthorizationGuardService ] },
+    { path: 'login', component: LoginPage, canActivate: [ loggedOutGuard ] },
+    { path: 'forgot-password', component: ForgotPasswordPage, canActivate: [ loggedOutGuard ] },
+    { path: 'login-callback', component: LoginCallbackPage, canActivate: [ loggedOutGuard ] },
+    { path: 'reset-password', component: ResetPasswordPage, canActivate: [ loggedOutGuard ] },
+    { path: 'register', component: RegisterPage, canActivate: [ loggedOutGuard ] },
+    { path: 'confirm-email', component: ConfirmEmailPage, canActivate: [ loggedOutGuard ] },
+    { path: 'account', component: AccountPage, canActivate: [ authorizationGuard ] },
     { path: 'home', component: HomePage, data: { reuse: true } },
     { path: 'access-forbidden', component: AccessForbiddenPage },
     { path: 'unexpected-error', component: UnexpectedErrorPage },
     { path: 'connection-lost', component: ConnectionLostPage },
     { path: 'page-not-found', component: PageNotFoundPage },
-    { path: 'upload', component: UploadPage, canActivate: [ AuthorizationGuardService ] },
-    { path: 'search', component: SearchPage, canActivate: [ AuthorizationGuardService ] },
-    { path: 'notifications', component: NotificationsPage, canActivate: [ AuthorizationGuardService ] },
-    { path: 'invitations', component: InvitationsPage, canActivate: [ AuthorizationGuardService ] },
-    { path: 'settings', component: SettingsPage, canActivate: [ AuthorizationGuardService ] },
-    { path: 'trending', component: TrendingPage, canActivate: [ AuthorizationGuardService ] },
-    { path: 'editors', component: EditorsPage, canActivate: [ AuthorizationGuardService ] },
-    { path: 'categories', component: CategoriesPage, canActivate: [ AuthorizationGuardService ] },
-    { path: 'preferences', component: PreferencesPage, canActivate: [ AuthorizationGuardService ] },
+    { path: 'upload', component: UploadPage, canActivate: [ authorizationGuard ] },
+    { path: 'search', component: SearchPage, canActivate: [ authorizationGuard ] },
+    { path: 'notifications', component: NotificationsPage, canActivate: [ authorizationGuard ] },
+    { path: 'invitations', component: InvitationsPage, canActivate: [ authorizationGuard ] },
+    { path: 'settings', component: SettingsPage, canActivate: [ authorizationGuard ] },
+    { path: 'trending', component: TrendingPage, canActivate: [ authorizationGuard ] },
+    { path: 'editors', component: EditorsPage, canActivate: [ authorizationGuard ] },
+    { path: 'categories', component: CategoriesPage, canActivate: [ authorizationGuard ] },
+    { path: 'preferences', component: PreferencesPage, canActivate: [ authorizationGuard ] },
     { path: ':userName', component: ProfilePage, children: [
         { path: 'following', component: ProfilePage },
         { path: 'followers', component: ProfilePage }

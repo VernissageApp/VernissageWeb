@@ -153,13 +153,10 @@ $vernissage-light-toolbar-theme: mat.define-light-theme((
 // Define a dark theme.
 
 $vernissage-dark-theme: mat.define-dark-theme((
- color: (
-   primary: mat.define-palette(mat.$pink-palette),
-   accent: mat.define-palette(mat.$blue-grey-palette),
- ),
-  // Only include `typography` and `density` in the default dark theme.
-  typography: mat.define-typography-config(),
-  density: 0,
+  color: (
+    primary: mat.define-palette(mat.$pink-palette),
+    accent: mat.define-palette(mat.$blue-grey-palette),
+  )
 ));
 
 $vernissage-dark-toolbar-theme: mat.define-light-theme((

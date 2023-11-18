@@ -1,25 +1,16 @@
-import { Injectable } from '@angular/core';
-import { Router, CanActivate } from '@angular/router';
+import { inject } from '@angular/core';
+import { Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { AuthorizationService } from './authorization.service';
 
-@Injectable({
-    providedIn: 'root'
-})
-export class LoggedOutGuardService implements CanActivate {
+export const loggedOutGuard = (_: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
+    const authorizationService = inject(AuthorizationService);
+    const router = inject(Router);
 
-    constructor(
-        public authorizationService: AuthorizationService,
-        public router: Router
-    ) { }
+    if (authorizationService.isLoggedIn()) {
+        router.navigate(['/home']);
 
-    async canActivate(): Promise<boolean> {
-
-        if (this.authorizationService.isLoggedIn()) {
-            this.router.navigate(['/home']);
-
-            return false;
-        }
-
-        return true;
+        return false;
     }
-}
+
+    return true;
+};
