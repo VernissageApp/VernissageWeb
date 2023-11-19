@@ -1,45 +1,42 @@
 import { Component } from '@angular/core';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { ForbiddenError } from 'src/app/errors/forbidden-error';
-import { Report } from 'src/app/models/report';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { LoadingService } from 'src/app/services/common/loading.service';
 import { Responsive } from 'src/app/common/responsive';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
-import { ReportsService } from 'src/app/services/http/reports.service';
 import { Role } from 'src/app/models/role';
 import { PaginableResult } from 'src/app/models/paginable-result';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { ReportDetailsDialog } from 'src/app/dialogs/report-details-dialog/report-details.dialog';
 import { MatDialog } from '@angular/material/dialog';
+import { UsersService } from 'src/app/services/http/users.service';
+import { User } from 'src/app/models/user';
 
 @Component({
-    selector: 'app-reports',
-    templateUrl: './reports.page.html',
-    styleUrls: ['./reports.page.scss'],
+    selector: 'app-users',
+    templateUrl: './users.page.html',
+    styleUrls: ['./users.page.scss'],
     animations: fadeInAnimation
 })
-export class ReportsPage extends Responsive {
+export class UsersPage extends Responsive {
     isReady = false;
-    reports?: PaginableResult<Report>;
+    users?: PaginableResult<User>;
     displayedColumns: string[] = [];
     routeParamsSubscription?: Subscription;
 
-    private readonly displayedColumnsHandsetPortrait: string[] = ['reportedUser', 'status'];
-    private readonly displayedColumnsHandserLandscape: string[] = ['reportedUser', 'status', 'actions'];
-    private readonly displayedColumnsTablet: string[] = ['user', 'reportedUser', 'category', 'status', 'actions'];
-    private readonly displayedColumnsBrowser: string[] = ['user', 'reportedUser', 'status', 'category', 'considerationUser', 'considerationDate', 'actions'];
+    private readonly displayedColumnsHandsetPortrait: string[] = ['userName'];
+    private readonly displayedColumnsHandserLandscape: string[] = ['userName', 'createdAt', 'actions'];
+    private readonly displayedColumnsTablet: string[] = ['userName', 'userFullName', 'email', 'createdAt', 'actions'];
+    private readonly displayedColumnsBrowser: string[] = ['userName', 'userFullName', 'email', 'isLocal', 'statuses', 'createdAt', 'actions'];
     
     constructor(
         private authorizationService: AuthorizationService,
-        private reportsService: ReportsService,
-        private messageService: MessagesService,
+        private usersService: UsersService,
         private loadingService: LoadingService,
         private activatedRoute: ActivatedRoute,
-        private dialog: MatDialog,
         private router: Router,
         breakpointObserver: BreakpointObserver) {
             super(breakpointObserver);
@@ -60,7 +57,7 @@ export class ReportsPage extends Responsive {
 
             let page = pageString ? +pageString : 0;
             let size = sizeString ? +sizeString : 10;
-            this.reports = await this.reportsService.get(page + 1, size);
+            this.users = await this.usersService.get(page + 1, size);
 
             this.isReady = true;
             this.loadingService.hideLoader();
@@ -90,39 +87,6 @@ export class ReportsPage extends Responsive {
 
     protected override onBrowser(): void {
         this.displayedColumns = this.displayedColumnsBrowser;
-    }
-
-    onOpen(report: Report): void {
-        this.dialog.open(ReportDetailsDialog, {
-            width: '500px',
-            data: report
-        });
-    }
-
-    async onClose(report: Report): Promise<void> {
-        try {
-            const savedReport = await this.reportsService.close(report.id);
-            report.considerationUser = savedReport.considerationUser;
-            report.considerationDate = savedReport.considerationDate;
-
-            this.messageService.showSuccess('Report has been closed.');
-        } catch (error) {
-            console.error(error);
-            this.messageService.showServerError(error);
-        }
-    }
-
-    async onRestore(report: Report): Promise<void> {
-        try {
-            const savedReport = await this.reportsService.restore(report.id);
-            report.considerationUser = savedReport.considerationUser;
-            report.considerationDate = savedReport.considerationDate;
-
-            this.messageService.showSuccess('Report has been restored.');
-        } catch (error) {
-            console.error(error);
-            this.messageService.showServerError(error);
-        }
     }
 
     isAdministrator(): boolean {

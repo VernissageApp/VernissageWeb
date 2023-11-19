@@ -1,0 +1,89 @@
+<div *ngIf="isReady && users" @fadeIn [ngClass]="{ 'padding-30': !isHandset, 'padding-10': isHandset }">
+    <div class="flex-row flex-space-around padding-left-10 padding-right-10">
+        <div class="width-100">
+            <section class="flex-row flex-space-between flex-align-center margin-bottom-20" [ngClass]="{ 'flex-row': !isHandset, 'flex-column': isHandset }">
+                <h1>
+                    <div>Users</div>
+                    <div *ngIf="!isHandset" class="fs-60 text-muted">List of users registered in the system.</div>
+                </h1>
+            </section>
+
+            <table mat-table [dataSource]="users.data" class="mat-elevation-z1">
+              
+                <!-- User Name Column -->
+                <ng-container matColumnDef="userName">
+                    <th mat-header-cell *matHeaderCellDef> User name </th>
+                    <td mat-cell *matCellDef="let element">
+                        <span>
+                            <a [routerLink]="['/@' + element.userName ]">{{ element.userName }}</a>
+                        </span>
+                    </td>
+                </ng-container>
+
+                <!-- User Full Name Column -->
+                <ng-container matColumnDef="userFullName">
+                    <th mat-header-cell *matHeaderCellDef> Full name </th>
+                    <td mat-cell *matCellDef="let element">
+                        <span>
+                            {{ element.name }}
+                        </span>
+                    </td>
+                </ng-container>
+
+                <!-- Email Column -->
+                <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef> Email </th>
+                    <td mat-cell *matCellDef="let element">
+                        <span>
+                            {{ element.email }}
+                        </span>
+                    </td>
+                </ng-container>
+
+                <!-- Is Local Column -->
+                <ng-container matColumnDef="isLocal">
+                    <th mat-header-cell *matHeaderCellDef> Is Local </th>
+                    <td mat-cell *matCellDef="let element">
+                        <mat-checkbox color="primary" [disableRipple]="true" [ngModel]="element.isLocal" disabled>
+                        </mat-checkbox>
+                    </td>
+                </ng-container>
+
+                <!-- Statuses Column -->
+                <ng-container matColumnDef="statuses">
+                    <th mat-header-cell *matHeaderCellDef> Statuses </th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.statusesCount }}
+                    </td>
+                </ng-container>
+
+                <!-- Created Date Column -->
+                <ng-container matColumnDef="createdAt">
+                    <th mat-header-cell *matHeaderCellDef> Created date </th>
+                    <td mat-cell *matCellDef="let element">
+                        <span *ngIf="element.createdAt">
+                            {{ element.createdAt | date: 'short' }}
+                        </span>
+                    </td>
+                </ng-container>
+
+                <!-- Actions Column -->
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef></th>
+                    <td mat-cell *matCellDef="let element" class="text-right">
+                    </td>
+                </ng-container>
+              
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <mat-paginator
+                (page)="handlePageEvent($event)"
+                [length]="users.total"
+                [pageSize]="10"
+                [pageSizeOptions]="[10, 25, 100]"
+                aria-label="Select page">
+            </mat-paginator>
+        </div>
+    </div>
+</div>

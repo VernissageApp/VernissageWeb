@@ -29,6 +29,7 @@ import { EditorsPage } from './editors/editors.page';
 import { CategoriesPage } from './categories/categories.page';
 import { PreferencesPage } from './preferences/preferences.page';
 import { ReportsPage } from './reports/reports.page';
+import { UsersPage } from './users/users.page';
 
 @NgModule({
     imports: [
@@ -61,7 +62,8 @@ import { ReportsPage } from './reports/reports.page';
         EditorsPage,
         CategoriesPage,
         PreferencesPage,
-        ReportsPage
+        ReportsPage,
+        UsersPage
     ],
     exports: [
         ComponentsModule,
@@ -89,7 +91,8 @@ import { ReportsPage } from './reports/reports.page';
         EditorsPage,
         CategoriesPage,
         PreferencesPage,
-        ReportsPage
+        ReportsPage,
+        UsersPage
     ]
 })
 export class PagesModule { }

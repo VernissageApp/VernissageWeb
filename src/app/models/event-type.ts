@@ -30,6 +30,7 @@ export enum EventType {
     UserRolesConnect = 'userRolesConnect',
     UserRolesDisconnect = 'userRolesDisconnect',
     
+    UsersList = 'usersList',
     UsersRead = 'usersRead',
     UsersUpdate = 'usersUpdate',
     UsersDelete = 'usersDelete',

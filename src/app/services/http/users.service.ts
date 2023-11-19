@@ -7,12 +7,18 @@ import { Status } from 'src/app/models/status';
 import { WindowService } from '../common/window.service';
 import { LinkableResult } from 'src/app/models/linkable-result';
 import { UserMuteRequest } from 'src/app/models/user-mute-request';
+import { PaginableResult } from 'src/app/models/paginable-result';
 
 @Injectable({
     providedIn: 'root'
 })
 export class UsersService {
     constructor(private httpClient: HttpClient, private windowService: WindowService) {
+    }
+
+    public async get(page: number, size: number): Promise<PaginableResult<User>> {
+        const event$ = this.httpClient.get<PaginableResult<User>>(this.windowService.apiUrl() + `/api/v1/users?page=${page}&size=${size}`);
+        return await firstValueFrom(event$);
     }
 
     public async profile(userName: string): Promise<User> {
