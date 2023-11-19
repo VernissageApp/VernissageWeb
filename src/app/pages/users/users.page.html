@@ -9,7 +9,15 @@
             </section>
 
             <table mat-table [dataSource]="users.data" class="mat-elevation-z1">
-              
+
+                <!-- User Avatar Column -->
+                <ng-container matColumnDef="avatar">
+                    <th mat-header-cell *matHeaderCellDef></th>
+                    <td mat-cell *matCellDef="let element">
+                        <app-avatar [user]="element" [size]="avatarSize.medium"></app-avatar>
+                    </td>
+                </ng-container>
+
                 <!-- User Name Column -->
                 <ng-container matColumnDef="userName">
                     <th mat-header-cell *matHeaderCellDef> User name </th>
@@ -42,7 +50,7 @@
 
                 <!-- Is Local Column -->
                 <ng-container matColumnDef="isLocal">
-                    <th mat-header-cell *matHeaderCellDef> Is Local </th>
+                    <th mat-header-cell *matHeaderCellDef> Local </th>
                     <td mat-cell *matCellDef="let element">
                         <mat-checkbox color="primary" [disableRipple]="true" [ngModel]="element.isLocal" disabled>
                         </mat-checkbox>

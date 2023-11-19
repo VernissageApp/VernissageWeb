@@ -14,6 +14,7 @@ import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { UsersService } from 'src/app/services/http/users.service';
 import { User } from 'src/app/models/user';
+import { AvatarSize } from 'src/app/components/widgets/avatar/avatar-size';
 
 @Component({
     selector: 'app-users',
@@ -22,15 +23,17 @@ import { User } from 'src/app/models/user';
     animations: fadeInAnimation
 })
 export class UsersPage extends Responsive {
+    readonly avatarSize = AvatarSize
+
     isReady = false;
     users?: PaginableResult<User>;
     displayedColumns: string[] = [];
     routeParamsSubscription?: Subscription;
 
-    private readonly displayedColumnsHandsetPortrait: string[] = ['userName'];
-    private readonly displayedColumnsHandserLandscape: string[] = ['userName', 'createdAt', 'actions'];
-    private readonly displayedColumnsTablet: string[] = ['userName', 'userFullName', 'email', 'createdAt', 'actions'];
-    private readonly displayedColumnsBrowser: string[] = ['userName', 'userFullName', 'email', 'isLocal', 'statuses', 'createdAt', 'actions'];
+    private readonly displayedColumnsHandsetPortrait: string[] = ['avatar', 'userName'];
+    private readonly displayedColumnsHandserLandscape: string[] = ['avatar', 'userName', 'createdAt', 'actions'];
+    private readonly displayedColumnsTablet: string[] = ['avatar', 'userName', 'userFullName', 'email', 'createdAt', 'actions'];
+    private readonly displayedColumnsBrowser: string[] = ['avatar', 'userName', 'userFullName', 'email', 'isLocal', 'statuses', 'createdAt', 'actions'];
     
     constructor(
         private authorizationService: AuthorizationService,

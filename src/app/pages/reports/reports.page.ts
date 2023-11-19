@@ -15,6 +15,7 @@ import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ReportDetailsDialog } from 'src/app/dialogs/report-details-dialog/report-details.dialog';
 import { MatDialog } from '@angular/material/dialog';
+import { AvatarSize } from 'src/app/components/widgets/avatar/avatar-size';
 
 @Component({
     selector: 'app-reports',
@@ -23,6 +24,8 @@ import { MatDialog } from '@angular/material/dialog';
     animations: fadeInAnimation
 })
 export class ReportsPage extends Responsive {
+    readonly avatarSize = AvatarSize;
+
     isReady = false;
     reports?: PaginableResult<Report>;
     displayedColumns: string[] = [];
