@@ -28,6 +28,7 @@ import { TrendingPage } from './trending/trending.page';
 import { EditorsPage } from './editors/editors.page';
 import { CategoriesPage } from './categories/categories.page';
 import { PreferencesPage } from './preferences/preferences.page';
+import { ReportsPage } from './reports/reports.page';
 
 @NgModule({
     imports: [
@@ -59,7 +60,8 @@ import { PreferencesPage } from './preferences/preferences.page';
         TrendingPage,
         EditorsPage,
         CategoriesPage,
-        PreferencesPage
+        PreferencesPage,
+        ReportsPage
     ],
     exports: [
         ComponentsModule,
@@ -86,7 +88,8 @@ import { PreferencesPage } from './preferences/preferences.page';
         TrendingPage,
         EditorsPage,
         CategoriesPage,
-        PreferencesPage
+        PreferencesPage,
+        ReportsPage
     ]
 })
 export class PagesModule { }

@@ -52,7 +52,7 @@
                                     <span>Favourited by</span>
                                 </button>
                                 <mat-divider></mat-divider>
-                                <button mat-menu-item>
+                                <button mat-menu-item (click)="onReportDialog()">
                                     <mat-icon>warning</mat-icon>
                                     <span>Report</span>
                                 </button>
@@ -132,7 +132,7 @@
             </mat-card>
 
             <!-- Right comments panel -->
-            <mat-card appearance="outlined">
+            <mat-card class="height-100" appearance="outlined">
                 <mat-card-header>
                     <mat-card-title>Comments</mat-card-title>
                 </mat-card-header>

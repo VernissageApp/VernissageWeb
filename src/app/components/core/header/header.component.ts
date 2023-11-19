@@ -60,6 +60,10 @@ export class HeaderComponent extends Responsive {
         return this.authorizationService.hasRole(Role.Administrator);
     }
 
+    isModerator(): boolean {
+        return this.authorizationService.hasRole(Role.Moderator);
+    }
+
     isRegistrationByInvitationsOpened(): boolean {
         return this.instanceService.instance?.registrationOpened === false && this.instanceService.instance?.registrationByInvitationsOpened === true;
     }

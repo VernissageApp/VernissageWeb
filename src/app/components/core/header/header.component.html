@@ -117,6 +117,11 @@
                         <mat-icon>build</mat-icon>
                         <span>Preferences</span>
                     </button>
+                    <mat-divider *ngIf="isAdministrator() || isModerator()"></mat-divider>
+                    <button *ngIf="isAdministrator() || isModerator()" mat-menu-item [routerLink]="['/reports']" aria-label="Reports">
+                        <mat-icon>feedback</mat-icon>
+                        <span>Reports</span>
+                    </button>
                     <button *ngIf="isAdministrator()" mat-menu-item [routerLink]="['/settings']" aria-label="Settings">
                         <mat-icon>settings</mat-icon>
                         <span>Settings</span>

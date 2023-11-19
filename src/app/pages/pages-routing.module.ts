@@ -27,6 +27,7 @@ import { TrendingPage } from './trending/trending.page';
 import { EditorsPage } from './editors/editors.page';
 import { CategoriesPage } from './categories/categories.page';
 import { PreferencesPage } from './preferences/preferences.page';
+import { ReportsPage } from './reports/reports.page';
 
 const routes: Routes = [
     { path: 'login', component: LoginPage, canActivate: [ loggedOutGuard ] },
@@ -50,6 +51,7 @@ const routes: Routes = [
     { path: 'editors', component: EditorsPage, canActivate: [ authorizationGuard ] },
     { path: 'categories', component: CategoriesPage, canActivate: [ authorizationGuard ] },
     { path: 'preferences', component: PreferencesPage, canActivate: [ authorizationGuard ] },
+    { path: 'reports', component: ReportsPage, canActivate: [ authorizationGuard ] },
     { path: ':userName', component: ProfilePage, children: [
         { path: 'following', component: ProfilePage },
         { path: 'followers', component: ProfilePage }

@@ -1,15 +1,14 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ReportRequest } from 'src/app/models/report-request';
 import { Rule } from 'src/app/models/rule';
+import { Report } from 'src/app/models/report';
 import { InstanceService } from 'src/app/services/http/instance.service';
-import { ReportData } from './report-data';
 
 @Component({
-    selector: 'report',
-    templateUrl: 'report.dialog.html'
+    selector: 'report-details',
+    templateUrl: 'report-details.dialog.html'
 })
-export class ReportDialog implements OnInit {
+export class ReportDetailsDialog implements OnInit {
     comment = '';
     forward = false;
     category = '';
@@ -31,27 +30,19 @@ export class ReportDialog implements OnInit {
 
     constructor(
         private instanceService: InstanceService,
-        public dialogRef: MatDialogRef<ReportDialog>,
-        @Inject(MAT_DIALOG_DATA) public data?: ReportData) {
+        public dialogRef: MatDialogRef<ReportDetailsDialog>,
+        @Inject(MAT_DIALOG_DATA) public data?: Report) {
     }
 
     ngOnInit(): void {
         this.rules = this.instanceService.instance?.rules ?? [];
+        this.comment = this.data?.comment ?? '';
+        this.forward = this.data?.forward ?? false;
+        this.category = this.data?.category ?? '';
+        this.ruleIds = this.data?.ruleIds?.map(x => +x) ?? [];
     }
 
     onNoClick(): void {
         this.dialogRef.close();
-    }
-
-    async onSubmit(): Promise<void> {
-        const reportRequest = new ReportRequest();
-        reportRequest.reportedUserId = this.data?.user?.id;
-        reportRequest.statusId = this.data?.status?.id;
-        reportRequest.category = this.category;
-        reportRequest.comment = this.comment;
-        reportRequest.forward = this.forward;
-        reportRequest.ruleIds = this.ruleIds;
-
-        this.dialogRef.close(reportRequest);
     }
 }

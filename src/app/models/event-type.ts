@@ -103,5 +103,7 @@ export enum EventType {
     InvitationDelete = 'invitationDelete',
 
     ReportsCreate = 'reportsCreate',
-    ReportsList = 'reportsList'
+    ReportsList = 'reportsList',
+    ReportsClose = 'reportsClose',
+    ReportsRestore = 'reportsRestore'
 }

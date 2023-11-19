@@ -14,6 +14,10 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { User } from 'src/app/models/user';
 import { StatusComment } from 'src/app/models/status-comment';
 import { AvatarSize } from 'src/app/components/widgets/avatar/avatar-size';
+import { ReportDialog } from 'src/app/dialogs/report-dialog/report.dialog';
+import { MatDialog } from '@angular/material/dialog';
+import { ReportData } from 'src/app/dialogs/report-dialog/report-data';
+import { ReportsService } from 'src/app/services/http/reports.service';
 
 @Component({
     selector: 'app-status',
@@ -38,7 +42,9 @@ export class StatusPage extends Responsive {
         private statusesService: StatusesService,
         private messageService: MessagesService,
         private authorizationService: AuthorizationService,
+        private reportsService: ReportsService,
         private activatedRoute: ActivatedRoute,
+        private dialog: MatDialog,
         breakpointObserver: BreakpointObserver) {
             super(breakpointObserver);
     }
@@ -62,6 +68,25 @@ export class StatusPage extends Responsive {
         super.ngOnDestroy();
 
         this.routeParamsSubscription?.unsubscribe();
+    }
+
+    async onReportDialog(): Promise<void> {
+        const dialogRef = this.dialog.open(ReportDialog, {
+            width: '500px',
+            data: new ReportData(this.status?.user, this.status)
+        });
+
+        dialogRef.afterClosed().subscribe(async (result) => {
+            if (result) {
+                try {
+                    await this.reportsService.create(result);
+                    this.messageService.showSuccess('Report has been saved.');
+                } catch (error) {
+                    console.error(error);
+                    this.messageService.showServerError(error);
+                }
+            }
+        });
     }
 
     isLoggedIn(): Boolean {

@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, In
 import { MatDialog } from '@angular/material/dialog';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { MuteAccountDialog } from 'src/app/dialogs/mute-account-dialog/mute-account.dialog';
+import { ReportData } from 'src/app/dialogs/report-dialog/report-data';
 import { ReportDialog } from 'src/app/dialogs/report-dialog/report.dialog';
 import { Relationship } from 'src/app/models/relationship';
 import { User } from 'src/app/models/user';
@@ -48,10 +49,10 @@ export class FollowButtonsSectionComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.recalculateRelationship();
-
         this.signedInUser = this.authorizationService.getUser();
         this.isProfileOwner = this.signedInUser?.id === this.user?.id;
+
+        this.recalculateRelationship();
     }
 
     onOriginalProfile(): void {
@@ -103,7 +104,7 @@ export class FollowButtonsSectionComponent implements OnInit {
     async onReportDialog(): Promise<void> {
         const dialogRef = this.dialog.open(ReportDialog, {
             width: '500px',
-            data: this.user
+            data: new ReportData(this.user, undefined)
         });
 
         dialogRef.afterClosed().subscribe(async (result) => {
@@ -268,12 +269,8 @@ export class FollowButtonsSectionComponent implements OnInit {
             return false;
         }
 
-        if ((this.relationship?.requestedBy ?? false) === false) {
-            return false;
-        }
-
         const isMuted = this.relationship?.mutedStatuses ||  this.relationship?.mutedReblogs || this.relationship?.mutedNotifications;
-        return isMuted === false ?? true;
+        return isMuted === null || isMuted === false;
     }
 
     private shouldShowUnnuteButton(): boolean {
@@ -285,12 +282,8 @@ export class FollowButtonsSectionComponent implements OnInit {
             return false;
         }
 
-        if ((this.relationship?.requestedBy ?? false) === false) {
-            return false;
-        }
-
         const isMuted = this.relationship?.mutedStatuses ||  this.relationship?.mutedReblogs || this.relationship?.mutedNotifications;
-        return isMuted === true ?? false;
+        return isMuted === true;
     }
 
     private shouldShowReportButton(): boolean {
@@ -310,8 +303,8 @@ export class FollowButtonsSectionComponent implements OnInit {
         this.showUnfollowButton = this.shouldShowUnfollowButton();
         this.showApproveFollowButton = this.shouldShowApproveFollowButton();
         this.showOpenOriginalProfileButton = this.shouldShowOpenOriginalProfileButton();
-        this.showUnmuteButton = this.shouldShowMuteButton();
-        this.showMuteButton = this.shouldShowUnnuteButton();
+        this.showMuteButton = this.shouldShowMuteButton();
+        this.showUnmuteButton = this.shouldShowUnnuteButton();
         this.showReportButton = this.shouldShowReportButton();
     }
 }
