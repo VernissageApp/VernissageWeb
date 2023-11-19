@@ -1,0 +1,18 @@
+<div mat-dialog-title>User roles</div>
+<div mat-dialog-content>
+
+    <div class="flex-col gap-0 margin-top-5">
+        <mat-checkbox name="administrator" color="primary" [disableRipple]="true" [(ngModel)]="isAdministrator" (click)="onChangeAdministrator()">
+            Administrator
+        </mat-checkbox>
+        <mat-checkbox name="moderator" color="primary" [disableRipple]="true" [(ngModel)]="isModerator" (click)="onChangeModerator()">
+            Moderator
+        </mat-checkbox>
+        <mat-checkbox name="member" color="primary" [disableRipple]="true" [(ngModel)]="isMember" disabled>
+            Member
+        </mat-checkbox>
+    </div>
+</div>
+<div mat-dialog-actions>
+    <button mat-button type="button" (click)="onNoClick()">Close</button>
+</div>

@@ -15,6 +15,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { UsersService } from 'src/app/services/http/users.service';
 import { User } from 'src/app/models/user';
 import { AvatarSize } from 'src/app/components/widgets/avatar/avatar-size';
+import { UserRolesDialog } from 'src/app/dialogs/user-roles-dialog/user-roles.dialog';
 
 @Component({
     selector: 'app-users',
@@ -24,13 +25,14 @@ import { AvatarSize } from 'src/app/components/widgets/avatar/avatar-size';
 })
 export class UsersPage extends Responsive {
     readonly avatarSize = AvatarSize
+    readonly role = Role;
 
     isReady = false;
     users?: PaginableResult<User>;
     displayedColumns: string[] = [];
     routeParamsSubscription?: Subscription;
 
-    private readonly displayedColumnsHandsetPortrait: string[] = ['avatar', 'userName'];
+    private readonly displayedColumnsHandsetPortrait: string[] = ['avatar', 'userName', 'actions'];
     private readonly displayedColumnsHandserLandscape: string[] = ['avatar', 'userName', 'createdAt', 'actions'];
     private readonly displayedColumnsTablet: string[] = ['avatar', 'userName', 'userFullName', 'email', 'createdAt', 'actions'];
     private readonly displayedColumnsBrowser: string[] = ['avatar', 'userName', 'userFullName', 'email', 'isLocal', 'statuses', 'createdAt', 'actions'];
@@ -39,8 +41,10 @@ export class UsersPage extends Responsive {
         private authorizationService: AuthorizationService,
         private usersService: UsersService,
         private loadingService: LoadingService,
+        private messageService: MessagesService,
         private activatedRoute: ActivatedRoute,
         private router: Router,
+        private dialog: MatDialog,
         breakpointObserver: BreakpointObserver) {
             super(breakpointObserver);
     }
@@ -65,6 +69,41 @@ export class UsersPage extends Responsive {
             this.isReady = true;
             this.loadingService.hideLoader();
         });
+    }
+
+    onSetRoles(user: User): void {
+        const dialogRef = this.dialog.open(UserRolesDialog, {
+            width: '500px',
+            data: user
+        });
+    }
+
+    async onSetEnable(user: User): Promise<void> {
+        try {
+            if (user.userName) {
+                await this.usersService.enable(user.userName);
+
+                user.isBlocked = false;
+                this.messageService.showSuccess('Account has been enabled.');
+            }
+        } catch (error) {
+            console.error(error);
+            this.messageService.showServerError(error);
+        }
+    }
+
+    async onSetDisable(user: User): Promise<void> {
+        try {
+            if (user.userName) {
+                await this.usersService.disable(user.userName);
+
+                user.isBlocked = true;
+                this.messageService.showSuccess('Account has been disabled.');
+            }
+        } catch (error) {
+            console.error(error);
+            this.messageService.showServerError(error);
+        }
     }
 
     async handlePageEvent(pageEvent: PageEvent): Promise<void> {

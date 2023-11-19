@@ -13,6 +13,7 @@ import { ChangeEmailDialog } from './change-email-dialog/change-email.dialog';
 import { MuteAccountDialog } from './mute-account-dialog/mute-account.dialog';
 import { ReportDialog } from './report-dialog/report.dialog';
 import { ReportDetailsDialog } from './report-details-dialog/report-details.dialog';
+import { UserRolesDialog } from './user-roles-dialog/user-roles.dialog';
 
 @NgModule({
     declarations: [
@@ -21,7 +22,8 @@ import { ReportDetailsDialog } from './report-details-dialog/report-details.dial
         DeleteAccountDialog,
         MuteAccountDialog,
         ReportDialog,
-        ReportDetailsDialog
+        ReportDetailsDialog,
+        UserRolesDialog
     ],
     imports: [
         BrowserModule,
@@ -39,7 +41,8 @@ import { ReportDetailsDialog } from './report-details-dialog/report-details.dial
         DeleteAccountDialog,
         MuteAccountDialog,
         ReportDialog,
-        ReportDetailsDialog
+        ReportDetailsDialog,
+        UserRolesDialog
     ]
 })
 export class DialogsModule { }

@@ -1,8 +1,10 @@
 import { FlexiField } from "./flexi-field";
+import { Role } from "./role";
 
 export class User {
     public id?: string;
     public isLocal?: boolean;
+    public isBlocked?: boolean;
     public userName?: string;
     public email?: string;
     public password?: string;
@@ -17,6 +19,7 @@ export class User {
     public agreement?: boolean;
     public emailWasConfirmed?: boolean;
     public fields?: FlexiField[];
+    public roles?: Role[];
     public bioHtml?: string;
     public activityPubProfile?: string;
     public statusesCount = 0;
