@@ -28,6 +28,7 @@ export class UsersPage extends Responsive {
     readonly role = Role;
 
     isReady = false;
+    pageIndex = 0;
     users?: PaginableResult<User>;
     displayedColumns: string[] = [];
     routeParamsSubscription?: Subscription;
@@ -64,6 +65,8 @@ export class UsersPage extends Responsive {
 
             let page = pageString ? +pageString : 0;
             let size = sizeString ? +sizeString : 10;
+
+            this.pageIndex = page;
             this.users = await this.usersService.get(page + 1, size);
 
             this.isReady = true;
@@ -107,6 +110,7 @@ export class UsersPage extends Responsive {
     }
 
     async handlePageEvent(pageEvent: PageEvent): Promise<void> {
+        console.log(pageEvent);
         const navigationExtras: NavigationExtras = {
             queryParams: { page: pageEvent.pageIndex, size: pageEvent.pageSize },
             queryParamsHandling: 'merge'

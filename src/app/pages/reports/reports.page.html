@@ -90,6 +90,7 @@
             <mat-paginator
                 (page)="handlePageEvent($event)"
                 [length]="reports.total"
+                [pageIndex]="pageIndex"
                 [pageSize]="10"
                 [pageSizeOptions]="[10, 25, 100]"
                 aria-label="Select page">

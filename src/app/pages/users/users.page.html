@@ -23,10 +23,12 @@
                     <th mat-header-cell *matHeaderCellDef> User name </th>
                     <td mat-cell *matCellDef="let element">
                         <div class="flex-row gap-8 flex-align-center">
-                            <div>
-                                <a [routerLink]="['/@' + element.userName ]">{{ element.userName }}</a>
+                            <div class="user-name-link">
+                                <a [routerLink]="['/@' + element.userName ]">
+                                    {{ element.userName }}    
+                                </a>                            
                             </div>
-                            <mat-chip-set aria-label="Roles">
+                            <mat-chip-set *ngIf="!isHandset" aria-label="Roles">
                                 <mat-chip-option *ngIf="element.roles?.includes(role.Administrator)" [disableRipple]="true" disabled>A</mat-chip-option>
                                 <mat-chip-option *ngIf="element.roles?.includes(role.Moderator)" [disableRipple]="true" disabled>M</mat-chip-option>
                                 <mat-chip-option *ngIf="element.isBlocked === true" [disableRipple]="true" disabled>Disabled</mat-chip-option>
@@ -101,6 +103,7 @@
             <mat-paginator
                 (page)="handlePageEvent($event)"
                 [length]="users.total"
+                [pageIndex]="pageIndex"
                 [pageSize]="10"
                 [pageSizeOptions]="[10, 25, 100]"
                 aria-label="Select page">

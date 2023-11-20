@@ -27,6 +27,7 @@ export class ReportsPage extends Responsive {
     readonly avatarSize = AvatarSize;
 
     isReady = false;
+    pageIndex = 0;
     reports?: PaginableResult<Report>;
     displayedColumns: string[] = [];
     routeParamsSubscription?: Subscription;
@@ -63,6 +64,8 @@ export class ReportsPage extends Responsive {
 
             let page = pageString ? +pageString : 0;
             let size = sizeString ? +sizeString : 10;
+
+            this.pageIndex = page;
             this.reports = await this.reportsService.get(page + 1, size);
 
             this.isReady = true;
