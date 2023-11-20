@@ -28,6 +28,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatRadioModule } from '@angular/material/radio';
+import { GalleryModule } from 'ng-gallery';
 
 @NgModule({
     imports: [
@@ -59,7 +60,8 @@ import { MatRadioModule } from '@angular/material/radio';
         MatButtonToggleModule,
         MatBadgeModule,
         MatSlideToggleModule,
-        MatRadioModule
+        MatRadioModule,
+        GalleryModule
     ],
     exports: [
         MatToolbarModule,
@@ -90,7 +92,8 @@ import { MatRadioModule } from '@angular/material/radio';
         MatButtonToggleModule,
         MatBadgeModule,
         MatSlideToggleModule,
-        MatRadioModule
+        MatRadioModule,
+        GalleryModule
     ]
 })
 export class AngularMaterialModule { }

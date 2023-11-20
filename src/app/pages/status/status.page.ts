@@ -18,6 +18,7 @@ import { ReportDialog } from 'src/app/dialogs/report-dialog/report.dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { ReportData } from 'src/app/dialogs/report-dialog/report-data';
 import { ReportsService } from 'src/app/services/http/reports.service';
+import { GalleryItem, ImageItem } from 'ng-gallery';
 
 @Component({
     selector: 'app-status',
@@ -32,11 +33,14 @@ export class StatusPage extends Responsive {
     isReady = false;
     status?: Status;
     comments?: StatusComment[];
-
     mainStatus?: Status;
     routeParamsSubscription?: Subscription;
     signedInUser?: User;
     replyStatus?: Status;
+    images?: GalleryItem[];
+
+    galleryAutoheight = false;
+    currentIndex = 0;
 
     constructor(
         private statusesService: StatusesService,
@@ -68,6 +72,26 @@ export class StatusPage extends Responsive {
         super.ngOnDestroy();
 
         this.routeParamsSubscription?.unsubscribe();
+    }
+
+    protected override onHandsetPortrait(): void {
+        this.galleryAutoheight = true;
+    }
+
+    protected override onHandsetLandscape(): void {
+        this.galleryAutoheight = true;
+    }
+
+    protected override onTablet(): void {
+        this.galleryAutoheight = false;
+    }
+
+    protected override onBrowser(): void {
+        this.galleryAutoheight = false;
+    }
+
+    onImageIndexChange(event: any): void {
+        this.currentIndex = event.currIndex;
     }
 
     async onReportDialog(): Promise<void> {
@@ -248,6 +272,10 @@ export class StatusPage extends Responsive {
         } else {
             this.mainStatus = this.status;
         }
+
+        this.images = this.mainStatus.attachments?.map(attachment => {
+            return new ImageItem({ src: attachment.originalFile?.url, thumb: attachment.smallFile?.url })
+        }); 
 
         this.comments = await this.getAllReplies(this.mainStatus.id);
     }

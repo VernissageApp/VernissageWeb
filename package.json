@@ -23,6 +23,8 @@
     "@auth0/angular-jwt": "^5.2.0",
     "blurhash": "^2.0.5",
     "exifreader": "^4.16.0",
+    "hammerjs": "^2.0.8",
+    "ng-gallery": "^11.0.0",
     "ngx-captcha": "^13.0.0",
     "rxjs": "~7.8.1",
     "tslib": "^2.6.2",

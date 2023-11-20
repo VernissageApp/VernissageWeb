@@ -17,6 +17,7 @@ import { APIInterceptor } from './interceptors/api.interceptor';
 import { LoadingService } from './services/common/loading.service';
 import { WindowService } from './services/common/window.service';
 import { CustomReuseStrategy } from './common/custom-reuse-strategy';
+import { HammerModule } from "../../node_modules/@angular/platform-browser";
 // import { NgxCaptchaModule } from 'ngx-captcha';
 
 const jwtOptionsFactory = (persistanceService: PersistanceService, windowService: WindowService) => {
@@ -44,6 +45,7 @@ const httpInterceptor = (router: Router) => new APIInterceptor(router);
             }
         }),
         // NgxCaptchaModule,
+        HammerModule,
         PagesModule
     ],
     providers: [
