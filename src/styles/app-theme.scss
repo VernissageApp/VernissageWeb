@@ -84,7 +84,8 @@
         width: 223px;
         height: 148px;
         margin-top: 4px;
-        background-color: white;
+        background-color: mat.get-color-from-palette($foreground);
+        opacity: 0.6;
         cursor: pointer;
         border-width: 1px;
         border-style: dashed;

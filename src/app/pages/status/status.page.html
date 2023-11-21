@@ -7,7 +7,7 @@
         <div class="display-inline">
             <ng-container *ngIf="images">
                 <ng-container *ngIf="images.length === 1">
-                    <div style="height: 600px;">
+                    <div [ngClass]="{ 'photo-image-container-fixed': !isHandset }">
                         <img [src]="images[0].data?.src" />
                     </div>
                 </ng-container>
