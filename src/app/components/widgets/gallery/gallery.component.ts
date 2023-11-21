@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { LinkableResult } from 'src/app/models/linkable-result';
 import { Status } from 'src/app/models/status';
+import { ContextStatusesService } from 'src/app/services/common/context-statuses.service';
 
 @Component({
     selector: 'app-gallery',
@@ -20,7 +21,9 @@ export class GalleryComponent implements OnInit, OnChanges {
     isHandset = false;
     breakpointSubscription?: Subscription;
 
-    constructor(private breakpointObserver: BreakpointObserver) {
+    constructor(
+        private contextStatusesService: ContextStatusesService,
+        private breakpointObserver: BreakpointObserver) {
     }
 
     ngOnInit(): void {
@@ -41,6 +44,7 @@ export class GalleryComponent implements OnInit, OnChanges {
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.statuses) {
+            this.contextStatusesService.setContextStatuses(this.statuses);
             this.buildGallery();
         }
     }

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { Subscription } from 'rxjs';
 import { StatusesService } from 'src/app/services/http/statuses.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Status } from 'src/app/models/status';
 import { Exif } from 'src/app/models/exif';
 import { Location } from 'src/app/models/location';
@@ -19,6 +19,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ReportData } from 'src/app/dialogs/report-dialog/report-data';
 import { ReportsService } from 'src/app/services/http/reports.service';
 import { GalleryItem, ImageItem } from 'ng-gallery';
+import { ContextStatusesService } from 'src/app/services/common/context-statuses.service';
 
 @Component({
     selector: 'app-status',
@@ -47,7 +48,9 @@ export class StatusPage extends Responsive {
         private messageService: MessagesService,
         private authorizationService: AuthorizationService,
         private reportsService: ReportsService,
+        private contextStatusesService: ContextStatusesService,
         private activatedRoute: ActivatedRoute,
+        private router: Router,
         private dialog: MatDialog,
         breakpointObserver: BreakpointObserver) {
             super(breakpointObserver);
@@ -72,6 +75,24 @@ export class StatusPage extends Responsive {
         super.ngOnDestroy();
 
         this.routeParamsSubscription?.unsubscribe();
+    }
+
+    async onBackClick(): Promise<void> {
+        if (this.status?.id) {
+            const previousStatus = await this.contextStatusesService.getPrevious(this.status?.id);
+            if (previousStatus) {
+                await this.router.navigate(['/statuses', previousStatus.id]);
+            }
+        }
+    }
+
+    async onNextClick(): Promise<void> {
+        if (this.status?.id) {
+            const nextStatus = await this.contextStatusesService.getNext(this.status?.id);
+            if (nextStatus) {
+                await this.router.navigate(['/statuses', nextStatus.id]);
+            }
+        }
     }
 
     protected override onHandsetPortrait(): void {
@@ -115,6 +136,10 @@ export class StatusPage extends Responsive {
 
     isLoggedIn(): Boolean {
         return this.authorizationService.isLoggedIn();
+    }
+
+    showContextArrows(): boolean {
+        return this.contextStatusesService.hasContextStatuses() && !this.isHandset;
     }
 
     getAltStatus(index: number): String | undefined {

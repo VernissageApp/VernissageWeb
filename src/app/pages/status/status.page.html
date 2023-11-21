@@ -1,25 +1,37 @@
 <div *ngIf="mainStatus && isReady" @fadeIn>
-    <div class="photoMargin"></div>
-    <div class="photoContainer">
-        <ng-container *ngIf="images">
-            <ng-container *ngIf="images.length === 1">
-                <img [src]="images[0].data?.src" />
+    <div class="photo-margin-top"></div>
+    <div class="photo-container" [ngClass]="{ 'photo-container-table': showContextArrows() }">
+        <div *ngIf="showContextArrows()" class="icon" (click)="onBackClick()">
+            <mat-icon>arrow_back_ios</mat-icon>
+        </div>
+        <div class="display-inline">
+            <ng-container *ngIf="images">
+                <ng-container *ngIf="images.length === 1">
+                    <div style="height: 600px;">
+                        <img [src]="images[0].data?.src" />
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="images.length > 1">
+                    <gallery
+                        class="custom-gallery"
+                        [ngClass]="{ 'custom-gallery-browser': showContextArrows() }"
+                        [items]="images"
+                        [dots]="true"
+                        [thumb]="false"
+                        [counter]="false"
+                        [nav]="false"
+                        [autoHeight]="galleryAutoheight"
+                        [dotsSize]="8"
+                        (indexChange)="onImageIndexChange($event)">
+                    </gallery>
+                </ng-container>
             </ng-container>
-            <ng-container *ngIf="images.length > 1">
-                <gallery
-                    [items]="images"
-                    [dots]="true"
-                    [thumb]="false"
-                    [counter]="false"
-                    [nav]="false"
-                    [autoHeight]="galleryAutoheight"
-                    [dotsSize]="8"
-                    (indexChange)="onImageIndexChange($event)">
-                </gallery>
-            </ng-container>
-        </ng-container>
+        </div>
+        <div *ngIf="showContextArrows()" class="icon" (click)="onNextClick()">
+            <mat-icon>arrow_forward_ios</mat-icon>
+        </div>
     </div>
-    <div class="photoMargin"></div>
+    <div class="photo-margin-bottom"></div>
 
     <div [ngClass]="{ 'padding-30': !isHandset, 'padding-10': isHandset }">
         <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
@@ -88,7 +100,7 @@
                     <!-- Alt text -->
                     <div *ngIf="getAltStatus(currentIndex)" class="flex-row alt margin-bottom-10">
                         <div>
-                            <mat-icon class="margin-right-10" inline="true" matTooltip="Alt">remove_red_eye</mat-icon>
+                            <mat-icon class="margin-right-20" inline="true" matTooltip="Alt">remove_red_eye</mat-icon>
                         </div>
                         <div>
                             <span class="alt-label">{{ getAltStatus(currentIndex) }}</span>
@@ -97,32 +109,32 @@
 
                     <!-- Category -->
                     <div *ngIf="mainStatus.category" class="category margin-bottom-10">
-                        <mat-icon class="margin-right-10" inline="true" matTooltip="Category">loyalty</mat-icon>
+                        <mat-icon class="margin-right-20" inline="true" matTooltip="Category">loyalty</mat-icon>
                         <span class="category-label">{{ mainStatus.category.name }}</span>
                     </div>
 
                     <!-- Location -->
                     <div *ngIf="getLocation(currentIndex)" class="location margin-bottom-10">
-                        <mat-icon class="margin-right-10" inline="true" matTooltip="Place">place</mat-icon>
+                        <mat-icon class="margin-right-20" inline="true" matTooltip="Place">place</mat-icon>
                         <span *ngIf="getLocation(currentIndex)?.name" class="location-label"><a class="dashed" target="_blank" [href]="getMapsUrl(currentIndex)">{{ getLocation(currentIndex)?.name }}</a> ({{ getLocation(currentIndex)?.country?.name }})</span>
                     </div>
 
                     <!-- Exif -->
                     <div *ngIf="getExif(currentIndex)" class="exif">
                         <div *ngIf="getExif(currentIndex)?.make || getExif(currentIndex)?.model" class="margin-bottom-10">
-                            <mat-icon class="margin-right-10" inline="true" matTooltip="Camera">camera_alt</mat-icon>
+                            <mat-icon class="margin-right-20" inline="true" matTooltip="Camera">camera_alt</mat-icon>
                             <span class="exif-label">
                                 <span *ngIf="getExif(currentIndex)?.make">{{ getExif(currentIndex)?.make }}</span>&nbsp;<span *ngIf="getExif(currentIndex)?.model">{{ getExif(currentIndex)?.model }}</span>
                             </span>
                         </div>
 
                         <div *ngIf="getExif(currentIndex)?.lens" class="margin-bottom-10">
-                            <mat-icon class="margin-right-10" inline="true" matTooltip="Lens">camera</mat-icon>
+                            <mat-icon class="margin-right-20" inline="true" matTooltip="Lens">camera</mat-icon>
                             <span *ngIf="getExif(currentIndex)?.lens" class="exif-label">{{ getExif(currentIndex)?.lens }}</span>
                         </div>
 
                         <div *ngIf="getExif(currentIndex)?.focalLenIn35mmFilm || getExif(currentIndex)?.fNumber || getExif(currentIndex)?.exposureTime || getExif(currentIndex)?.photographicSensitivity" class="margin-bottom-10">
-                            <mat-icon class="margin-right-10" inline="true" matTooltip="Exposure">brightness_7</mat-icon>
+                            <mat-icon class="margin-right-20" inline="true" matTooltip="Exposure">brightness_7</mat-icon>
                             <span *ngIf="getExif(currentIndex)?.focalLenIn35mmFilm" class="margin-right-15 exif-label">{{ getExif(currentIndex)?.focalLenIn35mmFilm }}mm</span>
                             <span *ngIf="getExif(currentIndex)?.fNumber" class="margin-right-15 exif-label">{{ getExif(currentIndex)?.fNumber }}</span>
                             <span *ngIf="getExif(currentIndex)?.exposureTime" class="margin-right-15 exif-label">{{ getExif(currentIndex)?.exposureTime }}s</span>
@@ -138,7 +150,7 @@
                             <mat-icon class="margin-right-15" *ngSwitchCase="statusVisibility.Followers" matTooltip="Followers">people</mat-icon>
                             <mat-icon class="margin-right-15" *ngSwitchCase="statusVisibility.Mentioned" matTooltip="Mentioned">person</mat-icon>
                         </ng-container>
-                        <div *ngIf="mainStatus.application" class="margin-right-15" matTooltip="Application" aria-label="Application">{{ mainStatus.application }}</div>
+                        <mat-icon *ngIf="mainStatus.application" class="margin-right-15" [matTooltip]="mainStatus.application" aria-label="Application">extension</mat-icon>
                         <mat-icon matTooltip="Number of reblogs" aria-label="Number of reblogs">swap_vertical_circle</mat-icon>
                         <div  class="margin-right-15">{{ mainStatus.reblogsCount }}</div>
                         <mat-icon matTooltip="Number of likes" aria-label="Number of likes">star</mat-icon>

@@ -9,6 +9,7 @@ import { LoadingService } from 'src/app/services/common/loading.service';
 import { Responsive } from 'src/app/common/responsive';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { LinkableResult } from 'src/app/models/linkable-result';
+import { ContextTimeline } from 'src/app/models/context-timeline';
 
 @Component({
     selector: 'app-home',
@@ -44,18 +45,22 @@ export class HomePage extends Responsive {
                 case 'local':
                     this.timeline = 'local';
                     this.statuses = await this.timelineService.public(undefined, undefined, undefined, undefined, true);
+                    this.statuses.context = ContextTimeline.local;
                     break;
                 case 'global':
                     this.timeline = 'global';
                     this.statuses = await this.timelineService.public(undefined, undefined, undefined, undefined, false);
+                    this.statuses.context = ContextTimeline.global;
                     break;
                 default:
                     if (this.isLoggedIn()) {
                         this.timeline = 'private';
                         this.statuses = await this.timelineService.home();
+                        this.statuses.context = ContextTimeline.home;
                     } else {
                         this.timeline = 'local';
                         this.statuses = await this.timelineService.public(undefined, undefined, undefined, undefined, true);
+                        this.statuses.context = ContextTimeline.local;
                     }
                     break;
             }

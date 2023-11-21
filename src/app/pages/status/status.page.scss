@@ -1,15 +1,33 @@
-.photoMargin {
+.photo-margin-top {
     height: 20px;
     background-color: #202020;
 }
 
-.photoContainer {
+.photo-margin-bottom {
+    height: 15px;
+    background-color: #202020;
+}
+
+.photo-container {
     width: 100%;
     background-color: #202020;
 
-    gallery {
+    .icon {
+        color: white;
+        text-align: center;
+        width: 40px;;
+        display:table-cell;
+        vertical-align: middle;
+        cursor: pointer;
+    }
+
+    .custom-gallery {
         background-color: #202020;
         max-height: 600px;
+    }
+
+    .custom-gallery-browser {
+        width: calc(100vw - 80px);
     }
 
     img {
@@ -21,10 +39,14 @@
     }
 }
 
+.photo-container-table {
+    display:table;
+}
+
 .category {
     mat-icon {
         transform: scale(1.6);
-        color: #202020;
+        opacity: 0.8;
     }
 
     .category-label {
@@ -36,7 +58,7 @@
 .location {
     mat-icon {
         transform: scale(1.6);
-        color: #202020;
+        opacity: 0.8;
     }
 
     .location-label {
@@ -47,7 +69,7 @@
 .exif {
     mat-icon {
         transform: scale(1.6);
-        color: #202020;
+        opacity: 0.8;
     }
 
     .exif-label {
@@ -58,7 +80,7 @@
 .alt {
     mat-icon {
         transform: scale(1.6);
-        color: #202020;
+        opacity: 0.8;
     }
 
     .alt-label {
