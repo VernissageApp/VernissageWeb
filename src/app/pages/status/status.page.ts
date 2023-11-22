@@ -42,6 +42,8 @@ export class StatusPage extends Responsive {
 
     galleryAutoheight = false;
     currentIndex = 0;
+    hideLeftArrow = false;
+    hideRightArrow = false;
 
     constructor(
         private statusesService: StatusesService,
@@ -58,10 +60,9 @@ export class StatusPage extends Responsive {
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
+        this.isReady = false;
 
         this.routeParamsSubscription = this.activatedRoute.params.subscribe(async params => {
-            this.isReady = false;
-
             const statusId = params['id'] as string;
 
             this.signedInUser = this.authorizationService.getUser();
@@ -82,6 +83,9 @@ export class StatusPage extends Responsive {
             const previousStatus = await this.contextStatusesService.getPrevious(this.status?.id);
             if (previousStatus) {
                 await this.router.navigate(['/statuses', previousStatus.id]);
+                this.hideRightArrow = false;
+            } else {
+                this.hideLeftArrow = true;
             }
         }
     }
@@ -91,6 +95,9 @@ export class StatusPage extends Responsive {
             const nextStatus = await this.contextStatusesService.getNext(this.status?.id);
             if (nextStatus) {
                 await this.router.navigate(['/statuses', nextStatus.id]);
+                this.hideLeftArrow = false;
+            } else {
+                this.hideRightArrow = true;
             }
         }
     }

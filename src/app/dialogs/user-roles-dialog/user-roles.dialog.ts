@@ -3,7 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Role } from 'src/app/models/role';
 import { User } from 'src/app/models/user';
 import { MessagesService } from 'src/app/services/common/messages.service';
-import { UserRolesService } from 'src/app/services/http/user-roles.service';
+import { UsersService } from 'src/app/services/http/users.service';
 
 @Component({
     selector: 'user-roles',
@@ -15,7 +15,7 @@ export class UserRolesDialog implements OnInit {
     isMember = true;
 
     constructor(
-        private userRolesService: UserRolesService,
+        private usersService: UsersService,
         private messageService: MessagesService,
         public dialogRef: MatDialogRef<UserRolesDialog>,
         @Inject(MAT_DIALOG_DATA) public data?: User) {
@@ -27,15 +27,15 @@ export class UserRolesDialog implements OnInit {
     }
 
     async onChangeAdministrator(): Promise<void> {
-        if (this.data?.id) {
+        if (this.data?.userName) {
             try {
                 if (this.isAdministrator) {
-                    this.userRolesService.connect(this.data?.id, Role.Administrator);
+                    this.usersService.connect(this.data?.userName, Role.Administrator);
 
                     this.data.roles?.push(Role.Administrator);
                     this.messageService.showSuccess('Role has been connected.');
                 } else {
-                    this.userRolesService.disconnect(this.data?.id, Role.Administrator);
+                    this.usersService.disconnect(this.data?.userName, Role.Administrator);
 
                     const index = this.data.roles?.indexOf(Role.Administrator, 0) ?? -1;
                     if (index > -1) {
@@ -52,15 +52,15 @@ export class UserRolesDialog implements OnInit {
     }
 
     async onChangeModerator(): Promise<void> {
-        if (this.data?.id) {
+        if (this.data?.userName) {
             try {
                 if (this.isModerator) {
-                    this.userRolesService.connect(this.data?.id, Role.Moderator);
+                    this.usersService.connect(this.data?.userName, Role.Moderator);
 
                     this.data.roles?.push(Role.Moderator);
                     this.messageService.showSuccess('Role has been connected.');
                 } else {
-                    this.userRolesService.disconnect(this.data?.id, Role.Moderator);
+                    this.usersService.disconnect(this.data?.userName, Role.Moderator);
 
                     const index = this.data.roles?.indexOf(Role.Moderator, 0) ?? -1;
                     if (index > -1) {

@@ -2,7 +2,7 @@
     <div class="photo-margin-top"></div>
     <div class="photo-container" [ngClass]="{ 'photo-container-table': showContextArrows() }">
         <div *ngIf="showContextArrows()" class="icon" (click)="onBackClick()">
-            <mat-icon>arrow_back_ios</mat-icon>
+            <mat-icon *ngIf="!hideLeftArrow">arrow_back_ios</mat-icon>
         </div>
         <div class="display-inline">
             <ng-container *ngIf="images">
@@ -28,7 +28,7 @@
             </ng-container>
         </div>
         <div *ngIf="showContextArrows()" class="icon" (click)="onNextClick()">
-            <mat-icon>arrow_forward_ios</mat-icon>
+            <mat-icon *ngIf="!hideRightArrow">arrow_forward_ios</mat-icon>
         </div>
     </div>
     <div class="photo-margin-bottom"></div>
