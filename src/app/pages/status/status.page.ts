@@ -20,6 +20,8 @@ import { ReportData } from 'src/app/dialogs/report-dialog/report-data';
 import { ReportsService } from 'src/app/services/http/reports.service';
 import { GalleryItem, ImageItem } from 'ng-gallery';
 import { ContextStatusesService } from 'src/app/services/common/context-statuses.service';
+import { Role } from 'src/app/models/role';
+import { DeleteStatusDialog } from 'src/app/dialogs/delete-status-dialog/delete-status.dialog';
 
 @Component({
     selector: 'app-status',
@@ -141,12 +143,39 @@ export class StatusPage extends Responsive {
         });
     }
 
+    async onDeleteStatus(): Promise<void> {
+        const dialogRef = this.dialog.open(DeleteStatusDialog, {
+            width: '500px'
+        });
+
+        dialogRef.afterClosed().subscribe(async (result) => {
+            if (result && this.status?.id) {
+                try {
+                    this.statusesService.delete(this.status?.id);
+                    this.messageService.showSuccess('Status has been deleted.');
+                    await this.router.navigate(['/']);
+                } catch (error) {
+                    console.error(error);
+                    this.messageService.showServerError(error);
+                }
+            }
+        });
+    }
+
     isLoggedIn(): Boolean {
         return this.authorizationService.isLoggedIn();
     }
 
     showContextArrows(): boolean {
         return this.contextStatusesService.hasContextStatuses() && !this.isHandset;
+    }
+
+    shoudDisplayDeleteButton(): boolean {
+        return this.isStatusOwner() || this.authorizationService.hasRole(Role.Administrator) || this.authorizationService.hasRole(Role.Moderator);
+    }
+
+    isStatusOwner(): boolean {
+        return this.mainStatus?.user?.id === this.signedInUser?.id;
     }
 
     getAltStatus(index: number): String | undefined {

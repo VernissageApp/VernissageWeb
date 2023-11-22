@@ -84,6 +84,10 @@
                                     <mat-icon>warning</mat-icon>
                                     <span>Report</span>
                                 </button>
+                                <button *ngIf="shoudDisplayDeleteButton()" mat-menu-item (click)="onDeleteStatus()">
+                                    <mat-icon>delete_outline</mat-icon>
+                                    <span>Delete</span>
+                                </button>
                             </mat-menu>
                         </div>
 

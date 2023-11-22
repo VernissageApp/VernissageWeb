@@ -21,6 +21,11 @@ export class StatusesService {
         return await firstValueFrom(event$);
     }
 
+    public async delete(id: string): Promise<void> {
+        const event$ = this.httpClient.delete(this.windowService.apiUrl() + '/api/v1/statuses/' + id);
+        await firstValueFrom(event$);
+    }
+
     public async getAll(minId?: string, maxId?: string, sinceId?: string, limit?: number): Promise<LinkableResult<Status>> {
         const event$ = this.httpClient.get<LinkableResult<Status>>(this.windowService.apiUrl() + `/api/v1/statuses?minId=${minId ?? ''}&maxId=${maxId ?? ''}&sinceId=${sinceId ?? ''}&limit=${limit ?? ''}`);
         return await firstValueFrom(event$);
