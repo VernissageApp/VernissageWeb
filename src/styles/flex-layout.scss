@@ -24,6 +24,11 @@
     }
 }
 
+.flex-spacer {
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+}
+
 // Flex grid.
 .grid { display: grid; }
 

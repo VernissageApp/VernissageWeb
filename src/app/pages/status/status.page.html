@@ -40,9 +40,10 @@
             <mat-card class="flex-grow-2 height-100" appearance="outlined">
                 <mat-card-content>
 
-                    <div class="flex-row flex-responsive flex-space-between">
+                    <div class="flex-row flex-wrap">
+
                         <!-- Actions panel -->
-                        <div *ngIf="isLoggedIn()">
+                        <ng-container *ngIf="isLoggedIn()">
                             <button *ngIf="!mainStatus.reblogged" mat-icon-button class="margin-right-10" color="primary" matTooltip="Boost" matTooltipPosition="above" aria-label="Boost" (click)="reblog()">
                                 <mat-icon>swap_vert</mat-icon>
                             </button>
@@ -89,7 +90,9 @@
                                     <span>Delete</span>
                                 </button>
                             </mat-menu>
-                        </div>
+                        </ng-container>
+
+                        <div class="flex-spacer"></div>
 
                         <!-- Reblog user card -->
                         <app-mini-user-card *ngIf="status?.reblog" [user]="status?.user"></app-mini-user-card>

@@ -108,5 +108,9 @@ export enum EventType {
     ReportsCreate = 'reportsCreate',
     ReportsList = 'reportsList',
     ReportsClose = 'reportsClose',
-    ReportsRestore = 'reportsRestore'
+    ReportsRestore = 'reportsRestore',
+
+    TrendingStatuses = 'trendingStatuses',
+    TrendingUsers = 'trendingUsers',
+    TrendingHashtags = 'trendingHashtags'
 }

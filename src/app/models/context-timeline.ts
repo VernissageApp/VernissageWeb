@@ -2,5 +2,8 @@ export enum ContextTimeline {
     unknown,
     home,
     local,
-    global
+    global,
+    trendingDaily,
+    trendingMonthly,
+    trendingYearly
 }

@@ -4,6 +4,8 @@ import { Status } from 'src/app/models/status';
 import { PersistanceService } from '../persistance/persistance.service';
 import { ContextTimeline } from 'src/app/models/context-timeline';
 import { TimelineService } from '../http/timeline.service';
+import { TrendingService } from '../http/trending.service';
+import { TrendingStatusPeriod } from 'src/app/models/trending-status-period';
 
 @Injectable({
     providedIn: 'root'
@@ -11,7 +13,11 @@ import { TimelineService } from '../http/timeline.service';
 export class ContextStatusesService {
     private statuses?: LinkableResult<Status>;
 
-    constructor(private persistanceService: PersistanceService, private timelineService: TimelineService) {
+    constructor(
+        private persistanceService: PersistanceService,
+        private timelineService: TimelineService,
+        private trendingService: TrendingService
+    ) {
         const statusesFromStorage = this.persistanceService.getJson('statusesContext') as LinkableResult<Status>;
         if (statusesFromStorage) {
             this.statuses = statusesFromStorage;
@@ -116,6 +122,18 @@ export class ContextStatusesService {
 
         if (this.statuses?.context === ContextTimeline.global) {
             return await this.timelineService.public(minId, maxId, undefined, undefined, false);
+        }
+
+        if (this.statuses?.context === ContextTimeline.trendingDaily) {
+            return await this.trendingService.statuses(minId, maxId, undefined, undefined, TrendingStatusPeriod.Daily);
+        }
+
+        if (this.statuses?.context === ContextTimeline.trendingMonthly) {
+            return await this.trendingService.statuses(minId, maxId, undefined, undefined, TrendingStatusPeriod.Monthly);
+        }
+
+        if (this.statuses?.context === ContextTimeline.trendingYearly) {
+            return await this.trendingService.statuses(minId, maxId, undefined, undefined, TrendingStatusPeriod.Yearly);
         }
 
         return null;
