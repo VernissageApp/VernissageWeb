@@ -12,11 +12,11 @@
       </section>
     </div>
 
-    <div *ngIf="trending === 'statuses'" class="flex-row flex-end padding-bottom-10" [ngClass]="{ 'padding-right-30': !isHandset, 'padding-right-10': isHandset }">
+    <div class="flex-row flex-end padding-bottom-10" [ngClass]="{ 'padding-right-30': !isHandset, 'padding-right-10': isHandset }">
       <mat-radio-group [(ngModel)]="period" (ngModelChange)="onSelectionChange()" aria-label="Select an period">
-        <mat-radio-button [disableRipple]="true" [value]="trendingStatusPeriod.Daily">Daily</mat-radio-button>
-        <mat-radio-button [disableRipple]="true" [value]="trendingStatusPeriod.Monthly">Monthly</mat-radio-button>
-        <mat-radio-button [disableRipple]="true" [value]="trendingStatusPeriod.Yearly">Yearly</mat-radio-button>
+        <mat-radio-button [disableRipple]="true" [value]="trendingPeriod.Daily">Daily</mat-radio-button>
+        <mat-radio-button [disableRipple]="true" [value]="trendingPeriod.Monthly">Monthly</mat-radio-button>
+        <mat-radio-button [disableRipple]="true" [value]="trendingPeriod.Yearly">Yearly</mat-radio-button>
       </mat-radio-group>
     </div>
 

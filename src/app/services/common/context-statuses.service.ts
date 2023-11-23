@@ -5,7 +5,7 @@ import { PersistanceService } from '../persistance/persistance.service';
 import { ContextTimeline } from 'src/app/models/context-timeline';
 import { TimelineService } from '../http/timeline.service';
 import { TrendingService } from '../http/trending.service';
-import { TrendingStatusPeriod } from 'src/app/models/trending-status-period';
+import { TrendingPeriod } from 'src/app/models/trending-period';
 
 @Injectable({
     providedIn: 'root'
@@ -125,15 +125,15 @@ export class ContextStatusesService {
         }
 
         if (this.statuses?.context === ContextTimeline.trendingDaily) {
-            return await this.trendingService.statuses(minId, maxId, undefined, undefined, TrendingStatusPeriod.Daily);
+            return await this.trendingService.statuses(minId, maxId, undefined, undefined, TrendingPeriod.Daily);
         }
 
         if (this.statuses?.context === ContextTimeline.trendingMonthly) {
-            return await this.trendingService.statuses(minId, maxId, undefined, undefined, TrendingStatusPeriod.Monthly);
+            return await this.trendingService.statuses(minId, maxId, undefined, undefined, TrendingPeriod.Monthly);
         }
 
         if (this.statuses?.context === ContextTimeline.trendingYearly) {
-            return await this.trendingService.statuses(minId, maxId, undefined, undefined, TrendingStatusPeriod.Yearly);
+            return await this.trendingService.statuses(minId, maxId, undefined, undefined, TrendingPeriod.Yearly);
         }
 
         return null;

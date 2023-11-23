@@ -7,7 +7,7 @@ import { Responsive } from "src/app/common/responsive";
 import { ContextTimeline } from "src/app/models/context-timeline";
 import { LinkableResult } from "src/app/models/linkable-result";
 import { Status } from "src/app/models/status";
-import { TrendingStatusPeriod } from "src/app/models/trending-status-period";
+import { TrendingPeriod } from "src/app/models/trending-period";
 import { LoadingService } from "src/app/services/common/loading.service";
 import { TrendingService } from "src/app/services/http/trending.service";
 
@@ -18,10 +18,10 @@ import { TrendingService } from "src/app/services/http/trending.service";
     animations: fadeInAnimation
 })
 export class TrendingPage extends Responsive {
-    readonly trendingStatusPeriod = TrendingStatusPeriod;
+    readonly trendingPeriod = TrendingPeriod;
 
     statuses?: LinkableResult<Status>;
-    period = TrendingStatusPeriod.Daily;
+    period = TrendingPeriod.Daily;
     trending: String = 'statuses';
     isReady = false;
 
@@ -41,7 +41,7 @@ export class TrendingPage extends Responsive {
 
         this.routeParamsSubscription = this.activatedRoute.queryParams.subscribe(async (params) => {
             this.loadingService.showLoader();
-            this.period = params['period'] as TrendingStatusPeriod ?? TrendingStatusPeriod.Daily;
+            this.period = params['period'] as TrendingPeriod ?? TrendingPeriod.Daily;
             this.trending  = params['trending'] as string ?? 'statuses';
 
             switch(this.trending) {
@@ -78,15 +78,15 @@ export class TrendingPage extends Responsive {
 
     private async loadTrendingStatuses(): Promise<void> {
         switch(this.period) {
-            case TrendingStatusPeriod.Daily:
+            case TrendingPeriod.Daily:
                 this.statuses = await this.trendingService.statuses(undefined, undefined, undefined, undefined, this.period);
                 this.statuses.context = ContextTimeline.trendingDaily;
                 break;
-            case TrendingStatusPeriod.Monthly:
+            case TrendingPeriod.Monthly:
                 this.statuses = await this.trendingService.statuses(undefined, undefined, undefined, undefined, this.period);
                 this.statuses.context = ContextTimeline.trendingMonthly;
                 break;
-            case TrendingStatusPeriod.Yearly:
+            case TrendingPeriod.Yearly:
                 this.statuses = await this.trendingService.statuses(undefined, undefined, undefined, undefined, this.period);
                 this.statuses.context = ContextTimeline.trendingYearly;
                 break;
