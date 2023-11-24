@@ -1,0 +1,21 @@
+<div [ngClass]="{ 'padding-left-30 padding-right-30': !isHandset, 'padding-left-10 padding-right-10': isHandset }">
+    
+    @if (users?.data?.length) {
+        <div *ngFor="let user of users?.data">
+            <app-user-card [user]="user"></app-user-card>
+            <div class="images-container">
+                <ng-container *ngFor="let status of getStatuses(user.userName)">
+                    <a [routerLink]="['/statuses', status.id]" [ariaLabel]="'Status added by: ' + status.user?.userName" (click)="onStatusClick(user.userName)">
+                        <img *ngIf="getMainAttachmentSrc(status)" [src]="getMainAttachmentSrc(status)" />
+                    </a>
+                </ng-container>
+            </div>
+        </div>
+    } @else {
+        <div class="text-muted padding-top-30 width-100 text-center">
+            <h2>
+                Unfortunatelly, there is nothing to see here yet.
+            </h2>
+        </div>
+    }
+</div>

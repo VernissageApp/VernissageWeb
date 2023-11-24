@@ -2,6 +2,7 @@ import { Attachment } from 'src/app/models/attachment';
 import { StatusVisibility } from 'src/app/models/status-visibility';
 import { User } from './user';
 import { Category } from './category';
+import { Hashtag } from './hashtag';
 
 export class Status {
     public id = '';
@@ -27,4 +28,5 @@ export class Status {
     public attachments?: Attachment[];
     public user?: User;
     public category?: Category;
+    public tags?: [Hashtag]
 }

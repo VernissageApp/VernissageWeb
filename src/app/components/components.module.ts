@@ -18,6 +18,8 @@ import { UserCardComponent } from './widgets/user-card/user-card.component';
 import { MiniUserCardComponent } from './widgets/mini-user-card/mini-user-card.component';
 import { CommentReplyComponent } from './widgets/comment-reply/comment-reply.component';
 import { AvatarComponent } from './widgets/avatar/avatar.component';
+import { UsersGalleryComponent } from './widgets/users-gallery/users-gallery.component';
+import { HashtagGalleryComponent } from './widgets/hashtag-gallery/hashtag-gallery.component';
 
 @NgModule({
     declarations: [
@@ -30,7 +32,9 @@ import { AvatarComponent } from './widgets/avatar/avatar.component';
         GalleryComponent,
         MiniUserCardComponent,
         CommentReplyComponent,
-        AvatarComponent
+        AvatarComponent,
+        UsersGalleryComponent,
+        HashtagGalleryComponent
     ],
     imports: [
         BrowserModule,
@@ -62,7 +66,9 @@ import { AvatarComponent } from './widgets/avatar/avatar.component';
         GalleryComponent,
         MiniUserCardComponent,
         CommentReplyComponent,
-        AvatarComponent
+        AvatarComponent,
+        UsersGalleryComponent,
+        HashtagGalleryComponent
     ]
 })
 export class ComponentsModule { }

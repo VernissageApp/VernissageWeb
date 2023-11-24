@@ -1,11 +1,15 @@
-on: push
+on:
+  push:
+    branches:
+      - '!main'
+
 name: Build Angular
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [18.x]
+        node-version: [20.x]
 
     steps:
       - uses: actions/checkout@v1

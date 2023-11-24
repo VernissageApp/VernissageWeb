@@ -1,0 +1,24 @@
+.images-container {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    margin-bottom: 20px;
+
+    img {
+        height: 300px;
+        padding-right: 6px;
+    }
+}
+
+.hashtag-header {
+    font-size: 1.5em;
+    padding-bottom: 20px;
+}
+
+mat-icon {
+    top: 4px;
+    position: relative;
+    transform: scale(1.4);
+    opacity: 0.8;
+}

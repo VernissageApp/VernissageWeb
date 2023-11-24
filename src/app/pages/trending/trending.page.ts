@@ -5,9 +5,11 @@ import { Subscription } from "rxjs";
 import { fadeInAnimation } from "src/app/animations/fade-in.animation";
 import { Responsive } from "src/app/common/responsive";
 import { ContextTimeline } from "src/app/models/context-timeline";
+import { Hashtag } from "src/app/models/hashtag";
 import { LinkableResult } from "src/app/models/linkable-result";
 import { Status } from "src/app/models/status";
 import { TrendingPeriod } from "src/app/models/trending-period";
+import { User } from "src/app/models/user";
 import { LoadingService } from "src/app/services/common/loading.service";
 import { TrendingService } from "src/app/services/http/trending.service";
 
@@ -21,6 +23,9 @@ export class TrendingPage extends Responsive {
     readonly trendingPeriod = TrendingPeriod;
 
     statuses?: LinkableResult<Status>;
+    users?: LinkableResult<User>;
+    hashtags?: LinkableResult<Hashtag>;
+
     period = TrendingPeriod.Daily;
     trending: String = 'statuses';
     isReady = false;
@@ -49,10 +54,10 @@ export class TrendingPage extends Responsive {
                     await this.loadTrendingStatuses();
                     break;
                 case 'users':
-                    this.statuses = new LinkableResult<Status>();
+                    await this.loadTrendingUsers();
                     break;
                 case 'hashtags':
-                    this.statuses = new LinkableResult<Status>();
+                    await this.loadTrendingHashtags();
                     break;
             }
 
@@ -89,6 +94,40 @@ export class TrendingPage extends Responsive {
             case TrendingPeriod.Yearly:
                 this.statuses = await this.trendingService.statuses(undefined, undefined, undefined, undefined, this.period);
                 this.statuses.context = ContextTimeline.trendingYearly;
+                break;
+        }
+    }
+
+    private async loadTrendingUsers(): Promise<void> {
+        switch(this.period) {
+            case TrendingPeriod.Daily:
+                this.users = await this.trendingService.users(undefined, undefined, undefined, undefined, this.period);
+                this.users.context = ContextTimeline.trendingDaily;
+                break;
+            case TrendingPeriod.Monthly:
+                this.users = await this.trendingService.users(undefined, undefined, undefined, undefined, this.period);
+                this.users.context = ContextTimeline.trendingMonthly;
+                break;
+            case TrendingPeriod.Yearly:
+                this.users = await this.trendingService.users(undefined, undefined, undefined, undefined, this.period);
+                this.users.context = ContextTimeline.trendingYearly;
+                break;
+        }
+    }
+
+    private async loadTrendingHashtags(): Promise<void> {
+        switch(this.period) {
+            case TrendingPeriod.Daily:
+                this.hashtags = await this.trendingService.hashtags(undefined, undefined, undefined, undefined, this.period);
+                this.hashtags.context = ContextTimeline.trendingDaily;
+                break;
+            case TrendingPeriod.Monthly:
+                this.hashtags = await this.trendingService.hashtags(undefined, undefined, undefined, undefined, this.period);
+                this.hashtags.context = ContextTimeline.trendingMonthly;
+                break;
+            case TrendingPeriod.Yearly:
+                this.hashtags = await this.trendingService.hashtags(undefined, undefined, undefined, undefined, this.period);
+                this.hashtags.context = ContextTimeline.trendingYearly;
                 break;
         }
     }

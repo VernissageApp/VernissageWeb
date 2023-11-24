@@ -1,11 +1,19 @@
-<div class="gallery-container">
-    <div class="image-gallery">
-        <div class="column" *ngFor="let items of gallery">
-            <div class="image-item" *ngFor="let status of items">
-                <a [routerLink]="['/statuses', status.id]" [ariaLabel]="'Status added by: ' + status.user?.userName">
-                    <img *ngIf="getMainAttachmentSrc(status)" [src]="getMainAttachmentSrc(status)" />
-                </a>
+@if (statuses?.data?.length) {
+    <div class="gallery-container">
+        <div class="image-gallery">
+            <div class="column" *ngFor="let items of gallery">
+                <div class="image-item" *ngFor="let status of items">
+                    <a [routerLink]="['/statuses', status.id]" [ariaLabel]="'Status added by: ' + status.user?.userName">
+                        <img *ngIf="getMainAttachmentSrc(status)" [src]="getMainAttachmentSrc(status)" />
+                    </a>
+                </div>
             </div>
         </div>
     </div>
-</div>
+} @else {
+    <div class="text-muted padding-top-30 width-100 text-center">
+        <h2>
+            Unfortunatelly, there is nothing to see here yet.
+        </h2>
+    </div>
+}

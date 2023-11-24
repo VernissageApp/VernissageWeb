@@ -1,6 +1,6 @@
 <div *ngIf="isReady" @fadeIn>
 
-    <div class="flex-row flex-align-center flex-space-between margin-bottom-10" [ngClass]="{ 'padding-30': !isHandset, 'padding-10': isHandset }">
+    <div class="flex-row flex-align-center flex-space-between margin-bottom-10" [ngClass]="{ 'padding-left-30 padding-right-30 padding-top-30': !isHandset, 'padding-left-10 padding-right-10 padding-top-10': isHandset }">
       <h1>Trending</h1>
 
       <section class="small-button-toggle">
@@ -20,5 +20,7 @@
       </mat-radio-group>
     </div>
 
-    <app-gallery [statuses]="statuses"></app-gallery>
+    <app-gallery *ngIf="trending === 'statuses'" [statuses]="statuses"></app-gallery>
+    <app-users-gallery *ngIf="trending === 'users'" [users]="users"></app-users-gallery>
+    <app-hashtag-gallery *ngIf="trending === 'hashtags'" [hashtags]="hashtags"></app-hashtag-gallery>
 </div>

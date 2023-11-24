@@ -1,15 +1,8 @@
 .gallery-container {
     .image-gallery {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         gap: 6px;
-    }
-
-    .image-gallery .column {
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-        flex: 1;
     }
 
     .image-item img {
