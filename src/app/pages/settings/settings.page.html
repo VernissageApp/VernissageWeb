@@ -65,6 +65,14 @@
                             </mat-form-field>
                         </div>
 
+                        <div class="margin-bottom-20">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Maximum number of invitations per user</mat-label>
+                                <input matInput type="number" name="maximumNumberOfInvitations" #maximumNumberOfInvitations="ngModel" [(ngModel)]="settings.maximumNumberOfInvitations"
+                                    placeholder="Maximum number of invitations" aria-label="Maximum number of invitations" />
+                            </mat-form-field>
+                        </div>
+
                         <mat-divider></mat-divider>
 
                         <div class="margin-bottom-20 margin-top-20">

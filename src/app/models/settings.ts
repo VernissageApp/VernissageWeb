@@ -10,6 +10,7 @@ export class Settings {
     public recaptchaKey = '';
     
     public corsOrigin = '';
+    public maximumNumberOfInvitations = 0;
     
     public emailHostname = '';
     public emailPort = 0;
