@@ -8,6 +8,7 @@ import { AuthorizationService } from '../../../services/authorization/authorizat
 import { Role } from 'src/app/models/role';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Resolution, Responsive } from 'src/app/common/responsive';
+import { NotificationsService } from 'src/app/services/http/notifications.service';
 
 @Component({
     selector: 'app-header',
@@ -17,27 +18,35 @@ import { Resolution, Responsive } from 'src/app/common/responsive';
 export class HeaderComponent extends Responsive {
     readonly resolution = Resolution;
 
+    public notificationCounter = 0;
     public user?: User | null;
     public avatarUrl = "assets/avatar.svg";
     private userChangeSubscription?: Subscription;
+    private notificationChangeSubscription?: Subscription;
 
     constructor(
         private authorizationService: AuthorizationService,
         private instanceService: InstanceService,
+        private notificationsService: NotificationsService,
         private router: Router,
         breakpointObserver: BreakpointObserver) {
             super(breakpointObserver)
     }
 
-    override ngOnInit(): void {
+    override async ngOnInit(): Promise<void> {
         super.ngOnInit();
 
         this.user = this.authorizationService.getUser();
         this.avatarUrl = this.user?.avatarUrl ?? 'assets/avatar.svg';
 
-        this.userChangeSubscription = this.authorizationService.changes.subscribe(user => {
+        this.userChangeSubscription = this.authorizationService.changes.subscribe(async (user) => {
             this.user = user;
             this.avatarUrl = this.user?.avatarUrl ?? 'assets/avatar.svg';
+            await this.loadNotificationCount();
+        });
+
+        this.notificationChangeSubscription = this.notificationsService.changes.subscribe(async (count) => {
+            this.notificationCounter = count;
         });
     }
 
@@ -45,6 +54,7 @@ export class HeaderComponent extends Responsive {
         super.ngOnDestroy();
 
         this.userChangeSubscription?.unsubscribe();
+        this.notificationChangeSubscription?.unsubscribe();
     }
 
     async signOut(): Promise<void> {
@@ -66,5 +76,16 @@ export class HeaderComponent extends Responsive {
 
     isRegistrationByInvitationsOpened(): boolean {
         return this.instanceService.instance?.registrationOpened === false && this.instanceService.instance?.registrationByInvitationsOpened === true;
+    }
+
+    private async loadNotificationCount(): Promise<void> {
+        try {
+            if (this.user) {
+                const notificationCount = await this.notificationsService.count();
+                this.notificationCounter = notificationCount.amount;
+            }
+        } catch(error) {
+            console.error(error);
+        }
     }
 }

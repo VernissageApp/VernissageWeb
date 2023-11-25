@@ -84,7 +84,7 @@ export class StatusPage extends Responsive {
         if (this.status?.id) {
             const previousStatus = await this.contextStatusesService.getPrevious(this.status?.id);
             if (previousStatus) {
-                await this.router.navigate(['/statuses', previousStatus.id]);
+                await this.router.navigate(['/statuses', previousStatus.id], { skipLocationChange: true });
                 this.hideRightArrow = false;
             } else {
                 this.hideLeftArrow = true;
@@ -96,7 +96,7 @@ export class StatusPage extends Responsive {
         if (this.status?.id) {
             const nextStatus = await this.contextStatusesService.getNext(this.status?.id);
             if (nextStatus) {
-                await this.router.navigate(['/statuses', nextStatus.id]);
+                await this.router.navigate(['/statuses', nextStatus.id], { skipLocationChange: true });
                 this.hideLeftArrow = false;
             } else {
                 this.hideRightArrow = true;
@@ -172,6 +172,10 @@ export class StatusPage extends Responsive {
 
     shoudDisplayDeleteButton(): boolean {
         return this.isStatusOwner() || this.authorizationService.hasRole(Role.Administrator) || this.authorizationService.hasRole(Role.Moderator);
+    }
+
+    shoudDisplayFeatureButton(): boolean {
+        return this.authorizationService.hasRole(Role.Administrator) || this.authorizationService.hasRole(Role.Moderator);
     }
 
     isStatusOwner(): boolean {
@@ -290,6 +294,30 @@ export class StatusPage extends Responsive {
             if (this.mainStatus) {
                 this.mainStatus = await this.statusesService.unbookmark(this.mainStatus.id);
                 this.messageService.showSuccess('Status unbookmarked.');
+            }
+        } catch (error) {
+            console.error(error);
+            this.messageService.showServerError(error);
+        }
+    }
+
+    async feature(): Promise<void> {
+        try {
+            if (this.mainStatus) {
+                this.mainStatus = await this.statusesService.feature(this.mainStatus.id);
+                this.messageService.showSuccess('Status featured.');
+            }
+        } catch (error) {
+            console.error(error);
+            this.messageService.showServerError(error);
+        }
+    }
+
+    async unfeature(): Promise<void> {
+        try {
+            if (this.mainStatus) {
+                this.mainStatus = await this.statusesService.unfeature(this.mainStatus.id);
+                this.messageService.showSuccess('Status unfeatured.');
             }
         } catch (error) {
             console.error(error);

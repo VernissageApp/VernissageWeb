@@ -36,6 +36,12 @@ export class NotificationsPage extends Responsive {
 
         this.loadingService.showLoader();
         await this.onLoadMore();
+
+        if (this.notifications?.data.length) {
+            await this.notificationsService.marker(this.notifications.data[0].id);
+            this.notificationsService.changes.next(0);
+        }
+
         this.isReady = true;
         this.loadingService.hideLoader();
     }

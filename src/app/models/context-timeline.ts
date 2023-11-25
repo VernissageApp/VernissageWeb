@@ -5,5 +5,6 @@ export enum ContextTimeline {
     global,
     trendingDaily,
     trendingMonthly,
-    trendingYearly
+    trendingYearly,
+    editors
 }

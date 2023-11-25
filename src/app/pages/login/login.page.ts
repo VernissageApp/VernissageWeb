@@ -5,11 +5,10 @@ import { Login } from 'src/app/models/login';
 import { LoginMode } from 'src/app/models/login-mode';
 import { AccountService } from 'src/app/services/http/account.service';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
-import { DirtyErrorStateMatcher } from 'src/app/common/DirtyErrorStateMatcher';
+import { DirtyErrorStateMatcher } from 'src/app/common/dirty-error-state-matcher';
 import { AuthClientsService } from 'src/app/services/http/auth-clients.service';
 import { AuthClient } from 'src/app/models/auth-client';
 import { InstanceService } from 'src/app/services/http/instance.service';
-import { environment } from 'src/environments/environment';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { WindowService } from 'src/app/services/common/window.service';
 

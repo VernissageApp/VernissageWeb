@@ -88,9 +88,14 @@ export enum EventType {
     StatusesUnfavourite = 'statusesUnfavourite',
     StatusesBookmark = 'statusesBookmark',
     StatusesUnbookmark = 'statusesUnbookmark',
+    StatusesFeature = 'statusesFeature',
+    StatusesUnfeature = 'statusesUnfeature',
     StatusesContext = 'statusesContext',
     
     TimelinesPublic = 'timelinesPublic',
+    TimelinesCategories = 'timelinesCategories',
+    TimelinesHashtags = 'timelinesHashtags',
+    TimelinesFeatured = 'timelinesFeatured',
     TimelinesHome = 'timelinesHome',
     
     FollowRequestList = 'followRequestList',
@@ -98,6 +103,9 @@ export enum EventType {
     FollowRequestReject = 'followRequestReject',
     
     NotificationsList = 'notificationsList',
+    NotificationsCount = 'notificationsCount',
+    NotificationsUpdateMarker = 'notificationsUpdateMarker',
+
     Relationships = 'relationships',
     Search = 'search',
 

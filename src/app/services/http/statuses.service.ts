@@ -66,6 +66,16 @@ export class StatusesService {
         return await firstValueFrom(event$);
     }
 
+    public async feature(id: string): Promise<Status> {
+        const event$ = this.httpClient.post<Status>(this.windowService.apiUrl() + '/api/v1/statuses/' + id + '/feature', null);
+        return await firstValueFrom(event$);
+    }
+
+    public async unfeature(id: string): Promise<Status> {
+        const event$ = this.httpClient.post<Status>(this.windowService.apiUrl() + '/api/v1/statuses/' + id + '/unfeature', null);
+        return await firstValueFrom(event$);
+    }
+
     public async context(id: string): Promise<StatusContext> {
         const event$ = this.httpClient.get<StatusContext>(this.windowService.apiUrl() + '/api/v1/statuses/' + id + '/context');
         return await firstValueFrom(event$);

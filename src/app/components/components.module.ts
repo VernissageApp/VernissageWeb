@@ -20,6 +20,7 @@ import { CommentReplyComponent } from './widgets/comment-reply/comment-reply.com
 import { AvatarComponent } from './widgets/avatar/avatar.component';
 import { UsersGalleryComponent } from './widgets/users-gallery/users-gallery.component';
 import { HashtagGalleryComponent } from './widgets/hashtag-gallery/hashtag-gallery.component';
+import { CategoryGalleryComponent } from './widgets/category-gallery/category-gallery.component';
 
 @NgModule({
     declarations: [
@@ -34,7 +35,8 @@ import { HashtagGalleryComponent } from './widgets/hashtag-gallery/hashtag-galle
         CommentReplyComponent,
         AvatarComponent,
         UsersGalleryComponent,
-        HashtagGalleryComponent
+        HashtagGalleryComponent,
+        CategoryGalleryComponent
     ],
     imports: [
         BrowserModule,
@@ -68,7 +70,8 @@ import { HashtagGalleryComponent } from './widgets/hashtag-gallery/hashtag-galle
         CommentReplyComponent,
         AvatarComponent,
         UsersGalleryComponent,
-        HashtagGalleryComponent
+        HashtagGalleryComponent,
+        CategoryGalleryComponent
     ]
 })
 export class ComponentsModule { }

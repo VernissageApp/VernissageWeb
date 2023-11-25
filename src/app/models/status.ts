@@ -23,6 +23,7 @@ export class Status {
     public favourited = false;
     public reblogged = false;
     public bookmarked = false;
+    public featured = false;
 
     public reblog?: Status;
     public attachments?: Attachment[];

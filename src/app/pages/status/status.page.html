@@ -68,6 +68,16 @@
                                 <mat-icon>bookmark</mat-icon>
                             </button>
 
+                            @if (shoudDisplayFeatureButton()) {
+                                <button *ngIf="!mainStatus.featured" mat-icon-button class="margin-right-10" color="primary" matTooltip="Feature" matTooltipPosition="above" aria-label="Feature" (click)="feature()">
+                                    <mat-icon>brightness_low</mat-icon>
+                                </button>
+
+                                <button *ngIf="mainStatus.featured" mat-icon-button class="margin-right-10" color="primary" matTooltip="Unfeature" matTooltipPosition="above" aria-label="Unfeature" (click)="unfeature()">
+                                    <mat-icon>brightness_high</mat-icon>
+                                </button>
+                            }
+
                             <button mat-icon-button [matMenuTriggerFor]="menu" class="margin-right-10" color="primary" aria-label="More options">
                                 <mat-icon>more_vert</mat-icon>
                             </button>

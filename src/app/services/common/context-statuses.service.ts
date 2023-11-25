@@ -136,6 +136,10 @@ export class ContextStatusesService {
             return await this.trendingService.statuses(minId, maxId, undefined, undefined, TrendingPeriod.Yearly);
         }
 
+        if (this.statuses?.context === ContextTimeline.editors) {
+            return await this.timelineService.featured(minId, maxId, undefined, undefined);
+        }
+
         return null;
     }
 }
