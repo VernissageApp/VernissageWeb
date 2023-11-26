@@ -5,6 +5,7 @@ import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { LinkableResult } from 'src/app/models/linkable-result';
 import { Status } from 'src/app/models/status';
 import { ContextStatusesService } from 'src/app/services/common/context-statuses.service';
+import { Attachment } from 'src/app/models/attachment';
 
 @Component({
     selector: 'app-gallery',
@@ -28,8 +29,10 @@ export class GalleryComponent implements OnInit, OnChanges {
 
     ngOnInit(): void {
         this.breakpointSubscription = this.breakpointObserver.observe([
-            Breakpoints.Handset
+            Breakpoints.XSmall, Breakpoints.Small
         ]).subscribe(result => {
+            console.log('rrrrr');
+
             if (result.matches) {
                 this.isHandset = true;
                 this.columns = 1;
@@ -68,16 +71,26 @@ export class GalleryComponent implements OnInit, OnChanges {
     }
 
     getMainAttachmentSrc(status: Status): string {
+        const mainAttachment = this.getMainAttachment(status);
+        return mainAttachment?.smallFile?.url ?? '';
+    }
+
+    getMainAttachmentBlurhash(status: Status): string {
+        const mainAttachment = this.getMainAttachment(status);
+        return mainAttachment?.blurhash ?? 'LEHV6nWB2yk8pyo0adR*.7kCMdnj';
+    }
+
+    private getMainAttachment(status: Status): Attachment | null {
         const mainStatus = status.reblog ?? status;
 
         if (!mainStatus.attachments) {
-            return '';
+            return null;
         }
     
         if (mainStatus.attachments?.length === 0) {
-            return '';
+            return null;
         }
     
-        return mainStatus.attachments[0].smallFile?.url ?? '';
+        return mainStatus.attachments[0]
     }
 }

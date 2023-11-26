@@ -3,13 +3,14 @@ import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { Status } from 'src/app/models/status';
 import { TimelineService } from 'src/app/services/http/timeline.service';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
-import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { ActivatedRoute, NavigationEnd, NavigationExtras, Router } from '@angular/router';
+import { Subscription, filter } from 'rxjs';
 import { LoadingService } from 'src/app/services/common/loading.service';
 import { Responsive } from 'src/app/common/responsive';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { LinkableResult } from 'src/app/models/linkable-result';
 import { ContextTimeline } from 'src/app/models/context-timeline';
+import { ContextStatusesService } from 'src/app/services/common/context-statuses.service';
 
 @Component({
     selector: 'app-home',
@@ -23,9 +24,11 @@ export class HomePage extends Responsive {
     isReady = false;
 
     routeParamsSubscription?: Subscription;
+    routeNavigationEndSubscription?: Subscription;
 
     constructor(
         private authorizationService: AuthorizationService,
+        private contextStatusesService: ContextStatusesService,
         private timelineService: TimelineService,
         private loadingService: LoadingService,
         private router: Router,
@@ -37,7 +40,18 @@ export class HomePage extends Responsive {
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
 
+        this.routeNavigationEndSubscription = this.router.events
+            .pipe(filter(event => event instanceof NavigationEnd))  
+            .subscribe(async (event) => {
+                const navigationEndEvent = event as NavigationEnd;
+                if (navigationEndEvent.urlAfterRedirects === '/home') {
+                    this.contextStatusesService.setContextStatuses(this.statuses);
+                }
+            });
+
         this.routeParamsSubscription = this.activatedRoute.queryParams.subscribe(async (params) => {
+            console.log('this.activatedRoute.queryParams.subscribe');
+
             this.loadingService.showLoader();
             const pageType = params['t'] as string;
 
@@ -74,6 +88,7 @@ export class HomePage extends Responsive {
         super.ngOnDestroy();
 
         this.routeParamsSubscription?.unsubscribe();
+        this.routeNavigationEndSubscription?.unsubscribe();
     }
 
     onTimelineChange(): void {

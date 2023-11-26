@@ -5,7 +5,12 @@
     white-space: nowrap;
     margin-bottom: 20px;
 
-    img {
+    .image {
+        height: 300px;
+        padding-right: 6px;
+    }
+
+    .blurhash {
         height: 300px;
         padding-right: 6px;
     }

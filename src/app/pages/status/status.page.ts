@@ -22,6 +22,7 @@ import { GalleryItem, ImageItem } from 'ng-gallery';
 import { ContextStatusesService } from 'src/app/services/common/context-statuses.service';
 import { Role } from 'src/app/models/role';
 import { DeleteStatusDialog } from 'src/app/dialogs/delete-status-dialog/delete-status.dialog';
+import { PersistanceService } from 'src/app/services/persistance/persistance.service';
 
 @Component({
     selector: 'app-status',
@@ -46,6 +47,7 @@ export class StatusPage extends Responsive {
     currentIndex = 0;
     hideLeftArrow = false;
     hideRightArrow = false;
+    showAlternativeText = false;
 
     constructor(
         private statusesService: StatusesService,
@@ -53,6 +55,7 @@ export class StatusPage extends Responsive {
         private authorizationService: AuthorizationService,
         private reportsService: ReportsService,
         private contextStatusesService: ContextStatusesService,
+        private persistanceService: PersistanceService,
         private activatedRoute: ActivatedRoute,
         private router: Router,
         private dialog: MatDialog,
@@ -63,6 +66,11 @@ export class StatusPage extends Responsive {
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
         this.isReady = false;
+
+        const showAlternativeTextString = this.persistanceService.get('showAlternativeText');
+        if (showAlternativeTextString === 'true') {
+            this.showAlternativeText = true;
+        }
 
         this.routeParamsSubscription = this.activatedRoute.params.subscribe(async params => {
             const statusId = params['id'] as string;

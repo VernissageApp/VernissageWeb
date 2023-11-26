@@ -5,15 +5,17 @@
         gap: 6px;
     }
 
-    .image-item img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
+    .image-item {
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
-    @media only screen and (min-width: 768px) {
-        .image-gallery {
-            flex-direction: row;
+        app-blurhash-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
     }
 }

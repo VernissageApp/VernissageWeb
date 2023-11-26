@@ -115,7 +115,7 @@
                     <div class="note margin-top-10 margin-bottom-20" [innerHTML]="mainStatus.noteHtml"></div>
 
                     <!-- Alt text -->
-                    <div *ngIf="getAltStatus(currentIndex)" class="flex-row alt margin-bottom-10">
+                    <div *ngIf="showAlternativeText && getAltStatus(currentIndex)" class="flex-row alt margin-bottom-10">
                         <div>
                             <mat-icon class="margin-right-20" inline="true" matTooltip="Alt">remove_red_eye</mat-icon>
                         </div>

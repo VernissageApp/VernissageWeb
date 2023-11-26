@@ -2,6 +2,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { Responsive } from 'src/app/common/responsive';
+import { Attachment } from 'src/app/models/attachment';
 import { LinkableResult } from 'src/app/models/linkable-result';
 import { Status } from 'src/app/models/status';
 import { User } from 'src/app/models/user';
@@ -40,17 +41,13 @@ export class UsersGalleryComponent extends Responsive implements OnChanges {
     }
 
     getMainAttachmentSrc(status: Status): string {
-        const mainStatus = status.reblog ?? status;
+        const mainAttachment = this.getMainAttachment(status);
+        return mainAttachment?.smallFile?.url ?? '';
+    }
 
-        if (!mainStatus.attachments) {
-            return '';
-        }
-    
-        if (mainStatus.attachments?.length === 0) {
-            return '';
-        }
-    
-        return mainStatus.attachments[0].smallFile?.url ?? '';
+    getMainAttachmentBlurhash(status: Status): string {
+        const mainAttachment = this.getMainAttachment(status);
+        return mainAttachment?.blurhash ?? 'LEHV6nWB2yk8pyo0adR*.7kCMdnj';
     }
 
     onStatusClick(userName: string | undefined): void {
@@ -77,5 +74,19 @@ export class UsersGalleryComponent extends Responsive implements OnChanges {
                 this.userStatuses.set(user.userName, statuses);
             }
         }
+    }
+
+    private getMainAttachment(status: Status): Attachment | null {
+        const mainStatus = status.reblog ?? status;
+
+        if (!mainStatus.attachments) {
+            return null;
+        }
+    
+        if (mainStatus.attachments?.length === 0) {
+            return null;
+        }
+    
+        return mainStatus.attachments[0]
     }
 }

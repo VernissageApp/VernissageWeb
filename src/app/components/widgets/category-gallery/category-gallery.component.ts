@@ -2,6 +2,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, Input } from '@angular/core';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { Responsive } from 'src/app/common/responsive';
+import { Attachment } from 'src/app/models/attachment';
 import { Category } from 'src/app/models/category';
 import { LinkableResult } from 'src/app/models/linkable-result';
 import { Status } from 'src/app/models/status';
@@ -34,17 +35,13 @@ export class CategoryGalleryComponent extends Responsive {
     }
 
     getMainAttachmentSrc(status: Status): string {
-        const mainStatus = status.reblog ?? status;
+        const mainAttachment = this.getMainAttachment(status);
+        return mainAttachment?.smallFile?.url ?? '';
+    }
 
-        if (!mainStatus.attachments) {
-            return '';
-        }
-    
-        if (mainStatus.attachments?.length === 0) {
-            return '';
-        }
-    
-        return mainStatus.attachments[0].smallFile?.url ?? '';
+    getMainAttachmentBlurhash(status: Status): string {
+        const mainAttachment = this.getMainAttachment(status);
+        return mainAttachment?.blurhash ?? 'LEHV6nWB2yk8pyo0adR*.7kCMdnj';
     }
 
     onStatusClick(hashtag: string | undefined): void {
@@ -58,5 +55,19 @@ export class CategoryGalleryComponent extends Responsive {
         }
 
         return this.categoryStatuses?.get(category) ?? undefined;
+    }
+
+    private getMainAttachment(status: Status): Attachment | null {
+        const mainStatus = status.reblog ?? status;
+
+        if (!mainStatus.attachments) {
+            return null;
+        }
+    
+        if (mainStatus.attachments?.length === 0) {
+            return null;
+        }
+    
+        return mainStatus.attachments[0]
     }
 }

@@ -2,7 +2,6 @@ import { Component, Inject, Renderer2 } from '@angular/core';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { EventType } from 'src/app/models/event-type';
-import { LoadingService } from 'src/app/services/common/loading.service';
 import { Responsive } from 'src/app/common/responsive';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { DOCUMENT } from '@angular/common';
@@ -30,8 +29,6 @@ export class PreferencesPage extends Responsive {
 
     constructor(
         @Inject(DOCUMENT) private document: Document,
-        private messageService: MessagesService,
-        private loadingService: LoadingService,
         private persistanceService: PersistanceService,
         private renderer: Renderer2,
         breakpointObserver: BreakpointObserver) {
@@ -51,22 +48,17 @@ export class PreferencesPage extends Responsive {
             this.isCircleAvatar = false;
         }
 
-        this.loadingService.showLoader();
-        // this.settings = await this.settingsService.get();
-        this.isReady = true;
-        this.loadingService.hideLoader();
-    }
-
-    async onSubmit(): Promise<void> {
-        try {
-            if (this.preferences) {
-                // await this.settingsService.put(this.settings);
-                this.messageService.showSuccess('Settings was saved.');
-            }
-        } catch (error) {
-            console.error(error);
-            this.messageService.showServerError(error);
+        const alwaysShowNSFWString = this.persistanceService.get('alwaysShowNSFW');
+        if (alwaysShowNSFWString === 'true') {
+            this.alwaysShowNSFW = true;
         }
+
+        const showAlternativeTextString = this.persistanceService.get('showAlternativeText');
+        if (showAlternativeTextString === 'true') {
+            this.showAlternativeText = true;
+        }
+
+        this.isReady = true;
     }
 
     onThemeChange(): void {
@@ -84,6 +76,22 @@ export class PreferencesPage extends Responsive {
             this.persistanceService.set('avatar', 'circle');
         } else {
             this.persistanceService.set('avatar', 'rounded');
+        }
+    }
+
+    onAlwaysShowNSFWChange(): void {
+        if (this.alwaysShowNSFW) {
+            this.persistanceService.set('alwaysShowNSFW', 'true');
+        } else {
+            this.persistanceService.set('alwaysShowNSFW', 'false');
+        }
+    }
+
+    onShowAlternativeTextChange(): void {
+        if (this.showAlternativeText) {
+            this.persistanceService.set('showAlternativeText', 'true');
+        } else {
+            this.persistanceService.set('showAlternativeText', 'false');
         }
     }
 }
