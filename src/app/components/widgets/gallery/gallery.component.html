@@ -3,9 +3,9 @@
         <div class="image-gallery">
             <div class="column" *ngFor="let items of gallery">
                 <div class="image-item" *ngFor="let status of items">
-                    <a [routerLink]="['/statuses', status.id]" [ariaLabel]="'Status added by: ' + status.user?.userName">
-                        @if (status.sensitive) {
-                            <app-blurhash-image [horizontal]="false" [imageSrc]="getMainAttachmentSrc(status)" [blurhash]="getMainAttachmentBlurhash(status)" [text]="status.contentWarning"></app-blurhash-image>
+                    <a [routerLink]="['/statuses', status.id]" [ariaLabel]="'Status added by: ' + getMainStatus(status).user?.userName">
+                        @if (getMainStatus(status).sensitive) {
+                            <app-blurhash-image [horizontal]="false" [imageSrc]="getMainAttachmentSrc(status)" [blurhash]="getMainAttachmentBlurhash(status)" [text]="getMainStatus(status).contentWarning"></app-blurhash-image>
                         } @else {
                             <img *ngIf="getMainAttachmentSrc(status)" [src]="getMainAttachmentSrc(status)" />
                         }

@@ -40,6 +40,10 @@ export class HashtagGalleryComponent extends Responsive implements OnChanges {
         return this.getLinkableStatuses(userName)?.data ?? [];
     }
 
+    getMainStatus(status: Status): Status {
+        return status.reblog ?? status;
+    }
+
     getMainAttachmentSrc(status: Status): string {
         const mainAttachment = this.getMainAttachment(status);
         return mainAttachment?.smallFile?.url ?? '';

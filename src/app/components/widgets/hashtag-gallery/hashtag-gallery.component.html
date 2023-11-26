@@ -9,10 +9,10 @@
             <div class="images-container">
                 <div class="flex-row">
                     <ng-container *ngFor="let status of getStatuses(hashtag.name)">
-                        <a [routerLink]="['/statuses', status.id]" [ariaLabel]="'Status added by: ' + status.user?.userName" (click)="onStatusClick(hashtag.name)">
-                            @if (status.sensitive) {
+                        <a [routerLink]="['/statuses', status.id]" [ariaLabel]="'Status added by: ' + getMainStatus(status).user?.userName" (click)="onStatusClick(hashtag.name)">
+                            @if (getMainStatus(status).sensitive) {
                                 <div class="blurhash">
-                                    <app-blurhash-image [horizontal]="true" [imageSrc]="getMainAttachmentSrc(status)" [blurhash]="getMainAttachmentBlurhash(status)" [text]="status.contentWarning"></app-blurhash-image>
+                                    <app-blurhash-image [horizontal]="true" [imageSrc]="getMainAttachmentSrc(status)" [blurhash]="getMainAttachmentBlurhash(status)" [text]="getMainStatus(status).contentWarning"></app-blurhash-image>
                                 </div>
                             } @else {
                                 <img class="image" *ngIf="getMainAttachmentSrc(status)" [src]="getMainAttachmentSrc(status)" />

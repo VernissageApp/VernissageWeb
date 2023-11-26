@@ -45,6 +45,10 @@ export class UsersGalleryComponent extends Responsive implements OnChanges {
         return mainAttachment?.smallFile?.url ?? '';
     }
 
+    getMainStatus(status: Status): Status {
+        return status.reblog ?? status;
+    }
+
     getMainAttachmentBlurhash(status: Status): string {
         const mainAttachment = this.getMainAttachment(status);
         return mainAttachment?.blurhash ?? 'LEHV6nWB2yk8pyo0adR*.7kCMdnj';

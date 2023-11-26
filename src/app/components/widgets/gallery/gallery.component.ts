@@ -70,6 +70,10 @@ export class GalleryComponent implements OnInit, OnChanges {
         }
     }
 
+    getMainStatus(status: Status): Status {
+        return status.reblog ?? status;
+    }
+
     getMainAttachmentSrc(status: Status): string {
         const mainAttachment = this.getMainAttachment(status);
         return mainAttachment?.smallFile?.url ?? '';

@@ -7,7 +7,6 @@ import { Category } from 'src/app/models/category';
 import { LinkableResult } from 'src/app/models/linkable-result';
 import { Status } from 'src/app/models/status';
 import { ContextStatusesService } from 'src/app/services/common/context-statuses.service';
-import { TimelineService } from 'src/app/services/http/timeline.service';
 
 @Component({
     selector: 'app-category-gallery',
@@ -20,7 +19,6 @@ export class CategoryGalleryComponent extends Responsive {
     @Input() categoryStatuses?: Map<string, LinkableResult<Status>>;
 
     constructor(
-        private timelineService: TimelineService,
         private contextStatusesService: ContextStatusesService,
         breakpointObserver: BreakpointObserver) {
             super(breakpointObserver);
@@ -32,6 +30,10 @@ export class CategoryGalleryComponent extends Responsive {
         }
 
         return this.getLinkableStatuses(userName)?.data ?? [];
+    }
+
+    getMainStatus(status: Status): Status {
+        return status.reblog ?? status;
     }
 
     getMainAttachmentSrc(status: Status): string {
