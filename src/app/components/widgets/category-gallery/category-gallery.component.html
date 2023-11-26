@@ -1,33 +1,30 @@
-<div [ngClass]="{ 'padding-left-30 padding-right-30': !isHandset, 'padding-left-10 padding-right-10': isHandset }">
-    
-    @if (categories?.length) {
-        <div *ngFor="let category of categories">
-            <div class="hashtag-header">
-                <a [routerLink]="['/category', category.name]">
-                    <mat-icon>loyalty</mat-icon> {{ category.name }}
-                </a>
-            </div>
-            <div class="images-container">
-                <div class="flex-row">
-                    <ng-container *ngFor="let status of getStatuses(category.name)">
-                        <a [routerLink]="['/statuses', status.id]" [ariaLabel]="'Status added by: ' + status.user?.userName" (click)="onStatusClick(category.name)">
-                            @if (status.sensitive) {
-                                <div class="blurhash">
-                                    <app-blurhash-image [horizontal]="true" [imageSrc]="getMainAttachmentSrc(status)" [blurhash]="getMainAttachmentBlurhash(status)" [text]="status.contentWarning"></app-blurhash-image>
-                                </div>
-                            } @else {
-                                <img class="image" *ngIf="getMainAttachmentSrc(status)" [src]="getMainAttachmentSrc(status)" />
-                            }
-                        </a>
-                    </ng-container>
-                </div>
+@if (categories?.length) {
+    <div *ngFor="let category of categories">
+        <div class="hashtag-header">
+            <a [routerLink]="['/category', category.name]">
+                <mat-icon>loyalty</mat-icon> {{ category.name }}
+            </a>
+        </div>
+        <div class="images-container">
+            <div class="flex-row">
+                <ng-container *ngFor="let status of getStatuses(category.name)">
+                    <a [routerLink]="['/statuses', status.id]" [ariaLabel]="'Status added by: ' + status.user?.userName" (click)="onStatusClick(category.name)">
+                        @if (status.sensitive) {
+                            <div class="blurhash">
+                                <app-blurhash-image [horizontal]="true" [imageSrc]="getMainAttachmentSrc(status)" [blurhash]="getMainAttachmentBlurhash(status)" [text]="status.contentWarning"></app-blurhash-image>
+                            </div>
+                        } @else {
+                            <img class="image" *ngIf="getMainAttachmentSrc(status)" [src]="getMainAttachmentSrc(status)" />
+                        }
+                    </a>
+                </ng-container>
             </div>
         </div>
-    } @else {
-        <div class="text-muted padding-top-30 width-100 text-center">
-            <h2>
-                Unfortunatelly, there is nothing to see here yet.
-            </h2>
-        </div>
-    }
-</div>
+    </div>
+} @else {
+    <div class="text-muted padding-top-30 width-100 text-center">
+        <h2>
+            Unfortunatelly, there is nothing to see here yet.
+        </h2>
+    </div>
+}

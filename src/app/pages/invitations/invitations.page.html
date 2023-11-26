@@ -18,7 +18,11 @@
                         <button mat-icon-button  color="primary" matTooltip="Copy" matTooltipPosition="above" aria-label="Copy" (click)="copy(element.code)">
                             <mat-icon>file_copy</mat-icon>
                         </button>
-                        <span>{{ element.code }}</span>
+                        @if (!element.invited) {
+                            <span>{{ element.code }}</span>
+                        } @else {
+                            <span><s>{{ element.code }}</s></span>
+                        }
                     </td>
                   </ng-container>
 

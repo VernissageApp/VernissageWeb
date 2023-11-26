@@ -1,5 +1,4 @@
 <div [ngClass]="{ 'padding-left-30 padding-right-30': !isHandset, 'padding-left-10 padding-right-10': isHandset }">
-    
     @if (users?.data?.length) {
         <div *ngFor="let user of users?.data">
             <app-user-card [user]="user"></app-user-card>
