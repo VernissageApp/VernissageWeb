@@ -1,12 +1,12 @@
-<div @fadeIn class="padding-30">
+<div @fadeIn [ngClass]="{ 'padding-30': !isHandset, 'padding-10': isHandset }">
     <h1>Upload a photos</h1>
 
-    <div class="flex-row flex-stretch">
-        <div>
+    <div class="flex-row flex-responsive flex-stretch">
+        <div class="padding-bottom-10">
             <div class="flex-row flex-wrap gap-10">
-                <img *ngFor="let photo of photos; let i = index;" (click)="selectedIndex = i" [src]="photo.photoSrc" alt="Uploaded photo" [ngClass]="{ 'selected': selectedIndex === i }" class="photo-thumbnail" />
+                <img *ngFor="let photo of photos; let i = index;" (click)="selectedIndex = i" [src]="photo.photoSrc" alt="Uploaded photo" [ngClass]="{ 'selected': selectedIndex === i, 'small': isHandset }" class="photo-thumbnail" />
 
-                <div class="dropzone" (click)="photoFileUpload.click()">
+                <div class="dropzone" [ngClass]="{ 'small': isHandset }" (click)="photoFileUpload.click()">
                     <div class="plus">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M20.889 10.889H13.111V3.11097C13.111 2.4974 12.6136 2 12 2C11.3864 2 10.889 2.4974 10.889 3.11097V10.889H3.11097C2.4974 10.889 2 11.3864 2 12C2 12.6136 2.4974 13.111 3.11097 13.111H10.889V20.889C10.889 21.5026 11.3864 22 12 22C12.6136 22 13.111 21.5026 13.111 20.889V13.111H20.889C21.5026 13.111 22 12.6136 22 12C22 11.3864 21.5026 10.889 20.889 10.889Z" fill="#0870D1"></path></svg>
                     </div>

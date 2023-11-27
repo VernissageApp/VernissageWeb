@@ -13,6 +13,8 @@ import { StatusesService } from 'src/app/services/http/statuses.service';
 import { fadeInAnimation } from '../../animations/fade-in.animation';
 import { CategoriesService } from 'src/app/services/http/categories.service';
 import { Category } from 'src/app/models/category';
+import { Responsive } from 'src/app/common/responsive';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
     selector: 'app-upload',
@@ -20,7 +22,7 @@ import { Category } from 'src/app/models/category';
     styleUrls: ['./upload.page.scss'],
     animations: fadeInAnimation
 })
-export class UploadPage implements OnInit {
+export class UploadPage extends Responsive {
     readonly StatusVisibility = StatusVisibility;
     categories: Category[] = [];
 
@@ -38,10 +40,13 @@ export class UploadPage implements OnInit {
                 private attachmentsService: AttachmentsService,
                 private categoriesService: CategoriesService,
                 private statusesService: StatusesService,
-                private router: Router) {
+                private router: Router,
+                breakpointObserver: BreakpointObserver) {
+        super(breakpointObserver);
     }
 
-    async ngOnInit(): Promise<void> {
+    override async ngOnInit(): Promise<void> {
+        super.ngOnInit();
         this.categories = await this.categoriesService.all();
     }
 
