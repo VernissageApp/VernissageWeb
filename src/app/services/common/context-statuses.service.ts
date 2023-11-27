@@ -6,6 +6,7 @@ import { ContextTimeline } from 'src/app/models/context-timeline';
 import { TimelineService } from '../http/timeline.service';
 import { TrendingService } from '../http/trending.service';
 import { TrendingPeriod } from 'src/app/models/trending-period';
+import { UsersService } from '../http/users.service';
 
 @Injectable({
     providedIn: 'root'
@@ -16,6 +17,7 @@ export class ContextStatusesService {
     constructor(
         private persistanceService: PersistanceService,
         private timelineService: TimelineService,
+        private usersService: UsersService,
         private trendingService: TrendingService
     ) {
         const statusesFromStorage = this.persistanceService.getJson('statusesContext') as LinkableResult<Status>;
@@ -124,20 +126,32 @@ export class ContextStatusesService {
             return await this.timelineService.public(minId, maxId, undefined, undefined, false);
         }
 
-        if (this.statuses?.context === ContextTimeline.trendingDaily) {
+        if (this.statuses?.context === ContextTimeline.trendingStatusesDaily) {
             return await this.trendingService.statuses(minId, maxId, undefined, undefined, TrendingPeriod.Daily);
         }
 
-        if (this.statuses?.context === ContextTimeline.trendingMonthly) {
+        if (this.statuses?.context === ContextTimeline.trendingStatusesMonthly) {
             return await this.trendingService.statuses(minId, maxId, undefined, undefined, TrendingPeriod.Monthly);
         }
 
-        if (this.statuses?.context === ContextTimeline.trendingYearly) {
+        if (this.statuses?.context === ContextTimeline.trendingStatusesYearly) {
             return await this.trendingService.statuses(minId, maxId, undefined, undefined, TrendingPeriod.Yearly);
         }
 
         if (this.statuses?.context === ContextTimeline.editors) {
             return await this.timelineService.featured(minId, maxId, undefined, undefined);
+        }
+
+        if (this.statuses?.context === ContextTimeline.hashtag && this.statuses.hashtag) {
+            return await this.timelineService.hashtag(this.statuses.hashtag, minId, maxId, undefined, undefined);
+        }
+
+        if (this.statuses?.context === ContextTimeline.category && this.statuses.category) {
+            return await this.timelineService.category(this.statuses.category, minId, maxId, undefined, undefined);
+        }
+
+        if (this.statuses?.context === ContextTimeline.user && this.statuses.user) {
+            let statuses = await this.usersService.statuses(this.statuses.user, minId, maxId, undefined, undefined);
         }
 
         return null;

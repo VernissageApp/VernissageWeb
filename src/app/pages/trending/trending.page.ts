@@ -85,15 +85,15 @@ export class TrendingPage extends Responsive {
         switch(this.period) {
             case TrendingPeriod.Daily:
                 this.statuses = await this.trendingService.statuses(undefined, undefined, undefined, undefined, this.period);
-                this.statuses.context = ContextTimeline.trendingDaily;
+                this.statuses.context = ContextTimeline.trendingStatusesDaily;
                 break;
             case TrendingPeriod.Monthly:
                 this.statuses = await this.trendingService.statuses(undefined, undefined, undefined, undefined, this.period);
-                this.statuses.context = ContextTimeline.trendingMonthly;
+                this.statuses.context = ContextTimeline.trendingStatusesMonthly;
                 break;
             case TrendingPeriod.Yearly:
                 this.statuses = await this.trendingService.statuses(undefined, undefined, undefined, undefined, this.period);
-                this.statuses.context = ContextTimeline.trendingYearly;
+                this.statuses.context = ContextTimeline.trendingStatusesYearly;
                 break;
         }
     }
@@ -102,15 +102,12 @@ export class TrendingPage extends Responsive {
         switch(this.period) {
             case TrendingPeriod.Daily:
                 this.users = await this.trendingService.users(undefined, undefined, undefined, undefined, this.period);
-                this.users.context = ContextTimeline.trendingDaily;
                 break;
             case TrendingPeriod.Monthly:
                 this.users = await this.trendingService.users(undefined, undefined, undefined, undefined, this.period);
-                this.users.context = ContextTimeline.trendingMonthly;
                 break;
             case TrendingPeriod.Yearly:
                 this.users = await this.trendingService.users(undefined, undefined, undefined, undefined, this.period);
-                this.users.context = ContextTimeline.trendingYearly;
                 break;
         }
     }
@@ -119,15 +116,12 @@ export class TrendingPage extends Responsive {
         switch(this.period) {
             case TrendingPeriod.Daily:
                 this.hashtags = await this.trendingService.hashtags(undefined, undefined, undefined, undefined, this.period);
-                this.hashtags.context = ContextTimeline.trendingDaily;
                 break;
             case TrendingPeriod.Monthly:
                 this.hashtags = await this.trendingService.hashtags(undefined, undefined, undefined, undefined, this.period);
-                this.hashtags.context = ContextTimeline.trendingMonthly;
                 break;
             case TrendingPeriod.Yearly:
                 this.hashtags = await this.trendingService.hashtags(undefined, undefined, undefined, undefined, this.period);
-                this.hashtags.context = ContextTimeline.trendingYearly;
                 break;
         }
     }

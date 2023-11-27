@@ -3,6 +3,7 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { Responsive } from 'src/app/common/responsive';
 import { Attachment } from 'src/app/models/attachment';
+import { ContextTimeline } from 'src/app/models/context-timeline';
 import { Hashtag } from 'src/app/models/hashtag';
 import { LinkableResult } from 'src/app/models/linkable-result';
 import { Status } from 'src/app/models/status';
@@ -73,7 +74,10 @@ export class HashtagGalleryComponent extends Responsive implements OnChanges {
         }
 
         for(let hashtag of this.hashtags?.data) {
-            let statuses = await this.timelineService.hashtag(undefined, undefined, undefined, undefined, hashtag.name);
+            let statuses = await this.timelineService.hashtag(hashtag.name, undefined, undefined, undefined, undefined);
+            statuses.context = ContextTimeline.hashtag;
+            statuses.hashtag = hashtag.name;
+
             this.hashtagStatuses.set(hashtag.name, statuses);
         }
     }

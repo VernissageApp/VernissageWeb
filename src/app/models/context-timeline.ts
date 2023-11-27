@@ -3,8 +3,11 @@ export enum ContextTimeline {
     home,
     local,
     global,
-    trendingDaily,
-    trendingMonthly,
-    trendingYearly,
-    editors
+    trendingStatusesDaily,
+    trendingStatusesMonthly,
+    trendingStatusesYearly,
+    editors,
+    category,
+    hashtag,
+    user
 }

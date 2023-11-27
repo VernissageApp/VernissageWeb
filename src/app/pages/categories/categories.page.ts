@@ -5,6 +5,7 @@ import { Subscription } from "rxjs";
 import { fadeInAnimation } from "src/app/animations/fade-in.animation";
 import { Responsive } from "src/app/common/responsive";
 import { Category } from "src/app/models/category";
+import { ContextTimeline } from "src/app/models/context-timeline";
 import { LinkableResult } from "src/app/models/linkable-result";
 import { Status } from "src/app/models/status";
 import { LoadingService } from "src/app/services/common/loading.service";
@@ -42,9 +43,12 @@ export class CategoriesPage extends Responsive {
 
             const categories = await this.categoriesService.all();
             for(let category of categories) {
-                const statuses = await this.timelineService.category(undefined, undefined, undefined, undefined, category.name);
+                const statuses = await this.timelineService.category(category.name, undefined, undefined, undefined, undefined);
+                statuses.context = ContextTimeline.category;
+                statuses.category = category.name;
+
                 if (statuses.data.length) {
-                    this.categoryStatuses.set(category?.name ?? '', statuses);
+                    this.categoryStatuses.set(category.name, statuses);
                     this.categories.push(category);
                 }
             }

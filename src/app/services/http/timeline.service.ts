@@ -28,12 +28,12 @@ export class TimelineService {
         return await firstValueFrom(event$);
     }
 
-    public async hashtag(minId?: string, maxId?: string, sinceId?: string, limit?: number, hashtag?: string, onlyLocal?: boolean): Promise<LinkableResult<Status>> {
+    public async hashtag(hashtag: string, minId?: string, maxId?: string, sinceId?: string, limit?: number, onlyLocal?: boolean): Promise<LinkableResult<Status>> {
         const event$ = this.httpClient.get<LinkableResult<Status>>(this.windowService.apiUrl() +  `/api/v1/timelines/hashtag/${hashtag}?minId=${minId ?? ''}&maxId=${maxId ?? ''}&sinceId=${sinceId ?? ''}&limit=${limit ?? ''}&onlyLocal=${onlyLocal ?? ''}`);
         return await firstValueFrom(event$);
     }
 
-    public async category(minId?: string, maxId?: string, sinceId?: string, limit?: number, category?: string, onlyLocal?: boolean): Promise<LinkableResult<Status>> {
+    public async category(category: string, minId?: string, maxId?: string, sinceId?: string, limit?: number, onlyLocal?: boolean): Promise<LinkableResult<Status>> {
         const event$ = this.httpClient.get<LinkableResult<Status>>(this.windowService.apiUrl() +  `/api/v1/timelines/category/${category}?minId=${minId ?? ''}&maxId=${maxId ?? ''}&sinceId=${sinceId ?? ''}&limit=${limit ?? ''}&onlyLocal=${onlyLocal ?? ''}`);
         return await firstValueFrom(event$);
     }

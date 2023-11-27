@@ -3,6 +3,7 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { Responsive } from 'src/app/common/responsive';
 import { Attachment } from 'src/app/models/attachment';
+import { ContextTimeline } from 'src/app/models/context-timeline';
 import { LinkableResult } from 'src/app/models/linkable-result';
 import { Status } from 'src/app/models/status';
 import { User } from 'src/app/models/user';
@@ -75,6 +76,9 @@ export class UsersGalleryComponent extends Responsive implements OnChanges {
         for(let user of this.users?.data) {
             if (user.userName) {
                 let statuses = await this.usersService.statuses(user.userName);
+                statuses.context = ContextTimeline.user;
+                statuses.user = user.userName;
+
                 this.userStatuses.set(user.userName, statuses);
             }
         }
