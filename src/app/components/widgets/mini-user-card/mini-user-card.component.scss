@@ -1,0 +1,28 @@
+
+.white {
+    a {
+        &:link {
+            color: rgba(255, 255, 255, 0.582);
+            text-decoration: none;
+        }
+
+        &:visited {
+            color: rgba(255, 255, 255, 0.582);
+            text-decoration: none;
+        }
+
+        &:hover {
+            color: rgba(255, 255, 255, 0.582);
+            text-decoration: none;
+        }
+
+        &:active {
+            color: rgba(255, 255, 255, 0.582);
+            text-decoration: none;
+        }
+    }
+}
+
+.username {
+    margin-top: -6px
+}

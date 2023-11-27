@@ -1,24 +1,5 @@
-.blurhash-container {
+.image-container {
     position: relative;
-
-    .blurhash {
-        position: absolute;
-        width: 100%;
-        height: calc(100% - 5px);
-        z-index: 100;
-    }
-
-    .text {
-        position: absolute;
-        top:45%;
-        width: 100%;
-        text-align: center;
-        color: rgb(209, 209, 209);
-        background-color: transparent;
-        font-size: 1.2em;
-        text-shadow: #777777 1px 0 4px;
-        z-index: 101;
-    }
 
     .img-horizontal {
         height: 300px;

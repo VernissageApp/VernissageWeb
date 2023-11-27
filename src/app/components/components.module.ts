@@ -22,6 +22,7 @@ import { UsersGalleryComponent } from './widgets/users-gallery/users-gallery.com
 import { HashtagGalleryComponent } from './widgets/hashtag-gallery/hashtag-gallery.component';
 import { CategoryGalleryComponent } from './widgets/category-gallery/category-gallery.component';
 import { BlurhashImageComponent } from './widgets/blurhash-image/blurhash-image.component';
+import { ImageComponent } from './widgets/image/image.component';
 
 @NgModule({
     declarations: [
@@ -38,7 +39,8 @@ import { BlurhashImageComponent } from './widgets/blurhash-image/blurhash-image.
         UsersGalleryComponent,
         HashtagGalleryComponent,
         CategoryGalleryComponent,
-        BlurhashImageComponent
+        BlurhashImageComponent,
+        ImageComponent
     ],
     imports: [
         BrowserModule,
@@ -74,7 +76,8 @@ import { BlurhashImageComponent } from './widgets/blurhash-image/blurhash-image.
         UsersGalleryComponent,
         HashtagGalleryComponent,
         CategoryGalleryComponent,
-        BlurhashImageComponent
+        BlurhashImageComponent,
+        ImageComponent
     ]
 })
 export class ComponentsModule { }

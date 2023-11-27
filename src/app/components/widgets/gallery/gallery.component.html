@@ -5,9 +5,19 @@
                 <div class="image-item" *ngFor="let status of items">
                     <a [routerLink]="['/statuses', status.id]" [ariaLabel]="'Status added by: ' + getMainStatus(status).user?.userName">
                         @if (getMainStatus(status).sensitive) {
-                            <app-blurhash-image [horizontal]="false" [imageSrc]="getMainAttachmentSrc(status)" [blurhash]="getMainAttachmentBlurhash(status)" [text]="getMainStatus(status).contentWarning"></app-blurhash-image>
+                            <app-blurhash-image
+                                [horizontal]="false"
+                                [imageSrc]="getMainAttachmentSrc(status)"
+                                [blurhash]="getMainAttachmentBlurhash(status)"
+                                [text]="getMainStatus(status).contentWarning"
+                                [user]="getMainStatus(status).user">
+                            </app-blurhash-image>
                         } @else {
-                            <img *ngIf="getMainAttachmentSrc(status)" [src]="getMainAttachmentSrc(status)" />
+                            <app-image
+                                [horizontal]="false" 
+                                [imageSrc]="getMainAttachmentSrc(status)"
+                                [user]="getMainStatus(status).user">
+                            </app-image>
                         }
                     </a>
                 </div>

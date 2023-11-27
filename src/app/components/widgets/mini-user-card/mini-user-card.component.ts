@@ -11,4 +11,7 @@ export class MiniUserCardComponent {
     readonly avatarSize = AvatarSize;
 
     @Input() user?: User;
+    @Input() size: AvatarSize = AvatarSize.small;
+    @Input() showUserName = true;
+    @Input() whiteLink = false;
 }

@@ -5,7 +5,7 @@ import { EventType } from 'src/app/models/event-type';
 import { Responsive } from 'src/app/common/responsive';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { DOCUMENT } from '@angular/common';
-import { PersistanceService } from 'src/app/services/persistance/persistance.service';
+import { PreferencesService } from 'src/app/services/common/preferences.service';
 
 @Component({
     selector: 'app-preferences',
@@ -29,7 +29,7 @@ export class PreferencesPage extends Responsive {
 
     constructor(
         @Inject(DOCUMENT) private document: Document,
-        private persistanceService: PersistanceService,
+        private preferencesService: PreferencesService,
         private renderer: Renderer2,
         breakpointObserver: BreakpointObserver) {
             super(breakpointObserver);
@@ -38,60 +38,40 @@ export class PreferencesPage extends Responsive {
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
 
-        const theme = this.persistanceService.get('theme');
-        if (theme === 'dark') {
-            this.isLightTheme = false;
-        }
-
-        const avatar = this.persistanceService.get('avatar');
-        if (avatar === 'rounded') {
-            this.isCircleAvatar = false;
-        }
-
-        const alwaysShowNSFWString = this.persistanceService.get('alwaysShowNSFW');
-        if (alwaysShowNSFWString === 'true') {
-            this.alwaysShowNSFW = true;
-        }
-
-        const showAlternativeTextString = this.persistanceService.get('showAlternativeText');
-        if (showAlternativeTextString === 'true') {
-            this.showAlternativeText = true;
-        }
+        this.isLightTheme = this.preferencesService.isLightTheme;
+        this.isCircleAvatar = this.preferencesService.isCircleAvatar;
+        this.alwaysShowNSFW = this.preferencesService.alwaysShowNSFW;
+        this.showAlternativeText = this.preferencesService.showAlternativeText;
+        this.showAvatars = this.preferencesService.showAvatars;
+        this.showFavourites = this.preferencesService.showFavourites;
+        this.showAltIcon = this.preferencesService.showAltIcon;
 
         this.isReady = true;
     }
 
     onThemeChange(): void {
+        this.preferencesService.isLightTheme = this.isLightTheme;
+
         if (this.isLightTheme) {
             this.renderer.removeClass(this.document.body, 'dark-theme');
-            this.persistanceService.set('theme', 'light');
         } else {
             this.renderer.addClass(this.document.body, 'dark-theme');
-            this.persistanceService.set('theme', 'dark');
         }
     }
 
     onAvatarChange(): void {
-        if (this.isCircleAvatar) {
-            this.persistanceService.set('avatar', 'circle');
-        } else {
-            this.persistanceService.set('avatar', 'rounded');
-        }
+        this.preferencesService.isCircleAvatar = this.isCircleAvatar;
     }
 
     onAlwaysShowNSFWChange(): void {
-        if (this.alwaysShowNSFW) {
-            this.persistanceService.set('alwaysShowNSFW', 'true');
-        } else {
-            this.persistanceService.set('alwaysShowNSFW', 'false');
-        }
+        this.preferencesService.alwaysShowNSFW = this.alwaysShowNSFW;
     }
 
     onShowAlternativeTextChange(): void {
-        if (this.showAlternativeText) {
-            this.persistanceService.set('showAlternativeText', 'true');
-        } else {
-            this.persistanceService.set('showAlternativeText', 'false');
-        }
+        this.preferencesService.showAlternativeText = this.showAlternativeText;
+    }
+
+    onShowAvatarsChange(): void {
+        this.preferencesService.showAvatars = this.showAvatars;
     }
 }

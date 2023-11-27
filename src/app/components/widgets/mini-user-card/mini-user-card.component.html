@@ -1,8 +1,11 @@
-<div *ngIf="user" class="flex-row gap-8">
+<div *ngIf="user" class="flex-row flex-align-center gap-8">
     <div>
-        <app-avatar [user]="user" [size]="avatarSize.small"></app-avatar>
+        <app-avatar [user]="user" [size]="size"></app-avatar>
     </div>
-    <div>
-        <a [routerLink]="[ '/@' + user.userName ]" class="margin-right-5 fw-400">{{ user.name }}</a><span class="fw-400 fs-90 text-muted">&#64;{{ user.userName }}</span>
+    <div class="username" [ngClass]="{ 'white': whiteLink }">
+        <a [routerLink]="[ '/@' + user.userName ]" class="margin-right-5 fw-400">{{ user.name }}</a>
+        @if (showUserName) {
+            <span class="fw-400 fs-90 text-muted">&#64;{{ user.userName }}</span>
+        }
     </div>
 </div>

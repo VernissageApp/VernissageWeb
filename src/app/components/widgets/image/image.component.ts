@@ -1,25 +1,26 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { AvatarSize } from '../avatar/avatar-size';
 import { User } from 'src/app/models/user';
-import { AvatarSize } from './avatar-size';
 import { PreferencesService } from 'src/app/services/common/preferences.service';
 
 @Component({
-    selector: 'app-avatar',
-    templateUrl: './avatar.component.html',
-    styleUrls: ['./avatar.component.scss']
+    selector: 'app-image',
+    templateUrl: './image.component.html',
+    styleUrls: ['./image.component.scss']
 })
-export class AvatarComponent implements OnInit {
+export class ImageComponent implements OnInit {
     readonly avatarSize = AvatarSize;
 
+    @Input() imageSrc?: string;
     @Input() user?: User;
-    @Input() size: AvatarSize = AvatarSize.huge;
+    @Input() horizontal = true;
 
-    isCircle = false;
+    showAvatar = true;
 
     constructor(private preferencesService: PreferencesService) {
     }
 
     ngOnInit(): void {
-        const avatar = this.preferencesService.isCircleAvatar;
+        this.showAvatar = this.preferencesService.showAvatars;
     }
 }

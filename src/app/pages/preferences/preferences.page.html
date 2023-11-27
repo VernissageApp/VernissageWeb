@@ -55,7 +55,7 @@
                     </div>
 
                     <div class="margin-bottom-20">
-                        <mat-slide-toggle color="warn" name="showAvatars" [(ngModel)]="showAvatars">
+                        <mat-slide-toggle color="warn" name="showAvatars" [(ngModel)]="showAvatars" (ngModelChange)="onShowAvatarsChange()">
                             Show avatars <div class="text-muted fs-90">Avatars will be displayed on timelines.</div>
                         </mat-slide-toggle>
                     </div>

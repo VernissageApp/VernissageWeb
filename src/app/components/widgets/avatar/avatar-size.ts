@@ -1,3 +1,3 @@
 export enum AvatarSize {
-    huge, big, medium, small
+    huge, big, medium, small, verysmall
 }

@@ -1,6 +1,9 @@
 import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { decode } from 'blurhash';
 import { PersistanceService } from 'src/app/services/persistance/persistance.service';
+import { AvatarSize } from '../avatar/avatar-size';
+import { User } from 'src/app/models/user';
+import { PreferencesService } from 'src/app/services/common/preferences.service';
 
 @Component({
     selector: 'app-blurhash-image',
@@ -8,6 +11,9 @@ import { PersistanceService } from 'src/app/services/persistance/persistance.ser
     styleUrls: ['./blurhash-image.component.scss']
 })
 export class BlurhashImageComponent implements AfterViewInit {
+    readonly avatarSize = AvatarSize;
+    
+    @Input() user?: User;
     @Input() imageSrc?: string;
     @Input() blurhash?: string;
     @Input() text?: string;
@@ -17,15 +23,14 @@ export class BlurhashImageComponent implements AfterViewInit {
     @ViewChild('img', { static: false }) readonly img?: ElementRef<HTMLImageElement>;
 
     showBlurhash = true;
+    showAvatar = true;
 
-    constructor(private persistanceService: PersistanceService) {
+    constructor(private preferencesService: PreferencesService) {
     }
 
     ngOnInit(): void {
-        const alwaysShowNSFW = this.persistanceService.get('alwaysShowNSFW');
-        if (alwaysShowNSFW === 'true') {
-            this.showBlurhash = false
-        }
+        this.showBlurhash = !this.preferencesService.alwaysShowNSFW;
+        this.showAvatar = this.preferencesService.showAvatars;
     }
 
     ngAfterViewInit(): void {
