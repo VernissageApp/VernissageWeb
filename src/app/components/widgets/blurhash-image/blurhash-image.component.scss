@@ -42,4 +42,16 @@
         border-radius: 25px;
         z-index: 102;
     }
+
+    .alt {
+        position: absolute;
+        bottom: 10px;
+        right: 4px;
+        background-color: rgba(0, 0, 0, 0.6);
+        padding-left: 10px;
+        padding-right: 10px;
+        border-radius: 25px;
+        color: rgba(255, 255, 255, 0.6);
+        z-index: 103;
+    }
 }

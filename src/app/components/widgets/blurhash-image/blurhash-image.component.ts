@@ -15,6 +15,7 @@ export class BlurhashImageComponent implements AfterViewInit {
     
     @Input() user?: User;
     @Input() imageSrc?: string;
+    @Input() alt?: string;
     @Input() blurhash?: string;
     @Input() text?: string;
     @Input() horizontal = true;
@@ -24,6 +25,7 @@ export class BlurhashImageComponent implements AfterViewInit {
 
     showBlurhash = true;
     showAvatar = true;
+    showAltIcon = false;
 
     constructor(private preferencesService: PreferencesService) {
     }
@@ -31,6 +33,7 @@ export class BlurhashImageComponent implements AfterViewInit {
     ngOnInit(): void {
         this.showBlurhash = !this.preferencesService.alwaysShowNSFW;
         this.showAvatar = this.preferencesService.showAvatars;
+        this.showAltIcon = this.preferencesService.showAltIcon;
     }
 
     ngAfterViewInit(): void {

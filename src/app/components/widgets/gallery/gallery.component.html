@@ -8,6 +8,7 @@
                             <app-blurhash-image
                                 [horizontal]="false"
                                 [imageSrc]="getMainAttachmentSrc(status)"
+                                [alt]="getMainAttachmentAlt(status)"
                                 [blurhash]="getMainAttachmentBlurhash(status)"
                                 [text]="getMainStatus(status).contentWarning"
                                 [user]="getMainStatus(status).user">
@@ -16,6 +17,7 @@
                             <app-image
                                 [horizontal]="false" 
                                 [imageSrc]="getMainAttachmentSrc(status)"
+                                [alt]="getMainAttachmentAlt(status)"
                                 [user]="getMainStatus(status).user">
                             </app-image>
                         }

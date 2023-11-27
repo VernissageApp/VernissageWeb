@@ -74,4 +74,12 @@ export class PreferencesPage extends Responsive {
     onShowAvatarsChange(): void {
         this.preferencesService.showAvatars = this.showAvatars;
     }
+
+    onShowFavouritesChange(): void {
+        this.preferencesService.showFavourites = this.showFavourites;
+    }
+
+    onShowAltIconChange(): void {
+        this.preferencesService.showAltIcon = this.showAltIcon;
+    }
 }

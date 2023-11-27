@@ -61,13 +61,13 @@
                     </div>
 
                     <div class="margin-bottom-20">
-                        <mat-slide-toggle color="warn" name="showFavourites" [(ngModel)]="showFavourites">
+                        <mat-slide-toggle color="warn" name="showFavourites" [(ngModel)]="showFavourites" (ngModelChange)="onShowFavouritesChange()">
                             Show favourites <div class="text-muted fs-90">Favourites will be displayed on timelines.</div>
                         </mat-slide-toggle>
                     </div>
 
                     <div class="margin-bottom-20">
-                        <mat-slide-toggle color="warn" name="showAltIcon" [(ngModel)]="showAltIcon">
+                        <mat-slide-toggle color="warn" name="showAltIcon" [(ngModel)]="showAltIcon" (ngModelChange)="onShowAltIconChange()">
                             Show ALT icon <div class="text-muted fs-90">ALT icon will be displayed on timelines.</div>
                         </mat-slide-toggle>
                     </div>

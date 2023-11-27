@@ -15,6 +15,7 @@
                                     <app-blurhash-image
                                         [horizontal]="true"
                                         [imageSrc]="getMainAttachmentSrc(status)"
+                                        [alt]="getMainAttachmentAlt(status)"
                                         [blurhash]="getMainAttachmentBlurhash(status)"
                                         [text]="getMainStatus(status).contentWarning"
                                         [user]="getMainStatus(status).user">
@@ -25,6 +26,7 @@
                                     <app-image
                                         [horizontal]="true"
                                         [imageSrc]="getMainAttachmentSrc(status)"
+                                        [alt]="getMainAttachmentAlt(status)"
                                         [user]="getMainStatus(status).user">
                                     </app-image>
                                 </div>

@@ -19,7 +19,7 @@ import { TimelineService } from "src/app/services/http/timeline.service";
     animations: fadeInAnimation
 })
 export class CategoriesPage extends Responsive {
-    isReady = true;
+    isReady = false;
 
     categories: Category[] = [];
     categoryStatuses = new Map<string, LinkableResult<Status>>();

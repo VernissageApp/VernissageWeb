@@ -12,15 +12,18 @@ export class ImageComponent implements OnInit {
     readonly avatarSize = AvatarSize;
 
     @Input() imageSrc?: string;
+    @Input() alt?: string;
     @Input() user?: User;
     @Input() horizontal = true;
 
     showAvatar = true;
+    showAltIcon = false;
 
     constructor(private preferencesService: PreferencesService) {
     }
 
     ngOnInit(): void {
         this.showAvatar = this.preferencesService.showAvatars;
+        this.showAltIcon = this.preferencesService.showAltIcon;
     }
 }

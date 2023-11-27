@@ -8,4 +8,8 @@
             <app-mini-user-card [user]="user" [showUserName]="false" [whiteLink]="true" [size]="avatarSize.verysmall"></app-mini-user-card>
         </div>
     }
+
+    @if(showAltIcon && alt) {
+        <div class="alt" [matTooltip]="alt" matTooltipPosition="above">ALT</div>
+    }
 </div>

@@ -11,12 +11,19 @@
                                     <app-blurhash-image
                                         [horizontal]="true"
                                         [imageSrc]="getMainAttachmentSrc(status)"
+                                        [alt]="getMainAttachmentAlt(status)"
                                         [blurhash]="getMainAttachmentBlurhash(status)"
                                         [text]="getMainStatus(status).contentWarning">
                                     </app-blurhash-image>
                                 </div>
                             } @else {
-                                <img class="image" *ngIf="getMainAttachmentSrc(status)" [src]="getMainAttachmentSrc(status)" />
+                                <div class="image">
+                                    <app-image
+                                        [horizontal]="true" 
+                                        [imageSrc]="getMainAttachmentSrc(status)"
+                                        [alt]="getMainAttachmentAlt(status)">
+                                    </app-image>
+                                </div>
                             }
                         </a>
                     </ng-container>

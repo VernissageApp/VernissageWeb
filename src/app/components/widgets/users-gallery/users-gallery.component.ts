@@ -46,6 +46,11 @@ export class UsersGalleryComponent extends Responsive implements OnChanges {
         return mainAttachment?.smallFile?.url ?? '';
     }
 
+    getMainAttachmentAlt(status: Status): string | undefined {
+        const mainAttachment = this.getMainAttachment(status);
+        return mainAttachment?.description;
+    }
+
     getMainStatus(status: Status): Status {
         return status.reblog ?? status;
     }
