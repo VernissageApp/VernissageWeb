@@ -21,11 +21,13 @@
                                     </app-blurhash-image>
                                 </div>
                             } @else {
-                                <app-image
-                                    [horizontal]="true"
-                                    [imageSrc]="getMainAttachmentSrc(status)"
-                                    [user]="getMainStatus(status).user">
-                                </app-image>
+                                <div class="image">
+                                    <app-image
+                                        [horizontal]="true"
+                                        [imageSrc]="getMainAttachmentSrc(status)"
+                                        [user]="getMainStatus(status).user">
+                                    </app-image>
+                                </div>
                             }
                         </a>
                     </ng-container>

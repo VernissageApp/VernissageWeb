@@ -4,18 +4,4 @@
         flex-direction: row;
         gap: 6px;
     }
-
-    .image-item {
-        app-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        app-blurhash-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-    }
 }
