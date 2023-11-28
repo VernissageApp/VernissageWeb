@@ -1,6 +1,6 @@
 <div *ngIf="isReady" @fadeIn>
     <section [ngClass]="{ 'padding-30': !isHandset, 'padding-10': isHandset }">
-        <h1>Editor's choice</h1>
+        <h1><mat-icon>loyalty</mat-icon> {{ category }}</h1>
     </section>
 
     <app-gallery [statuses]="statuses"></app-gallery>

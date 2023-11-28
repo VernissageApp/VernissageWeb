@@ -47,39 +47,56 @@
                     <div></div>
                 </div>
 
-                <mat-card-subtitle>Fields</mat-card-subtitle>
-                <div *ngFor="let field of user.fields; let i = index" class="flex-row flex-responsive flex-stretch gap-16">
-                    <mat-form-field appearance="outline">
-                        <mat-label>Key</mat-label>
-                        <input matInput [name]="'key-' + i" #key="ngModel" [(ngModel)]="field.key" placeholder="Key" aria-label="Key" appMaxLength="500" />
-                        <mat-error *ngIf="key.invalid && key.errors?.appMaxLength">
-                            Too long key.
-                        </mat-error>
-                    </mat-form-field>
-
-                    <mat-form-field appearance="outline">
-                        <mat-label>Value</mat-label>
-                        <input matInput [name]="'value-' + i" #value="ngModel" [(ngModel)]="field.value" placeholder="Value" aria-label="Value" appMaxLength="500" />
-                        <mat-error *ngIf="value.invalid && value.errors?.appMaxLength">
-                            Too long value.
-                        </mat-error>
-                    </mat-form-field>
-
-                    <div class="padding-top-10">
-                        <button mat-stroked-button [disabled]="user.fields?.length === 1" color="primary" type="button" class="margin-right-10" (click)="onDeleteField(field)">Delete</button>
-                    </div>
-                </div>
                 <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
+                    <mat-divider></mat-divider>
                     <div></div>
-                    <div class="text-right">
-                        <button mat-stroked-button color="accent" type="button" (click)="onAddField()">Add</button>
+                </div>
+
+                <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20 padding-top-20">
+                    <div class="flex-row flex-stretch flex-space-between">
+                        <h3>Fields</h3>
+                        <div class="text-right">
+                            <button mat-stroked-button color="accent" type="button" (click)="onAddField()">Add field</button>
+                        </div>
                     </div>
                     <div></div>
+                </div>
+
+                <div *ngFor="let field of user.fields; let i = index">
+
+                    <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Key</mat-label>
+                            <input matInput [name]="'key-' + i" #key="ngModel" [(ngModel)]="field.key" placeholder="Key" aria-label="Key" appMaxLength="500" />
+                            <mat-error *ngIf="key.invalid && key.errors?.appMaxLength">
+                                Too long key.
+                            </mat-error>
+                        </mat-form-field>
+                        <div></div>
+                    </div>
+
+                    <div class="flex-row flex-responsive flex-stretch gap-16">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Value</mat-label>
+                            <input matInput [name]="'value-' + i" #value="ngModel" [(ngModel)]="field.value" placeholder="Value" aria-label="Value" appMaxLength="500" />
+                            <mat-error *ngIf="value.invalid && value.errors?.appMaxLength">
+                                Too long value.
+                            </mat-error>
+                        </mat-form-field>
+                        <div></div>
+                    </div>
+
+                    <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
+                        <div class="text-right">
+                            <button mat-stroked-button color="primary" type="button" (click)="onDeleteField(field)">Delete</button>
+                        </div>
+                        <div></div>
+                    </div>
                 </div>
             </mat-card-content>
 
             <mat-card-actions>
-                <div class="account-actions">
+                <div class="account-actions padding-top-20">
                     <button type="submit" mat-raised-button color="primary" aria-label="Save">Save</button>
                 </div>
             </mat-card-actions>

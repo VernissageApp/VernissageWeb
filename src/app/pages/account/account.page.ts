@@ -220,9 +220,5 @@ export class AccountPage extends Responsive {
         this.user = await this.usersService.profile(this.userName);
         this.avatarSrc = this.user.avatarUrl ?? 'assets/avatar-placeholder.svg';
         this.headerSrc = this.user.headerUrl ?? 'assets/header-placeholder.svg';
-
-        if (this.user.fields?.length === 0) {
-            this.user.fields.push(new FlexiField());
-        }
     }
 }

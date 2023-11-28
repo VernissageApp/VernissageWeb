@@ -12,6 +12,8 @@ import { RelationshipsService } from 'src/app/services/http/relationships.servic
 import { ProfilePageTab } from 'src/app/models/profile-page-tab';
 import { LoadingService } from 'src/app/services/common/loading.service';
 import { LinkableResult } from 'src/app/models/linkable-result';
+import { Responsive } from 'src/app/common/responsive';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
     selector: 'app-profile',
@@ -19,7 +21,7 @@ import { LinkableResult } from 'src/app/models/linkable-result';
     styleUrls: ['./profile.page.scss'],
     animations: fadeInAnimation
 })
-export class ProfilePage implements OnInit, OnDestroy {
+export class ProfilePage extends Responsive implements OnInit, OnDestroy {
     readonly ProfilePageTab = ProfilePageTab;
 
     isReady = false;
@@ -51,10 +53,14 @@ export class ProfilePage implements OnInit, OnDestroy {
         private relationshipsService: RelationshipsService,
         private loadingService: LoadingService,
         private router: Router,
-        private activatedRoute: ActivatedRoute) {
+        private activatedRoute: ActivatedRoute,
+        breakpointObserver: BreakpointObserver) {
+            super(breakpointObserver);
     }
 
-    async ngOnInit(): Promise<void> {
+    override async ngOnInit(): Promise<void> {
+        super.ngOnInit();
+
         this.routeNavigationStartSubscription = this.router.events
             .pipe(filter(event => event instanceof NavigationStart))  
             .subscribe(async (event) => {
@@ -120,7 +126,9 @@ export class ProfilePage implements OnInit, OnDestroy {
         });
     }
 
-    ngOnDestroy(): void {
+    override ngOnDestroy(): void {
+        super.ngOnDestroy();
+
         this.routeParamsSubscription?.unsubscribe();
         this.routeNavigationEndSubscription?.unsubscribe();
         this.routeNavigationStartSubscription?.unsubscribe()

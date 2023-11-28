@@ -1,7 +1,7 @@
 @if (categories?.length) {
     <div *ngFor="let category of categories">
         <div class="hashtag-header">
-            <a [routerLink]="['/category', category.name]">
+            <a [routerLink]="['/categories', category.name]">
                 <mat-icon>loyalty</mat-icon> {{ category.name }}
             </a>
         </div>
