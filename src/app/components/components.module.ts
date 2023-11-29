@@ -23,6 +23,7 @@ import { HashtagGalleryComponent } from './widgets/hashtag-gallery/hashtag-galle
 import { CategoryGalleryComponent } from './widgets/category-gallery/category-gallery.component';
 import { BlurhashImageComponent } from './widgets/blurhash-image/blurhash-image.component';
 import { ImageComponent } from './widgets/image/image.component';
+import { DirectivesModule } from '../directives/directive.module';
 
 @NgModule({
     declarations: [
@@ -51,7 +52,8 @@ import { ImageComponent } from './widgets/image/image.component';
         AngularMaterialModule,
         RouterModule,
         ValidationsModule,
-        NgOptimizedImage
+        NgOptimizedImage,
+        DirectivesModule
     ],
     exports: [
         BrowserModule,
@@ -77,7 +79,8 @@ import { ImageComponent } from './widgets/image/image.component';
         HashtagGalleryComponent,
         CategoryGalleryComponent,
         BlurhashImageComponent,
-        ImageComponent
+        ImageComponent,
+        DirectivesModule
     ]
 })
 export class ComponentsModule { }

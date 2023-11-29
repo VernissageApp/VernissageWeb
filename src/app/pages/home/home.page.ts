@@ -50,7 +50,6 @@ export class HomePage extends Responsive {
             });
 
         this.routeParamsSubscription = this.activatedRoute.queryParams.subscribe(async (params) => {
-            console.log('this.activatedRoute.queryParams.subscribe');
 
             this.loadingService.showLoader();
             const pageType = params['t'] as string;

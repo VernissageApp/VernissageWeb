@@ -1,28 +1,32 @@
 @if (statuses?.data?.length) {
-    <div class="gallery-container">
+    <div class="gallery-container" appScrollNearEnd (nearEnd)="onNearEndScroll()">
         <div class="image-gallery">
             <div class="column" *ngFor="let items of gallery">
-                <div class="image-item" *ngFor="let status of items">
-                    <a [routerLink]="['/statuses', status.id]" [ariaLabel]="'Status added by: ' + getMainStatus(status).user?.userName">
-                        @if (getMainStatus(status).sensitive) {
-                            <app-blurhash-image
-                                [horizontal]="false"
-                                [imageSrc]="getMainAttachmentSrc(status)"
-                                [alt]="getMainAttachmentAlt(status)"
-                                [blurhash]="getMainAttachmentBlurhash(status)"
-                                [text]="getMainStatus(status).contentWarning"
-                                [user]="getMainStatus(status).user">
-                            </app-blurhash-image>
-                        } @else {
-                            <app-image
-                                [horizontal]="false" 
-                                [imageSrc]="getMainAttachmentSrc(status)"
-                                [alt]="getMainAttachmentAlt(status)"
-                                [user]="getMainStatus(status).user">
-                            </app-image>
-                        }
-                    </a>
-                </div>
+                @if(items.length > 0) {
+                    <div class="image-item" *ngFor="let status of items; trackBy:trackByFn">
+                        <a [routerLink]="['/statuses', status.id]" [ariaLabel]="'Status added by: ' + getMainStatus(status).user?.userName">
+                            @if (getMainStatus(status).sensitive) {
+                                <app-blurhash-image
+                                    [horizontal]="false"
+                                    [imageSrc]="getMainAttachmentSrc(status)"
+                                    [alt]="getMainAttachmentAlt(status)"
+                                    [blurhash]="getMainAttachmentBlurhash(status)"
+                                    [text]="getMainStatus(status).contentWarning"
+                                    [user]="getMainStatus(status).user">
+                                </app-blurhash-image>
+                            } @else {
+                                <app-image
+                                    [horizontal]="false" 
+                                    [imageSrc]="getMainAttachmentSrc(status)"
+                                    [alt]="getMainAttachmentAlt(status)"
+                                    [user]="getMainStatus(status).user">
+                                </app-image>
+                            }
+                        </a>
+                    </div>
+                } @else {
+                    <div class="placeholder"></div>
+                }
             </div>
         </div>
     </div>

@@ -110,7 +110,6 @@ export class UsersPage extends Responsive {
     }
 
     async handlePageEvent(pageEvent: PageEvent): Promise<void> {
-        console.log(pageEvent);
         const navigationExtras: NavigationExtras = {
             queryParams: { page: pageEvent.pageIndex, size: pageEvent.pageSize },
             queryParamsHandling: 'merge'

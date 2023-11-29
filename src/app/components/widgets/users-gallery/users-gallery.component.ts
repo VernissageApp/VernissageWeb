@@ -33,6 +33,10 @@ export class UsersGalleryComponent extends Responsive implements OnChanges {
         }
     }
 
+    trackByFn(_: number, item: Status): string | undefined{
+        return item.id;
+    }
+
     getStatuses(userName: string | undefined): Status[] {
         if (!userName) {
             return [];

@@ -24,6 +24,10 @@ export class CategoryGalleryComponent extends Responsive {
             super(breakpointObserver);
     }
 
+    trackByFn(_: number, item: Status): string | undefined{
+        return item.id;
+    }
+
     getStatuses(userName: string | undefined): Status[] {
         if (!userName) {
             return [];

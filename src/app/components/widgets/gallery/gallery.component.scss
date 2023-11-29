@@ -4,4 +4,8 @@
         flex-direction: row;
         gap: 6px;
     }
+
+    .placeholder {
+        width: calc((100vw - 12px) / 3);
+    }
 }

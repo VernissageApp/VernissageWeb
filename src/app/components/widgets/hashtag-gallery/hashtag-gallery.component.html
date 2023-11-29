@@ -8,7 +8,7 @@
             </div>
             <div class="images-container">
                 <div class="flex-row">
-                    <ng-container *ngFor="let status of getStatuses(hashtag.name)">
+                    <ng-container *ngFor="let status of getStatuses(hashtag.name); trackBy:trackByFn">
                         <a [routerLink]="['/statuses', status.id]" [ariaLabel]="'Status added by: ' + getMainStatus(status).user?.userName" (click)="onStatusClick(hashtag.name)">
                             @if (getMainStatus(status).sensitive) {
                                 <div class="blurhash">

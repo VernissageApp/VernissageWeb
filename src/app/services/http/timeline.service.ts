@@ -24,6 +24,7 @@ export class TimelineService {
     }
 
     public async public(minId?: string, maxId?: string, sinceId?: string, limit?: number, onlyLocal?: boolean): Promise<LinkableResult<Status>> {
+        limit = 15;
         const event$ = this.httpClient.get<LinkableResult<Status>>(this.windowService.apiUrl() +  `/api/v1/timelines/public?minId=${minId ?? ''}&maxId=${maxId ?? ''}&sinceId=${sinceId ?? ''}&limit=${limit ?? ''}&onlyLocal=${onlyLocal ?? ''}`);
         return await firstValueFrom(event$);
     }

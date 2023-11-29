@@ -4,7 +4,7 @@
             <app-user-card [user]="user"></app-user-card>
             <div class="images-container">
                 <div class="flex-row">
-                    <ng-container *ngFor="let status of getStatuses(user.userName)">
+                    <ng-container *ngFor="let status of getStatuses(user.userName); trackBy:trackByFn">
                         <a [routerLink]="['/statuses', status.id]" [ariaLabel]="'Status added by: ' + getMainStatus(status).user?.userName" (click)="onStatusClick(user.userName)">
                             @if (getMainStatus(status).sensitive) {
                                 <div class="blurhash">
