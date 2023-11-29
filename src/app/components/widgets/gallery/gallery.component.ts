@@ -20,7 +20,6 @@ export class GalleryComponent implements OnInit, OnChanges {
     gallery?: Status[][];
     sizes?: number[];
     columns = 3;
-    showLoadMore = true;
     isDuringLoadingMode = false;
     allStatusesLoaded = false;
 
@@ -52,6 +51,8 @@ export class GalleryComponent implements OnInit, OnChanges {
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.statuses) {
             this.contextStatusesService.setContextStatuses(this.statuses);
+
+            this.allStatusesLoaded = false;
             this.buildGallery();
         }
     }
