@@ -18,6 +18,7 @@ import { LoadingService } from './services/common/loading.service';
 import { WindowService } from './services/common/window.service';
 import { CustomReuseStrategy } from './common/custom-reuse-strategy';
 import { HammerModule } from "../../node_modules/@angular/platform-browser";
+import { MatIconRegistry } from '@angular/material/icon';
 // import { NgxCaptchaModule } from 'ngx-captcha';
 
 const jwtOptionsFactory = (persistanceService: PersistanceService, windowService: WindowService) => {
@@ -69,4 +70,8 @@ const httpInterceptor = (router: Router) => new APIInterceptor(router);
     ],
     bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+    constructor(iconRegistry: MatIconRegistry) {
+        iconRegistry.setDefaultFontSetClass('material-symbols-outlined');
+      }
+}

@@ -45,36 +45,36 @@
                         <!-- Actions panel -->
                         <ng-container *ngIf="isLoggedIn()">
                             <button *ngIf="!mainStatus.reblogged" mat-icon-button class="margin-right-10" color="primary" matTooltip="Boost" matTooltipPosition="above" aria-label="Boost" (click)="reblog()">
-                                <mat-icon>swap_vert</mat-icon>
+                                <mat-icon class="outline-symbol">rocket_launch</mat-icon>
                             </button>
 
                             <button *ngIf="mainStatus.reblogged" mat-icon-button class="margin-right-10" color="primary" matTooltip="Unboost" matTooltipPosition="above" aria-label="Unboost" (click)="unreblog()">
-                                <mat-icon>swap_vertical_circle</mat-icon>
+                                <mat-icon class="fill-symbol">rocket_launch</mat-icon>
                             </button>
 
                             <button *ngIf="!mainStatus.favourited" mat-icon-button class="margin-right-10" color="primary" matTooltip="Like" matTooltipPosition="above" aria-label="Like" (click)="favourite()">
-                                <mat-icon>star_border</mat-icon>
+                                <mat-icon class="outline-symbol">grade</mat-icon>
                             </button>
 
                             <button *ngIf="mainStatus.favourited" mat-icon-button class="margin-right-10" color="primary" matTooltip="Unlike" matTooltipPosition="above" aria-label="Unlike" (click)="unfavourite()">
-                                <mat-icon>star</mat-icon>
+                                <mat-icon class="fill-symbol">grade</mat-icon>
                             </button>
 
                             <button *ngIf="!mainStatus.bookmarked" mat-icon-button class="margin-right-10" color="primary" matTooltip="Bookmark" matTooltipPosition="above" aria-label="Bookmark" (click)="bookmark()">
-                                <mat-icon>bookmark_border</mat-icon>
+                                <mat-icon class="outline-symbol">bookmark</mat-icon>
                             </button>
 
                             <button *ngIf="mainStatus.bookmarked" mat-icon-button class="margin-right-10" color="primary" matTooltip="Unbookmark" matTooltipPosition="above" aria-label="Unbookmark" (click)="unbookmark()">
-                                <mat-icon>bookmark</mat-icon>
+                                <mat-icon class="fill-symbol">bookmark</mat-icon>
                             </button>
 
                             @if (shoudDisplayFeatureButton()) {
                                 <button *ngIf="!mainStatus.featured" mat-icon-button class="margin-right-10" color="primary" matTooltip="Feature" matTooltipPosition="above" aria-label="Feature" (click)="feature()">
-                                    <mat-icon>brightness_low</mat-icon>
+                                    <mat-icon class="outline-symbol">stars</mat-icon>
                                 </button>
 
                                 <button *ngIf="mainStatus.featured" mat-icon-button class="margin-right-10" color="primary" matTooltip="Unfeature" matTooltipPosition="above" aria-label="Unfeature" (click)="unfeature()">
-                                    <mat-icon>brightness_high</mat-icon>
+                                    <mat-icon class="fill-symbol">stars</mat-icon>
                                 </button>
                             }
 
@@ -83,20 +83,20 @@
                             </button>
                             <mat-menu #menu="matMenu">
                                 <button mat-menu-item>
-                                    <mat-icon>swap_vertical_circle</mat-icon>
+                                    <mat-icon class="fill-symbol">rocket_launch</mat-icon>
                                     <span>Boosted by</span>
                                 </button>
                                 <button mat-menu-item>
-                                    <mat-icon>star</mat-icon>
+                                    <mat-icon class="fill-symbol">grade</mat-icon>
                                     <span>Favourited by</span>
                                 </button>
                                 <mat-divider></mat-divider>
                                 <button mat-menu-item (click)="onReportDialog()">
-                                    <mat-icon>warning</mat-icon>
+                                    <mat-icon class="outline-symbol">report</mat-icon>
                                     <span>Report</span>
                                 </button>
                                 <button *ngIf="shoudDisplayDeleteButton()" mat-menu-item (click)="onDeleteStatus()">
-                                    <mat-icon>delete_outline</mat-icon>
+                                    <mat-icon class="outline-symbol">delete</mat-icon>
                                     <span>Delete</span>
                                 </button>
                             </mat-menu>
@@ -167,8 +167,8 @@
                             <mat-icon class="margin-right-15" *ngSwitchCase="statusVisibility.Followers" matTooltip="Followers">people</mat-icon>
                             <mat-icon class="margin-right-15" *ngSwitchCase="statusVisibility.Mentioned" matTooltip="Mentioned">person</mat-icon>
                         </ng-container>
-                        <mat-icon *ngIf="mainStatus.application" class="margin-right-15" [matTooltip]="mainStatus.application" aria-label="Application">extension</mat-icon>
-                        <mat-icon matTooltip="Number of reblogs" aria-label="Number of reblogs">swap_vertical_circle</mat-icon>
+                        <mat-icon *ngIf="mainStatus.application" class="margin-right-15" [matTooltip]="mainStatus.application" aria-label="Application">settings_applications</mat-icon>
+                        <mat-icon matTooltip="Number of reblogs" aria-label="Number of reblogs">rocket</mat-icon>
                         <div  class="margin-right-15">{{ mainStatus.reblogsCount }}</div>
                         <mat-icon matTooltip="Number of likes" aria-label="Number of likes">star</mat-icon>
                         <div>{{ mainStatus.favouritesCount }}</div>
@@ -200,7 +200,7 @@
                                     </div>
                                 </div>
                                 <div *ngIf="signedInUser" class="flex-grow-1 text-right">
-                                    <mat-icon class="favourited" *ngIf="comment.status.favourited">star</mat-icon>
+                                    <mat-icon class="favourited fill-symbol" *ngIf="comment.status.favourited">star</mat-icon>
                                     <button mat-icon-button [matMenuTriggerFor]="menu" class="margin-right-10" color="primary" aria-label="More options">
                                         <mat-icon>more_vert</mat-icon>
                                     </button>

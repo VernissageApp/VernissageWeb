@@ -28,11 +28,23 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 .cdk-visually-hidden {
-    width: 0;
-    height: 0;
-    position: fixed;
-    overflow: hidden;
-    top: -500px;
+  width: 0;
+  height: 0;
+  position: fixed;
+  overflow: hidden;
+  top: -500px;
+}
+
+/*
+ * Material symbols.
+ */
+
+.fill-symbol {
+  font-variation-settings: 'FILL' 1, 'wght' 700, 'GRAD' 0, 'opsz' 48;
+}
+
+.outline-symbol {
+  font-variation-settings: 'FILL' 0, 'wght' 700, 'GRAD' 0, 'opsz' 48;
 }
 
 /*

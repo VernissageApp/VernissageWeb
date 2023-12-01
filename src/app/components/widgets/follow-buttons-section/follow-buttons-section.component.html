@@ -10,10 +10,10 @@
             <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #dropdownMenuOne2="matMenu" xPosition="before">
-            <button *ngIf="showOpenOriginalProfileButton" (click)="onOriginalProfile()" mat-menu-item>Open original profile</button>
-            <button *ngIf="showMuteButton" (click)="openMuteAccountDialog()" mat-menu-item>Mute</button>
-            <button *ngIf="showUnmuteButton" (click)="unmuteAccount()" mat-menu-item>Unmute</button>
-            <button *ngIf="showReportButton" (click)="onReportDialog()" mat-menu-item>Report</button>
+            <button *ngIf="showOpenOriginalProfileButton" (click)="onOriginalProfile()" mat-menu-item><mat-icon>public</mat-icon> Open original profile</button>
+            <button *ngIf="showMuteButton" (click)="openMuteAccountDialog()" mat-menu-item><mat-icon>voice_over_off</mat-icon> Mute</button>
+            <button *ngIf="showUnmuteButton" (click)="unmuteAccount()" mat-menu-item><mat-icon>record_voice_over</mat-icon> Unmute</button>
+            <button *ngIf="showReportButton" (click)="onReportDialog()" mat-menu-item><mat-icon>report</mat-icon> Report</button>
         </mat-menu>
     </ng-container>
 </div>

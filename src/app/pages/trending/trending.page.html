@@ -5,9 +5,9 @@
 
       <section class="small-button-toggle">
         <mat-button-toggle-group [(ngModel)]="trending" (ngModelChange)="onSelectionChange()" aria-label="Trending type">
-          <mat-button-toggle value="statuses"><mat-icon>insert_photo</mat-icon><span *ngIf="!isHandset"> Photos</span></mat-button-toggle>
-          <mat-button-toggle value="users"><mat-icon>group</mat-icon><span *ngIf="!isHandset"> Accounts</span></mat-button-toggle>
-          <mat-button-toggle value="hashtags"><mat-icon>local_offer</mat-icon><span *ngIf="!isHandset"> Tags</span></mat-button-toggle>
+          <mat-button-toggle value="statuses"><mat-icon class="fill-symbol">insert_photo</mat-icon><span *ngIf="!isHandset"> Photos</span></mat-button-toggle>
+          <mat-button-toggle value="users"><mat-icon class="fill-symbol">groups</mat-icon><span *ngIf="!isHandset"> Accounts</span></mat-button-toggle>
+          <mat-button-toggle value="hashtags"><mat-icon class="fill-symbol">tag</mat-icon><span *ngIf="!isHandset"> Tags</span></mat-button-toggle>
         </mat-button-toggle-group>
       </section>
     </div>
