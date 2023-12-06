@@ -8,6 +8,7 @@ import { StatusVisibility } from 'src/app/models/status-visibility';
 import { WindowService } from '../common/window.service';
 import { LinkableResult } from 'src/app/models/linkable-result';
 import { StatusContext } from 'src/app/models/status-context';
+import { User } from 'src/app/models/user';
 
 @Injectable({
     providedIn: 'root'
@@ -78,6 +79,16 @@ export class StatusesService {
 
     public async context(id: string): Promise<StatusContext> {
         const event$ = this.httpClient.get<StatusContext>(this.windowService.apiUrl() + '/api/v1/statuses/' + id + '/context');
+        return await firstValueFrom(event$);
+    }
+
+    public async reblgged(statusId: string, minId?: string, maxId?: string, sinceId?: string, limit?: number): Promise<LinkableResult<User>> {
+        const event$ = this.httpClient.get<LinkableResult<User>>(this.windowService.apiUrl() +  '/api/v1/statuses/' + statusId + `/reblogged?minId=${minId ?? ''}&maxId=${maxId ?? ''}&sinceId=${sinceId ?? ''}&limit=${limit ?? ''}`);
+        return await firstValueFrom(event$);
+    }
+
+    public async favourited(statusId: string, minId?: string, maxId?: string, sinceId?: string, limit?: number): Promise<LinkableResult<User>> {
+        const event$ = this.httpClient.get<LinkableResult<User>>(this.windowService.apiUrl() +  '/api/v1/statuses/' + statusId + `/favourited?minId=${minId ?? ''}&maxId=${maxId ?? ''}&sinceId=${sinceId ?? ''}&limit=${limit ?? ''}`);
         return await firstValueFrom(event$);
     }
 }

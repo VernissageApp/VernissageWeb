@@ -91,6 +91,8 @@ export enum EventType {
     StatusesFeature = 'statusesFeature',
     StatusesUnfeature = 'statusesUnfeature',
     StatusesContext = 'statusesContext',
+    StatusesReblogged = 'statusesReblogged',
+    StatusesFavourited = 'statusesFavourited',
     
     TimelinesPublic = 'timelinesPublic',
     TimelinesCategories = 'timelinesCategories',

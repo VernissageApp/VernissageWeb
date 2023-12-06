@@ -1,30 +1,26 @@
-<mat-card class="users-card" appearance="outlined">
-    <mat-card-content>
-        <div *ngFor="let user of users; trackBy:trackByFn" class="flex-row flex-space-between padding-bottom-10 padding-top-10">
-            <div class="flex-row gap-8">
-                <div>
-                    <app-avatar [user]="user" [size]="avatarSize.huge"></app-avatar>
-                </div>
-                <div>
-                    <div [ngClass]="{ 'flex-row': !isHandset, 'flex-column': isHandset }">
-                        <div><a [routerLink]="[ '/@' + user.userName ]" class="margin-right-5 fw-600">{{ user.name }}</a></div>
-                        <div class="fw-400 fs-90 text-muted">&#64;{{ user.userName }}</div>
-                    </div>
-
-                    <div *ngIf="showBio" class="bio" [innerHTML]="user.bioHtml"></div>
-                    <div class="fw-300 fs-90">
-                        <span class="margin-right-15"><span class="fw-500">{{ user.statusesCount }}</span> Posts</span>
-                        <span class="margin-right-15"><span class="fw-500">{{ user.followersCount }}</span> Followers</span>
-                        <span><span class="fw-500">{{ user.followingCount }}</span> Following</span>
-                    </div>
-                </div>
+<div *ngFor="let user of users; trackBy:trackByFn" class="flex-row flex-space-between padding-bottom-10 padding-top-10">
+    <div class="flex-row gap-8">
+        <div>
+            <app-avatar [user]="user" [size]="avatarSize.huge"></app-avatar>
+        </div>
+        <div>
+            <div [ngClass]="{ 'flex-row': !isHandset, 'flex-column': isHandset }">
+                <div><a [routerLink]="[ '/@' + user.userName ]" class="margin-right-5 fw-600">{{ user.name }}</a></div>
+                <div class="fw-400 fs-90 text-muted">&#64;{{ user.userName }}</div>
             </div>
 
-            <app-follow-buttons-section [user]="user" [relationship]="getRelationship(user)" (relationChanged)="onRelationChanged($event)" [singleButton]="true"></app-follow-buttons-section>
+            <div *ngIf="showBio" class="bio" [innerHTML]="user.bioHtml"></div>
+            <div class="fw-300 fs-90">
+                <span class="margin-right-15"><span class="fw-500">{{ user.statusesCount }}</span> Posts</span>
+                <span class="margin-right-15"><span class="fw-500">{{ user.followersCount }}</span> Followers</span>
+                <span><span class="fw-500">{{ user.followingCount }}</span> Following</span>
+            </div>
         </div>
+    </div>
 
-        <div *ngIf="showLoadMore" class="flex-row flex-space-around">
-            <button mat-button (click)="onLoadMore()">Load more...</button>
-        </div>
-    </mat-card-content>
-</mat-card>
+    <app-follow-buttons-section [user]="user" [relationship]="getRelationship(user)" (relationChanged)="onRelationChanged($event)" [singleButton]="true"></app-follow-buttons-section>
+</div>
+
+<div *ngIf="showLoadMore" class="flex-row flex-space-around">
+    <button mat-button (click)="onLoadMore()">Load more...</button>
+</div>

@@ -82,11 +82,11 @@
                                 <mat-icon>more_vert</mat-icon>
                             </button>
                             <mat-menu #menu="matMenu">
-                                <button mat-menu-item>
+                                <button mat-menu-item (click)="onBoostedByDialog()">
                                     <mat-icon class="fill-symbol">rocket_launch</mat-icon>
                                     <span>Boosted by</span>
                                 </button>
-                                <button mat-menu-item>
+                                <button mat-menu-item (click)="onFavouritedByDialog()">
                                     <mat-icon class="fill-symbol">grade</mat-icon>
                                     <span>Favourited by</span>
                                 </button>

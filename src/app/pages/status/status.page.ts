@@ -24,6 +24,8 @@ import { Role } from 'src/app/models/role';
 import { DeleteStatusDialog } from 'src/app/dialogs/delete-status-dialog/delete-status.dialog';
 import { PersistanceService } from 'src/app/services/persistance/persistance.service';
 import { PreferencesService } from 'src/app/services/common/preferences.service';
+import { UsersDialog } from 'src/app/dialogs/users-dialog/users.dialog';
+import { UsersDialogContext, UsersListType } from 'src/app/dialogs/users-dialog/users-dialog-context';
 
 @Component({
     selector: 'app-status',
@@ -165,6 +167,28 @@ export class StatusPage extends Responsive {
                     this.messageService.showServerError(error);
                 }
             }
+        });
+    }
+
+    async onBoostedByDialog(): Promise<void> {
+        if (!this.status?.id) {
+            return;
+        }
+
+        const dialogRef = this.dialog.open(UsersDialog, {
+            width: '500px',
+            data: new UsersDialogContext(this.status.id, UsersListType.reblogged, 'Boosted by')
+        });
+    }
+
+    async onFavouritedByDialog(): Promise<void> {
+        if (!this.status?.id) {
+            return;
+        }
+
+        const dialogRef = this.dialog.open(UsersDialog, {
+            width: '500px',
+            data: new UsersDialogContext(this.status.id, UsersListType.favourited, 'Favourited by')
         });
     }
 

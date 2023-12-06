@@ -15,6 +15,7 @@ import { ReportDialog } from './report-dialog/report.dialog';
 import { ReportDetailsDialog } from './report-details-dialog/report-details.dialog';
 import { UserRolesDialog } from './user-roles-dialog/user-roles.dialog';
 import { DeleteStatusDialog } from './delete-status-dialog/delete-status.dialog';
+import { UsersDialog } from './users-dialog/users.dialog';
 
 @NgModule({
     declarations: [
@@ -25,7 +26,8 @@ import { DeleteStatusDialog } from './delete-status-dialog/delete-status.dialog'
         ReportDialog,
         ReportDetailsDialog,
         UserRolesDialog,
-        DeleteStatusDialog
+        DeleteStatusDialog,
+        UsersDialog
     ],
     imports: [
         BrowserModule,
@@ -45,7 +47,8 @@ import { DeleteStatusDialog } from './delete-status-dialog/delete-status.dialog'
         ReportDialog,
         ReportDetailsDialog,
         UserRolesDialog,
-        DeleteStatusDialog
+        DeleteStatusDialog,
+        UsersDialog
     ]
 })
 export class DialogsModule { }
