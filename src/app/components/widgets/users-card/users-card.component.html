@@ -18,7 +18,14 @@
         </div>
     </div>
 
-    <app-follow-buttons-section [user]="user" [relationship]="getRelationship(user)" (relationChanged)="onRelationChanged($event)" [singleButton]="true"></app-follow-buttons-section>
+    @if (getRelationship(user)) {
+        <app-follow-buttons-section
+            [user]="user"
+            [relationship]="getRelationship(user)"
+            (relationChanged)="onRelationChanged($event)"
+            [singleButton]="true">
+        </app-follow-buttons-section>
+    }
 </div>
 
 <div *ngIf="showLoadMore" class="flex-row flex-space-around">
