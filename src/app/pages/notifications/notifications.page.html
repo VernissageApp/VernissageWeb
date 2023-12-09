@@ -76,11 +76,17 @@
                                 </div>
                             </div>
 
-                            <div *ngIf="notification.status && getAttachemntUrl(notification.status)" class="status">
-                                <a [routerLink]="['/statuses', notification.status.id]">
-                                    <img [src]="getAttachemntUrl(notification.status)" class="" />
-                                </a>
-                            </div>
+                            @if (notification.status && getAttachemntUrl(notification.status)) {
+                                <div class="status">
+                                    <a [routerLink]="['/statuses', notification.status.id]">
+                                        <img [src]="getAttachemntUrl(notification.status)" class="" />
+                                    </a>
+                                </div>
+                            }
+
+                            @if (notification.notificationType === notificationType.AdminReport) {
+                                <button mat-button [routerLink]="['/reports']">Reports</button>
+                            }
                         </div>
                     </div>
 
