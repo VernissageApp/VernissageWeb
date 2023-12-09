@@ -5,6 +5,7 @@ export class User {
     public id?: string;
     public isLocal?: boolean;
     public isBlocked?: boolean;
+    public isApproved?: boolean;
     public userName?: string;
     public email?: string;
     public password?: string;

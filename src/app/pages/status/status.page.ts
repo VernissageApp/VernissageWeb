@@ -22,10 +22,10 @@ import { GalleryItem, ImageItem } from 'ng-gallery';
 import { ContextStatusesService } from 'src/app/services/common/context-statuses.service';
 import { Role } from 'src/app/models/role';
 import { DeleteStatusDialog } from 'src/app/dialogs/delete-status-dialog/delete-status.dialog';
-import { PersistanceService } from 'src/app/services/persistance/persistance.service';
 import { PreferencesService } from 'src/app/services/common/preferences.service';
 import { UsersDialog } from 'src/app/dialogs/users-dialog/users.dialog';
 import { UsersDialogContext, UsersListType } from 'src/app/dialogs/users-dialog/users-dialog-context';
+import { Location as AngularLocation } from '@angular/common';
 
 @Component({
     selector: 'app-status',
@@ -61,6 +61,7 @@ export class StatusPage extends Responsive {
         private preferencesService: PreferencesService,
         private activatedRoute: ActivatedRoute,
         private router: Router,
+        private angularLocation: AngularLocation,
         private dialog: MatDialog,
         breakpointObserver: BreakpointObserver) {
             super(breakpointObserver);
@@ -88,7 +89,11 @@ export class StatusPage extends Responsive {
         this.routeParamsSubscription?.unsubscribe();
     }
 
-    async onBackClick(): Promise<void> {
+    onBackClick(): void {
+        this.angularLocation.back();
+    }
+
+    async onPrevClick(): Promise<void> {
         if (this.status?.id) {
             const previousStatus = await this.contextStatusesService.getPrevious(this.status?.id);
             if (previousStatus) {
@@ -194,6 +199,10 @@ export class StatusPage extends Responsive {
 
     isLoggedIn(): Boolean {
         return this.authorizationService.isLoggedIn();
+    }
+
+    showBackArrow(): boolean {
+        return !this.isHandset;
     }
 
     showContextArrows(): boolean {

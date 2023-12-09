@@ -1,10 +1,27 @@
 .photo-margin-top {
-    height: 20px;
+    height: 25px;
     background-color: #202020;
+    
+    .back-container {
+        display: inline-block;
+        cursor: pointer;
+        margin-top: 4px;
+
+        mat-icon {
+            color: white;
+            transform: scale(0.7);
+            padding-left: 4px;
+            margin-top: -1px;
+        }
+
+        .back-label {
+            vertical-align: top;
+        }
+    }
 }
 
 .photo-margin-bottom {
-    height: 15px;
+    height: 20px;
     background-color: #202020;
 }
 

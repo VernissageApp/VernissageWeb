@@ -64,6 +64,15 @@
                     </td>
                 </ng-container>
 
+                <!-- Is Approved Column -->
+                <ng-container matColumnDef="isApproved">
+                    <th mat-header-cell *matHeaderCellDef> Approved </th>
+                    <td mat-cell *matCellDef="let element">
+                        <mat-checkbox color="primary" [disableRipple]="true" [ngModel]="element.isApproved" disabled>
+                        </mat-checkbox>
+                    </td>
+                </ng-container>
+
                 <!-- Statuses Column -->
                 <ng-container matColumnDef="statuses">
                     <th mat-header-cell *matHeaderCellDef> Statuses </th>
@@ -93,6 +102,8 @@
                             <button (click)="onSetRoles(element)" mat-menu-item>Assign roles</button>
                             <button *ngIf="element.isBlocked" (click)="onSetEnable(element)" mat-menu-item>Enable</button>
                             <button *ngIf="!element.isBlocked" (click)="onSetDisable(element)" mat-menu-item>Disable</button>
+                            <button *ngIf="!element.isApproved" (click)="onApprove(element)" mat-menu-item>Approve</button>
+                            <button *ngIf="!element.isApproved" (click)="onReject(element)" mat-menu-item>Reject</button>
                         </mat-menu>
                     </td>
                 </ng-container>

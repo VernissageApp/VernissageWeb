@@ -86,6 +86,16 @@ export class UsersService {
         await firstValueFrom(event$);
     }
 
+    public async approve(userName: string): Promise<void> {
+        const event$ = this.httpClient.post(this.windowService.apiUrl() + '/api/v1/users/@' + userName + '/approve', null);
+        await firstValueFrom(event$);
+    }
+
+    public async reject(userName: string): Promise<void> {
+        const event$ = this.httpClient.post(this.windowService.apiUrl() + '/api/v1/users/@' + userName + '/reject', null);
+        await firstValueFrom(event$);
+    }
+
     public async statuses(userName: string, minId?: string, maxId?: string, sinceId?: string, limit?: number): Promise<LinkableResult<Status>> {
         const event$ = this.httpClient.get<LinkableResult<Status>>(this.windowService.apiUrl() +  '/api/v1/users/' + userName + `/statuses?minId=${minId ?? ''}&maxId=${maxId ?? ''}&sinceId=${sinceId ?? ''}&limit=${limit ?? ''}`);
         return await firstValueFrom(event$);

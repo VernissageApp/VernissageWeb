@@ -1,11 +1,12 @@
 import { Component, Inject, Renderer2 } from '@angular/core';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
-import { MessagesService } from 'src/app/services/common/messages.service';
 import { EventType } from 'src/app/models/event-type';
 import { Responsive } from 'src/app/common/responsive';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { DOCUMENT } from '@angular/common';
 import { PreferencesService } from 'src/app/services/common/preferences.service';
+import { RouteReuseStrategy } from '@angular/router';
+import { CustomReuseStrategy } from 'src/app/common/custom-reuse-strategy';
 
 @Component({
     selector: 'app-preferences',
@@ -30,6 +31,7 @@ export class PreferencesPage extends Responsive {
     constructor(
         @Inject(DOCUMENT) private document: Document,
         private preferencesService: PreferencesService,
+        private routeReuseStrategy: RouteReuseStrategy,
         private renderer: Renderer2,
         breakpointObserver: BreakpointObserver) {
             super(breakpointObserver);
@@ -64,6 +66,9 @@ export class PreferencesPage extends Responsive {
     }
 
     onAlwaysShowNSFWChange(): void {
+        const customReuseStrategy = this.routeReuseStrategy as CustomReuseStrategy;
+        customReuseStrategy?.clear();
+
         this.preferencesService.alwaysShowNSFW = this.alwaysShowNSFW;
     }
 

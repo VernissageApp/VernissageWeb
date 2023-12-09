@@ -24,8 +24,9 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 })
 export class UploadPage extends Responsive {
     readonly StatusVisibility = StatusVisibility;
-    categories: Category[] = [];
+    readonly maxFileSize = 10485760;
 
+    categories: Category[] = [];
     statusText = '';
     categoryId?: string;
     visibility = StatusVisibility.Public;
@@ -33,6 +34,7 @@ export class UploadPage extends Responsive {
     isSensitive = false;
     contentWarning = '';
     selectedIndex = 0;
+
 
     photos: UploadPhoto[] = [];
 
@@ -52,6 +54,12 @@ export class UploadPage extends Responsive {
 
     async onPhotoSelected(event: any): Promise<void> {
         try {
+            const file = event.target.files[0];
+            if (file.size > this.maxFileSize) {
+                this.messageService.showError('Uploaded file is too large. Maximum size is 10mb.');
+                return;
+            }
+
             const uploadPhoto = new UploadPhoto(event.target.files[0]);
             this.photos.push(uploadPhoto);
 

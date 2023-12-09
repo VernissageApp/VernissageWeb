@@ -27,9 +27,6 @@ export enum EventType {
     RolesUpdate = 'rolesUpdate',
     RolesDelete = 'rolesDelete',
     
-    UserRolesConnect = 'userRolesConnect',
-    UserRolesDisconnect = 'userRolesDisconnect',
-    
     UsersList = 'usersList',
     UsersRead = 'usersRead',
     UsersUpdate = 'usersUpdate',
@@ -41,7 +38,11 @@ export enum EventType {
     UsersMute = 'usersMute',
     UsersUnmute = 'usersUnmute',
     UsersEnable = 'usersEnable',
-    UsersDisable = 'usersEnable',
+    UsersDisable = 'usersDisable',
+    UserRolesConnect = 'userRolesConnect',
+    UserRolesDisconnect = 'userRolesDisconnect',
+    UserApprove = 'userApprove',
+    UserReject = 'userReject',
     UsersStatuses = 'usersStatuses',
     
     AvatarUpdate = 'avatarUpdate',

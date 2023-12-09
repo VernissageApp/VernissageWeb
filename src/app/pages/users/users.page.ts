@@ -16,6 +16,7 @@ import { UsersService } from 'src/app/services/http/users.service';
 import { User } from 'src/app/models/user';
 import { AvatarSize } from 'src/app/components/widgets/avatar/avatar-size';
 import { UserRolesDialog } from 'src/app/dialogs/user-roles-dialog/user-roles.dialog';
+import { RandomGeneratorService } from 'src/app/services/common/random-generator.service';
 
 @Component({
     selector: 'app-users',
@@ -35,14 +36,15 @@ export class UsersPage extends Responsive {
 
     private readonly displayedColumnsHandsetPortrait: string[] = ['avatar', 'userName', 'actions'];
     private readonly displayedColumnsHandserLandscape: string[] = ['avatar', 'userName', 'createdAt', 'actions'];
-    private readonly displayedColumnsTablet: string[] = ['avatar', 'userName', 'userFullName', 'email', 'createdAt', 'actions'];
-    private readonly displayedColumnsBrowser: string[] = ['avatar', 'userName', 'userFullName', 'email', 'isLocal', 'statuses', 'createdAt', 'actions'];
+    private readonly displayedColumnsTablet: string[] = ['avatar', 'userName', 'userFullName', 'email', 'isApproved', 'createdAt', 'actions'];
+    private readonly displayedColumnsBrowser: string[] = ['avatar', 'userName', 'userFullName', 'email', 'isLocal', 'isApproved', 'statuses', 'createdAt', 'actions'];
     
     constructor(
         private authorizationService: AuthorizationService,
         private usersService: UsersService,
         private loadingService: LoadingService,
         private messageService: MessagesService,
+        private randomGeneratorService: RandomGeneratorService,
         private activatedRoute: ActivatedRoute,
         private router: Router,
         private dialog: MatDialog,
@@ -102,6 +104,39 @@ export class UsersPage extends Responsive {
 
                 user.isBlocked = true;
                 this.messageService.showSuccess('Account has been disabled.');
+            }
+        } catch (error) {
+            console.error(error);
+            this.messageService.showServerError(error);
+        }
+    }
+
+    async onApprove(user: User): Promise<void> {
+        try {
+            if (user.userName) {
+                await this.usersService.approve(user.userName);
+
+                user.isApproved = true;
+                this.messageService.showSuccess('Account has been approved.');
+            }
+        } catch (error) {
+            console.error(error);
+            this.messageService.showServerError(error);
+        }
+    }
+
+    async onReject(user: User): Promise<void> {
+        try {
+            if (user.userName) {
+                await this.usersService.reject(user.userName);
+                this.messageService.showSuccess('Account has been rejected.');
+
+                const navigationExtras: NavigationExtras = {
+                    queryParams: { t: this.randomGeneratorService.generateString(8) },
+                    queryParamsHandling: 'merge'
+                };
+        
+                await this.router.navigate([], navigationExtras);
             }
         } catch (error) {
             console.error(error);

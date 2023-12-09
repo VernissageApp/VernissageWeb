@@ -1,7 +1,12 @@
 <div *ngIf="mainStatus && isReady" @fadeIn>
-    <div class="photo-margin-top"></div>
+    <div class="photo-margin-top">
+        <div *ngIf="showBackArrow()" class="back-container" (click)="onBackClick()">
+            <mat-icon>arrow_back</mat-icon>
+            <span class="back-label">Back</span>
+        </div>
+    </div>
     <div class="photo-container" [ngClass]="{ 'photo-container-table': showContextArrows() }">
-        <div *ngIf="showContextArrows()" class="icon" (click)="onBackClick()">
+        <div *ngIf="showContextArrows()" class="icon" (click)="onPrevClick()">
             <mat-icon *ngIf="!hideLeftArrow">arrow_back_ios</mat-icon>
         </div>
         <div class="display-inline">
