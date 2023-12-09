@@ -15,15 +15,19 @@
                 </mat-card>
 
 
-                <mat-card class="users-card" appearance="outlined">
-                    <mat-card-content>
-                        <app-users-card *ngIf="(users?.length ?? 0) > 0" [users]="users" [relationships]="usersRelationships" [showBio]="true"></app-users-card>
-                    </mat-card-content>
-                </mat-card>
+                @if (users.length > 0) {
+                    <mat-card class="users-card" appearance="outlined">
+                        <mat-card-content>
+                            <app-users-card [users]="users" [relationships]="usersRelationships" [showBio]="true"></app-users-card>
+                        </mat-card-content>
+                    </mat-card>
+                }
 
-                <div *ngIf="searchExecuted && (users?.length ?? 0) === 0">
-                    No results found.
-                </div>
+                @if (searchExecuted && users.length === 0) {
+                    <div>
+                        No results found.
+                    </div>
+                }
             </div>
         </div>
     </form>
