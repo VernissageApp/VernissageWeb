@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { map, switchMap } from 'rxjs/operators';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { Country } from 'src/app/models/country';
+import { License } from 'src/app/models/license';
 import { Location } from 'src/app/models/location';
 import { UploadPhoto } from 'src/app/models/upload-photo';
 import { CountriesService } from 'src/app/services/http/countries.service';
@@ -18,6 +19,7 @@ import { LocationsService } from 'src/app/services/http/locations.service';
 })
 export class UploadPhotoComponent implements OnInit {
     @Input() photo!: UploadPhoto;
+    @Input() licenses!: License[];
     @Input() index = 0;
 
     cities$?: Observable<Location[]>;

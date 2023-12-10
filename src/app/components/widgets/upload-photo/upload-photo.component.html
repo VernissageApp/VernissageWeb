@@ -45,6 +45,15 @@
         </mat-autocomplete>
     </mat-form-field>
 
+    <mat-form-field appearance="outline">
+        <mat-label>License</mat-label>
+        <mat-select [(value)]="photo.licenseId">
+            <mat-option *ngFor="let license of licenses" [value]="license.id">
+                {{ license.name }} <ng-container *ngIf="license.code">({{ license.code }})</ng-container>
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
     <div *ngIf="photo.make || photo.model || photo.lens || photo.createDate || photo.focalLenIn35mmFilm || photo.fNumber || photo.exposureTime || photo.photographicSensitivity" class="text-muted">Exif metadata</div>
     <mat-checkbox *ngIf="photo.make" [name]="'make' + index" color="primary" [disableRipple]="true" [(ngModel)]="photo.showMake">
         <span class="text-muted">Manufacturer:</span> {{ photo.make }}

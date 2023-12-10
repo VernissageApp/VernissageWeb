@@ -141,6 +141,18 @@
                         <span *ngIf="getLocation(currentIndex)?.name" class="location-label"><a class="dashed" target="_blank" [href]="getMapsUrl(currentIndex)">{{ getLocation(currentIndex)?.name }}</a> ({{ getLocation(currentIndex)?.country?.name }})</span>
                     </div>
 
+                    <!-- Licencja -->
+                    <div *ngIf="getLicense(currentIndex)" class="license margin-bottom-10">
+                        <mat-icon class="margin-right-20" inline="true" matTooltip="License">license</mat-icon>
+                        <span *ngIf="getLicense(currentIndex)?.name" class="license-label">
+                            @if (getLicense(currentIndex)?.url) {
+                                <a class="dashed" target="_blank" [href]="getLicense(currentIndex)?.url">{{ getLicense(currentIndex)?.name }}</a><ng-container *ngIf="getLicense(currentIndex)?.code"> ({{ getLicense(currentIndex)?.code }})</ng-container>
+                            } @else {
+                                {{ getLicense(currentIndex)?.name }}<ng-container *ngIf="getLicense(currentIndex)?.code"> ({{ getLicense(currentIndex)?.code }})</ng-container>
+                            }
+                        </span>
+                    </div>
+
                     <!-- Exif -->
                     <div *ngIf="getExif(currentIndex)" class="exif">
                         <div *ngIf="getExif(currentIndex)?.make || getExif(currentIndex)?.model" class="margin-bottom-10">

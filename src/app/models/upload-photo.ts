@@ -7,6 +7,7 @@ export class UploadPhoto {
     public description?: string;
     public blurhash?: string;
     public locationId?: string;
+    public licenseId?: string;
 
     public showMake = true;
     public showModel = true;

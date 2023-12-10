@@ -26,6 +26,7 @@ import { PreferencesService } from 'src/app/services/common/preferences.service'
 import { UsersDialog } from 'src/app/dialogs/users-dialog/users.dialog';
 import { UsersDialogContext, UsersListType } from 'src/app/dialogs/users-dialog/users-dialog-context';
 import { Location as AngularLocation } from '@angular/common';
+import { License } from 'src/app/models/license';
 
 @Component({
     selector: 'app-status',
@@ -269,6 +270,15 @@ export class StatusPage extends Responsive {
         const attachment = this.mainStatus?.attachments?.at(index);
         if (attachment) {
             return attachment.location;
+        }
+
+        return undefined;
+    }
+
+    getLicense(index: number): License | undefined {
+        const attachment = this.mainStatus?.attachments?.at(index);
+        if (attachment) {
+            return attachment.license;
         }
 
         return undefined;

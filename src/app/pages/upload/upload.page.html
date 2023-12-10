@@ -26,7 +26,7 @@
                 <mat-stepper orientation="vertical" [(selectedIndex)]="selectedIndex" #stepper>
                     <mat-step *ngFor="let photo of photos; let i = index;">
                         <ng-template matStepLabel>Image data #{{ i + 1 }}</ng-template>
-                        <app-upload-photo [photo]="photo" [index]="i"></app-upload-photo>
+                        <app-upload-photo [photo]="photo" [index]="i" [licenses]="licenses"></app-upload-photo>
                         <div class="margin-top-15 flex-row flex-space-between">
                             <div>
                                 <button *ngIf="i > 0" class="margin-right-10" mat-stroked-button matStepperPrevious>Back</button>

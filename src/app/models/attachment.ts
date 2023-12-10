@@ -1,6 +1,7 @@
-import { FileInfo } from 'src/app/models/file-info';
-import { Metadata } from 'src/app/models/metadata';
-import { Location } from 'src/app/models/location';
+import { FileInfo } from './file-info';
+import { Metadata } from './metadata';
+import { Location } from './location';
+import { License } from './license';
 
 export class Attachment {
     public id = '';
@@ -10,4 +11,5 @@ export class Attachment {
     public blurhash?: string;
     public metadata?: Metadata;
     public location?: Location;
+    public license?: License;
 }

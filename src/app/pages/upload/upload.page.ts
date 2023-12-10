@@ -15,6 +15,8 @@ import { CategoriesService } from 'src/app/services/http/categories.service';
 import { Category } from 'src/app/models/category';
 import { Responsive } from 'src/app/common/responsive';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { License } from 'src/app/models/license';
+import { LicensesService } from 'src/app/services/http/liceses.service';
 
 @Component({
     selector: 'app-upload',
@@ -27,6 +29,7 @@ export class UploadPage extends Responsive {
     readonly maxFileSize = 10485760;
 
     categories: Category[] = [];
+    licenses: License[] = [];
     statusText = '';
     categoryId?: string;
     visibility = StatusVisibility.Public;
@@ -41,6 +44,7 @@ export class UploadPage extends Responsive {
     constructor(private messageService: MessagesService,
                 private attachmentsService: AttachmentsService,
                 private categoriesService: CategoriesService,
+                private licensesService: LicensesService,
                 private statusesService: StatusesService,
                 private router: Router,
                 breakpointObserver: BreakpointObserver) {
@@ -49,7 +53,11 @@ export class UploadPage extends Responsive {
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
-        this.categories = await this.categoriesService.all();
+
+        [this.categories, this.licenses] = await Promise.all([
+            this.categoriesService.all(),
+            this.licensesService.all()
+        ]);
     }
 
     async onPhotoSelected(event: any): Promise<void> {
@@ -106,6 +114,7 @@ export class UploadPage extends Responsive {
                 temporaryAttachment.exposureTime = photo.exposureTime
                 temporaryAttachment.photographicSensitivity = photo.photographicSensitivity
                 temporaryAttachment.locationId = photo.locationId;
+                temporaryAttachment.licenseId = photo.licenseId;
 
                 await this.attachmentsService.updateAttachment(temporaryAttachment);
             }

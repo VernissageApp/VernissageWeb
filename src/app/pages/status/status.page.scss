@@ -87,6 +87,17 @@
     } 
 }
 
+.license {
+    mat-icon {
+        transform: scale(1.6);
+        opacity: 0.8;
+    }
+
+    .license-label {
+        vertical-align: top;
+    } 
+}
+
 .exif {
     mat-icon {
         transform: scale(1.6);
