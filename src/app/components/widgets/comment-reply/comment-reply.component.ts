@@ -17,9 +17,11 @@ export class CommentReplyComponent {
     @Input() signedInUser?: User;
     @Input() status?: Status;
     @Input() showCancel = false;
-    @Output() close = new EventEmitter();
+    @Output() cancel = new EventEmitter();
+    @Output() added = new EventEmitter();
 
     comment = '';
+    isSendDisabled = false;
 
     constructor(private statusesService: StatusesService, private messageService: MessagesService) {
     }
@@ -27,6 +29,8 @@ export class CommentReplyComponent {
     async onSubmitComment(): Promise<void> {
         try {
             if (this.status != null) {
+                this.isSendDisabled = true;
+
                 const newStatusRequest = new StatusRequest();
                 newStatusRequest.note = this.comment;
                 newStatusRequest.replyToStatusId = this.status.id;
@@ -34,15 +38,17 @@ export class CommentReplyComponent {
                 await this.statusesService.create(newStatusRequest);
 
                 this.messageService.showSuccess('Comment has been added.');
-                this.close.emit();
+                this.added.emit();
             }
         } catch (error) {
             console.error(error);
             this.messageService.showServerError(error);
+        } finally {
+            this.isSendDisabled = false;
         }
     }
 
-    cancel(): void {
-        this.close.emit();
+    onCancel(): void {
+        this.cancel.emit();
     }
 }

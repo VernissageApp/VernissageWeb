@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, RouteReuseStrategy } from '@angular/router';
 
 import { Login } from 'src/app/models/login';
 import { LoginMode } from 'src/app/models/login-mode';
@@ -11,6 +11,7 @@ import { AuthClient } from 'src/app/models/auth-client';
 import { InstanceService } from 'src/app/services/http/instance.service';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { WindowService } from 'src/app/services/common/window.service';
+import { CustomReuseStrategy } from 'src/app/common/custom-reuse-strategy';
 
 @Component({
     selector: 'app-login',
@@ -35,6 +36,7 @@ export class LoginPage implements OnInit {
         private authorizationService: AuthorizationService,
         private instanceService: InstanceService,
         private route: ActivatedRoute,
+        private routeReuseStrategy: RouteReuseStrategy,
         private windowService: WindowService,
         private authClientsService: AuthClientsService) {
     }
@@ -51,6 +53,7 @@ export class LoginPage implements OnInit {
         this.loginMode = LoginMode.Submitting;
 
         try {
+            this.clearReuseStrategyState();
             const accessToken = await this.accountService.login(this.login);
             this.authorizationService.signIn(accessToken);
 
@@ -91,5 +94,12 @@ export class LoginPage implements OnInit {
 
     isRegistrationEnabled(): boolean {
         return this.instanceService.isRegistrationEnabled();
+    }
+
+    private clearReuseStrategyState(): void {
+        const customReuseStrategy = this.routeReuseStrategy as CustomReuseStrategy;
+        if (customReuseStrategy) {
+            customReuseStrategy.clear();
+        }
     }
 }

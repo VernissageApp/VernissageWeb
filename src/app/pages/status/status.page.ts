@@ -137,10 +137,10 @@ export class StatusPage extends Responsive {
         this.currentIndex = event.currIndex;
     }
 
-    async onReportDialog(): Promise<void> {
+    async onReportDialog(reportedStatus: Status): Promise<void> {
         const dialogRef = this.dialog.open(ReportDialog, {
             width: '500px',
-            data: new ReportData(this.status?.user, this.status)
+            data: new ReportData(reportedStatus?.user, reportedStatus)
         });
 
         dialogRef.afterClosed().subscribe(async (result) => {
@@ -167,6 +167,28 @@ export class StatusPage extends Responsive {
                     this.statusesService.delete(this.status?.id);
                     this.messageService.showSuccess('Status has been deleted.');
                     await this.router.navigate(['/']);
+                } catch (error) {
+                    console.error(error);
+                    this.messageService.showServerError(error);
+                }
+            }
+        });
+    }
+
+    async onDeleteComment(comment: Status): Promise<void> {
+        const dialogRef = this.dialog.open(DeleteStatusDialog, {
+            width: '500px'
+        });
+
+        dialogRef.afterClosed().subscribe(async (result) => {
+            if (result && comment?.id) {
+                try {
+                    this.statusesService.delete(comment?.id);
+                    this.messageService.showSuccess('Status has been deleted.');
+
+                    if (this.mainStatus) {
+                        this.comments = await this.getAllReplies(this.mainStatus.id);
+                    }
                 } catch (error) {
                     console.error(error);
                     this.messageService.showServerError(error);
@@ -215,6 +237,10 @@ export class StatusPage extends Responsive {
 
     shoudDisplayFeatureButton(): boolean {
         return this.authorizationService.hasRole(Role.Administrator) || this.authorizationService.hasRole(Role.Moderator);
+    }
+
+    shoudDisplayDeleteCommentButton(comment: Status): boolean {
+        return comment.user?.id === this.signedInUser?.id;
     }
 
     isStatusOwner(): boolean {
@@ -390,6 +416,13 @@ export class StatusPage extends Responsive {
 
     onReply(status?: Status): void {
         this.replyStatus = status;
+    }
+
+    async onCommentAdded(): Promise<void> {
+        if (this.mainStatus) {
+            this.onReply(undefined);
+            this.comments = await this.getAllReplies(this.mainStatus.id);
+        }
     }
 
     private async loadPageData(statusId: string): Promise<void> {

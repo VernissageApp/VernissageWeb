@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
+import { RouteReuseStrategy, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { User } from 'src/app/models/user';
@@ -9,6 +9,7 @@ import { Role } from 'src/app/models/role';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Resolution, Responsive } from 'src/app/common/responsive';
 import { NotificationsService } from 'src/app/services/http/notifications.service';
+import { CustomReuseStrategy } from 'src/app/common/custom-reuse-strategy';
 
 @Component({
     selector: 'app-header',
@@ -28,6 +29,7 @@ export class HeaderComponent extends Responsive {
         private authorizationService: AuthorizationService,
         private instanceService: InstanceService,
         private notificationsService: NotificationsService,
+        private routeReuseStrategy: RouteReuseStrategy,
         private router: Router,
         breakpointObserver: BreakpointObserver) {
             super(breakpointObserver)
@@ -43,6 +45,7 @@ export class HeaderComponent extends Responsive {
             this.user = user;
             this.avatarUrl = this.user?.avatarUrl ?? 'assets/avatar.svg';
             await this.loadNotificationCount();
+            this.clearReuseStrategyState();
         });
 
         this.notificationChangeSubscription = this.notificationsService.changes.subscribe(async (count) => {
@@ -58,6 +61,7 @@ export class HeaderComponent extends Responsive {
     }
 
     async signOut(): Promise<void> {
+        this.clearReuseStrategyState();
         await this.authorizationService.signOut();
         await this.router.navigate(['/login']);
     }
@@ -86,6 +90,13 @@ export class HeaderComponent extends Responsive {
             }
         } catch(error) {
             console.error(error);
+        }
+    }
+
+    private clearReuseStrategyState(): void {
+        const customReuseStrategy = this.routeReuseStrategy as CustomReuseStrategy;
+        if (customReuseStrategy) {
+            customReuseStrategy.clear();
         }
     }
 }
