@@ -49,21 +49,6 @@ export class HashtagGalleryComponent extends Responsive implements OnChanges {
         return status.reblog ?? status;
     }
 
-    getMainAttachmentSrc(status: Status): string {
-        const mainAttachment = this.getMainAttachment(status);
-        return mainAttachment?.smallFile?.url ?? '';
-    }
-
-    getMainAttachmentAlt(status: Status): string | undefined {
-        const mainAttachment = this.getMainAttachment(status);
-        return mainAttachment?.description;
-    }
-
-    getMainAttachmentBlurhash(status: Status): string {
-        const mainAttachment = this.getMainAttachment(status);
-        return mainAttachment?.blurhash ?? 'LEHV6nWB2yk8pyo0adR*.7kCMdnj';
-    }
-
     onStatusClick(hashtag: string | undefined): void {
         let statuses = this.getLinkableStatuses(hashtag);
         this.contextStatusesService.setContextStatuses(statuses);
@@ -89,19 +74,5 @@ export class HashtagGalleryComponent extends Responsive implements OnChanges {
 
             this.hashtagStatuses.set(hashtag.name, statuses);
         }
-    }
-
-    private getMainAttachment(status: Status): Attachment | null {
-        const mainStatus = status.reblog ?? status;
-
-        if (!mainStatus.attachments) {
-            return null;
-        }
-    
-        if (mainStatus.attachments?.length === 0) {
-            return null;
-        }
-    
-        return mainStatus.attachments[0]
     }
 }

@@ -45,23 +45,8 @@ export class UsersGalleryComponent extends Responsive implements OnChanges {
         return this.getLinkableStatuses(userName)?.data ?? [];
     }
 
-    getMainAttachmentSrc(status: Status): string {
-        const mainAttachment = this.getMainAttachment(status);
-        return mainAttachment?.smallFile?.url ?? '';
-    }
-
-    getMainAttachmentAlt(status: Status): string | undefined {
-        const mainAttachment = this.getMainAttachment(status);
-        return mainAttachment?.description;
-    }
-
     getMainStatus(status: Status): Status {
         return status.reblog ?? status;
-    }
-
-    getMainAttachmentBlurhash(status: Status): string {
-        const mainAttachment = this.getMainAttachment(status);
-        return mainAttachment?.blurhash ?? 'LEHV6nWB2yk8pyo0adR*.7kCMdnj';
     }
 
     onStatusClick(userName: string | undefined): void {
@@ -91,19 +76,5 @@ export class UsersGalleryComponent extends Responsive implements OnChanges {
                 this.userStatuses.set(user.userName, statuses);
             }
         }
-    }
-
-    private getMainAttachment(status: Status): Attachment | null {
-        const mainStatus = status.reblog ?? status;
-
-        if (!mainStatus.attachments) {
-            return null;
-        }
-    
-        if (mainStatus.attachments?.length === 0) {
-            return null;
-        }
-    
-        return mainStatus.attachments[0]
     }
 }

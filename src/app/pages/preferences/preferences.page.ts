@@ -66,9 +66,7 @@ export class PreferencesPage extends Responsive {
     }
 
     onAlwaysShowNSFWChange(): void {
-        const customReuseStrategy = this.routeReuseStrategy as CustomReuseStrategy;
-        customReuseStrategy?.clear();
-
+        this.clearReuseStrategyState();
         this.preferencesService.alwaysShowNSFW = this.alwaysShowNSFW;
     }
 
@@ -77,14 +75,22 @@ export class PreferencesPage extends Responsive {
     }
 
     onShowAvatarsChange(): void {
+        this.clearReuseStrategyState();
         this.preferencesService.showAvatars = this.showAvatars;
     }
 
     onShowFavouritesChange(): void {
+        this.clearReuseStrategyState();
         this.preferencesService.showFavourites = this.showFavourites;
     }
 
     onShowAltIconChange(): void {
+        this.clearReuseStrategyState();
         this.preferencesService.showAltIcon = this.showAltIcon;
+    }
+
+    private clearReuseStrategyState(): void {
+        const customReuseStrategy = this.routeReuseStrategy as CustomReuseStrategy;
+        customReuseStrategy?.clear();
     }
 }

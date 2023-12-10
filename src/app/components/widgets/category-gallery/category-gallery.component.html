@@ -11,23 +11,11 @@
                     <a [routerLink]="['/statuses', status.id]" [ariaLabel]="'Status added by: ' + getMainStatus(status).user?.userName" (click)="onStatusClick(category.name)">
                         @if (getMainStatus(status).sensitive) {
                             <div class="blurhash">
-                                <app-blurhash-image
-                                    [horizontal]="true"
-                                    [imageSrc]="getMainAttachmentSrc(status)"
-                                    [alt]="getMainAttachmentAlt(status)"
-                                    [blurhash]="getMainAttachmentBlurhash(status)"
-                                    [text]="getMainStatus(status).contentWarning"
-                                    [user]="getMainStatus(status).user">
-                                </app-blurhash-image>
+                                <app-blurhash-image [horizontal]="true" [status]="status"></app-blurhash-image>
                             </div>
                         } @else {
                             <div class="image">
-                                <app-image
-                                    [horizontal]="true"
-                                    [imageSrc]="getMainAttachmentSrc(status)"
-                                    [alt]="getMainAttachmentAlt(status)"
-                                    [user]="getMainStatus(status).user">
-                                </app-image>
+                                <app-image [horizontal]="true" [status]="status"></app-image>
                             </div>
                         }
                     </a>

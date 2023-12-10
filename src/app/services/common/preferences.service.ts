@@ -54,7 +54,7 @@ export class PreferencesService {
     }
 
     public set showFavourites(showFavourites: boolean) {
-        this.persistanceService.set('showAlternativeText', showFavourites ? 'true' : 'false');
+        this.persistanceService.set('showFavourites', showFavourites ? 'true' : 'false');
     }
 
     public get showAltIcon(): boolean {

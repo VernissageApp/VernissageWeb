@@ -6,21 +6,9 @@
                     <div class="image-item" *ngFor="let status of items; trackBy:trackByFn">
                         <a [routerLink]="['/statuses', status.id]" [ariaLabel]="'Status added by: ' + getMainStatus(status).user?.userName">
                             @if (getMainStatus(status).sensitive) {
-                                <app-blurhash-image
-                                    [horizontal]="false"
-                                    [imageSrc]="getMainAttachmentSrc(status)"
-                                    [alt]="getMainAttachmentAlt(status)"
-                                    [blurhash]="getMainAttachmentBlurhash(status)"
-                                    [text]="getMainStatus(status).contentWarning"
-                                    [user]="getMainStatus(status).user">
-                                </app-blurhash-image>
+                                <app-blurhash-image [horizontal]="false" [status]="status"></app-blurhash-image>
                             } @else {
-                                <app-image
-                                    [horizontal]="false" 
-                                    [imageSrc]="getMainAttachmentSrc(status)"
-                                    [alt]="getMainAttachmentAlt(status)"
-                                    [user]="getMainStatus(status).user">
-                                </app-image>
+                                <app-image [horizontal]="false" [status]="status"></app-image>
                             }
                         </a>
                     </div>

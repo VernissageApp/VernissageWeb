@@ -139,21 +139,6 @@ export class GalleryComponent implements OnInit, OnChanges {
         return status.reblog ?? status;
     }
 
-    getMainAttachmentSrc(status: Status): string {
-        const mainAttachment = this.getMainAttachment(status);
-        return mainAttachment?.smallFile?.url ?? '';
-    }
-
-    getMainAttachmentAlt(status: Status): string | undefined {
-        const mainAttachment = this.getMainAttachment(status);
-        return mainAttachment?.description;
-    }
-
-    getMainAttachmentBlurhash(status: Status): string {
-        const mainAttachment = this.getMainAttachment(status);
-        return mainAttachment?.blurhash ?? 'LEHV6nWB2yk8pyo0adR*.7kCMdnj';
-    }
-
     private getSmallerColumnIndex(currentImageHeight: number): number {
         if (!this.sizes) {
             return 0;

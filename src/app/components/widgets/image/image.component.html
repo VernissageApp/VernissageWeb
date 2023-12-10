@@ -7,6 +7,13 @@
         </div>
     }
 
+    @if (signedInUser && showFavourites) {
+        <div class="favourite" (click)="favouriteToogle(); $event.preventDefault(); $event.stopPropagation();">
+            <mat-icon *ngIf="!getMainStatus()?.favourited" class="outline-symbol">grade</mat-icon>
+            <mat-icon *ngIf="getMainStatus()?.favourited" class="fill-symbol">grade</mat-icon>
+        </div>
+    }
+
     @if(showAltIcon && alt) {
         <div class="alt" [matTooltip]="alt" matTooltipPosition="above">ALT</div>
     }
