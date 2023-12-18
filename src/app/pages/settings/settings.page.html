@@ -73,6 +73,30 @@
                             </mat-form-field>
                         </div>
 
+                        <div class="margin-bottom-20">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Maximum number of characters in status</mat-label>
+                                <input matInput type="number" name="maxCharacters" #maxCharacters="ngModel" [(ngModel)]="settings.maxCharacters"
+                                    placeholder="Maximum number of characters in status" aria-label="Maximum number of characters in status" />
+                            </mat-form-field>
+                        </div>
+
+                        <div class="margin-bottom-20">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Maximum number of attachments</mat-label>
+                                <input matInput type="number" name="maxMediaAttachments" #maxMediaAttachments="ngModel" [(ngModel)]="settings.maxMediaAttachments"
+                                    placeholder="Maximum number of attachments" aria-label="Maximum number of attachments" />
+                            </mat-form-field>
+                        </div>
+
+                        <div class="margin-bottom-20">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Maximum file size</mat-label>
+                                <input matInput type="number" name="imageSizeLimit" #imageSizeLimit="ngModel" [(ngModel)]="settings.imageSizeLimit"
+                                    placeholder="Maximum file size" aria-label="Maximum file size" />
+                            </mat-form-field>
+                        </div>
+
                         <mat-divider></mat-divider>
 
                         <div class="margin-bottom-20 margin-top-20">
