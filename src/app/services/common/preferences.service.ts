@@ -10,7 +10,7 @@ export class PreferencesService {
     }
 
     public get isLightTheme(): boolean {
-        return this.persistanceService.get('isLightTheme') === 'true';
+        return (this.persistanceService.get('isLightTheme') ?? 'true') === 'true';
     }
 
     public set isLightTheme(isLightTheme: boolean) {
@@ -18,15 +18,15 @@ export class PreferencesService {
     }
 
     public get isCircleAvatar(): boolean {
-        return this.persistanceService.get('isCircleAvatar') === 'true';
+        return (this.persistanceService.get('isCircleAvatar') ?? 'false') === 'true';
     }
 
     public set isCircleAvatar(isCircleAvatar: boolean) {
-        this.persistanceService.set('isLightTheme', isCircleAvatar ? 'true' : 'false');
+        this.persistanceService.set('isCircleAvatar', isCircleAvatar ? 'true' : 'false');
     }
 
     public get alwaysShowNSFW(): boolean {
-        return this.persistanceService.get('alwaysShowNSFW') === 'true';
+        return (this.persistanceService.get('alwaysShowNSFW') ?? 'false') === 'true';
     }
 
     public set alwaysShowNSFW(alwaysShowNSFW: boolean) {
@@ -34,7 +34,7 @@ export class PreferencesService {
     }
 
     public get showAlternativeText(): boolean {
-        return this.persistanceService.get('showAlternativeText') === 'true';
+        return (this.persistanceService.get('showAlternativeText') ?? 'false') === 'true';
     }
 
     public set showAlternativeText(showAlternativeText: boolean) {
@@ -42,7 +42,7 @@ export class PreferencesService {
     }
 
     public get showAvatars(): boolean {
-        return this.persistanceService.get('showAvatars') === 'true';
+        return (this.persistanceService.get('showAvatars') ?? 'false') === 'true';
     }
 
     public set showAvatars(showAvatars: boolean) {
@@ -50,7 +50,7 @@ export class PreferencesService {
     }
 
     public get showFavourites(): boolean {
-        return this.persistanceService.get('showFavourites') === 'true';
+        return (this.persistanceService.get('showFavourites') ?? 'false') === 'true';
     }
 
     public set showFavourites(showFavourites: boolean) {
@@ -58,7 +58,7 @@ export class PreferencesService {
     }
 
     public get showAltIcon(): boolean {
-        return this.persistanceService.get('showAltIcon') === 'true';
+        return (this.persistanceService.get('showAltIcon') ?? 'false') === 'true';
     }
 
     public set showAltIcon(showAltIcon: boolean) {

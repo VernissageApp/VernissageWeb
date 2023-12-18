@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { encode } from 'blurhash';
 import * as ExifReader from 'exifreader';
@@ -17,6 +17,7 @@ import { Responsive } from 'src/app/common/responsive';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { License } from 'src/app/models/license';
 import { LicensesService } from 'src/app/services/http/liceses.service';
+import { InstanceService } from 'src/app/services/http/instance.service';
 
 @Component({
     selector: 'app-upload',
@@ -26,8 +27,8 @@ import { LicensesService } from 'src/app/services/http/liceses.service';
 })
 export class UploadPage extends Responsive {
     readonly StatusVisibility = StatusVisibility;
-    readonly maxFileSize = 10485760;
-
+    readonly defaultMaxFileSize = 10485760;
+    
     categories: Category[] = [];
     licenses: License[] = [];
     statusText = '';
@@ -37,7 +38,7 @@ export class UploadPage extends Responsive {
     isSensitive = false;
     contentWarning = '';
     selectedIndex = 0;
-
+    maxFileSize = 0;
 
     photos: UploadPhoto[] = [];
 
@@ -46,6 +47,7 @@ export class UploadPage extends Responsive {
                 private categoriesService: CategoriesService,
                 private licensesService: LicensesService,
                 private statusesService: StatusesService,
+                private instanceService: InstanceService,
                 private router: Router,
                 breakpointObserver: BreakpointObserver) {
         super(breakpointObserver);
@@ -53,6 +55,7 @@ export class UploadPage extends Responsive {
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
+        this.maxFileSize = this.instanceService.instance?.configuration?.attachments?.imageSizeLimit ?? 10485760;
 
         [this.categories, this.licenses] = await Promise.all([
             this.categoriesService.all(),

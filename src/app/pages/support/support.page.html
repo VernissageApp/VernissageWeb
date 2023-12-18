@@ -1,0 +1,59 @@
+<div *ngIf="isReady" @fadeIn [ngClass]="{ 'padding-30': !isHandset, 'padding-10': isHandset }">
+
+    <div class="flex-row flex-align-center flex-space-between margin-bottom-10">
+        <h1>Support</h1>
+    </div>
+
+    <!-- Other informations. -->
+    @if (instance) {
+        <h3>
+            Instance information
+        </h3>
+
+        <dl>
+            @if (instance.title) {
+                <dt>Title:</dt>
+                <dd>{{ instance.title }}</dd>
+            }
+
+            @if (instance.description) {
+                <dt>Description:</dt>
+                <dd>{{ instance.description }}</dd>
+            }
+
+            @if (instance.email) {
+                <dt>Email:</dt>
+                <dd>{{ instance.email }}</dd>
+            }
+
+            @if (instance.version) {
+                <dt>Version:</dt>
+                <dd>{{ instance.version }}</dd>
+            }
+
+            @if (instance.languages) {
+                <dt>Languages:</dt>
+                <dd>{{ instance.languages.join(',') }}</dd>
+            }
+
+            <dt>Max status characters:</dt>
+            <dd>{{ instance.configuration?.statuses?.maxCharacters ?? 0 }}</dd>
+
+            <dt>Max media attachments:</dt>
+            <dd>{{ instance.configuration?.statuses?.maxMediaAttachments ?? 0 }}</dd>
+
+            <dt>Image size limit:</dt>
+            <dd>{{ (instance.configuration?.attachments?.imageSizeLimit ?? 0) / 1024 / 1024 }} MB</dd>
+        </dl>
+    }
+
+    <h3>
+        Helpful links
+    </h3>
+    <ul>
+        <li><a [routerLink]="['/terms']">Terms of Service</a></li>
+        <li><a [routerLink]="['/privacy']">Privacy policy</a></li>
+        <li><a href="https://github.com/VernissageApp/VernissageServer">Source code</a></li>
+        <li><a href="https://github.com/VernissageApp/VernissageServer/issues">Report a bug</a></li>
+    </ul>
+</div>

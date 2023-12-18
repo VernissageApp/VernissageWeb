@@ -118,6 +118,10 @@
                         <mat-icon>build</mat-icon>
                         <span>Preferences</span>
                     </button>
+                    <button mat-menu-item [routerLink]="['/support']" aria-label="Support">
+                        <mat-icon>info</mat-icon>
+                        <span>Support</span>
+                    </button>
                     <mat-divider *ngIf="isAdministrator() || isModerator()"></mat-divider>
                     <button *ngIf="isAdministrator() || isModerator()" mat-menu-item [routerLink]="['/users']" aria-label="Users">
                         <mat-icon>people</mat-icon>

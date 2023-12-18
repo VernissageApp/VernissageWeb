@@ -54,8 +54,8 @@
     </div>
   </app-root>
   <script>
-    const theme = localStorage.getItem('theme');
-    if (theme === "dark") {
+    const isLightTheme = localStorage.getItem('isLightTheme');
+    if (isLightTheme === "false") {
       const body = window.document.getElementById('body');
       body.classList.add('dark-theme');
     }

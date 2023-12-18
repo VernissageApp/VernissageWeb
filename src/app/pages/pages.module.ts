@@ -32,6 +32,9 @@ import { ReportsPage } from './reports/reports.page';
 import { UsersPage } from './users/users.page';
 import { HashtagPage } from './hashtag/hashtag.page';
 import { CategoryPage } from './category/category.page';
+import { SupportPage } from './support/support.page';
+import { TermsPage } from './terms/terms.page';
+import { PrivacyPage } from './privacy/privacy.page';
 
 @NgModule({
     imports: [
@@ -67,7 +70,10 @@ import { CategoryPage } from './category/category.page';
         ReportsPage,
         UsersPage,
         HashtagPage,
-        CategoryPage
+        CategoryPage,
+        SupportPage,
+        TermsPage,
+        PrivacyPage
     ],
     exports: [
         ComponentsModule,
@@ -98,7 +104,10 @@ import { CategoryPage } from './category/category.page';
         ReportsPage,
         UsersPage,
         HashtagPage,
-        CategoryPage
+        CategoryPage,
+        SupportPage,
+        TermsPage,
+        PrivacyPage
     ]
 })
 export class PagesModule { }

@@ -31,6 +31,9 @@ import { ReportsPage } from './reports/reports.page';
 import { UsersPage } from './users/users.page';
 import { HashtagPage } from './hashtag/hashtag.page';
 import { CategoryPage } from './category/category.page';
+import { SupportPage } from './support/support.page';
+import { TermsPage } from './terms/terms.page';
+import { PrivacyPage } from './privacy/privacy.page';
 
 const routes: Routes = [
     { path: 'login', component: LoginPage, canActivate: [ loggedOutGuard ] },
@@ -57,6 +60,9 @@ const routes: Routes = [
     { path: 'reports', component: ReportsPage, canActivate: [ authorizationGuard ] },
     { path: 'tags/:tag', component: HashtagPage },
     { path: 'categories/:category', component: CategoryPage },
+    { path: 'support', component: SupportPage },
+    { path: 'terms', component: TermsPage },
+    { path: 'privacy', component: PrivacyPage },
     { path: 'users', component: UsersPage, canActivate: [ authorizationGuard ] },
     { path: ':userName', component: ProfilePage, children: [
         { path: 'following', component: ProfilePage },

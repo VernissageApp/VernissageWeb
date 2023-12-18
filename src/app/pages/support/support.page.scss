@@ -1,0 +1,25 @@
+dl {
+    margin-left: 20px;
+}
+
+dd {
+    display: inline;
+    margin: 0;
+    font-weight: 200;
+}
+
+dt {
+    display: inline-block;
+    width: 240px;
+    font-weight: 400;
+}
+
+dd::after {
+    content: "";
+    display: block;
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 20px;
+}
