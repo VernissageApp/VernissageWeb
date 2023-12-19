@@ -7,6 +7,7 @@ import { Status } from 'src/app/models/status';
 import { ContextStatusesService } from 'src/app/services/common/context-statuses.service';
 import { Attachment } from 'src/app/models/attachment';
 import { LoadingService } from 'src/app/services/common/loading.service';
+import { Responsive } from 'src/app/common/responsive';
 
 @Component({
     selector: 'app-gallery',
@@ -14,7 +15,7 @@ import { LoadingService } from 'src/app/services/common/loading.service';
     styleUrls: ['./gallery.component.scss'],
     animations: fadeInAnimation
 })
-export class GalleryComponent implements OnInit, OnChanges {
+export class GalleryComponent extends Responsive implements OnInit, OnChanges {
     @Input() statuses?: LinkableResult<Status>;
 
     gallery?: Status[][];
@@ -23,17 +24,17 @@ export class GalleryComponent implements OnInit, OnChanges {
     isDuringLoadingMode = false;
     allStatusesLoaded = false;
 
-    isHandset = false;
-    breakpointSubscription?: Subscription;
+    galleryBreakpointSubscription?: Subscription;
 
     constructor(
         private loadingService: LoadingService,
         private contextStatusesService: ContextStatusesService,
-        private breakpointObserver: BreakpointObserver) {
+        private galleryBreakpointObserver: BreakpointObserver) {
+        super(galleryBreakpointObserver);
     }
 
-    ngOnInit(): void {
-        this.breakpointSubscription = this.breakpointObserver.observe([
+    override ngOnInit(): void {
+        this.galleryBreakpointSubscription = this.galleryBreakpointObserver.observe([
             Breakpoints.XSmall, Breakpoints.Small
         ]).subscribe(result => {
             if (result.matches) {

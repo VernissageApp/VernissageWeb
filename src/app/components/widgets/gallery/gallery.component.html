@@ -19,7 +19,7 @@
         </div>
     </div>
 } @else {
-    <div class="text-muted padding-top-30 width-100 text-center">
+    <div class="text-muted padding-top-30 text-center" [ngClass]="{ 'padding-left-30 padding-right-30': !isHandset, 'padding-left-10 padding-right-10': isHandset }">
         <h2>
             Unfortunatelly, there is nothing to see here yet.
         </h2>
