@@ -1,5 +1,6 @@
 app-mini-user-card {
     display: inline-block;
+    vertical-align: text-top;
 }
 
 dl {
@@ -7,15 +8,21 @@ dl {
 }
 
 dd {
-    display: inline;
     margin: 0;
     font-weight: 200;
+}
+
+@media only screen and (min-width: 768px) {
+    dd {
+        display: inline;
+    }
 }
 
 dt {
     display: inline-block;
     width: 240px;
     font-weight: 400;
+    margin-top: 6px;
 }
 
 dd::after {
