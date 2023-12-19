@@ -24,10 +24,12 @@ import { CategoryGalleryComponent } from './widgets/category-gallery/category-ga
 import { BlurhashImageComponent } from './widgets/blurhash-image/blurhash-image.component';
 import { ImageComponent } from './widgets/image/image.component';
 import { DirectivesModule } from '../directives/directive.module';
+import { FooterComponent } from './core/footer/footer.component';
 
 @NgModule({
     declarations: [
         HeaderComponent,
+        FooterComponent,
         PasswordComponent,
         UploadPhotoComponent,
         UserCardComponent,
@@ -65,6 +67,7 @@ import { DirectivesModule } from '../directives/directive.module';
         RouterModule,
         ValidationsModule,
         HeaderComponent,
+        FooterComponent,
         PasswordComponent,
         NgOptimizedImage,
         UploadPhotoComponent,
