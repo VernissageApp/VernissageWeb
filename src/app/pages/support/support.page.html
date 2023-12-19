@@ -21,11 +21,6 @@
                 <dd>{{ instance.description }}</dd>
             }
 
-            @if (instance.email) {
-                <dt>Email:</dt>
-                <dd>{{ instance.email }}</dd>
-            }
-
             @if (instance.version) {
                 <dt>Version:</dt>
                 <dd>{{ instance.version }}</dd>
@@ -44,6 +39,16 @@
 
             <dt>Image size limit:</dt>
             <dd>{{ (instance.configuration?.attachments?.imageSizeLimit ?? 0) / 1024 / 1024 }} MB</dd>
+
+            @if (instance.email) {
+                <dt>Email:</dt>
+                <dd>{{ instance.email }}</dd>
+            }
+
+            @if (instance.contact) {
+                <dt>Contact account:</dt>
+                <dd><app-mini-user-card [user]="instance.contact"></app-mini-user-card></dd>
+            }
         </dl>
     }
 
