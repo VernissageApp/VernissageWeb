@@ -27,8 +27,9 @@ export class HashtagPage extends Responsive {
         private timelineService: TimelineService,
         private loadingService: LoadingService,
         private activatedRoute: ActivatedRoute,
-        breakpointObserver: BreakpointObserver) {
-            super(breakpointObserver);
+        breakpointObserver: BreakpointObserver
+    ) {
+        super(breakpointObserver);
     }
 
     override async ngOnInit(): Promise<void> {

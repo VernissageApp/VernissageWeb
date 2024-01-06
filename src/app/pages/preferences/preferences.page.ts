@@ -33,8 +33,9 @@ export class PreferencesPage extends Responsive {
         private preferencesService: PreferencesService,
         private routeReuseStrategy: RouteReuseStrategy,
         private renderer: Renderer2,
-        breakpointObserver: BreakpointObserver) {
-            super(breakpointObserver);
+        breakpointObserver: BreakpointObserver
+    ) {
+        super(breakpointObserver);
     }
 
     override async ngOnInit(): Promise<void> {

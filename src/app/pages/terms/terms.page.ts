@@ -21,8 +21,9 @@ export class TermsPage extends Responsive implements OnInit {
     constructor(
         private instanceService: InstanceService,
         private windowService: WindowService,
-        breakpointObserver: BreakpointObserver) {
-            super(breakpointObserver);
+        breakpointObserver: BreakpointObserver
+    ) {
+        super(breakpointObserver);
     }
 
     override ngOnInit(): void {

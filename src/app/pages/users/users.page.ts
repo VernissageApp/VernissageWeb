@@ -48,8 +48,9 @@ export class UsersPage extends Responsive {
         private activatedRoute: ActivatedRoute,
         private router: Router,
         private dialog: MatDialog,
-        breakpointObserver: BreakpointObserver) {
-            super(breakpointObserver);
+        breakpointObserver: BreakpointObserver
+    ) {
+        super(breakpointObserver);
     }
 
     override async ngOnInit(): Promise<void> {

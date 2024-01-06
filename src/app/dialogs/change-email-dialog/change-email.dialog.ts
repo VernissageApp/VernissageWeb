@@ -17,7 +17,7 @@ export class ChangeEmailDialog {
         private messagesService: MessagesService,
         private windowService: WindowService,
         public dialogRef: MatDialogRef<ChangeEmailDialog>
-    ) {}
+    ) { }
 
     onNoClick(): void {
         this.dialogRef.close();

@@ -31,8 +31,9 @@ export class SearchPage extends Responsive implements AfterViewInit {
         private activatedRoute: ActivatedRoute,
         private loadingService: LoadingService,
         private router: Router,
-        breakpointObserver: BreakpointObserver) {
-            super(breakpointObserver);
+        breakpointObserver: BreakpointObserver
+    ) {
+        super(breakpointObserver);
     }
 
     override ngOnInit(): void {

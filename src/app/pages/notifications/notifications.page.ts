@@ -27,8 +27,9 @@ export class NotificationsPage extends Responsive {
     constructor(
         private notificationsService: NotificationsService,
         private loadingService: LoadingService,
-        breakpointObserver: BreakpointObserver) {
-            super(breakpointObserver);
+        breakpointObserver: BreakpointObserver
+    ) {
+        super(breakpointObserver);
     }
 
     override async ngOnInit(): Promise<void> {

@@ -27,8 +27,9 @@ export class SettingsPage extends Responsive {
         private messageService: MessagesService,
         private loadingService: LoadingService,
         private settingsService: SettingsService,
-        breakpointObserver: BreakpointObserver) {
-            super(breakpointObserver);
+        breakpointObserver: BreakpointObserver
+    ) {
+        super(breakpointObserver);
     }
 
     override async ngOnInit(): Promise<void> {

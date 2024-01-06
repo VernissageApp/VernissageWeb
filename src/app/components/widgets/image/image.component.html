@@ -1,20 +1,26 @@
 <div class="image-container">
-    <img [ngClass]="{ 'img-vertical': !horizontal, 'img-horizontal': horizontal }" [src]="imageSrc" />
-
-    @if(showAvatar && user) {
-        <div class="avatar">
-            <app-mini-user-card [user]="user" [showUserName]="false" [whiteLink]="true" [size]="avatarSize.verysmall"></app-mini-user-card>
-        </div>
+    @if (!imageIsLoaded) {
+        <canvas class="blurhash" #canvas width="32" height="32"></canvas>
     }
 
-    @if (signedInUser && showFavourites) {
-        <div class="favourite" (click)="favouriteToogle(); $event.preventDefault(); $event.stopPropagation();">
-            <mat-icon *ngIf="!getMainStatus()?.favourited" class="outline-symbol">grade</mat-icon>
-            <mat-icon *ngIf="getMainStatus()?.favourited" class="fill-symbol">grade</mat-icon>
-        </div>
-    }
+    <img [ngClass]="{ 'img-vertical': !horizontal, 'img-horizontal': horizontal }" [src]="imageSrc" (load)="onImageLoaded()" />
 
-    @if(showAltIcon && alt) {
-        <div class="alt" [matTooltip]="alt" matTooltipPosition="above">ALT</div>
+    @if (imageIsLoaded) {
+        @if(showAvatar && user) {
+            <div class="avatar">
+                <app-mini-user-card [user]="user" [showUserName]="false" [whiteLink]="true" [size]="avatarSize.verysmall"></app-mini-user-card>
+            </div>
+        }
+
+        @if (signedInUser && showFavourites) {
+            <div class="favourite" (click)="favouriteToogle(); $event.preventDefault(); $event.stopPropagation();">
+                <mat-icon *ngIf="!getMainStatus()?.favourited" class="outline-symbol">grade</mat-icon>
+                <mat-icon *ngIf="getMainStatus()?.favourited" class="fill-symbol">grade</mat-icon>
+            </div>
+        }
+
+        @if(showAltIcon && alt) {
+            <div class="alt" [matTooltip]="alt" matTooltipPosition="above">ALT</div>
+        }
     }
 </div>

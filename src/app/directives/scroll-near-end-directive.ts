@@ -13,7 +13,7 @@ export class ScrollNearEndDirective implements OnInit {
   
     private window!: Window;
   
-    constructor(private el: ElementRef) {}
+    constructor(private el: ElementRef) { }
   
     ngOnInit(): void {
         // save window object for type safety

@@ -18,8 +18,9 @@ export class SupportPage extends Responsive implements OnInit {
 
     constructor(
         private instanceService: InstanceService,
-        breakpointObserver: BreakpointObserver) {
-            super(breakpointObserver);
+        breakpointObserver: BreakpointObserver
+    ) {
+        super(breakpointObserver);
     }
 
     override ngOnInit(): void {

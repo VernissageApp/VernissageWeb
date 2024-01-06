@@ -23,8 +23,9 @@ export class UsersGalleryComponent extends Responsive implements OnChanges {
     constructor(
         private usersService: UsersService,
         private contextStatusesService: ContextStatusesService,
-        breakpointObserver: BreakpointObserver) {
-            super(breakpointObserver);
+        breakpointObserver: BreakpointObserver
+    ) {
+        super(breakpointObserver);
     }
 
     async ngOnChanges(changes: SimpleChanges): Promise<void> {

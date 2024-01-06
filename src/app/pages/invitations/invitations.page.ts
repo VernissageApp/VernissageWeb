@@ -36,8 +36,9 @@ export class InvitationsPage extends Responsive {
         private loadingService: LoadingService,
         private settingsService: SettingsService,
         private clipboard: Clipboard,
-        breakpointObserver: BreakpointObserver) {
-            super(breakpointObserver);
+        breakpointObserver: BreakpointObserver
+    ) {
+        super(breakpointObserver);
     }
 
     override async ngOnInit(): Promise<void> {

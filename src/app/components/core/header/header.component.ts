@@ -31,8 +31,9 @@ export class HeaderComponent extends Responsive {
         private notificationsService: NotificationsService,
         private routeReuseStrategy: RouteReuseStrategy,
         private router: Router,
-        breakpointObserver: BreakpointObserver) {
-            super(breakpointObserver)
+        breakpointObserver: BreakpointObserver
+    ) {
+        super(breakpointObserver)
     }
 
     override async ngOnInit(): Promise<void> {

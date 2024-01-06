@@ -33,8 +33,9 @@ export class HomePage extends Responsive {
         private loadingService: LoadingService,
         private router: Router,
         private activatedRoute: ActivatedRoute,
-        breakpointObserver: BreakpointObserver) {
-            super(breakpointObserver);
+        breakpointObserver: BreakpointObserver
+    ) {
+        super(breakpointObserver);
     }
 
     override async ngOnInit(): Promise<void> {

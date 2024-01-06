@@ -1,6 +1,5 @@
 import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { decode } from 'blurhash';
-import { PersistanceService } from 'src/app/services/persistance/persistance.service';
 import { AvatarSize } from '../avatar/avatar-size';
 import { User } from 'src/app/models/user';
 import { PreferencesService } from 'src/app/services/common/preferences.service';

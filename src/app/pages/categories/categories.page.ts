@@ -31,8 +31,9 @@ export class CategoriesPage extends Responsive {
         private categoriesService: CategoriesService,
         private loadingService: LoadingService,
         private activatedRoute: ActivatedRoute,
-        breakpointObserver: BreakpointObserver) {
-            super(breakpointObserver);
+        breakpointObserver: BreakpointObserver
+    ) {
+        super(breakpointObserver);
     }
 
     override async ngOnInit(): Promise<void> {

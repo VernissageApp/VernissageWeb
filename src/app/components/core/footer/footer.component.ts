@@ -17,7 +17,8 @@ export class FooterComponent extends Responsive implements OnInit {
     constructor(
         private windowService: WindowService,
         private instanceService: InstanceService,
-        breakpointObserver: BreakpointObserver) {
+        breakpointObserver: BreakpointObserver
+    ) {
         super(breakpointObserver);
     }
 

@@ -23,8 +23,9 @@ export class HashtagGalleryComponent extends Responsive implements OnChanges {
     constructor(
         private timelineService: TimelineService,
         private contextStatusesService: ContextStatusesService,
-        breakpointObserver: BreakpointObserver) {
-            super(breakpointObserver);
+        breakpointObserver: BreakpointObserver
+    ) {
+        super(breakpointObserver);
     }
 
     async ngOnChanges(changes: SimpleChanges): Promise<void> {

@@ -19,8 +19,9 @@ export class CategoryGalleryComponent extends Responsive {
 
     constructor(
         private contextStatusesService: ContextStatusesService,
-        breakpointObserver: BreakpointObserver) {
-            super(breakpointObserver);
+        breakpointObserver: BreakpointObserver
+    ) {
+        super(breakpointObserver);
     }
 
     trackByFn(_: number, item: Status): string | undefined{

@@ -29,7 +29,8 @@ export class GalleryComponent extends Responsive implements OnInit, OnChanges {
     constructor(
         private loadingService: LoadingService,
         private contextStatusesService: ContextStatusesService,
-        private galleryBreakpointObserver: BreakpointObserver) {
+        private galleryBreakpointObserver: BreakpointObserver
+    ) {
         super(galleryBreakpointObserver);
     }
 

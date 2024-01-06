@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { decode } from 'blurhash';
 import { AvatarSize } from '../avatar/avatar-size';
 import { User } from 'src/app/models/user';
 import { PreferencesService } from 'src/app/services/common/preferences.service';
@@ -13,20 +14,26 @@ import { MessagesService } from 'src/app/services/common/messages.service';
     templateUrl: './image.component.html',
     styleUrls: ['./image.component.scss']
 })
-export class ImageComponent implements OnInit {
+export class ImageComponent implements OnInit, AfterViewInit {
     readonly avatarSize = AvatarSize;
 
     @Input() horizontal = true;
     @Input() status?: Status;
 
-    imageSrc?: string;
+    imageSrc = '';
     alt?: string;
+    blurhash?: string;
     user?: User;
     signedInUser?: User;
+    width = 0;
+    height = 0;
+
+    @ViewChild('canvas', { static: false }) readonly canvas?: ElementRef<HTMLCanvasElement>;
 
     showAvatar = true;
     showAltIcon = false;
     showFavourites = false;
+    imageIsLoaded = false;
 
     constructor(
         private preferencesService: PreferencesService,
@@ -39,12 +46,19 @@ export class ImageComponent implements OnInit {
         this.imageSrc = this.getMainAttachmentSrc();
         this.alt = this.getMainAttachmentAlt();
         this.user = this.getMainStatus()?.user;
+        this.blurhash = this.getMainAttachmentBlurhash();
+        this.width = this.getMainAttachmentWidth();
+        this.height = this.getMainAttachmentHeight();
 
         this.showAvatar = this.preferencesService.showAvatars;
         this.showAltIcon = this.preferencesService.showAltIcon;
         this.showFavourites = this.preferencesService.showFavourites;
 
         this.signedInUser = this.authorizationService.getUser();
+    }
+
+    ngAfterViewInit(): void {
+        this.drawCanvas();
     }
 
     async favouriteToogle(): Promise<void> {
@@ -66,6 +80,35 @@ export class ImageComponent implements OnInit {
                 this.messageService.showServerError(error);
             }
         }
+    }
+
+    onImageLoaded(): void {
+        this.imageIsLoaded = true;
+    }
+
+    private drawCanvas(): void {
+        if (!this.blurhash) {
+            return;
+        }
+
+        if (!this.canvas) {
+            return;
+        }
+
+        const pixels = decode(this.blurhash, 32, 32);
+        const ctx = this.canvas.nativeElement.getContext('2d');
+
+        if (!ctx) {
+            return;
+        }
+
+        const imageData = ctx.createImageData(32, 32);
+        if (!imageData) {
+            return;
+        }
+
+        imageData.data.set(pixels);
+        ctx.putImageData(imageData!, 0, 0);
     }
 
     protected getMainStatus(): Status | undefined {
@@ -102,5 +145,32 @@ export class ImageComponent implements OnInit {
         }
     
         return mainStatus.attachments[0]
+    }
+
+    getMainAttachmentBlurhash(): string {
+        if (this.status) {
+            const mainAttachment = this.getMainAttachment(this.status);
+            return mainAttachment?.blurhash ?? 'LEHV6nWB2yk8pyo0adR*.7kCMdnj';
+        }
+
+        return 'LEHV6nWB2yk8pyo0adR*.7kCMdnj';
+    }
+
+    getMainAttachmentWidth(): number {
+        if (this.status) {
+            const mainAttachment = this.getMainAttachment(this.status);
+            return mainAttachment?.smallFile?.width ?? 0;
+        }
+
+        return 0;
+    }
+
+    getMainAttachmentHeight(): number {
+        if (this.status) {
+            const mainAttachment = this.getMainAttachment(this.status);
+            return mainAttachment?.smallFile?.height ?? 0;
+        }
+
+        return 0;
     }
 }

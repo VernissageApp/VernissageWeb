@@ -31,9 +31,10 @@ export class UploadPhotoComponent implements OnInit {
     filteredCountries?: Observable<Country[]>;
     currentCountry?: Country;
 
-    constructor(private countriesService: CountriesService,
-                private locationService: LocationsService) {
-    }
+    constructor(
+        private countriesService: CountriesService,
+        private locationService: LocationsService
+    ) { }
 
     async ngOnInit(): Promise<void> {
         this.allCountries = await this.countriesService.all();

@@ -19,7 +19,7 @@ export class DeleteAccountDialog {
         private windowService: WindowService,
         public dialogRef: MatDialogRef<DeleteAccountDialog>,
         @Inject(MAT_DIALOG_DATA) public data: User
-    ) {}
+    ) { }
 
     onNoClick(): void {
         this.dialogRef.close();

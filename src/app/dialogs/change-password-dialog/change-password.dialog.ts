@@ -17,7 +17,7 @@ export class ChangePasswordDialog {
         private accountService: AccountService,
         private messagesService: MessagesService,
         public dialogRef: MatDialogRef<ChangePasswordDialog>
-    ) {}
+    ) { }
 
     passwordValid(valid: boolean): void {
         this.passwordIsValid = valid;

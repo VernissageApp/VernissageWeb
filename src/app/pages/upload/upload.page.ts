@@ -42,14 +42,16 @@ export class UploadPage extends Responsive {
 
     photos: UploadPhoto[] = [];
 
-    constructor(private messageService: MessagesService,
-                private attachmentsService: AttachmentsService,
-                private categoriesService: CategoriesService,
-                private licensesService: LicensesService,
-                private statusesService: StatusesService,
-                private instanceService: InstanceService,
-                private router: Router,
-                breakpointObserver: BreakpointObserver) {
+    constructor(
+        private messageService: MessagesService,
+        private attachmentsService: AttachmentsService,
+        private categoriesService: CategoriesService,
+        private licensesService: LicensesService,
+        private statusesService: StatusesService,
+        private instanceService: InstanceService,
+        private router: Router,
+        breakpointObserver: BreakpointObserver
+    ) {
         super(breakpointObserver);
     }
 

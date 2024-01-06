@@ -64,8 +64,9 @@ export class StatusPage extends Responsive {
         private router: Router,
         private angularLocation: AngularLocation,
         private dialog: MatDialog,
-        breakpointObserver: BreakpointObserver) {
-            super(breakpointObserver);
+        breakpointObserver: BreakpointObserver
+    ) {
+        super(breakpointObserver);
     }
 
     override async ngOnInit(): Promise<void> {
