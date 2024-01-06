@@ -42,19 +42,21 @@ export class CategoriesPage extends Responsive {
             this.loadingService.showLoader();
 
             const categories = await this.categoriesService.all();
-            for(let category of categories) {
-                const statuses = await this.timelineService.category(category.name, undefined, undefined, undefined, undefined);
-                statuses.context = ContextTimeline.category;
-                statuses.category = category.name;
-
-                if (statuses.data.length) {
-                    this.categoryStatuses.set(category.name, statuses);
-                    this.categories.push(category);
-                }
-            }
+            await Promise.all(categories.map(x => this.loadStatuses(x)));
 
             this.isReady = true;
             this.loadingService.hideLoader();
         });
+    }
+
+    private async loadStatuses(category: Category): Promise<void> {
+        const statuses = await this.timelineService.category(category.name, undefined, undefined, undefined, undefined);
+        statuses.context = ContextTimeline.category;
+        statuses.category = category.name;
+
+        if (statuses.data.length) {
+            this.categoryStatuses.set(category.name, statuses);
+            this.categories.push(category);
+        }
     }
 }
