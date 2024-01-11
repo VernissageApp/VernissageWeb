@@ -212,9 +212,7 @@
                                         <a [routerLink]="[ '/@' + comment.status.user?.userName ]" class="margin-right-5 fw-600">{{ comment.status.user?.name }}</a>
                                         <span class="fw-400 fs-90 text-muted">&#64;{{ comment.status.user?.userName }}</span>
                                     </div>
-                                    <div>
-                                        {{ comment.status.note }}
-                                    </div>
+                                    <div [innerHTML]="comment.status.note"></div>
                                 </div>
                                 <div *ngIf="signedInUser" class="flex-grow-1 text-right">
                                     <mat-icon class="favourited fill-symbol" *ngIf="comment.status.favourited">star</mat-icon>
