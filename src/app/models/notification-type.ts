@@ -24,5 +24,8 @@ export enum NotificationType {
     AdminSignUp = 'adminSignUp',
     
     /// A new report has been filed.
-    AdminReport = 'adminReport'
+    AdminReport = 'adminReport',
+
+    /// A new comment to status has been added.
+    NewComment = 'newComment'
 }

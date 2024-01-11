@@ -72,6 +72,12 @@
                                             <mat-icon>report_problem</mat-icon>
                                             <div>New report</div>
                                         </div>
+
+                                        <!-- NewComment. -->
+                                        <div *ngSwitchCase="notificationType.NewComment" class="flex-row flex-align-center">
+                                            <mat-icon>chat_bubble</mat-icon>
+                                            <div>New comment</div>
+                                        </div>
                                     </ng-container>
                                 </div>
                             </div>
