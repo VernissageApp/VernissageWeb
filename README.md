@@ -7,6 +7,8 @@
 
 Application which is Web component for Vernissage photos sharing platform.
 
+<img src="images/01.png" width="400" > <img src="images/02.png" width="400" >
+
 ## Prerequisites
 
 Before you start Web client you have to run Vernissage API. Here [https://github.com/VernissageApp/VernissageServer](https://github.com/VernissageApp/VernissageServer) you can find instructions how to do it on local development environment.
