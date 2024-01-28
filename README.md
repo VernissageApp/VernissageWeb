@@ -40,7 +40,7 @@ After clonning the reposity you can easly run the Web client. Go to main reposit
 $ ng serve
 ```
 
-Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Navigate to [http://localhost:4200/](http://localhost:4200/). The application will automatically reload if you change any of the source files.
 
 ## Docker
 
