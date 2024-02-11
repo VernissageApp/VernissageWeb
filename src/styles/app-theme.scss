@@ -11,10 +11,6 @@
     $grey: mat.define-palette(mat.$grey-palette);
     $green: mat.define-palette(mat.$green-palette);
 
-    body {
-        background-color: mat.get-color-from-palette($foreground);
-    }
-
     a {
         &:link {
             color: mat.get-color-from-palette($primary);

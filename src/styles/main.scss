@@ -10,6 +10,8 @@
 @import './messages-theme';
 @import './general';
 
+@include mat.core();
+
 // =======================================================================
 // Enable typography with hierarchy.
 
@@ -206,26 +208,38 @@ $vernissage-dark-toolbar-theme: mat.define-light-theme((
 // =======================================================================
 // Enable ligth and dark themes.
 
-// User theme for all components.
+// Set core theme.
+@include mat.core-theme($vernissage-light-theme);
+
+// Use theme for all components.
 @include mat.all-component-themes($vernissage-light-theme);
 
 // Toolbar color set to white.
 @include mat.toolbar-color($vernissage-light-toolbar-theme);
 
-// Include custom vernissage components themes.
+// Set custom Vernissage components themes.
 @include material-app-theme($vernissage-light-theme, $vernissage-gray);
+
+// Set messages theme.
 @include messages-theme($vernissage-light-theme);
 
 .dark-theme {
   // Use different colors for dark theme.
   // https://github.com/angular/components/blob/main/guides/duplicate-theming-styles.md
+
+  // Set dark core colors.
+  @include mat.core-color($vernissage-dark-theme);
+
+  // Use dark colors for all components.
   @include mat.all-component-colors($vernissage-dark-theme);
 
   // Toolbar color set to white.
   @include mat.toolbar-color($vernissage-dark-toolbar-theme);
 
-  // Include custom vernissage components themes.
+  // Set custom Vernissage components themes.
   @include material-app-theme($vernissage-dark-theme, $vernissage-white);
+
+  // Set messages theme.
   @include messages-theme($vernissage-dark-theme);
 }
 
