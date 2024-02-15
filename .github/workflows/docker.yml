@@ -25,7 +25,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags:
+          tags: |
             mczachurski/vernissage-web:latest
             mczachurski/vernissage-web:1.0.0
       - name: Build and push (develop)
