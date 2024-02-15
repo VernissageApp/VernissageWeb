@@ -1,9 +1,16 @@
+name: Build Angular
+
 on:
   push:
     branches:
+      - '**'
       - '!main'
+      - '!develop'
+  pull_request:
+    branches:
+      - main
+      - develop
 
-name: Build Angular
 jobs:
   build:
     runs-on: ubuntu-latest
