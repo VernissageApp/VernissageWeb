@@ -26,8 +26,8 @@ jobs:
           file: ./Dockerfile
           push: true
           tags:
-            - mczachurski/vernissage-web:latest
-            - mczachurski/vernissage-web:1.0.0
+            mczachurski/vernissage-web:latest
+            mczachurski/vernissage-web:1.0.0
       - name: Build and push (develop)
         if: github.ref == 'refs/heads/develop'
         uses: docker/build-push-action@v4
@@ -36,5 +36,5 @@ jobs:
           file: ./Dockerfile
           push: true
           tags:
-            - mczachurski/vernissage-web:develop
-            - mczachurski/vernissage-web:1.0.0-alpha
+            mczachurski/vernissage-web:develop
+            mczachurski/vernissage-web:1.0.0-alpha
