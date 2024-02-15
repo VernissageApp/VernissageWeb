@@ -1,6 +1,6 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, filter } from 'rxjs';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { LinkableResult } from 'src/app/models/linkable-result';
 import { Status } from 'src/app/models/status';
@@ -8,6 +8,8 @@ import { ContextStatusesService } from 'src/app/services/common/context-statuses
 import { Attachment } from 'src/app/models/attachment';
 import { LoadingService } from 'src/app/services/common/loading.service';
 import { Responsive } from 'src/app/common/responsive';
+import { NavigationStart, Router } from '@angular/router';
+import { WindowService } from 'src/app/services/common/window.service';
 
 @Component({
     selector: 'app-gallery',
@@ -25,16 +27,24 @@ export class GalleryComponent extends Responsive implements OnInit, OnChanges {
     allStatusesLoaded = false;
 
     galleryBreakpointSubscription?: Subscription;
+    routeNavigationStartSubscription?: Subscription;
+
+    private startUrl?: URL;
+    private currentUrl?: URL;
 
     constructor(
         private loadingService: LoadingService,
+        private router: Router,
         private contextStatusesService: ContextStatusesService,
-        private galleryBreakpointObserver: BreakpointObserver
+        private galleryBreakpointObserver: BreakpointObserver,
+        private windowService: WindowService
     ) {
         super(galleryBreakpointObserver);
     }
 
     override ngOnInit(): void {
+        this.startUrl = new URL(this.router.routerState.snapshot.url, this.windowService.getApplicationUrl());
+
         this.galleryBreakpointSubscription = this.galleryBreakpointObserver.observe([
             Breakpoints.XSmall, Breakpoints.Small
         ]).subscribe(result => {
@@ -48,6 +58,13 @@ export class GalleryComponent extends Responsive implements OnInit, OnChanges {
                 this.buildGallery();
             }
         });
+
+        this.routeNavigationStartSubscription = this.router.events
+            .pipe(filter(event => event instanceof NavigationStart))  
+            .subscribe(async (event) => {
+                const navigationStarEvent = event as NavigationStart;
+                this.currentUrl = new URL(navigationStarEvent.url, this.windowService.getApplicationUrl());
+            });
     }    
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -60,6 +77,10 @@ export class GalleryComponent extends Responsive implements OnInit, OnChanges {
     }
 
     async onNearEndScroll(): Promise<void> {
+        if (this.startUrl?.pathname !== this.currentUrl?.pathname) {
+            return;
+        }
+
         if (this.allStatusesLoaded) {
             return;
         }
