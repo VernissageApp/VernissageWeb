@@ -19,6 +19,7 @@ import { WindowService } from './services/common/window.service';
 import { CustomReuseStrategy } from './common/custom-reuse-strategy';
 import { HammerModule } from "../../node_modules/@angular/platform-browser";
 import { MatIconRegistry } from '@angular/material/icon';
+import { SettingsService } from './services/http/settings.service';
 // import { NgxCaptchaModule } from 'ngx-captcha';
 
 const jwtOptionsFactory = (persistanceService: PersistanceService, windowService: WindowService) => {
@@ -55,7 +56,7 @@ const httpInterceptor = (router: Router) => new APIInterceptor(router);
         {
             provide: APP_INITIALIZER,
             useFactory: appInitialization,
-            deps: [AuthorizationService, InstanceService],
+            deps: [AuthorizationService, InstanceService, SettingsService],
             multi: true
         },
         {
