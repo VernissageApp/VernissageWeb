@@ -56,6 +56,7 @@ export enum EventType {
     AttachmentsDelete = 'attachmentsDelete',
     
     SettingsList = 'settingsList',
+    SettingsPublic = 'settingsPublic',
     SettingsUpdate = 'settingsUpdate',
     
     ActivityPubRead = 'activityPubRead',

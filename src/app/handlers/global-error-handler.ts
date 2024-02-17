@@ -6,23 +6,28 @@ import { ObjectNotFoundError } from 'src/app/errors/object-not-found-error';
 import { PageNotFoundError } from 'src/app/errors/page-not-found-error';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 import { LoadingService } from '../services/common/loading.service';
+import { SentryErrorHandler } from '@sentry/angular-ivy';
 
-export class GlobalErrorHandler implements ErrorHandler {
+export class GlobalErrorHandler extends SentryErrorHandler {
 
     constructor(
         private injector: Injector,
         private zone: NgZone,
         private authorizationService: AuthorizationService,
         private loadingService: LoadingService
-    ) { }
+    ) {
+        super();
+    }
 
     private get router(): Router {
         return this.injector.get(Router);
     }
 
-    async handleError(error: any): Promise<void> {
+    override async handleError(error: any): Promise<void> {
         await this.zone.run(async () => {
             console.error(error);
+            super.handleError(error);
+
             this.loadingService.hideLoader();
 
             if (this.isObjectNotFoundError(error) || this.isPageNotFoundError(error)) {
