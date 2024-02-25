@@ -18,7 +18,8 @@ import { ReportDialog } from 'src/app/dialogs/report-dialog/report.dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { ReportData } from 'src/app/dialogs/report-dialog/report-data';
 import { ReportsService } from 'src/app/services/http/reports.service';
-import { GalleryItem, ImageItem } from 'ng-gallery';
+import { Gallery, GalleryItem, ImageItem } from 'ng-gallery';
+import { Lightbox } from 'ng-gallery/lightbox';
 import { ContextStatusesService } from 'src/app/services/common/context-statuses.service';
 import { Role } from 'src/app/models/role';
 import { DeleteStatusDialog } from 'src/app/dialogs/delete-status-dialog/delete-status.dialog';
@@ -52,6 +53,7 @@ export class StatusPage extends Responsive {
     hideLeftArrow = false;
     hideRightArrow = false;
     showAlternativeText = false;
+    galleryId = 'statusPageLightbox';
 
     constructor(
         private statusesService: StatusesService,
@@ -64,6 +66,8 @@ export class StatusPage extends Responsive {
         private router: Router,
         private angularLocation: AngularLocation,
         private dialog: MatDialog,
+        private gallery: Gallery,
+        private lightbox: Lightbox,
         breakpointObserver: BreakpointObserver
     ) {
         super(breakpointObserver);
@@ -81,6 +85,9 @@ export class StatusPage extends Responsive {
             this.signedInUser = this.authorizationService.getUser();
             await this.loadPageData(statusId);
 
+            const galleryRef = this.gallery.ref(this.galleryId);
+            galleryRef.load(this.images ?? []);
+
             this.isReady = true;
         });
     }
@@ -89,6 +96,12 @@ export class StatusPage extends Responsive {
         super.ngOnDestroy();
 
         this.routeParamsSubscription?.unsubscribe();
+    }
+
+    openInFullScreen() {
+        this.lightbox.open(this.currentIndex, this.galleryId, {
+            panelClass: 'fullscreen'
+        });
     }
 
     onBackClick(): void {
