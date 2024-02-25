@@ -106,10 +106,11 @@ export class RegisterPage implements OnInit {
                 this.errorMessage = 'Invitation token has been used.';
             } else if (error.error.code === 'userHaveToAcceptAgreement') {
                 this.errorMessage = 'You have to accept server rules.';
+            } else if (error.error.code === 'disposableEmailCannotBeUsed') {
+                this.errorMessage = 'Disposable email cannot be used.';
             } else {
                 this.errorMessage = 'Unexpected error occurred. Please try again.';
             }
-
 
             this.registerMode = RegisterMode.Error;
         }
