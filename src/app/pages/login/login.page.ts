@@ -23,12 +23,14 @@ export class LoginPage implements OnInit {
     readonly LoginMode = LoginMode;
 
     login = new Login('', '');
+    twoFactorToken = '';
     loginMode = LoginMode.Login;
     dirtyErrorStateMatcher = new DirtyErrorStateMatcher();
 
     errorMessage?: string;
     returnUrl?: string;
     authClients?: AuthClient[];
+    showTwoTokenField = false;
 
     constructor(
         private accountService: AccountService,
@@ -49,12 +51,20 @@ export class LoginPage implements OnInit {
         this.authClients = await this.authClientsService.getList();
     }
 
+    onUserNameOrEmailChanged(): void {
+        this.showTwoTokenField = false;
+    }
+
+    onPasswordChanged(): void {
+        this.showTwoTokenField = false;
+    }
+
     async onSubmit(): Promise<void> {
         this.loginMode = LoginMode.Submitting;
 
         try {
             this.clearReuseStrategyState();
-            const accessToken = await this.accountService.login(this.login);
+            const accessToken = await this.accountService.login(this.login, this.twoFactorToken);
             this.authorizationService.signIn(accessToken);
 
             if (this.returnUrl) {
@@ -64,7 +74,13 @@ export class LoginPage implements OnInit {
             }
         } catch (error: any) {
 
-            if (error.error.code === 'invalidLoginCredentials') {
+            if (error.error.code === 'twoFactorTokenNotFound') {
+                this.showTwoTokenField = true;
+                this.errorMessage = 'Enter token from authentication app.';
+            } else if (error.error.code === 'tokenNotValid') {
+                this.showTwoTokenField = true;
+                this.errorMessage = 'Token is not valid. Plase enter new token.';
+            } else if (error.error.code === 'invalidLoginCredentials') {
                 this.errorMessage = 'Invalid credentials.';
             } else if (error.error.code === 'emailNotConfirmed') {
                 this.errorMessage = 'Your email is not confirmed. Check your inbox or reset your password.';
