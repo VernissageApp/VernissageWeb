@@ -26,4 +26,5 @@ export class User {
     public statusesCount = 0;
     public followersCount = 0;
     public followingCount = 0;
+    public twoFactorEnabled = false;
 }

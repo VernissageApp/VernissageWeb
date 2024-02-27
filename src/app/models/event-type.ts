@@ -10,6 +10,9 @@ export enum EventType {
     AccountForgotToken = 'accountForgotToken',
     AccountForgotConfirm = 'accountForgotConfirm',
     AccountRevoke = 'accountRevoke',
+    AccountGetTwoFactorToken = 'accountGetTwoFactorToken',
+    AccountEnableTwoFactorAuthentication = 'accountEnableTwoFactorAuthentication',
+    AccountDisableTwoFactorAuthentication = 'accountDisableTwoFactorAuthentication',
     
     AuthClientsCreate = 'authClientsCreate',
     AuthClientsList = 'authClientsList',

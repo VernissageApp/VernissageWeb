@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -19,6 +19,9 @@ import { ResendEmailConfirmation } from 'src/app/models/resend-email-confirmatio
 import { ChangePasswordDialog } from 'src/app/dialogs/change-password-dialog/change-password.dialog';
 import { Responsive } from 'src/app/common/responsive';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { TwoFactorToken } from 'src/app/models/two-factor-token';
+import { EnableTwoFactorTokenDialog } from 'src/app/dialogs/enable-two-factor-token/enable-two-factor-token.dialog';
+import { DisableTwoFactorTokenDialog } from 'src/app/dialogs/disable-two-factor-token/disable-two-factor-token.dialog';
 
 @Component({
     selector: 'app-account',
@@ -31,6 +34,7 @@ export class AccountPage extends Responsive {
     userName = '';
     user: User = new User();
     isReady = false;
+    twoFactorTokenEnabled = false;
 
     selectedAvatarFile: any = null;
     avatarSrc?: string;
@@ -213,6 +217,26 @@ export class AccountPage extends Responsive {
                 this.authorizationService.signOut()
                 await this.router.navigate(['/']);
             }
+        });
+    }
+
+    openEnableTwoFactorTokenDialog(): void {
+        const dialogRef = this.dialog.open(EnableTwoFactorTokenDialog, {
+            data: this.user
+        });
+
+        dialogRef.afterClosed().subscribe(async () => {
+            await this.loadUserData()
+        });
+    }
+
+    openDisableTwoFactorTokenDialog(): void {
+        const dialogRef = this.dialog.open(DisableTwoFactorTokenDialog, {
+            data: this.user
+        });
+
+        dialogRef.afterClosed().subscribe(async () => {
+            await this.loadUserData()
         });
     }
 
