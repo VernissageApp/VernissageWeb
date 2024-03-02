@@ -18,6 +18,7 @@ import { DeleteStatusDialog } from './delete-status-dialog/delete-status.dialog'
 import { UsersDialog } from './users-dialog/users.dialog';
 import { EnableTwoFactorTokenDialog } from './enable-two-factor-token/enable-two-factor-token.dialog';
 import { DisableTwoFactorTokenDialog } from './disable-two-factor-token/disable-two-factor-token.dialog';
+import { ContentWarningDialog } from './content-warning-dialog/content-warning.dialog';
 
 @NgModule({
     declarations: [
@@ -31,7 +32,8 @@ import { DisableTwoFactorTokenDialog } from './disable-two-factor-token/disable-
         DeleteStatusDialog,
         UsersDialog,
         EnableTwoFactorTokenDialog,
-        DisableTwoFactorTokenDialog
+        DisableTwoFactorTokenDialog,
+        ContentWarningDialog
     ],
     imports: [
         BrowserModule,
@@ -54,7 +56,8 @@ import { DisableTwoFactorTokenDialog } from './disable-two-factor-token/disable-
         DeleteStatusDialog,
         UsersDialog,
         EnableTwoFactorTokenDialog,
-        DisableTwoFactorTokenDialog
+        DisableTwoFactorTokenDialog,
+        ContentWarningDialog
     ]
 })
 export class DialogsModule { }

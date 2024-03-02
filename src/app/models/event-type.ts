@@ -87,6 +87,7 @@ export enum EventType {
     StatusesRead = 'statusesRead',
     StatusesUpdate = 'statusesUpdate',
     StatusesDelete = 'statusesDelete',
+    StatusesUnlist = 'statusesUnlist',
     StatusesReblog = 'statusesReblog',
     StatusesUnreblog = 'statusesUnreblog',
     StatusesFavourite = 'statusesFavourite',

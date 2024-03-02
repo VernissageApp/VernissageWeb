@@ -79,8 +79,74 @@
                     <th mat-header-cell *matHeaderCellDef></th>
                     <td mat-cell *matCellDef="let element" class="text-right">
                         <button type="button" mat-raised-button aria-label="Close report" (click)="onOpen(element)" class="action-button margin-right-10">Open</button>
-                        <button *ngIf="!element.considerationDate" type="button" mat-raised-button color="accent" aria-label="Close report" (click)="onClose(element)" class="action-button">Close</button>
-                        <button *ngIf="element.considerationDate" type="button" mat-raised-button color="accent" aria-label="Restore report" (click)="onRestore(element)" class="action-button">Restore</button>
+
+
+
+                        <button mat-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                            <button
+                                *ngIf="!element.considerationDate"
+                                type="button"
+                                mat-menu-item
+                                color="accent"
+                                aria-label="Close report"
+                                (click)="onClose(element)"
+                                class="action-button">
+                                <mat-icon>cancel</mat-icon>
+                                <span>Close</span>
+                            </button>
+                            <button
+                                *ngIf="element.considerationDate"
+                                type="button"
+                                mat-menu-item
+                                color="accent"
+                                aria-label="Restore report"
+                                (click)="onRestore(element)"
+                                class="action-button">
+                                <mat-icon>settings_backup_restore</mat-icon>
+                                <span>Restore</span>
+                            </button>
+
+                            <button
+                                *ngIf="element.status && !element.considerationDate"
+                                type="button"
+                                mat-menu-item
+                                color="accent"
+                                aria-label="Restore report"
+                                (click)="onUnlist(element)"
+                                class="action-button">
+                                <mat-icon>hide_image</mat-icon>
+                                <span>Unlist status</span>
+                            </button>
+
+                            <button
+                                *ngIf="element.status && !element.considerationDate"
+                                type="button"
+                                mat-menu-item
+                                color="accent"
+                                aria-label="Restore report"
+                                (click)="onDelete(element)"
+                                class="action-button">
+                                <mat-icon>delete</mat-icon>
+                                <span>Delete status</span>
+                            </button>
+
+                            <button
+                                *ngIf="element.status && !element.considerationDate"
+                                type="button"
+                                mat-menu-item
+                                color="accent"
+                                aria-label="Restore report"
+                                (click)="onApplyCW(element)"
+                                class="action-button">
+                                <mat-icon>warning</mat-icon>
+                                <span>Apply CW to status</span>
+                            </button>
+
+                            
+                        </mat-menu>
                     </td>
                 </ng-container>
               
