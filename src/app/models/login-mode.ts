@@ -1,5 +1,4 @@
 export enum LoginMode {
-    Login,
-    Submitting,
-    Error
+    UserNameAndPassword,
+    TwoFactorToken
 }
