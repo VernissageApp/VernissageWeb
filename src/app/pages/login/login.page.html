@@ -10,36 +10,42 @@
                     </mat-card-header>
                     <mat-card-content>
                         <div class="login-content">
-                            <!-- Username. -->
-                            <mat-form-field appearance="outline">
-                                <mat-label>Username or email</mat-label>
-                                <input matInput [errorStateMatcher]="dirtyErrorStateMatcher" name="userNameOrEmail" [(ngModel)]="login.userNameOrEmail" (ngModelChange)="onUserNameOrEmailChanged()" #userNameOrEmail="ngModel" type="text" placeholder="Username or email" aria-label="Username or email" required />
-                                <mat-error *ngIf="userNameOrEmail.dirty && userNameOrEmail.invalid && userNameOrEmail.errors?.required">Enter username or email.</mat-error>
-                            </mat-form-field>
+                            @if (loginMode === LoginMode.UserNameAndPassword) {
+                                <!-- Username. -->
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Username or email</mat-label>
+                                    <input matInput [errorStateMatcher]="dirtyErrorStateMatcher" name="userNameOrEmail" [(ngModel)]="login.userNameOrEmail" #userNameOrEmail="ngModel" type="text" placeholder="Username or email" aria-label="Username or email" required />
+                                    <mat-error *ngIf="userNameOrEmail.dirty && userNameOrEmail.invalid && userNameOrEmail.errors?.required">Enter username or email.</mat-error>
+                                </mat-form-field>
 
-                            <!-- Password. -->
-                            <div class="text-right">
-                                <a routerLink="/forgot-password">Forgot password?</a>
-                            </div>
-                            <mat-form-field appearance="outline">
-                                <mat-label>Password</mat-label>
-                                <input matInput [errorStateMatcher]="dirtyErrorStateMatcher" name="password" [(ngModel)]="login.password" (ngModelChange)="onPasswordChanged()" #password="ngModel" type="password" placeholder="Password" aria-label="Password" required />
-                                <mat-error *ngIf="password.dirty && password.invalid && password.errors?.required">Enter password.</mat-error>
-                            </mat-form-field>
-
-                            <!-- Token 2FA. -->
-                            <mat-form-field *ngIf="showTwoTokenField" appearance="outline">
-                                <mat-label>Token</mat-label>
-                                <input matInput [errorStateMatcher]="dirtyErrorStateMatcher" name="token" [(ngModel)]="twoFactorToken" #twoFactorTokenInput="ngModel" type="text" placeholder="Two factor token" aria-label="Two factor token" required />
-                                <mat-error *ngIf="twoFactorTokenInput.dirty && twoFactorTokenInput.invalid && twoFactorTokenInput.errors?.required">Enter token.</mat-error>
-                            </mat-form-field>
+                                <!-- Password. -->
+                                <div class="text-right">
+                                    <a routerLink="/forgot-password">Forgot password?</a>
+                                </div>
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Password</mat-label>
+                                    <input matInput [errorStateMatcher]="dirtyErrorStateMatcher" name="password" [(ngModel)]="login.password" #password="ngModel" type="password" placeholder="Password" aria-label="Password" required />
+                                    <mat-error *ngIf="password.dirty && password.invalid && password.errors?.required">Enter password.</mat-error>
+                                </mat-form-field>
+                            }
+                            @else {
+                                <!-- Token 2FA. -->
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Token</mat-label>
+                                    <input matInput [errorStateMatcher]="dirtyErrorStateMatcher" name="token" [(ngModel)]="twoFactorToken" #twoFactorTokenInput="ngModel" type="text" placeholder="Two factor token" aria-label="Two factor token" required />
+                                </mat-form-field>
+                                <div *ngIf="tokenMessge" class="fw-400 fs-90 text-error">{{ tokenMessge }}</div>
+                            }
                         </div>
                     </mat-card-content>
                     <mat-card-actions>
                         <div class="login-actions">
-                            <button type="submit" mat-flat-button (click)="loginMode = LoginMode.Login" [disabled]="isSubmittingMode()" color="primary" aria-label="Login">Login</button>
-                            <mat-spinner *ngIf="isSubmittingMode()" [diameter]="24" class="display-inline margin-left-10"></mat-spinner>
-                            <span *ngIf="isErrorMode()" class="mat-small text-error margin-left-10">{{ errorMessage }}</span>
+                            @if (loginMode === LoginMode.TwoFactorToken) {
+                                <button type="button" mat-stroked-button (click)="onCancelTwoFactor()" [disabled]="isSubmitting" class="margin-right-5" aria-label="Cancel">Cancel</button>
+                            }
+                            <button type="submit" mat-flat-button [disabled]="isSubmitting" color="primary" aria-label="Login">Login</button>
+                            <mat-spinner *ngIf="isSubmitting" [diameter]="24" class="display-inline margin-left-10"></mat-spinner>
+                            <span *ngIf="errorMessage" class="mat-small text-error margin-left-10">{{ errorMessage }}</span>
                         </div>
                     </mat-card-actions>
                     <mat-card-footer *ngIf="isRegistrationEnabled()">
