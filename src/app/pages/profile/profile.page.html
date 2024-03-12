@@ -41,7 +41,7 @@
             </div>
 
             <div class="flex-row flex-center padding-top-20">
-                <div class="margin-left-20 margin-right-20"><span class="fw-500">{{ user.statusesCount }}</span><span class="fw-200 margin-left-5" [ngClass]="{ 'dashed': profilePageTab === ProfilePageTab.Statuses}"><a [routerLink]="['/', userName]">Posts</a></span></div>
+                <div class="margin-left-20 margin-right-20"><span class="fw-500">{{ user.statusesCount }}</span><span class="fw-200 margin-left-5" [ngClass]="{ 'dashed': profilePageTab === ProfilePageTab.Statuses}"><a [routerLink]="['posts']">Posts</a></span></div>
                 <div class="margin-left-20 margin-right-20"><span class="fw-500">{{ user.followingCount }}</span><span class="fw-200 margin-left-5" [ngClass]="{ 'dashed': profilePageTab === ProfilePageTab.Following}"><a [routerLink]="['following']">Following</a></span></div>
                 <div class="margin-left-20 margin-right-20"><span class="fw-500">{{ user.followersCount }}</span><span class="fw-200 margin-left-5" [ngClass]="{ 'dashed': profilePageTab === ProfilePageTab.Followers}"><a [routerLink]="['followers']">Followers</a></span></div>
             </div>
