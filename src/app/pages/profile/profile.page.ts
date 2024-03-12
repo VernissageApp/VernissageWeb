@@ -27,7 +27,7 @@ export class ProfilePage extends Responsive implements OnInit, OnDestroy {
     isReady = false;
     allFollowingDisplayed = false;
     allFollowersDisplayed = false;
-    loadingDifferentFrofile = false;
+    loadingDifferentProfile = false;
     profilePageTab = ProfilePageTab.Statuses;
     userName!: string;
 
@@ -66,17 +66,17 @@ export class ProfilePage extends Responsive implements OnInit, OnDestroy {
             .pipe(filter(event => event instanceof NavigationStart))  
             .subscribe(async (event) => {
                 const navigationStarEvent = event as NavigationStart;
-                if (navigationStarEvent.url.includes(this.userName) ) {
-                    this.loadingDifferentFrofile = false;
+                if (navigationStarEvent.url.includes(this.userName.substring(1))) {
+                    this.loadingDifferentProfile = false;
                 } else {
-                    this.loadingDifferentFrofile = true;
+                    this.loadingDifferentProfile = true;
                 }
             });
 
         this.routeNavigationEndSubscription = this.router.events
             .pipe(filter(event => event instanceof NavigationEnd))  
             .subscribe(async (event) => {
-                if (!this.loadingDifferentFrofile) {
+                if (!this.loadingDifferentProfile) {
                     const navigationEndEvent  = event as NavigationEnd;
         
                     if (navigationEndEvent.url.includes('/following')) {
@@ -102,12 +102,12 @@ export class ProfilePage extends Responsive implements OnInit, OnDestroy {
             this.isReady = false;
             this.loadingService.showLoader();
 
-            const userName = params['userName'] as string;
-            if (!userName.startsWith('@')) {
-                throw new PageNotFoundError();
+            let userNameFromParams = params['userName'] as string;
+            if (!userNameFromParams.startsWith('@')) {
+                userNameFromParams = `@${userNameFromParams}`
             }
 
-            this.userName = userName;
+            this.userName = userNameFromParams;
             this.followers = undefined;
             this.following = undefined;
             this.statuses = undefined;
@@ -115,8 +115,8 @@ export class ProfilePage extends Responsive implements OnInit, OnDestroy {
             this.signedInUser = this.authorizationService.getUser();
 
             [this.user, this.latestFollowers] = await Promise.all([
-                this.usersService.profile(userName),
-                this.usersService.followers(userName, undefined, undefined, undefined, 10)
+                this.usersService.profile(this.userName),
+                this.usersService.followers(this.userName, undefined, undefined, undefined, 10)
             ]);
 
             this.relationship = await this.downloadRelationship();
