@@ -30,4 +30,5 @@ export class Settings {
     public webThumbnail = '';
     public webLanguages = '';
     public webContactUserId = '';
+    public systemDefaultUserId = '';
 }
