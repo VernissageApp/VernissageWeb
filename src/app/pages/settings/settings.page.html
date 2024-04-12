@@ -97,6 +97,14 @@
                             </mat-form-field>
                         </div>
 
+                        <div class="margin-bottom-20">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Default system user id</mat-label>
+                                <input matInput name="systemDefaultUserId" #systemDefaultUserId="ngModel" [(ngModel)]="settings.systemDefaultUserId"
+                                    placeholder="Default system user id" aria-label="Default system user id" />
+                            </mat-form-field>
+                        </div>
+
                         <mat-divider></mat-divider>
 
                         <div class="margin-bottom-20 margin-top-20">
