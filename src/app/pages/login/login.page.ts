@@ -23,12 +23,15 @@ export class LoginPage implements OnInit {
     readonly LoginMode = LoginMode;
 
     login = new Login('', '');
-    loginMode = LoginMode.Login;
+    twoFactorToken = '';
+    loginMode = LoginMode.UserNameAndPassword;
     dirtyErrorStateMatcher = new DirtyErrorStateMatcher();
 
     errorMessage?: string;
+    tokenMessge?: string;
     returnUrl?: string;
     authClients?: AuthClient[];
+    isSubmitting = false;
 
     constructor(
         private accountService: AccountService,
@@ -49,12 +52,18 @@ export class LoginPage implements OnInit {
         this.authClients = await this.authClientsService.getList();
     }
 
+    onCancelTwoFactor(): void {
+        this.twoFactorToken = '';
+        this.tokenMessge = undefined;
+        this.loginMode = LoginMode.UserNameAndPassword;
+    }
+
     async onSubmit(): Promise<void> {
-        this.loginMode = LoginMode.Submitting;
+        this.isSubmitting = true;
 
         try {
             this.clearReuseStrategyState();
-            const accessToken = await this.accountService.login(this.login);
+            const accessToken = await this.accountService.login(this.login, this.twoFactorToken);
             this.authorizationService.signIn(accessToken);
 
             if (this.returnUrl) {
@@ -63,8 +72,14 @@ export class LoginPage implements OnInit {
                 await this.router.navigate(['/home']);
             }
         } catch (error: any) {
+            this.errorMessage = undefined;
 
-            if (error.error.code === 'invalidLoginCredentials') {
+            if (error.error.code === 'twoFactorTokenNotFound') {
+                this.tokenMessge = 'Enter token from authentication app.';
+                this.loginMode = LoginMode.TwoFactorToken;
+            } else if (error.error.code === 'tokenNotValid') {
+                this.tokenMessge = 'Token is not valid. Plase enter new token.';
+            } else if (error.error.code === 'invalidLoginCredentials') {
                 this.errorMessage = 'Invalid credentials.';
             } else if (error.error.code === 'emailNotConfirmed') {
                 this.errorMessage = 'Your email is not confirmed. Check your inbox or reset your password.';
@@ -75,21 +90,13 @@ export class LoginPage implements OnInit {
             } else {
                 this.errorMessage = 'Unknown login error. Try again later.';
             }
-
-            this.loginMode = LoginMode.Error;
+        } finally {
+            this.isSubmitting = false;
         }
     }
 
     getExternalProviderUrl(authClient: AuthClient): string {
         return this.windowService.apiUrl() + '/identity/authenticate/' + authClient.uri;
-    }
-
-    isSubmittingMode(): boolean {
-        return this.loginMode === LoginMode.Submitting;
-    }
-
-    isErrorMode(): boolean {
-        return this.loginMode === LoginMode.Error;
     }
 
     isRegistrationEnabled(): boolean {

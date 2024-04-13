@@ -16,6 +16,8 @@ import { Subscription } from 'rxjs';
 import { ReportDetailsDialog } from 'src/app/dialogs/report-details-dialog/report-details.dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { AvatarSize } from 'src/app/components/widgets/avatar/avatar-size';
+import { StatusesService } from 'src/app/services/http/statuses.service';
+import { ContentWarningDialog } from 'src/app/dialogs/content-warning-dialog/content-warning.dialog';
 
 @Component({
     selector: 'app-reports',
@@ -40,6 +42,7 @@ export class ReportsPage extends Responsive {
     constructor(
         private authorizationService: AuthorizationService,
         private reportsService: ReportsService,
+        private statusesService: StatusesService,
         private messageService: MessagesService,
         private loadingService: LoadingService,
         private activatedRoute: ActivatedRoute,
@@ -130,6 +133,67 @@ export class ReportsPage extends Responsive {
             console.error(error);
             this.messageService.showServerError(error);
         }
+    }
+
+    async onUnlist(report: Report): Promise<void> {
+        try {
+            if (!report.status) {
+                return;
+            }
+
+            await this.statusesService.unlist(report.status.id);
+            const savedReport = await this.reportsService.close(report.id);
+            report.considerationUser = savedReport.considerationUser;
+            report.considerationDate = savedReport.considerationDate;
+
+            this.messageService.showSuccess('Status has been unlisted.');
+        } catch (error) {
+            console.error(error);
+            this.messageService.showServerError(error);
+        }
+    }
+
+    async onDelete(report: Report): Promise<void> {
+        try {
+            if (!report.status) {
+                return;
+            }
+
+            await this.statusesService.delete(report.status.id);
+            this.messageService.showSuccess('Status has been deleted.');
+        } catch (error) {
+            console.error(error);
+            this.messageService.showServerError(error);
+        }
+    }
+
+    async onApplyCW(report: Report): Promise<void> {
+        if (!report.status) {
+            return;
+        }
+
+        const dialogRef = this.dialog.open(ContentWarningDialog, { data: report.status.id });
+
+        dialogRef.afterClosed().subscribe(async (result) => {
+            if (result?.contentWarning) {
+                try {
+                    if (!result?.statusId) {
+                        return;
+                    }
+        
+                    await this.statusesService.applyContentWarning(result?.statusId, result?.contentWarning);
+
+                    const savedReport = await this.reportsService.close(report.id);
+                    report.considerationUser = savedReport.considerationUser;
+                    report.considerationDate = savedReport.considerationDate;
+        
+                    this.messageService.showSuccess('Content warning has been added.');
+                } catch (error) {
+                    console.error(error);
+                    this.messageService.showServerError(error);
+                }
+            }
+        });
     }
 
     isAdministrator(): boolean {

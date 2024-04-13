@@ -1,7 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { Subscription, filter, map } from 'rxjs';
-import { PageNotFoundError } from 'src/app/errors/page-not-found-error';
 import { Status } from 'src/app/models/status';
 import { User } from 'src/app/models/user';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
@@ -14,6 +13,7 @@ import { LoadingService } from 'src/app/services/common/loading.service';
 import { LinkableResult } from 'src/app/models/linkable-result';
 import { Responsive } from 'src/app/common/responsive';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
     selector: 'app-profile',
@@ -27,7 +27,7 @@ export class ProfilePage extends Responsive implements OnInit, OnDestroy {
     isReady = false;
     allFollowingDisplayed = false;
     allFollowersDisplayed = false;
-    loadingDifferentFrofile = false;
+    loadingDifferentProfile = false;
     profilePageTab = ProfilePageTab.Statuses;
     userName!: string;
 
@@ -48,6 +48,7 @@ export class ProfilePage extends Responsive implements OnInit, OnDestroy {
     routeNavigationStartSubscription?: Subscription;
 
     constructor(
+        @Inject(DOCUMENT) private document: Document,
         private authorizationService: AuthorizationService,
         private usersService: UsersService,
         private relationshipsService: RelationshipsService,
@@ -66,17 +67,17 @@ export class ProfilePage extends Responsive implements OnInit, OnDestroy {
             .pipe(filter(event => event instanceof NavigationStart))  
             .subscribe(async (event) => {
                 const navigationStarEvent = event as NavigationStart;
-                if (navigationStarEvent.url.includes(this.userName) ) {
-                    this.loadingDifferentFrofile = false;
+                if (navigationStarEvent.url.includes(this.userName.substring(1))) {
+                    this.loadingDifferentProfile = false;
                 } else {
-                    this.loadingDifferentFrofile = true;
+                    this.loadingDifferentProfile = true;
                 }
             });
 
         this.routeNavigationEndSubscription = this.router.events
             .pipe(filter(event => event instanceof NavigationEnd))  
             .subscribe(async (event) => {
-                if (!this.loadingDifferentFrofile) {
+                if (!this.loadingDifferentProfile) {
                     const navigationEndEvent  = event as NavigationEnd;
         
                     if (navigationEndEvent.url.includes('/following')) {
@@ -102,22 +103,32 @@ export class ProfilePage extends Responsive implements OnInit, OnDestroy {
             this.isReady = false;
             this.loadingService.showLoader();
 
-            const userName = params['userName'] as string;
-            if (!userName.startsWith('@')) {
-                throw new PageNotFoundError();
+            let userNameFromParams = params['userName'] as string;
+            if (!userNameFromParams.startsWith('@')) {
+                userNameFromParams = `@${userNameFromParams}`
             }
 
-            this.userName = userName;
+            this.userName = userNameFromParams;
             this.followers = undefined;
             this.following = undefined;
             this.statuses = undefined;
 
             this.signedInUser = this.authorizationService.getUser();
 
-            [this.user, this.latestFollowers] = await Promise.all([
-                this.usersService.profile(userName),
-                this.usersService.followers(userName, undefined, undefined, undefined, 10)
-            ]);
+            this.user = await this.usersService.profile(this.userName);
+            // [this.user, this.latestFollowers] = await Promise.all([
+            //     this.usersService.profile(this.userName),
+            //     this.usersService.followers(this.userName, undefined, undefined, undefined, 10)
+            // ]);
+
+            this.user.fields?.forEach(field => {
+                if (field.value) {
+                    const loweCasedValue = field.value.toLowerCase();
+                    if (loweCasedValue.startsWith('https://')) {
+                        this.createLink(loweCasedValue);
+                    }
+                }
+            });
 
             this.relationship = await this.downloadRelationship();
             await this.loadPageData();
@@ -237,5 +248,13 @@ export class ProfilePage extends Responsive implements OnInit, OnDestroy {
             this.profilePageTab = ProfilePageTab.Statuses;
             this.statuses = await this.usersService.statuses(this.userName);
         }
+    }
+
+    private createLink(url: string): void {
+        let link: HTMLLinkElement = this.document.createElement('link');
+        link.setAttribute('href', url);
+        link.setAttribute('rel', 'me');
+
+        this.document.head.appendChild(link);
     }
 }

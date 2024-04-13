@@ -64,7 +64,13 @@ const routes: Routes = [
     { path: 'terms', component: TermsPage },
     { path: 'privacy', component: PrivacyPage },
     { path: 'users', component: UsersPage, canActivate: [ authorizationGuard ] },
+    { path: 'actors/:userName', component: ProfilePage, children: [
+        { path: 'posts', component: ProfilePage },
+        { path: 'following', component: ProfilePage },
+        { path: 'followers', component: ProfilePage }
+    ]},
     { path: ':userName', component: ProfilePage, children: [
+        { path: 'posts', component: ProfilePage },
         { path: 'following', component: ProfilePage },
         { path: 'followers', component: ProfilePage }
     ]},

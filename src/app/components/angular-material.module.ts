@@ -29,6 +29,7 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatRadioModule } from '@angular/material/radio';
 import { GalleryModule } from 'ng-gallery';
+import { QRCodeModule } from 'angularx-qrcode';
 
 @NgModule({
     imports: [
@@ -61,7 +62,8 @@ import { GalleryModule } from 'ng-gallery';
         MatBadgeModule,
         MatSlideToggleModule,
         MatRadioModule,
-        GalleryModule
+        GalleryModule,
+        QRCodeModule
     ],
     exports: [
         MatToolbarModule,
@@ -93,7 +95,8 @@ import { GalleryModule } from 'ng-gallery';
         MatBadgeModule,
         MatSlideToggleModule,
         MatRadioModule,
-        GalleryModule
+        GalleryModule,
+        QRCodeModule
     ]
 })
 export class AngularMaterialModule { }

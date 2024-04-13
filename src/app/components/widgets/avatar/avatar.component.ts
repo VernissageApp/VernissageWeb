@@ -20,6 +20,6 @@ export class AvatarComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        const avatar = this.preferencesService.isCircleAvatar;
+        this.isCircle = this.preferencesService.isCircleAvatar;
     }
 }

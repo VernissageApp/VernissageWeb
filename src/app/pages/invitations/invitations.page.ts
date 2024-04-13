@@ -10,7 +10,7 @@ import { LoadingService } from 'src/app/services/common/loading.service';
 import { Responsive } from 'src/app/common/responsive';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { SettingsService } from 'src/app/services/http/settings.service';
-import { Settings } from 'src/app/models/settings';
+import { PublicSettings } from 'src/app/models/public-settings';
 
 @Component({
     selector: 'app-invitations',
@@ -21,7 +21,7 @@ import { Settings } from 'src/app/models/settings';
 export class InvitationsPage extends Responsive {
     isReady = false;
     invitations?: Invitation[];
-    settings?: Settings;
+    publicSettings?: PublicSettings;
     displayedColumns: string[] = [];
 
     private readonly displayedColumnsHandsetPortrait: string[] = ['code'];
@@ -50,9 +50,9 @@ export class InvitationsPage extends Responsive {
 
         this.loadingService.showLoader();
 
-        [this.invitations, this.settings] = await Promise.all([
+        [this.invitations, this.publicSettings] = await Promise.all([
             this.invitationsService.get(),
-            this.settingsService.get()
+            this.settingsService.getPublic()
         ]);
 
         this.isReady = true;
@@ -60,7 +60,7 @@ export class InvitationsPage extends Responsive {
     }
 
     canGenerateNewInvitations(): boolean {
-        return (this.invitations?.length ?? 0) < (this.settings?.maximumNumberOfInvitations ?? 0);
+        return (this.invitations?.length ?? 0) < (this.publicSettings?.maximumNumberOfInvitations ?? 0);
     }
 
     protected override onHandsetPortrait(): void {

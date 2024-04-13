@@ -13,7 +13,7 @@
             <ng-container *ngIf="images">
                 <ng-container *ngIf="images.length === 1">
                     <div [ngClass]="{ 'photo-image-container-fixed': !isHandset }">
-                        <img [src]="images[0].data?.src" />
+                        <img [src]="images[0].data?.src" (click)="openInFullScreen()" />
                     </div>
                 </ng-container>
                 <ng-container *ngIf="images.length > 1">
@@ -27,6 +27,7 @@
                         [nav]="false"
                         [autoHeight]="galleryAutoheight"
                         [dotsSize]="8"
+                        (itemClick)="openInFullScreen()"
                         (indexChange)="onImageIndexChange($event)">
                     </gallery>
                 </ng-container>

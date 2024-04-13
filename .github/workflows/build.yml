@@ -1,9 +1,10 @@
+name: Build Angular
+
 on:
   push:
     branches:
-      - '!main'
+      - '**'
 
-name: Build Angular
 jobs:
   build:
     runs-on: ubuntu-latest

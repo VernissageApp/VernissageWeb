@@ -16,6 +16,9 @@ import { ReportDetailsDialog } from './report-details-dialog/report-details.dial
 import { UserRolesDialog } from './user-roles-dialog/user-roles.dialog';
 import { DeleteStatusDialog } from './delete-status-dialog/delete-status.dialog';
 import { UsersDialog } from './users-dialog/users.dialog';
+import { EnableTwoFactorTokenDialog } from './enable-two-factor-token/enable-two-factor-token.dialog';
+import { DisableTwoFactorTokenDialog } from './disable-two-factor-token/disable-two-factor-token.dialog';
+import { ContentWarningDialog } from './content-warning-dialog/content-warning.dialog';
 
 @NgModule({
     declarations: [
@@ -27,7 +30,10 @@ import { UsersDialog } from './users-dialog/users.dialog';
         ReportDetailsDialog,
         UserRolesDialog,
         DeleteStatusDialog,
-        UsersDialog
+        UsersDialog,
+        EnableTwoFactorTokenDialog,
+        DisableTwoFactorTokenDialog,
+        ContentWarningDialog
     ],
     imports: [
         BrowserModule,
@@ -48,7 +54,10 @@ import { UsersDialog } from './users-dialog/users.dialog';
         ReportDetailsDialog,
         UserRolesDialog,
         DeleteStatusDialog,
-        UsersDialog
+        UsersDialog,
+        EnableTwoFactorTokenDialog,
+        DisableTwoFactorTokenDialog,
+        ContentWarningDialog
     ]
 })
 export class DialogsModule { }

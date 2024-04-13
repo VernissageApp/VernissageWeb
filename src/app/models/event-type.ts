@@ -10,6 +10,9 @@ export enum EventType {
     AccountForgotToken = 'accountForgotToken',
     AccountForgotConfirm = 'accountForgotConfirm',
     AccountRevoke = 'accountRevoke',
+    AccountGetTwoFactorToken = 'accountGetTwoFactorToken',
+    AccountEnableTwoFactorAuthentication = 'accountEnableTwoFactorAuthentication',
+    AccountDisableTwoFactorAuthentication = 'accountDisableTwoFactorAuthentication',
     
     AuthClientsCreate = 'authClientsCreate',
     AuthClientsList = 'authClientsList',
@@ -56,6 +59,7 @@ export enum EventType {
     AttachmentsDelete = 'attachmentsDelete',
     
     SettingsList = 'settingsList',
+    SettingsPublic = 'settingsPublic',
     SettingsUpdate = 'settingsUpdate',
     
     ActivityPubRead = 'activityPubRead',
@@ -83,6 +87,7 @@ export enum EventType {
     StatusesRead = 'statusesRead',
     StatusesUpdate = 'statusesUpdate',
     StatusesDelete = 'statusesDelete',
+    StatusesUnlist = 'statusesUnlist',
     StatusesReblog = 'statusesReblog',
     StatusesUnreblog = 'statusesUnreblog',
     StatusesFavourite = 'statusesFavourite',

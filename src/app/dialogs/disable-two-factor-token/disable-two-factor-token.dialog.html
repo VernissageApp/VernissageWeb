@@ -1,0 +1,21 @@
+<form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+    <div mat-dialog-title>Disable two factor authentication (2FA)</div>
+    <div mat-dialog-content>
+        <div class="flex-col gap-0 margin-top-5">
+            <div>
+                Enter token from 2FA application (like Authy or Google Authenticator).
+            </div>
+            <mat-form-field appearance="outline" class="margin-top-10" >
+                <mat-label>Token</mat-label>
+                <input matInput name="code" #codeInput="ngModel" [(ngModel)]="code" type="text" aria-label="Code" required />
+                <mat-error *ngIf="codeInput.invalid && codeInput.errors?.required">
+                    Token is required.
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button type="button" (click)="onNoClick()">Cancel</button>
+        <button mat-raised-button type="submit" color="accent" cdkFocusInitial>Send</button>
+    </div>
+</form>

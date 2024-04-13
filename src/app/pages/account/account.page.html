@@ -163,6 +163,25 @@
     <mat-card class="margin-bottom-20" appearance="outlined">
         <mat-card-header>
             <mat-card-title>
+                Two factor authentication (2FA)
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="flex-row flex-responsive flex-space-between gap-16 margin-bottom-20">
+                <div>
+                    Protect access to your account by two factor authentication (2FA) process.
+                </div>
+                <div>
+                    <button *ngIf="!user.twoFactorEnabled" type="button" (click)="openEnableTwoFactorTokenDialog()" mat-raised-button color="primary" aria-label="Enable two factor authentication">Enable</button>
+                    <button *ngIf="user.twoFactorEnabled" type="button" (click)="openDisableTwoFactorTokenDialog()" mat-raised-button color="accent" aria-label="Disable two factor authentication">Disable</button>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card class="margin-bottom-20" appearance="outlined">
+        <mat-card-header>
+            <mat-card-title>
                 Change email
             </mat-card-title>
         </mat-card-header>

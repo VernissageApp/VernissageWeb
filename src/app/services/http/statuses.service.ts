@@ -9,6 +9,7 @@ import { WindowService } from '../common/window.service';
 import { LinkableResult } from 'src/app/models/linkable-result';
 import { StatusContext } from 'src/app/models/status-context';
 import { User } from 'src/app/models/user';
+import { ContentWarning } from 'src/app/models/content-warning';
 
 @Injectable({
     providedIn: 'root'
@@ -24,6 +25,16 @@ export class StatusesService {
 
     public async delete(id: string): Promise<void> {
         const event$ = this.httpClient.delete(this.windowService.apiUrl() + '/api/v1/statuses/' + id);
+        await firstValueFrom(event$);
+    }
+
+    public async unlist(id: string): Promise<void> {
+        const event$ = this.httpClient.post(this.windowService.apiUrl() + '/api/v1/statuses/' + id + '/unlist', null);
+        await firstValueFrom(event$);
+    }
+
+    public async applyContentWarning(id: string, contentWarning: string): Promise<void> {
+        const event$ = this.httpClient.post(this.windowService.apiUrl() + '/api/v1/statuses/' + id + '/apply-content-warning', new ContentWarning(contentWarning));
         await firstValueFrom(event$);
     }
 
