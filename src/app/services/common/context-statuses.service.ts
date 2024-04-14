@@ -7,6 +7,8 @@ import { TimelineService } from '../http/timeline.service';
 import { TrendingService } from '../http/trending.service';
 import { TrendingPeriod } from 'src/app/models/trending-period';
 import { UsersService } from '../http/users.service';
+import { BookmarksService } from '../http/bookmarks.service';
+import { FavouritesService } from '../http/favourites.service';
 
 @Injectable({
     providedIn: 'root'
@@ -17,6 +19,8 @@ export class ContextStatusesService {
     constructor(
         private persistanceService: PersistanceService,
         private timelineService: TimelineService,
+        private bookmarksService: BookmarksService,
+        private favouritesService: FavouritesService,
         private usersService: UsersService,
         private trendingService: TrendingService
     ) {
@@ -116,6 +120,14 @@ export class ContextStatusesService {
     private async downloadStatuses(minId?: string, maxId?: string): Promise<LinkableResult<Status> | null> {
         if (this.statuses?.context === ContextTimeline.home) {
             return await this.timelineService.home(minId, maxId, undefined);
+        }
+
+        if (this.statuses?.context === ContextTimeline.bookmarks) {
+            return await this.bookmarksService.list(minId, maxId, undefined);
+        }
+
+        if (this.statuses?.context === ContextTimeline.favourites) {
+            return await this.favouritesService.list(minId, maxId, undefined);
         }
 
         if (this.statuses?.context === ContextTimeline.local) {

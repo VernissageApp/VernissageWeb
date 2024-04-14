@@ -1,12 +1,12 @@
 <div *ngIf="!singleButton" class="multiple-buttons flex-row flex-center gap-8">
-    <button @fadeIn *ngIf="isDuringRelationshipAction" type="button" mat-raised-button aria-label="Processing" disabled="disabled">Processing...</button>
-    <button @fadeIn *ngIf="showFollowButton && !isDuringRelationshipAction" type="button" (click)="onFollow()" mat-raised-button color="primary" aria-label="Follow">{{ relationship?.followedBy ? "Follow back" : "Follow" }}</button>
-    <button @fadeIn *ngIf="showUnfollowButton && !isDuringRelationshipAction" type="button" (click)="onUnfollow()" mat-raised-button color="accent" aria-label="Unfollow">{{ relationship?.following ? "Unfollow" : "Cancel request" }}</button>
-    <button @fadeIn *ngIf="showApproveFollowButton && !isDuringRelationshipAction" type="button" (click)="onApproveFollow()" mat-raised-button aria-label="Approve follow">Approve follow</button>
-    <button @fadeIn *ngIf="showApproveFollowButton && !isDuringRelationshipAction" type="button" (click)="onRejectFollow()" mat-raised-button aria-label="Approve follow">Reject follow</button>
+    <button @fadeIn *ngIf="isDuringRelationshipAction" type="button" mat-flat-button aria-label="Processing" disabled="disabled">Processing...</button>
+    <button @fadeIn *ngIf="showFollowButton && !isDuringRelationshipAction" type="button" (click)="onFollow()" mat-flat-button color="primary" aria-label="Follow">{{ relationship?.followedBy ? "Follow back" : "Follow" }}</button>
+    <button @fadeIn *ngIf="showUnfollowButton && !isDuringRelationshipAction" type="button" (click)="onUnfollow()" mat-flat-button color="accent" aria-label="Unfollow">{{ relationship?.following ? "Unfollow" : "Cancel request" }}</button>
+    <button @fadeIn *ngIf="showApproveFollowButton && !isDuringRelationshipAction" type="button" (click)="onApproveFollow()" mat-flat-button aria-label="Approve follow">Approve follow</button>
+    <button @fadeIn *ngIf="showApproveFollowButton && !isDuringRelationshipAction" type="button" (click)="onRejectFollow()" mat-flat-button aria-label="Approve follow">Reject follow</button>
 
     <ng-container *ngIf="showOpenOriginalProfileButton || showMuteButton || showUnmuteButton || showReportButton">
-        <button class="more-button" mat-stroked-button [matMenuTriggerFor]="dropdownMenuOne2" color="primary" aria-label="More options">
+        <button class="more-button" mat-flat-button [matMenuTriggerFor]="dropdownMenuOne2" color="primary" aria-label="More options">
             <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #dropdownMenuOne2="matMenu" xPosition="before">
