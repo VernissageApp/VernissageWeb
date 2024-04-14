@@ -1,0 +1,7 @@
+<div *ngIf="isReady" @fadeIn>
+    <section [ngClass]="{ 'padding-30': !isHandset, 'padding-10': isHandset }">
+        <h1>Bookmarks</h1>
+    </section>
+
+    <app-gallery [statuses]="statuses"></app-gallery>
+</div>

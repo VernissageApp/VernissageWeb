@@ -213,24 +213,24 @@ export class StatusPage extends Responsive {
     }
 
     async onBoostedByDialog(): Promise<void> {
-        if (!this.status?.id) {
+        if (!this.mainStatus?.id) {
             return;
         }
 
         const dialogRef = this.dialog.open(UsersDialog, {
             width: '500px',
-            data: new UsersDialogContext(this.status.id, UsersListType.reblogged, 'Boosted by')
+            data: new UsersDialogContext(this.mainStatus.id, UsersListType.reblogged, 'Boosted by')
         });
     }
 
     async onFavouritedByDialog(): Promise<void> {
-        if (!this.status?.id) {
+        if (!this.mainStatus?.id) {
             return;
         }
 
         const dialogRef = this.dialog.open(UsersDialog, {
             width: '500px',
-            data: new UsersDialogContext(this.status.id, UsersListType.favourited, 'Favourited by')
+            data: new UsersDialogContext(this.mainStatus.id, UsersListType.favourited, 'Favourited by')
         });
     }
 

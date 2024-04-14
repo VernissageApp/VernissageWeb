@@ -128,5 +128,8 @@ export enum EventType {
 
     TrendingStatuses = 'trendingStatuses',
     TrendingUsers = 'trendingUsers',
-    TrendingHashtags = 'trendingHashtags'
+    TrendingHashtags = 'trendingHashtags',
+
+    BookmarksList = 'bookmarksList',
+    FavouritesList = 'favouritesList'
 }

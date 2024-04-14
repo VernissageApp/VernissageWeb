@@ -116,10 +116,7 @@ export class ProfilePage extends Responsive implements OnInit, OnDestroy {
             this.signedInUser = this.authorizationService.getUser();
 
             this.user = await this.usersService.profile(this.userName);
-            // [this.user, this.latestFollowers] = await Promise.all([
-            //     this.usersService.profile(this.userName),
-            //     this.usersService.followers(this.userName, undefined, undefined, undefined, 10)
-            // ]);
+            this.latestFollowers = await this.usersService.followers(this.userName, undefined, undefined, undefined, 10)
 
             this.user.fields?.forEach(field => {
                 if (field.value) {

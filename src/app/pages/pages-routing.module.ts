@@ -34,6 +34,8 @@ import { CategoryPage } from './category/category.page';
 import { SupportPage } from './support/support.page';
 import { TermsPage } from './terms/terms.page';
 import { PrivacyPage } from './privacy/privacy.page';
+import { BookmarksPage } from './bookmarks/bookmarks.page';
+import { FavouritesPage } from './favourites/favourites.page';
 
 const routes: Routes = [
     { path: 'login', component: LoginPage, canActivate: [ loggedOutGuard ] },
@@ -63,6 +65,8 @@ const routes: Routes = [
     { path: 'support', component: SupportPage },
     { path: 'terms', component: TermsPage },
     { path: 'privacy', component: PrivacyPage },
+    { path: 'bookmarks', component: BookmarksPage, data: { reuse: true } },
+    { path: 'favourites', component: FavouritesPage, data: { reuse: true } },
     { path: 'users', component: UsersPage, canActivate: [ authorizationGuard ] },
     { path: 'actors/:userName', component: ProfilePage, children: [
         { path: 'posts', component: ProfilePage },

@@ -9,5 +9,7 @@ export enum ContextTimeline {
     editors,
     category,
     hashtag,
-    user
+    user,
+    bookmarks,
+    favourites
 }

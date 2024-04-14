@@ -76,8 +76,8 @@ export class GalleryComponent extends Responsive implements OnInit, OnChanges {
         }
     }
 
-    async onNearEndScroll(): Promise<void> {
-        if (this.startUrl?.pathname !== this.currentUrl?.pathname) {
+    async onNearEndScroll(): Promise<void> {        
+        if (this.currentUrl && this.startUrl?.pathname !== this.currentUrl.pathname) {
             return;
         }
 

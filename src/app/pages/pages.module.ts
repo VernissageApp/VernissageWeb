@@ -35,6 +35,8 @@ import { CategoryPage } from './category/category.page';
 import { SupportPage } from './support/support.page';
 import { TermsPage } from './terms/terms.page';
 import { PrivacyPage } from './privacy/privacy.page';
+import { BookmarksPage } from './bookmarks/bookmarks.page';
+import { FavouritesPage } from './favourites/favourites.page';
 
 @NgModule({
     imports: [
@@ -73,7 +75,9 @@ import { PrivacyPage } from './privacy/privacy.page';
         CategoryPage,
         SupportPage,
         TermsPage,
-        PrivacyPage
+        PrivacyPage,
+        BookmarksPage,
+        FavouritesPage
     ],
     exports: [
         ComponentsModule,
@@ -107,7 +111,9 @@ import { PrivacyPage } from './privacy/privacy.page';
         CategoryPage,
         SupportPage,
         TermsPage,
-        PrivacyPage
+        PrivacyPage,
+        BookmarksPage,
+        FavouritesPage
     ]
 })
 export class PagesModule { }

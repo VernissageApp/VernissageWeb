@@ -14,6 +14,13 @@
                 <app-follow-buttons-section [user]="user" [relationship]="relationship" (relationChanged)="onMainRelationChanged()"></app-follow-buttons-section>
             </div>
 
+            @if (signedInUser?.id === user.id) {
+                <div class="flex-row flex-center gap-8">
+                    <button type="button" [routerLink]="['/favourites']" mat-flat-button aria-label="Favourites"><mat-icon class="fill-symbol">grade</mat-icon> Favourites</button>
+                    <button type="button" [routerLink]="['/bookmarks']" mat-flat-button aria-label="Bookmarks"><mat-icon class="fill-symbol">bookmark</mat-icon> Bookmarks</button>
+                </div>
+            }
+
             <div *ngIf="(latestFollowers?.data?.length ?? 0) > 0" class="text-center padding-top-10 padding-bottom-10">
                 <div class="text-muted padding-bottom-5">LATEST FOLLOWERS</div>
                 <ng-container *ngFor="let item of latestFollowers?.data">
