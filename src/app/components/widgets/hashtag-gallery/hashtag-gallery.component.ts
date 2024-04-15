@@ -17,8 +17,14 @@ import { TimelineService } from 'src/app/services/http/timeline.service';
     animations: fadeInAnimation
 })
 export class HashtagGalleryComponent extends Responsive implements OnChanges {
+    private readonly numberOfVisibleHashtagsChunk = 10;
+    private readonly numberOfVisibleStatuses = 10;
+
     @Input() hashtags?: LinkableResult<Hashtag>;
+
     private hashtagStatuses = new Map<string, LinkableResult<Status>>();
+    private numberOfVisibleHashtags = this.numberOfVisibleHashtagsChunk;
+    protected visibleHashtags: Hashtag[] = [];
 
     constructor(
         private timelineService: TimelineService,
@@ -30,12 +36,17 @@ export class HashtagGalleryComponent extends Responsive implements OnChanges {
 
     async ngOnChanges(changes: SimpleChanges): Promise<void> {
         if (changes.hashtags) {
+            this.numberOfVisibleHashtags = this.numberOfVisibleHashtagsChunk;
             await this.loadStatuses();
         }
     }
 
     trackByFn(_: number, item: Status): string | undefined{
         return item.id;
+    }
+
+    trackByHashtagFn(_: number, item: Hashtag): string | undefined{
+        return item.name;
     }
 
     getStatuses(userName: string | undefined): Status[] {
@@ -55,6 +66,11 @@ export class HashtagGalleryComponent extends Responsive implements OnChanges {
         this.contextStatusesService.setContextStatuses(statuses);
     }
 
+    async onNearEndScroll(): Promise<void> {
+        this.numberOfVisibleHashtags = this.numberOfVisibleHashtags + this.numberOfVisibleHashtagsChunk;
+        await this.loadStatuses();
+    }
+
     private getLinkableStatuses(hashtag: string | undefined): LinkableResult<Status> | undefined {
         if (!hashtag) {
             return undefined;
@@ -64,12 +80,19 @@ export class HashtagGalleryComponent extends Responsive implements OnChanges {
     }
 
     private async loadStatuses(): Promise<void> {
-        if (!this.hashtags) {
+        if (!this.hashtags || this.hashtags.data?.length === 0) {
+            this.visibleHashtags = [];
             return;
         }
 
-        for(let hashtag of this.hashtags?.data) {
-            let statuses = await this.timelineService.hashtag(hashtag.name, undefined, undefined, undefined, undefined);
+        this.visibleHashtags = this.hashtags.data.slice(0, this.numberOfVisibleHashtags);
+
+        for (let hashtag of this.visibleHashtags) {
+            if (this.hashtagStatuses.has(hashtag.name)) {
+                continue;
+            }
+
+            let statuses = await this.timelineService.hashtag(hashtag.name, undefined, undefined, undefined, this.numberOfVisibleStatuses, undefined);
             statuses.context = ContextTimeline.hashtag;
             statuses.hashtag = hashtag.name;
 

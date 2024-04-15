@@ -1,26 +1,28 @@
 <div [ngClass]="{ 'padding-left-30 padding-right-30': !isHandset, 'padding-left-10 padding-right-10': isHandset }">
-    @if (hashtags?.data?.length) {
-        <div *ngFor="let hashtag of hashtags?.data">
-            <div class="hashtag-header">
-                <a [routerLink]="['/tags', hashtag.name]">
-                    <mat-icon>tag</mat-icon> {{ hashtag.name }}
-                </a>
-            </div>
-            <div class="images-container">
-                <div class="flex-row">
-                    <ng-container *ngFor="let status of getStatuses(hashtag.name); trackBy:trackByFn">
-                        <a [routerLink]="['/statuses', status.id]" [ariaLabel]="'Status added by: ' + getMainStatus(status).user?.userName" (click)="onStatusClick(hashtag.name)">
-                            @if (getMainStatus(status).sensitive) {
-                                <div class="blurhash">
-                                    <app-blurhash-image [horizontal]="true" [status]="status"></app-blurhash-image>
-                                </div>
-                            } @else {
-                                <div class="image">
-                                    <app-image [horizontal]="true" [status]="status"></app-image>
-                                </div>
-                            }
-                        </a>
-                    </ng-container>
+    @if (visibleHashtags.length) {
+        <div appScrollNearEnd (nearEnd)="onNearEndScroll()">
+            <div *ngFor="let hashtag of visibleHashtags; trackBy:trackByHashtagFn">
+                <div class="hashtag-header">
+                    <a [routerLink]="['/tags', hashtag.name]">
+                        <mat-icon>tag</mat-icon> {{ hashtag.name }}
+                    </a>
+                </div>
+                <div class="images-container">
+                    <div class="flex-row">
+                        <ng-container *ngFor="let status of getStatuses(hashtag.name); trackBy:trackByFn">
+                            <a [routerLink]="['/statuses', status.id]" [ariaLabel]="'Status added by: ' + getMainStatus(status).user?.userName" (click)="onStatusClick(hashtag.name)">
+                                @if (getMainStatus(status).sensitive) {
+                                    <div class="blurhash">
+                                        <app-blurhash-image [horizontal]="true" [status]="status"></app-blurhash-image>
+                                    </div>
+                                } @else {
+                                    <div class="image">
+                                        <app-image [horizontal]="true" [status]="status"></app-image>
+                                    </div>
+                                }
+                            </a>
+                        </ng-container>
+                    </div>
                 </div>
             </div>
         </div>
