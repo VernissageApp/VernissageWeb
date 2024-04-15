@@ -4,7 +4,7 @@
       <h1>Timeline</h1>
 
       <section class="small-button-toggle">
-        <mat-button-toggle-group [(ngModel)]="timeline" (ngModelChange)="onTimelineChange()" aria-label="Font Style">
+        <mat-button-toggle-group [(ngModel)]="timeline" (ngModelChange)="onTimelineChange()" aria-label="Timeline type">
           <mat-button-toggle *ngIf="isLoggedIn()" value="private"><mat-icon>person</mat-icon><span *ngIf="!isHandset"> Private</span></mat-button-toggle>
           <mat-button-toggle value="local"><mat-icon>location_city</mat-icon><span *ngIf="!isHandset"> Local</span></mat-button-toggle>
           <mat-button-toggle value="global"><mat-icon>public</mat-icon><span *ngIf="!isHandset"> Global</span></mat-button-toggle>
