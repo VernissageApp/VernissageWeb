@@ -110,14 +110,38 @@ export class UploadPage extends Responsive {
                 temporaryAttachment.description = photo.description;
                 temporaryAttachment.blurhash = photo.blurhash;
 
-                temporaryAttachment.make = photo.make
-                temporaryAttachment.model = photo.model
-                temporaryAttachment.lens = photo.lens
-                temporaryAttachment.createDate = photo.createDate
-                temporaryAttachment.focalLenIn35mmFilm = photo.focalLenIn35mmFilm
-                temporaryAttachment.fNumber = photo.fNumber
-                temporaryAttachment.exposureTime = photo.exposureTime
-                temporaryAttachment.photographicSensitivity = photo.photographicSensitivity
+                if (photo.showMake) {
+                    temporaryAttachment.make = photo.make
+                }
+
+                if (photo.showModel) {
+                    temporaryAttachment.model = photo.model
+                }
+
+                if (photo.showLens) {
+                    temporaryAttachment.lens = photo.lens
+                }
+
+                if (photo.showCreateDate) {
+                    temporaryAttachment.createDate = photo.createDate
+                }
+
+                if (photo.showFocalLenIn35mmFilm) {
+                    temporaryAttachment.focalLenIn35mmFilm = photo.focalLenIn35mmFilm
+                }
+                
+                if (photo.fNumber) {
+                    temporaryAttachment.fNumber = photo.fNumber
+                }
+
+                if (photo.exposureTime) {
+                    temporaryAttachment.exposureTime = photo.exposureTime
+                }
+
+                if (photo.photographicSensitivity) {
+                    temporaryAttachment.photographicSensitivity = photo.photographicSensitivity
+                }
+
                 temporaryAttachment.locationId = photo.locationId;
                 temporaryAttachment.licenseId = photo.licenseId;
 
