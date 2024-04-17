@@ -28,6 +28,7 @@ import { UsersDialog } from 'src/app/dialogs/users-dialog/users.dialog';
 import { UsersDialogContext, UsersListType } from 'src/app/dialogs/users-dialog/users-dialog-context';
 import { Location as AngularLocation } from '@angular/common';
 import { License } from 'src/app/models/license';
+import { WindowService } from 'src/app/services/common/window.service';
 
 @Component({
     selector: 'app-status',
@@ -68,6 +69,7 @@ export class StatusPage extends Responsive {
         private dialog: MatDialog,
         private gallery: Gallery,
         private lightbox: Lightbox,
+        private windowService: WindowService,
         breakpointObserver: BreakpointObserver
     ) {
         super(breakpointObserver);
@@ -232,6 +234,14 @@ export class StatusPage extends Responsive {
             width: '500px',
             data: new UsersDialogContext(this.mainStatus.id, UsersListType.favourited, 'Favourited by')
         });
+    }
+
+    onOpenOrginalPage(): void {
+        if (!this.mainStatus?.activityPubUrl) {
+            return;
+        }
+
+        this.windowService.openPage(this.mainStatus.activityPubUrl);
     }
 
     isLoggedIn(): Boolean {
