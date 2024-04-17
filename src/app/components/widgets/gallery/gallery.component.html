@@ -1,6 +1,6 @@
 @if (statuses?.data?.length) {
     <div class="gallery-container" appScrollNearEnd (nearEnd)="onNearEndScroll()">
-        <div class="image-gallery">
+        <div [ngClass]="{ 'image-gallery': !isHandset }">
             <div class="column" *ngFor="let items of gallery">
                 @if(items.length > 0) {
                     <div class="image-item" *ngFor="let status of items; trackBy:trackByFn">

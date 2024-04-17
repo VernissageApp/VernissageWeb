@@ -207,7 +207,7 @@
                     <app-comment-reply *ngIf="signedInUser" [signedInUser]="signedInUser" [status]="mainStatus" (added)="onCommentAdded()"></app-comment-reply>
 
                     <ng-container *ngIf="(comments?.length ?? 0) > 0">
-                        <div *ngFor="let comment of comments">
+                        <div *ngFor="let comment of comments; trackBy:trackByCommentFn">
                             <div class="flex-row gap-8 padding-top-5 comments" [ngClass]="{ 'replies': !comment.showDivider, 'padding-top-15': comment.showDivider }">
                                 <div>
                                     <app-avatar [user]="comment.status.user" [size]="avatarSize.medium"></app-avatar>
@@ -215,6 +215,8 @@
                                 <div>
                                     <div>
                                         <a [routerLink]="[ '/@' + comment.status.user?.userName ]" class="margin-right-5 fw-600">{{ comment.status.user?.name }}</a>
+                                    </div>
+                                    <div>
                                         <span class="fw-400 fs-90 text-muted">&#64;{{ comment.status.user?.userName }}</span>
                                     </div>
                                     <div [innerHTML]="comment.status.note"></div>

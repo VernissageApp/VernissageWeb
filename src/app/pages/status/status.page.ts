@@ -100,6 +100,10 @@ export class StatusPage extends Responsive {
         this.routeParamsSubscription?.unsubscribe();
     }
 
+    trackByCommentFn(_: number, item: StatusComment): string | undefined{
+        return item.status.id;
+    }
+
     openInFullScreen() {
         this.lightbox.open(this.currentIndex, this.galleryId, {
             panelClass: 'fullscreen'
@@ -181,7 +185,8 @@ export class StatusPage extends Responsive {
         dialogRef.afterClosed().subscribe(async (result) => {
             if (result && this.status?.id) {
                 try {
-                    this.statusesService.delete(this.status?.id);
+                    await this.statusesService.delete(this.status?.id);
+
                     this.messageService.showSuccess('Status has been deleted.');
                     await this.router.navigate(['/']);
                 } catch (error) {
@@ -200,7 +205,7 @@ export class StatusPage extends Responsive {
         dialogRef.afterClosed().subscribe(async (result) => {
             if (result && comment?.id) {
                 try {
-                    this.statusesService.delete(comment?.id);
+                    await this.statusesService.delete(comment?.id);
                     this.messageService.showSuccess('Status has been deleted.');
 
                     if (this.mainStatus) {
