@@ -1,4 +1,4 @@
-<form name="form" (ngSubmit)="f.form.valid && onSubmitComment()" #f="ngForm" novalidate>
+<form name="form" (ngSubmit)="commentForm.form.valid && onSubmitComment()" #commentForm="ngForm" novalidate>
     <div class="flex-row gap-8 comment-add small-text-input">
         <div>
             <app-avatar [user]="signedInUser" [size]="avatarSize.big"></app-avatar>
@@ -6,12 +6,18 @@
         <div class="flex-grow-1">
             <mat-form-field appearance="outline" class="width-100">
                 <mat-label>Comment</mat-label>
-                <input matInput [name]="'comment' + status?.id" #commentInput="ngModel" [(ngModel)]="comment"
-                    placeholder="Comment" aria-label="Comment" required="" appMaxLength="100" />
-                <mat-error *ngIf="commentInput.invalid && commentInput.errors?.appMaxLength">
+                <input
+                    matInput [name]="'comment' + status?.id"
+                    #commentInput="ngModel"
+                    [(ngModel)]="comment"
+                    placeholder="Comment"
+                    aria-label="Comment"
+                    required=""
+                    appMaxLength="200" />
+                <mat-error *ngIf="commentInput.touched && commentInput.invalid && commentInput.errors?.appMaxLength">
                     Too long comment.
                 </mat-error>
-                <mat-error *ngIf="commentInput.invalid && commentInput.errors?.required">
+                <mat-error *ngIf="commentInput.touched && commentInput.invalid && commentInput.errors?.required">
                     Comment required.
                 </mat-error>
             </mat-form-field>
