@@ -16,6 +16,9 @@ export class Status {
     public contentWarning?: string;
     public commentsDisabled = false;
     public replyToStatusId?: string;
+    public isLocal = true;
+    public activityPubId = '';
+    public activityPubUrl = '';
 
     public repliesCount = 0;
     public reblogsCount = 0;

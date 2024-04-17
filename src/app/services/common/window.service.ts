@@ -49,4 +49,8 @@ export class WindowService {
     apiUrl(): string {
         return this.apiProtocol() + '//' + this.apiService();
     }
+
+    openPage(url: string): void {
+        this.nativeWindow.open(url, "_blank");
+    }
 }

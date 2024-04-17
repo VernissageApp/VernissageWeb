@@ -96,6 +96,10 @@
                                     <mat-icon class="fill-symbol">grade</mat-icon>
                                     <span>Favourited by</span>
                                 </button>
+                                <button *ngIf="!mainStatus.isLocal" mat-menu-item (click)="onOpenOrginalPage()">
+                                    <mat-icon class="fill-symbol">export_notes</mat-icon>
+                                    <span>Open orginal page</span>
+                                </button>
                                 <mat-divider></mat-divider>
                                 <button mat-menu-item (click)="onReportDialog(mainStatus)">
                                     <mat-icon class="outline-symbol">report</mat-icon>
