@@ -19,7 +19,7 @@
 </div>
 
 <ng-container *ngIf="singleButton && (showFollowButton || showUnfollowButton || showApproveFollowButton || showApproveFollowButton)">
-    <mat-button-toggle-group>
+    <mat-button-toggle-group [hideSingleSelectionIndicator]="true" (change)="toggleChange($event)">
         <mat-button-toggle *ngIf="showFollowButton" (click)="onFollow()">{{ relationship?.followedBy ? "Follow back" : "Follow" }}</mat-button-toggle>
         <mat-button-toggle *ngIf="showUnfollowButton" (click)="onUnfollow()">{{ relationship?.following ? "Unfollow" : "Cancel request" }}</mat-button-toggle>
         <mat-button-toggle *ngIf="showApproveFollowButton || showApproveFollowButton" [matMenuTriggerFor]="dropdownMenuOne">
