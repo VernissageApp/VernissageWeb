@@ -8,11 +8,11 @@
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Fleur+De+Leah&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fleur+De+Leah&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
 
   <style type="text/css">
     body,
@@ -46,6 +46,8 @@
       100% { transform: rotate(360deg); transform: rotate(360deg); }
     }
   </style>
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#fafafa">
 </head>
 <body id="body" class="mat-app-background mat-typography">
   <app-root>
@@ -58,7 +60,9 @@
     if (isLightTheme === "false") {
       const body = window.document.getElementById('body');
       body.classList.add('dark-theme');
+      window.document.querySelector("meta[name='theme-color']").setAttribute("content", "#303030");
     }
   </script>
+  <noscript>Please enable JavaScript to continue using this application.</noscript>
 </body>
 </html>

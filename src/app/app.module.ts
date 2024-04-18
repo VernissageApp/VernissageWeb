@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, APP_INITIALIZER, ErrorHandler, Injector, NgZone } from '@angular/core';
+import { NgModule, APP_INITIALIZER, ErrorHandler, Injector, NgZone, isDevMode } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
@@ -20,6 +20,7 @@ import { CustomReuseStrategy } from './common/custom-reuse-strategy';
 import { HammerModule } from "../../node_modules/@angular/platform-browser";
 import { MatIconRegistry } from '@angular/material/icon';
 import { SettingsService } from './services/http/settings.service';
+import { ServiceWorkerModule } from '@angular/service-worker';
 // import { NgxCaptchaModule } from 'ngx-captcha';
 
 const jwtOptionsFactory = (persistanceService: PersistanceService, windowService: WindowService) => {
@@ -48,7 +49,13 @@ const httpInterceptor = (router: Router) => new APIInterceptor(router);
         }),
         // NgxCaptchaModule,
         HammerModule,
-        PagesModule
+        PagesModule,
+        ServiceWorkerModule.register('ngsw-worker.js', {
+          enabled: !isDevMode(),
+          // Register the ServiceWorker as soon as the application is stable
+          // or after 30 seconds (whichever comes first).
+          registrationStrategy: 'registerWhenStable:30000'
+        })
     ],
     providers: [
         { provide: RouteReuseStrategy, useClass: CustomReuseStrategy },

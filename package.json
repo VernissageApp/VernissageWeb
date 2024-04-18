@@ -20,6 +20,7 @@
     "@angular/platform-browser": "^17.3.5",
     "@angular/platform-browser-dynamic": "^17.3.5",
     "@angular/router": "^17.3.5",
+    "@angular/service-worker": "^17.3.5",
     "@auth0/angular-jwt": "^5.2.0",
     "@sentry/angular-ivy": "^7.110.1",
     "angularx-qrcode": "^17.0.0",

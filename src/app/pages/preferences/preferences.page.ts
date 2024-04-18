@@ -7,6 +7,7 @@ import { DOCUMENT } from '@angular/common';
 import { PreferencesService } from 'src/app/services/common/preferences.service';
 import { RouteReuseStrategy } from '@angular/router';
 import { CustomReuseStrategy } from 'src/app/common/custom-reuse-strategy';
+import { WindowService } from 'src/app/services/common/window.service';
 
 @Component({
     selector: 'app-preferences',
@@ -33,6 +34,7 @@ export class PreferencesPage extends Responsive {
         private preferencesService: PreferencesService,
         private routeReuseStrategy: RouteReuseStrategy,
         private renderer: Renderer2,
+        private windowService: WindowService,
         breakpointObserver: BreakpointObserver
     ) {
         super(breakpointObserver);
@@ -57,8 +59,10 @@ export class PreferencesPage extends Responsive {
 
         if (this.isLightTheme) {
             this.renderer.removeClass(this.document.body, 'dark-theme');
+            this.windowService.nativeWindow.document.querySelector('meta[name="theme-color"]')?.setAttribute("content", "#fafafa");
         } else {
             this.renderer.addClass(this.document.body, 'dark-theme');
+            this.windowService.nativeWindow.document.querySelector('meta[name="theme-color"]')?.setAttribute("content", "#303030");
         }
     }
 
