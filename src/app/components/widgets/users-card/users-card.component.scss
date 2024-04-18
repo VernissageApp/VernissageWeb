@@ -1,4 +1,38 @@
-.users-card {
+.user-wrapper {
+    align-items: center;
+    display: flex;
+    gap: 10px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+
+    .user-display-name {
+        display: flex;
+        gap: 10px;
+        flex: 1 1 auto;
+        overflow: hidden;
+        align-items: center;
+    }
+
+    .user-statuses-tag {
+        display: none;
+    }
+
+    @media only screen and (min-width: 500px) {
+        .user-statuses-tag {
+            display: block;
+        }
+    }
+
+    .user-following-tag {
+        display: none;
+    }
+
+    @media only screen and (min-width: 600px) {
+        .user-following-tag {
+            display: block;
+        }
+    }
+
     .bio {
         opacity: 0.7;
 
