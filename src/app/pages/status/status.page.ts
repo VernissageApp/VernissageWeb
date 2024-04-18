@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
+import { decode } from 'blurhash';
 import { Subscription } from 'rxjs';
 import { StatusesService } from 'src/app/services/http/statuses.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -40,6 +41,8 @@ export class StatusPage extends Responsive {
     readonly statusVisibility = StatusVisibility;
     readonly avatarSize = AvatarSize;
 
+    @ViewChild('canvas', { static: false }) readonly canvas?: ElementRef<HTMLCanvasElement>;
+
     isReady = false;
     status?: Status;
     comments?: StatusComment[];
@@ -48,6 +51,7 @@ export class StatusPage extends Responsive {
     signedInUser?: User;
     replyStatus?: Status;
     images?: GalleryItem[];
+    imageIsLoaded = false;
 
     galleryAutoheight = false;
     currentIndex = 0;
@@ -55,6 +59,9 @@ export class StatusPage extends Responsive {
     hideRightArrow = false;
     showAlternativeText = false;
     galleryId = 'statusPageLightbox';
+    imageWidth = 32;
+    imageHeight = 32;
+    blurhash = 'LEHV6nWB2yk8pyo0adR*.7kCMdnj';
 
     constructor(
         private statusesService: StatusesService,
@@ -69,6 +76,7 @@ export class StatusPage extends Responsive {
         private dialog: MatDialog,
         private gallery: Gallery,
         private lightbox: Lightbox,
+        private changeDetectorRef: ChangeDetectorRef,
         private windowService: WindowService,
         breakpointObserver: BreakpointObserver
     ) {
@@ -91,6 +99,9 @@ export class StatusPage extends Responsive {
             galleryRef.load(this.images ?? []);
 
             this.isReady = true;
+
+            this.changeDetectorRef.detectChanges();
+            this.drawCanvas();
         });
     }
 
@@ -98,6 +109,10 @@ export class StatusPage extends Responsive {
         super.ngOnDestroy();
 
         this.routeParamsSubscription?.unsubscribe();
+    }
+
+    onImageLoaded(): void {
+        this.imageIsLoaded = true;
     }
 
     trackByCommentFn(_: number, item: StatusComment): string | undefined{
@@ -478,6 +493,9 @@ export class StatusPage extends Responsive {
         }); 
 
         this.comments = await this.getAllReplies(this.mainStatus.id);
+        this.setBlurhash();
+        this.setImageWidth();
+        this.setImageHeight();
     }
 
     private async getAllReplies(statusId: string): Promise<StatusComment[]> {
@@ -498,5 +516,60 @@ export class StatusPage extends Responsive {
             replies.push(new StatusComment(item, false));
             await this.getReplies(item.id, replies);
         }
+    }
+
+    private setBlurhash(): void {
+        if (!this.mainStatus?.attachments || this.mainStatus?.attachments?.length === 0) {
+            return;
+        }
+
+        this.blurhash =  this.mainStatus.attachments[0].blurhash ?? 'LEHV6nWB2yk8pyo0adR*.7kCMdnj';
+    }
+
+    private setImageWidth(): void {
+        if (!this.mainStatus?.attachments || this.mainStatus?.attachments?.length === 0) {
+            return;
+        }
+
+        const width = this.mainStatus.attachments[0].smallFile?.width;
+        if (!width) {
+            return;
+        }
+
+        this.imageWidth = width;
+    }
+
+    private setImageHeight(): void {
+        if (!this.mainStatus?.attachments || this.mainStatus?.attachments?.length === 0) {
+            return;
+        }
+
+        const height = this.mainStatus.attachments[0].smallFile?.height;
+        if (!height) {
+            return;
+        }
+
+        this.imageHeight = height;
+    }
+
+    private drawCanvas(): void {
+        if (!this.canvas) {
+            return;
+        }
+
+        const pixels = decode(this.blurhash, this.imageWidth, this.imageHeight);
+        const ctx = this.canvas.nativeElement.getContext('2d');
+
+        if (!ctx) {
+            return;
+        }
+
+        const imageData = ctx.createImageData(this.imageWidth, this.imageHeight);
+        if (!imageData) {
+            return;
+        }
+
+        imageData.data.set(pixels);
+        ctx.putImageData(imageData!, 0, 0);
     }
 }
