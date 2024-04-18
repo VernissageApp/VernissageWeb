@@ -13,7 +13,8 @@
             <ng-container *ngIf="images">
                 <ng-container *ngIf="images.length === 1">
                     <div [ngClass]="{ 'photo-image-container-fixed': !isHandset }">
-                        <img [src]="images[0].data?.src" (click)="openInFullScreen()" />
+                        <canvas [ngClass]="{ 'display-none': imageIsLoaded }" class="blurhash" #canvas [width]="imageWidth" [height]="imageHeight"></canvas>
+                        <img @fadeIn [ngClass]="{ 'display-none': !imageIsLoaded }" [src]="images[0].data?.src" (click)="openInFullScreen()" (load)="onImageLoaded()" />
                     </div>
                 </ng-container>
                 <ng-container *ngIf="images.length > 1">
