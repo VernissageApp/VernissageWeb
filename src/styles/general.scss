@@ -403,3 +403,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .vertical-align-bottom {
   vertical-align: bottom;
 }
+
+.overflow-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
