@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { decode } from 'blurhash';
 import { Subscription } from 'rxjs';
@@ -27,9 +27,9 @@ import { DeleteStatusDialog } from 'src/app/dialogs/delete-status-dialog/delete-
 import { PreferencesService } from 'src/app/services/common/preferences.service';
 import { UsersDialog } from 'src/app/dialogs/users-dialog/users.dialog';
 import { UsersDialogContext, UsersListType } from 'src/app/dialogs/users-dialog/users-dialog-context';
-import { Location as AngularLocation } from '@angular/common';
 import { License } from 'src/app/models/license';
 import { WindowService } from 'src/app/services/common/window.service';
+import { RoutingStateService } from 'src/app/services/common/routing-state.service';
 
 @Component({
     selector: 'app-status',
@@ -48,10 +48,13 @@ export class StatusPage extends Responsive {
     comments?: StatusComment[];
     mainStatus?: Status;
     routeParamsSubscription?: Subscription;
+    routeNavigationEndSubscription?: Subscription;
     signedInUser?: User;
     replyStatus?: Status;
     images?: GalleryItem[];
     imageIsLoaded = false;
+    firstCanvasInitialization = false;
+    urlToGallery?: string;
 
     galleryAutoheight = false;
     currentIndex = 0;
@@ -72,7 +75,7 @@ export class StatusPage extends Responsive {
         private preferencesService: PreferencesService,
         private activatedRoute: ActivatedRoute,
         private router: Router,
-        private angularLocation: AngularLocation,
+        private routingStateService: RoutingStateService,
         private dialog: MatDialog,
         private gallery: Gallery,
         private lightbox: Lightbox,
@@ -87,6 +90,7 @@ export class StatusPage extends Responsive {
         super.ngOnInit();
         this.isReady = false;
 
+        this.urlToGallery = this.routingStateService.getPreviousUrl();
         this.showAlternativeText = this.preferencesService.showAlternativeText;
 
         this.routeParamsSubscription = this.activatedRoute.params.subscribe(async params => {
@@ -100,8 +104,10 @@ export class StatusPage extends Responsive {
 
             this.isReady = true;
 
-            this.changeDetectorRef.detectChanges();
-            this.drawCanvas();
+            if (!this.firstCanvasInitialization) {
+                this.changeDetectorRef.detectChanges();
+                this.drawCanvas();
+            }
         });
     }
 
@@ -109,6 +115,7 @@ export class StatusPage extends Responsive {
         super.ngOnDestroy();
 
         this.routeParamsSubscription?.unsubscribe();
+        this.routeNavigationEndSubscription?.unsubscribe();
     }
 
     onImageLoaded(): void {
@@ -126,14 +133,16 @@ export class StatusPage extends Responsive {
     }
 
     onBackClick(): void {
-        this.angularLocation.back();
+        if (this.urlToGallery) {
+            this.router.navigateByUrl(this.urlToGallery);
+        }
     }
 
     async onPrevClick(): Promise<void> {
         if (this.status?.id) {
             const previousStatus = await this.contextStatusesService.getPrevious(this.status?.id);
             if (previousStatus) {
-                await this.router.navigate(['/statuses', previousStatus.id], { skipLocationChange: true });
+                await this.router.navigate(['/statuses', previousStatus.id]);
                 this.hideRightArrow = false;
             } else {
                 this.hideLeftArrow = true;
@@ -145,7 +154,7 @@ export class StatusPage extends Responsive {
         if (this.status?.id) {
             const nextStatus = await this.contextStatusesService.getNext(this.status?.id);
             if (nextStatus) {
-                await this.router.navigate(['/statuses', nextStatus.id], { skipLocationChange: true });
+                await this.router.navigate(['/statuses', nextStatus.id]);
                 this.hideLeftArrow = false;
             } else {
                 this.hideRightArrow = true;
@@ -269,7 +278,7 @@ export class StatusPage extends Responsive {
     }
 
     showBackArrow(): boolean {
-        return !this.isHandset;
+        return !this.isHandset && !!this.urlToGallery;
     }
 
     showContextArrows(): boolean {
@@ -480,7 +489,7 @@ export class StatusPage extends Responsive {
     }
 
     private async loadPageData(statusId: string): Promise<void> {
-        this.status = await this.statusesService.get(statusId)
+        this.status = await this.statusesService.get(statusId);
 
         if (this.status.reblog) {
             this.mainStatus = this.status.reblog;
@@ -488,14 +497,16 @@ export class StatusPage extends Responsive {
             this.mainStatus = this.status;
         }
 
+        this.setBlurhash();
+        this.setImageWidth();
+        this.setImageHeight();
+        this.imageIsLoaded = false;
+
         this.images = this.mainStatus.attachments?.map(attachment => {
             return new ImageItem({ src: attachment.originalFile?.url, thumb: attachment.smallFile?.url })
         }); 
 
         this.comments = await this.getAllReplies(this.mainStatus.id);
-        this.setBlurhash();
-        this.setImageWidth();
-        this.setImageHeight();
     }
 
     private async getAllReplies(statusId: string): Promise<StatusComment[]> {
@@ -524,6 +535,7 @@ export class StatusPage extends Responsive {
         }
 
         this.blurhash =  this.mainStatus.attachments[0].blurhash ?? 'LEHV6nWB2yk8pyo0adR*.7kCMdnj';
+        this.drawCanvas();
     }
 
     private setImageWidth(): void {
@@ -564,6 +576,7 @@ export class StatusPage extends Responsive {
             return;
         }
 
+        ctx.clearRect(0, 0, this.imageWidth, this.imageHeight);
         const imageData = ctx.createImageData(this.imageWidth, this.imageHeight);
         if (!imageData) {
             return;
@@ -571,5 +584,7 @@ export class StatusPage extends Responsive {
 
         imageData.data.set(pixels);
         ctx.putImageData(imageData!, 0, 0);
+
+        this.firstCanvasInitialization = true;
     }
 }
