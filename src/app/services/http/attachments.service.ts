@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { TemporaryAttachment } from 'src/app/models/temporary-attachment';
 import { WindowService } from '../common/window.service';
+import { AttachmentDescription } from 'src/app/models/attachment-description';
 
 @Injectable({
     providedIn: 'root'
@@ -24,5 +25,10 @@ export class AttachmentsService {
     public async deleteAttachment(id: string): Promise<void> {
         const event$ = this.httpClient.delete(this.windowService.apiUrl() + '/api/v1/attachments/' + id);
         await firstValueFrom(event$);
+    }
+
+    public async describe(id: string): Promise<AttachmentDescription> {
+        const event$ = this.httpClient.get<AttachmentDescription>(this.windowService.apiUrl() + '/api/v1/attachments/' + id + '/describe');
+        return await firstValueFrom(event$);
     }
 }

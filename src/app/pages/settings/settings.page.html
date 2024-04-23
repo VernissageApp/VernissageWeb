@@ -190,6 +190,24 @@
                         <mat-divider></mat-divider>
 
                         <div class="margin-bottom-20 margin-top-20">
+                            <div>
+                                <mat-checkbox name="isOpenAIEnabled" color="primary" [disableRipple]="true" [(ngModel)]="settings.isOpenAIEnabled">
+                                    Is OpenAPI enabled
+                                </mat-checkbox>
+                            </div>
+                        </div>
+
+                        <div class="margin-bottom-20">
+                            <mat-form-field appearance="outline">
+                                <mat-label>OpenAI secure key</mat-label>
+                                <input matInput name="openAPIKey" #openAPIKey="ngModel" [(ngModel)]="settings.openAIKey"
+                                    placeholder="OpenAI key" aria-label="OpenAI key" />
+                            </mat-form-field>
+                        </div>
+
+                        <mat-divider></mat-divider>
+
+                        <div class="margin-bottom-20 margin-top-20">
                             <mat-form-field>
                                 <mat-label>Events to log</mat-label>
                                 <mat-select [(value)]="settings.eventsToStore" multiple>

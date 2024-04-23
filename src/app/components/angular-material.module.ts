@@ -62,6 +62,7 @@ import { QRCodeModule } from 'angularx-qrcode';
         MatBadgeModule,
         MatSlideToggleModule,
         MatRadioModule,
+        MatProgressSpinnerModule,
         GalleryModule,
         QRCodeModule
     ],
@@ -95,6 +96,7 @@ import { QRCodeModule } from 'angularx-qrcode';
         MatBadgeModule,
         MatSlideToggleModule,
         MatRadioModule,
+        MatProgressSpinnerModule,
         GalleryModule,
         QRCodeModule
     ]
