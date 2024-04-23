@@ -10,9 +10,18 @@
                 #altTextInput="ngModel"
                 [(ngModel)]="photo.description"
                 aria-label="Alt text"
-                appMaxLength="500"></textarea>
+                appMaxLength="2000"></textarea>
         <mat-error *ngIf="altTextInput.invalid && altTextInput.errors?.appMaxLength">Too long alt text.</mat-error>
     </mat-form-field>
+
+    @if (isOpenAIEnabled) {
+        <div class="flex-row flex-end">
+            <mat-spinner *ngIf="describeInProgress" class="margin-top-10 margin-right-10" [diameter]="18"></mat-spinner>
+            <button mat-stroked-button color="primary" (click)="onGenerateDescription()" [disabled]="!photo.isUploaded || describeInProgress">
+                <mat-icon>smart_toy</mat-icon> Generate
+            </button>
+        </div>
+    }
 
     <div class="text-muted">Location</div>
     <mat-form-field appearance="outline" class="margin-top-10">

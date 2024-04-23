@@ -97,10 +97,10 @@
                     </mat-card-content>
 
                     <mat-card-actions>
-                        <div class="register-actions">
+                        <div class="flex-row register-actions">
                             <button type="submit" mat-flat-button (click)="registerMode = RegisterMode.Register" [disabled]="isSubmittingMode()" color="primary" aria-label="Register">Register</button>
-                            <mat-spinner *ngIf="isSubmittingMode()" [diameter]="24" class="display-inline margin-left-10"></mat-spinner>
-                            <span *ngIf="isErrorMode()" class="mat-small text-error margin-left-10">{{ errorMessage }}</span>
+                            <mat-spinner *ngIf="isSubmittingMode()" [diameter]="18" class="margin-left-10 margin-top-5"></mat-spinner>
+                            <div *ngIf="isErrorMode()" class="mat-small text-error margin-left-10">{{ errorMessage }}</div>
                         </div>
                     </mat-card-actions>
                 </mat-card>

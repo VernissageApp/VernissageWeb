@@ -31,4 +31,7 @@ export class Settings {
     public webLanguages = '';
     public webContactUserId = '';
     public systemDefaultUserId = '';
+
+    public isOpenAIEnabled = false;
+    public openAIKey = '';
 }
