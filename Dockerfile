@@ -1,3 +1,4 @@
+###############################################################################
 # Stage 1: Compile and Build angular codebase
 
 # Use official node image as the base image
@@ -13,21 +14,43 @@ COPY ./ /usr/local/app/
 RUN commit=$(git rev-parse --short HEAD) && sed -i -e "s/buildx/$commit/g" src/app/pages/support/support.page.html
 
 # Install all the dependencies
-RUN npm install
+RUN npm install --force
 
 # Generate the build of the application
-RUN npm run build
+RUN npm run build:ssr
 
+###############################################################################
 # Stage 2: Serve app with nginx server
 
 # Use official nginx image as the base image
-FROM nginx:latest
+FROM nginx:latest AS client-browser
 
 # Use custom ngix file (for rewriting to index.html).
 COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 
 # Copy the build output to replace the default nginx contents.
-COPY --from=build /usr/local/app/dist/vernissage-web /usr/share/nginx/html
+COPY --from=build /usr/local/app/dist/VernissageWeb/browser/ /usr/share/nginx/html
 
-# Expose port 80
+# Expose port 8080
+# EXPOSE 8080
+
+###############################################################################
+# Stage 3: Serve app with node server (SSR)
+
+# Use official node server.
+FROM node:20 AS ssr-server
+
+# Set the working directory.
+WORKDIR /usr/local/app
+
+# Copy dist files.
+COPY --from=build /usr/local/app/dist /usr/local/app/dist/
+
+# Copy packages json file.
+COPY ./package.json /usr/local/app/package.json
+
+# Expose port 8080
 EXPOSE 8080
+
+# Run HTTP server.
+CMD npm run serve:ssr

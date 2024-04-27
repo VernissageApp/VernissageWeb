@@ -214,7 +214,7 @@ export class AccountPage extends Responsive {
         dialogRef.afterClosed().subscribe(async (result) => {
             if (result?.confirmed && this.user.userName) {
                 await this.usersService.delete(this.user.userName);
-                this.authorizationService.signOut()
+                await this.authorizationService.signOut()
                 await this.router.navigate(['/']);
             }
         });

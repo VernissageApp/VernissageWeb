@@ -58,7 +58,7 @@ export class FollowButtonsSectionComponent implements OnInit {
 
     onOriginalProfile(): void {
         if (this.user?.activityPubProfile) {
-            window.open(this.user.activityPubProfile, "_blank");
+            this.windowService.openPage(this.user.activityPubProfile);
         }
     }
 
