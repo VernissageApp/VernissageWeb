@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, ElementRef, Inject, PLATFORM_ID, ViewChild } from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, Inject, ViewChild } from '@angular/core';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { decode } from 'blurhash';
 import { Subscription } from 'rxjs';
@@ -30,6 +30,8 @@ import { UsersDialogContext, UsersListType } from 'src/app/dialogs/users-dialog/
 import { License } from 'src/app/models/license';
 import { WindowService } from 'src/app/services/common/window.service';
 import { RoutingStateService } from 'src/app/services/common/routing-state.service';
+import { DOCUMENT } from '@angular/common';
+import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
     selector: 'app-status',
@@ -68,7 +70,7 @@ export class StatusPage extends Responsive {
     blurhash = 'LEHV6nWB2yk8pyo0adR*.7kCMdnj';
 
     constructor(
-        @Inject(PLATFORM_ID) platformId: Object,
+        @Inject(DOCUMENT) private document: Document,
         private statusesService: StatusesService,
         private messageService: MessagesService,
         private authorizationService: AuthorizationService,
@@ -83,6 +85,8 @@ export class StatusPage extends Responsive {
         private lightbox: Lightbox,
         private changeDetectorRef: ChangeDetectorRef,
         private windowService: WindowService,
+        private titleService: Title,
+        private metaService: Meta,
         breakpointObserver: BreakpointObserver
     ) {
         super(breakpointObserver);
@@ -502,6 +506,7 @@ export class StatusPage extends Responsive {
         this.setBlurhash();
         this.setImageWidth();
         this.setImageHeight();
+        this.setCardMetatags();
         this.imageIsLoaded = false;
 
         this.images = this.mainStatus.attachments?.map(attachment => {
@@ -592,5 +597,53 @@ export class StatusPage extends Responsive {
         ctx.putImageData(imageData!, 0, 0);
 
         this.firstCanvasInitialization = true;
+    }
+
+    private setCardMetatags(): void {
+        const statusTitle = (this.mainStatus?.user?.name ?? '') + ` (@${this.mainStatus?.user?.userName ?? ''})`;
+        const statusDescription = this.htmlToText(this.mainStatus?.note ?? '');
+
+        // <title>John Doe (@john@vernissage.xxx)</title>
+        this.titleService.setTitle(statusTitle);
+
+        // <meta name="description" content="My suite of cool apps is coming together nicely. What would you like to see me build next?">
+        this.metaService.updateTag({ name: 'description', content: statusDescription });
+
+        // <meta property="og:url" content="https://vernissage.xxx/@user/112348668082695358">
+        this.metaService.updateTag({ property: 'og:url', content: this.windowService.getApplicationUrl() });
+
+        // <meta property="og:type" content="website">
+        this.metaService.updateTag({ property: 'og:type', content: 'website' });
+
+        // <meta property="og:title" content="John Doe (@john@vernissage.xxx)">
+        this.metaService.updateTag({ property: 'og:title', content: statusTitle });
+
+        // <meta property="og:description" content="Somethinf apps next?">
+        this.metaService.updateTag({ property: 'og:description', content: statusDescription });
+
+        // <meta property="og:logo" content="https://vernissage.xxx/assets/icons/icon-128x128.png" />
+        this.metaService.updateTag({ property: 'og:logo', content: `https://${this.windowService.getApplicationBaseUrl()}/assets/icons/icon-128x128.png` });
+
+        if (this.status?.attachments && this.status?.attachments.length > 0) {
+            const firstImage = this.status?.attachments[0];
+
+            // <meta property="og:image" content="https://files.vernissage.xxx/media_attachments/files/112348.png">
+            this.metaService.updateTag({ property: 'og:image', content: firstImage.smallFile?.url ?? '' });
+
+            // <meta property="og:image:width"" content="1532">
+            this.metaService.updateTag({ property: 'og:image:width', content: firstImage.smallFile?.width.toString() ?? '' });
+
+            // <meta property="og:image:height"" content="1416">
+            this.metaService.updateTag({ property: 'og:image:height', content: firstImage.smallFile?.height.toString() ?? '' });
+        }
+
+        // <meta name="twitter:card" content="summary_large_image">
+        this.metaService.updateTag({ property: 'twitter:card', content: 'summary_large_image' });
+    }
+
+    htmlToText(value: string): string {
+        const temp = this.document.createElement('div');
+        temp.innerHTML = value;
+        return temp.textContent || temp.innerText || '';
     }
 }

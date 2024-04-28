@@ -14,6 +14,8 @@ import { LinkableResult } from 'src/app/models/linkable-result';
 import { Responsive } from 'src/app/common/responsive';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { DOCUMENT } from '@angular/common';
+import { Meta, Title } from '@angular/platform-browser';
+import { WindowService } from 'src/app/services/common/window.service';
 
 @Component({
     selector: 'app-profile',
@@ -55,6 +57,9 @@ export class ProfilePage extends Responsive implements OnInit, OnDestroy {
         private loadingService: LoadingService,
         private router: Router,
         private activatedRoute: ActivatedRoute,
+        private titleService: Title,
+        private metaService: Meta,
+        private windowService: WindowService,
         breakpointObserver: BreakpointObserver
     ) {
         super(breakpointObserver);
@@ -129,6 +134,7 @@ export class ProfilePage extends Responsive implements OnInit, OnDestroy {
 
             this.relationship = await this.downloadRelationship();
             await this.loadPageData();
+            this.setCardMetatags();
 
             this.isReady = true;
             this.loadingService.hideLoader();
@@ -253,5 +259,54 @@ export class ProfilePage extends Responsive implements OnInit, OnDestroy {
         link.setAttribute('rel', 'me');
 
         this.document.head.appendChild(link);
+    }
+
+    private setCardMetatags(): void {
+        const profileTitle = (this.user?.name ?? '') + ` (@${this.user?.userName ?? ''})`;
+        const profileDescription = this.htmlToText(this.user?.bio ?? '');
+
+        // <title>John Doe (@john@vernissage.xxx)</title>
+        this.titleService.setTitle(profileTitle);
+
+        // <meta name="description" content="My suite of cool apps is coming together nicely. What would you like to see me build next?">
+        this.metaService.updateTag({ name: 'description', content: profileDescription });
+
+        // <meta property="og:url" content="https://vernissage.xxx/@user/112348668082695358">
+        this.metaService.updateTag({ property: 'og:url', content: this.windowService.getApplicationUrl() });
+
+        // <meta property="og:type" content="website">
+        this.metaService.updateTag({ property: 'og:type', content: 'website' });
+
+        // <meta property="og:title" content="John Doe (@john@vernissage.xxx)">
+        this.metaService.updateTag({ property: 'og:title', content: profileTitle });
+
+        // <meta property="og:description" content="Somethinf apps next?">
+        this.metaService.updateTag({ property: 'og:description', content: profileDescription });
+
+        // <meta property="og:logo" content="https://vernissage.xxx/assets/icons/icon-128x128.png" />
+        this.metaService.updateTag({ property: 'og:logo', content: `https://${this.windowService.getApplicationBaseUrl()}/assets/icons/icon-128x128.png` });
+
+        const avatarImage = this.user?.avatarUrl;
+        if (avatarImage) {
+            const firstImage = this.user?.avatarUrl;
+
+            // <meta property="og:image" content="https://files.vernissage.xxx/media_attachments/files/112348.png">
+            this.metaService.updateTag({ property: 'og:image', content: avatarImage });
+
+            // <meta property="og:image:width"" content="1532">
+            this.metaService.updateTag({ property: 'og:image:width', content: '600' });
+
+            // <meta property="og:image:height"" content="1416">
+            this.metaService.updateTag({ property: 'og:image:height', content: '600' });
+        }
+
+        // <meta name="twitter:card" content="summary_large_image">
+        this.metaService.updateTag({ property: 'twitter:card', content: 'summary_large_image' });
+    }
+
+    htmlToText(value: string): string {
+        const temp = this.document.createElement('div');
+        temp.innerHTML = value;
+        return temp.textContent || temp.innerText || '';
     }
 }
