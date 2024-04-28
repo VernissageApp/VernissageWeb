@@ -1,4 +1,4 @@
-import { Injectable, NgZone } from '@angular/core';
+import { Injectable, NgZone, isDevMode } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { User } from 'src/app/models/user';
 import { AccountService } from '../http/account.service';
@@ -85,7 +85,11 @@ export class AuthorizationService {
     async refreshAccessToken(): Promise<void> {
         try {
             const refresheUserPayloadToken = await this.accountService.refreshToken();
-            this.signIn(refresheUserPayloadToken);
+            if (refresheUserPayloadToken) {
+                this.signIn(refresheUserPayloadToken);
+            } else {
+                await this.signOut();
+            }
         } catch (error) {
             if ((error instanceof RefreshTokenNotExistsError) === false) {
                 await this.signOut();

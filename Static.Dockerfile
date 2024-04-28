@@ -20,22 +20,16 @@ RUN npm install --force
 RUN npm run build:ssr
 
 ###############################################################################
-# Stage 2: Serve dynamic app with node server (SSR).
+# Stage 2: Serve static app with nginx server.
 
-# Use official node server.
-FROM node:20 AS ssr-server
+# Use official nginx image as the base image
+FROM nginx:latest AS client-browser
 
-# Set the working directory.
-WORKDIR /usr/local/app
+# Use custom ngix file (for rewriting to index.html).
+COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 
-# Copy dist files.
-COPY --from=build /usr/local/app/dist /usr/local/app/dist/
-
-# Copy packages json file.
-COPY ./package.json /usr/local/app/package.json
+# Copy the build output to replace the default nginx contents.
+COPY --from=build /usr/local/app/dist/VernissageWeb/browser/ /usr/share/nginx/html
 
 # Expose port 8080
 EXPOSE 8080
-
-# Run HTTP server.
-CMD npm run serve:ssr

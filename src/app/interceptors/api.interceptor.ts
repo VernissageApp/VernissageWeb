@@ -5,6 +5,8 @@ import { Observable } from 'rxjs/internal/Observable';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
+import { AuthorizationService } from '../services/authorization/authorization.service';
+import { from } from 'rxjs';
 
 /* tslint:disable:no-any */
 
@@ -12,38 +14,33 @@ import { isPlatformBrowser } from '@angular/common';
 export class APIInterceptor implements HttpInterceptor {
     private isBrowser = false;
 
-    constructor(@Inject(PLATFORM_ID) platformId: Object, private router: Router) {
+    constructor(
+        @Inject(PLATFORM_ID) platformId: Object,
+        private authorizationService: AuthorizationService,
+        private router: Router
+    ) {
         this.isBrowser = isPlatformBrowser(platformId);
     }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        return next.handle(request).pipe(catchError(x => this.handleAuthError(x)));
+        return next.handle(request).pipe(catchError(error => from(this.handleAuthErrorAsync(error))));
     }
 
-    private handleAuthError(error: HttpErrorResponse): Observable<any> {
-
+    private async handleAuthErrorAsync(error: HttpErrorResponse): Promise<any> {
         if (error) {
-            if (this.isBrowser) {
-                if (error.error instanceof ErrorEvent) {
-                    console.error('Error Event');
-                    console.error(error);
-                } else {
-                    switch (error.status) {
-                        case 401:
-                            this.router.navigateByUrl('/login');
-                            break;
+            switch (error.status) {
+                case 401:
+                    if (this.isBrowser) {
+                        await this.authorizationService.signOut();
                     }
-                }
-            } else {
-                switch (error.status) {
-                    case 401:
-                        this.router.navigateByUrl('/login');
-                        break;
-                }
+
+                    await this.router.navigateByUrl('/login');
+                    break;
+                default:
+                    console.error(error);
             }
         } else {
             console.error('Something else happened.');
-            console.error(error);
         }
 
         throw error;

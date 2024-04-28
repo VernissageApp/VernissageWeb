@@ -1,5 +1,5 @@
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { ChangeEmail } from 'src/app/models/change-email';
 import { UserPayloadToken } from 'src/app/models/user-payload-token';
@@ -27,7 +27,7 @@ export class AccountService {
             this.isBrowser = isPlatformBrowser(platformId);
     }
 
-    public async refreshToken(): Promise<UserPayloadToken> {
+    public async refreshToken(): Promise<UserPayloadToken | null> {
         const refreshTokenDto = this.getRefreshToken();
 
         if (!this.isBrowser && !refreshTokenDto) {

@@ -64,7 +64,7 @@ export class LoginPage implements OnInit {
         try {
             this.clearReuseStrategyState();
             const userPayloadToken = await this.accountService.login(this.login, this.twoFactorToken);
-            this.authorizationService.signIn(userPayloadToken);
+            await this.authorizationService.signIn(userPayloadToken);
 
             if (this.returnUrl) {
                 await this.router.navigateByUrl(this.returnUrl);

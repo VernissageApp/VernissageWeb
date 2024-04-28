@@ -23,7 +23,8 @@ import { isPlatformBrowser } from '@angular/common';
 import { CookieModule } from 'ngx-cookie';
 // import { NgxCaptchaModule } from 'ngx-captcha';
 
-const httpInterceptor = (platformId: Object, router: Router) => new APIInterceptor(platformId, router);
+const httpInterceptor = (platformId: Object, authorizationService: AuthorizationService, router: Router) => 
+    new APIInterceptor(platformId, authorizationService, router);
 
 @NgModule({
     declarations: [
@@ -56,7 +57,7 @@ const httpInterceptor = (platformId: Object, router: Router) => new APIIntercept
         {
             provide: HTTP_INTERCEPTORS,
             useFactory: httpInterceptor,
-            deps: [PLATFORM_ID, Router],
+            deps: [PLATFORM_ID, AuthorizationService, Router],
             multi: true
         },
         {

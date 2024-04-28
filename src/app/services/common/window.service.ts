@@ -1,12 +1,17 @@
-import { Injectable } from '@angular/core';
-import { Location, PlatformLocation } from '@angular/common';
+import { Inject, Injectable, Optional, PLATFORM_ID } from '@angular/core';
+import { Location, isPlatformServer } from '@angular/common';
 import { getWindow } from 'ssr-window';
+import { Request } from "express";
+import { REQUEST } from '@nguniversal/express-engine/tokens';
 
 @Injectable({
     providedIn: 'root'
 })
 export class WindowService {
-    constructor(private location: Location, private platformLocation: PlatformLocation) {
+    constructor(
+        @Inject(PLATFORM_ID) private platformId: Object,
+        @Optional() @Inject(REQUEST) protected request: Request | null,
+        private location: Location) {
     }
 
     get nativeWindow(): Window {
@@ -14,15 +19,26 @@ export class WindowService {
     }
 
     private getLocationHostname(): string {
-        return this.platformLocation.hostname;
-    }
+        if (isPlatformServer(this.platformId)) {
+            // In the SSR we have to use headers.
+            const forwardedHostHeader = this.request?.headers['x-forwarded-host'] as string;
+            if (forwardedHostHeader && forwardedHostHeader.length > 0) {
+                return forwardedHostHeader;
+            }
 
-    private getLocationProtocol(): string {
-        return this.platformLocation.protocol;
-    }
+            const hostHeader = this.request?.headers['host'];
+            if (hostHeader && hostHeader.length > 0) {
+                return hostHeader;
+            }
 
-    private getLocationPort(): string {
-        return this.platformLocation.port;
+            console.error('Request have to contain "x-forwarded-host" or "host" header with URL to API. Current headers:');
+            console.error(this.request?.headers);
+
+            return window.location.hostname;
+        } else {
+            // In the browser mode we have to use URL (hostname: eg. 'localhost' or 'vernissage.photos').
+            return window.location.hostname;
+        }
     }
 
     private getApplicationFolder(): string {
@@ -30,31 +46,32 @@ export class WindowService {
     }
 
     getApplicationUrl(): string {
-        return 'http://localhost:4200';
+        const applicationFolder = this.getApplicationFolder();
+        const host = this.getLocationHostname();
 
-        // const host = this.getLocationHostname();
-        // if (host.startsWith('localhost')) {
-        //     return this.getLocationProtocol() +  '//localhost:4200';
-        // }
-    
-        // const applicationFolder = this.getApplicationFolder();
-        // return this.getLocationProtocol() +  '//' + host + applicationFolder;
+        if (host.startsWith('localhost')) {
+            return 'http://localhost:4200' + applicationFolder;;
+        }
+            
+        return 'https://' + host + applicationFolder;
     }
 
     apiService(): string {
-        return 'localhost:8080';
-
-        // const host = this.getLocationHostname();
-        // if (host.startsWith('localhost')) {
-        //     return 'localhost:8080';
-        // }
+        const host = this.getLocationHostname();
+        if (host.startsWith('localhost')) {
+            return 'localhost:8080';
+        }
     
-        // return host;
+        return host;
     }
 
     apiUrl(): string {
-        // return this.getLocationProtocol() +  '//' + this.apiService();
-        return 'http://localhost:8080';
+        const host = this.getLocationHostname();
+        if (host.startsWith('localhost')) {
+            return 'http://localhost:8080';
+        }
+
+        return 'https://' + this.apiService();
     }
 
     openPage(url: string): void {
