@@ -18,6 +18,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { License } from 'src/app/models/license';
 import { LicensesService } from 'src/app/services/http/liceses.service';
 import { InstanceService } from 'src/app/services/http/instance.service';
+import { SettingsService } from 'src/app/services/http/settings.service';
 
 @Component({
     selector: 'app-upload',
@@ -39,6 +40,8 @@ export class UploadPage extends Responsive {
     contentWarning = '';
     selectedIndex = 0;
     maxFileSize = 0;
+    isOpenAIEnabled = false;
+    hashtagsInProgress = false;
 
     photos: UploadPhoto[] = [];
 
@@ -50,6 +53,7 @@ export class UploadPage extends Responsive {
         private statusesService: StatusesService,
         private instanceService: InstanceService,
         private router: Router,
+        private settingsService: SettingsService,
         breakpointObserver: BreakpointObserver
     ) {
         super(breakpointObserver);
@@ -58,6 +62,7 @@ export class UploadPage extends Responsive {
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
         this.maxFileSize = this.instanceService.instance?.configuration?.attachments?.imageSizeLimit ?? 10485760;
+        this.isOpenAIEnabled = this.settingsService.publicSettings?.isOpenAIEnabled ?? false;
 
         [this.categories, this.licenses] = await Promise.all([
             this.categoriesService.all(),
@@ -95,6 +100,26 @@ export class UploadPage extends Responsive {
         const index = this.photos.indexOf(photo, 0);
         if (index > -1) {
             this.photos.splice(index, 1);
+        }
+    }
+
+    async onGenerateHashtags(): Promise<void> {
+        try {
+            if (this.photos.length === 0) {
+                return;
+            }
+
+            this.hashtagsInProgress = true;
+            let attachmentHashtags = await this.attachmentsService.hashtags(this.photos[0].id);
+            if (attachmentHashtags.hashtags && attachmentHashtags.hashtags.length > 0) {
+                const hashtags = attachmentHashtags.hashtags.map(tag => '#' + tag);
+                this.statusText = this.statusText + '\n\n' + hashtags.join(' ');
+            }
+        } catch (error) {
+            console.error(error);
+            this.messageService.showServerError(error);
+        } finally {
+            this.hashtagsInProgress = false;
         }
     }
 
