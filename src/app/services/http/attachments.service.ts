@@ -4,6 +4,7 @@ import { firstValueFrom } from 'rxjs';
 import { TemporaryAttachment } from 'src/app/models/temporary-attachment';
 import { WindowService } from '../common/window.service';
 import { AttachmentDescription } from 'src/app/models/attachment-description';
+import { AttachmentHashtag } from 'src/app/models/attachment-hashtag';
 
 @Injectable({
     providedIn: 'root'
@@ -29,6 +30,11 @@ export class AttachmentsService {
 
     public async describe(id: string): Promise<AttachmentDescription> {
         const event$ = this.httpClient.get<AttachmentDescription>(this.windowService.apiUrl() + '/api/v1/attachments/' + id + '/describe');
+        return await firstValueFrom(event$);
+    }
+
+    public async hashtags(id: string): Promise<AttachmentHashtag> {
+        const event$ = this.httpClient.get<AttachmentHashtag>(this.windowService.apiUrl() + '/api/v1/attachments/' + id + '/hashtags');
         return await firstValueFrom(event$);
     }
 }

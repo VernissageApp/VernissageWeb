@@ -49,6 +49,15 @@
                                     <mat-error *ngIf="statusInput.invalid && statusInput.errors?.appMaxLength">Too long status.</mat-error>
                                 </mat-form-field>
 
+                                @if (isOpenAIEnabled) {
+                                    <div class="flex-row flex-end margin-bottom-20 margin-right-10">
+                                        <mat-spinner *ngIf="hashtagsInProgress" class="margin-top-10 margin-right-10" [diameter]="18"></mat-spinner>
+                                        <button mat-stroked-button color="primary" (click)="onGenerateHashtags()" [disabled]="!allPhotosUploaded() || photos.length === 0 || hashtagsInProgress">
+                                            <mat-icon>smart_toy</mat-icon> Hashtags
+                                        </button>
+                                    </div>
+                                }
+
                                 <mat-form-field appearance="outline">
                                     <mat-label>Category</mat-label>
                                     <mat-select required [(value)]="categoryId">

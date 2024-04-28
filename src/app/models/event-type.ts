@@ -58,6 +58,8 @@ export enum EventType {
     AttachmentsCreate = 'attachmentsCreate',
     AttachmentsUpdate = 'attachmentsUpdate',
     AttachmentsDelete = 'attachmentsDelete',
+    AttachmentsDescribe = 'attachmentsDescribe',
+    AttachmentsHashtags = 'attachmentsHashtags',
     
     SettingsList = 'settingsList',
     SettingsPublic = 'settingsPublic',
