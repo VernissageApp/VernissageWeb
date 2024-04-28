@@ -45,15 +45,21 @@ export class WindowService {
         return this.location.prepareExternalUrl('');
     }
 
-    getApplicationUrl(): string {
-        const applicationFolder = this.getApplicationFolder();
+    getApplicationBaseUrl(): string {
         const host = this.getLocationHostname();
 
         if (host.startsWith('localhost')) {
-            return 'http://localhost:4200' + applicationFolder;;
+            return 'http://localhost:4200';
         }
             
-        return 'https://' + host + applicationFolder;
+        return 'https://' + host;
+    }
+
+    getApplicationUrl(): string {
+        const applicationFolder = this.getApplicationFolder();
+        const applicationBaseUrl = this.getApplicationBaseUrl();
+            
+        return applicationBaseUrl + applicationFolder;
     }
 
     apiService(): string {
