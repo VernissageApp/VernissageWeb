@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Inject, Input, PLATFORM_ID, ViewChild } from '@angular/core';
 import { decode } from 'blurhash';
 import { AvatarSize } from '../avatar/avatar-size';
 import { User } from 'src/app/models/user';
@@ -26,6 +26,7 @@ export class BlurhashImageComponent implements AfterViewInit {
     user?: User;
     text?: string;
     signedInUser?: User;
+    isBrowser = false;
     
     @ViewChild('canvas', { static: false }) readonly canvas?: ElementRef<HTMLCanvasElement>;
     @ViewChild('img', { static: false }) readonly img?: ElementRef<HTMLImageElement>;
@@ -36,6 +37,7 @@ export class BlurhashImageComponent implements AfterViewInit {
     showFavourites = false;
 
     constructor(
+        @Inject(PLATFORM_ID) platformId: Object,
         private preferencesService: PreferencesService,
         private statusesService: StatusesService,
         private messageService: MessagesService,
@@ -85,6 +87,10 @@ export class BlurhashImageComponent implements AfterViewInit {
     }
 
     private drawCanvas(): void {
+        if (!this.isBrowser) {
+            return;
+        }
+
         if (!this.blurhash) {
             return;
         }

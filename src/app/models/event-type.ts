@@ -3,6 +3,7 @@ export enum EventType {
     Unknown = 'unknown',
 
     AccountLogin = 'accountLogin',
+    AccountLogout = 'accountLogout',
     AccountRefresh = 'accountRefresh',
     AccountConfirm = 'accountConfirm',
     AccountChangeEmail = 'accountChangeEmail',

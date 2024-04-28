@@ -1,38 +1,38 @@
-import { Injectable, NgZone } from '@angular/core';
+import { Injectable, NgZone, isDevMode } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { JwtHelperService } from '@auth0/angular-jwt';
-
 import { User } from 'src/app/models/user';
-import { PersistanceService } from '../persistance/persistance.service';
 import { AccountService } from '../http/account.service';
-import { AccessToken } from '../../models/access-token';
+import { UserPayloadToken } from '../../models/user-payload-token';
 import { Role } from 'src/app/models/role';
+import { RefreshTokenNotExistsError } from 'src/app/errors/refresh-token-not-exists-error';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthorizationService {
-
     public changes = new BehaviorSubject<User | undefined>(this.getUser());
     private sessionTimeout?: NodeJS.Timeout;
     private tokenProcessingTime = 30;
     private oneSecond = 1000;
+    private userPayloadToken?: UserPayloadToken;
 
     constructor(
-        private jwtHelperService: JwtHelperService,
-        private persistanceService: PersistanceService,
         private accountService: AccountService,
         private zone: NgZone) {
     }
 
     isLoggedIn(): boolean {
-
-        const actionToken = this.persistanceService.getAccessToken();
-        if (!actionToken) {
+        if (!this.userPayloadToken) {
             return false;
         }
 
-        if (this.jwtHelperService.isTokenExpired(actionToken)) {
+        const expirationDate = this.getTokenExpirationTime();
+        if (!expirationDate) {
+            return false;
+        }
+
+        const now = new Date();
+        if (expirationDate < now) {
             return false;
         }
 
@@ -40,52 +40,28 @@ export class AuthorizationService {
     }
 
     getUser(): User | undefined {
-
-        const actionToken = this.persistanceService.getAccessToken();
-        if (!actionToken) {
+        if (!this.userPayloadToken) {
             return undefined;
         }
 
-        const decodedToken = this.jwtHelperService.decodeToken(actionToken);
-
-        const user = new User();
-        user.id = decodedToken.id;
-        user.email = decodedToken.email;
-        user.name = decodedToken.name;
-        user.userName = decodedToken.userName;
-        user.avatarUrl = decodedToken.avatarUrl;
-        user.headerUrl = decodedToken.headerUrl;
-
-        return user;
+        return this.userPayloadToken.userPayload;
     }
 
     hasRole(role: Role): boolean {
-        const actionToken = this.persistanceService.getAccessToken();
-        if (!actionToken) {
+        if (!this.userPayloadToken || !this.userPayloadToken.userPayload || !this.userPayloadToken.userPayload.roles) {
             return false;
         }
 
-        const decodedToken = this.jwtHelperService.decodeToken(actionToken);
-
-        if (Array.isArray(decodedToken.roles)) {
-            const castedRoles = decodedToken.roles as string[];
-            return castedRoles.includes(role);
-        } else {
-            const castedRole = decodedToken.roles as string;
-            return castedRole == role;
-        }
+        return this.userPayloadToken.userPayload.roles.includes(role);    
     }
 
-    signIn(accessToken: AccessToken): void {
-        this.persistanceService.setAccessToken(accessToken.accessToken);
-        this.persistanceService.setRefreshToken(accessToken.refreshToken);
-
-        const user = this.getUser();
-        this.changes.next(user);
+    async signIn(userPayloadToken: UserPayloadToken): Promise<void> {
+        this.userPayloadToken = userPayloadToken;
+        this.changes.next(this.userPayloadToken.userPayload);
 
         const tokenExpirationTime = this.getTokenExpirationTime();
         if (tokenExpirationTime == null) {
-            this.signOut();
+            await this.signOut();
             return;
         }
 
@@ -98,36 +74,35 @@ export class AuthorizationService {
         this.initSessionTimeout(sessionTimeout);
     }
 
-    signOut(): void {
+    async signOut(): Promise<void> {
         this.cancelSessionTimeout();
-        this.persistanceService.removeAccessToken();
-        this.persistanceService.removeRefreshToken();
+        this.userPayloadToken = undefined;
+        await this.accountService.logout();
+
         this.changes.next(undefined);
     }
 
     async refreshAccessToken(): Promise<void> {
-        const refreshToken = this.persistanceService.getRefreshToken();
-        if (!refreshToken) {
-            return;
-        }
-
         try {
-            const refreshedAccessToken = await this.accountService.refreshToken(refreshToken);
-            this.signIn(refreshedAccessToken);
-        } catch {
-            this.signOut();
+            const refresheUserPayloadToken = await this.accountService.refreshToken();
+            if (refresheUserPayloadToken) {
+                this.signIn(refresheUserPayloadToken);
+            } else {
+                await this.signOut();
+            }
+        } catch (error) {
+            if ((error instanceof RefreshTokenNotExistsError) === false) {
+                await this.signOut();
+            }
         }
     }
 
     private getTokenExpirationTime(): Date | null {
-        const actionToken = this.persistanceService.getAccessToken();
-        if (!actionToken) {
+        if (!this.userPayloadToken) {
             return null;
         }
 
-        const decodedToken = this.jwtHelperService.decodeToken(actionToken);
-
-        return new Date(Math.round(decodedToken.exp * this.oneSecond));
+        return new Date(this.userPayloadToken.expirationDate);
     }
 
     private initSessionTimeout(seconds: number): void {

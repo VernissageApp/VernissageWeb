@@ -1,5 +1,5 @@
 import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
-import { ErrorHandler, Injector, NgZone } from '@angular/core';
+import { Injector, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { ForbiddenError } from 'src/app/errors/forbidden-error';
 import { ObjectNotFoundError } from 'src/app/errors/object-not-found-error';

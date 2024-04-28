@@ -1,11 +1,15 @@
-import { Injectable } from '@angular/core';
-
 /* tslint:disable:no-any */
 
-@Injectable({
-    providedIn: 'root'
-})
-export class PersistanceService {
+export abstract class  PersistanceService {
+    abstract set(key: string, value: string): void;
+    abstract setJson(key: string, data: any): void;
+    abstract get(key: string): string | null;
+    abstract getJson(key: string): any;
+    abstract remove(key: string): void;
+}
+
+
+export class PersistanceBrowserService implements PersistanceService {
 
     set(key: string, value: string): void {
         localStorage.setItem(key, value);
@@ -45,28 +49,23 @@ export class PersistanceService {
             console.error('Error removing from localStorage', e);
         }
     }
+}
 
-    setAccessToken(data: any): void {
-        this.setJson('access_token', data);
+export class PersistanceServerService implements PersistanceService {
+    set(key: string, value: string): void {
     }
 
-    getAccessToken(): any {
-        return this.getJson('access_token');
+    setJson(key: string, data: any): void {
     }
 
-    removeAccessToken(): void {
-        localStorage.removeItem('access_token');
+    get(key: string): string | null {
+        return null;
     }
 
-    setRefreshToken(data: any): void {
-        this.setJson('refresh_token', data);
+    getJson(key: string): any {
+        return null;
     }
 
-    getRefreshToken(): any {
-        return this.getJson('refresh_token');
-    }
-
-    removeRefreshToken(): void {
-        localStorage.removeItem('refresh_token');
+    remove(key: string): void {
     }
 }

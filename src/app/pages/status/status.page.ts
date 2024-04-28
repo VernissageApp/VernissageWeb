@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, Inject, PLATFORM_ID, ViewChild } from '@angular/core';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { decode } from 'blurhash';
 import { Subscription } from 'rxjs';
@@ -56,6 +56,7 @@ export class StatusPage extends Responsive {
     firstCanvasInitialization = false;
     urlToGallery?: string;
 
+    isBrowser = false;
     galleryAutoheight = false;
     currentIndex = 0;
     hideLeftArrow = false;
@@ -67,6 +68,7 @@ export class StatusPage extends Responsive {
     blurhash = 'LEHV6nWB2yk8pyo0adR*.7kCMdnj';
 
     constructor(
+        @Inject(PLATFORM_ID) platformId: Object,
         private statusesService: StatusesService,
         private messageService: MessagesService,
         private authorizationService: AuthorizationService,
@@ -565,6 +567,10 @@ export class StatusPage extends Responsive {
     }
 
     private drawCanvas(): void {
+        if (!this.isBrowser) {
+            return;
+        }
+
         if (!this.canvas) {
             return;
         }

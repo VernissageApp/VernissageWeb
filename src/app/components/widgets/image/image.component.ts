@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Inject, Input, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
 import { decode } from 'blurhash';
 import { AvatarSize } from '../avatar/avatar-size';
 import { User } from 'src/app/models/user';
@@ -8,6 +8,7 @@ import { Attachment } from 'src/app/models/attachment';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 import { StatusesService } from 'src/app/services/http/statuses.service';
 import { MessagesService } from 'src/app/services/common/messages.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
     selector: 'app-image',
@@ -27,6 +28,7 @@ export class ImageComponent implements OnInit, AfterViewInit {
     signedInUser?: User;
     width = 0;
     height = 0;
+    isBrowser = false;
 
     @ViewChild('canvas', { static: false }) readonly canvas?: ElementRef<HTMLCanvasElement>;
 
@@ -36,10 +38,12 @@ export class ImageComponent implements OnInit, AfterViewInit {
     imageIsLoaded = false;
 
     constructor(
+        @Inject(PLATFORM_ID) platformId: Object,
         private preferencesService: PreferencesService,
         private statusesService: StatusesService,
         private messageService: MessagesService,
         private authorizationService: AuthorizationService) {
+            this.isBrowser = isPlatformBrowser(platformId);
     }
 
     ngOnInit(): void {
@@ -87,6 +91,10 @@ export class ImageComponent implements OnInit, AfterViewInit {
     }
 
     private drawCanvas(): void {
+        if (!this.isBrowser) {
+            return;
+        }
+
         if (!this.blurhash) {
             return;
         }
