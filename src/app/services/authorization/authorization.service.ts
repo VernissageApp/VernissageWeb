@@ -1,10 +1,11 @@
-import { Injectable, NgZone, isDevMode } from '@angular/core';
+import { Inject, Injectable, NgZone, PLATFORM_ID, isDevMode } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { User } from 'src/app/models/user';
 import { AccountService } from '../http/account.service';
 import { UserPayloadToken } from '../../models/user-payload-token';
 import { Role } from 'src/app/models/role';
-import { RefreshTokenNotExistsError } from 'src/app/errors/refresh-token-not-exists-error';
+import { ServerRefreshTokenNotExistsError } from 'src/app/errors/server-refresh-token-not-exists-error';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
     providedIn: 'root'
@@ -15,10 +16,13 @@ export class AuthorizationService {
     private tokenProcessingTime = 30;
     private oneSecond = 1000;
     private userPayloadToken?: UserPayloadToken;
+    private isBrowser = false;
 
     constructor(
+        @Inject(PLATFORM_ID) platformId: Object,
         private accountService: AccountService,
         private zone: NgZone) {
+            this.isBrowser = isPlatformBrowser(platformId);
     }
 
     isLoggedIn(): boolean {
@@ -77,7 +81,10 @@ export class AuthorizationService {
     async signOut(): Promise<void> {
         this.cancelSessionTimeout();
         this.userPayloadToken = undefined;
-        await this.accountService.logout();
+
+        if (this.isBrowser) {
+            await this.accountService.logout();
+        }
 
         this.changes.next(undefined);
     }
@@ -86,12 +93,12 @@ export class AuthorizationService {
         try {
             const refresheUserPayloadToken = await this.accountService.refreshToken();
             if (refresheUserPayloadToken) {
-                this.signIn(refresheUserPayloadToken);
+                await this.signIn(refresheUserPayloadToken);
             } else {
                 await this.signOut();
             }
         } catch (error) {
-            if ((error instanceof RefreshTokenNotExistsError) === false) {
+            if ((error instanceof ServerRefreshTokenNotExistsError) === false) {
                 await this.signOut();
             }
         }

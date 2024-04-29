@@ -12,6 +12,7 @@ import { InstanceService } from 'src/app/services/http/instance.service';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { WindowService } from 'src/app/services/common/window.service';
 import { CustomReuseStrategy } from 'src/app/common/custom-reuse-strategy';
+import { AlwaysErrorStateMatcher } from 'src/app/common/always-error-state-mather';
 
 @Component({
     selector: 'app-login',
@@ -26,6 +27,7 @@ export class LoginPage implements OnInit {
     twoFactorToken = '';
     loginMode = LoginMode.UserNameAndPassword;
     dirtyErrorStateMatcher = new DirtyErrorStateMatcher();
+    alwaysErrorStateMatcher = new AlwaysErrorStateMatcher();
 
     errorMessage?: string;
     tokenMessge?: string;

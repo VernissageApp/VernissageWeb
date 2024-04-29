@@ -11,7 +11,7 @@ import { WindowService } from '../common/window.service';
 import { TwoFactorToken } from 'src/app/models/two-factor-token';
 import { CookieService } from 'ngx-cookie';
 import { isPlatformBrowser } from '@angular/common';
-import { RefreshTokenNotExistsError } from 'src/app/errors/refresh-token-not-exists-error';
+import { ServerRefreshTokenNotExistsError } from 'src/app/errors/server-refresh-token-not-exists-error';
 
 @Injectable({
     providedIn: 'root'
@@ -31,7 +31,7 @@ export class AccountService {
         const refreshTokenDto = this.getRefreshToken();
 
         if (!this.isBrowser && !refreshTokenDto) {
-            throw new RefreshTokenNotExistsError();
+            throw new ServerRefreshTokenNotExistsError();
         }
 
         const event$ = this.httpClient.post<UserPayloadToken>(
