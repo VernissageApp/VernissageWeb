@@ -28,6 +28,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { GalleryModule } from 'ng-gallery';
 import { QRCodeModule } from 'angularx-qrcode';
 
@@ -63,6 +64,7 @@ import { QRCodeModule } from 'angularx-qrcode';
         MatSlideToggleModule,
         MatRadioModule,
         MatProgressSpinnerModule,
+        MatExpansionModule,
         GalleryModule,
         QRCodeModule
     ],
@@ -97,6 +99,7 @@ import { QRCodeModule } from 'angularx-qrcode';
         MatSlideToggleModule,
         MatRadioModule,
         MatProgressSpinnerModule,
+        MatExpansionModule,
         GalleryModule,
         QRCodeModule
     ]

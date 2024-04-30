@@ -5,228 +5,37 @@
                 <h1>Settings</h1>
             </section>
 
-            <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+            <mat-accordion class="settings-headers-align">
 
-                <mat-card *ngIf="settings" class="settings-card" appearance="outlined">
-                    <mat-card-content>
-                        <div class="margin-bottom-20">
-                            <mat-form-field appearance="outline">
-                                <mat-label>Web title</mat-label>
-                                <input matInput name="webTitle" #webTitle="ngModel" [(ngModel)]="settings.webTitle"
-                                    placeholder="Web title" aria-label="Web title" />
-                            </mat-form-field>
-                        </div>
+                <!-- General settings panel. -->
+                <mat-expansion-panel [expanded]="true">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            General settings
+                        </mat-panel-title>
+                        <mat-panel-description *ngIf="!isHandset">
+                            Here you can set up general application settings.
+                            <mat-icon>dns</mat-icon>
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <app-general-settings [settings]="settings"></app-general-settings>
+                </mat-expansion-panel>
 
-                        <div class="margin-bottom-20">
-                            <mat-form-field appearance="outline">
-                                <mat-label>Web description</mat-label>
-                                <input matInput name="webDescription" #webDescription="ngModel" [(ngModel)]="settings.webDescription"
-                                    placeholder="Web description" aria-label="Web description" />
-                            </mat-form-field>
-                        </div>
-
-                        <div class="margin-bottom-20">
-                            <mat-form-field appearance="outline">
-                                <mat-label>Web email</mat-label>
-                                <input matInput name="webEmail" #webEmail="ngModel" [(ngModel)]="settings.webEmail"
-                                    placeholder="Web email" aria-label="Web email" />
-                            </mat-form-field>
-                        </div>
-
-                        <div class="margin-bottom-20">
-                            <mat-form-field appearance="outline">
-                                <mat-label>Web thumbnail url</mat-label>
-                                <input matInput name="webThumbnail" #webThumbnail="ngModel" [(ngModel)]="settings.webThumbnail"
-                                    placeholder="Web thumbnail ur" aria-label="Web thumbnail ur" />
-                            </mat-form-field>
-                        </div>
-
-                        <div class="margin-bottom-20">
-                            <mat-form-field appearance="outline">
-                                <mat-label>Web languages</mat-label>
-                                <input matInput name="webLanguages" #webLanguages="ngModel" [(ngModel)]="settings.webLanguages"
-                                    placeholder="Web languages" aria-label="Web languages" />
-                            </mat-form-field>
-                        </div>
-
-                        <div class="margin-bottom-20">
-                            <mat-form-field appearance="outline">
-                                <mat-label>Web contact user id</mat-label>
-                                <input matInput name="webContactUserId" #webContactUserId="ngModel" [(ngModel)]="settings.webContactUserId"
-                                    placeholder="Web contact user id" aria-label="Web contact user id" />
-                            </mat-form-field>
-                        </div>
-
-                        <div class="margin-bottom-20">
-                            <mat-form-field appearance="outline">
-                                <mat-label>CORS orgins</mat-label>
-                                <input matInput name="corsOrigin" #corsOrigin="ngModel" [(ngModel)]="settings.corsOrigin"
-                                    placeholder="CORS orgins" aria-label="CORS orgins" />
-                            </mat-form-field>
-                        </div>
-
-                        <div class="margin-bottom-20">
-                            <mat-form-field appearance="outline">
-                                <mat-label>Maximum number of invitations per user</mat-label>
-                                <input matInput type="number" name="maximumNumberOfInvitations" #maximumNumberOfInvitations="ngModel" [(ngModel)]="settings.maximumNumberOfInvitations"
-                                    placeholder="Maximum number of invitations" aria-label="Maximum number of invitations" />
-                            </mat-form-field>
-                        </div>
-
-                        <div class="margin-bottom-20">
-                            <mat-form-field appearance="outline">
-                                <mat-label>Maximum number of characters in status</mat-label>
-                                <input matInput type="number" name="maxCharacters" #maxCharacters="ngModel" [(ngModel)]="settings.maxCharacters"
-                                    placeholder="Maximum number of characters in status" aria-label="Maximum number of characters in status" />
-                            </mat-form-field>
-                        </div>
-
-                        <div class="margin-bottom-20">
-                            <mat-form-field appearance="outline">
-                                <mat-label>Maximum number of attachments</mat-label>
-                                <input matInput type="number" name="maxMediaAttachments" #maxMediaAttachments="ngModel" [(ngModel)]="settings.maxMediaAttachments"
-                                    placeholder="Maximum number of attachments" aria-label="Maximum number of attachments" />
-                            </mat-form-field>
-                        </div>
-
-                        <div class="margin-bottom-20">
-                            <mat-form-field appearance="outline">
-                                <mat-label>Maximum file size</mat-label>
-                                <input matInput type="number" name="imageSizeLimit" #imageSizeLimit="ngModel" [(ngModel)]="settings.imageSizeLimit"
-                                    placeholder="Maximum file size" aria-label="Maximum file size" />
-                            </mat-form-field>
-                        </div>
-
-                        <div class="margin-bottom-20">
-                            <mat-form-field appearance="outline">
-                                <mat-label>Default system user id</mat-label>
-                                <input matInput name="systemDefaultUserId" #systemDefaultUserId="ngModel" [(ngModel)]="settings.systemDefaultUserId"
-                                    placeholder="Default system user id" aria-label="Default system user id" />
-                            </mat-form-field>
-                        </div>
-
-                        <mat-divider></mat-divider>
-
-                        <div class="margin-bottom-20 margin-top-20">
-                            <div>
-                                <mat-checkbox name="isRegistrationOpened" color="primary" [disableRipple]="true" [(ngModel)]="settings.isRegistrationOpened">
-                                    Is registration opened
-                                </mat-checkbox>
-                            </div>
-                            <div>
-                                <mat-checkbox name="isRegistrationByApprovalOpened" color="primary" [disableRipple]="true" [(ngModel)]="settings.isRegistrationByApprovalOpened">
-                                    Is registration by approval opened
-                                </mat-checkbox>
-                            </div>
-                            <div>
-                                <mat-checkbox name="isRegistrationByInvitationsOpened" color="primary" [disableRipple]="true" [(ngModel)]="settings.isRegistrationByInvitationsOpened">
-                                    Is registration by invitations opened
-                                </mat-checkbox>
-                            </div>
-                        </div>
-
-                        <mat-divider></mat-divider>
-
-                        <div class="margin-bottom-20 margin-top-20">
-                            <mat-form-field appearance="outline">
-                                <mat-label>Email hostname</mat-label>
-                                <input matInput name="emailHostname" #emailHostname="ngModel" [(ngModel)]="settings.emailHostname"
-                                    placeholder="Email hostname" aria-label="Email hostname" />
-                            </mat-form-field>
-                        </div>
-
-                        <div class="margin-bottom-20">
-                            <mat-form-field appearance="outline">
-                                <mat-label>Email port</mat-label>
-                                <input matInput type="number" name="emailPort" #emailPort="ngModel" [(ngModel)]="settings.emailPort"
-                                    placeholder="Email port" aria-label="Email port" />
-                            </mat-form-field>
-                        </div>
-
-                        <div class="margin-bottom-20">
-                            <mat-form-field appearance="outline">
-                                <mat-label>Email username</mat-label>
-                                <input matInput name="emailUserName" #emailUserName="ngModel" [(ngModel)]="settings.emailUserName"
-                                    placeholder="Email username" aria-label="Email username" />
-                            </mat-form-field>
-                        </div>
-
-                        <div class="margin-bottom-20">
-                            <mat-form-field appearance="outline">
-                                <mat-label>Email password</mat-label>
-                                <input matInput name="emailPassword" #emailPassword="ngModel" [(ngModel)]="settings.emailPassword"
-                                    placeholder="Email password" aria-label="Email password" />
-                            </mat-form-field>
-                        </div>
-
-                        <div class="margin-bottom-20">
-                            <mat-form-field appearance="outline">
-                                <mat-label>Email from address</mat-label>
-                                <input matInput name="emailFromAddress" #emailFromAddress="ngModel" [(ngModel)]="settings.emailFromAddress"
-                                    placeholder="Email from address" aria-label="Email from address" />
-                            </mat-form-field>
-                        </div>
-
-                        <div class="margin-bottom-20">
-                            <mat-form-field appearance="outline">
-                                <mat-label>Email from name</mat-label>
-                                <input matInput name="emailFromName" #emailFromName="ngModel" [(ngModel)]="settings.emailFromName"
-                                    placeholder="Email from name" aria-label="Email from name" />
-                            </mat-form-field>
-                        </div>
-
-                        <div class="margin-bottom-20">
-                            <mat-form-field appearance="outline">
-                                <mat-label>Email secure method</mat-label>
-                                <mat-select [(value)]="settings.emailSecureMethod">
-                                    <mat-option value="none">None</mat-option>
-                                    <mat-option value="ssl">SSL</mat-option>
-                                    <mat-option value="startTls">Start TLS</mat-option>
-                                    <mat-option value="startTlsWhenAvailable">Start TLS when available</mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        </div>
-
-                        <mat-divider></mat-divider>
-
-                        <div class="margin-bottom-20 margin-top-20">
-                            <div>
-                                <mat-checkbox name="isOpenAIEnabled" color="primary" [disableRipple]="true" [(ngModel)]="settings.isOpenAIEnabled">
-                                    Is OpenAPI enabled
-                                </mat-checkbox>
-                            </div>
-                        </div>
-
-                        <div class="margin-bottom-20">
-                            <mat-form-field appearance="outline">
-                                <mat-label>OpenAI secure key</mat-label>
-                                <input matInput name="openAPIKey" #openAPIKey="ngModel" [(ngModel)]="settings.openAIKey"
-                                    placeholder="OpenAI key" aria-label="OpenAI key" />
-                            </mat-form-field>
-                        </div>
-
-                        <mat-divider></mat-divider>
-
-                        <div class="margin-bottom-20 margin-top-20">
-                            <mat-form-field>
-                                <mat-label>Events to log</mat-label>
-                                <mat-select [(value)]="settings.eventsToStore" multiple>
-                                <mat-option *ngFor="let eventType of eventTypes" [value]="eventType">{{ eventType }}</mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        </div>
-
-                    </mat-card-content>
-
-                    <mat-card-actions>
-                        <div class="actions margin-top-20">
-                            <button type="submit" mat-raised-button color="primary" aria-label="Save">Save</button>
-                        </div>
-                    </mat-card-actions>
-                </mat-card>
-
-            </form>
-
+                <!-- Domain blocks panel. -->
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Instance domain blocks
+                        </mat-panel-title>
+                        <mat-panel-description *ngIf="!isHandset">
+                            Here you can manage domains blocked by instance.
+                            <mat-icon>public_off</mat-icon>
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <app-domain-blocks></app-domain-blocks>
+                </mat-expansion-panel>
+            </mat-accordion>
+              
         </div>
     </div>
 </div>

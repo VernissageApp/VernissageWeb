@@ -134,5 +134,10 @@ export enum EventType {
     TrendingHashtags = 'trendingHashtags',
 
     BookmarksList = 'bookmarksList',
-    FavouritesList = 'favouritesList'
+    FavouritesList = 'favouritesList',
+
+    InstanceBlockedDomainsList = 'instanceBlockedDomainsList',
+    InstanceBlockedDomainsCreate = 'instanceBlockedDomainsCreate',
+    InstanceBlockedDomainsUpdate = 'instanceBlockedDomainsUpdate',
+    InstanceBlockedDomainsDelete = 'instanceBlockedDomainsDelete'
 }
