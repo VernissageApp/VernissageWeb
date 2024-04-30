@@ -13,7 +13,7 @@ import { isPlatformBrowser } from '@angular/common';
 export class AuthorizationService {
     public changes = new BehaviorSubject<User | undefined>(this.getUser());
     private sessionTimeout?: NodeJS.Timeout;
-    private tokenProcessingTime = 30;
+    private tokenProcessingTime = 120;
     private oneSecond = 1000;
     private userPayloadToken?: UserPayloadToken;
     private isBrowser = false;
@@ -30,13 +30,13 @@ export class AuthorizationService {
             return false;
         }
 
-        const expirationDate = this.getTokenExpirationTime();
-        if (!expirationDate) {
+        const tokenExpirationTime = new Date(this.userPayloadToken.expirationDate);
+        if (!tokenExpirationTime) {
             return false;
         }
 
         const now = new Date();
-        if (expirationDate < now) {
+        if (tokenExpirationTime < now) {
             return false;
         }
 
@@ -60,16 +60,26 @@ export class AuthorizationService {
     }
 
     async signIn(userPayloadToken: UserPayloadToken): Promise<void> {
-        this.userPayloadToken = userPayloadToken;
-        this.changes.next(this.userPayloadToken.userPayload);
+        if (!userPayloadToken) {
+            await this.signOut();
+            return;
+        }
 
-        const tokenExpirationTime = this.getTokenExpirationTime();
-        if (tokenExpirationTime == null) {
+        const tokenExpirationTime = new Date(userPayloadToken.expirationDate);
+        if (!tokenExpirationTime) {
             await this.signOut();
             return;
         }
 
         const now = new Date();
+        if (tokenExpirationTime < now) {
+            await this.signOut();
+            return;
+        }
+
+        this.userPayloadToken = userPayloadToken;
+        this.changes.next(this.userPayloadToken.userPayload);
+
         const expirationTime = tokenExpirationTime.getTime();
         const tokenExpirationSeconds = Math.round(expirationTime / this.oneSecond);
         const nowSeconds = Math.round(now.getTime() / this.oneSecond);
@@ -89,27 +99,23 @@ export class AuthorizationService {
         this.changes.next(undefined);
     }
 
-    async refreshAccessToken(): Promise<void> {
+    async refreshAccessToken(): Promise<boolean> {
         try {
             const refresheUserPayloadToken = await this.accountService.refreshToken();
             if (refresheUserPayloadToken) {
                 await this.signIn(refresheUserPayloadToken);
+                return true;
             } else {
                 await this.signOut();
+                return false;
             }
         } catch (error) {
             if ((error instanceof ServerRefreshTokenNotExistsError) === false) {
                 await this.signOut();
             }
-        }
-    }
 
-    private getTokenExpirationTime(): Date | null {
-        if (!this.userPayloadToken) {
-            return null;
+            return false;
         }
-
-        return new Date(this.userPayloadToken.expirationDate);
     }
 
     private initSessionTimeout(seconds: number): void {

@@ -67,6 +67,10 @@ export class GlobalErrorHandler extends SentryErrorHandler {
     }
 
     private getErrorResponse(error: any): HttpErrorResponse {
+        if (error instanceof HttpErrorResponse) {
+            return error;
+        }
+
         return error.rejection;
     }
 
