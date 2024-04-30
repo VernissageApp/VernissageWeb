@@ -25,6 +25,8 @@ import { BlurhashImageComponent } from './widgets/blurhash-image/blurhash-image.
 import { ImageComponent } from './widgets/image/image.component';
 import { DirectivesModule } from '../directives/directive.module';
 import { FooterComponent } from './core/footer/footer.component';
+import { GeneralSettingsComponent } from './widgets/general-settings/general-settings.component';
+import { DomainBlocksComponent } from './widgets/domain-blocks/domain-blocks.component';
 
 @NgModule({
     declarations: [
@@ -43,7 +45,9 @@ import { FooterComponent } from './core/footer/footer.component';
         HashtagGalleryComponent,
         CategoryGalleryComponent,
         BlurhashImageComponent,
-        ImageComponent
+        ImageComponent,
+        GeneralSettingsComponent,
+        DomainBlocksComponent
     ],
     imports: [
         BrowserModule,
@@ -83,6 +87,8 @@ import { FooterComponent } from './core/footer/footer.component';
         CategoryGalleryComponent,
         BlurhashImageComponent,
         ImageComponent,
+        GeneralSettingsComponent,
+        DomainBlocksComponent,
         DirectivesModule
     ]
 })

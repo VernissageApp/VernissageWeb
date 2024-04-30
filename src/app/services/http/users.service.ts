@@ -32,7 +32,7 @@ export class UsersService {
     }
 
     public async delete(userName: string): Promise<object> {
-        const event$ = this.httpClient.delete<User>(this.windowService.apiUrl() + '/api/v1/users/@' + userName);
+        const event$ = this.httpClient.delete(this.windowService.apiUrl() + '/api/v1/users/@' + userName);
         return await firstValueFrom(event$);
     }
 

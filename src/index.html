@@ -55,6 +55,16 @@
       <div class="spinner-icon"></div>
     </div>
   </app-root>
+  <script>
+    if (typeof window !== 'undefined') {
+      const isDarkTheme = window.document.cookie.includes('isLightTheme=false');
+      if (isDarkTheme) {
+        const body = window.document.getElementById('body');
+        body.classList.add('dark-theme');
+        window.document.querySelector("meta[name='theme-color']").setAttribute("content", "#303030");
+      }
+    }
+  </script>
   <noscript>Please enable JavaScript to continue using this application.</noscript>
 </body>
 </html>
