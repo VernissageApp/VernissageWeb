@@ -7,7 +7,7 @@ import { GlobalErrorHandler } from 'src/app/handlers/global-error-handler';
 import { InstanceService } from 'src/app/services/http/instance.service';
 import { appInitialization } from './app-initialization';
 
-import { RouteReuseStrategy, Router } from '@angular/router';
+import { RouteReuseStrategy } from '@angular/router';
 import { AppComponent } from './app.component';
 import { PersistanceBrowserService, PersistanceServerService, PersistanceService } from './services/persistance/persistance.service';
 import { AuthorizationService } from './services/authorization/authorization.service';
@@ -23,8 +23,8 @@ import { isPlatformBrowser } from '@angular/common';
 import { CookieModule } from 'ngx-cookie';
 // import { NgxCaptchaModule } from 'ngx-captcha';
 
-const httpInterceptor = (platformId: Object, authorizationService: AuthorizationService, router: Router) => 
-    new APIInterceptor(platformId, authorizationService, router);
+const httpInterceptor = (platformId: Object, authorizationService: AuthorizationService) => 
+    new APIInterceptor(platformId, authorizationService);
 
 @NgModule({
     declarations: [
@@ -57,7 +57,7 @@ const httpInterceptor = (platformId: Object, authorizationService: Authorization
         {
             provide: HTTP_INTERCEPTORS,
             useFactory: httpInterceptor,
-            deps: [PLATFORM_ID, AuthorizationService, Router],
+            deps: [PLATFORM_ID, AuthorizationService],
             multi: true
         },
         {
@@ -72,7 +72,7 @@ const httpInterceptor = (platformId: Object, authorizationService: Authorization
             deps: [PLATFORM_ID]
         },
         {
-            provide: ErrorHandler, useClass: GlobalErrorHandler, deps: [Injector, NgZone, AuthorizationService, LoadingService]
+            provide: ErrorHandler, useClass: GlobalErrorHandler, deps: [PLATFORM_ID, Injector, NgZone, AuthorizationService, LoadingService]
         },
         provideHttpClient(withFetch()),
         provideClientHydration()
