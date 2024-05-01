@@ -16,6 +16,8 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { DOCUMENT } from '@angular/common';
 import { Meta, Title } from '@angular/platform-browser';
 import { WindowService } from 'src/app/services/common/window.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ProfileCodeDialog } from 'src/app/dialogs/profile-code-dialog/profile-code.dialog';
 
 @Component({
     selector: 'app-profile',
@@ -60,6 +62,7 @@ export class ProfilePage extends Responsive implements OnInit, OnDestroy {
         private titleService: Title,
         private metaService: Meta,
         private windowService: WindowService,
+        public dialog: MatDialog,
         breakpointObserver: BreakpointObserver
     ) {
         super(breakpointObserver);
@@ -236,6 +239,12 @@ export class ProfilePage extends Responsive implements OnInit, OnDestroy {
                 this.allFollowersDisplayed = true;
             }
         }
+    }
+
+    onAvatarClick(): void {
+        this.dialog.open(ProfileCodeDialog, {
+            data: this.user?.userName
+        });
     }
 
     private async loadPageData(): Promise<void> {

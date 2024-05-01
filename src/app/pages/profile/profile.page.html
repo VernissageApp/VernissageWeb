@@ -1,6 +1,6 @@
 <div *ngIf="user && isReady" @fadeIn>
     <img class="header-image" alt="header" [src]="this.user.headerUrl ?? '/assets/header.jpg'" />
-    <img class="avatar-image" alt="header" [src]="this.user.avatarUrl ?? '/assets/avatar.svg'" />
+    <img class="avatar-image" alt="header" [src]="this.user.avatarUrl ?? '/assets/avatar.svg'" (click)="onAvatarClick()" />
 
     <div class="flex-row flex-space-around padding-left-10 padding-right-10">
         <div class="profile">

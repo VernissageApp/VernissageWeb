@@ -3,7 +3,6 @@ import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse
 
 import { Observable } from 'rxjs/internal/Observable';
 import { catchError, switchMap } from 'rxjs/operators';
-import { Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { AuthorizationService } from '../services/authorization/authorization.service';
 import { from } from 'rxjs';
@@ -16,8 +15,7 @@ export class APIInterceptor implements HttpInterceptor {
 
     constructor(
         @Inject(PLATFORM_ID) platformId: Object,
-        private authorizationService: AuthorizationService,
-        private router: Router
+        private authorizationService: AuthorizationService
     ) {
         this.isBrowser = isPlatformBrowser(platformId);
     }
@@ -54,7 +52,6 @@ export class APIInterceptor implements HttpInterceptor {
                 }
             }
 
-            console.error(error);
             throw error;
         }));
     }

@@ -39,9 +39,10 @@ export class UploadPage extends Responsive {
     isSensitive = false;
     contentWarning = '';
     selectedIndex = 0;
-    maxFileSize = 0;
     isOpenAIEnabled = false;
     hashtagsInProgress = false;
+    maxFileSize = 0;
+    maxStatusLength = 0;
 
     photos: UploadPhoto[] = [];
 
@@ -62,6 +63,7 @@ export class UploadPage extends Responsive {
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
         this.maxFileSize = this.instanceService.instance?.configuration?.attachments?.imageSizeLimit ?? 10485760;
+        this.maxStatusLength = this.instanceService.instance?.configuration?.statuses?.maxCharacters ?? 500;
         this.isOpenAIEnabled = this.settingsService.publicSettings?.isOpenAIEnabled ?? false;
 
         [this.categories, this.licenses] = await Promise.all([

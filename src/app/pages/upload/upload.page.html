@@ -45,7 +45,10 @@
                                     <mat-label>Text</mat-label>
                                     <textarea matInput name="statusText" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4"
                                               cdkAutosizeMaxRows="10"  #statusInput="ngModel" [(ngModel)]="statusText" required
-                                              aria-label="Status" appMaxLength="500"></textarea>
+                                              aria-label="Status" [appMaxLength]="maxStatusLength.toString()"></textarea>
+                                    <mat-hint class="text-muted" align="start">Use “CamelCase” for hashtags, capitalizing the first letter of each word.</mat-hint>
+                                    <mat-hint align="end">{{ statusText.length }}/{{ maxStatusLength }}</mat-hint>
+                                    <mat-error *ngIf="statusInput.invalid && statusInput.errors?.required">Enter status text.</mat-error>
                                     <mat-error *ngIf="statusInput.invalid && statusInput.errors?.appMaxLength">Too long status.</mat-error>
                                 </mat-form-field>
 
