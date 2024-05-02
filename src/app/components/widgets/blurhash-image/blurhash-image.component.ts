@@ -8,6 +8,7 @@ import { Attachment } from 'src/app/models/attachment';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 import { StatusesService } from 'src/app/services/http/statuses.service';
 import { MessagesService } from 'src/app/services/common/messages.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
     selector: 'app-blurhash-image',
@@ -42,6 +43,7 @@ export class BlurhashImageComponent implements AfterViewInit {
         private statusesService: StatusesService,
         private messageService: MessagesService,
         private authorizationService: AuthorizationService) {
+            this.isBrowser = isPlatformBrowser(platformId);
     }
 
     ngOnInit(): void {

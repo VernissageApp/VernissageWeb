@@ -52,20 +52,20 @@ export class PersistanceBrowserService implements PersistanceService {
 }
 
 export class PersistanceServerService implements PersistanceService {
-    set(key: string, value: string): void {
+    set(_key: string, _value: string): void {
     }
 
-    setJson(key: string, data: any): void {
+    setJson(_valuekey: string, _data: any): void {
     }
 
-    get(key: string): string | null {
+    get(_key: string): string | null {
         return null;
     }
 
-    getJson(key: string): any {
+    getJson(_key: string): any {
         return null;
     }
 
-    remove(key: string): void {
+    remove(_key: string): void {
     }
 }
