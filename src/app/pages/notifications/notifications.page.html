@@ -1,13 +1,13 @@
 <div *ngIf="isReady && notifications" @fadeIn [ngClass]="{ 'padding-30': !isHandset, 'padding-10': isHandset }">
     <div class="flex-row flex-space-around">
         <div class="notifications-container width-100">
-            <div class="flex-row flex-align-center flex-space-between margin-bottom-10">
+            <div class="flex-row flex-align-center flex-space-between margin-bottom-20">
                 <h1>Notifications</h1>
 
                 @if (showEnableNotificationButton) {
                     <button mat-flat-button color="primary" (click)="openNotificationsSettings()">
                         <mat-icon>notifications_none</mat-icon>
-                        Notifications settings
+                        Settings
                     </button>
                 }
             </div>

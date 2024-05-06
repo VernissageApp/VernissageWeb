@@ -28,7 +28,6 @@ export class NotificationsPage extends Responsive {
     showLoadMore = true;
     showEnableNotificationButton = false;
     notifications?: LinkableResult<Notification>;
-    readonly publicVapidServerKey = 'BDQQTUwZW-E2Dw8Yy7NtosI67Chw4YEBsSDCt95PSUZxBU4D4KSVMTsNaDYb7O3BvtR9TvGjb4ZWz4vweh2i2u4';
 
     constructor(
         private notificationsService: NotificationsService,
@@ -52,7 +51,7 @@ export class NotificationsPage extends Responsive {
             this.notificationsService.changes.next(0);
         }
 
-        this.showEnableNotificationButton = this.swPushService.isEnabled && !!this.settingsService.publicSettings?.webPushVapidPublicKey;
+        this.showEnableNotificationButton = this.isPusApiSupported() && this.swPushService.isEnabled && !!this.settingsService.publicSettings?.webPushVapidPublicKey;
 
         this.isReady = true;
         this.loadingService.hideLoader();
@@ -95,5 +94,9 @@ export class NotificationsPage extends Responsive {
         this.dialog.open(NotificationSettingsDialog, {
             width: '500px'
         });
+    }
+
+    private isPusApiSupported(): boolean {
+        return 'Notification' in window && 'serviceWorker' in navigator && 'PushManager' in window;
     }
 }
