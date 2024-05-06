@@ -21,6 +21,7 @@ import { DisableTwoFactorTokenDialog } from './disable-two-factor-token/disable-
 import { ContentWarningDialog } from './content-warning-dialog/content-warning.dialog';
 import { InstanceBlockedDomainDialog } from './instance-blocked-domain-dialog/instance-blocked-domain.dialog';
 import { ProfileCodeDialog } from './profile-code-dialog/profile-code.dialog';
+import { NotificationSettingsDialog } from './notification-settings-dialog/notification-settings.dialog';
 
 @NgModule({
     declarations: [
@@ -37,7 +38,8 @@ import { ProfileCodeDialog } from './profile-code-dialog/profile-code.dialog';
         DisableTwoFactorTokenDialog,
         ContentWarningDialog,
         InstanceBlockedDomainDialog,
-        ProfileCodeDialog
+        ProfileCodeDialog,
+        NotificationSettingsDialog
     ],
     imports: [
         BrowserModule,
@@ -63,7 +65,8 @@ import { ProfileCodeDialog } from './profile-code-dialog/profile-code.dialog';
         DisableTwoFactorTokenDialog,
         ContentWarningDialog,
         InstanceBlockedDomainDialog,
-        ProfileCodeDialog
+        ProfileCodeDialog,
+        NotificationSettingsDialog
     ]
 })
 export class DialogsModule { }
