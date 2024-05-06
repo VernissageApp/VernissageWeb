@@ -202,6 +202,57 @@
     </div>
 
     <mat-divider></mat-divider>
+    <h3>WebPush notifications</h3>
+
+    <div class="margin-bottom-20">
+        <div>
+            <mat-checkbox name="isWebPushEnabled" color="primary" [disableRipple]="true" [(ngModel)]="settings.isWebPushEnabled">
+                Are WebPush notifications enabled
+            </mat-checkbox>
+        </div>
+    </div>
+
+    <div class="margin-bottom-20">
+        <mat-form-field appearance="outline">
+            <mat-label>WebPush service endpoint</mat-label>
+            <input matInput name="webPushEndpoint" #openAPIKey="ngModel" [(ngModel)]="settings.webPushEndpoint"
+                placeholder="WebPush service endpoint" aria-label="WebPush service endpoint" />
+        </mat-form-field>
+    </div>
+
+    <div class="margin-bottom-20">
+        <mat-form-field appearance="outline">
+            <mat-label>WebPush service secret key</mat-label>
+            <input matInput name="webPushSecretKey" #openAPIKey="ngModel" [(ngModel)]="settings.webPushSecretKey"
+                placeholder="WebPush service secret key" aria-label="WebPush service secret key" />
+        </mat-form-field>
+    </div>
+
+    <div class="margin-bottom-20">
+        <mat-form-field appearance="outline">
+            <mat-label>WebPush Vapid subject</mat-label>
+            <input matInput name="webPushVapidSubject" #openAPIKey="ngModel" [(ngModel)]="settings.webPushVapidSubject"
+                placeholder="WebPush Vapid subject" aria-label="WebPush Vapid subject" />
+        </mat-form-field>
+    </div>
+
+    <div class="margin-bottom-20">
+        <mat-form-field appearance="outline">
+            <mat-label>WebPush Vapid public key</mat-label>
+            <input matInput name="webPushVapidPublicKey" #openAPIKey="ngModel" [(ngModel)]="settings.webPushVapidPublicKey"
+                placeholder="WebPush Vapid public key" aria-label="WebPush Vapid public key" />
+        </mat-form-field>
+    </div>
+
+    <div class="margin-bottom-20">
+        <mat-form-field appearance="outline">
+            <mat-label>WebPush Vapid private key</mat-label>
+            <input matInput name="webPushVapidPrivateKey" #openAPIKey="ngModel" [(ngModel)]="settings.webPushVapidPrivateKey"
+                placeholder="WebPush Vapid priavte key" aria-label="WebPush Vapid priavte key" />
+        </mat-form-field>
+    </div>
+
+    <mat-divider></mat-divider>
 
     <div class="margin-bottom-20 margin-top-20">
         <mat-form-field>

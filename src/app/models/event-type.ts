@@ -139,5 +139,10 @@ export enum EventType {
     InstanceBlockedDomainsList = 'instanceBlockedDomainsList',
     InstanceBlockedDomainsCreate = 'instanceBlockedDomainsCreate',
     InstanceBlockedDomainsUpdate = 'instanceBlockedDomainsUpdate',
-    InstanceBlockedDomainsDelete = 'instanceBlockedDomainsDelete'
+    InstanceBlockedDomainsDelete = 'instanceBlockedDomainsDelete',
+
+    PushSubscriptionsList = 'pushSubscriptionsList',
+    PushSubscriptionsCreate = 'pushSubscriptionsCreate',
+    PushSubscriptionsUpdate = 'pushSubscriptionsUpdate',
+    PushSubscriptionsDelete = 'pushSubscriptionsDelete'
 }

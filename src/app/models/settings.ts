@@ -34,4 +34,11 @@ export class Settings {
 
     public isOpenAIEnabled = false;
     public openAIKey = '';
+
+    public isWebPushEnabled = false;
+    public webPushEndpoint = '';
+    public webPushSecretKey = '';
+    public webPushVapidPublicKey = '';
+    public webPushVapidPrivateKey = '';
+    public webPushVapidSubject = '';
 }
