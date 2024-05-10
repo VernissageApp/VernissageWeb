@@ -20,6 +20,7 @@ import { WindowService } from 'src/app/services/common/window.service';
 export class GalleryComponent extends Responsive implements OnInit, OnChanges {
     @Input() statuses?: LinkableResult<Status>;
     @Input() squareImages = false;
+    @Input() hideAvatars = false;
 
     gallery?: Status[][];
     sizes?: number[];
