@@ -22,6 +22,7 @@ export class PreferencesPage extends Responsive {
 
     isLightTheme = true;
     isCircleAvatar = true;
+    isSquareImages = true;
 
     alwaysShowNSFW = false;
     showAlternativeText = false;
@@ -45,6 +46,7 @@ export class PreferencesPage extends Responsive {
 
         this.isLightTheme = this.preferencesService.isLightTheme;
         this.isCircleAvatar = this.preferencesService.isCircleAvatar;
+        this.isSquareImages = this.preferencesService.isSquareImages;
         this.alwaysShowNSFW = this.preferencesService.alwaysShowNSFW;
         this.showAlternativeText = this.preferencesService.showAlternativeText;
         this.showAvatars = this.preferencesService.showAvatars;
@@ -68,6 +70,10 @@ export class PreferencesPage extends Responsive {
 
     onAvatarChange(): void {
         this.preferencesService.isCircleAvatar = this.isCircleAvatar;
+    }
+
+    onSquareImageChange(): void {
+        this.preferencesService.isSquareImages = this.isSquareImages;
     }
 
     onAlwaysShowNSFWChange(): void {

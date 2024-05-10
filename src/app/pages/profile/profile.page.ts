@@ -18,6 +18,7 @@ import { Meta, Title } from '@angular/platform-browser';
 import { WindowService } from 'src/app/services/common/window.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ProfileCodeDialog } from 'src/app/dialogs/profile-code-dialog/profile-code.dialog';
+import { PreferencesService } from 'src/app/services/common/preferences.service';
 
 @Component({
     selector: 'app-profile',
@@ -32,6 +33,7 @@ export class ProfilePage extends Responsive implements OnInit, OnDestroy {
     allFollowingDisplayed = false;
     allFollowersDisplayed = false;
     loadingDifferentProfile = false;
+    squareImages = false;
     profilePageTab = ProfilePageTab.Statuses;
     userName!: string;
 
@@ -62,6 +64,7 @@ export class ProfilePage extends Responsive implements OnInit, OnDestroy {
         private titleService: Title,
         private metaService: Meta,
         private windowService: WindowService,
+        private preferencesService: PreferencesService,
         public dialog: MatDialog,
         breakpointObserver: BreakpointObserver
     ) {
@@ -70,6 +73,7 @@ export class ProfilePage extends Responsive implements OnInit, OnDestroy {
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
+        this.squareImages = this.preferencesService.isSquareImages;
 
         this.routeNavigationStartSubscription = this.router.events
             .pipe(filter(event => event instanceof NavigationStart))  

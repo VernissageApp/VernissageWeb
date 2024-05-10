@@ -20,6 +20,12 @@
         z-index: 101;
     }
 
+    @media only screen and (max-width: 768px) {
+        .text {
+            font-size: 0.6em;
+        }
+    }
+
     .img-horizontal {
         height: 300px;
         object-fit: cover;
