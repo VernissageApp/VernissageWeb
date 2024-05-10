@@ -10,7 +10,7 @@
 
         &.square {
             .column {    
-                ::ng-deep img {
+                ::ng-deep .image-item {
                     width: calc((100vw - 12px) / 3);
                     height: calc((100vw - 12px) / 3);
                     object-fit: cover;

@@ -4,9 +4,9 @@
     }
 
     @if (horizontal) {
-        <img [ngClass]="{ 'img-vertical': !horizontal, 'img-horizontal': horizontal }" [src]="imageSrc" (load)="onImageLoaded()" />
+        <img class="image-item" [ngClass]="{ 'img-vertical': !horizontal, 'img-horizontal': horizontal }" [src]="imageSrc" (load)="onImageLoaded()" />
     } @else {
-        <img [ngClass]="{ 'img-vertical': !horizontal, 'img-horizontal': horizontal }" [src]="imageSrc" [width]="width" [height]="height" (load)="onImageLoaded()" />
+        <img class="image-item" [ngClass]="{ 'img-vertical': !horizontal, 'img-horizontal': horizontal }" [src]="imageSrc" [width]="width" [height]="height" (load)="onImageLoaded()" />
     }
 
     @if (imageIsLoaded) {
