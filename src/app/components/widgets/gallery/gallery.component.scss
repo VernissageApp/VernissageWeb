@@ -7,6 +7,16 @@
         .column {
             max-width: calc((100vw - 12px) / 3);
         }
+
+        &.square {
+            .column {    
+                ::ng-deep img {
+                    width: calc((100vw - 12px) / 3);
+                    height: calc((100vw - 12px) / 3);
+                    object-fit: cover;
+                }
+            }
+        }
     }
 
     .placeholder {

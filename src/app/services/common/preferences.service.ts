@@ -30,6 +30,14 @@ export class PreferencesService {
         this.cookieService.put('isCircleAvatar', isCircleAvatar ? 'true' : 'false', { expires: this.longFuture });
     }
 
+    public get isSquareImages(): boolean {
+        return (this.cookieService.get('isSquareImages') ?? 'true') === 'true';
+    }
+
+    public set isSquareImages(isSquareImages: boolean) {
+        this.cookieService.put('isSquareImages', isSquareImages ? 'true' : 'false', { expires: this.longFuture });
+    }
+
     public get alwaysShowNSFW(): boolean {
         return (this.cookieService.get('alwaysShowNSFW') ?? 'false') === 'true';
     }

@@ -19,6 +19,7 @@ import { WindowService } from 'src/app/services/common/window.service';
 })
 export class GalleryComponent extends Responsive implements OnInit, OnChanges {
     @Input() statuses?: LinkableResult<Status>;
+    @Input() squareImages = false;
 
     gallery?: Status[][];
     sizes?: number[];
@@ -47,7 +48,7 @@ export class GalleryComponent extends Responsive implements OnInit, OnChanges {
 
         this.galleryBreakpointSubscription = this.galleryBreakpointObserver.observe([Breakpoints.XSmall]).subscribe(result => {
             if (result.matches) {
-                this.columns = 1;
+                this.columns = this.squareImages ? 3 : 1;
                 this.buildGallery();
             } else {
                 this.columns = 3;
@@ -190,6 +191,10 @@ export class GalleryComponent extends Responsive implements OnInit, OnChanges {
     }
 
     private getImageConstraitHeight(status: Status): number {
+        if (this.squareImages) {
+            return 1;
+        }
+
         const mainAttachment = this.getMainAttachment(status);
 
         const height = mainAttachment?.originalFile?.height ?? 0.0;
