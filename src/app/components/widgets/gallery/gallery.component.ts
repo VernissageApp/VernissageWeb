@@ -26,6 +26,7 @@ export class GalleryComponent extends Responsive implements OnInit, OnChanges {
     columns = 3;
     isDuringLoadingMode = false;
     allStatusesLoaded = false;
+    avatarVisible = true;
 
     galleryBreakpointSubscription?: Subscription;
     routeNavigationStartSubscription?: Subscription;
@@ -49,9 +50,11 @@ export class GalleryComponent extends Responsive implements OnInit, OnChanges {
         this.galleryBreakpointSubscription = this.galleryBreakpointObserver.observe([Breakpoints.XSmall]).subscribe(result => {
             if (result.matches) {
                 this.columns = this.squareImages ? 3 : 1;
+                this.avatarVisible = !this.squareImages;
                 this.buildGallery();
             } else {
                 this.columns = 3;
+                this.avatarVisible = true;
                 this.buildGallery();
             }
         });

@@ -20,6 +20,7 @@ export class BlurhashImageComponent implements AfterViewInit {
     
     @Input() horizontal = true;
     @Input() status?: Status;
+    @Input() avatarVisible = true;
 
     imageSrc?: string;
     alt?: string;
@@ -33,9 +34,10 @@ export class BlurhashImageComponent implements AfterViewInit {
     @ViewChild('img', { static: false }) readonly img?: ElementRef<HTMLImageElement>;
 
     showBlurhash = true;
-    showAvatar = true;
     showAltIcon = false;
     showFavourites = false;
+
+    get showAvatar() { return this.preferencesService.showAvatars && this.avatarVisible; }
 
     constructor(
         @Inject(PLATFORM_ID) platformId: Object,
@@ -54,7 +56,6 @@ export class BlurhashImageComponent implements AfterViewInit {
         this.text = this.getMainStatus()?.contentWarning;
 
         this.showBlurhash = !this.preferencesService.alwaysShowNSFW;
-        this.showAvatar = this.preferencesService.showAvatars;
         this.showAltIcon = this.preferencesService.showAltIcon;
         this.showFavourites = this.preferencesService.showFavourites;
 

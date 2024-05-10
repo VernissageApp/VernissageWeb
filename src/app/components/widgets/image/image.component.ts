@@ -20,6 +20,7 @@ export class ImageComponent implements OnInit, AfterViewInit {
 
     @Input() horizontal = true;
     @Input() status?: Status;
+    @Input() avatarVisible = true;
 
     imageSrc = '';
     alt?: string;
@@ -32,10 +33,11 @@ export class ImageComponent implements OnInit, AfterViewInit {
 
     @ViewChild('canvas', { static: false }) readonly canvas?: ElementRef<HTMLCanvasElement>;
 
-    showAvatar = true;
     showAltIcon = false;
     showFavourites = false;
     imageIsLoaded = false;
+
+    get showAvatar() { return this.preferencesService.showAvatars && this.avatarVisible; }
 
     constructor(
         @Inject(PLATFORM_ID) platformId: Object,
@@ -54,7 +56,6 @@ export class ImageComponent implements OnInit, AfterViewInit {
         this.width = this.getMainAttachmentWidth();
         this.height = this.getMainAttachmentHeight();
 
-        this.showAvatar = this.preferencesService.showAvatars;
         this.showAltIcon = this.preferencesService.showAltIcon;
         this.showFavourites = this.preferencesService.showFavourites;
 

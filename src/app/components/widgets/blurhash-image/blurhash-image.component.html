@@ -4,7 +4,7 @@
         <canvas class="blurhash" #canvas width="32" height="32"></canvas>
     }
 
-    <img [ngClass]="{ 'img-vertical': !horizontal, 'img-horizontal': horizontal }" [src]="imageSrc" />
+    <img class="image-item" [ngClass]="{ 'img-vertical': !horizontal, 'img-horizontal': horizontal }" [src]="imageSrc" />
 
     @if(showAvatar && user) {
         <div class="avatar">
