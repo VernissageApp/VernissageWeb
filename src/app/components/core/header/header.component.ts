@@ -22,6 +22,7 @@ export class HeaderComponent extends Responsive {
     public notificationCounter = 0;
     public user?: User | null;
     public avatarUrl = "assets/avatar.svg";
+    public fullName = '';
     private userChangeSubscription?: Subscription;
     private notificationChangeSubscription?: Subscription;
 
@@ -45,6 +46,12 @@ export class HeaderComponent extends Responsive {
         this.userChangeSubscription = this.authorizationService.changes.subscribe(async (user) => {
             this.user = user;
             this.avatarUrl = this.user?.avatarUrl ?? 'assets/avatar.svg';
+
+            this.fullName = this.user?.userName ?? '';
+            if (this.user?.name && this.user.name.length > 0) {
+                this.fullName = this.user.name
+            }
+
             await this.loadNotificationCount();
             this.clearReuseStrategyState();
         });
