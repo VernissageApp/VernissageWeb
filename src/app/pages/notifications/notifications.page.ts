@@ -149,8 +149,4 @@ export class NotificationsPage extends Responsive {
                 return '';
         }
     }
-
-    private isPushApiSupported(): boolean {
-        return 'Notification' in window && 'serviceWorker' in navigator && 'PushManager' in window;
-    }
 }
