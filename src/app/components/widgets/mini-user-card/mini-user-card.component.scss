@@ -24,5 +24,17 @@
 }
 
 .username {
-    margin-top: -6px
+    margin-top: -5px;
+
+    .fullname {
+        line-height: 14px;
+
+        a {
+            line-height: 14px;
+        }
+    }
+
+    .account {
+        line-height: 12px;
+    }
 }
