@@ -51,7 +51,7 @@ export class NotificationsPage extends Responsive {
             this.notificationsService.changes.next(0);
         }
 
-        this.showEnableNotificationButton = this.isPushApiSupported() && this.swPushService.isEnabled && !!this.settingsService.publicSettings?.webPushVapidPublicKey;
+        this.showEnableNotificationButton = this.notificationsService.isPushApiSupported() && this.swPushService.isEnabled && !!this.settingsService.publicSettings?.webPushVapidPublicKey;
 
         this.isReady = true;
         this.loadingService.hideLoader();
