@@ -3,11 +3,11 @@
         <app-avatar [user]="user" [size]="size"></app-avatar>
     </div>
     <div class="flex-row flex-responsive username" [ngClass]="{ 'white': whiteLink }">
-        <div>
+        <div class="fullname">
             <a [routerLink]="[ '/@' + user.userName ]" class="margin-right-5 fw-400">{{ user.name }}</a>
         </div>
         @if (showUserName) {
-            <div class="fw-400 fs-90 text-muted">&#64;{{ user.userName }}</div>
+            <div class="fw-400 fs-90 text-muted account">&#64;{{ user.userName }}</div>
         }
     </div>
 </div>

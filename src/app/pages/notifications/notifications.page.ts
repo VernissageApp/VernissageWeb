@@ -96,6 +96,60 @@ export class NotificationsPage extends Responsive {
         });
     }
 
+    getNotificationText(notification: Notification): string {
+        switch (notification.notificationType) {
+            case NotificationType.Mention:
+                return 'mentioned you';
+            case NotificationType.Status:
+                return 'published status';
+            case NotificationType.Reblog:
+                return 'boost your status';
+            case NotificationType.Follow:
+                return 'followed you';
+            case NotificationType.FollowRequest:
+                return 'want to follow you';
+            case NotificationType.Favourite:
+                return 'favourited your status';
+            case NotificationType.Update:
+                return 'edited status';
+            case NotificationType.AdminSignUp:
+                return 'is a new user';
+            case NotificationType.AdminReport:
+                return 'has been reported';
+            case NotificationType.NewComment:
+                return 'wrote new comment';
+            default:
+                return '';
+        }
+    }
+
+    getNotificationIcon(notification: Notification): string {
+        switch (notification.notificationType) {
+            case NotificationType.Mention:
+                return 'alternate_email';
+            case NotificationType.Status:
+                return 'fiber_new';
+            case NotificationType.Reblog:
+                return 'swap_vertical_circle';
+            case NotificationType.Follow:
+                return 'person_add';
+            case NotificationType.FollowRequest:
+                return 'person_outline';
+            case NotificationType.Favourite:
+                return 'star';
+            case NotificationType.Update:
+                return 'edit';
+            case NotificationType.AdminSignUp:
+                return 'account_box';
+            case NotificationType.AdminReport:
+                return 'report_problem';
+            case NotificationType.NewComment:
+                return 'chat_bubble';
+            default:
+                return '';
+        }
+    }
+
     private isPusApiSupported(): boolean {
         return 'Notification' in window && 'serviceWorker' in navigator && 'PushManager' in window;
     }
