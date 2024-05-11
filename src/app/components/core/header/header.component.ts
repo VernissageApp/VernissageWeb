@@ -10,6 +10,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { Resolution, Responsive } from 'src/app/common/responsive';
 import { NotificationsService } from 'src/app/services/http/notifications.service';
 import { CustomReuseStrategy } from 'src/app/common/custom-reuse-strategy';
+import { SwPush } from '@angular/service-worker';
 
 @Component({
     selector: 'app-header',
@@ -25,6 +26,7 @@ export class HeaderComponent extends Responsive {
     public fullName = '';
     private userChangeSubscription?: Subscription;
     private notificationChangeSubscription?: Subscription;
+    private meesagesSubscription?: Subscription;
 
     constructor(
         private authorizationService: AuthorizationService,
@@ -32,6 +34,7 @@ export class HeaderComponent extends Responsive {
         private notificationsService: NotificationsService,
         private routeReuseStrategy: RouteReuseStrategy,
         private router: Router,
+        private swPushService: SwPush,
         breakpointObserver: BreakpointObserver
     ) {
         super(breakpointObserver)
@@ -52,6 +55,10 @@ export class HeaderComponent extends Responsive {
                 this.fullName = this.user.name
             }
 
+            this.meesagesSubscription = this.swPushService.messages.subscribe(async (a) => {
+                await this.loadNotificationCount();
+            });
+
             await this.loadNotificationCount();
             this.clearReuseStrategyState();
         });
@@ -66,6 +73,7 @@ export class HeaderComponent extends Responsive {
 
         this.userChangeSubscription?.unsubscribe();
         this.notificationChangeSubscription?.unsubscribe();
+        this.meesagesSubscription?.unsubscribe();
     }
 
     async signOut(): Promise<void> {
