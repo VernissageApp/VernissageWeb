@@ -29,4 +29,12 @@ export class NotificationsService {
         const event$ = this.httpClient.post(this.windowService.apiUrl() +  `/api/v1/notifications/marker/${notificationId}`, null);
         await firstValueFrom(event$);
     }
+
+    public isPushApiSupported(): boolean {
+        return 'Notification' in window && 'serviceWorker' in navigator && 'PushManager' in window;
+    }
+
+    public isApplicationBadgeSupported(): boolean {
+        return 'setAppBadge' in navigator;
+    }
 }

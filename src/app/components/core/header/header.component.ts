@@ -65,6 +65,10 @@ export class HeaderComponent extends Responsive {
 
         this.notificationChangeSubscription = this.notificationsService.changes.subscribe(async (count) => {
             this.notificationCounter = count;
+
+            if (this.notificationsService.isApplicationBadgeSupported()) {
+                navigator.setAppBadge(count);
+            }
         });
     }
 
