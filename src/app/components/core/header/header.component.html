@@ -92,9 +92,9 @@
                     <img class="avatar" [src]="avatarUrl" alt="Avatar">
                 </button>
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item disabled aria-label="Signed in as">
+                    <button mat-menu-item [routerLink]="['/@' + user.userName]" aria-label="Signed in as">
                         <mat-icon>face</mat-icon>
-                        <span>{{ user.name }}</span>
+                        <span>{{ fullName }}</span>
                     </button>
                     <mat-divider></mat-divider>
                     <button mat-menu-item [routerLink]="['/']" aria-label="Home">
@@ -104,10 +104,6 @@
                     <button *ngIf="isRegistrationByInvitationsOpened()" mat-menu-item [routerLink]="['/invitations']" aria-label="Invite">
                         <mat-icon>person_add</mat-icon>
                         <span>Invite</span>
-                    </button>
-                    <button mat-menu-item [routerLink]="['/@' + user.userName]" aria-label="Home">
-                        <mat-icon>face</mat-icon>
-                        <span>Profile</span>
                     </button>
                     <mat-divider></mat-divider>
                     <button mat-menu-item [routerLink]="['/account']" aria-label="Account">
