@@ -75,7 +75,6 @@ export class NotificationsPage extends Responsive {
                 this.showLoadMore = false;
             }
         }
-
     }
 
     getAttachemntUrl(status: Status): string | undefined {
