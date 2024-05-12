@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { SwPush } from '@angular/service-worker';
+import { firstValueFrom } from 'rxjs';
 import { PushSubscription as PushSubscriptionDto } from 'src/app/models/push-subscription';
 import { Role } from 'src/app/models/role';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
@@ -46,25 +47,28 @@ export class NotificationSettingsDialog implements OnInit {
     async ngOnInit(): Promise<void> {
         this.loadingService.showLoader();
 
-        const subscriptions = await this.pushSubscriptionsService.get(1, 10);
-        const firstSubscription = subscriptions.data.length > 0 ? subscriptions.data[0] : null;
+        // Get subscription from browser.
+        const subscription = await firstValueFrom(this.swPushService.subscription);
 
-        if (firstSubscription) {
-            this.webPushNotificationsEnabled = firstSubscription.webPushNotificationsEnabled;
-            this.webPushMentionEnabled = firstSubscription.webPushMentionEnabled;
-            this.webPushStatusEnabled = firstSubscription.webPushStatusEnabled;
-            this.webPushReblogEnabled = firstSubscription.webPushReblogEnabled;
-            this.webPushFollowEnabled = firstSubscription.webPushFollowEnabled;
-            this.webPushFollowRequestEnabled = firstSubscription.webPushFollowRequestEnabled;
-            this.webPushFavouriteEnabled = firstSubscription.webPushFavouriteEnabled;
-            this.webPushUpdateEnabled = firstSubscription.webPushUpdateEnabled;
-            this.webPushAdminSignUpEnabled = firstSubscription.webPushAdminSignUpEnabled;
-            this.webPushAdminReportEnabled = firstSubscription.webPushAdminReportEnabled;
-            this.webPushNewCommentEnabled = firstSubscription.webPushNewCommentEnabled;
+        // Download subscription from server.
+        const currentSubscription = await this.pushSubscriptionsService.getPushSubscription(subscription?.endpoint);
+
+        if (currentSubscription) {
+            this.webPushNotificationsEnabled = currentSubscription.webPushNotificationsEnabled;
+            this.webPushMentionEnabled = currentSubscription.webPushMentionEnabled;
+            this.webPushStatusEnabled = currentSubscription.webPushStatusEnabled;
+            this.webPushReblogEnabled = currentSubscription.webPushReblogEnabled;
+            this.webPushFollowEnabled = currentSubscription.webPushFollowEnabled;
+            this.webPushFollowRequestEnabled = currentSubscription.webPushFollowRequestEnabled;
+            this.webPushFavouriteEnabled = currentSubscription.webPushFavouriteEnabled;
+            this.webPushUpdateEnabled = currentSubscription.webPushUpdateEnabled;
+            this.webPushAdminSignUpEnabled = currentSubscription.webPushAdminSignUpEnabled;
+            this.webPushAdminReportEnabled = currentSubscription.webPushAdminReportEnabled;
+            this.webPushNewCommentEnabled = currentSubscription.webPushNewCommentEnabled;
         }
 
         this.switchDisabled = Notification.permission == 'denied';
-        this.notificationsEnabled = Notification.permission == 'granted' && !!firstSubscription?.webPushNotificationsEnabled;
+        this.notificationsEnabled = Notification.permission == 'granted' && !!currentSubscription?.webPushNotificationsEnabled;
 
         this.loadingService.hideLoader();
     }
@@ -129,17 +133,15 @@ export class NotificationSettingsDialog implements OnInit {
 
         try {
             if (!this.swPushService.isEnabled) {
-                console.log("Notification is not enabled.");
+                console.info("Notification is not enabled.");
                 return;
-              }
+            }
 
             const subscription = await this.swPushService.requestSubscription({
                 serverPublicKey: this.settingsService.publicSettings.webPushVapidPublicKey
             });
 
-            console.log(subscription);
             const jsonObject = subscription.toJSON();
-
             this.endpoint = jsonObject.endpoint;
             this.p256dh = jsonObject.keys?.p256dh;
             this.auth = jsonObject.keys?.auth;

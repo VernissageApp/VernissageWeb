@@ -12,7 +12,9 @@ import { NotificationsCountDto } from 'src/app/models/notifications-count';
 export class NotificationsService {
     public changes = new BehaviorSubject<number>(0);
 
-    constructor(private httpClient: HttpClient, private windowService: WindowService) {
+    constructor(
+        private httpClient: HttpClient,
+        private windowService: WindowService) {
     }
 
     public async get(minId?: string, maxId?: string, sinceId?: string, limit?: number): Promise<LinkableResult<Notification>> {
