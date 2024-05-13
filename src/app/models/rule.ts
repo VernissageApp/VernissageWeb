@@ -1,4 +1,5 @@
 export class Rule {
-    public id = 0;
+    public id = '';
+    public order = 0;
     public text = '';
 }
