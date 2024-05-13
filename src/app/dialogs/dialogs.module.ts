@@ -22,6 +22,8 @@ import { ContentWarningDialog } from './content-warning-dialog/content-warning.d
 import { InstanceBlockedDomainDialog } from './instance-blocked-domain-dialog/instance-blocked-domain.dialog';
 import { ProfileCodeDialog } from './profile-code-dialog/profile-code.dialog';
 import { NotificationSettingsDialog } from './notification-settings-dialog/notification-settings.dialog';
+import { InstanceRuleDialog } from './instance-rule-dialog/instance-rule.dialog';
+import { ConfirmationDialog } from './confirmation-dialog/confirmation.dialog';
 
 @NgModule({
     declarations: [
@@ -39,7 +41,9 @@ import { NotificationSettingsDialog } from './notification-settings-dialog/notif
         ContentWarningDialog,
         InstanceBlockedDomainDialog,
         ProfileCodeDialog,
-        NotificationSettingsDialog
+        NotificationSettingsDialog,
+        InstanceRuleDialog,
+        ConfirmationDialog
     ],
     imports: [
         BrowserModule,
@@ -66,7 +70,9 @@ import { NotificationSettingsDialog } from './notification-settings-dialog/notif
         ContentWarningDialog,
         InstanceBlockedDomainDialog,
         ProfileCodeDialog,
-        NotificationSettingsDialog
+        NotificationSettingsDialog,
+        InstanceRuleDialog,
+        ConfirmationDialog
     ]
 })
 export class DialogsModule { }

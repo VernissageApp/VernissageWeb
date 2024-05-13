@@ -21,6 +21,20 @@
                     <app-general-settings [settings]="settings"></app-general-settings>
                 </mat-expansion-panel>
 
+                <!-- Instance rules. -->
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Instance rules
+                        </mat-panel-title>
+                        <mat-panel-description *ngIf="!isHandset">
+                            Here you can manage instance rules.
+                            <mat-icon>local_police</mat-icon>
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <app-instance-rules></app-instance-rules>
+                </mat-expansion-panel>
+
                 <!-- Domain blocks panel. -->
                 <mat-expansion-panel>
                     <mat-expansion-panel-header>
@@ -34,8 +48,9 @@
                     </mat-expansion-panel-header>
                     <app-domain-blocks></app-domain-blocks>
                 </mat-expansion-panel>
+
             </mat-accordion>
-              
+
         </div>
     </div>
 </div>

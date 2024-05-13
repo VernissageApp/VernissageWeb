@@ -27,6 +27,7 @@ import { DirectivesModule } from '../directives/directive.module';
 import { FooterComponent } from './core/footer/footer.component';
 import { GeneralSettingsComponent } from './widgets/general-settings/general-settings.component';
 import { DomainBlocksComponent } from './widgets/domain-blocks/domain-blocks.component';
+import { InstanceRulesComponent } from './widgets/instance-rules/instance-rules.component';
 
 @NgModule({
     declarations: [
@@ -47,7 +48,8 @@ import { DomainBlocksComponent } from './widgets/domain-blocks/domain-blocks.com
         BlurhashImageComponent,
         ImageComponent,
         GeneralSettingsComponent,
-        DomainBlocksComponent
+        DomainBlocksComponent,
+        InstanceRulesComponent
     ],
     imports: [
         BrowserModule,
@@ -89,6 +91,7 @@ import { DomainBlocksComponent } from './widgets/domain-blocks/domain-blocks.com
         ImageComponent,
         GeneralSettingsComponent,
         DomainBlocksComponent,
+        InstanceRulesComponent,
         DirectivesModule
     ]
 })
