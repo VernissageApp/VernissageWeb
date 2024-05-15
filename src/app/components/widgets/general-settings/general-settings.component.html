@@ -201,6 +201,14 @@
         </mat-form-field>
     </div>
 
+    <div class="margin-bottom-20">
+        <mat-form-field appearance="outline">
+            <mat-label>OpenAI model</mat-label>
+            <input matInput name="openAPIModel" #openAPIModel="ngModel" [(ngModel)]="settings.openAIModel"
+                placeholder="OpenAI model" aria-label="OpenAI model" />
+        </mat-form-field>
+    </div>
+
     <mat-divider></mat-divider>
     <h3>WebPush notifications</h3>
 
