@@ -34,6 +34,7 @@ export class Settings {
 
     public isOpenAIEnabled = false;
     public openAIKey = '';
+    public openAIModel = '';
 
     public isWebPushEnabled = false;
     public webPushEndpoint = '';
