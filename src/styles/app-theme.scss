@@ -6,59 +6,59 @@
     $accent: map-get($theme, accent);
     $foreground: map-get($theme, foreground);
 
-    $error: mat.define-palette(mat.$red-palette);
-    $warning: mat.define-palette(mat.$orange-palette);
-    $grey: mat.define-palette(mat.$grey-palette);
-    $green: mat.define-palette(mat.$green-palette);
+    $error: mat.m2-define-palette(mat.$m2-red-palette);
+    $warning: mat.m2-define-palette(mat.$m2-orange-palette);
+    $grey: mat.m2-define-palette(mat.$m2-grey-palette);
+    $green: mat.m2-define-palette(mat.$m2-green-palette);
 
     a {
         &:link {
-            color: mat.get-color-from-palette($primary);
+            color: mat.m2-get-color-from-palette($primary);
             text-decoration: none;
         }
 
         &:visited {
-            color: mat.get-color-from-palette($primary);
+            color: mat.m2-get-color-from-palette($primary);
             text-decoration: none;
         }
 
         &:hover {
-            color: mat.get-color-from-palette($primary);
+            color: mat.m2-get-color-from-palette($primary);
             text-decoration: none;
         }
 
         &:active {
-            color: mat.get-color-from-palette($primary);
+            color: mat.m2-get-color-from-palette($primary);
             text-decoration: none;
         }
     }
 
     .text-error {
-        color: mat.get-color-from-palette($error);
+        color: mat.m2-get-color-from-palette($error);
     }
 
     .text-warning {
-        color: mat.get-color-from-palette($warning);
+        color: mat.m2-get-color-from-palette($warning);
     }
 
     .text-success {
-        color: mat.get-color-from-palette($green, 800);
+        color: mat.m2-get-color-from-palette($green, 800);
     }
 
     .text-muted {
-        color: mat.get-color-from-palette($grey);
+        color: mat.m2-get-color-from-palette($grey);
     }
 
     .separator {
         display: flex;
         align-items: center;
         text-align: center;
-        color: mat.get-color-from-palette($grey);
+        color: mat.m2-get-color-from-palette($grey);
 
         &::before, &::after {
             content: '';
             flex: 1;
-            border-bottom: 1px solid mat.get-color-from-palette($grey);
+            border-bottom: 1px solid mat.m2-get-color-from-palette($grey);
         }
 
         &::before {
@@ -73,22 +73,22 @@
     .dashed {
         border-bottom-width: 1px;
         border-bottom-style: dashed;
-        border-bottom-color: mat.get-color-from-palette($primary);
+        border-bottom-color: mat.m2-get-color-from-palette($primary);
     }
 
     .dropzone {
         width: 223px;
         height: 148px;
         margin-top: 4px;
-        background-color: mat.get-color-from-palette($foreground);
+        background-color: mat.m2-get-color-from-palette($foreground);
         opacity: 0.6;
         cursor: pointer;
         border-width: 1px;
         border-style: dashed;
-        border-color: mat.get-color-from-palette($grey);
+        border-color: mat.m2-get-color-from-palette($grey);
 
         path {
-            fill: mat.get-color-from-palette($primary);
+            fill: mat.m2-get-color-from-palette($primary);
         }
 
         .plus {
@@ -98,7 +98,7 @@
         }
 
         &:hover {
-            background-color: mat.get-color-from-palette($primary);
+            background-color: mat.m2-get-color-from-palette($primary);
             path {
                 fill: white;
             }
@@ -123,7 +123,7 @@
         cursor: pointer;
 
         &.selected {
-            border: 4px solid mat.get-color-from-palette($primary, 300);
+            border: 4px solid mat.m2-get-color-from-palette($primary, 300);
         }
 
         &.small {
@@ -138,6 +138,6 @@
     a:link.logo {
         font-style: normal;
         text-decoration: none;
-        color: mat.get-color-from-palette($background);
+        color: mat.m2-get-color-from-palette($background);
     }
 }

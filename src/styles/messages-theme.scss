@@ -1,9 +1,9 @@
 @use '@angular/material' as mat;
 @mixin messages-theme($theme) {
-    $primary: mat.get-color-from-palette(map-get($theme, primary));
-    $primary-text: mat.get-color-from-palette(map-get($theme, primary), default-contrast);
-    $warn: mat.get-color-from-palette(map-get($theme, warn));
-    $warn-text: mat.get-color-from-palette(map-get($theme, warn), default-contrast);
+    $primary: mat.m2-get-color-from-palette(map-get($theme, primary));
+    $primary-text: mat.m2-get-color-from-palette(map-get($theme, primary), default-contrast);
+    $warn: mat.m2-get-color-from-palette(map-get($theme, warn));
+    $warn-text: mat.m2-get-color-from-palette(map-get($theme, warn), default-contrast);
 
     .message-error {
         color: $warn-text;

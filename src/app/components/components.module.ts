@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withFetch, withInterceptorsFromDi } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { NgOptimizedImage } from "@angular/common";
 import { UploadPhotoComponent } from './widgets/upload-photo/upload-photo.component';
@@ -29,7 +29,8 @@ import { GeneralSettingsComponent } from './widgets/general-settings/general-set
 import { DomainBlocksComponent } from './widgets/domain-blocks/domain-blocks.component';
 import { InstanceRulesComponent } from './widgets/instance-rules/instance-rules.component';
 
-@NgModule({ declarations: [
+@NgModule({
+    declarations: [
         HeaderComponent,
         FooterComponent,
         PasswordComponent,
@@ -54,7 +55,6 @@ import { InstanceRulesComponent } from './widgets/instance-rules/instance-rules.
         BrowserModule,
         BrowserAnimationsModule,
         FormsModule,
-        HttpClientModule,
         ReactiveFormsModule,
         AngularMaterialModule,
         RouterModule,
@@ -80,7 +80,9 @@ import { InstanceRulesComponent } from './widgets/instance-rules/instance-rules.
         DomainBlocksComponent,
         InstanceRulesComponent,
         DirectivesModule
-    ], imports: [BrowserModule,
+    ],
+    imports: [
+        BrowserModule,
         BrowserAnimationsModule,
         FormsModule,
         ReactiveFormsModule,
@@ -88,5 +90,9 @@ import { InstanceRulesComponent } from './widgets/instance-rules/instance-rules.
         RouterModule,
         ValidationsModule,
         NgOptimizedImage,
-        DirectivesModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
+        DirectivesModule
+    ],
+    providers: [
+        provideHttpClient(withFetch(), withInterceptorsFromDi()),
+    ]})
 export class ComponentsModule { }

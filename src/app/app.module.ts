@@ -1,6 +1,6 @@
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER, ErrorHandler, Injector, NgZone, isDevMode, PLATFORM_ID } from '@angular/core';
-import { HTTP_INTERCEPTORS, provideHttpClient, withFetch, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withFetch, withInterceptorsFromDi } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MAT_CHECKBOX_DEFAULT_OPTIONS, MatCheckboxDefaultOptions } from '@angular/material/checkbox';
 import { GlobalErrorHandler } from 'src/app/handlers/global-error-handler';
@@ -26,10 +26,13 @@ import { CookieModule } from 'ngx-cookie';
 const httpInterceptor = (platformId: Object, authorizationService: AuthorizationService) => 
     new APIInterceptor(platformId, authorizationService);
 
-@NgModule({ declarations: [
+@NgModule({
+    declarations: [
         AppComponent
     ],
-    bootstrap: [AppComponent], imports: [BrowserModule,
+    bootstrap: [AppComponent],
+    imports: [
+        BrowserModule,
         BrowserAnimationsModule,
         // NgxCaptchaModule,
         HammerModule,
@@ -40,7 +43,9 @@ const httpInterceptor = (platformId: Object, authorizationService: Authorization
             // Register the ServiceWorker as soon as the application is stable
             // or after 30 seconds (whichever comes first).
             registrationStrategy: 'registerWhenStable:30000'
-        })], providers: [
+        })
+    ],
+    providers: [
         { provide: RouteReuseStrategy, useClass: CustomReuseStrategy },
         { provide: MAT_CHECKBOX_DEFAULT_OPTIONS, useValue: { clickAction: 'check' } as MatCheckboxDefaultOptions },
         {
@@ -70,10 +75,10 @@ const httpInterceptor = (platformId: Object, authorizationService: Authorization
         {
             provide: ErrorHandler, useClass: GlobalErrorHandler, deps: [PLATFORM_ID, Injector, NgZone, AuthorizationService, LoadingService]
         },
-        provideHttpClient(withFetch()),
-        provideClientHydration(),
-        provideHttpClient(withInterceptorsFromDi())
-    ] })
+        provideHttpClient(withFetch(), withInterceptorsFromDi()),
+        provideClientHydration()
+    ]
+})
 export class AppModule {
     constructor(iconRegistry: MatIconRegistry) {
         iconRegistry.setDefaultFontSetClass('material-symbols-outlined');
