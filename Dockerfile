@@ -17,7 +17,7 @@ RUN commit=$(git rev-parse --short HEAD) && sed -i -e "s/buildx/$commit/g" src/a
 RUN npm install --force
 
 # Generate the build of the application
-RUN npm run build:ssr
+RUN npm run build
 
 ###############################################################################
 # Stage 2: Serve dynamic app with node server (SSR).
