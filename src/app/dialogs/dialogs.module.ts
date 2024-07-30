@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withFetch, withInterceptorsFromDi } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { DeleteAccountDialog } from 'src/app/dialogs/delete-account-dialog/delete-account.dialog';
 import { ValidationsModule } from '../validators/validations.module';
@@ -45,16 +45,6 @@ import { ConfirmationDialog } from './confirmation-dialog/confirmation.dialog';
         InstanceRuleDialog,
         ConfirmationDialog
     ],
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        FormsModule,
-        HttpClientModule,
-        ReactiveFormsModule,
-        RouterModule,
-        ValidationsModule,
-        ComponentsModule
-    ],
     exports: [
         ChangePasswordDialog,
         ChangeEmailDialog,
@@ -73,6 +63,18 @@ import { ConfirmationDialog } from './confirmation-dialog/confirmation.dialog';
         NotificationSettingsDialog,
         InstanceRuleDialog,
         ConfirmationDialog
+    ], 
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        ReactiveFormsModule,
+        RouterModule,
+        ValidationsModule,
+        ComponentsModule
+    ],
+    providers: [
+        provideHttpClient(withFetch(), withInterceptorsFromDi()),
     ]
 })
 export class DialogsModule { }

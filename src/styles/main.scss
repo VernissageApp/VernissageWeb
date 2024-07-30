@@ -15,7 +15,7 @@
 // =======================================================================
 // Enable typography with hierarchy.
 
-$my-typography: mat.define-typography-config();
+$my-typography: mat.m2-define-typography-config();
 @include mat.typography-hierarchy($my-typography);
 
 // =======================================================================
@@ -55,7 +55,7 @@ $md-white: (
 );
 
 // White palette.
-$vernissage-white: mat.define-palette($md-white);
+$vernissage-white: mat.m2-define-palette($md-white);
 
 // =======================================================================
 // Dark palette.
@@ -94,7 +94,7 @@ $md-gray: (
 );
 
 // Dark palette.
-$vernissage-gray: mat.define-palette($md-gray);
+$vernissage-gray: mat.m2-define-palette($md-gray);
 
 // =======================================================================
 // Define light theme (constructed from custom colors).
@@ -167,16 +167,16 @@ $md-palette2: (
 );
 
 // Primary color palette.
-$vernissage-light-primary: mat.define-palette($md-palette1, 500);
+$vernissage-light-primary: mat.m2-define-palette($md-palette1, 500);
 
 // Accent color palette.
-$vernissage-light-accent: mat.define-palette($md-palette2, A200, A100, A400);
+$vernissage-light-accent: mat.m2-define-palette($md-palette2, A200, A100, A400);
 
 // The "warn" palette is optional and defaults to red if not specified.
-$vernissage-light-warn: mat.define-palette(mat.$red-palette);
+$vernissage-light-warn: mat.m2-define-palette(mat.$m2-red-palette);
 
 // Creating theme based on color palettes.
-$vernissage-light-theme: mat.define-light-theme((
+$vernissage-light-theme: mat.m2-define-light-theme((
   color: (
     primary: $vernissage-light-primary,
     accent: $vernissage-light-accent,
@@ -185,7 +185,7 @@ $vernissage-light-theme: mat.define-light-theme((
   typography: $my-typography
 ));
 
-$vernissage-light-toolbar-theme: mat.define-light-theme((
+$vernissage-light-toolbar-theme: mat.m2-define-light-theme((
   color: (primary: $vernissage-white, accent: $vernissage-light-accent),
 ));
 
@@ -193,15 +193,15 @@ $vernissage-light-toolbar-theme: mat.define-light-theme((
 // =======================================================================
 // Define a dark theme (constructed from Angular Material palettes).
 
-$vernissage-dark-theme: mat.define-dark-theme((
+$vernissage-dark-theme: mat.m2-define-dark-theme((
   color: (
-    primary: mat.define-palette(mat.$blue-palette),
-    accent: mat.define-palette(mat.$lime-palette),
+    primary: mat.m2-define-palette(mat.$m2-blue-palette),
+    accent: mat.m2-define-palette(mat.$m2-lime-palette),
     warn: $vernissage-light-warn
   )
 ));
 
-$vernissage-dark-toolbar-theme: mat.define-light-theme((
+$vernissage-dark-toolbar-theme: mat.m2-define-light-theme((
   color: (primary: $vernissage-gray, accent: $vernissage-light-accent),
 ));
 
