@@ -13,7 +13,8 @@
             <ng-container *ngIf="images">
                 <ng-container *ngIf="images.length === 1">
                     <div [ngClass]="{ 'photo-image-container-fixed': !isHandset }">
-                        <img [src]="images[0].data?.src" (click)="openInFullScreen()" />
+                        <canvas [ngClass]="{ 'display-none': imageIsLoaded }" class="blurhash" #canvas [width]="imageWidth" [height]="imageHeight"></canvas>
+                        <img [ngClass]="{ 'display-none': !imageIsLoaded }" [src]="images[0].data?.src" (click)="openInFullScreen()" (load)="onImageLoaded()" />
                     </div>
                 </ng-container>
                 <ng-container *ngIf="images.length > 1">
@@ -95,6 +96,10 @@
                                 <button mat-menu-item (click)="onFavouritedByDialog()">
                                     <mat-icon class="fill-symbol">grade</mat-icon>
                                     <span>Favourited by</span>
+                                </button>
+                                <button *ngIf="!mainStatus.isLocal" mat-menu-item (click)="onOpenOrginalPage()">
+                                    <mat-icon class="fill-symbol">export_notes</mat-icon>
+                                    <span>Open orginal page</span>
                                 </button>
                                 <mat-divider></mat-divider>
                                 <button mat-menu-item (click)="onReportDialog(mainStatus)">
@@ -203,7 +208,7 @@
                     <app-comment-reply *ngIf="signedInUser" [signedInUser]="signedInUser" [status]="mainStatus" (added)="onCommentAdded()"></app-comment-reply>
 
                     <ng-container *ngIf="(comments?.length ?? 0) > 0">
-                        <div *ngFor="let comment of comments">
+                        <div *ngFor="let comment of comments; trackBy:trackByCommentFn">
                             <div class="flex-row gap-8 padding-top-5 comments" [ngClass]="{ 'replies': !comment.showDivider, 'padding-top-15': comment.showDivider }">
                                 <div>
                                     <app-avatar [user]="comment.status.user" [size]="avatarSize.medium"></app-avatar>
@@ -211,9 +216,11 @@
                                 <div>
                                     <div>
                                         <a [routerLink]="[ '/@' + comment.status.user?.userName ]" class="margin-right-5 fw-600">{{ comment.status.user?.name }}</a>
+                                    </div>
+                                    <div>
                                         <span class="fw-400 fs-90 text-muted">&#64;{{ comment.status.user?.userName }}</span>
                                     </div>
-                                    <div [innerHTML]="comment.status.note"></div>
+                                    <div [innerHTML]="comment.status.noteHtml"></div>
                                 </div>
                                 <div *ngIf="signedInUser" class="flex-grow-1 text-right">
                                     <mat-icon class="favourited fill-symbol" *ngIf="comment.status.favourited">star</mat-icon>

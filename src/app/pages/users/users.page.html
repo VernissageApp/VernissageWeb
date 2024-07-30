@@ -68,8 +68,10 @@
                 <ng-container matColumnDef="isApproved">
                     <th mat-header-cell *matHeaderCellDef> Approved </th>
                     <td mat-cell *matCellDef="let element">
-                        <mat-checkbox color="primary" [disableRipple]="true" [ngModel]="element.isApproved" disabled>
-                        </mat-checkbox>
+                        @if (element.isLocal) {
+                            <mat-checkbox color="primary" [disableRipple]="true" [ngModel]="element.isApproved" disabled>
+                            </mat-checkbox>
+                        }
                     </td>
                 </ng-container>
 

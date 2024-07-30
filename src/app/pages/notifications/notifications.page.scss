@@ -1,12 +1,37 @@
 .notifications-container {
     max-width: 640px;
+    width: 100%;
 
-    mat-form-field {
-        width: 100%;
+    h1 {
+        margin-bottom: 0;
     }
+
+    .notification-wrapper {
+        display: flex;
+        gap: 10px;
+        padding-bottom: 10px;
+        padding-top: 10px;
     
-    ::ng-deep .mat-mdc-form-field-subscript-wrapper {
-        height: 0;
+        .notification-display-name {
+            display: flex;
+            gap: 10px;
+            flex: 1 1 auto;
+            overflow: hidden;
+
+            .icon {
+                position: relative;
+                top: -10px;
+                margin-right: 4px;
+            }
+
+            .fullname {
+                line-height: 16px;
+            }
+
+            .username {
+                line-height: 16px;
+            }
+        }
     }
 
     .notifications-card {

@@ -1,84 +1,41 @@
 <div *ngIf="isReady && notifications" @fadeIn [ngClass]="{ 'padding-30': !isHandset, 'padding-10': isHandset }">
     <div class="flex-row flex-space-around">
         <div class="notifications-container width-100">
-            <section>
+            <div class="flex-row flex-align-center flex-space-between margin-bottom-20">
                 <h1>Notifications</h1>
-            </section>
+
+                @if (showEnableNotificationButton) {
+                    <button mat-flat-button color="primary" (click)="openNotificationsSettings()">
+                        <mat-icon>notifications_none</mat-icon>
+                        Settings
+                    </button>
+                }
+            </div>
 
             <!-- List of notifications. -->
             <mat-card *ngIf="notifications.data.length > 0" class="notifications-card" appearance="outlined">
                 <mat-card-content>
-                    <div *ngFor="let notification of notifications.data; trackBy:trackByFn" class="padding-bottom-10 padding-top-10">
-                        <div class="flex-row flex-space-between">
-                            <div class="flex-row gap-8">
+                    <div *ngFor="let notification of notifications.data; trackBy:trackByFn">
+                        <div class="notification-wrapper">
+                            <div class="notification-display-name">
                                 <div class="user">
+                                    @if (!isHandsetPortrait) {
+                                        <span class="text-muted icon"><mat-icon>{{ getNotificationIcon(notification) }}</mat-icon></span>
+                                    }
                                     <app-avatar [user]="notification.byUser" [size]="avatarSize.huge"></app-avatar>
                                 </div>
-                                <div>
-                                    <div>
-                                        <a [routerLink]="[ '/@' + notification.byUser?.userName ]" class="margin-right-5 fw-600">{{ notification.byUser?.name }}</a><span class="fw-400 fs-90 text-muted">&#64;{{ notification.byUser?.userName }}</span>
+                                <div class="overflow-ellipsis">
+                                    <div class="overflow-ellipsis margin-top-5 fullname flex-row flex-responsive">
+                                        <div class="overflow-ellipsis">
+                                            <a [routerLink]="[ '/@' + notification.byUser?.userName ]" class="margin-right-5 fw-600">{{ notification.byUser?.name }}</a>
+                                        </div>
+                                        <div class="overflow-ellipsis">
+                                            <span class="text-muted">{{ getNotificationText(notification) }} </span>
+                                        </div>
                                     </div>
-                                    <ng-container [ngSwitch]="notification.notificationType">
-                                        <!-- Mentioned. -->
-                                        <div *ngSwitchCase="notificationType.Mention" class="flex-row flex-align-center">
-                                            <mat-icon>alternate_email</mat-icon>
-                                            <div>Mentioned</div>
-                                        </div>
-
-                                        <!-- Status. -->
-                                        <div *ngSwitchCase="notificationType.Status" class="flex-row flex-align-center">
-                                            <mat-icon>fiber_new</mat-icon>
-                                            <div>New status</div>
-                                        </div>
-
-                                        <!-- Reblog. -->
-                                        <div *ngSwitchCase="notificationType.Reblog" class="flex-row flex-align-center">
-                                            <mat-icon>swap_vertical_circle</mat-icon>
-                                            <div>Reblogged</div>
-                                        </div>
-
-                                        <!-- Follow. -->
-                                        <div *ngSwitchCase="notificationType.Follow" class="flex-row flex-align-center">
-                                            <mat-icon>person_add</mat-icon>
-                                            <div>Followed you</div>
-                                        </div>
-
-                                        <!-- FollowRequest. -->
-                                        <div *ngSwitchCase="notificationType.FollowRequest" class="flex-row flex-align-center">
-                                            <mat-icon>person_outline</mat-icon>
-                                            <div>Follow request</div>
-                                        </div>
-
-                                        <!-- Favourite. -->
-                                        <div *ngSwitchCase="notificationType.Favourite" class="flex-row flex-align-center">
-                                            <mat-icon>star</mat-icon>
-                                            <div>Favorited</div>
-                                        </div>
-
-                                        <!-- Update. -->
-                                        <div *ngSwitchCase="notificationType.Update" class="flex-row flex-align-center">
-                                            <mat-icon>edit</mat-icon>
-                                            <div>Status updated</div>
-                                        </div>
-
-                                        <!-- AdminSignUp. -->
-                                        <div *ngSwitchCase="notificationType.AdminSignUp" class="flex-row flex-align-center">
-                                            <mat-icon>account_box</mat-icon>
-                                            <div>New account created</div>
-                                        </div>
-
-                                        <!-- AdminReport. -->
-                                        <div *ngSwitchCase="notificationType.AdminReport" class="flex-row flex-align-center">
-                                            <mat-icon>report_problem</mat-icon>
-                                            <div>New report</div>
-                                        </div>
-
-                                        <!-- NewComment. -->
-                                        <div *ngSwitchCase="notificationType.NewComment" class="flex-row flex-align-center">
-                                            <mat-icon>chat_bubble</mat-icon>
-                                            <div>New comment</div>
-                                        </div>
-                                    </ng-container>
+                                    @if (!isHandsetPortrait) {
+                                        <div class="fw-400 fs-90 text-muted overflow-ellipsis username">&#64;{{ notification.byUser?.userName }}</div>
+                                    }
                                 </div>
                             </div>
 
@@ -91,7 +48,7 @@
                             }
 
                             @if (notification.notificationType === notificationType.AdminReport) {
-                                <button mat-button [routerLink]="['/reports']">Reports</button>
+                                <button mat-stroked-button [routerLink]="['/reports']">Reports</button>
                             }
                         </div>
                     </div>

@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatButtonToggleChange } from '@angular/material/button-toggle';
 import { MatDialog } from '@angular/material/dialog';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { MuteAccountDialog } from 'src/app/dialogs/mute-account-dialog/mute-account.dialog';
@@ -57,7 +58,7 @@ export class FollowButtonsSectionComponent implements OnInit {
 
     onOriginalProfile(): void {
         if (this.user?.activityPubProfile) {
-            window.open(this.user.activityPubProfile, "_blank");
+            this.windowService.openPage(this.user.activityPubProfile);
         }
     }
 
@@ -83,6 +84,10 @@ export class FollowButtonsSectionComponent implements OnInit {
                 }
             }
         });
+    }
+
+    toggleChange(event: MatButtonToggleChange) {
+        event.source.buttonToggleGroup.value = '';
     }
 
     async unmuteAccount(): Promise<void> {

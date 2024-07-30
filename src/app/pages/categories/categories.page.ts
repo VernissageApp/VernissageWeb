@@ -19,8 +19,9 @@ import { TimelineService } from "src/app/services/http/timeline.service";
     animations: fadeInAnimation
 })
 export class CategoriesPage extends Responsive {
-    isReady = false;
+    private readonly numberOfVisibleStatuses = 10;
 
+    isReady = false;
     categories: Category[] = [];
     categoryStatuses = new Map<string, LinkableResult<Status>>();
 
@@ -51,7 +52,7 @@ export class CategoriesPage extends Responsive {
     }
 
     private async loadStatuses(category: Category): Promise<void> {
-        const statuses = await this.timelineService.category(category.name, undefined, undefined, undefined, undefined);
+        const statuses = await this.timelineService.category(category.name, undefined, undefined, undefined, this.numberOfVisibleStatuses, undefined);
         statuses.context = ContextTimeline.category;
         statuses.category = category.name;
 

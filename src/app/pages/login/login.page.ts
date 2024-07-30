@@ -12,6 +12,8 @@ import { InstanceService } from 'src/app/services/http/instance.service';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { WindowService } from 'src/app/services/common/window.service';
 import { CustomReuseStrategy } from 'src/app/common/custom-reuse-strategy';
+import { AlwaysErrorStateMatcher } from 'src/app/common/always-error-state-mather';
+import { PushSubscriptionsService } from 'src/app/services/http/push-subscriptions.service';
 
 @Component({
     selector: 'app-login',
@@ -26,6 +28,7 @@ export class LoginPage implements OnInit {
     twoFactorToken = '';
     loginMode = LoginMode.UserNameAndPassword;
     dirtyErrorStateMatcher = new DirtyErrorStateMatcher();
+    alwaysErrorStateMatcher = new AlwaysErrorStateMatcher();
 
     errorMessage?: string;
     tokenMessge?: string;
@@ -41,6 +44,7 @@ export class LoginPage implements OnInit {
         private route: ActivatedRoute,
         private routeReuseStrategy: RouteReuseStrategy,
         private windowService: WindowService,
+        private pushSubscriptionsService: PushSubscriptionsService,
         private authClientsService: AuthClientsService) {
     }
 
@@ -63,8 +67,9 @@ export class LoginPage implements OnInit {
 
         try {
             this.clearReuseStrategyState();
-            const accessToken = await this.accountService.login(this.login, this.twoFactorToken);
-            this.authorizationService.signIn(accessToken);
+            const userPayloadToken = await this.accountService.login(this.login, this.twoFactorToken);
+            await this.authorizationService.signIn(userPayloadToken);
+            await this.pushSubscriptionsService.updatePushSubscription();
 
             if (this.returnUrl) {
                 await this.router.navigateByUrl(this.returnUrl);

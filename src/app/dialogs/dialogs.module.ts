@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withFetch, withInterceptorsFromDi } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { DeleteAccountDialog } from 'src/app/dialogs/delete-account-dialog/delete-account.dialog';
 import { ValidationsModule } from '../validators/validations.module';
@@ -19,6 +19,11 @@ import { UsersDialog } from './users-dialog/users.dialog';
 import { EnableTwoFactorTokenDialog } from './enable-two-factor-token/enable-two-factor-token.dialog';
 import { DisableTwoFactorTokenDialog } from './disable-two-factor-token/disable-two-factor-token.dialog';
 import { ContentWarningDialog } from './content-warning-dialog/content-warning.dialog';
+import { InstanceBlockedDomainDialog } from './instance-blocked-domain-dialog/instance-blocked-domain.dialog';
+import { ProfileCodeDialog } from './profile-code-dialog/profile-code.dialog';
+import { NotificationSettingsDialog } from './notification-settings-dialog/notification-settings.dialog';
+import { InstanceRuleDialog } from './instance-rule-dialog/instance-rule.dialog';
+import { ConfirmationDialog } from './confirmation-dialog/confirmation.dialog';
 
 @NgModule({
     declarations: [
@@ -33,17 +38,12 @@ import { ContentWarningDialog } from './content-warning-dialog/content-warning.d
         UsersDialog,
         EnableTwoFactorTokenDialog,
         DisableTwoFactorTokenDialog,
-        ContentWarningDialog
-    ],
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        FormsModule,
-        HttpClientModule,
-        ReactiveFormsModule,
-        RouterModule,
-        ValidationsModule,
-        ComponentsModule
+        ContentWarningDialog,
+        InstanceBlockedDomainDialog,
+        ProfileCodeDialog,
+        NotificationSettingsDialog,
+        InstanceRuleDialog,
+        ConfirmationDialog
     ],
     exports: [
         ChangePasswordDialog,
@@ -57,7 +57,24 @@ import { ContentWarningDialog } from './content-warning-dialog/content-warning.d
         UsersDialog,
         EnableTwoFactorTokenDialog,
         DisableTwoFactorTokenDialog,
-        ContentWarningDialog
+        ContentWarningDialog,
+        InstanceBlockedDomainDialog,
+        ProfileCodeDialog,
+        NotificationSettingsDialog,
+        InstanceRuleDialog,
+        ConfirmationDialog
+    ], 
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        ReactiveFormsModule,
+        RouterModule,
+        ValidationsModule,
+        ComponentsModule
+    ],
+    providers: [
+        provideHttpClient(withFetch(), withInterceptorsFromDi()),
     ]
 })
 export class DialogsModule { }

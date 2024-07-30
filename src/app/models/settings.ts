@@ -31,4 +31,15 @@ export class Settings {
     public webLanguages = '';
     public webContactUserId = '';
     public systemDefaultUserId = '';
+
+    public isOpenAIEnabled = false;
+    public openAIKey = '';
+    public openAIModel = '';
+
+    public isWebPushEnabled = false;
+    public webPushEndpoint = '';
+    public webPushSecretKey = '';
+    public webPushVapidPublicKey = '';
+    public webPushVapidPrivateKey = '';
+    public webPushVapidSubject = '';
 }

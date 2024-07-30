@@ -1,5 +1,5 @@
 @if (categories?.length) {
-    <div *ngFor="let category of categories">
+    <div *ngFor="let category of categories; trackBy:trackByCategoryFn">
         <div class="hashtag-header">
             <a [routerLink]="['/categories', category.name]">
                 <mat-icon>loyalty</mat-icon> {{ category.name }}

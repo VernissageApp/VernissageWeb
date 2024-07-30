@@ -18,6 +18,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { License } from 'src/app/models/license';
 import { LicensesService } from 'src/app/services/http/liceses.service';
 import { InstanceService } from 'src/app/services/http/instance.service';
+import { SettingsService } from 'src/app/services/http/settings.service';
 
 @Component({
     selector: 'app-upload',
@@ -38,7 +39,10 @@ export class UploadPage extends Responsive {
     isSensitive = false;
     contentWarning = '';
     selectedIndex = 0;
+    isOpenAIEnabled = false;
+    hashtagsInProgress = false;
     maxFileSize = 0;
+    maxStatusLength = 0;
 
     photos: UploadPhoto[] = [];
 
@@ -50,6 +54,7 @@ export class UploadPage extends Responsive {
         private statusesService: StatusesService,
         private instanceService: InstanceService,
         private router: Router,
+        private settingsService: SettingsService,
         breakpointObserver: BreakpointObserver
     ) {
         super(breakpointObserver);
@@ -58,6 +63,8 @@ export class UploadPage extends Responsive {
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
         this.maxFileSize = this.instanceService.instance?.configuration?.attachments?.imageSizeLimit ?? 10485760;
+        this.maxStatusLength = this.instanceService.instance?.configuration?.statuses?.maxCharacters ?? 500;
+        this.isOpenAIEnabled = this.settingsService.publicSettings?.isOpenAIEnabled ?? false;
 
         [this.categories, this.licenses] = await Promise.all([
             this.categoriesService.all(),
@@ -98,6 +105,26 @@ export class UploadPage extends Responsive {
         }
     }
 
+    async onGenerateHashtags(): Promise<void> {
+        try {
+            if (this.photos.length === 0) {
+                return;
+            }
+
+            this.hashtagsInProgress = true;
+            let attachmentHashtags = await this.attachmentsService.hashtags(this.photos[0].id);
+            if (attachmentHashtags.hashtags && attachmentHashtags.hashtags.length > 0) {
+                const hashtags = attachmentHashtags.hashtags.map(tag => '#' + tag);
+                this.statusText = this.statusText + '\n\n' + hashtags.join(' ');
+            }
+        } catch (error) {
+            console.error(error);
+            this.messageService.showServerError(error);
+        } finally {
+            this.hashtagsInProgress = false;
+        }
+    }
+
     protected allPhotosUploaded(): boolean {
         return !this.photos.some(x => !x.isUploaded);
     }
@@ -110,14 +137,38 @@ export class UploadPage extends Responsive {
                 temporaryAttachment.description = photo.description;
                 temporaryAttachment.blurhash = photo.blurhash;
 
-                temporaryAttachment.make = photo.make
-                temporaryAttachment.model = photo.model
-                temporaryAttachment.lens = photo.lens
-                temporaryAttachment.createDate = photo.createDate
-                temporaryAttachment.focalLenIn35mmFilm = photo.focalLenIn35mmFilm
-                temporaryAttachment.fNumber = photo.fNumber
-                temporaryAttachment.exposureTime = photo.exposureTime
-                temporaryAttachment.photographicSensitivity = photo.photographicSensitivity
+                if (photo.showMake) {
+                    temporaryAttachment.make = photo.make
+                }
+
+                if (photo.showModel) {
+                    temporaryAttachment.model = photo.model
+                }
+
+                if (photo.showLens) {
+                    temporaryAttachment.lens = photo.lens
+                }
+
+                if (photo.showCreateDate) {
+                    temporaryAttachment.createDate = photo.createDate
+                }
+
+                if (photo.showFocalLenIn35mmFilm) {
+                    temporaryAttachment.focalLenIn35mmFilm = photo.focalLenIn35mmFilm
+                }
+                
+                if (photo.fNumber) {
+                    temporaryAttachment.fNumber = photo.fNumber
+                }
+
+                if (photo.exposureTime) {
+                    temporaryAttachment.exposureTime = photo.exposureTime
+                }
+
+                if (photo.photographicSensitivity) {
+                    temporaryAttachment.photographicSensitivity = photo.photographicSensitivity
+                }
+
                 temporaryAttachment.locationId = photo.locationId;
                 temporaryAttachment.licenseId = photo.licenseId;
 

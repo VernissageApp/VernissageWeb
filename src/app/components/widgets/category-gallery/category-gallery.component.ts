@@ -28,6 +28,10 @@ export class CategoryGalleryComponent extends Responsive {
         return item.id;
     }
 
+    trackByCategoryFn(_: number, item: Category): string | undefined{
+        return item.id;
+    }
+
     getStatuses(userName: string | undefined): Status[] {
         if (!userName) {
             return [];

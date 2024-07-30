@@ -2,7 +2,6 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { Responsive } from 'src/app/common/responsive';
-import { Attachment } from 'src/app/models/attachment';
 import { ContextTimeline } from 'src/app/models/context-timeline';
 import { LinkableResult } from 'src/app/models/linkable-result';
 import { Status } from 'src/app/models/status';
@@ -17,8 +16,14 @@ import { UsersService } from 'src/app/services/http/users.service';
     animations: fadeInAnimation
 })
 export class UsersGalleryComponent extends Responsive implements OnChanges {
+    private readonly numberOfVisibleUsersChunk = 10;
+    private readonly numberOfVisibleStatuses = 10;
+
     @Input() users?: LinkableResult<User>;
+
     private userStatuses = new Map<string, LinkableResult<Status>>();
+    private numberOfVisibleUsers = this.numberOfVisibleUsersChunk;
+    protected visibleUsers: User[] = [];
 
     constructor(
         private usersService: UsersService,
@@ -30,12 +35,17 @@ export class UsersGalleryComponent extends Responsive implements OnChanges {
 
     async ngOnChanges(changes: SimpleChanges): Promise<void> {
         if (changes.users) {
+            this.numberOfVisibleUsers = this.numberOfVisibleUsersChunk;
             await this.loadStatuses();
         }
     }
 
     trackByFn(_: number, item: Status): string | undefined{
         return item.id;
+    }
+
+    trackByUserFn(_: number, item: User): string | undefined{
+        return item.userName;
     }
 
     getStatuses(userName: string | undefined): Status[] {
@@ -55,6 +65,11 @@ export class UsersGalleryComponent extends Responsive implements OnChanges {
         this.contextStatusesService.setContextStatuses(statuses);
     }
 
+    async onNearEndScroll(): Promise<void> {
+        this.numberOfVisibleUsers = this.numberOfVisibleUsers + this.numberOfVisibleUsersChunk;
+        await this.loadStatuses();
+    }
+
     private getLinkableStatuses(userName: string | undefined): LinkableResult<Status> | undefined {
         if (!userName) {
             return undefined;
@@ -64,13 +79,20 @@ export class UsersGalleryComponent extends Responsive implements OnChanges {
     }
 
     private async loadStatuses(): Promise<void> {
-        if (!this.users) {
+        if (!this.users || this.users.data?.length === 0) {
+            this.visibleUsers = [];
             return;
         }
 
-        for(let user of this.users?.data) {
+        this.visibleUsers = this.users?.data.slice(0, this.numberOfVisibleUsers);
+
+        for (let user of this.visibleUsers) {
             if (user.userName) {
-                let statuses = await this.usersService.statuses(user.userName);
+                if (this.userStatuses.has(user.userName)) {
+                    continue;
+                }
+
+                let statuses = await this.usersService.statuses(user.userName, undefined, undefined, undefined, this.numberOfVisibleStatuses);
                 statuses.context = ContextTimeline.user;
                 statuses.user = user.userName;
 

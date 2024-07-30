@@ -39,6 +39,23 @@
                     <mat-divider></mat-divider>
 
                     <div class="margin-top-20">
+                        <h4>User's profile gallery</h4>
+                    </div>
+
+                    <div class="margin-bottom-20">
+                        <mat-radio-group name="square" [(ngModel)]="isSquareImages" (ngModelChange)="onSquareImageChange()" aria-label="Select image view">
+                            <div>
+                                <mat-radio-button [value]="true" [disableRipple]="true"> Square images</mat-radio-button>
+                            </div>
+                            <div>
+                                <mat-radio-button [value]="false" [disableRipple]="true"> Orginal ratio</mat-radio-button>
+                            </div>
+                        </mat-radio-group>
+                    </div>
+
+                    <mat-divider></mat-divider>
+
+                    <div class="margin-top-20">
                         <h4>Media settings</h4>
                     </div>
 

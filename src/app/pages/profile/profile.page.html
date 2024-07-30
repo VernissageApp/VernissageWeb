@@ -1,6 +1,6 @@
 <div *ngIf="user && isReady" @fadeIn>
     <img class="header-image" alt="header" [src]="this.user.headerUrl ?? '/assets/header.jpg'" />
-    <img class="avatar-image" alt="header" [src]="this.user.avatarUrl ?? '/assets/avatar.svg'" />
+    <img class="avatar-image" alt="header" [src]="this.user.avatarUrl ?? '/assets/avatar.svg'" (click)="onAvatarClick()" />
 
     <div class="flex-row flex-space-around padding-left-10 padding-right-10">
         <div class="profile">
@@ -13,6 +13,13 @@
             <div class="padding-top-10">
                 <app-follow-buttons-section [user]="user" [relationship]="relationship" (relationChanged)="onMainRelationChanged()"></app-follow-buttons-section>
             </div>
+
+            @if (signedInUser?.id === user.id) {
+                <div class="flex-row flex-center gap-8">
+                    <button type="button" [routerLink]="['/favourites']" mat-flat-button aria-label="Favourites"><mat-icon class="fill-symbol">grade</mat-icon> Favourites</button>
+                    <button type="button" [routerLink]="['/bookmarks']" mat-flat-button aria-label="Bookmarks"><mat-icon class="fill-symbol">bookmark</mat-icon> Bookmarks</button>
+                </div>
+            }
 
             <div *ngIf="(latestFollowers?.data?.length ?? 0) > 0" class="text-center padding-top-10 padding-bottom-10">
                 <div class="text-muted padding-bottom-5">LATEST FOLLOWERS</div>
@@ -50,14 +57,24 @@
                 <div class="padding-bottom-20 padding-top-20">
                     <mat-card class="users-card" appearance="outlined">
                         <mat-card-content>
-                            <app-users-card
-                                *ngIf="(following?.data?.length ?? 0) > 0"
-                                [showLoadMore]="!allFollowingDisplayed"
-                                [users]="following?.data"
-                                [relationships]="followingRelationships"
-                                (relationChanged)="onRelationChanged($event)"
-                                (loadMore)="onLoadMoreFollowing()">
-                            </app-users-card>
+                            @if ((following?.data?.length ?? 0) > 0) {
+                                <app-users-card
+                                    [showLoadMore]="!allFollowingDisplayed"
+                                    [users]="following?.data"
+                                    [relationships]="followingRelationships"
+                                    (relationChanged)="onRelationChanged($event)"
+                                    (loadMore)="onLoadMoreFollowing()">
+                                </app-users-card>
+                            } @else {
+                                @if (user.isLocal) {
+                                    <div>There is nothing to read here yet.</div>
+                                } @else {
+                                    <div class="text-center">
+                                        <p>We do not have this information in the system.</p>
+                                        <p>Check on the user's original <a [href]="user.activityPubProfile" target="_blank">profile page</a>.</p>
+                                    </div>
+                                }
+                            }
                         </mat-card-content>
                     </mat-card>
                 </div>
@@ -67,14 +84,25 @@
                 <div class="padding-bottom-20 padding-top-20">
                     <mat-card class="users-card" appearance="outlined">
                         <mat-card-content>
-                            <app-users-card
-                                *ngIf="(followers?.data?.length ?? 0) > 0"
-                                [showLoadMore]="!allFollowersDisplayed"
-                                [users]="followers?.data"
-                                [relationships]="followersRelationships"
-                                (relationChanged)="onRelationChanged($event)"
-                                (loadMore)="onLoadMoreFollowers()">
-                            </app-users-card>
+                            @if ((followers?.data?.length ?? 0) > 0) {
+                                <app-users-card
+                                    [showLoadMore]="!allFollowersDisplayed"
+                                    [users]="followers?.data"
+                                    [relationships]="followersRelationships"
+                                    (relationChanged)="onRelationChanged($event)"
+                                    (loadMore)="onLoadMoreFollowers()">
+                                </app-users-card>
+                            } @else {
+                                @if (user.isLocal) {
+                                    <div>There is nothing to read here yet.</div>
+                                } @else {
+                                    <div class="text-center">
+                                        <p>We do not have this information in the system.</p>
+                                        <p>Check on the user's original <a [href]="user.activityPubProfile" target="_blank">profile page</a>.</p>
+                                    </div>
+                                }
+                            }
+
                         </mat-card-content>
                     </mat-card>
                 </div>
@@ -83,6 +111,6 @@
     </div>
 
     <div *ngIf="profilePageTab === ProfilePageTab.Statuses">
-        <app-gallery [statuses]="statuses"></app-gallery>
+        <app-gallery [statuses]="statuses" [squareImages]="squareImages" [hideAvatars]="true"></app-gallery>
     </div>
 </div>

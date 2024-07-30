@@ -3,6 +3,7 @@ export enum EventType {
     Unknown = 'unknown',
 
     AccountLogin = 'accountLogin',
+    AccountLogout = 'accountLogout',
     AccountRefresh = 'accountRefresh',
     AccountConfirm = 'accountConfirm',
     AccountChangeEmail = 'accountChangeEmail',
@@ -57,6 +58,8 @@ export enum EventType {
     AttachmentsCreate = 'attachmentsCreate',
     AttachmentsUpdate = 'attachmentsUpdate',
     AttachmentsDelete = 'attachmentsDelete',
+    AttachmentsDescribe = 'attachmentsDescribe',
+    AttachmentsHashtags = 'attachmentsHashtags',
     
     SettingsList = 'settingsList',
     SettingsPublic = 'settingsPublic',
@@ -128,5 +131,18 @@ export enum EventType {
 
     TrendingStatuses = 'trendingStatuses',
     TrendingUsers = 'trendingUsers',
-    TrendingHashtags = 'trendingHashtags'
+    TrendingHashtags = 'trendingHashtags',
+
+    BookmarksList = 'bookmarksList',
+    FavouritesList = 'favouritesList',
+
+    InstanceBlockedDomainsList = 'instanceBlockedDomainsList',
+    InstanceBlockedDomainsCreate = 'instanceBlockedDomainsCreate',
+    InstanceBlockedDomainsUpdate = 'instanceBlockedDomainsUpdate',
+    InstanceBlockedDomainsDelete = 'instanceBlockedDomainsDelete',
+
+    PushSubscriptionsList = 'pushSubscriptionsList',
+    PushSubscriptionsCreate = 'pushSubscriptionsCreate',
+    PushSubscriptionsUpdate = 'pushSubscriptionsUpdate',
+    PushSubscriptionsDelete = 'pushSubscriptionsDelete'
 }

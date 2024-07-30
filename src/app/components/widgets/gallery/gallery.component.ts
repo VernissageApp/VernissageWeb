@@ -19,12 +19,15 @@ import { WindowService } from 'src/app/services/common/window.service';
 })
 export class GalleryComponent extends Responsive implements OnInit, OnChanges {
     @Input() statuses?: LinkableResult<Status>;
+    @Input() squareImages = false;
+    @Input() hideAvatars = false;
 
     gallery?: Status[][];
     sizes?: number[];
     columns = 3;
     isDuringLoadingMode = false;
     allStatusesLoaded = false;
+    avatarVisible = true;
 
     galleryBreakpointSubscription?: Subscription;
     routeNavigationStartSubscription?: Subscription;
@@ -45,16 +48,14 @@ export class GalleryComponent extends Responsive implements OnInit, OnChanges {
     override ngOnInit(): void {
         this.startUrl = new URL(this.router.routerState.snapshot.url, this.windowService.getApplicationUrl());
 
-        this.galleryBreakpointSubscription = this.galleryBreakpointObserver.observe([
-            Breakpoints.XSmall, Breakpoints.Small
-        ]).subscribe(result => {
+        this.galleryBreakpointSubscription = this.galleryBreakpointObserver.observe([Breakpoints.XSmall]).subscribe(result => {
             if (result.matches) {
-                this.isHandset = true;
-                this.columns = 1;
+                this.columns = this.squareImages ? 3 : 1;
+                this.avatarVisible = !this.squareImages;
                 this.buildGallery();
             } else {
-                this.isHandset = false;
                 this.columns = 3;
+                this.avatarVisible = true;
                 this.buildGallery();
             }
         });
@@ -76,8 +77,8 @@ export class GalleryComponent extends Responsive implements OnInit, OnChanges {
         }
     }
 
-    async onNearEndScroll(): Promise<void> {
-        if (this.startUrl?.pathname !== this.currentUrl?.pathname) {
+    async onNearEndScroll(): Promise<void> {        
+        if (this.currentUrl && this.startUrl?.pathname !== this.currentUrl.pathname) {
             return;
         }
 
@@ -194,6 +195,10 @@ export class GalleryComponent extends Responsive implements OnInit, OnChanges {
     }
 
     private getImageConstraitHeight(status: Status): number {
+        if (this.squareImages) {
+            return 1;
+        }
+
         const mainAttachment = this.getMainAttachment(status);
 
         const height = mainAttachment?.originalFile?.height ?? 0.0;

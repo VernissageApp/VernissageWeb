@@ -1,4 +1,5 @@
 import { Directive, ElementRef, EventEmitter, HostListener, Input, OnInit, Output } from "@angular/core";
+import { WindowService } from "../services/common/window.service";
 
 @Directive({
     selector: '[appScrollNearEnd]'
@@ -13,11 +14,11 @@ export class ScrollNearEndDirective implements OnInit {
   
     private window!: Window;
   
-    constructor(private el: ElementRef) { }
+    constructor(private el: ElementRef, private windowService: WindowService) { }
   
     ngOnInit(): void {
         // save window object for type safety
-        this.window = window;
+        this.window = this.windowService.nativeWindow;
     }
   
     @HostListener('window:scroll', ['$event.target'])

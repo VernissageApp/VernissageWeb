@@ -1,3 +1,4 @@
+###############################################################################
 # Stage 1: Compile and Build angular codebase
 
 # Use official node image as the base image
@@ -13,21 +14,28 @@ COPY ./ /usr/local/app/
 RUN commit=$(git rev-parse --short HEAD) && sed -i -e "s/buildx/$commit/g" src/app/pages/support/support.page.html
 
 # Install all the dependencies
-RUN npm install
+RUN npm install --force
 
 # Generate the build of the application
 RUN npm run build
 
-# Stage 2: Serve app with nginx server
+###############################################################################
+# Stage 2: Serve dynamic app with node server (SSR).
 
-# Use official nginx image as the base image
-FROM nginx:latest
+# Use official node server.
+FROM node:20 AS ssr-server
 
-# Use custom ngix file (for rewriting to index.html).
-COPY ./nginx.conf /etc/nginx/conf.d/default.conf
+# Set the working directory.
+WORKDIR /usr/local/app
 
-# Copy the build output to replace the default nginx contents.
-COPY --from=build /usr/local/app/dist/vernissage-web /usr/share/nginx/html
+# Copy dist files.
+COPY --from=build /usr/local/app/dist /usr/local/app/dist/
 
-# Expose port 80
+# Copy packages json file.
+COPY ./package.json /usr/local/app/package.json
+
+# Expose port 8080
 EXPOSE 8080
+
+# Run HTTP server.
+CMD npm run serve:ssr

@@ -1,5 +1,5 @@
 import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
-import { ErrorHandler, Injector, NgZone } from '@angular/core';
+import { Injector, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { ForbiddenError } from 'src/app/errors/forbidden-error';
 import { ObjectNotFoundError } from 'src/app/errors/object-not-found-error';
@@ -7,16 +7,20 @@ import { PageNotFoundError } from 'src/app/errors/page-not-found-error';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 import { LoadingService } from '../services/common/loading.service';
 import { SentryErrorHandler } from '@sentry/angular-ivy';
+import { isPlatformBrowser } from '@angular/common';
 
 export class GlobalErrorHandler extends SentryErrorHandler {
+    private isBrowser = false;
 
     constructor(
+        platformId: Object,
         private injector: Injector,
         private zone: NgZone,
         private authorizationService: AuthorizationService,
         private loadingService: LoadingService
     ) {
         super();
+        this.isBrowser = isPlatformBrowser(platformId);
     }
 
     private get router(): Router {
@@ -53,7 +57,11 @@ export class GlobalErrorHandler extends SentryErrorHandler {
                         await this.router.navigate(['/access-forbidden']);
                         break;
                     case HttpStatusCode.Unauthorized:
-                        await this.authorizationService.signOut();
+                        // We don't need to signout when we render page on server.
+                        if (this.isBrowser) {
+                            await this.authorizationService.signOut();
+                        }
+
                         await this.router.navigate(['/login']);
                         break;
                     default:
@@ -67,6 +75,10 @@ export class GlobalErrorHandler extends SentryErrorHandler {
     }
 
     private getErrorResponse(error: any): HttpErrorResponse {
+        if (error instanceof HttpErrorResponse) {
+            return error;
+        }
+
         return error.rejection;
     }
 

@@ -1,5 +1,15 @@
 <div class="flex-col gap-0 margin-top-5">
-    <mat-form-field appearance="outline">
+
+    @if (isOpenAIEnabled) {
+        <div class="flex-row flex-end">
+            <mat-spinner *ngIf="describeInProgress" class="margin-right-10 margin-top-10" [diameter]="18"></mat-spinner>
+            <button mat-stroked-button color="primary" (click)="onGenerateDescription()" [disabled]="!photo.isUploaded || describeInProgress">
+                <mat-icon>smart_toy</mat-icon> Generate
+            </button>
+        </div>
+    }
+
+    <mat-form-field appearance="outline" class="margin-top-10">
         <mat-label>Alt text</mat-label>
         <textarea
                 matInput [name]="'altText-' + index"
@@ -10,7 +20,7 @@
                 #altTextInput="ngModel"
                 [(ngModel)]="photo.description"
                 aria-label="Alt text"
-                appMaxLength="500"></textarea>
+                appMaxLength="2000"></textarea>
         <mat-error *ngIf="altTextInput.invalid && altTextInput.errors?.appMaxLength">Too long alt text.</mat-error>
     </mat-form-field>
 

@@ -30,22 +30,22 @@
                             }
                             @else {
                                 <!-- Token 2FA. -->
-                                <mat-form-field appearance="outline">
+                                <mat-form-field appearance="outline" class="margin-bottom-20">
                                     <mat-label>Token</mat-label>
-                                    <input matInput [errorStateMatcher]="dirtyErrorStateMatcher" name="token" [(ngModel)]="twoFactorToken" #twoFactorTokenInput="ngModel" type="text" placeholder="Two factor token" aria-label="Two factor token" required />
+                                    <input matInput [errorStateMatcher]="alwaysErrorStateMatcher" inputmode="numeric" name="token" [(ngModel)]="twoFactorToken" #twoFactorTokenInput="ngModel" type="text" placeholder="Two factor token" aria-label="Two factor token" required />
+                                    <mat-error *ngIf="tokenMessge">{{ tokenMessge }}</mat-error>
                                 </mat-form-field>
-                                <div *ngIf="tokenMessge" class="fw-400 fs-90 text-error">{{ tokenMessge }}</div>
                             }
                         </div>
                     </mat-card-content>
                     <mat-card-actions>
-                        <div class="login-actions">
+                        <div class="flex-row login-actions">
                             @if (loginMode === LoginMode.TwoFactorToken) {
                                 <button type="button" mat-stroked-button (click)="onCancelTwoFactor()" [disabled]="isSubmitting" class="margin-right-5" aria-label="Cancel">Cancel</button>
                             }
                             <button type="submit" mat-flat-button [disabled]="isSubmitting" color="primary" aria-label="Login">Login</button>
-                            <mat-spinner *ngIf="isSubmitting" [diameter]="24" class="display-inline margin-left-10"></mat-spinner>
-                            <span *ngIf="errorMessage" class="mat-small text-error margin-left-10">{{ errorMessage }}</span>
+                            <mat-spinner *ngIf="isSubmitting" [diameter]="18" class="margin-left-10 margin-top-5"></mat-spinner>
+                            <div *ngIf="errorMessage" class="mat-small text-error margin-left-10 margin-top-10">{{ errorMessage }}</div>
                         </div>
                     </mat-card-actions>
                     <mat-card-footer *ngIf="isRegistrationEnabled()">

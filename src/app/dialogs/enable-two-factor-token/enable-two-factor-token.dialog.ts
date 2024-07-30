@@ -23,7 +23,6 @@ export class EnableTwoFactorTokenDialog implements OnInit {
 
     async ngOnInit(): Promise<void> {
         this.twoFactorToken = await this.accountService.getTwoFactorToken();
-        console.log(this.twoFactorToken);
     }
 
     onNoClick(): void {

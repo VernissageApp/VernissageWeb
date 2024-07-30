@@ -17,7 +17,6 @@ export class TimelineService {
         return await firstValueFrom(event$);
     }
 
-
     public async featured(minId?: string, maxId?: string, sinceId?: string, limit?: number): Promise<LinkableResult<Status>> {
         const event$ = this.httpClient.get<LinkableResult<Status>>(this.windowService.apiUrl() +  `/api/v1/timelines/featured?minId=${minId ?? ''}&maxId=${maxId ?? ''}&sinceId=${sinceId ?? ''}&limit=${limit ?? ''}`);
         return await firstValueFrom(event$);

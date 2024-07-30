@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Inject, Input, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
 import { decode } from 'blurhash';
 import { AvatarSize } from '../avatar/avatar-size';
 import { User } from 'src/app/models/user';
@@ -8,6 +8,7 @@ import { Attachment } from 'src/app/models/attachment';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 import { StatusesService } from 'src/app/services/http/statuses.service';
 import { MessagesService } from 'src/app/services/common/messages.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
     selector: 'app-image',
@@ -19,6 +20,7 @@ export class ImageComponent implements OnInit, AfterViewInit {
 
     @Input() horizontal = true;
     @Input() status?: Status;
+    @Input() avatarVisible = true;
 
     imageSrc = '';
     alt?: string;
@@ -27,19 +29,23 @@ export class ImageComponent implements OnInit, AfterViewInit {
     signedInUser?: User;
     width = 0;
     height = 0;
+    isBrowser = false;
 
     @ViewChild('canvas', { static: false }) readonly canvas?: ElementRef<HTMLCanvasElement>;
 
-    showAvatar = true;
     showAltIcon = false;
     showFavourites = false;
     imageIsLoaded = false;
 
+    get showAvatar() { return this.preferencesService.showAvatars && this.avatarVisible; }
+
     constructor(
+        @Inject(PLATFORM_ID) platformId: Object,
         private preferencesService: PreferencesService,
         private statusesService: StatusesService,
         private messageService: MessagesService,
         private authorizationService: AuthorizationService) {
+            this.isBrowser = isPlatformBrowser(platformId);
     }
 
     ngOnInit(): void {
@@ -50,7 +56,6 @@ export class ImageComponent implements OnInit, AfterViewInit {
         this.width = this.getMainAttachmentWidth();
         this.height = this.getMainAttachmentHeight();
 
-        this.showAvatar = this.preferencesService.showAvatars;
         this.showAltIcon = this.preferencesService.showAltIcon;
         this.showFavourites = this.preferencesService.showFavourites;
 
@@ -87,6 +92,10 @@ export class ImageComponent implements OnInit, AfterViewInit {
     }
 
     private drawCanvas(): void {
+        if (!this.isBrowser) {
+            return;
+        }
+
         if (!this.blurhash) {
             return;
         }

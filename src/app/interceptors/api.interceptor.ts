@@ -1,40 +1,58 @@
-import { Injectable } from '@angular/core';
-import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse } from '@angular/common/http';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 
 import { Observable } from 'rxjs/internal/Observable';
-import { catchError } from 'rxjs/operators';
-import { Router } from '@angular/router';
+import { catchError, switchMap } from 'rxjs/operators';
+import { isPlatformBrowser } from '@angular/common';
+import { AuthorizationService } from '../services/authorization/authorization.service';
+import { from } from 'rxjs';
 
 /* tslint:disable:no-any */
 
 @Injectable()
 export class APIInterceptor implements HttpInterceptor {
+    private isBrowser = false;
 
-    constructor(private router: Router) {
+    constructor(
+        @Inject(PLATFORM_ID) platformId: Object,
+        private authorizationService: AuthorizationService
+    ) {
+        this.isBrowser = isPlatformBrowser(platformId);
     }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        return next.handle(request).pipe(catchError(x => this.handleAuthError(x)));
-    }
+        request = request.clone({
+            withCredentials: true
+        });
 
-    private handleAuthError(error: HttpErrorResponse): Observable<any> {
+        // Executing orginal request.
+        return next.handle(request).pipe(catchError(error => {
+            // In case of unauthorized error we can try to refresh access tokens.
+            if (error instanceof HttpErrorResponse && error.status === HttpStatusCode.Unauthorized) {
 
-        if (error) {
-            if (error.error instanceof ErrorEvent) {
-                console.error('Error Event');
-                console.error(error);
-            } else {
-                switch (error.status) {
-                    case 401:
-                        this.router.navigateByUrl('/login');
-                        break;
+                // We can try to refresh tokens only in the browser (SSR doen't contain tokens in cookies).
+                if (this.isBrowser) {
+                    // Sending refresh token.
+                    return from(this.authorizationService.refreshAccessToken())
+                        .pipe(
+                            switchMap((result) => {
+                                if (result) {
+                                    // Sending same request once again when refresh token has been retrieve.
+                                    return next.handle(request);
+                                } else {
+                                    // Refresh token not retrieved, we can send error to global error handler.
+                                    throw error;
+                                }
+                            }),
+                            catchError(innerError => {
+                                // Request after refresing token failed again, send error to global error handler.
+                                throw innerError;
+                            })
+                        );
                 }
             }
-        } else {
-            console.error('Something else happened.');
-            console.error(error);
-        }
 
-        throw error;
+            throw error;
+        }));
     }
 }

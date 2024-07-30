@@ -1,6 +1,6 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, NavigationStart, Router } from '@angular/router';
-import { Subscription, filter, map } from 'rxjs';
+import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from '@angular/router';
+import { Subscription, filter } from 'rxjs';
 import { Status } from 'src/app/models/status';
 import { User } from 'src/app/models/user';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
@@ -14,6 +14,11 @@ import { LinkableResult } from 'src/app/models/linkable-result';
 import { Responsive } from 'src/app/common/responsive';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { DOCUMENT } from '@angular/common';
+import { Meta, Title } from '@angular/platform-browser';
+import { WindowService } from 'src/app/services/common/window.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ProfileCodeDialog } from 'src/app/dialogs/profile-code-dialog/profile-code.dialog';
+import { PreferencesService } from 'src/app/services/common/preferences.service';
 
 @Component({
     selector: 'app-profile',
@@ -28,6 +33,7 @@ export class ProfilePage extends Responsive implements OnInit, OnDestroy {
     allFollowingDisplayed = false;
     allFollowersDisplayed = false;
     loadingDifferentProfile = false;
+    squareImages = false;
     profilePageTab = ProfilePageTab.Statuses;
     userName!: string;
 
@@ -55,6 +61,11 @@ export class ProfilePage extends Responsive implements OnInit, OnDestroy {
         private loadingService: LoadingService,
         private router: Router,
         private activatedRoute: ActivatedRoute,
+        private titleService: Title,
+        private metaService: Meta,
+        private windowService: WindowService,
+        private preferencesService: PreferencesService,
+        public dialog: MatDialog,
         breakpointObserver: BreakpointObserver
     ) {
         super(breakpointObserver);
@@ -62,6 +73,7 @@ export class ProfilePage extends Responsive implements OnInit, OnDestroy {
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
+        this.squareImages = this.preferencesService.isSquareImages;
 
         this.routeNavigationStartSubscription = this.router.events
             .pipe(filter(event => event instanceof NavigationStart))  
@@ -116,10 +128,7 @@ export class ProfilePage extends Responsive implements OnInit, OnDestroy {
             this.signedInUser = this.authorizationService.getUser();
 
             this.user = await this.usersService.profile(this.userName);
-            // [this.user, this.latestFollowers] = await Promise.all([
-            //     this.usersService.profile(this.userName),
-            //     this.usersService.followers(this.userName, undefined, undefined, undefined, 10)
-            // ]);
+            this.latestFollowers = await this.usersService.followers(this.userName, undefined, undefined, undefined, 10)
 
             this.user.fields?.forEach(field => {
                 if (field.value) {
@@ -132,6 +141,7 @@ export class ProfilePage extends Responsive implements OnInit, OnDestroy {
 
             this.relationship = await this.downloadRelationship();
             await this.loadPageData();
+            this.setCardMetatags();
 
             this.isReady = true;
             this.loadingService.hideLoader();
@@ -235,6 +245,12 @@ export class ProfilePage extends Responsive implements OnInit, OnDestroy {
         }
     }
 
+    onAvatarClick(): void {
+        this.dialog.open(ProfileCodeDialog, {
+            data: this.user?.userName
+        });
+    }
+
     private async loadPageData(): Promise<void> {
         const currentUrl = this.router.routerState.snapshot.url;
         
@@ -256,5 +272,54 @@ export class ProfilePage extends Responsive implements OnInit, OnDestroy {
         link.setAttribute('rel', 'me');
 
         this.document.head.appendChild(link);
+    }
+
+    private setCardMetatags(): void {
+        const profileTitle = (this.user?.name ?? '') + ` (@${this.user?.userName ?? ''})`;
+        const profileDescription = this.htmlToText(this.user?.bio ?? '');
+
+        // <title>John Doe (@john@vernissage.xxx)</title>
+        this.titleService.setTitle(profileTitle);
+
+        // <meta name="description" content="My suite of cool apps is coming together nicely. What would you like to see me build next?">
+        this.metaService.updateTag({ name: 'description', content: profileDescription });
+
+        // <meta property="og:url" content="https://vernissage.xxx/@user/112348668082695358">
+        this.metaService.updateTag({ property: 'og:url', content: this.windowService.getApplicationUrl() });
+
+        // <meta property="og:type" content="website">
+        this.metaService.updateTag({ property: 'og:type', content: 'website' });
+
+        // <meta property="og:title" content="John Doe (@john@vernissage.xxx)">
+        this.metaService.updateTag({ property: 'og:title', content: profileTitle });
+
+        // <meta property="og:description" content="Somethinf apps next?">
+        this.metaService.updateTag({ property: 'og:description', content: profileDescription });
+
+        // <meta property="og:logo" content="https://vernissage.xxx/assets/icons/icon-128x128.png" />
+        this.metaService.updateTag({ property: 'og:logo', content: `https://${this.windowService.getApplicationBaseUrl()}/assets/icons/icon-128x128.png` });
+
+        const avatarImage = this.user?.avatarUrl;
+        if (avatarImage) {
+            const firstImage = this.user?.avatarUrl;
+
+            // <meta property="og:image" content="https://files.vernissage.xxx/media_attachments/files/112348.png">
+            this.metaService.updateTag({ property: 'og:image', content: avatarImage });
+
+            // <meta property="og:image:width"" content="1532">
+            this.metaService.updateTag({ property: 'og:image:width', content: '600' });
+
+            // <meta property="og:image:height"" content="1416">
+            this.metaService.updateTag({ property: 'og:image:height', content: '600' });
+        }
+
+        // <meta name="twitter:card" content="summary_large_image">
+        this.metaService.updateTag({ property: 'twitter:card', content: 'summary_large_image' });
+    }
+
+    htmlToText(value: string): string {
+        const temp = this.document.createElement('div');
+        temp.innerHTML = value;
+        return temp.textContent || temp.innerText || '';
     }
 }

@@ -20,11 +20,9 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 export class SettingsPage extends Responsive {
     isReady = false;
     settings?: Settings;
-    eventTypes = Object.values(EventType);
 
     constructor(
         private authorizationService: AuthorizationService,
-        private messageService: MessagesService,
         private loadingService: LoadingService,
         private settingsService: SettingsService,
         breakpointObserver: BreakpointObserver
@@ -47,17 +45,5 @@ export class SettingsPage extends Responsive {
 
     private isAdministrator(): boolean {
         return this.authorizationService.hasRole(Role.Administrator);
-    }
-
-    async onSubmit(): Promise<void> {
-        try {
-            if (this.settings) {
-                await this.settingsService.put(this.settings);
-                this.messageService.showSuccess('Settings was saved.');
-            }
-        } catch (error) {
-            console.error(error);
-            this.messageService.showServerError(error);
-        }
     }
 }

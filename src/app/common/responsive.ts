@@ -24,6 +24,8 @@ export class Responsive implements OnInit, OnDestroy {
 
     protected deviceResolution = Resolution.browser;
     protected isHandset = false;
+    protected isHandsetPortrait = false;
+    protected isHandsetLandscape = false;
 
     constructor(private breakpointObserver: BreakpointObserver) {
         this.breakpointSubscription = this.breakpointObserver
@@ -42,35 +44,43 @@ export class Responsive implements OnInit, OnDestroy {
     }
 
     private callFunction(): void {
-        if (this.isHandsetPortrait()) {
+        if (this.isHandsetPortraitLayout()) {
             this.deviceResolution = Resolution.handsetPortrait;
             this.isHandset = true;
+            this.isHandsetPortrait = true;
+            this.isHandsetLandscape = false;
 
             this.onHandsetPortrait?.();
-        } else if (this.isHandsetLandscape()) {
+        } else if (this.isHandsetLandscapeLayout()) {
             this.deviceResolution = Resolution.handsetLandscape;
             this.isHandset = true;
+            this.isHandsetPortrait = false;
+            this.isHandsetLandscape = true;
 
             this.onHandsetLandscape?.();
         } else if (this.isTabletLayout()) {
             this.deviceResolution = Resolution.tablet;
             this.isHandset = false;
+            this.isHandsetPortrait = false;
+            this.isHandsetLandscape = false;
 
             this.onTablet?.();
         } else {
             this.deviceResolution = Resolution.browser;
             this.isHandset = false;
+            this.isHandsetPortrait = false;
+            this.isHandsetLandscape = false;
 
             this.onBrowser?.();
         }
     }
 
-    private isHandsetPortrait(): boolean {
+    private isHandsetPortraitLayout(): boolean {
         // (max-width: 599.98px)
         return this.breakpointObserver.isMatched(Breakpoints.XSmall);
     }
 
-    private isHandsetLandscape(): boolean {
+    private isHandsetLandscapeLayout(): boolean {
         // (min-width: 600px) and (max-width: 959.98px)
         return this.breakpointObserver.isMatched(Breakpoints.Small);
     }

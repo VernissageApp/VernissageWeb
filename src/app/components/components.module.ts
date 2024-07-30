@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withFetch, withInterceptorsFromDi } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { NgOptimizedImage } from "@angular/common";
 import { UploadPhotoComponent } from './widgets/upload-photo/upload-photo.component';
@@ -25,6 +25,9 @@ import { BlurhashImageComponent } from './widgets/blurhash-image/blurhash-image.
 import { ImageComponent } from './widgets/image/image.component';
 import { DirectivesModule } from '../directives/directive.module';
 import { FooterComponent } from './core/footer/footer.component';
+import { GeneralSettingsComponent } from './widgets/general-settings/general-settings.component';
+import { DomainBlocksComponent } from './widgets/domain-blocks/domain-blocks.component';
+import { InstanceRulesComponent } from './widgets/instance-rules/instance-rules.component';
 
 @NgModule({
     declarations: [
@@ -43,25 +46,15 @@ import { FooterComponent } from './core/footer/footer.component';
         HashtagGalleryComponent,
         CategoryGalleryComponent,
         BlurhashImageComponent,
-        ImageComponent
-    ],
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        FormsModule,
-        HttpClientModule,
-        ReactiveFormsModule,
-        AngularMaterialModule,
-        RouterModule,
-        ValidationsModule,
-        NgOptimizedImage,
-        DirectivesModule
+        ImageComponent,
+        GeneralSettingsComponent,
+        DomainBlocksComponent,
+        InstanceRulesComponent
     ],
     exports: [
         BrowserModule,
         BrowserAnimationsModule,
         FormsModule,
-        HttpClientModule,
         ReactiveFormsModule,
         AngularMaterialModule,
         RouterModule,
@@ -83,7 +76,23 @@ import { FooterComponent } from './core/footer/footer.component';
         CategoryGalleryComponent,
         BlurhashImageComponent,
         ImageComponent,
+        GeneralSettingsComponent,
+        DomainBlocksComponent,
+        InstanceRulesComponent,
         DirectivesModule
-    ]
-})
+    ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        ReactiveFormsModule,
+        AngularMaterialModule,
+        RouterModule,
+        ValidationsModule,
+        NgOptimizedImage,
+        DirectivesModule
+    ],
+    providers: [
+        provideHttpClient(withFetch(), withInterceptorsFromDi()),
+    ]})
 export class ComponentsModule { }

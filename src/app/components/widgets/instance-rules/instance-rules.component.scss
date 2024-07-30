@@ -1,0 +1,19 @@
+.actions {
+    width: 100px;
+}
+
+@media only screen and (min-width: 600px) {
+    .actions {
+        width: 210px;
+    }
+}
+
+@media only screen and (max-width: 599px) {
+    .mdc-data-table__cell {
+        padding: 0px;
+    }
+
+    .mdc-data-table__header-cell {
+        padding: 0px;
+    }
+}

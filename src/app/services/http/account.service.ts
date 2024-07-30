@@ -1,37 +1,56 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { ChangeEmail } from 'src/app/models/change-email';
-import { AccessToken } from 'src/app/models/access-token';
+import { UserPayloadToken } from 'src/app/models/user-payload-token';
 import { Login } from 'src/app/models/login';
 import { ChangePassword } from 'src/app/models/change-password';
 import { RefreshToken } from 'src/app/models/refresh-token';
 import { ResendEmailConfirmation } from "../../models/resend-email-confirmation";
 import { WindowService } from '../common/window.service';
 import { TwoFactorToken } from 'src/app/models/two-factor-token';
+import { CookieService } from 'ngx-cookie';
+import { isPlatformBrowser } from '@angular/common';
+import { ServerRefreshTokenNotExistsError } from 'src/app/errors/server-refresh-token-not-exists-error';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AccountService {
+    private isBrowser = false;
 
-    constructor(private httpClient: HttpClient, private windowService: WindowService) {
+    constructor(
+        @Inject(PLATFORM_ID) platformId: Object,
+        private httpClient: HttpClient,
+        private windowService: WindowService,
+        private cookieService: CookieService) {
+            this.isBrowser = isPlatformBrowser(platformId);
     }
 
-    public async refreshToken(refreshToken: string): Promise<AccessToken> {
-        const event$ = this.httpClient.post<AccessToken>(
-            this.windowService.apiUrl() + '/api/v1/account/refresh-token',
-            new RefreshToken(refreshToken)
+    public async refreshToken(): Promise<UserPayloadToken | null> {
+        const refreshTokenDto = this.getRefreshToken();
+
+        if (!this.isBrowser && !refreshTokenDto) {
+            throw new ServerRefreshTokenNotExistsError();
+        }
+
+        const event$ = this.httpClient.post<UserPayloadToken>(
+            this.windowService.apiUrl() + '/api/v1/account/refresh-token', refreshTokenDto
         );
 
       return await firstValueFrom(event$);
     }
 
-    public async login(login: Login, token: string): Promise<AccessToken> {
-        const event$ = this.httpClient.post<AccessToken>(this.windowService.apiUrl() + '/api/v1/account/login', login, {
+    public async login(login: Login, token: string): Promise<UserPayloadToken> {
+        const event$ = this.httpClient.post<UserPayloadToken>(this.windowService.apiUrl() + '/api/v1/account/login', login, {
             headers: { 'X-Auth-2FA': token }
         });
         return await firstValueFrom(event$);
+    }
+
+    public async logout(): Promise<void> {
+        const event$ = this.httpClient.post(this.windowService.apiUrl() + '/api/v1/account/logout', null);
+        await firstValueFrom(event$);
     }
 
     public async changePassword(changePassword: ChangePassword): Promise<object> {
@@ -68,5 +87,20 @@ export class AccountService {
         });
 
         await firstValueFrom(event$);
+    }
+
+    private getRefreshToken(): RefreshToken | null {
+        // In browser mode refresh token is send as a cookie (by browser).
+        if (this.isBrowser) {
+            return null;
+        }
+        
+        // In Angular SSR mode we have to send refresh token from cookie (from user browser).
+        const refreshToken = this.cookieService.get('refresh-token');
+        if (!refreshToken) {
+            return null;
+        }
+
+        return new RefreshToken(refreshToken, false);
     }
 }

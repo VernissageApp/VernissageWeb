@@ -41,15 +41,30 @@
                         <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
                             <ng-template matStepLabel>Status</ng-template>
                             <div class="flex-col gap-0 margin-top-5">
-                                <mat-form-field appearance="outline">
+
+                                @if (isOpenAIEnabled) {
+                                    <div class="flex-row flex-end margin-bottom-10">
+                                        <mat-spinner *ngIf="hashtagsInProgress" class="margin-top-10 margin-right-10" [diameter]="18"></mat-spinner>
+                                        <button mat-stroked-button color="primary" (click)="onGenerateHashtags()" [disabled]="!allPhotosUploaded() || photos.length === 0 || hashtagsInProgress">
+                                            <mat-icon>smart_toy</mat-icon> Hashtags
+                                        </button>
+                                    </div>
+                                }
+
+                                <mat-form-field appearance="outline" class="margin-bottom-20">
                                     <mat-label>Text</mat-label>
                                     <textarea matInput name="statusText" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4"
                                               cdkAutosizeMaxRows="10"  #statusInput="ngModel" [(ngModel)]="statusText" required
-                                              aria-label="Status" appMaxLength="500"></textarea>
+                                              aria-label="Status" [appMaxLength]="maxStatusLength.toString()"></textarea>
+                                    @if (!isHandset) {
+                                        <mat-hint class="text-muted" align="start">Use “CamelCase” for hashtags, capitalizing the first letter of each word.</mat-hint>
+                                    }
+                                    <mat-hint align="end">{{ statusText.length }}/{{ maxStatusLength }}</mat-hint>
+                                    <mat-error *ngIf="statusInput.invalid && statusInput.errors?.required">Enter status text.</mat-error>
                                     <mat-error *ngIf="statusInput.invalid && statusInput.errors?.appMaxLength">Too long status.</mat-error>
                                 </mat-form-field>
 
-                                <mat-form-field appearance="outline">
+                                <mat-form-field appearance="outline" class=" margin-bottom-20">
                                     <mat-label>Category</mat-label>
                                     <mat-select required [(value)]="categoryId">
                                         <mat-option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</mat-option>
