@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { NgOptimizedImage } from "@angular/common";
 import { UploadPhotoComponent } from './widgets/upload-photo/upload-photo.component';
@@ -29,8 +29,7 @@ import { GeneralSettingsComponent } from './widgets/general-settings/general-set
 import { DomainBlocksComponent } from './widgets/domain-blocks/domain-blocks.component';
 import { InstanceRulesComponent } from './widgets/instance-rules/instance-rules.component';
 
-@NgModule({
-    declarations: [
+@NgModule({ declarations: [
         HeaderComponent,
         FooterComponent,
         PasswordComponent,
@@ -50,18 +49,6 @@ import { InstanceRulesComponent } from './widgets/instance-rules/instance-rules.
         GeneralSettingsComponent,
         DomainBlocksComponent,
         InstanceRulesComponent
-    ],
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        FormsModule,
-        HttpClientModule,
-        ReactiveFormsModule,
-        AngularMaterialModule,
-        RouterModule,
-        ValidationsModule,
-        NgOptimizedImage,
-        DirectivesModule
     ],
     exports: [
         BrowserModule,
@@ -93,6 +80,13 @@ import { InstanceRulesComponent } from './widgets/instance-rules/instance-rules.
         DomainBlocksComponent,
         InstanceRulesComponent,
         DirectivesModule
-    ]
-})
+    ], imports: [BrowserModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        ReactiveFormsModule,
+        AngularMaterialModule,
+        RouterModule,
+        ValidationsModule,
+        NgOptimizedImage,
+        DirectivesModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class ComponentsModule { }

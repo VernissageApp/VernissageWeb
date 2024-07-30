@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { DeleteAccountDialog } from 'src/app/dialogs/delete-account-dialog/delete-account.dialog';
 import { ValidationsModule } from '../validators/validations.module';
@@ -25,8 +25,7 @@ import { NotificationSettingsDialog } from './notification-settings-dialog/notif
 import { InstanceRuleDialog } from './instance-rule-dialog/instance-rule.dialog';
 import { ConfirmationDialog } from './confirmation-dialog/confirmation.dialog';
 
-@NgModule({
-    declarations: [
+@NgModule({ declarations: [
         ChangePasswordDialog,
         ChangeEmailDialog,
         DeleteAccountDialog,
@@ -44,16 +43,6 @@ import { ConfirmationDialog } from './confirmation-dialog/confirmation.dialog';
         NotificationSettingsDialog,
         InstanceRuleDialog,
         ConfirmationDialog
-    ],
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        FormsModule,
-        HttpClientModule,
-        ReactiveFormsModule,
-        RouterModule,
-        ValidationsModule,
-        ComponentsModule
     ],
     exports: [
         ChangePasswordDialog,
@@ -73,6 +62,11 @@ import { ConfirmationDialog } from './confirmation-dialog/confirmation.dialog';
         NotificationSettingsDialog,
         InstanceRuleDialog,
         ConfirmationDialog
-    ]
-})
+    ], imports: [BrowserModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        ReactiveFormsModule,
+        RouterModule,
+        ValidationsModule,
+        ComponentsModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class DialogsModule { }
