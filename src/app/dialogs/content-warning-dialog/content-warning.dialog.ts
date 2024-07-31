@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
-    selector: 'content-warning',
+    selector: 'app-content-warning-dialog',
     templateUrl: 'content-warning.dialog.html'
 })
 export class ContentWarningDialog {

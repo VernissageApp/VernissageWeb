@@ -11,7 +11,7 @@ import { RelationshipsService } from 'src/app/services/http/relationships.servic
 import { ProfilePageTab } from 'src/app/models/profile-page-tab';
 import { LoadingService } from 'src/app/services/common/loading.service';
 import { LinkableResult } from 'src/app/models/linkable-result';
-import { Responsive } from 'src/app/common/responsive';
+import { ResponsiveComponent } from 'src/app/common/responsive';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { DOCUMENT } from '@angular/common';
 import { Meta, Title } from '@angular/platform-browser';
@@ -26,7 +26,7 @@ import { PreferencesService } from 'src/app/services/common/preferences.service'
     styleUrls: ['./profile.page.scss'],
     animations: fadeInAnimation
 })
-export class ProfilePage extends Responsive implements OnInit, OnDestroy {
+export class ProfilePage extends ResponsiveComponent implements OnInit, OnDestroy {
     readonly ProfilePageTab = ProfilePageTab;
 
     isReady = false;
@@ -267,7 +267,7 @@ export class ProfilePage extends Responsive implements OnInit, OnDestroy {
     }
 
     private createLink(url: string): void {
-        let link: HTMLLinkElement = this.document.createElement('link');
+        const link: HTMLLinkElement = this.document.createElement('link');
         link.setAttribute('href', url);
         link.setAttribute('rel', 'me');
 
@@ -301,8 +301,6 @@ export class ProfilePage extends Responsive implements OnInit, OnDestroy {
 
         const avatarImage = this.user?.avatarUrl;
         if (avatarImage) {
-            const firstImage = this.user?.avatarUrl;
-
             // <meta property="og:image" content="https://files.vernissage.xxx/media_attachments/files/112348.png">
             this.metaService.updateTag({ property: 'og:image', content: avatarImage });
 

@@ -40,7 +40,7 @@ export class ImageComponent implements OnInit, AfterViewInit {
     get showAvatar() { return this.preferencesService.showAvatars && this.avatarVisible; }
 
     constructor(
-        @Inject(PLATFORM_ID) platformId: Object,
+        @Inject(PLATFORM_ID) platformId: object,
         private preferencesService: PreferencesService,
         private statusesService: StatusesService,
         private messageService: MessagesService,

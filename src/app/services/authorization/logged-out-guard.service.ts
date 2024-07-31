@@ -2,7 +2,8 @@ import { inject } from '@angular/core';
 import { Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { AuthorizationService } from './authorization.service';
 
-export const loggedOutGuard = (_: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const loggedOutGuard = (_: ActivatedRouteSnapshot, _state: RouterStateSnapshot) => {
     const authorizationService = inject(AuthorizationService);
     const router = inject(Router);
 

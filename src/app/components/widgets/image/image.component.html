@@ -4,9 +4,9 @@
     }
 
     @if (horizontal) {
-        <img class="image-item" [ngClass]="{ 'img-vertical': !horizontal, 'img-horizontal': horizontal }" [src]="imageSrc" (load)="onImageLoaded()" />
+        <img class="image-item" [ngClass]="{ 'img-vertical': !horizontal, 'img-horizontal': horizontal }" [src]="imageSrc" (load)="onImageLoaded()" alt="Status image" />
     } @else {
-        <img class="image-item" [ngClass]="{ 'img-vertical': !horizontal, 'img-horizontal': horizontal }" [src]="imageSrc" [width]="width" [height]="height" (load)="onImageLoaded()" />
+        <img class="image-item" [ngClass]="{ 'img-vertical': !horizontal, 'img-horizontal': horizontal }" [src]="imageSrc" [width]="width" [height]="height" (load)="onImageLoaded()" alt="Status image" />
     }
 
     @if (imageIsLoaded) {
@@ -17,7 +17,7 @@
         }
 
         @if (signedInUser && showFavourites) {
-            <div class="favourite" (click)="favouriteToogle(); $event.preventDefault(); $event.stopPropagation();">
+            <div class="favourite" (click)="favouriteToogle(); $event.preventDefault(); $event.stopPropagation();" (keydown.enter)="favouriteToogle(); $event.preventDefault(); $event.stopPropagation();" tabindex="0">
                 <mat-icon *ngIf="!getMainStatus()?.favourited" class="outline-symbol">grade</mat-icon>
                 <mat-icon *ngIf="getMainStatus()?.favourited" class="fill-symbol">grade</mat-icon>
             </div>

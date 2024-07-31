@@ -13,7 +13,7 @@ export class GlobalErrorHandler extends SentryErrorHandler {
     private isBrowser = false;
 
     constructor(
-        platformId: Object,
+        platformId: object,
         private injector: Injector,
         private zone: NgZone,
         private authorizationService: AuthorizationService,

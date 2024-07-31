@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { ForbiddenError } from 'src/app/errors/forbidden-error';
 import { Report } from 'src/app/models/report';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { LoadingService } from 'src/app/services/common/loading.service';
-import { Responsive } from 'src/app/common/responsive';
+import { ResponsiveComponent } from 'src/app/common/responsive';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 import { ReportsService } from 'src/app/services/http/reports.service';
@@ -25,7 +25,7 @@ import { ContentWarningDialog } from 'src/app/dialogs/content-warning-dialog/con
     styleUrls: ['./reports.page.scss'],
     animations: fadeInAnimation
 })
-export class ReportsPage extends Responsive {
+export class ReportsPage extends ResponsiveComponent implements OnInit {
     readonly avatarSize = AvatarSize;
 
     isReady = false;
@@ -66,8 +66,8 @@ export class ReportsPage extends Responsive {
             const pageString = params['page'] as string;
             const sizeString = params['size'] as string;
 
-            let page = pageString ? +pageString : 0;
-            let size = sizeString ? +sizeString : 10;
+            const page = pageString ? +pageString : 0;
+            const size = sizeString ? +sizeString : 10;
 
             this.pageIndex = page;
             this.reports = await this.reportsService.get(page + 1, size);

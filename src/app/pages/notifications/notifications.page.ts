@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { Notification } from '../../models/notification';
 import { NotificationsService } from 'src/app/services/http/notifications.service';
 import { Status } from 'src/app/models/status';
 import { NotificationType } from 'src/app/models/notification-type';
 import { LoadingService } from 'src/app/services/common/loading.service';
-import { Responsive } from 'src/app/common/responsive';
+import { ResponsiveComponent } from 'src/app/common/responsive';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { LinkableResult } from 'src/app/models/linkable-result';
 import { AvatarSize } from 'src/app/components/widgets/avatar/avatar-size';
@@ -20,7 +20,7 @@ import { MatDialog } from '@angular/material/dialog';
     styleUrls: ['./notifications.page.scss'],
     animations: fadeInAnimation
 })
-export class NotificationsPage extends Responsive {
+export class NotificationsPage extends ResponsiveComponent implements OnInit {
     readonly notificationType = NotificationType;
     readonly avatarSize = AvatarSize;
 

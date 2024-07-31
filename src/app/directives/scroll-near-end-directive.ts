@@ -22,7 +22,8 @@ export class ScrollNearEndDirective implements OnInit {
     }
   
     @HostListener('window:scroll', ['$event.target'])
-    windowScrollEvent(event: KeyboardEvent) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    windowScrollEvent(_event: KeyboardEvent) {
         // height of whole window page
         const heightOfWholePage = this.window.document.documentElement.scrollHeight;
   

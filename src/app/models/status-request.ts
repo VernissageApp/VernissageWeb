@@ -1,5 +1,4 @@
 import { StatusVisibility } from 'src/app/models/status-visibility';
-import { Category } from './category';
 
 export class StatusRequest {
     public id = '';

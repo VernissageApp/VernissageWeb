@@ -1,14 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { ForbiddenError } from 'src/app/errors/forbidden-error';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 import { Role } from 'src/app/models/role';
 import { Settings } from 'src/app/models/settings';
 import { SettingsService } from 'src/app/services/http/settings.service';
-import { MessagesService } from 'src/app/services/common/messages.service';
-import { EventType } from 'src/app/models/event-type';
 import { LoadingService } from 'src/app/services/common/loading.service';
-import { Responsive } from 'src/app/common/responsive';
+import { ResponsiveComponent } from 'src/app/common/responsive';
 import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
@@ -17,7 +15,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
     styleUrls: ['./settings.page.scss'],
     animations: fadeInAnimation
 })
-export class SettingsPage extends Responsive {
+export class SettingsPage extends ResponsiveComponent implements OnInit {
     isReady = false;
     settings?: Settings;
 

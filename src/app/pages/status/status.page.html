@@ -1,12 +1,12 @@
 <div *ngIf="mainStatus && isReady" @fadeIn>
     <div class="photo-margin-top">
-        <div *ngIf="showBackArrow()" class="back-container" (click)="onBackClick()">
+        <div *ngIf="showBackArrow()" class="back-container" (click)="onBackClick()" (keydown.enter)="onBackClick()" tabindex="0">
             <mat-icon>arrow_back</mat-icon>
             <span class="back-label">Back</span>
         </div>
     </div>
     <div class="photo-container" [ngClass]="{ 'photo-container-table': showContextArrows() }">
-        <div *ngIf="showContextArrows()" class="icon" (click)="onPrevClick()">
+        <div *ngIf="showContextArrows()" class="icon" (click)="onPrevClick()" (keydown.enter)="onPrevClick()" tabindex="0">
             <mat-icon *ngIf="!hideLeftArrow">arrow_back_ios</mat-icon>
         </div>
         <div class="display-inline">
@@ -14,7 +14,7 @@
                 <ng-container *ngIf="images.length === 1">
                     <div [ngClass]="{ 'photo-image-container-fixed': !isHandset }">
                         <canvas [ngClass]="{ 'display-none': imageIsLoaded }" class="blurhash" #canvas [width]="imageWidth" [height]="imageHeight"></canvas>
-                        <img [ngClass]="{ 'display-none': !imageIsLoaded }" [src]="images[0].data?.src" (click)="openInFullScreen()" (load)="onImageLoaded()" />
+                        <img [ngClass]="{ 'display-none': !imageIsLoaded }" [src]="images[0].data?.src" (click)="openInFullScreen()" (keydown.enter)="openInFullScreen()" tabindex="0" (load)="onImageLoaded()" alt="Status image" />
                     </div>
                 </ng-container>
                 <ng-container *ngIf="images.length > 1">
@@ -34,7 +34,7 @@
                 </ng-container>
             </ng-container>
         </div>
-        <div *ngIf="showContextArrows()" class="icon" (click)="onNextClick()">
+        <div *ngIf="showContextArrows()" class="icon" (click)="onNextClick()" (keydown.enter)="onNextClick()" tabindex="0">
             <mat-icon *ngIf="!hideRightArrow">arrow_forward_ios</mat-icon>
         </div>
     </div>

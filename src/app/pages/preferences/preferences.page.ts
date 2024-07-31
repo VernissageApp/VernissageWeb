@@ -1,7 +1,7 @@
-import { Component, Inject, Renderer2 } from '@angular/core';
+import { Component, Inject, Renderer2, OnInit } from '@angular/core';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { EventType } from 'src/app/models/event-type';
-import { Responsive } from 'src/app/common/responsive';
+import { ResponsiveComponent } from 'src/app/common/responsive';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { DOCUMENT } from '@angular/common';
 import { PreferencesService } from 'src/app/services/common/preferences.service';
@@ -15,7 +15,7 @@ import { WindowService } from 'src/app/services/common/window.service';
     styleUrls: ['./preferences.page.scss'],
     animations: fadeInAnimation
 })
-export class PreferencesPage extends Responsive {
+export class PreferencesPage extends ResponsiveComponent implements OnInit {
     isReady = false;
     preferences: string[] = [];
     eventTypes = Object.values(EventType);

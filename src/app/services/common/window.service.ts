@@ -9,7 +9,7 @@ import { REQUEST } from '@nguniversal/express-engine/tokens';
 })
 export class WindowService {
     constructor(
-        @Inject(PLATFORM_ID) private platformId: Object,
+        @Inject(PLATFORM_ID) private platformId: object,
         @Optional() @Inject(REQUEST) protected request: Request | null,
         private location: Location) {
     }

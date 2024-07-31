@@ -7,7 +7,7 @@ import { Status } from 'src/app/models/status';
 import { ContextStatusesService } from 'src/app/services/common/context-statuses.service';
 import { Attachment } from 'src/app/models/attachment';
 import { LoadingService } from 'src/app/services/common/loading.service';
-import { Responsive } from 'src/app/common/responsive';
+import { ResponsiveComponent } from 'src/app/common/responsive';
 import { NavigationStart, Router } from '@angular/router';
 import { WindowService } from 'src/app/services/common/window.service';
 
@@ -17,7 +17,7 @@ import { WindowService } from 'src/app/services/common/window.service';
     styleUrls: ['./gallery.component.scss'],
     animations: fadeInAnimation
 })
-export class GalleryComponent extends Responsive implements OnInit, OnChanges {
+export class GalleryComponent extends ResponsiveComponent implements OnInit, OnChanges {
     @Input() statuses?: LinkableResult<Status>;
     @Input() squareImages = false;
     @Input() hideAvatars = false;
@@ -126,7 +126,7 @@ export class GalleryComponent extends Responsive implements OnInit, OnChanges {
             return;
         }
 
-        for (let status of this.statuses.data) {
+        for (const status of this.statuses.data) {
             const imageHeight = this.getImageConstraitHeight(status);
             const smallerColumnIndex = this.getSmallerColumnIndex(imageHeight);
 
@@ -149,7 +149,7 @@ export class GalleryComponent extends Responsive implements OnInit, OnChanges {
         }
 
         for(let i = fromIndex; i < this.statuses.data.length; i++) {
-            let status = this.statuses.data[i];
+            const status = this.statuses.data[i];
 
             const imageHeight = this.getImageConstraitHeight(status);
             const smallerColumnIndex = this.getSmallerColumnIndex(imageHeight);

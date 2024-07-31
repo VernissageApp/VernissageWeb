@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -17,9 +17,8 @@ import { WindowService } from 'src/app/services/common/window.service';
 import { FlexiField } from 'src/app/models/flexi-field';
 import { ResendEmailConfirmation } from 'src/app/models/resend-email-confirmation';
 import { ChangePasswordDialog } from 'src/app/dialogs/change-password-dialog/change-password.dialog';
-import { Responsive } from 'src/app/common/responsive';
+import { ResponsiveComponent } from 'src/app/common/responsive';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { TwoFactorToken } from 'src/app/models/two-factor-token';
 import { EnableTwoFactorTokenDialog } from 'src/app/dialogs/enable-two-factor-token/enable-two-factor-token.dialog';
 import { DisableTwoFactorTokenDialog } from 'src/app/dialogs/disable-two-factor-token/disable-two-factor-token.dialog';
 
@@ -29,7 +28,7 @@ import { DisableTwoFactorTokenDialog } from 'src/app/dialogs/disable-two-factor-
     styleUrls: ['./account.page.scss'],
     animations: fadeInAnimation
 })
-export class AccountPage extends Responsive {
+export class AccountPage extends ResponsiveComponent implements OnInit {
 
     userName = '';
     user: User = new User();

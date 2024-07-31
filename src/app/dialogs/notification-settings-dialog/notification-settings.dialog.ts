@@ -11,7 +11,7 @@ import { PushSubscriptionsService } from 'src/app/services/http/push-subscriptio
 import { SettingsService } from 'src/app/services/http/settings.service';
 
 @Component({
-    selector: 'notification-settings-dialog',
+    selector: 'app-notification-settings-dialog',
     templateUrl: 'notification-settings.dialog.html',
     styleUrls: ['notification-settings.dialog.scss']
 })

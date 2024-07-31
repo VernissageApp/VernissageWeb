@@ -6,7 +6,7 @@ import { MessagesService } from 'src/app/services/common/messages.service';
 import { UsersService } from 'src/app/services/http/users.service';
 
 @Component({
-    selector: 'user-roles',
+    selector: 'app-user-roles-dialog',
     templateUrl: 'user-roles.dialog.html'
 })
 export class UserRolesDialog implements OnInit {

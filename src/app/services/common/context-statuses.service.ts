@@ -69,7 +69,7 @@ export class ContextStatusesService {
             return null;
         }
 
-        var currentIndex = this.statuses.data.findIndex(x => x.id === id);
+        let currentIndex = this.statuses.data.findIndex(x => x.id === id);
         if (currentIndex < 0) {
             this.clearContextStatuses();
             return null;
@@ -163,7 +163,7 @@ export class ContextStatusesService {
         }
 
         if (this.statuses?.context === ContextTimeline.user && this.statuses.user) {
-            let statuses = await this.usersService.statuses(this.statuses.user, minId, maxId, undefined, undefined);
+            return await this.usersService.statuses(this.statuses.user, minId, maxId, undefined, undefined);
         }
 
         return null;

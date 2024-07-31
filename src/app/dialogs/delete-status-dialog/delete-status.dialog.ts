@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
-    selector: 'delete-status',
+    selector: 'app-delete-status-dialog',
     templateUrl: 'delete-status.dialog.html'
 })
 export class DeleteStatusDialog {

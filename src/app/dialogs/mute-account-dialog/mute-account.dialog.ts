@@ -1,11 +1,9 @@
-import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { User } from 'src/app/models/user';
+import { Component } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 import { UserMuteRequest } from 'src/app/models/user-mute-request';
-import { UsersService } from 'src/app/services/http/users.service';
 
 @Component({
-    selector: 'mute-account',
+    selector: 'app-mute-account-dialog',
     templateUrl: 'mute-account.dialog.html'
 })
 export class MuteAccountDialog {

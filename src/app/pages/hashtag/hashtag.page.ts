@@ -1,9 +1,9 @@
 import { BreakpointObserver } from "@angular/cdk/layout";
-import { Component } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs/internal/Subscription";
 import { fadeInAnimation } from "src/app/animations/fade-in.animation";
-import { Responsive } from "src/app/common/responsive";
+import { ResponsiveComponent } from "src/app/common/responsive";
 import { ContextTimeline } from "src/app/models/context-timeline";
 import { LinkableResult } from "src/app/models/linkable-result";
 import { Status } from "src/app/models/status";
@@ -16,7 +16,7 @@ import { TimelineService } from "src/app/services/http/timeline.service";
     styleUrls: ['./hashtag.page.scss'],
     animations: fadeInAnimation
 })
-export class HashtagPage extends Responsive {
+export class HashtagPage extends ResponsiveComponent implements OnInit, OnDestroy {
     statuses?: LinkableResult<Status>;
     isReady = false;
 

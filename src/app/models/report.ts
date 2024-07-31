@@ -2,7 +2,7 @@ import { Status } from "./status";
 import { User } from "./user";
 
 export class Report {
-    public id: string = '';
+    public id = '';
     public user?: User;
     public reportedUser?: User;
     public status?: Status;

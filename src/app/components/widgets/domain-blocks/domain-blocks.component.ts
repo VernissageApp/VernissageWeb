@@ -1,8 +1,8 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
-import { Responsive } from 'src/app/common/responsive';
+import { ResponsiveComponent } from 'src/app/common/responsive';
 import { ConfirmationDialog } from 'src/app/dialogs/confirmation-dialog/confirmation.dialog';
 import { InstanceBlockedDomainDialog } from 'src/app/dialogs/instance-blocked-domain-dialog/instance-blocked-domain.dialog';
 import { InstanceBlockedDomain } from 'src/app/models/instance-blocked-domain';
@@ -15,7 +15,7 @@ import { InstanceBlockedDomainsService } from 'src/app/services/http/instance-bl
     templateUrl: './domain-blocks.component.html',
     styleUrls: ['./domain-blocks.component.scss']
 })
-export class DomainBlocksComponent extends Responsive {
+export class DomainBlocksComponent extends ResponsiveComponent implements OnInit {
     domains?: PaginableResult<InstanceBlockedDomain>;
     displayedColumns: string[] = [];
     pageIndex = 0;

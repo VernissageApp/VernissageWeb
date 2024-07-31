@@ -1,6 +1,6 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, Input } from '@angular/core';
-import { Responsive } from 'src/app/common/responsive';
+import { ResponsiveComponent } from 'src/app/common/responsive';
 import { User } from 'src/app/models/user';
 import { AvatarSize } from '../avatar/avatar-size';
 
@@ -9,7 +9,7 @@ import { AvatarSize } from '../avatar/avatar-size';
     templateUrl: './user-card.component.html',
     styleUrls: ['./user-card.component.scss']
 })
-export class UserCardComponent extends Responsive {
+export class UserCardComponent extends ResponsiveComponent {
     readonly avatarSize = AvatarSize;
     @Input() user?: User;
 

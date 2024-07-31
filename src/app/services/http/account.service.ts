@@ -20,7 +20,7 @@ export class AccountService {
     private isBrowser = false;
 
     constructor(
-        @Inject(PLATFORM_ID) platformId: Object,
+        @Inject(PLATFORM_ID) platformId: object,
         private httpClient: HttpClient,
         private windowService: WindowService,
         private cookieService: CookieService) {
@@ -38,7 +38,7 @@ export class AccountService {
             this.windowService.apiUrl() + '/api/v1/account/refresh-token', refreshTokenDto
         );
 
-      return await firstValueFrom(event$);
+        return await firstValueFrom(event$);
     }
 
     public async login(login: Login, token: string): Promise<UserPayloadToken> {

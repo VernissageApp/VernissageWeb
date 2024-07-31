@@ -14,7 +14,7 @@ export enum Resolution {
     template: '',
     styles: []
 })
-export class Responsive implements OnInit, OnDestroy {
+export class ResponsiveComponent implements OnInit, OnDestroy {
     private breakpointSubscription: Subscription;
 
     protected onHandsetPortrait?() : void;

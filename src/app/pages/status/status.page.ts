@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, ElementRef, Inject, ViewChild } from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, Inject, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { decode } from 'blurhash';
 import { Subscription } from 'rxjs';
@@ -10,7 +10,7 @@ import { Location } from 'src/app/models/location';
 import { StatusVisibility } from 'src/app/models/status-visibility';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
-import { Responsive } from 'src/app/common/responsive';
+import { ResponsiveComponent } from 'src/app/common/responsive';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { User } from 'src/app/models/user';
 import { StatusComment } from 'src/app/models/status-comment';
@@ -39,7 +39,7 @@ import { Meta, Title } from '@angular/platform-browser';
     styleUrls: ['./status.page.scss'],
     animations: fadeInAnimation
 })
-export class StatusPage extends Responsive {
+export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy {
     readonly statusVisibility = StatusVisibility;
     readonly avatarSize = AvatarSize;
 
@@ -254,7 +254,7 @@ export class StatusPage extends Responsive {
             return;
         }
 
-        const dialogRef = this.dialog.open(UsersDialog, {
+        this.dialog.open(UsersDialog, {
             width: '500px',
             data: new UsersDialogContext(this.mainStatus.id, UsersListType.reblogged, 'Boosted by')
         });
@@ -265,7 +265,7 @@ export class StatusPage extends Responsive {
             return;
         }
 
-        const dialogRef = this.dialog.open(UsersDialog, {
+        this.dialog.open(UsersDialog, {
             width: '500px',
             data: new UsersDialogContext(this.mainStatus.id, UsersListType.favourited, 'Favourited by')
         });
@@ -279,7 +279,7 @@ export class StatusPage extends Responsive {
         this.windowService.openPage(this.mainStatus.activityPubUrl);
     }
 
-    isLoggedIn(): Boolean {
+    isLoggedIn(): boolean {
         return this.authorizationService.isLoggedIn();
     }
 
@@ -307,7 +307,7 @@ export class StatusPage extends Responsive {
         return this.mainStatus?.user?.id === this.signedInUser?.id;
     }
 
-    getAltStatus(index: number): String | undefined {
+    getAltStatus(index: number): string | undefined {
         const attachment = this.mainStatus?.attachments?.at(index);
         if (attachment) {
             return attachment.description;
@@ -343,7 +343,7 @@ export class StatusPage extends Responsive {
         return undefined;
     }
 
-    getMapsUrl(index: number): String | undefined {
+    getMapsUrl(index: number): string | undefined {
         const location = this.getLocation(index);
         if (location) {
             const latitude = location.latitude?.replace(',', '.');
@@ -520,7 +520,7 @@ export class StatusPage extends Responsive {
         const replies: StatusComment[] = [];
 
         const context = await this.statusesService.context(statusId);
-        for(let item of context.descendants) {
+        for (const item of context.descendants) {
             replies.push(new StatusComment(item, true));
             await this.getReplies(item.id, replies);
         }
@@ -530,7 +530,7 @@ export class StatusPage extends Responsive {
 
     private async getReplies(statusId: string, replies: StatusComment[]): Promise<void> {
         const context = await this.statusesService.context(statusId);
-        for(let item of context.descendants) {
+        for (const item of context.descendants) {
             replies.push(new StatusComment(item, false));
             await this.getReplies(item.id, replies);
         }

@@ -7,7 +7,7 @@ import { InvitationsService } from 'src/app/services/http/invitations.service';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { LoadingService } from 'src/app/services/common/loading.service';
-import { Responsive } from 'src/app/common/responsive';
+import { ResponsiveComponent } from 'src/app/common/responsive';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { SettingsService } from 'src/app/services/http/settings.service';
 import { PublicSettings } from 'src/app/models/public-settings';
@@ -18,7 +18,7 @@ import { PublicSettings } from 'src/app/models/public-settings';
     styleUrls: ['./invitations.page.scss'],
     animations: fadeInAnimation
 })
-export class InvitationsPage extends Responsive {
+export class InvitationsPage extends ResponsiveComponent implements OnInit {
     isReady = false;
     invitations?: Invitation[];
     publicSettings?: PublicSettings;

@@ -1,6 +1,6 @@
 <nav>
     <mat-toolbar color="primary">
-        <a class="logo" [routerLink]="['/']">Vernissage <img src="assets/beta.png"></a>
+        <a class="logo" [routerLink]="['/']">Vernissage <img src="assets/beta.png" alt="Beta sign"></a>
         <ng-container *ngIf="!user">
             <div class="flex-spacer"></div>
             <button *ngIf="isRegistrationEnabled()" mat-stroked-button color="primary" [routerLink]="['/register']" class="margin-right-5">Sign up</button>

@@ -7,7 +7,7 @@ import { InstanceService } from 'src/app/services/http/instance.service';
 import { AuthorizationService } from '../../../services/authorization/authorization.service';
 import { Role } from 'src/app/models/role';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Resolution, Responsive } from 'src/app/common/responsive';
+import { Resolution, ResponsiveComponent } from 'src/app/common/responsive';
 import { NotificationsService } from 'src/app/services/http/notifications.service';
 import { CustomReuseStrategy } from 'src/app/common/custom-reuse-strategy';
 import { SwPush } from '@angular/service-worker';
@@ -17,7 +17,7 @@ import { SwPush } from '@angular/service-worker';
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent extends Responsive {
+export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDestroy {
     readonly resolution = Resolution;
 
     public notificationCounter = 0;
@@ -55,7 +55,7 @@ export class HeaderComponent extends Responsive {
                 this.fullName = this.user.name
             }
 
-            this.meesagesSubscription = this.swPushService.messages.subscribe(async (a) => {
+            this.meesagesSubscription = this.swPushService.messages.subscribe(async () => {
                 await this.loadNotificationCount();
             });
 

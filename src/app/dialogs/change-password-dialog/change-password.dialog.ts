@@ -5,7 +5,7 @@ import { MessagesService } from 'src/app/services/common/messages.service';
 import { AccountService } from 'src/app/services/http/account.service';
 
 @Component({
-    selector: 'change-password',
+    selector: 'app-change-password-dialog',
     templateUrl: 'change-password.dialog.html'
 })
 export class ChangePasswordDialog {

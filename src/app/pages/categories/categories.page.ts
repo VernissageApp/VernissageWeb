@@ -1,9 +1,9 @@
 import { BreakpointObserver } from "@angular/cdk/layout";
-import { Component } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs";
 import { fadeInAnimation } from "src/app/animations/fade-in.animation";
-import { Responsive } from "src/app/common/responsive";
+import { ResponsiveComponent } from "src/app/common/responsive";
 import { Category } from "src/app/models/category";
 import { ContextTimeline } from "src/app/models/context-timeline";
 import { LinkableResult } from "src/app/models/linkable-result";
@@ -18,7 +18,7 @@ import { TimelineService } from "src/app/services/http/timeline.service";
     styleUrls: ['./categories.page.scss'],
     animations: fadeInAnimation
 })
-export class CategoriesPage extends Responsive {
+export class CategoriesPage extends ResponsiveComponent implements OnInit, OnDestroy {
     private readonly numberOfVisibleStatuses = 10;
 
     isReady = false;
@@ -40,7 +40,7 @@ export class CategoriesPage extends Responsive {
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
 
-        this.routeParamsSubscription = this.activatedRoute.queryParams.subscribe(async (params) => {
+        this.routeParamsSubscription = this.activatedRoute.queryParams.subscribe(async () => {
             this.loadingService.showLoader();
 
             const categories = await this.categoriesService.all();
@@ -49,6 +49,12 @@ export class CategoriesPage extends Responsive {
             this.isReady = true;
             this.loadingService.hideLoader();
         });
+    }
+
+    override ngOnDestroy(): void {
+        super.ngOnDestroy();
+
+        this.routeParamsSubscription?.unsubscribe();
     }
 
     private async loadStatuses(category: Category): Promise<void> {

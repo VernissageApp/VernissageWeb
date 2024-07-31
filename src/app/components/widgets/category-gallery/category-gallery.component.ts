@@ -1,7 +1,7 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, Input } from '@angular/core';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
-import { Responsive } from 'src/app/common/responsive';
+import { ResponsiveComponent } from 'src/app/common/responsive';
 import { Category } from 'src/app/models/category';
 import { LinkableResult } from 'src/app/models/linkable-result';
 import { Status } from 'src/app/models/status';
@@ -13,7 +13,7 @@ import { ContextStatusesService } from 'src/app/services/common/context-statuses
     styleUrls: ['./category-gallery.component.scss'],
     animations: fadeInAnimation
 })
-export class CategoryGalleryComponent extends Responsive {
+export class CategoryGalleryComponent extends ResponsiveComponent {
     @Input() categories?: Category[];
     @Input() categoryStatuses?: Map<string, LinkableResult<Status>>;
 
@@ -45,7 +45,7 @@ export class CategoryGalleryComponent extends Responsive {
     }
 
     onStatusClick(hashtag: string | undefined): void {
-        let statuses = this.getLinkableStatuses(hashtag);
+        const statuses = this.getLinkableStatuses(hashtag);
         this.contextStatusesService.setContextStatuses(statuses);
     }
 

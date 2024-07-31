@@ -4,7 +4,6 @@ import { ReCaptchaV3Service } from 'ngx-captcha';
 import { ForbiddenError } from 'src/app/errors/forbidden-error';
 import { RegisterUser } from 'src/app/models/register-user';
 
-import { User } from 'src/app/models/user';
 import { RegisterMode } from 'src/app/models/register-mode';
 import { InstanceService } from 'src/app/services/http/instance.service';
 import { RegisterService } from 'src/app/services/http/register.service';
@@ -90,7 +89,7 @@ export class RegisterPage implements OnInit {
         try {
             this.user.securityToken = token;
 
-            const user = await this.registerService.register(this.user);
+            await this.registerService.register(this.user);
             this.removeGoogleBadge();
 
             this.messageService.showSuccess('Your account has been created.');

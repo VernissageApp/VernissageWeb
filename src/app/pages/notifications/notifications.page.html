@@ -42,7 +42,7 @@
                             @if (notification.status && getAttachemntUrl(notification.status)) {
                                 <div class="status">
                                     <a [routerLink]="['/statuses', notification.status.id]">
-                                        <img [src]="getAttachemntUrl(notification.status)" class="" />
+                                        <img [src]="getAttachemntUrl(notification.status)" class="" alt="Status image" />
                                     </a>
                                 </div>
                             }
