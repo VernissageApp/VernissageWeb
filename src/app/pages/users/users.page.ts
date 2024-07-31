@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { ForbiddenError } from 'src/app/errors/forbidden-error';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { LoadingService } from 'src/app/services/common/loading.service';
-import { Responsive } from 'src/app/common/responsive';
+import { ResponsiveComponent } from 'src/app/common/responsive';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 import { Role } from 'src/app/models/role';
@@ -24,7 +24,7 @@ import { RandomGeneratorService } from 'src/app/services/common/random-generator
     styleUrls: ['./users.page.scss'],
     animations: fadeInAnimation
 })
-export class UsersPage extends Responsive {
+export class UsersPage extends ResponsiveComponent implements OnInit {
     readonly avatarSize = AvatarSize
     readonly role = Role;
 
@@ -66,8 +66,8 @@ export class UsersPage extends Responsive {
             const pageString = params['page'] as string;
             const sizeString = params['size'] as string;
 
-            let page = pageString ? +pageString : 0;
-            let size = sizeString ? +sizeString : 10;
+            const page = pageString ? +pageString : 0;
+            const size = sizeString ? +sizeString : 10;
 
             this.pageIndex = page;
             this.users = await this.usersService.get(page + 1, size);
@@ -78,7 +78,7 @@ export class UsersPage extends Responsive {
     }
 
     onSetRoles(user: User): void {
-        const dialogRef = this.dialog.open(UserRolesDialog, {
+        this.dialog.open(UserRolesDialog, {
             width: '500px',
             data: user
         });

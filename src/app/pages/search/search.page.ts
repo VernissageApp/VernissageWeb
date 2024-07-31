@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { User } from 'src/app/models/user';
 import { Relationship } from 'src/app/models/relationship';
@@ -7,7 +7,7 @@ import { RelationshipsService } from 'src/app/services/http/relationships.servic
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { LoadingService } from 'src/app/services/common/loading.service';
-import { Responsive } from 'src/app/common/responsive';
+import { ResponsiveComponent } from 'src/app/common/responsive';
 import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
@@ -16,7 +16,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
     styleUrls: ['./search.page.scss'],
     animations: fadeInAnimation
 })
-export class SearchPage extends Responsive implements AfterViewInit {
+export class SearchPage extends ResponsiveComponent implements AfterViewInit, OnInit, OnDestroy {
     search = '';
     users: User[] = [];
     usersRelationships: Relationship[] = [];

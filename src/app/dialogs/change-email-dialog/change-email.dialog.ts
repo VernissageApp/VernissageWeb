@@ -6,7 +6,7 @@ import { WindowService } from 'src/app/services/common/window.service';
 import { AccountService } from 'src/app/services/http/account.service';
 
 @Component({
-    selector: 'change-email',
+    selector: 'app-change-email-dialog',
     templateUrl: 'change-email.dialog.html'
 })
 export class ChangeEmailDialog {

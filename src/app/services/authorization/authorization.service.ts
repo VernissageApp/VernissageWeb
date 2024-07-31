@@ -1,4 +1,4 @@
-import { Inject, Injectable, NgZone, PLATFORM_ID, isDevMode } from '@angular/core';
+import { Inject, Injectable, NgZone, PLATFORM_ID } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { User } from 'src/app/models/user';
 import { AccountService } from '../http/account.service';
@@ -19,7 +19,7 @@ export class AuthorizationService {
     private isBrowser = false;
 
     constructor(
-        @Inject(PLATFORM_ID) platformId: Object,
+        @Inject(PLATFORM_ID) platformId: object,
         private accountService: AccountService,
         private zone: NgZone) {
             this.isBrowser = isPlatformBrowser(platformId);

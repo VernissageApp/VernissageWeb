@@ -5,7 +5,7 @@ import { Report } from 'src/app/models/report';
 import { InstanceService } from 'src/app/services/http/instance.service';
 
 @Component({
-    selector: 'report-details',
+    selector: 'app-report-details-dialog',
     templateUrl: 'report-details.dialog.html'
 })
 export class ReportDetailsDialog implements OnInit {

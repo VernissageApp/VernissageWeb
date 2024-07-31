@@ -1,9 +1,8 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
-import { Responsive } from 'src/app/common/responsive';
+import { ResponsiveComponent } from 'src/app/common/responsive';
 import { Instance } from 'src/app/models/instance';
-import { Rule } from 'src/app/models/rule';
 import { InstanceService } from 'src/app/services/http/instance.service';
 
 @Component({
@@ -12,7 +11,7 @@ import { InstanceService } from 'src/app/services/http/instance.service';
     styleUrls: ['./support.page.scss'],
     animations: fadeInAnimation
 })
-export class SupportPage extends Responsive implements OnInit {
+export class SupportPage extends ResponsiveComponent implements OnInit {
     isReady = false;
     instance?: Instance;
 
@@ -24,6 +23,8 @@ export class SupportPage extends Responsive implements OnInit {
     }
 
     override ngOnInit(): void {
+        super.ngOnInit();
+
         this.isReady = true;
         this.instance = this.instanceService.instance;
     }

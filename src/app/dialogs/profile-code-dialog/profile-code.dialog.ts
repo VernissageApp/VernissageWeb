@@ -4,7 +4,7 @@ import { PreferencesService } from 'src/app/services/common/preferences.service'
 import { WindowService } from 'src/app/services/common/window.service';
 
 @Component({
-    selector: 'profile-code-dialog',
+    selector: 'app-profile-code-dialog',
     templateUrl: 'profile-code.dialog.html',
     styleUrls: ['profile-code.dialog.scss']
 })

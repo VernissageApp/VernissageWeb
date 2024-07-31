@@ -5,7 +5,7 @@ import { MessagesService } from 'src/app/services/common/messages.service';
 import { RulesService } from 'src/app/services/http/rules.service';
 
 @Component({
-    selector: 'instance-rule-dialog',
+    selector: 'app-instance-rule-dialog',
     templateUrl: 'instance-rule.dialog.html',
     styleUrls: ['instance-rule.dialog.scss']
 })

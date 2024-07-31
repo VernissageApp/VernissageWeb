@@ -5,7 +5,7 @@ import { MessagesService } from 'src/app/services/common/messages.service';
 import { InstanceBlockedDomainsService } from 'src/app/services/http/instance-blocked-domains.service';
 
 @Component({
-    selector: 'instance-blocked-domain-dialog',
+    selector: 'app-instance-blocked-domain-dialog',
     templateUrl: 'instance-blocked-domain.dialog.html',
     styleUrls: ['instance-blocked-domain.dialog.scss']
 })

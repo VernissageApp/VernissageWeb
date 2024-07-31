@@ -7,14 +7,12 @@ import { isPlatformBrowser } from '@angular/common';
 import { AuthorizationService } from '../services/authorization/authorization.service';
 import { from } from 'rxjs';
 
-/* tslint:disable:no-any */
-
 @Injectable()
 export class APIInterceptor implements HttpInterceptor {
     private isBrowser = false;
 
     constructor(
-        @Inject(PLATFORM_ID) platformId: Object,
+        @Inject(PLATFORM_ID) platformId: object,
         private authorizationService: AuthorizationService
     ) {
         this.isBrowser = isPlatformBrowser(platformId);

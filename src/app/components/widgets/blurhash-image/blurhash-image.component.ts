@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Inject, Input, PLATFORM_ID, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Inject, Input, PLATFORM_ID, ViewChild, OnInit } from '@angular/core';
 import { decode } from 'blurhash';
 import { AvatarSize } from '../avatar/avatar-size';
 import { User } from 'src/app/models/user';
@@ -15,7 +15,7 @@ import { isPlatformBrowser } from '@angular/common';
     templateUrl: './blurhash-image.component.html',
     styleUrls: ['./blurhash-image.component.scss']
 })
-export class BlurhashImageComponent implements AfterViewInit {
+export class BlurhashImageComponent implements AfterViewInit, OnInit {
     readonly avatarSize = AvatarSize;
     
     @Input() horizontal = true;
@@ -40,7 +40,7 @@ export class BlurhashImageComponent implements AfterViewInit {
     get showAvatar() { return this.preferencesService.showAvatars && this.avatarVisible; }
 
     constructor(
-        @Inject(PLATFORM_ID) platformId: Object,
+        @Inject(PLATFORM_ID) platformId: object,
         private preferencesService: PreferencesService,
         private statusesService: StatusesService,
         private messageService: MessagesService,

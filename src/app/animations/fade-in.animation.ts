@@ -5,7 +5,6 @@ import {
     transition
 } from '@angular/animations';
 
-// tslint:disable: no-magic-numbers
 export const fadeInAnimation = [
     trigger('fadeIn', [
         transition(':enter', [   // :enter is alias to 'void => *'

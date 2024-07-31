@@ -5,7 +5,7 @@ import { MessagesService } from 'src/app/services/common/messages.service';
 import { AccountService } from 'src/app/services/http/account.service';
 
 @Component({
-    selector: 'disable-two-factor-token',
+    selector: 'app-disable-two-factor-token-dialog',
     templateUrl: 'disable-two-factor-token.dialog.html'
 })
 export class DisableTwoFactorTokenDialog {

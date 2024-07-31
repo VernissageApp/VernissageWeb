@@ -1,7 +1,7 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
-import { Responsive } from 'src/app/common/responsive';
+import { ResponsiveComponent } from 'src/app/common/responsive';
 import { ContextTimeline } from 'src/app/models/context-timeline';
 import { LinkableResult } from 'src/app/models/linkable-result';
 import { Status } from 'src/app/models/status';
@@ -15,7 +15,7 @@ import { UsersService } from 'src/app/services/http/users.service';
     styleUrls: ['./users-gallery.component.scss'],
     animations: fadeInAnimation
 })
-export class UsersGalleryComponent extends Responsive implements OnChanges {
+export class UsersGalleryComponent extends ResponsiveComponent implements OnChanges {
     private readonly numberOfVisibleUsersChunk = 10;
     private readonly numberOfVisibleStatuses = 10;
 
@@ -61,7 +61,7 @@ export class UsersGalleryComponent extends Responsive implements OnChanges {
     }
 
     onStatusClick(userName: string | undefined): void {
-        let statuses = this.getLinkableStatuses(userName);
+        const statuses = this.getLinkableStatuses(userName);
         this.contextStatusesService.setContextStatuses(statuses);
     }
 
@@ -86,13 +86,13 @@ export class UsersGalleryComponent extends Responsive implements OnChanges {
 
         this.visibleUsers = this.users?.data.slice(0, this.numberOfVisibleUsers);
 
-        for (let user of this.visibleUsers) {
+        for (const user of this.visibleUsers) {
             if (user.userName) {
                 if (this.userStatuses.has(user.userName)) {
                     continue;
                 }
 
-                let statuses = await this.usersService.statuses(user.userName, undefined, undefined, undefined, this.numberOfVisibleStatuses);
+                const statuses = await this.usersService.statuses(user.userName, undefined, undefined, undefined, this.numberOfVisibleStatuses);
                 statuses.context = ContextTimeline.user;
                 statuses.user = user.userName;
 

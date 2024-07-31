@@ -2,7 +2,7 @@
 
 ![Build Status](https://github.com/VernissageApp/VernissageWeb/actions/workflows/build.yml/badge.svg)
 [![Typescript](https://img.shields.io/badge/Typescript-orange.svg?style=flat)](https://www.typescriptlang.org)
-[![Angular](https://img.shields.io/badge/Angular-17-blue.svg?style=flat)](https://angular.io)
+[![Angular](https://img.shields.io/badge/Angular-18-blue.svg?style=flat)](https://angular.io)
 [![Platforms macOS | Linux | Windows](https://img.shields.io/badge/Platforms-macOS%20%7C%20Linux%20%7C%20Windows%20-lightgray.svg?style=flat)](https://angular.io)
 
 Application which is Web component for Vernissage photos sharing platform.
@@ -34,7 +34,7 @@ Before you start Web client you have to run Vernissage API. Here [https://github
 
 ## Getting started
 
-After clonning the reposity you can easly run the Web client. Go to main repository folder and run the command:
+After cloning the repository you can easily run the Web client. Go to main repository folder and run the command:
 
 ```bash
 $ ng serve

@@ -23,7 +23,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { CookieModule } from 'ngx-cookie';
 // import { NgxCaptchaModule } from 'ngx-captcha';
 
-const httpInterceptor = (platformId: Object, authorizationService: AuthorizationService) => 
+const httpInterceptor = (platformId: object, authorizationService: AuthorizationService) => 
     new APIInterceptor(platformId, authorizationService);
 
 @NgModule({
@@ -34,7 +34,6 @@ const httpInterceptor = (platformId: Object, authorizationService: Authorization
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
-        // NgxCaptchaModule,
         HammerModule,
         PagesModule,
         CookieModule.withOptions(),
@@ -62,7 +61,7 @@ const httpInterceptor = (platformId: Object, authorizationService: Authorization
         },
         {
             provide: PersistanceService,
-            useFactory: (platformId: Object) => {
+            useFactory: (platformId: object) => {
                 if (isPlatformBrowser(platformId)) {
                     return new PersistanceBrowserService();
                 }

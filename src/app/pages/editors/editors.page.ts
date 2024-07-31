@@ -1,9 +1,9 @@
 import { BreakpointObserver } from "@angular/cdk/layout";
-import { Component } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs/internal/Subscription";
 import { fadeInAnimation } from "src/app/animations/fade-in.animation";
-import { Responsive } from "src/app/common/responsive";
+import { ResponsiveComponent } from "src/app/common/responsive";
 import { ContextTimeline } from "src/app/models/context-timeline";
 import { LinkableResult } from "src/app/models/linkable-result";
 import { Status } from "src/app/models/status";
@@ -16,7 +16,7 @@ import { TimelineService } from "src/app/services/http/timeline.service";
     styleUrls: ['./editors.page.scss'],
     animations: fadeInAnimation
 })
-export class EditorsPage extends Responsive {
+export class EditorsPage extends ResponsiveComponent implements OnInit, OnDestroy {
     statuses?: LinkableResult<Status>;
     isReady = false;
 
@@ -34,7 +34,7 @@ export class EditorsPage extends Responsive {
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
 
-        this.routeParamsSubscription = this.activatedRoute.queryParams.subscribe(async (params) => {
+        this.routeParamsSubscription = this.activatedRoute.queryParams.subscribe(async () => {
             this.loadingService.showLoader();
 
             this.statuses = await this.timelineService.featured(undefined, undefined, undefined, undefined);

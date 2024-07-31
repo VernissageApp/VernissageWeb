@@ -1,7 +1,7 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
-import { Responsive } from 'src/app/common/responsive';
+import { ResponsiveComponent } from 'src/app/common/responsive';
 import { WindowService } from 'src/app/services/common/window.service';
 
 @Component({
@@ -10,7 +10,7 @@ import { WindowService } from 'src/app/services/common/window.service';
     styleUrls: ['./privacy.page.scss'],
     animations: fadeInAnimation
 })
-export class PrivacyPage extends Responsive implements OnInit {
+export class PrivacyPage extends ResponsiveComponent implements OnInit {
     isReady = false;
     apiService = '';
 

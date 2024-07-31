@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { Status } from 'src/app/models/status';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subscription, filter } from 'rxjs';
 import { LoadingService } from 'src/app/services/common/loading.service';
-import { Responsive } from 'src/app/common/responsive';
+import { ResponsiveComponent } from 'src/app/common/responsive';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { LinkableResult } from 'src/app/models/linkable-result';
 import { ContextTimeline } from 'src/app/models/context-timeline';
@@ -17,7 +17,7 @@ import { BookmarksService } from 'src/app/services/http/bookmarks.service';
     styleUrls: ['./bookmarks.page.scss'],
     animations: fadeInAnimation
 })
-export class BookmarksPage extends Responsive {
+export class BookmarksPage extends ResponsiveComponent implements OnInit, OnDestroy {
     statuses?: LinkableResult<Status>;
     isReady = false;
 
@@ -47,7 +47,7 @@ export class BookmarksPage extends Responsive {
                 }
             });
 
-        this.routeParamsSubscription = this.activatedRoute.queryParams.subscribe(async (params) => {
+        this.routeParamsSubscription = this.activatedRoute.queryParams.subscribe(async () => {
 
             this.loadingService.showLoader();
 

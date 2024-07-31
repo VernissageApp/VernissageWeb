@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { encode } from 'blurhash';
 import * as ExifReader from 'exifreader';
@@ -13,7 +13,7 @@ import { StatusesService } from 'src/app/services/http/statuses.service';
 import { fadeInAnimation } from '../../animations/fade-in.animation';
 import { CategoriesService } from 'src/app/services/http/categories.service';
 import { Category } from 'src/app/models/category';
-import { Responsive } from 'src/app/common/responsive';
+import { ResponsiveComponent } from 'src/app/common/responsive';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { License } from 'src/app/models/license';
 import { LicensesService } from 'src/app/services/http/liceses.service';
@@ -26,7 +26,7 @@ import { SettingsService } from 'src/app/services/http/settings.service';
     styleUrls: ['./upload.page.scss'],
     animations: fadeInAnimation
 })
-export class UploadPage extends Responsive {
+export class UploadPage extends ResponsiveComponent implements OnInit {
     readonly StatusVisibility = StatusVisibility;
     readonly defaultMaxFileSize = 10485760;
     
@@ -112,7 +112,7 @@ export class UploadPage extends Responsive {
             }
 
             this.hashtagsInProgress = true;
-            let attachmentHashtags = await this.attachmentsService.hashtags(this.photos[0].id);
+            const attachmentHashtags = await this.attachmentsService.hashtags(this.photos[0].id);
             if (attachmentHashtags.hashtags && attachmentHashtags.hashtags.length > 0) {
                 const hashtags = attachmentHashtags.hashtags.map(tag => '#' + tag);
                 this.statusText = this.statusText + '\n\n' + hashtags.join(' ');
@@ -131,7 +131,7 @@ export class UploadPage extends Responsive {
 
     async onSubmit(): Promise<void> {
         try {
-            for(let photo of this.photos) {
+            for (const photo of this.photos) {
                 const temporaryAttachment = new TemporaryAttachment();
                 temporaryAttachment.id = photo.id;
                 temporaryAttachment.description = photo.description;
@@ -183,7 +183,7 @@ export class UploadPage extends Responsive {
             status.sensitive = this.isSensitive;
             status.contentWarning = this.contentWarning === '' ? undefined : this.contentWarning;
 
-            for(let photo of this.photos) {
+            for (const photo of this.photos) {
                 status.attachmentIds.push(photo.id);
             }
 
@@ -211,7 +211,7 @@ export class UploadPage extends Responsive {
     private setExifMetadata(uploadPhoto: UploadPhoto): void {
         const bufferReader = new FileReader();
 
-        bufferReader.addEventListener('load', fileReaderEvent => {
+        bufferReader.addEventListener('load', () => {
             const tags = ExifReader.load(bufferReader.result as ArrayBuffer);
 
             uploadPhoto.make = tags['Make']?.description.toString();

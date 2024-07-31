@@ -1,8 +1,7 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
-import { Responsive } from 'src/app/common/responsive';
-import { Attachment } from 'src/app/models/attachment';
+import { ResponsiveComponent } from 'src/app/common/responsive';
 import { ContextTimeline } from 'src/app/models/context-timeline';
 import { Hashtag } from 'src/app/models/hashtag';
 import { LinkableResult } from 'src/app/models/linkable-result';
@@ -16,7 +15,7 @@ import { TimelineService } from 'src/app/services/http/timeline.service';
     styleUrls: ['./hashtag-gallery.component.scss'],
     animations: fadeInAnimation
 })
-export class HashtagGalleryComponent extends Responsive implements OnChanges {
+export class HashtagGalleryComponent extends ResponsiveComponent implements OnChanges {
     private readonly numberOfVisibleHashtagsChunk = 10;
     private readonly numberOfVisibleStatuses = 10;
 
@@ -62,7 +61,7 @@ export class HashtagGalleryComponent extends Responsive implements OnChanges {
     }
 
     onStatusClick(hashtag: string | undefined): void {
-        let statuses = this.getLinkableStatuses(hashtag);
+        const statuses = this.getLinkableStatuses(hashtag);
         this.contextStatusesService.setContextStatuses(statuses);
     }
 
@@ -87,12 +86,12 @@ export class HashtagGalleryComponent extends Responsive implements OnChanges {
 
         this.visibleHashtags = this.hashtags.data.slice(0, this.numberOfVisibleHashtags);
 
-        for (let hashtag of this.visibleHashtags) {
+        for (const hashtag of this.visibleHashtags) {
             if (this.hashtagStatuses.has(hashtag.name)) {
                 continue;
             }
 
-            let statuses = await this.timelineService.hashtag(hashtag.name, undefined, undefined, undefined, this.numberOfVisibleStatuses, undefined);
+            const statuses = await this.timelineService.hashtag(hashtag.name, undefined, undefined, undefined, this.numberOfVisibleStatuses, undefined);
             statuses.context = ContextTimeline.hashtag;
             statuses.hashtag = hashtag.name;
 

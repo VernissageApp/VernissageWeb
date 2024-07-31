@@ -1,9 +1,9 @@
 import { BreakpointObserver } from "@angular/cdk/layout";
-import { Component } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { fadeInAnimation } from "src/app/animations/fade-in.animation";
-import { Responsive } from "src/app/common/responsive";
+import { ResponsiveComponent } from "src/app/common/responsive";
 import { ContextTimeline } from "src/app/models/context-timeline";
 import { Hashtag } from "src/app/models/hashtag";
 import { LinkableResult } from "src/app/models/linkable-result";
@@ -19,7 +19,7 @@ import { TrendingService } from "src/app/services/http/trending.service";
     styleUrls: ['./trending.page.scss'],
     animations: fadeInAnimation
 })
-export class TrendingPage extends Responsive {
+export class TrendingPage extends ResponsiveComponent implements OnInit, OnDestroy {
     readonly trendingPeriod = TrendingPeriod;
 
     statuses?: LinkableResult<Status>;
@@ -27,7 +27,7 @@ export class TrendingPage extends Responsive {
     hashtags?: LinkableResult<Hashtag>;
 
     period = TrendingPeriod.Daily;
-    trending: String = 'statuses';
+    trending = 'statuses';
     isReady = false;
 
     routeParamsSubscription?: Subscription;

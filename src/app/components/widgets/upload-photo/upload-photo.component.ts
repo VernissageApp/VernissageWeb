@@ -91,7 +91,7 @@ export class UploadPhotoComponent implements OnInit {
     async onGenerateDescription(): Promise<void> {
         try {
             this.describeInProgress = true;
-            let attachmentDescription = await this.attachmentsService.describe(this.photo.id);
+            const attachmentDescription = await this.attachmentsService.describe(this.photo.id);
             if (attachmentDescription.description) {
                 this.photo.description = attachmentDescription.description;
             }

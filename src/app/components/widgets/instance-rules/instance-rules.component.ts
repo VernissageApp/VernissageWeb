@@ -1,8 +1,8 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
-import { Responsive } from 'src/app/common/responsive';
+import { ResponsiveComponent } from 'src/app/common/responsive';
 import { ConfirmationDialog } from 'src/app/dialogs/confirmation-dialog/confirmation.dialog';
 import { InstanceRuleDialog } from 'src/app/dialogs/instance-rule-dialog/instance-rule.dialog';
 import { PaginableResult } from 'src/app/models/paginable-result';
@@ -15,7 +15,7 @@ import { RulesService } from 'src/app/services/http/rules.service';
     templateUrl: './instance-rules.component.html',
     styleUrls: ['./instance-rules.component.scss']
 })
-export class InstanceRulesComponent extends Responsive {
+export class InstanceRulesComponent extends ResponsiveComponent implements OnInit {
     rules?: PaginableResult<Rule>;
     displayedColumns: string[] = [];
     pageIndex = 0;

@@ -7,7 +7,7 @@ import { StatusesService } from 'src/app/services/http/statuses.service';
 import { UsersDialogContext, UsersListType } from './users-dialog-context';
 
 @Component({
-    selector: 'users',
+    selector: 'app-users-dialog',
     templateUrl: 'users.dialog.html'
 })
 export class UsersDialog implements OnInit {

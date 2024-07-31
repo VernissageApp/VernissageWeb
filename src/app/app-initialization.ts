@@ -16,7 +16,7 @@ export function appInitialization(
                 instanceService.load(),
                 settingsService.load()
             ]);
-            
+
             Sentry.init({
                 dsn: settingsService.publicSettings?.webSentryDsn ?? ""
             });
