@@ -20,8 +20,6 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { SettingsService } from './services/http/settings.service';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { isPlatformBrowser } from '@angular/common';
-import { CookieModule } from 'ngx-cookie';
-// import { NgxCaptchaModule } from 'ngx-captcha';
 
 const httpInterceptor = (platformId: object, authorizationService: AuthorizationService) => 
     new APIInterceptor(platformId, authorizationService);
@@ -36,7 +34,6 @@ const httpInterceptor = (platformId: object, authorizationService: Authorization
         BrowserAnimationsModule,
         HammerModule,
         PagesModule,
-        CookieModule.withOptions(),
         ServiceWorkerModule.register('service-worker.js', {
             enabled: !isDevMode(),
             // Register the ServiceWorker as soon as the application is stable

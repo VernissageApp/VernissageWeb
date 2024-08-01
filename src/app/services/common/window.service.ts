@@ -2,7 +2,7 @@ import { Inject, Injectable, Optional, PLATFORM_ID } from '@angular/core';
 import { Location, isPlatformServer } from '@angular/common';
 import { getWindow } from 'ssr-window';
 import { Request } from "express";
-import { REQUEST } from '@nguniversal/express-engine/tokens';
+import { REQUEST } from 'express.tokens';
 
 @Injectable({
     providedIn: 'root'

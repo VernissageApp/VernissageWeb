@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CookieService } from 'ngx-cookie';
+import { SsrCookieService } from './ssr-cookie.service';
 
 // We are storing preferences in the cookies instead of local storage because of
 // Server Side Rendering. The cookies are send to server even with the first browser
@@ -9,9 +9,9 @@ import { CookieService } from 'ngx-cookie';
     providedIn: 'root'
 })
 export class PreferencesService {
-    private readonly longFuture = 'Sat, 01 Jan 2050 00:00:00 GMT';
+    private readonly longFuture = new Date('Sat, 01 Jan 2050 00:00:00 GMT');
 
-    constructor(private cookieService: CookieService) {
+    constructor(private cookieService: SsrCookieService) {
     }
 
     public get isLightTheme(): boolean {
@@ -19,7 +19,7 @@ export class PreferencesService {
     }
 
     public set isLightTheme(isLightTheme: boolean) {
-        this.cookieService.put('isLightTheme', isLightTheme ? 'true' : 'false', { expires: this.longFuture });
+        this.cookieService.set('isLightTheme', isLightTheme ? 'true' : 'false', { expires: this.longFuture });
     }
 
     public get isCircleAvatar(): boolean {
@@ -27,7 +27,7 @@ export class PreferencesService {
     }
 
     public set isCircleAvatar(isCircleAvatar: boolean) {
-        this.cookieService.put('isCircleAvatar', isCircleAvatar ? 'true' : 'false', { expires: this.longFuture });
+        this.cookieService.set('isCircleAvatar', isCircleAvatar ? 'true' : 'false', { expires: this.longFuture });
     }
 
     public get isSquareImages(): boolean {
@@ -35,7 +35,7 @@ export class PreferencesService {
     }
 
     public set isSquareImages(isSquareImages: boolean) {
-        this.cookieService.put('isSquareImages', isSquareImages ? 'true' : 'false', { expires: this.longFuture });
+        this.cookieService.set('isSquareImages', isSquareImages ? 'true' : 'false', { expires: this.longFuture });
     }
 
     public get alwaysShowNSFW(): boolean {
@@ -43,7 +43,7 @@ export class PreferencesService {
     }
 
     public set alwaysShowNSFW(alwaysShowNSFW: boolean) {
-        this.cookieService.put('alwaysShowNSFW', alwaysShowNSFW ? 'true' : 'false', { expires: this.longFuture });
+        this.cookieService.set('alwaysShowNSFW', alwaysShowNSFW ? 'true' : 'false', { expires: this.longFuture });
     }
 
     public get showAlternativeText(): boolean {
@@ -51,7 +51,7 @@ export class PreferencesService {
     }
 
     public set showAlternativeText(showAlternativeText: boolean) {
-        this.cookieService.put('showAlternativeText', showAlternativeText ? 'true' : 'false', { expires: this.longFuture });
+        this.cookieService.set('showAlternativeText', showAlternativeText ? 'true' : 'false', { expires: this.longFuture });
     }
 
     public get showAvatars(): boolean {
@@ -59,7 +59,7 @@ export class PreferencesService {
     }
 
     public set showAvatars(showAvatars: boolean) {
-        this.cookieService.put('showAvatars', showAvatars ? 'true' : 'false', { expires: this.longFuture });
+        this.cookieService.set('showAvatars', showAvatars ? 'true' : 'false', { expires: this.longFuture });
     }
 
     public get showFavourites(): boolean {
@@ -67,7 +67,7 @@ export class PreferencesService {
     }
 
     public set showFavourites(showFavourites: boolean) {
-        this.cookieService.put('showFavourites', showFavourites ? 'true' : 'false', { expires: this.longFuture });
+        this.cookieService.set('showFavourites', showFavourites ? 'true' : 'false', { expires: this.longFuture });
     }
 
     public get showAltIcon(): boolean {
@@ -75,6 +75,6 @@ export class PreferencesService {
     }
 
     public set showAltIcon(showAltIcon: boolean) {
-        this.cookieService.put('showAltIcon', showAltIcon ? 'true' : 'false', { expires: this.longFuture });
+        this.cookieService.set('showAltIcon', showAltIcon ? 'true' : 'false', { expires: this.longFuture });
     }
 }

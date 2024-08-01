@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 import { LoadingService } from './services/common/loading.service';
 import { RoutingStateService } from './services/common/routing-state.service';
 import { DOCUMENT } from '@angular/common';
-import { CookieService } from 'ngx-cookie';
+import { SsrCookieService } from './services/common/ssr-cookie.service';
 
 @Component({
     selector: 'app-root',
@@ -18,7 +18,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     constructor(
         @Inject(DOCUMENT) private documentRef: Document,
         private loadingService: LoadingService,
-        private cookieService: CookieService,
+        private cookieService: SsrCookieService,
         private routingStateService: RoutingStateService,
         private changeDetectorRef: ChangeDetectorRef) {
     }
