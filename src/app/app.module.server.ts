@@ -3,12 +3,11 @@ import { ServerModule } from '@angular/platform-server';
 
 import { AppModule } from './app.module';
 import { AppComponent } from './app.component';
-import { CookieBackendModule } from 'ngx-cookie-backend';
 import { JWT_OPTIONS, JwtModule } from '@auth0/angular-jwt';
-import { CookieService } from 'ngx-cookie';
 import { WindowService } from './services/common/window.service';
+import { SsrCookieService } from './services/common/ssr-cookie.service';
 
-const jwtOptionsFactory = (cookieService: CookieService, windowService: WindowService) => {
+const jwtOptionsFactory = (cookieService: SsrCookieService, windowService: WindowService) => {
     return {
         tokenGetter: () => {
             return cookieService.get('access-token');
@@ -21,12 +20,11 @@ const jwtOptionsFactory = (cookieService: CookieService, windowService: WindowSe
     imports: [
         AppModule,
         ServerModule,
-        CookieBackendModule.withOptions(),
         JwtModule.forRoot({
             jwtOptionsProvider: {
                 provide: JWT_OPTIONS,
                 useFactory: jwtOptionsFactory,
-                deps: [CookieService, WindowService],
+                deps: [SsrCookieService, WindowService],
             }
         }),
     ],
