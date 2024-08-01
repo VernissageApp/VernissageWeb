@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { User } from 'src/app/models/user';
 import { AvatarSize } from '../avatar/avatar-size';
+import { UserDisplayService } from 'src/app/services/common/user-display.service';
 
 @Component({
     selector: 'app-mini-user-card',
@@ -14,4 +15,7 @@ export class MiniUserCardComponent {
     @Input() size: AvatarSize = AvatarSize.small;
     @Input() showUserName = true;
     @Input() whiteLink = false;
+
+    constructor(protected userDisplayService: UserDisplayService) {
+    }
 }

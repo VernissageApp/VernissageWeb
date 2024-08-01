@@ -19,6 +19,7 @@ import { WindowService } from 'src/app/services/common/window.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ProfileCodeDialog } from 'src/app/dialogs/profile-code-dialog/profile-code.dialog';
 import { PreferencesService } from 'src/app/services/common/preferences.service';
+import { UserDisplayService } from 'src/app/services/common/user-display.service';
 
 @Component({
     selector: 'app-profile',
@@ -65,6 +66,7 @@ export class ProfilePage extends ResponsiveComponent implements OnInit, OnDestro
         private metaService: Meta,
         private windowService: WindowService,
         private preferencesService: PreferencesService,
+        protected userDisplayService: UserDisplayService,
         public dialog: MatDialog,
         breakpointObserver: BreakpointObserver
     ) {

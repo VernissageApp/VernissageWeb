@@ -5,7 +5,7 @@
         </div>
 
         <div class="overflow-ellipsis width-100">
-            <div class="overflow-ellipsis"><a [routerLink]="[ '/@' + user.userName ]" class="margin-right-5 fw-600">{{ user.name }}</a></div>
+            <div class="overflow-ellipsis"><a [routerLink]="[ '/@' + user.userName ]" class="margin-right-5 fw-600">{{ userDisplayService.displayName(user) }}</a></div>
             <div class="fw-400 fs-90 text-muted overflow-ellipsis">&#64;{{ user.userName }}</div>
 
             <div *ngIf="showBio" class="bio" [innerHTML]="user.bioHtml"></div>

@@ -4,6 +4,7 @@ import { ResponsiveComponent } from 'src/app/common/responsive';
 import { Relationship } from 'src/app/models/relationship';
 import { User } from 'src/app/models/user';
 import { AvatarSize } from '../avatar/avatar-size';
+import { UserDisplayService } from 'src/app/services/common/user-display.service';
 
 @Component({
     selector: 'app-users-card',
@@ -20,7 +21,7 @@ export class UsersCardComponent extends ResponsiveComponent {
     @Output() relationChanged = new EventEmitter<Relationship>();
     @Output() loadMore = new EventEmitter();
 
-    constructor(breakpointObserver: BreakpointObserver) {
+    constructor(protected userDisplayService: UserDisplayService, breakpointObserver: BreakpointObserver) {
         super(breakpointObserver);
     }
 
