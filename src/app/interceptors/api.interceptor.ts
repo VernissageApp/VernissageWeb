@@ -23,12 +23,12 @@ export class APIInterceptor implements HttpInterceptor {
             withCredentials: true
         });
 
-        // Executing orginal request.
+        // Executing original request.
         return next.handle(request).pipe(catchError(error => {
             // In case of unauthorized error we can try to refresh access tokens.
             if (error instanceof HttpErrorResponse && error.status === HttpStatusCode.Unauthorized) {
 
-                // We can try to refresh tokens only in the browser (SSR doen't contain tokens in cookies).
+                // We can try to refresh tokens only in the browser (SSR doesn't contain tokens in cookies).
                 if (this.isBrowser) {
                     // Sending refresh token.
                     return from(this.authorizationService.refreshAccessToken())
@@ -43,7 +43,7 @@ export class APIInterceptor implements HttpInterceptor {
                                 }
                             }),
                             catchError(innerError => {
-                                // Request after refresing token failed again, send error to global error handler.
+                                // Request after refreshing token failed again, send error to global error handler.
                                 throw innerError;
                             })
                         );
