@@ -140,4 +140,8 @@
         text-decoration: none;
         color: mat.m2-get-color-from-palette($background);
     }
+
+    a.mdc-button {
+        color: mat.m2-get-color-from-palette($background);
+    }
 }
