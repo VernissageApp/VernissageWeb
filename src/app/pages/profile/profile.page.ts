@@ -37,6 +37,7 @@ export class ProfilePage extends ResponsiveComponent implements OnInit, OnDestro
     squareImages = false;
     profilePageTab = ProfilePageTab.Statuses;
     userName!: string;
+    createdAt?: Date;
 
     signedInUser?: User;
     user?: User;
@@ -130,6 +131,7 @@ export class ProfilePage extends ResponsiveComponent implements OnInit, OnDestro
             this.signedInUser = this.authorizationService.getUser();
 
             this.user = await this.usersService.profile(this.userName);
+            this.createdAt = new Date(this.user.createdAt);
             this.latestFollowers = await this.usersService.followers(this.userName, undefined, undefined, undefined, 10)
 
             this.user.fields?.forEach(field => {
