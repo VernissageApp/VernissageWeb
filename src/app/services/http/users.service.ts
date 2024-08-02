@@ -16,8 +16,8 @@ export class UsersService {
     constructor(private httpClient: HttpClient, private windowService: WindowService) {
     }
 
-    public async get(page: number, size: number): Promise<PaginableResult<User>> {
-        const event$ = this.httpClient.get<PaginableResult<User>>(this.windowService.apiUrl() + `/api/v1/users?page=${page}&size=${size}`);
+    public async get(page: number, size: number, query: string): Promise<PaginableResult<User>> {
+        const event$ = this.httpClient.get<PaginableResult<User>>(this.windowService.apiUrl() + `/api/v1/users?page=${page}&size=${size}&query=${query ?? ''}`);
         return await firstValueFrom(event$);
     }
 
@@ -93,6 +93,11 @@ export class UsersService {
 
     public async reject(userName: string): Promise<void> {
         const event$ = this.httpClient.post(this.windowService.apiUrl() + '/api/v1/users/@' + userName + '/reject', null);
+        await firstValueFrom(event$);
+    }
+
+    public async refresh(userName: string): Promise<void> {
+        const event$ = this.httpClient.post(this.windowService.apiUrl() + '/api/v1/users/@' + userName + '/refresh', null);
         await firstValueFrom(event$);
     }
 

@@ -101,9 +101,9 @@ export class AuthorizationService {
 
     async refreshAccessToken(): Promise<boolean> {
         try {
-            const refresheUserPayloadToken = await this.accountService.refreshToken();
-            if (refresheUserPayloadToken) {
-                await this.signIn(refresheUserPayloadToken);
+            const refreshUserPayloadToken = await this.accountService.refreshToken();
+            if (refreshUserPayloadToken) {
+                await this.signIn(refreshUserPayloadToken);
                 return true;
             } else {
                 await this.signOut();

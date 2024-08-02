@@ -28,6 +28,7 @@ export class UsersPage extends ResponsiveComponent implements OnInit {
     readonly avatarSize = AvatarSize
     readonly role = Role;
 
+    search = '';
     isReady = false;
     pageIndex = 0;
     users?: PaginableResult<User>;
@@ -65,16 +66,27 @@ export class UsersPage extends ResponsiveComponent implements OnInit {
 
             const pageString = params['page'] as string;
             const sizeString = params['size'] as string;
+            const query = params['query'] as string;
 
             const page = pageString ? +pageString : 0;
             const size = sizeString ? +sizeString : 10;
 
             this.pageIndex = page;
-            this.users = await this.usersService.get(page + 1, size);
+            this.search = query
+            this.users = await this.usersService.get(page + 1, size, query);
 
             this.isReady = true;
             this.loadingService.hideLoader();
         });
+    }
+
+    async onSubmit(): Promise<void> {
+        const navigationExtras: NavigationExtras = {
+            queryParams: { query: this.search },
+            queryParamsHandling: 'merge'
+        };
+
+        this.router.navigate([], navigationExtras);
     }
 
     onSetRoles(user: User): void {
@@ -131,6 +143,25 @@ export class UsersPage extends ResponsiveComponent implements OnInit {
             if (user.userName) {
                 await this.usersService.reject(user.userName);
                 this.messageService.showSuccess('Account has been rejected.');
+
+                const navigationExtras: NavigationExtras = {
+                    queryParams: { t: this.randomGeneratorService.generateString(8) },
+                    queryParamsHandling: 'merge'
+                };
+        
+                await this.router.navigate([], navigationExtras);
+            }
+        } catch (error) {
+            console.error(error);
+            this.messageService.showServerError(error);
+        }
+    }
+
+    async onUserRefresh(user: User): Promise<void> {
+        try {
+            if (user.userName) {
+                await this.usersService.refresh(user.userName);
+                this.messageService.showSuccess('Account has been refreshed.');
 
                 const navigationExtras: NavigationExtras = {
                     queryParams: { t: this.randomGeneratorService.generateString(8) },
