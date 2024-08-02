@@ -4,6 +4,7 @@ import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { Instance } from 'src/app/models/instance';
 import { InstanceService } from 'src/app/services/http/instance.service';
+import { SettingsService } from 'src/app/services/http/settings.service';
 
 @Component({
     selector: 'app-support',
@@ -14,9 +15,11 @@ import { InstanceService } from 'src/app/services/http/instance.service';
 export class SupportPage extends ResponsiveComponent implements OnInit {
     isReady = false;
     instance?: Instance;
+    patreonUrl?: string;
 
     constructor(
         private instanceService: InstanceService,
+        private settingsService: SettingsService,
         breakpointObserver: BreakpointObserver
     ) {
         super(breakpointObserver);
@@ -25,7 +28,13 @@ export class SupportPage extends ResponsiveComponent implements OnInit {
     override ngOnInit(): void {
         super.ngOnInit();
 
-        this.isReady = true;
         this.instance = this.instanceService.instance;
+
+        const internalPatreonUrl = this.settingsService.publicSettings?.patreonUrl ?? '';
+        if (internalPatreonUrl.length > 0) {
+            this.patreonUrl = internalPatreonUrl;
+        }
+
+        this.isReady = true;
     }
 }

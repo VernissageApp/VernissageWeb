@@ -1,6 +1,6 @@
 <div *ngIf="user && isReady" @fadeIn>
-    <img class="header-image" alt="header profile" [src]="this.user.headerUrl ?? '/assets/header.jpg'" />
-    <img class="avatar-image" alt="avatar profile" [src]="this.user.avatarUrl ?? '/assets/avatar.svg'" (click)="onAvatarClick()" (keydown.enter)="onAvatarClick()" tabindex="0" />
+    <img class="header-image" alt="header profile" [src]="this.user.headerUrl ?? 'assets/header.jpg'" />
+    <img class="avatar-image" alt="avatar profile" [src]="this.user.avatarUrl ?? 'assets/avatar.svg'" (click)="onAvatarClick()" (keydown.enter)="onAvatarClick()" tabindex="0" />
 
     <div class="flex-row flex-space-around padding-left-10 padding-right-10">
         <div class="profile">
@@ -24,7 +24,7 @@
             <div *ngIf="(latestFollowers?.data?.length ?? 0) > 0" class="text-center padding-top-10">
                 <div class="text-muted padding-bottom-5">LATEST FOLLOWERS</div>
                 <ng-container *ngFor="let item of latestFollowers?.data">
-                    <img class="follower-image" [src]="item.avatarUrl ?? '/assets/avatar.svg'" [matTooltip]="item.name ?? item.userName ?? ''" alt="Avatar" />
+                    <img class="follower-image" [src]="item.avatarUrl ?? 'assets/avatar.svg'" [matTooltip]="item.name ?? item.userName ?? ''" alt="Avatar" />
                 </ng-container>
             </div>
 
