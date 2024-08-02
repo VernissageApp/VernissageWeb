@@ -2,7 +2,9 @@
 
     <div class="flex-row flex-align-center flex-space-between margin-bottom-10">
         <h1>Support</h1>
-        <a class="patreon" mat-flat-button color="primary" [href]="patreonUrl" target="_blank"><img src="assets/patreon-white.svg" width="16" height="16" alt="patreon"> Support us</a>
+        @if (patreonUrl) {
+            <a class="patreon" mat-flat-button color="primary" [href]="patreonUrl" target="_blank"><img src="assets/patreon-white.svg" width="16" height="16" alt="patreon"> Support us</a>
+        }
     </div>
 
     <!-- Other informations. -->
