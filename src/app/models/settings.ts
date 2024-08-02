@@ -31,6 +31,7 @@ export class Settings {
     public webLanguages = '';
     public webContactUserId = '';
     public systemDefaultUserId = '';
+    public patreonUrl = '';
 
     public isOpenAIEnabled = false;
     public openAIKey = '';

@@ -98,6 +98,14 @@
         </mat-form-field>
     </div>
 
+    <div class="margin-bottom-20">
+        <mat-form-field appearance="outline">
+            <mat-label>Patreon url</mat-label>
+            <input matInput name="patreonUrl" #patreonUrl="ngModel" [(ngModel)]="settings.patreonUrl"
+                placeholder="Patreon url" aria-label="Patreon url" />
+        </mat-form-field>
+    </div>
+
     <mat-divider></mat-divider>
     <h3>Registrations</h3>
 
