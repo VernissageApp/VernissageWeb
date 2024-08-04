@@ -30,11 +30,14 @@
                             }
                             @else {
                                 <!-- Token 2FA. -->
-                                <mat-form-field appearance="outline" class="margin-bottom-20">
+                                <mat-form-field appearance="outline">
                                     <mat-label>Token</mat-label>
                                     <input matInput [errorStateMatcher]="alwaysErrorStateMatcher" inputmode="numeric" name="token" [(ngModel)]="twoFactorToken" #twoFactorTokenInput="ngModel" type="text" placeholder="Two factor token" aria-label="Two factor token" required />
-                                    <mat-error *ngIf="tokenMessge">{{ tokenMessge }}</mat-error>
+                                    <mat-error *ngIf="tokenMessage">{{ tokenMessage }}</mat-error>
                                 </mat-form-field>
+                                <mat-checkbox class="margin-bottom-20" name="trustMachine" [disableRipple]="true" [(ngModel)]="login.trustMachine">
+                                    Trust this machine for the next 30 days.
+                                </mat-checkbox>
                             }
                         </div>
                     </mat-card-content>

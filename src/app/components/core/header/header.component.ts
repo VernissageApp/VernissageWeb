@@ -26,7 +26,7 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
     public fullName = '';
     private userChangeSubscription?: Subscription;
     private notificationChangeSubscription?: Subscription;
-    private meesagesSubscription?: Subscription;
+    private messagesSubscription?: Subscription;
 
     constructor(
         private authorizationService: AuthorizationService,
@@ -55,7 +55,7 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
                 this.fullName = this.user.name
             }
 
-            this.meesagesSubscription = this.swPushService.messages.subscribe(async () => {
+            this.messagesSubscription = this.swPushService.messages.subscribe(async () => {
                 await this.loadNotificationCount();
             });
 
@@ -74,7 +74,7 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
 
         this.userChangeSubscription?.unsubscribe();
         this.notificationChangeSubscription?.unsubscribe();
-        this.meesagesSubscription?.unsubscribe();
+        this.messagesSubscription?.unsubscribe();
     }
 
     async signOut(): Promise<void> {
@@ -97,6 +97,10 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
 
     isRegistrationByInvitationsOpened(): boolean {
         return this.instanceService.instance?.registrationOpened === false && this.instanceService.instance?.registrationByInvitationsOpened === true;
+    }
+
+    isLoggedIn(): boolean {
+        return this.authorizationService.isLoggedIn();
     }
 
     private async loadNotificationCount(): Promise<void> {
