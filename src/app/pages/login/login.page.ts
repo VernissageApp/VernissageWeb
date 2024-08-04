@@ -24,14 +24,14 @@ import { PushSubscriptionsService } from 'src/app/services/http/push-subscriptio
 export class LoginPage implements OnInit {
     readonly LoginMode = LoginMode;
 
-    login = new Login('', '');
+    login = new Login('', '', false);
     twoFactorToken = '';
     loginMode = LoginMode.UserNameAndPassword;
     dirtyErrorStateMatcher = new DirtyErrorStateMatcher();
     alwaysErrorStateMatcher = new AlwaysErrorStateMatcher();
 
     errorMessage?: string;
-    tokenMessge?: string;
+    tokenMessage?: string;
     returnUrl?: string;
     authClients?: AuthClient[];
     isSubmitting = false;
@@ -58,7 +58,7 @@ export class LoginPage implements OnInit {
 
     onCancelTwoFactor(): void {
         this.twoFactorToken = '';
-        this.tokenMessge = undefined;
+        this.tokenMessage = undefined;
         this.loginMode = LoginMode.UserNameAndPassword;
     }
 
@@ -80,10 +80,10 @@ export class LoginPage implements OnInit {
             this.errorMessage = undefined;
 
             if (error.error.code === 'twoFactorTokenNotFound') {
-                this.tokenMessge = 'Enter token from authentication app.';
+                this.tokenMessage = 'Enter token from authentication app.';
                 this.loginMode = LoginMode.TwoFactorToken;
             } else if (error.error.code === 'tokenNotValid') {
-                this.tokenMessge = 'Token is not valid. Plase enter new token.';
+                this.tokenMessage = 'Token is not valid. Plase enter new token.';
             } else if (error.error.code === 'invalidLoginCredentials') {
                 this.errorMessage = 'Invalid credentials.';
             } else if (error.error.code === 'emailNotConfirmed') {
