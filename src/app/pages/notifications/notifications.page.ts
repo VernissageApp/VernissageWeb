@@ -148,4 +148,33 @@ export class NotificationsPage extends ResponsiveComponent implements OnInit {
                 return '';
         }
     }
+
+    dict: Record<string, string> = {};
+
+    getNotificationIconClass(notification: Notification): string {
+        switch (notification.notificationType) {
+            case NotificationType.Mention:
+                return 'mention';
+            case NotificationType.Status:
+                return 'status';
+            case NotificationType.Reblog:
+                return 'reblog';
+            case NotificationType.Follow:
+                return 'follow';
+            case NotificationType.FollowRequest:
+                return 'follow-request';
+            case NotificationType.Favourite:
+                return 'favourite';
+            case NotificationType.Update:
+                return 'update';
+            case NotificationType.AdminSignUp:
+                return 'admin-sign-up';
+            case NotificationType.AdminReport:
+                return 'admin-report';
+            case NotificationType.NewComment:
+                return 'new-comments';
+            default:
+                return '';
+        }
+    }
 }
