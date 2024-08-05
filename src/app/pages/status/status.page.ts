@@ -68,6 +68,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     imageWidth = 32;
     imageHeight = 32;
     blurhash = 'LEHV6nWB2yk8pyo0adR*.7kCMdnj';
+    isLoggedIn = false;
 
     constructor(
         @Inject(DOCUMENT) private document: Document,
@@ -103,6 +104,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
             const statusId = params['id'] as string;
 
             this.signedInUser = this.authorizationService.getUser();
+            this.isLoggedIn = await  this.authorizationService.isLoggedIn();
             await this.loadPageData(statusId);
 
             const galleryRef = this.gallery.ref(this.galleryId);
@@ -277,10 +279,6 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         }
 
         this.windowService.openPage(this.mainStatus.activityPubUrl);
-    }
-
-    isLoggedIn(): boolean {
-        return this.authorizationService.isLoggedIn();
     }
 
     showBackArrow(): boolean {

@@ -5,7 +5,7 @@
 
       <section class="small-button-toggle">
         <mat-button-toggle-group [(ngModel)]="timeline" (ngModelChange)="onTimelineChange()" [hideSingleSelectionIndicator]="true" aria-label="Timeline type">
-          <mat-button-toggle *ngIf="isLoggedIn()" value="private"><mat-icon>person</mat-icon><span *ngIf="!isHandset"> Private</span></mat-button-toggle>
+          <mat-button-toggle *ngIf="isLoggedIn" value="private"><mat-icon>person</mat-icon><span *ngIf="!isHandset"> Private</span></mat-button-toggle>
           <mat-button-toggle value="local"><mat-icon>communities</mat-icon><span *ngIf="!isHandset"> Local</span></mat-button-toggle>
           <mat-button-toggle value="global"><mat-icon>hub</mat-icon><span *ngIf="!isHandset"> All</span></mat-button-toggle>
         </mat-button-toggle-group>

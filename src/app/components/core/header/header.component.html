@@ -1,12 +1,12 @@
 <nav>
     <mat-toolbar color="primary">
         <a class="logo" [routerLink]="['/']">Vernissage <img src="assets/beta.png" alt="Beta sign"></a>
-        <ng-container *ngIf="!user || !isLoggedIn()">
+        <ng-container *ngIf="!user || !isLoggedIn">
             <div class="flex-spacer"></div>
             <button *ngIf="isRegistrationEnabled()" mat-stroked-button color="primary" [routerLink]="['/register']" class="margin-right-5">Sign up</button>
             <button mat-button [routerLink]="['/login']">Log in</button>
         </ng-container>
-        <ng-container *ngIf="user && isLoggedIn()">
+        <ng-container *ngIf="user && isLoggedIn">
             <ng-container *ngIf="deviceResolution === resolution.handsetLandscape || deviceResolution === resolution.tablet || deviceResolution === resolution.browser">
                 <ng-container *ngIf="deviceResolution === resolution.handsetLandscape">
                     <button mat-icon-button color="primary" [routerLink]="['/trending']" aria-label="Trending">
