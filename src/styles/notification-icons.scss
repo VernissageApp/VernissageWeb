@@ -1,0 +1,46 @@
+@use '@angular/material' as mat;
+@mixin notification-icons($palette) {
+    .notifications-container {
+        .notifications-card {    
+            .mention {
+                color: map-get($palette, 50);
+            }
+    
+            .status {
+                color: map-get($palette, 100);
+            }
+    
+            .reblog {
+                color: map-get($palette, 200);
+            }
+            
+            .follow {
+                color: map-get($palette, 300);
+            }
+    
+            .follow-request {
+                color: map-get($palette, 400);
+            }
+    
+            .favourite {
+                color: map-get($palette, 500);
+            }
+    
+            .update {
+                color: map-get($palette, 600);
+            }
+    
+            .admin-sign-up {
+                color: map-get($palette, 700);
+            }
+    
+            .admin-report{
+                color: map-get($palette, 800);
+            }
+            
+            .new-comments {
+                color: map-get($palette, 900);
+            }
+        }
+    }
+}

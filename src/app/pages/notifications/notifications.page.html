@@ -20,7 +20,9 @@
                             <div class="notification-display-name">
                                 <div class="user">
                                     @if (!isHandsetPortrait) {
-                                        <span class="text-muted icon"><mat-icon>{{ getNotificationIcon(notification) }}</mat-icon></span>
+                                        <span class="text-muted icon" [ngClass]="getNotificationIconClass(notification)">
+                                            <mat-icon class="fill-symbol">{{ getNotificationIcon(notification) }}</mat-icon>
+                                        </span>
                                     }
                                     <app-avatar [user]="notification.byUser" [size]="avatarSize.huge"></app-avatar>
                                 </div>

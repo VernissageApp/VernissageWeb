@@ -8,6 +8,7 @@
 @import './flex-layout';
 @import './app-theme';
 @import './messages-theme';
+@import './notification-icons';
 @import './general';
 
 @include mat.core();
@@ -189,6 +190,32 @@ $vernissage-light-toolbar-theme: mat.m2-define-light-theme((
   color: (primary: $vernissage-white, accent: $vernissage-light-accent),
 ));
 
+// Define colors for notifications.
+$md-notifications-palette: (
+	50: #f86874,
+	100: #f59d21,
+	200: #f8be2b,
+	300: #6bc95e,
+	400: #a871ad,
+	500: #45a8f4,
+	600: #ef5b72,
+	700: #8ace3e,
+	800: #f87392,
+	900: #5f90ec
+);
+
+$md-notifications-dark-palette: (
+	50: #FF9AA2,
+	100: #FFB347,
+	200: #FFDA79,
+	300: #A2D39C,
+	400: #B39EB5,
+	500: #80C9FF,
+	600: #f7a7b3,
+	700: #B3DE81,
+	800: #e1a8b5,
+	900: #AFCBFF
+);
 
 // =======================================================================
 // Define a dark theme (constructed from Angular Material palettes).
@@ -206,7 +233,7 @@ $vernissage-dark-toolbar-theme: mat.m2-define-light-theme((
 ));
 
 // =======================================================================
-// Enable ligth and dark themes.
+// Enable light and dark themes.
 
 // Set core theme.
 @include mat.core-theme($vernissage-light-theme);
@@ -222,6 +249,9 @@ $vernissage-dark-toolbar-theme: mat.m2-define-light-theme((
 
 // Set messages theme.
 @include messages-theme($vernissage-light-theme);
+
+// Set notification icons theme.
+@include notification-icons($md-notifications-palette);
 
 .dark-theme {
   // Use different colors for dark theme.
@@ -241,6 +271,9 @@ $vernissage-dark-toolbar-theme: mat.m2-define-light-theme((
 
   // Set messages theme.
   @include messages-theme($vernissage-dark-theme);
+
+  // Set notification icons theme.
+  @include notification-icons($md-notifications-dark-palette);
 }
 
 
