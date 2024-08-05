@@ -22,6 +22,7 @@ export class HomePage extends ResponsiveComponent implements OnInit, OnDestroy {
     statuses?: LinkableResult<Status>;
     timeline = 'private';
     isReady = false;
+    isLoggedIn = false;
 
     routeParamsSubscription?: Subscription;
     routeNavigationEndSubscription?: Subscription;
@@ -53,6 +54,8 @@ export class HomePage extends ResponsiveComponent implements OnInit, OnDestroy {
         this.routeParamsSubscription = this.activatedRoute.queryParams.subscribe(async (params) => {
 
             this.loadingService.showLoader();
+
+            this.isLoggedIn = await this.authorizationService.isLoggedIn();
             const pageType = params['t'] as string;
 
             switch(pageType) {
@@ -67,7 +70,7 @@ export class HomePage extends ResponsiveComponent implements OnInit, OnDestroy {
                     this.statuses.context = ContextTimeline.global;
                     break;
                 default:
-                    if (this.isLoggedIn()) {
+                    if (this.isLoggedIn) {
                         this.timeline = 'private';
                         this.statuses = await this.timelineService.home();
                         this.statuses.context = ContextTimeline.home;
@@ -98,9 +101,5 @@ export class HomePage extends ResponsiveComponent implements OnInit, OnDestroy {
         };
 
         this.router.navigate([], navigationExtras);
-    }
-
-    isLoggedIn(): boolean {
-        return this.authorizationService.isLoggedIn();
     }
 }

@@ -25,7 +25,7 @@ export class AuthorizationService {
             this.isBrowser = isPlatformBrowser(platformId);
     }
 
-    isLoggedIn(): boolean {
+    async isLoggedIn(): Promise<boolean> {
         if (!this.userPayloadToken) {
             return false;
         }
@@ -37,7 +37,7 @@ export class AuthorizationService {
 
         const now = new Date();
         if (tokenExpirationTime < now) {
-            return false;
+            return this.refreshAccessToken();
         }
 
         return true;

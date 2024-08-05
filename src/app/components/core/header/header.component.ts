@@ -24,6 +24,8 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
     public user?: User | null;
     public avatarUrl = "assets/avatar.svg";
     public fullName = '';
+    public isLoggedIn = false;
+
     private userChangeSubscription?: Subscription;
     private notificationChangeSubscription?: Subscription;
     private messagesSubscription?: Subscription;
@@ -44,10 +46,12 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
         super.ngOnInit();
 
         this.user = this.authorizationService.getUser();
+        this.isLoggedIn = await this.authorizationService.isLoggedIn();
         this.avatarUrl = this.user?.avatarUrl ?? 'assets/avatar.svg';
 
         this.userChangeSubscription = this.authorizationService.changes.subscribe(async (user) => {
             this.user = user;
+            this.isLoggedIn = await this.authorizationService.isLoggedIn();
             this.avatarUrl = this.user?.avatarUrl ?? 'assets/avatar.svg';
 
             this.fullName = this.user?.userName ?? '';
@@ -97,10 +101,6 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
 
     isRegistrationByInvitationsOpened(): boolean {
         return this.instanceService.instance?.registrationOpened === false && this.instanceService.instance?.registrationByInvitationsOpened === true;
-    }
-
-    isLoggedIn(): boolean {
-        return this.authorizationService.isLoggedIn();
     }
 
     private async loadNotificationCount(): Promise<void> {

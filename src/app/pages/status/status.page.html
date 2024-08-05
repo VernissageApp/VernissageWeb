@@ -50,7 +50,7 @@
                     <div class="flex-row flex-wrap">
 
                         <!-- Actions panel -->
-                        <ng-container *ngIf="isLoggedIn()">
+                        <ng-container *ngIf="isLoggedIn">
                             <button *ngIf="!mainStatus.reblogged" mat-icon-button class="margin-right-10" color="primary" matTooltip="Boost" matTooltipPosition="above" aria-label="Boost" (click)="reblog()">
                                 <mat-icon class="outline-symbol">rocket_launch</mat-icon>
                             </button>
