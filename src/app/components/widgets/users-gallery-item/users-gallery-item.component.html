@@ -5,11 +5,11 @@
             <ng-container *ngFor="let status of statuses?.data; trackBy:trackByFn">
                 <a [routerLink]="['/statuses', status.id]" [ariaLabel]="'Status added by: ' + getMainStatus(status).user?.userName" (click)="onStatusClick()">
                     @if (getMainStatus(status).sensitive) {
-                        <div class="blurhash">
+                        <div @fadeIn class="blurhash">
                             <app-blurhash-image [horizontal]="true" [status]="status"></app-blurhash-image>
                         </div>
                     } @else {
-                        <div class="image">
+                        <div @fadeIn class="image">
                             <app-image [horizontal]="true" [status]="status"></app-image>
                         </div>
                     }

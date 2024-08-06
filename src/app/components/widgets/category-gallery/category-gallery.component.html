@@ -1,4 +1,7 @@
-@if (categories?.length) {
+@if (!isBrowser) {
+    <div></div>
+}
+@else if (categories?.length) {
     <div *ngFor="let category of categories; trackBy:trackByCategoryFn">
         <app-category-gallery-item [category]="category"></app-category-gallery-item>
     </div>
