@@ -6,11 +6,11 @@
                 <a [routerLink]="['/statuses', status.id]" [ariaLabel]="'Status added by: ' + getMainStatus(status).user?.userName" (click)="onStatusClick()">
                     @if (getMainStatus(status).sensitive) {
                         <div @fadeIn class="blurhash">
-                            <app-blurhash-image [horizontal]="true" [status]="status"></app-blurhash-image>
+                            <app-blurhash-image [horizontal]="true" [status]="status" [avatarVisible]="false"></app-blurhash-image>
                         </div>
                     } @else {
                         <div @fadeIn class="image">
-                            <app-image [horizontal]="true" [status]="status"></app-image>
+                            <app-image [horizontal]="true" [status]="status" [avatarVisible]="false"></app-image>
                         </div>
                     }
                 </a>
