@@ -28,6 +28,9 @@ import { FooterComponent } from './core/footer/footer.component';
 import { GeneralSettingsComponent } from './widgets/general-settings/general-settings.component';
 import { DomainBlocksComponent } from './widgets/domain-blocks/domain-blocks.component';
 import { InstanceRulesComponent } from './widgets/instance-rules/instance-rules.component';
+import { CategoryGalleryItemComponent } from './widgets/category-gallery-item/category-gallery-item.component';
+import { HashtagGalleryItemComponent } from './widgets/hashtag-gallery-item/hashtag-gallery-item.component';
+import { UsersGalleryItemComponent } from './widgets/users-gallery-item/users-gallery-item.component';
 
 @NgModule({
     declarations: [
@@ -43,8 +46,11 @@ import { InstanceRulesComponent } from './widgets/instance-rules/instance-rules.
         CommentReplyComponent,
         AvatarComponent,
         UsersGalleryComponent,
+        UsersGalleryItemComponent,
         HashtagGalleryComponent,
+        HashtagGalleryItemComponent,
         CategoryGalleryComponent,
+        CategoryGalleryItemComponent,
         BlurhashImageComponent,
         ImageComponent,
         GeneralSettingsComponent,

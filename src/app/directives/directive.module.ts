@@ -2,11 +2,13 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
-import { ScrollNearEndDirective } from './scroll-near-end-directive';
+import { ScrollNearEndDirective } from './scroll-near-end.directive';
+import { LazyLoadDirective } from './lazy-load.directive';
 
 @NgModule({
     declarations: [
-        ScrollNearEndDirective
+        ScrollNearEndDirective,
+        LazyLoadDirective
     ],
     imports: [
         BrowserModule,
@@ -14,7 +16,8 @@ import { ScrollNearEndDirective } from './scroll-near-end-directive';
         FormsModule
     ],
     exports: [
-        ScrollNearEndDirective
+        ScrollNearEndDirective,
+        LazyLoadDirective
     ]
 })
 export class DirectivesModule { }

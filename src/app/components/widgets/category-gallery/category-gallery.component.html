@@ -1,27 +1,6 @@
-@if (categoryStatuses?.length) {
-    <div *ngFor="let category of categoryStatuses; trackBy:trackByCategoryFn">
-        <div class="hashtag-header">
-            <a [routerLink]="['/categories', category.name]">
-                <mat-icon>loyalty</mat-icon> {{ category.name }}
-            </a>
-        </div>
-        <div class="images-container">
-            <div class="flex-row">
-                <ng-container *ngFor="let status of category.statuses?.data; trackBy:trackByFn">
-                    <a [routerLink]="['/statuses', status.id]" [ariaLabel]="'Status added by: ' + getMainStatus(status).user?.userName" (click)="onStatusClick(category.statuses)">
-                        @if (getMainStatus(status).sensitive) {
-                            <div class="blurhash">
-                                <app-blurhash-image [horizontal]="true" [status]="status"></app-blurhash-image>
-                            </div>
-                        } @else {
-                            <div class="image">
-                                <app-image [horizontal]="true" [status]="status"></app-image>
-                            </div>
-                        }
-                    </a>
-                </ng-container>
-            </div>
-        </div>
+@if (categories?.length) {
+    <div *ngFor="let category of categories; trackBy:trackByCategoryFn">
+        <app-category-gallery-item [category]="category"></app-category-gallery-item>
     </div>
 } @else {
     <div class="text-muted padding-top-30 width-100 text-center">
