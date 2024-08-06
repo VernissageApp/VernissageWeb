@@ -5,6 +5,7 @@ import { Subscription } from "rxjs";
 import { fadeInAnimation } from "src/app/animations/fade-in.animation";
 import { ResponsiveComponent } from "src/app/common/responsive";
 import { Category } from "src/app/models/category";
+import { CategoryStatuses } from "src/app/models/category-statuses";
 import { ContextTimeline } from "src/app/models/context-timeline";
 import { LinkableResult } from "src/app/models/linkable-result";
 import { Status } from "src/app/models/status";
@@ -22,9 +23,7 @@ export class CategoriesPage extends ResponsiveComponent implements OnInit, OnDes
     private readonly numberOfVisibleStatuses = 10;
 
     isReady = false;
-    categories: Category[] = [];
-    categoryStatuses = new Map<string, LinkableResult<Status>>();
-
+    categoryStatuses?: CategoryStatuses[] = [];
     routeParamsSubscription?: Subscription;
 
     constructor(
@@ -43,22 +42,18 @@ export class CategoriesPage extends ResponsiveComponent implements OnInit, OnDes
         this.routeParamsSubscription = this.activatedRoute.queryParams.subscribe(async () => {
             this.loadingService.showLoader();
 
-            const internalAllCategories = await this.categoriesService.all();
+            const categories = await this.categoriesService.all();
+            const internalCategoryStatuses: CategoryStatuses[] = [];
 
-            const internalCategories: Category[] = [];
-            const internalCategoryStatuses = new Map<string, LinkableResult<Status>>();
-
-            await Promise.all(internalAllCategories.map(async (category) => {
+            await Promise.all(categories.map(async (category) => {
                 const statuses = await this.loadStatuses(category);
-                if (statuses.data.length) {
-                    internalCategoryStatuses.set(category.name, statuses);
-                    internalCategories.push(category);
+                if (statuses.data.length && category.id && category.name) {
+                    const categoryStatuses = new CategoryStatuses(category.id, category.name, statuses);
+                    internalCategoryStatuses.push(categoryStatuses);
                 }
             }));
 
             this.categoryStatuses = internalCategoryStatuses;
-            this.categories = internalCategories;
-
             this.isReady = true;
             this.loadingService.hideLoader();
         });

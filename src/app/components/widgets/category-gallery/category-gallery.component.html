@@ -1,5 +1,5 @@
-@if (categories?.length) {
-    <div *ngFor="let category of categories; trackBy:trackByCategoryFn">
+@if (categoryStatuses?.length) {
+    <div *ngFor="let category of categoryStatuses; trackBy:trackByCategoryFn">
         <div class="hashtag-header">
             <a [routerLink]="['/categories', category.name]">
                 <mat-icon>loyalty</mat-icon> {{ category.name }}
@@ -7,8 +7,8 @@
         </div>
         <div class="images-container">
             <div class="flex-row">
-                <ng-container *ngFor="let status of getStatuses(category.name); trackBy:trackByFn">
-                    <a [routerLink]="['/statuses', status.id]" [ariaLabel]="'Status added by: ' + getMainStatus(status).user?.userName" (click)="onStatusClick(category.name)">
+                <ng-container *ngFor="let status of category.statuses?.data; trackBy:trackByFn">
+                    <a [routerLink]="['/statuses', status.id]" [ariaLabel]="'Status added by: ' + getMainStatus(status).user?.userName" (click)="onStatusClick(category.statuses)">
                         @if (getMainStatus(status).sensitive) {
                             <div class="blurhash">
                                 <app-blurhash-image [horizontal]="true" [status]="status"></app-blurhash-image>

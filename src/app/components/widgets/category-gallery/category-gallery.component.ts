@@ -2,7 +2,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, Input } from '@angular/core';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { ResponsiveComponent } from 'src/app/common/responsive';
-import { Category } from 'src/app/models/category';
+import { CategoryStatuses } from 'src/app/models/category-statuses';
 import { LinkableResult } from 'src/app/models/linkable-result';
 import { Status } from 'src/app/models/status';
 import { ContextStatusesService } from 'src/app/services/common/context-statuses.service';
@@ -14,8 +14,7 @@ import { ContextStatusesService } from 'src/app/services/common/context-statuses
     animations: fadeInAnimation
 })
 export class CategoryGalleryComponent extends ResponsiveComponent {
-    @Input() categories?: Category[];
-    @Input() categoryStatuses?: Map<string, LinkableResult<Status>>;
+    @Input() categoryStatuses?: CategoryStatuses[] = [];
 
     constructor(
         private contextStatusesService: ContextStatusesService,
@@ -24,36 +23,19 @@ export class CategoryGalleryComponent extends ResponsiveComponent {
         super(breakpointObserver);
     }
 
-    trackByFn(_: number, item: Status): string | undefined{
+    trackByFn(_: number, item: Status): string {
         return item.id;
     }
 
-    trackByCategoryFn(_: number, item: Category): string | undefined{
+    trackByCategoryFn(_: number, item: CategoryStatuses): string {
         return item.id;
-    }
-
-    getStatuses(userName: string | undefined): Status[] {
-        if (!userName) {
-            return [];
-        }
-
-        return this.getLinkableStatuses(userName)?.data ?? [];
     }
 
     getMainStatus(status: Status): Status {
         return status.reblog ?? status;
     }
 
-    onStatusClick(hashtag: string | undefined): void {
-        const statuses = this.getLinkableStatuses(hashtag);
+    onStatusClick(statuses: LinkableResult<Status>): void {
         this.contextStatusesService.setContextStatuses(statuses);
-    }
-
-    private getLinkableStatuses(category: string | undefined): LinkableResult<Status> | undefined {
-        if (!category) {
-            return undefined;
-        }
-
-        return this.categoryStatuses?.get(category) ?? undefined;
     }
 }
