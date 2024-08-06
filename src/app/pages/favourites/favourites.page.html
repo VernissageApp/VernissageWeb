@@ -1,6 +1,11 @@
 <div *ngIf="isReady" @fadeIn>
     <section [ngClass]="{ 'padding-30': !isHandset, 'padding-10': isHandset }">
         <h1>Favourites</h1>
+
+        @if (user) {
+            <a [routerLink]="['/@' + user.userName]" aria-label="Account link">{{ fullName }}</a>
+        }
+
     </section>
 
     <app-gallery [statuses]="statuses"></app-gallery>

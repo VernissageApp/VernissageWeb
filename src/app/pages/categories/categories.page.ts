@@ -43,8 +43,21 @@ export class CategoriesPage extends ResponsiveComponent implements OnInit, OnDes
         this.routeParamsSubscription = this.activatedRoute.queryParams.subscribe(async () => {
             this.loadingService.showLoader();
 
-            const categories = await this.categoriesService.all();
-            await Promise.all(categories.map(x => this.loadStatuses(x)));
+            const internalAllCategories = await this.categoriesService.all();
+
+            const internalCategories: Category[] = [];
+            const internalCategoryStatuses = new Map<string, LinkableResult<Status>>();
+
+            await Promise.all(internalAllCategories.map(async (category) => {
+                const statuses = await this.loadStatuses(category);
+                if (statuses.data.length) {
+                    internalCategoryStatuses.set(category.name, statuses);
+                    internalCategories.push(category);
+                }
+            }));
+
+            this.categoryStatuses = internalCategoryStatuses;
+            this.categories = internalCategories;
 
             this.isReady = true;
             this.loadingService.hideLoader();
@@ -57,14 +70,11 @@ export class CategoriesPage extends ResponsiveComponent implements OnInit, OnDes
         this.routeParamsSubscription?.unsubscribe();
     }
 
-    private async loadStatuses(category: Category): Promise<void> {
+    private async loadStatuses(category: Category): Promise<LinkableResult<Status>> {
         const statuses = await this.timelineService.category(category.name, undefined, undefined, undefined, this.numberOfVisibleStatuses, undefined);
         statuses.context = ContextTimeline.category;
         statuses.category = category.name;
 
-        if (statuses.data.length) {
-            this.categoryStatuses.set(category.name, statuses);
-            this.categories.push(category);
-        }
+        return statuses
     }
 }

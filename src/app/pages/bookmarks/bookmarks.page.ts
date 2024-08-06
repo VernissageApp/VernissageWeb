@@ -10,6 +10,9 @@ import { LinkableResult } from 'src/app/models/linkable-result';
 import { ContextTimeline } from 'src/app/models/context-timeline';
 import { ContextStatusesService } from 'src/app/services/common/context-statuses.service';
 import { BookmarksService } from 'src/app/services/http/bookmarks.service';
+import { User } from 'src/app/models/user';
+import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
+import { UserDisplayService } from 'src/app/services/common/user-display.service';
 
 @Component({
     selector: 'app-bookmarks',
@@ -21,6 +24,9 @@ export class BookmarksPage extends ResponsiveComponent implements OnInit, OnDest
     statuses?: LinkableResult<Status>;
     isReady = false;
 
+    public user?: User | null;
+    public fullName = '';
+
     routeParamsSubscription?: Subscription;
     routeNavigationEndSubscription?: Subscription;
 
@@ -28,6 +34,8 @@ export class BookmarksPage extends ResponsiveComponent implements OnInit, OnDest
         private contextStatusesService: ContextStatusesService,
         private bookmarksService: BookmarksService,
         private loadingService: LoadingService,
+        private authorizationService: AuthorizationService,
+        private userDisplayService: UserDisplayService,
         private router: Router,
         private activatedRoute: ActivatedRoute,
         breakpointObserver: BreakpointObserver
@@ -50,6 +58,9 @@ export class BookmarksPage extends ResponsiveComponent implements OnInit, OnDest
         this.routeParamsSubscription = this.activatedRoute.queryParams.subscribe(async () => {
 
             this.loadingService.showLoader();
+
+            this.user = this.authorizationService.getUser();
+            this.fullName = this.userDisplayService.displayName(this.user);
 
             this.statuses = await this.bookmarksService.list();
             this.statuses.context = ContextTimeline.bookmarks;

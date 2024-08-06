@@ -24,7 +24,7 @@ export class InvitationsPage extends ResponsiveComponent implements OnInit {
     publicSettings?: PublicSettings;
     displayedColumns: string[] = [];
 
-    private readonly displayedColumnsHandsetPortrait: string[] = ['code'];
+    private readonly displayedColumnsHandsetPortrait: string[] = ['code', 'actions'];
     private readonly displayedColumnsHandserLandscape: string[] = ['code', 'actions'];
     private readonly displayedColumnsTablet: string[] = ['code', 'invited', 'actions'];
     private readonly displayedColumnsBrowser: string[] = ['code', 'createdAt', 'invited', 'actions'];
