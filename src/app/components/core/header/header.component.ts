@@ -11,6 +11,7 @@ import { Resolution, ResponsiveComponent } from 'src/app/common/responsive';
 import { NotificationsService } from 'src/app/services/http/notifications.service';
 import { CustomReuseStrategy } from 'src/app/common/custom-reuse-strategy';
 import { SwPush } from '@angular/service-worker';
+import { UserDisplayService } from 'src/app/services/common/user-display.service';
 
 @Component({
     selector: 'app-header',
@@ -34,6 +35,7 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
         private authorizationService: AuthorizationService,
         private instanceService: InstanceService,
         private notificationsService: NotificationsService,
+        private userDisplayService: UserDisplayService,
         private routeReuseStrategy: RouteReuseStrategy,
         private router: Router,
         private swPushService: SwPush,
@@ -53,11 +55,7 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
             this.user = user;
             this.isLoggedIn = await this.authorizationService.isLoggedIn();
             this.avatarUrl = this.user?.avatarUrl ?? 'assets/avatar.svg';
-
-            this.fullName = this.user?.userName ?? '';
-            if (this.user?.name && this.user.name.length > 0) {
-                this.fullName = this.user.name
-            }
+            this.fullName = this.userDisplayService.displayName(this.user);
 
             this.messagesSubscription = this.swPushService.messages.subscribe(async () => {
                 await this.loadNotificationCount();

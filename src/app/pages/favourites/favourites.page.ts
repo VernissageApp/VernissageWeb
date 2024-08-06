@@ -10,6 +10,9 @@ import { LinkableResult } from 'src/app/models/linkable-result';
 import { ContextTimeline } from 'src/app/models/context-timeline';
 import { ContextStatusesService } from 'src/app/services/common/context-statuses.service';
 import { FavouritesService } from 'src/app/services/http/favourites.service';
+import { UserDisplayService } from 'src/app/services/common/user-display.service';
+import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
+import { User } from 'src/app/models/user';
 
 @Component({
     selector: 'app-favourites',
@@ -21,6 +24,8 @@ export class FavouritesPage extends ResponsiveComponent implements OnInit, OnDes
     statuses?: LinkableResult<Status>;
     isReady = false;
 
+    public user?: User | null;
+    public fullName = '';
     routeParamsSubscription?: Subscription;
     routeNavigationEndSubscription?: Subscription;
 
@@ -28,6 +33,8 @@ export class FavouritesPage extends ResponsiveComponent implements OnInit, OnDes
         private contextStatusesService: ContextStatusesService,
         private favouritesService: FavouritesService,
         private loadingService: LoadingService,
+        private authorizationService: AuthorizationService,
+        private userDisplayService: UserDisplayService,
         private router: Router,
         private activatedRoute: ActivatedRoute,
         breakpointObserver: BreakpointObserver
@@ -50,6 +57,9 @@ export class FavouritesPage extends ResponsiveComponent implements OnInit, OnDes
         this.routeParamsSubscription = this.activatedRoute.queryParams.subscribe(async () => {
 
             this.loadingService.showLoader();
+
+            this.user = this.authorizationService.getUser();
+            this.fullName = this.userDisplayService.displayName(this.user);
 
             this.statuses = await this.favouritesService.list();
             this.statuses.context = ContextTimeline.favourites;
