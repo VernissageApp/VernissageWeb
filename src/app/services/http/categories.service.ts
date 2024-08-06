@@ -11,8 +11,8 @@ export class CategoriesService {
     constructor(private httpClient: HttpClient, private windowService: WindowService) {
     }
 
-    public async all(): Promise<Category[]> {
-        const event$ = this.httpClient.get<Category[]>(this.windowService.apiUrl() +  '/api/v1/categories');
+    public async all(onlyUsed = false): Promise<Category[]> {
+        const event$ = this.httpClient.get<Category[]>(this.windowService.apiUrl() +  `/api/v1/categories?onlyUsed=${onlyUsed}`);
         return await firstValueFrom(event$);
     }
 }
