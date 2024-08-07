@@ -62,7 +62,7 @@
             </div>
             
             <div *ngIf="profilePageTab === ProfilePageTab.Following">
-                <div class="padding-bottom-20 padding-top-20">
+                <div @fadeIn class="padding-bottom-20 padding-top-20">
                     <mat-card class="users-card" appearance="outlined">
                         <mat-card-content>
                             @if ((following?.data?.length ?? 0) > 0) {
@@ -89,7 +89,7 @@
             </div>
 
             <div *ngIf="profilePageTab === ProfilePageTab.Followers">
-                <div class="padding-bottom-20 padding-top-20">
+                <div @fadeIn class="padding-bottom-20 padding-top-20">
                     <mat-card class="users-card" appearance="outlined">
                         <mat-card-content>
                             @if ((followers?.data?.length ?? 0) > 0) {

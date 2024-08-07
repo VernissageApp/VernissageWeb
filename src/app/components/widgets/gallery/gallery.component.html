@@ -3,7 +3,7 @@
         <div [ngClass]="{ 'image-gallery': !isHandsetPortrait || squareImages, 'square': squareImages }">
             <div class="column" *ngFor="let items of gallery">
                 @if(items.length > 0) {
-                    <div *ngFor="let status of items; trackBy:trackByFn">
+                    <div @fadeIn *ngFor="let status of items; trackBy:trackByFn">
                         <a [routerLink]="['/statuses', status.id]" [ariaLabel]="'Status added by: ' + getMainStatus(status).user?.userName">
                             @if (getMainStatus(status).sensitive) {
                                 <app-blurhash-image [horizontal]="false" [avatarVisible]="avatarVisible && !hideAvatars" [status]="status"></app-blurhash-image>
@@ -21,8 +21,9 @@
     
 } @else {
     <div class="text-muted padding-top-30 text-center" [ngClass]="{ 'padding-left-30 padding-right-30': !isHandset, 'padding-left-10 padding-right-10': isHandset }">
-        <h2>
-            Unfortunatelly, there is nothing to see here yet.
+        <h2 class="empty-page">
+            <div class="camera"></div>
+            <div>Sadly, there's nothing to see here just yet.</div>
         </h2>
     </div>
 }
