@@ -1,4 +1,7 @@
-@if (statuses?.data?.length) {
+@if (!isBrowser) {
+    <div></div>
+}
+@else if (statuses?.data?.length) {
     <div class="gallery-container" appScrollNearEnd (nearEnd)="onNearEndScroll()">
         <div [ngClass]="{ 'image-gallery': !isHandsetPortrait || squareImages, 'square': squareImages }">
             <div class="column" *ngFor="let items of gallery">
