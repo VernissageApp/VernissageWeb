@@ -20,7 +20,7 @@
       </mat-radio-group>
     </div>
 
-    <app-gallery *ngIf="trending === 'statuses'" [statuses]="statuses"></app-gallery>
-    <app-users-gallery *ngIf="trending === 'users'" [users]="users"></app-users-gallery>
-    <app-hashtag-gallery *ngIf="trending === 'hashtags'" [hashtags]="hashtags"></app-hashtag-gallery>
+    <app-gallery *ngIf="selectedTrending === 'statuses'" [statuses]="statuses"></app-gallery>
+    <app-users-gallery *ngIf="selectedTrending === 'users'" [users]="users"></app-users-gallery>
+    <app-hashtag-gallery *ngIf="selectedTrending === 'hashtags'" [hashtags]="hashtags"></app-hashtag-gallery>
 </div>
