@@ -28,6 +28,7 @@ export class TrendingPage extends ResponsiveComponent implements OnInit, OnDestr
 
     period = TrendingPeriod.Daily;
     trending = 'statuses';
+    selectedTrending = 'statuses';
     isReady = false;
 
     routeParamsSubscription?: Subscription;
@@ -47,20 +48,24 @@ export class TrendingPage extends ResponsiveComponent implements OnInit, OnDestr
 
         this.routeParamsSubscription = this.activatedRoute.queryParams.subscribe(async (params) => {
             this.loadingService.showLoader();
-            this.period = params['period'] as TrendingPeriod ?? TrendingPeriod.Daily;
-            this.trending  = params['trending'] as string ?? 'statuses';
+            const internalPeriod = params['period'] as TrendingPeriod ?? TrendingPeriod.Daily;
+            const internalTrending  = params['trending'] as string ?? 'statuses';
 
-            switch(this.trending) {
+            switch(internalTrending) {
                 case 'statuses':
-                    await this.loadTrendingStatuses();
+                    await this.loadTrendingStatuses(internalPeriod);
                     break;
                 case 'users':
-                    await this.loadTrendingUsers();
+                    await this.loadTrendingUsers(internalPeriod);
                     break;
                 case 'hashtags':
-                    await this.loadTrendingHashtags();
+                    await this.loadTrendingHashtags(internalPeriod);
                     break;
             }
+
+            this.period = internalPeriod;
+            this.trending  = internalTrending;
+            this.selectedTrending = internalTrending;
 
             this.isReady = true;
             this.loadingService.hideLoader();
@@ -82,47 +87,47 @@ export class TrendingPage extends ResponsiveComponent implements OnInit, OnDestr
         this.router.navigate([], navigationExtras);
     }
 
-    private async loadTrendingStatuses(): Promise<void> {
-        switch(this.period) {
+    private async loadTrendingStatuses(internalPeriod: TrendingPeriod): Promise<void> {
+        switch(internalPeriod) {
             case TrendingPeriod.Daily:
-                this.statuses = await this.trendingService.statuses(undefined, undefined, undefined, undefined, this.period);
+                this.statuses = await this.trendingService.statuses(undefined, undefined, undefined, undefined, internalPeriod);
                 this.statuses.context = ContextTimeline.trendingStatusesDaily;
                 break;
             case TrendingPeriod.Monthly:
-                this.statuses = await this.trendingService.statuses(undefined, undefined, undefined, undefined, this.period);
+                this.statuses = await this.trendingService.statuses(undefined, undefined, undefined, undefined, internalPeriod);
                 this.statuses.context = ContextTimeline.trendingStatusesMonthly;
                 break;
             case TrendingPeriod.Yearly:
-                this.statuses = await this.trendingService.statuses(undefined, undefined, undefined, undefined, this.period);
+                this.statuses = await this.trendingService.statuses(undefined, undefined, undefined, undefined, internalPeriod);
                 this.statuses.context = ContextTimeline.trendingStatusesYearly;
                 break;
         }
     }
 
-    private async loadTrendingUsers(): Promise<void> {
-        switch(this.period) {
+    private async loadTrendingUsers(internalPeriod: TrendingPeriod): Promise<void> {
+        switch(internalPeriod) {
             case TrendingPeriod.Daily:
-                this.users = await this.trendingService.users(undefined, undefined, undefined, undefined, this.period);
+                this.users = await this.trendingService.users(undefined, undefined, undefined, undefined, internalPeriod);
                 break;
             case TrendingPeriod.Monthly:
-                this.users = await this.trendingService.users(undefined, undefined, undefined, undefined, this.period);
+                this.users = await this.trendingService.users(undefined, undefined, undefined, undefined, internalPeriod);
                 break;
             case TrendingPeriod.Yearly:
-                this.users = await this.trendingService.users(undefined, undefined, undefined, undefined, this.period);
+                this.users = await this.trendingService.users(undefined, undefined, undefined, undefined, internalPeriod);
                 break;
         }
     }
 
-    private async loadTrendingHashtags(): Promise<void> {
-        switch(this.period) {
+    private async loadTrendingHashtags(internalPeriod: TrendingPeriod): Promise<void> {
+        switch(internalPeriod) {
             case TrendingPeriod.Daily:
-                this.hashtags = await this.trendingService.hashtags(undefined, undefined, undefined, undefined, this.period);
+                this.hashtags = await this.trendingService.hashtags(undefined, undefined, undefined, undefined, internalPeriod);
                 break;
             case TrendingPeriod.Monthly:
-                this.hashtags = await this.trendingService.hashtags(undefined, undefined, undefined, undefined, this.period);
+                this.hashtags = await this.trendingService.hashtags(undefined, undefined, undefined, undefined, internalPeriod);
                 break;
             case TrendingPeriod.Yearly:
-                this.hashtags = await this.trendingService.hashtags(undefined, undefined, undefined, undefined, this.period);
+                this.hashtags = await this.trendingService.hashtags(undefined, undefined, undefined, undefined, internalPeriod);
                 break;
         }
     }

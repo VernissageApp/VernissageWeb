@@ -23,6 +23,7 @@ export class HomePage extends ResponsiveComponent implements OnInit, OnDestroy {
     timeline = 'private';
     isReady = false;
     isLoggedIn = false;
+    isPageVisible = true;
     lastRefreshTime = new Date();
 
     routeParamsSubscription?: Subscription;
@@ -47,8 +48,12 @@ export class HomePage extends ResponsiveComponent implements OnInit, OnDestroy {
             .pipe(filter(event => event instanceof NavigationEnd))  
             .subscribe(async (event) => {
                 const navigationEndEvent = event as NavigationEnd;
+                
                 if (navigationEndEvent.urlAfterRedirects === '/home') {
                     this.contextStatusesService.setContextStatuses(this.statuses);
+                    this.isPageVisible = true;
+                } else {
+                    this.isPageVisible = false;
                 }
             });
 
@@ -72,7 +77,7 @@ export class HomePage extends ResponsiveComponent implements OnInit, OnDestroy {
 
     @HostListener('document:visibilitychange', ['$event'])
     async visibilityChange(event: any): Promise<void> {
-        if (!event.target.hidden) {
+        if (!event.target.hidden && this.isPageVisible) {
             const lastRefreshTimePlusMinute = new Date(this.lastRefreshTime.getTime() + 60000);
             const currentTime = new Date();
 

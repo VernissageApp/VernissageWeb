@@ -4,7 +4,7 @@ import { AfterViewInit, Directive, ElementRef, EventEmitter, OnDestroy, Output }
     selector: '[appLazyLoad]'
 })
 export class LazyLoadDirective implements AfterViewInit, OnDestroy {
-    @Output() lazyLoad: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output() lazyLoad = new EventEmitter<boolean>();
 
     private intersectionObserver?: IntersectionObserver;
 
