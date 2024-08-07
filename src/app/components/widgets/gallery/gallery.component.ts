@@ -1,5 +1,5 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Inject, Input, OnChanges, OnInit, PLATFORM_ID, SimpleChanges } from '@angular/core';
 import { Subscription, filter } from 'rxjs';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { LinkableResult } from 'src/app/models/linkable-result';
@@ -10,6 +10,7 @@ import { LoadingService } from 'src/app/services/common/loading.service';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { NavigationStart, Router } from '@angular/router';
 import { WindowService } from 'src/app/services/common/window.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
     selector: 'app-gallery',
@@ -28,6 +29,7 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnC
     isDuringLoadingMode = false;
     allStatusesLoaded = false;
     avatarVisible = true;
+    isBrowser = false;
 
     galleryBreakpointSubscription?: Subscription;
     routeNavigationStartSubscription?: Subscription;
@@ -36,6 +38,7 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnC
     private currentUrl?: URL;
 
     constructor(
+        @Inject(PLATFORM_ID) platformId: object,
         private loadingService: LoadingService,
         private router: Router,
         private contextStatusesService: ContextStatusesService,
@@ -43,6 +46,7 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnC
         private windowService: WindowService
     ) {
         super(galleryBreakpointObserver);
+        this.isBrowser = isPlatformBrowser(platformId);
     }
 
     override ngOnInit(): void {
