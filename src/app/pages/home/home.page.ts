@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { Status } from 'src/app/models/status';
 import { TimelineService } from 'src/app/services/http/timeline.service';
@@ -23,6 +23,7 @@ export class HomePage extends ResponsiveComponent implements OnInit, OnDestroy {
     timeline = 'private';
     isReady = false;
     isLoggedIn = false;
+    lastRefreshTime = new Date();
 
     routeParamsSubscription?: Subscription;
     routeNavigationEndSubscription?: Subscription;
@@ -52,35 +53,10 @@ export class HomePage extends ResponsiveComponent implements OnInit, OnDestroy {
             });
 
         this.routeParamsSubscription = this.activatedRoute.queryParams.subscribe(async (params) => {
-
             this.loadingService.showLoader();
 
-            this.isLoggedIn = await this.authorizationService.isLoggedIn();
             const pageType = params['t'] as string;
-
-            switch(pageType) {
-                case 'local':
-                    this.timeline = 'local';
-                    this.statuses = await this.timelineService.public(undefined, undefined, undefined, undefined, true);
-                    this.statuses.context = ContextTimeline.local;
-                    break;
-                case 'global':
-                    this.timeline = 'global';
-                    this.statuses = await this.timelineService.public(undefined, undefined, undefined, undefined, false);
-                    this.statuses.context = ContextTimeline.global;
-                    break;
-                default:
-                    if (this.isLoggedIn) {
-                        this.timeline = 'private';
-                        this.statuses = await this.timelineService.home();
-                        this.statuses.context = ContextTimeline.home;
-                    } else {
-                        this.timeline = 'local';
-                        this.statuses = await this.timelineService.public(undefined, undefined, undefined, undefined, true);
-                        this.statuses.context = ContextTimeline.local;
-                    }
-                    break;
-            }
+            await this.loadData(pageType);
 
             this.isReady = true;
             this.loadingService.hideLoader();
@@ -94,12 +70,57 @@ export class HomePage extends ResponsiveComponent implements OnInit, OnDestroy {
         this.routeNavigationEndSubscription?.unsubscribe();
     }
 
+    @HostListener('document:visibilitychange', ['$event'])
+    async visibilityChange(event: any): Promise<void> {
+        if (!event.target.hidden) {
+            const lastRefreshTimePlusMinute = new Date(this.lastRefreshTime.getTime() + 60000);
+            const currentTime = new Date();
+
+            if (lastRefreshTimePlusMinute < currentTime) {
+                this.loadingService.showLoader();
+                await this.loadData(this.timeline);
+                this.loadingService.hideLoader();
+            }
+        }
+    }
+
     onTimelineChange(): void {
         const navigationExtras: NavigationExtras = {
-            queryParams: { t: this.timeline },
+            queryParams: {
+                t: this.timeline
+            },
             queryParamsHandling: 'merge'
         };
 
         this.router.navigate([], navigationExtras);
+    }
+
+    private async loadData(pageType: string): Promise<void> {
+        this.isLoggedIn = await this.authorizationService.isLoggedIn();
+        this.lastRefreshTime = new Date();
+
+        switch(pageType) {
+            case 'local':
+                this.timeline = 'local';
+                this.statuses = await this.timelineService.public(undefined, undefined, undefined, undefined, true);
+                this.statuses.context = ContextTimeline.local;
+                break;
+            case 'global':
+                this.timeline = 'global';
+                this.statuses = await this.timelineService.public(undefined, undefined, undefined, undefined, false);
+                this.statuses.context = ContextTimeline.global;
+                break;
+            default:
+                if (this.isLoggedIn) {
+                    this.timeline = 'private';
+                    this.statuses = await this.timelineService.home();
+                    this.statuses.context = ContextTimeline.home;
+                } else {
+                    this.timeline = 'local';
+                    this.statuses = await this.timelineService.public(undefined, undefined, undefined, undefined, true);
+                    this.statuses.context = ContextTimeline.local;
+                }
+                break;
+        }
     }
 }

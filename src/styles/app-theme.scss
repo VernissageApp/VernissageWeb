@@ -144,4 +144,36 @@
     a.mdc-button {
         color: mat.m2-get-color-from-palette($background);
     }
+
+    .empty-page {
+        .camera {
+            margin-left: auto;
+            margin-right: auto;
+            width: 128px;
+            height: 128px;
+            background-size: 128px 128px;
+            background-image: url('/assets/camera-light.svg');
+        }
+
+        .face {
+            margin-left: auto;
+            margin-right: auto;
+            width: 64px;
+            height: 64px;
+            background-size: 64px 64px;
+            background-image: url('/assets/face-light.svg');
+        }
+    }
+
+    .dark-theme {
+        .empty-page {
+            .camera {
+                background-image: url('/assets/camera-dark.svg') !important;
+            }
+
+            .face {
+                background-image: url('/assets/face-dark.svg') !important;
+            }
+        }
+    }
 }
