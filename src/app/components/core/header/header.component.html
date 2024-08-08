@@ -1,6 +1,6 @@
 <nav>
     <mat-toolbar color="primary">
-        <a class="logo" [routerLink]="['/']">Vernissage <div class="beta"></div></a>
+        <a class="logo link" (click)="onLogoClick()" (keydown.enter)="onLogoClick()" tabindex="0">Vernissage <div class="beta"></div></a>
         <ng-container *ngIf="!user || !isLoggedIn">
             <div class="flex-spacer"></div>
             <button *ngIf="isRegistrationEnabled()" mat-stroked-button color="primary" [routerLink]="['/register']" class="margin-right-5">Sign up</button>
