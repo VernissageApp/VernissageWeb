@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
+import { PersistanceService } from 'src/app/services/persistance/persistance.service';
 
 @Component({
     selector: 'app-unexpected-error',
@@ -7,5 +9,46 @@ import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
     styleUrls: ['./unexpected-error.page.scss'],
     animations: fadeInAnimation
 })
-export class UnexpectedErrorPage {
+export class UnexpectedErrorPage implements OnInit, OnDestroy {
+    value = 100;
+    errorExpanded = false;
+    interval: any;
+    errorMessage?: string;
+
+    constructor(private persistanceService: PersistanceService, private router: Router) {
+    }
+
+    ngOnInit(): void {
+        this.interval = setInterval(async ()=> {
+            if (this.errorExpanded) {
+                if (this.interval) {
+                    clearInterval(this.interval);
+                }
+
+                return;
+            }
+
+            this.value = this.value - 4;
+            if (this.value < 0) {
+                await this.router.navigate(['/']);
+            }
+        }, 200);
+
+        const errorObject = this.persistanceService.get('exception');
+        if (errorObject) {
+            this.errorMessage = errorObject.toString();
+            this.persistanceService.remove('exception');
+        }
+    }
+
+    ngOnDestroy() {
+        if (this.interval) {
+            clearInterval(this.interval);
+        }
+    }
+
+    onAfterExpand(): void {
+        this.errorExpanded = true;
+        this.value = 100;
+    }
 }

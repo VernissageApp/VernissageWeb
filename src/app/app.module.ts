@@ -69,7 +69,7 @@ const httpInterceptor = (platformId: object, authorizationService: Authorization
             deps: [PLATFORM_ID]
         },
         {
-            provide: ErrorHandler, useClass: GlobalErrorHandler, deps: [PLATFORM_ID, Injector, NgZone, AuthorizationService, LoadingService]
+            provide: ErrorHandler, useClass: GlobalErrorHandler, deps: [PLATFORM_ID, Injector, NgZone, AuthorizationService, PersistanceService, LoadingService]
         },
         provideHttpClient(withFetch(), withInterceptorsFromDi()),
         provideClientHydration()
