@@ -9,6 +9,7 @@ import { LoadingService } from '../services/common/loading.service';
 import { SentryErrorHandler } from '@sentry/angular-ivy';
 import { isPlatformBrowser } from '@angular/common';
 import { PersistanceService } from '../services/persistance/persistance.service';
+import { CustomError } from '../errors/custom-error';
 
 export class GlobalErrorHandler extends SentryErrorHandler {
     private isBrowser = false;
@@ -33,7 +34,7 @@ export class GlobalErrorHandler extends SentryErrorHandler {
         await this.zone.run(async () => {
             console.error(error);
             super.handleError(error);
-            this.persistanceService.set('exception', error);
+            this.storeInLocalStorage(error);
 
             this.loadingService.hideLoader();
 
@@ -95,5 +96,30 @@ export class GlobalErrorHandler extends SentryErrorHandler {
 
     private isForbiddenError(error: any): boolean {
         return error instanceof ForbiddenError || (error.rejection && error.rejection instanceof ForbiddenError);
+    }
+
+    private storeInLocalStorage(error: any): void {
+        if (error instanceof Error) {
+            const plainObject = this.toPlainObject(error);
+            const stringified = JSON.stringify(plainObject, null, 2);
+            this.persistanceService.set('exception', stringified.trim());
+        } else if (typeof error === 'object' && error !== null) {
+            const stringified = JSON.stringify(error, null, 2);
+            this.persistanceService.set('exception', stringified.trim());
+        } else {
+            const customError = new CustomError(error);
+            const stringified = JSON.stringify(customError, null, 2);
+            this.persistanceService.set('exception', stringified.trim());
+        }
+    }
+
+    private toPlainObject(value: any) {
+        const error: any = { };
+
+        Object.getOwnPropertyNames(value).forEach(function (propName) {
+            error[propName] = value[propName];
+        });
+
+        return error;
     }
 }
