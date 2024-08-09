@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 
 @Component({
@@ -7,5 +8,25 @@ import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
     styleUrls: ['./access-forbidden.page.scss'],
     animations: fadeInAnimation
 })
-export class AccessForbiddenPage {
+export class AccessForbiddenPage implements OnInit, OnDestroy {
+    value = 100;
+    interval: any;
+
+    constructor(private router: Router) {
+    }
+
+    async ngOnInit(): Promise<void> {
+        this.interval = setInterval(async ()=> {
+            this.value = this.value - 4;
+            if (this.value < 0) {
+                await this.router.navigate(['/']);
+            }
+        }, 200);
+    }
+
+    ngOnDestroy() {
+        if (this.interval) {
+            clearInterval(this.interval);
+        }
+    }
 }

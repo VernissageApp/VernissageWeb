@@ -8,6 +8,7 @@ import { AuthorizationService } from 'src/app/services/authorization/authorizati
 import { LoadingService } from '../services/common/loading.service';
 import { SentryErrorHandler } from '@sentry/angular-ivy';
 import { isPlatformBrowser } from '@angular/common';
+import { PersistanceService } from '../services/persistance/persistance.service';
 
 export class GlobalErrorHandler extends SentryErrorHandler {
     private isBrowser = false;
@@ -17,6 +18,7 @@ export class GlobalErrorHandler extends SentryErrorHandler {
         private injector: Injector,
         private zone: NgZone,
         private authorizationService: AuthorizationService,
+        private persistanceService: PersistanceService,
         private loadingService: LoadingService
     ) {
         super();
@@ -31,6 +33,7 @@ export class GlobalErrorHandler extends SentryErrorHandler {
         await this.zone.run(async () => {
             console.error(error);
             super.handleError(error);
+            this.persistanceService.set('exception', error);
 
             this.loadingService.hideLoader();
 
