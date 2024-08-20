@@ -220,6 +220,50 @@
     <mat-card class="margin-bottom-20" appearance="outlined">
         <mat-card-header>
             <mat-card-title>
+                Moving from a different account
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
+                <div>
+                    If you want to move from another account to this one, here you can create an alias,
+                    which is required before you can proceed with moving followers from the old account to this one.
+                    This action by itself is harmless and reversible. The account migration is initiated from the old account.
+
+                    @if (userAliases && userAliases.length > 0) {
+                        <table mat-table [dataSource]="userAliases" @fadeIn>
+        
+                            <!-- Alias Column -->
+                            <ng-container matColumnDef="alias">
+                                <th mat-header-cell *matHeaderCellDef> Alias </th>
+                                <td mat-cell *matCellDef="let element" class="domain">
+                                    {{ element.alias }}
+                                </td>
+                            </ng-container>
+                    
+                            <!-- Actions Column -->
+                            <ng-container matColumnDef="actions">
+                                <th mat-header-cell *matHeaderCellDef></th>
+                                <td mat-cell *matCellDef="let element" class="text-right actions">
+                                    <button mat-stroked-button color="warn" (click)="onUserAliasDelete(element)">Delete</button>
+                                </td>
+                            </ng-container>
+                        
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                        </table>
+                    }
+                </div>
+                <div class="text-right">
+                    <button type="button" (click)="openCreateAccountDialog()" mat-raised-button color="primary" aria-label="Create account">Create alias</button>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card class="margin-bottom-20" appearance="outlined">
+        <mat-card-header>
+            <mat-card-title>
                 Delete account
             </mat-card-title>
         </mat-card-header>
