@@ -21,6 +21,10 @@ import { ResponsiveComponent } from 'src/app/common/responsive';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { EnableTwoFactorTokenDialog } from 'src/app/dialogs/enable-two-factor-token/enable-two-factor-token.dialog';
 import { DisableTwoFactorTokenDialog } from 'src/app/dialogs/disable-two-factor-token/disable-two-factor-token.dialog';
+import { CreateAliasDialog } from 'src/app/dialogs/create-alias-dialog/create-alias.dialog';
+import { UserAlias } from 'src/app/models/user-alias';
+import { UserAliasesService } from 'src/app/services/http/user-aliases.service';
+import { ConfirmationDialog } from 'src/app/dialogs/confirmation-dialog/confirmation.dialog';
 
 @Component({
     selector: 'app-account',
@@ -35,6 +39,9 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
     isReady = false;
     twoFactorTokenEnabled = false;
 
+    readonly displayedColumns: string[] = ['alias', 'actions'];
+    userAliases: UserAlias[] = [];
+
     selectedAvatarFile: any = null;
     avatarSrc?: string;
 
@@ -47,6 +54,7 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
         private headersService: HeadersService,
         private accountService: AccountService,
         private authorizationService: AuthorizationService,
+        private userAliasesService: UserAliasesService,
         private messageService: MessagesService,
         private windowService: WindowService,
         private router: Router,
@@ -66,7 +74,8 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
             const userFromToken = this.authorizationService.getUser();
             if (userFromToken?.userName) {
                 this.userName = userFromToken?.userName;
-                await this.loadUserData()
+                await this.loadUserData();
+                await this.loadUserAliases();
             } else {
                 this.messageService.showError('Cannot download user settings.');
             }
@@ -100,7 +109,7 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
                 formData.append('file', this.selectedAvatarFile);
 
                 await this.avatarsService.uploadAvatar(this.userName, formData);
-                await this.loadUserData()
+                await this.loadUserData();
                 this.messageService.showSuccess('Avatar has ben saved.');
             }
         } catch (error) {
@@ -129,7 +138,7 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
                 formData.append('file', this.selectedHeaderFile);
 
                 await this.headersService.uploadHeader(this.userName, formData);
-                await this.loadUserData()
+                await this.loadUserData();
                 this.messageService.showSuccess('Header has ben saved.');
             }
         } catch (error) {
@@ -142,7 +151,7 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
         try {
             if (this.user.headerUrl) {
                 await this.headersService.deleteHeader(this.userName);
-                await this.loadUserData()
+                await this.loadUserData();
                 this.messageService.showSuccess('Header has ben deleted.');
             }
         } catch (error) {
@@ -201,7 +210,7 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
     openChangeEmailDialog(): void {
         const dialogRef = this.dialog.open(ChangeEmailDialog);
         dialogRef.afterClosed().subscribe(async () => {
-            await this.loadUserData()
+            await this.loadUserData();
         });
     }
 
@@ -213,7 +222,7 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
         dialogRef.afterClosed().subscribe(async (result) => {
             if (result?.confirmed && this.user.userName) {
                 await this.usersService.delete(this.user.userName);
-                await this.authorizationService.signOut()
+                await this.authorizationService.signOut();
                 await this.router.navigate(['/']);
             }
         });
@@ -225,7 +234,7 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
         });
 
         dialogRef.afterClosed().subscribe(async () => {
-            await this.loadUserData()
+            await this.loadUserData();
         });
     }
 
@@ -235,7 +244,37 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
         });
 
         dialogRef.afterClosed().subscribe(async () => {
-            await this.loadUserData()
+            await this.loadUserData();
+        });
+    }
+
+    openCreateAccountDialog(): void {
+        const dialogRef = this.dialog.open(CreateAliasDialog, {
+            data: this.user
+        });
+
+        dialogRef.afterClosed().subscribe(async () => {
+            await this.loadUserAliases();
+        });
+    }
+
+    onUserAliasDelete(userAlias: UserAlias): void {
+        const dialogRef = this.dialog.open(ConfirmationDialog, {
+            width: '500px',
+            data: 'Do you want to delete user account alias?'
+        });
+
+        dialogRef.afterClosed().subscribe(async (result) => {
+            if (result?.confirmed) {
+                try {
+                    await this.userAliasesService.delete(userAlias.id);
+                    this.messageService.showSuccess('Account alias has been deleted.');
+                    await this.loadUserAliases();
+                } catch (error) {
+                    console.error(error);
+                    this.messageService.showServerError(error);
+                }
+            }
         });
     }
 
@@ -243,5 +282,9 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
         this.user = await this.usersService.profile(this.userName);
         this.avatarSrc = this.user.avatarUrl ?? 'assets/avatar-placeholder.svg';
         this.headerSrc = this.user.headerUrl ?? 'assets/header-placeholder.svg';
+    }
+
+    private async loadUserAliases(): Promise<void> {
+        this.userAliases = await this.userAliasesService.get();
     }
 }
