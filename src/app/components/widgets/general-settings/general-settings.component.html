@@ -20,6 +20,15 @@
 
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
+            <mat-label>Web long description</mat-label>
+            <textarea matInput name="webLongDescription" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4"
+                cdkAutosizeMaxRows="10" placeholder="Web long description" #webLongDescription="ngModel" [(ngModel)]="settings.webLongDescription"
+                aria-label="Web long description"></textarea>
+        </mat-form-field>
+    </div>
+
+    <div class="margin-bottom-20">
+        <mat-form-field appearance="outline">
             <mat-label>Web email</mat-label>
             <input matInput name="webEmail" #webEmail="ngModel" [(ngModel)]="settings.webEmail"
                 placeholder="Web email" aria-label="Web email" />
@@ -104,6 +113,56 @@
             <input matInput name="patreonUrl" #patreonUrl="ngModel" [(ngModel)]="settings.patreonUrl"
                 placeholder="Patreon url" aria-label="Patreon url" />
         </mat-form-field>
+    </div>
+
+    <mat-divider></mat-divider>
+    <h3>Financial support</h3>
+
+    <div class="margin-bottom-20">
+        <mat-form-field appearance="outline">
+            <mat-label>Total cost</mat-label>
+            <input matInput type="number" name="totalCost" #totalCost="ngModel" [(ngModel)]="settings.totalCost"
+                placeholder="Total cost" aria-label="Total cost" />
+        </mat-form-field>
+    </div>
+
+    <div class="margin-bottom-20">
+        <mat-form-field appearance="outline">
+            <mat-label>Users support</mat-label>
+            <input matInput type="number" name="usersSupport" #usersSupport="ngModel" [(ngModel)]="settings.usersSupport"
+                placeholder="Users support" aria-label="Users support" />
+        </mat-form-field>
+    </div>
+
+    <mat-divider></mat-divider>
+    <h3>Anonymous access</h3>
+
+    <div class="margin-bottom-20">
+        <div>
+            <mat-checkbox name="showLocalTimelineForAnonymous" color="primary" [disableRipple]="true" [(ngModel)]="settings.showLocalTimelineForAnonymous">
+                Show local timeline for anonymous.
+            </mat-checkbox>
+        </div>
+        <div>
+            <mat-checkbox name="showTrendingForAnonymous" color="primary" [disableRipple]="true" [(ngModel)]="settings.showTrendingForAnonymous">
+                Show trending for anonymous.
+            </mat-checkbox>
+        </div>
+        <div>
+            <mat-checkbox name="showEditorsChoiceForAnonymous" color="primary" [disableRipple]="true" [(ngModel)]="settings.showEditorsChoiceForAnonymous">
+                Show editor's choice for anonymous.
+            </mat-checkbox>
+        </div>
+        <div>
+            <mat-checkbox name="showHashtagsForAnonymous" color="primary" [disableRipple]="true" [(ngModel)]="settings.showHashtagsForAnonymous">
+                Show hashtags for anonymous.
+            </mat-checkbox>
+        </div>
+        <div>
+            <mat-checkbox name="showCategoriesForAnonymous" color="primary" [disableRipple]="true" [(ngModel)]="settings.showCategoriesForAnonymous">
+                Show categories for anonymous.
+            </mat-checkbox>
+        </div>
     </div>
 
     <mat-divider></mat-divider>

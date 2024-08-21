@@ -7,6 +7,7 @@ export class Instance {
     public uri?: string;
     public title?: string;
     public description?: string;
+    public longDescription?: string;
     public email?: string;
     public version?: string;
     public thumbnail?: string;

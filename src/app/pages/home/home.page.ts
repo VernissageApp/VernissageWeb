@@ -11,6 +11,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { LinkableResult } from 'src/app/models/linkable-result';
 import { ContextTimeline } from 'src/app/models/context-timeline';
 import { ContextStatusesService } from 'src/app/services/common/context-statuses.service';
+import { SettingsService } from 'src/app/services/http/settings.service';
 
 @Component({
     selector: 'app-home',
@@ -34,6 +35,7 @@ export class HomePage extends ResponsiveComponent implements OnInit, OnDestroy {
         private contextStatusesService: ContextStatusesService,
         private timelineService: TimelineService,
         private loadingService: LoadingService,
+        private settingsService: SettingsService,
         private router: Router,
         private activatedRoute: ActivatedRoute,
         breakpointObserver: BreakpointObserver
@@ -58,6 +60,11 @@ export class HomePage extends ResponsiveComponent implements OnInit, OnDestroy {
             });
 
         this.routeParamsSubscription = this.activatedRoute.queryParams.subscribe(async (params) => {
+            if (!this.hasAccessToLocalTimeline()) {
+                await this.router.navigate(['/login']);
+                return;
+            }
+
             this.loadingService.showLoader();
 
             const pageType = params['t'] as string;
@@ -127,5 +134,17 @@ export class HomePage extends ResponsiveComponent implements OnInit, OnDestroy {
                 }
                 break;
         }
+    }
+
+    private hasAccessToLocalTimeline(): boolean {
+        if (this.authorizationService.getUser()) {
+            return true;
+        }
+
+        if (this.settingsService.publicSettings?.showLocalTimelineForAnonymous) {
+            return true;
+        }
+
+        return false;
     }
 }

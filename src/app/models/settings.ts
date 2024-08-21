@@ -26,6 +26,7 @@ export class Settings {
     public eventsToStore: EventType[] = [];
     public webTitle = '';
     public webDescription = '';
+    public webLongDescription = '';
     public webEmail = '';
     public webThumbnail = '';
     public webLanguages = '';
@@ -43,4 +44,13 @@ export class Settings {
     public webPushVapidPublicKey = '';
     public webPushVapidPrivateKey = '';
     public webPushVapidSubject = '';
+
+    public totalCost = 0;
+    public usersSupport = 0;
+
+    public showLocalTimelineForAnonymous = false;
+    public showTrendingForAnonymous = false;
+    public showEditorsChoiceForAnonymous = false;
+    public showHashtagsForAnonymous = false;
+    public showCategoriesForAnonymous = false;
 }
