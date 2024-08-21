@@ -144,5 +144,9 @@ export enum EventType {
     PushSubscriptionsList = 'pushSubscriptionsList',
     PushSubscriptionsCreate = 'pushSubscriptionsCreate',
     PushSubscriptionsUpdate = 'pushSubscriptionsUpdate',
-    PushSubscriptionsDelete = 'pushSubscriptionsDelete'
+    PushSubscriptionsDelete = 'pushSubscriptionsDelete',
+
+    UserAliasesList = 'userAliasesList',
+    UserAliasesCreate = 'userAliasesCreate',
+    UserAliasesDelete = 'userAliasesDelete'
 }
