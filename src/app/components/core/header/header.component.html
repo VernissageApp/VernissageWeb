@@ -1,81 +1,111 @@
 <nav>
     <mat-toolbar color="primary">
         <a class="logo link" (click)="onLogoClick()" (keydown.enter)="onLogoClick()" tabindex="0">Vernissage <div class="beta"></div></a>
-        <ng-container *ngIf="!user || !isLoggedIn">
-            <div class="flex-spacer"></div>
-            <button *ngIf="isRegistrationEnabled()" mat-stroked-button color="primary" [routerLink]="['/register']" class="margin-right-5">Sign up</button>
-            <button mat-button [routerLink]="['/login']">Log in</button>
-        </ng-container>
-        <ng-container *ngIf="user && isLoggedIn">
-            <ng-container *ngIf="deviceResolution === resolution.handsetLandscape || deviceResolution === resolution.tablet || deviceResolution === resolution.browser">
-                <ng-container *ngIf="deviceResolution === resolution.handsetLandscape">
+
+        @if (deviceResolution === resolution.handsetLandscape || deviceResolution === resolution.tablet || deviceResolution === resolution.browser) {
+            @if (deviceResolution === resolution.handsetLandscape) {
+                @if (showTrending) {
                     <button mat-icon-button color="primary" [routerLink]="['/trending']" aria-label="Trending">
                         <mat-icon>trending_up</mat-icon>
                     </button>
+                }
+                
+                @if (showEditorsChoice) {
                     <button mat-icon-button color="primary" [routerLink]="['/editors']" aria-label="Editor's choice">
                         <mat-icon>stars</mat-icon>
                     </button>
+                }
+
+                @if (showCategories) {
                     <button mat-icon-button color="primary" [routerLink]="['/categories']" aria-label="Categories">
                         <mat-icon>loyalty</mat-icon>
                     </button>
-                </ng-container>
+                }
+            }
 
-
-                <ng-container *ngIf="deviceResolution === resolution.tablet || deviceResolution === resolution.browser">
+            @if (deviceResolution === resolution.tablet || deviceResolution === resolution.browser) {
+                @if(showTrending) {
                     <button mat-button color="primary" [routerLink]="['/trending']" aria-label="Trending" class="margin-right-5">
                         <mat-icon>trending_up</mat-icon> Trending
                     </button>
+                }
+
+                @if (showEditorsChoice) {
                     <button mat-button color="primary" [routerLink]="['/editors']" aria-label="Editor's choice" class="margin-right-5">
                         <mat-icon>stars</mat-icon> Editor's choice
                     </button>
+                }
+
+                @if (showCategories) {
                     <button mat-button color="primary" [routerLink]="['/categories']" aria-label="Categories" class="margin-right-5">
                         <mat-icon>loyalty</mat-icon> Categories
                     </button>
-                </ng-container>
-            </ng-container>
+                }
+            }
+        }
 
-            <div class="flex-spacer"></div>
+        <div class="flex-spacer"></div>
 
-            <ng-container *ngIf="deviceResolution === resolution.handsetLandscape || deviceResolution === resolution.tablet || deviceResolution === resolution.browser">
+        @if (user && isLoggedIn) {
+            @if (deviceResolution === resolution.handsetLandscape || deviceResolution === resolution.tablet || deviceResolution === resolution.browser) {
                 <button *ngIf="deviceResolution === resolution.handsetLandscape" mat-icon-button color="primary" [routerLink]="['/upload']" aria-label="Upload">
                     <mat-icon>arrow_upward</mat-icon>
                 </button>
                 <button *ngIf="deviceResolution === resolution.tablet || deviceResolution === resolution.browser" mat-stroked-button color="primary" class="margin-right-10" [routerLink]="['/upload']">
                     <mat-icon>arrow_upward</mat-icon> Upload
                 </button>
-            </ng-container>
+            }
+        }
 
-            <ng-container *ngIf="deviceResolution === resolution.handsetPortrait">
+        @if (deviceResolution === resolution.handsetPortrait) {
+            @if (showTrending || showEditorsChoice || showCategories) {
                 <button mat-icon-button [matMenuTriggerFor]="discover" color="primary" aria-label="More options">
                     <mat-icon>menu</mat-icon>
                 </button>
                 <mat-menu #discover="matMenu">
-                    <button mat-menu-item [routerLink]="['/trending']" aria-label="Trending">
-                        <mat-icon>timeline</mat-icon>
-                        <span>Trending</span>
-                    </button>
-                    <button mat-menu-item [routerLink]="['/editors']" aria-label="Editor's choice">
-                        <mat-icon>stars</mat-icon>
-                        <span>Editor's choice</span>
-                    </button>
-                    <button mat-menu-item [routerLink]="['/categories']" aria-label="Categories">
-                        <mat-icon>loyalty</mat-icon>
-                        <span>Categories</span>
-                    </button>
+                    @if (showTrending) {
+                        <button mat-menu-item [routerLink]="['/trending']" aria-label="Trending">
+                            <mat-icon>timeline</mat-icon>
+                            <span>Trending</span>
+                        </button>
+                    }
 
-                    <mat-divider></mat-divider>
+                    @if (showEditorsChoice) {
+                        <button mat-menu-item [routerLink]="['/editors']" aria-label="Editor's choice">
+                            <mat-icon>stars</mat-icon>
+                            <span>Editor's choice</span>
+                        </button>
+                    }
 
-                    <button mat-menu-item [routerLink]="['/upload']" aria-label="Upload">
-                        <mat-icon>arrow_upward</mat-icon>
-                        <span>Upload</span>
-                    </button>
-                    <button mat-menu-item [routerLink]="['/search']" aria-label="Search">
-                        <mat-icon>search</mat-icon>
-                        <span>Search</span>
-                    </button>
+                    @if (showCategories) {
+                        <button mat-menu-item [routerLink]="['/categories']" aria-label="Categories">
+                            <mat-icon>loyalty</mat-icon>
+                            <span>Categories</span>
+                        </button>
+                    }
+
+                    @if (user && isLoggedIn) {
+                        <mat-divider></mat-divider>
+
+                        <button mat-menu-item [routerLink]="['/upload']" aria-label="Upload">
+                            <mat-icon>arrow_upward</mat-icon>
+                            <span>Upload</span>
+                        </button>
+                        <button mat-menu-item [routerLink]="['/search']" aria-label="Search">
+                            <mat-icon>search</mat-icon>
+                            <span>Search</span>
+                        </button>
+                    }
                 </mat-menu>
-            </ng-container>
+            }
+        }
 
+        @if(!user || !isLoggedIn) {
+            <button *ngIf="isRegistrationEnabled()" mat-stroked-button color="primary" [routerLink]="['/register']" class="margin-right-5">Sign up</button>
+            <button mat-button [routerLink]="['/login']">Log in</button>
+        }
+
+        @if (user && isLoggedIn) {
             <mat-divider class="menu-divider" [vertical]="true"></mat-divider>
 
             <button *ngIf="deviceResolution !== resolution.handsetPortrait" mat-icon-button color="primary" [routerLink]="['/search']" aria-label="Search">
@@ -138,6 +168,6 @@
                     </button>
                 </mat-menu>
             </div>
-        </ng-container>
+        }
     </mat-toolbar>
 </nav>

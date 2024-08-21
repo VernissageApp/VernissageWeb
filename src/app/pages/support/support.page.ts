@@ -16,6 +16,8 @@ export class SupportPage extends ResponsiveComponent implements OnInit {
     isReady = false;
     instance?: Instance;
     patreonUrl?: string;
+    totalCost = 0;
+    usersSupport = 0;
 
     constructor(
         private instanceService: InstanceService,
@@ -34,6 +36,9 @@ export class SupportPage extends ResponsiveComponent implements OnInit {
         if (internalPatreonUrl.length > 0) {
             this.patreonUrl = internalPatreonUrl;
         }
+
+        this.totalCost = this.settingsService.publicSettings?.totalCost ?? 0;
+        this.usersSupport = this.settingsService.publicSettings?.usersSupport ?? 0;
 
         this.isReady = true;
     }

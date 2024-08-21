@@ -10,7 +10,9 @@ import { LinkableResult } from "src/app/models/linkable-result";
 import { Status } from "src/app/models/status";
 import { TrendingPeriod } from "src/app/models/trending-period";
 import { User } from "src/app/models/user";
+import { AuthorizationService } from "src/app/services/authorization/authorization.service";
 import { LoadingService } from "src/app/services/common/loading.service";
+import { SettingsService } from "src/app/services/http/settings.service";
 import { TrendingService } from "src/app/services/http/trending.service";
 
 @Component({
@@ -30,12 +32,15 @@ export class TrendingPage extends ResponsiveComponent implements OnInit, OnDestr
     trending = 'statuses';
     selectedTrending = 'statuses';
     isReady = false;
+    showHashtags = false;
 
     routeParamsSubscription?: Subscription;
 
     constructor(
         private trendingService: TrendingService,
         private loadingService: LoadingService,
+        private settingsService: SettingsService,
+        private authorizationService: AuthorizationService,
         private router: Router,
         private activatedRoute: ActivatedRoute,
         breakpointObserver: BreakpointObserver
@@ -50,6 +55,7 @@ export class TrendingPage extends ResponsiveComponent implements OnInit, OnDestr
             this.loadingService.showLoader();
             const internalPeriod = params['period'] as TrendingPeriod ?? TrendingPeriod.Daily;
             const internalTrending  = params['trending'] as string ?? 'statuses';
+            this.showHashtags = this.hasAccessToHashtags();
 
             switch(internalTrending) {
                 case 'statuses':
@@ -130,5 +136,17 @@ export class TrendingPage extends ResponsiveComponent implements OnInit, OnDestr
                 this.hashtags = await this.trendingService.hashtags(undefined, undefined, undefined, undefined, internalPeriod);
                 break;
         }
+    }
+
+    private hasAccessToHashtags(): boolean {
+        if (this.authorizationService.getUser()) {
+            return true;
+        }
+
+        if (this.settingsService.publicSettings?.showHashtagsForAnonymous) {
+            return true;
+        }
+
+        return false;
     }
 }
