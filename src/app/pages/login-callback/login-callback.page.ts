@@ -24,7 +24,7 @@ export class LoginCallbackPage implements OnInit {
 
         try {
             const accessToken = await this.identityService.login(new IdentityToken(authenticateToken));
-            this.authorizationService.signIn(accessToken);
+            await this.authorizationService.signIn(accessToken);
             await this.router.navigate(['/home']);
         } catch (error: any) {
 

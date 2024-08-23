@@ -61,7 +61,7 @@ export class GlobalErrorHandler extends SentryErrorHandler {
                         await this.router.navigate(['/access-forbidden']);
                         break;
                     case HttpStatusCode.Unauthorized:
-                        // We don't need to signout when we render page on server.
+                        // We don't need to sign out when we render page on server.
                         if (this.isBrowser) {
                             await this.authorizationService.signOut();
                         }

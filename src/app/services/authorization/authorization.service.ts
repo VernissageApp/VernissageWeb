@@ -37,7 +37,8 @@ export class AuthorizationService {
 
         const now = new Date();
         if (tokenExpirationTime < now) {
-            return this.refreshAccessToken();
+            const resultRefreshAccessToken = await this.refreshAccessToken();
+            return resultRefreshAccessToken;
         }
 
         return true;
@@ -59,26 +60,25 @@ export class AuthorizationService {
         return this.userPayloadToken.userPayload.roles.includes(role);    
     }
 
-    async signIn(userPayloadToken: UserPayloadToken): Promise<void> {
+    async signIn(userPayloadToken: UserPayloadToken): Promise<boolean> {
         if (!userPayloadToken) {
             await this.signOut();
-            return;
+            return false;
         }
 
         const tokenExpirationTime = new Date(userPayloadToken.expirationDate);
         if (!tokenExpirationTime) {
             await this.signOut();
-            return;
+            return false;
         }
 
         const now = new Date();
         if (tokenExpirationTime < now) {
             await this.signOut();
-            return;
+            return false;
         }
 
         this.userPayloadToken = userPayloadToken;
-        this.changes.next(this.userPayloadToken.userPayload);
 
         const expirationTime = tokenExpirationTime.getTime();
         const tokenExpirationSeconds = Math.round(expirationTime / this.oneSecond);
@@ -86,14 +86,19 @@ export class AuthorizationService {
 
         const sessionTimeout = (tokenExpirationSeconds - nowSeconds) - this.tokenProcessingTime;
         this.initSessionTimeout(sessionTimeout);
+
+        this.changes.next(this.userPayloadToken.userPayload);
+        return true;
     }
 
     async signOut(): Promise<void> {
         this.cancelSessionTimeout();
-        this.userPayloadToken = undefined;
-
-        if (this.isBrowser) {
+        
+        if (this.isBrowser && this.userPayloadToken)  {
+            this.userPayloadToken = undefined;
             await this.accountService.logout();
+        } else {
+            this.userPayloadToken = undefined;
         }
 
         this.changes.next(undefined);
@@ -103,8 +108,8 @@ export class AuthorizationService {
         try {
             const refreshUserPayloadToken = await this.accountService.refreshToken();
             if (refreshUserPayloadToken) {
-                await this.signIn(refreshUserPayloadToken);
-                return true;
+                const signInResult = await this.signIn(refreshUserPayloadToken);
+                return signInResult;
             } else {
                 await this.signOut();
                 return false;
