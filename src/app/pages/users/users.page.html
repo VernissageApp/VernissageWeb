@@ -117,14 +117,36 @@
                         </button>
                         <mat-menu #dropdownMenuOne2="matMenu" xPosition="before">
                             @if (element.isLocal) {
-                                <button (click)="onSetRoles(element)" mat-menu-item>Assign roles</button>
-                                <button *ngIf="element.isBlocked" (click)="onSetEnable(element)" mat-menu-item>Enable</button>
-                                <button *ngIf="!element.isBlocked" (click)="onSetDisable(element)" mat-menu-item>Disable</button>
-                                <button *ngIf="!element.isApproved" (click)="onApprove(element)" mat-menu-item>Approve</button>
-                                <button *ngIf="!element.isApproved" (click)="onReject(element)" mat-menu-item>Reject</button>
+                                <button (click)="onSetRoles(element)" mat-menu-item>
+                                    <mat-icon class="outline-symbol">key</mat-icon>
+                                    <span>Assign roles</span>
+                                </button>
+                                <button *ngIf="element.isBlocked" (click)="onSetEnable(element)" mat-menu-item>
+                                    <mat-icon class="outline-symbol">person_check</mat-icon>
+                                    <span>Enable</span>
+                                </button>
+                                <button *ngIf="!element.isBlocked" (click)="onSetDisable(element)" mat-menu-item>
+                                    <mat-icon class="outline-symbol">person_cancel</mat-icon>
+                                    <span>Disable</span>
+                                </button>
+                                <button *ngIf="!element.isApproved" (click)="onApprove(element)" mat-menu-item>
+                                    <mat-icon class="outline-symbol">check_circle</mat-icon>
+                                    <span>Approve</span>
+                                </button>
+                                <button *ngIf="!element.isApproved" (click)="onReject(element)" mat-menu-item>
+                                    <mat-icon class="outline-symbol">unpublished</mat-icon>
+                                    <span>Reject</span>
+                                </button>
                             } @else {
-                                <button (click)="onUserRefresh(element)" mat-menu-item>Refresh</button>
+                                <button (click)="onUserRefresh(element)" mat-menu-item>
+                                    <mat-icon class="outline-symbol">sync</mat-icon>
+                                    <span>Refresh</span>
+                                </button>
                             }
+                            <button (click)="onDelete(element)" mat-menu-item>
+                                <mat-icon class="outline-symbol">delete</mat-icon>
+                                <span>Delete</span>
+                            </button>
                         </mat-menu>
                     </td>
                 </ng-container>
