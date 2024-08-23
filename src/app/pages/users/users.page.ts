@@ -17,6 +17,7 @@ import { User } from 'src/app/models/user';
 import { AvatarSize } from 'src/app/components/widgets/avatar/avatar-size';
 import { UserRolesDialog } from 'src/app/dialogs/user-roles-dialog/user-roles.dialog';
 import { RandomGeneratorService } from 'src/app/services/common/random-generator.service';
+import { ConfirmationDialog } from 'src/app/dialogs/confirmation-dialog/confirmation.dialog';
 
 @Component({
     selector: 'app-users',
@@ -174,6 +175,34 @@ export class UsersPage extends ResponsiveComponent implements OnInit {
             console.error(error);
             this.messageService.showServerError(error);
         }
+    }
+
+    async onDelete(user: User): Promise<void> {
+        const dialogRef = this.dialog.open(ConfirmationDialog, {
+            width: '500px',
+            data: 'Do you want to delete user account?'
+        });
+
+        dialogRef.afterClosed().subscribe(async (result) => {
+            if (result?.confirmed) {
+                try {
+                    if (user.userName) {
+                        await this.usersService.delete(user.userName);
+                        this.messageService.showSuccess('Account has been deleted.');
+        
+                        const navigationExtras: NavigationExtras = {
+                            queryParams: { t: this.randomGeneratorService.generateString(8) },
+                            queryParamsHandling: 'merge'
+                        };
+                
+                        await this.router.navigate([], navigationExtras);
+                    }
+                } catch (error) {
+                    console.error(error);
+                    this.messageService.showServerError(error);
+                }
+            }
+        });
     }
 
     async handlePageEvent(pageEvent: PageEvent): Promise<void> {
