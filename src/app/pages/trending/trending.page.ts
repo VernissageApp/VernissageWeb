@@ -52,6 +52,11 @@ export class TrendingPage extends ResponsiveComponent implements OnInit, OnDestr
         super.ngOnInit();
 
         this.routeParamsSubscription = this.activatedRoute.queryParams.subscribe(async (params) => {
+            if (!this.hasAccessToTrending()) {
+                await this.router.navigate(['/login']);
+                return;
+            }
+
             this.loadingService.showLoader();
             const internalPeriod = params['period'] as TrendingPeriod ?? TrendingPeriod.Daily;
             const internalTrending  = params['trending'] as string ?? 'statuses';
@@ -144,6 +149,18 @@ export class TrendingPage extends ResponsiveComponent implements OnInit, OnDestr
         }
 
         if (this.settingsService.publicSettings?.showHashtagsForAnonymous) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private hasAccessToTrending(): boolean {
+        if (this.authorizationService.getUser()) {
+            return true;
+        }
+
+        if (this.settingsService.publicSettings?.showTrendingForAnonymous) {
             return true;
         }
 

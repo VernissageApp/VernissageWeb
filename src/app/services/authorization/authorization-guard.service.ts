@@ -6,7 +6,8 @@ export const authorizationGuard = async (_: ActivatedRouteSnapshot, state: Route
     const authorizationService = inject(AuthorizationService);
     const router = inject(Router);
 
-    if (!authorizationService.isLoggedIn()) {
+    const isLoggedIn = await authorizationService.isLoggedIn();
+    if (!isLoggedIn) {
         await authorizationService.signOut();
         await router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
 
