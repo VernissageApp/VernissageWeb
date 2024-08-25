@@ -5,6 +5,9 @@ import { ResponsiveComponent } from 'src/app/common/responsive';
 import { Instance } from 'src/app/models/instance';
 import { InstanceService } from 'src/app/services/http/instance.service';
 import { SettingsService } from 'src/app/services/http/settings.service';
+import { HealthService } from 'src/app/services/http/health.service';
+import { Health } from 'src/app/models/health';
+import { MessagesService } from 'src/app/services/common/messages.service';
 
 @Component({
     selector: 'app-support',
@@ -18,16 +21,19 @@ export class SupportPage extends ResponsiveComponent implements OnInit {
     patreonUrl?: string;
     totalCost = 0;
     usersSupport = 0;
+    health?: Health;
 
     constructor(
         private instanceService: InstanceService,
         private settingsService: SettingsService,
+        private healthService: HealthService,
+        private messageService: MessagesService,
         breakpointObserver: BreakpointObserver
     ) {
         super(breakpointObserver);
     }
 
-    override ngOnInit(): void {
+    override async ngOnInit(): Promise<void> {
         super.ngOnInit();
 
         this.instance = this.instanceService.instance;
@@ -39,7 +45,17 @@ export class SupportPage extends ResponsiveComponent implements OnInit {
 
         this.totalCost = this.settingsService.publicSettings?.totalCost ?? 0;
         this.usersSupport = this.settingsService.publicSettings?.usersSupport ?? 0;
+        this.loadHealthStatus();
 
         this.isReady = true;
+    }
+
+    private async loadHealthStatus(): Promise<void> {
+        try {
+            this.health = await this.healthService.get();
+        } catch {
+            this.health = new Health();
+            this.messageService.showError('Error during downloading system health status.');
+        }
     }
 }
