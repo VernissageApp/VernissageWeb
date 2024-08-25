@@ -170,7 +170,7 @@
 
                         <div *ngIf="getExif(currentIndex)?.lens" class="margin-bottom-10">
                             <mat-icon class="margin-right-20" inline="true" matTooltip="Lens">camera</mat-icon>
-                            <span *ngIf="getExif(currentIndex)?.lens" class="exif-label">{{ getExif(currentIndex)?.lens }}</span>
+                            <span class="exif-label">{{ getExif(currentIndex)?.lens }}</span>
                         </div>
 
                         <div *ngIf="getExif(currentIndex)?.focalLenIn35mmFilm || getExif(currentIndex)?.fNumber || getExif(currentIndex)?.exposureTime || getExif(currentIndex)?.photographicSensitivity" class="margin-bottom-10">
@@ -179,6 +179,11 @@
                             <span *ngIf="getExif(currentIndex)?.fNumber" class="margin-right-15 exif-label">{{ getExif(currentIndex)?.fNumber }}</span>
                             <span *ngIf="getExif(currentIndex)?.exposureTime" class="margin-right-15 exif-label">{{ getExif(currentIndex)?.exposureTime }}s</span>
                             <span *ngIf="getExif(currentIndex)?.photographicSensitivity" class="margin-right-15 exif-label">ISO {{ getExif(currentIndex)?.photographicSensitivity }}</span>
+                        </div>
+
+                        <div *ngIf="getExif(currentIndex)?.film" class="margin-bottom-10">
+                            <mat-icon class="margin-right-20" inline="true" matTooltip="Camera roll">camera_roll</mat-icon>
+                            <span class="exif-label">{{ getExif(currentIndex)?.film }}</span>
                         </div>
                     </div>
 

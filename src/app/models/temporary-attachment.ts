@@ -12,6 +12,7 @@ export class TemporaryAttachment {
     public fNumber?: string;
     public exposureTime?: string;
     public photographicSensitivity?: string;
+    public film?: string;
     public locationId?: string;
     public licenseId?: string;
 }
