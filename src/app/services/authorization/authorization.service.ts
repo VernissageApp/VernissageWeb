@@ -52,6 +52,10 @@ export class AuthorizationService {
         return this.userPayloadToken.userPayload;
     }
 
+    getXsrfToken(): string {
+        return this.userPayloadToken?.xsrfToken ?? 'unknown';
+    }
+
     hasRole(role: Role): boolean {
         if (!this.userPayloadToken || !this.userPayloadToken.userPayload || !this.userPayloadToken.userPayload.roles) {
             return false;
