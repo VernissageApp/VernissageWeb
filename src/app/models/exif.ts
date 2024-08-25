@@ -7,4 +7,5 @@ export class Exif {
     public fNumber?: string;
     public exposureTime?: string;
     public photographicSensitivity?: string;
+    public film?: string;
 }

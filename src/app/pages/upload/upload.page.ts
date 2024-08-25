@@ -150,7 +150,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
                 }
 
                 if (photo.showCreateDate) {
-                    temporaryAttachment.createDate = photo.createDate
+                    temporaryAttachment.createDate = photo.createDate?.toISOString()
                 }
 
                 if (photo.showFocalLenIn35mmFilm) {
@@ -158,7 +158,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
                 }
                 
                 if (photo.fNumber) {
-                    temporaryAttachment.fNumber = photo.fNumber
+                    temporaryAttachment.fNumber = `f/${photo.fNumber}`
                 }
 
                 if (photo.exposureTime) {
@@ -167,6 +167,10 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
 
                 if (photo.photographicSensitivity) {
                     temporaryAttachment.photographicSensitivity = photo.photographicSensitivity
+                }
+
+                if (photo.film) {
+                    temporaryAttachment.film = photo.film
                 }
 
                 temporaryAttachment.locationId = photo.locationId;
@@ -214,14 +218,53 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
         bufferReader.addEventListener('load', () => {
             const tags = ExifReader.load(bufferReader.result as ArrayBuffer);
 
-            uploadPhoto.make = tags['Make']?.description.toString();
-            uploadPhoto.model = tags['Model']?.description.toString();
-            uploadPhoto.lens = tags['Lens']?.description.toString();
-            uploadPhoto.createDate = tags['CreateDate']?.description.toString();
-            uploadPhoto.focalLenIn35mmFilm = tags['FocalLengthIn35mmFilm']?.description.toString();
-            uploadPhoto.fNumber = tags['FNumber']?.description.toString();
-            uploadPhoto.exposureTime = tags['ExposureTime']?.description.toString();
-            uploadPhoto.photographicSensitivity = tags['ISOSpeedRatings']?.description.toString();
+            const make = tags['Make']?.description.toString();
+            if (make) {
+                uploadPhoto.make = make;
+                uploadPhoto.showMake = true;
+            }
+
+            const model = tags['Model']?.description.toString();
+            if (model) {
+                uploadPhoto.model = model;
+                uploadPhoto.showModel = true;
+            }
+
+            const lens = tags['Lens']?.description.toString();
+            if (lens) {
+                uploadPhoto.lens = lens;
+                uploadPhoto.showLens = true;
+            }
+
+            const focalLenIn35mmFilm = tags['FocalLengthIn35mmFilm']?.description.toString();
+            if (focalLenIn35mmFilm) {
+                uploadPhoto.focalLenIn35mmFilm = focalLenIn35mmFilm;
+                uploadPhoto.showFocalLenIn35mmFilm = true;
+            }
+
+            const exposureTime = tags['ExposureTime']?.description.toString();
+            if (exposureTime) {
+                uploadPhoto.exposureTime = exposureTime;
+                uploadPhoto.showExposureTime = true;
+            }
+
+            const photographicSensitivity = tags['ISOSpeedRatings']?.description.toString();
+            if (photographicSensitivity) {
+                uploadPhoto.photographicSensitivity = photographicSensitivity;
+                uploadPhoto.showPhotographicSensitivity = true;
+            }
+
+            const fNumber = tags['FNumber']?.description.toString();
+            if (fNumber) {
+                uploadPhoto.fNumber = fNumber?.replace('f/', '');
+                uploadPhoto.showFNumber = true;
+            }
+
+            const createDate = tags['CreateDate']?.description.toString();
+            if (createDate) {
+                uploadPhoto.createDate = new Date(createDate);
+                uploadPhoto.showCreateDate = true;
+            }
         });
 
         bufferReader.readAsArrayBuffer(uploadPhoto.photoFile);
