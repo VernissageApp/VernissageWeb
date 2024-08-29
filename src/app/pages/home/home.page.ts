@@ -85,10 +85,11 @@ export class HomePage extends ResponsiveComponent implements OnInit, OnDestroy {
     @HostListener('document:visibilitychange', ['$event'])
     async visibilityChange(event: any): Promise<void> {
         if (!event.target.hidden && this.isPageVisible) {
-            const lastRefreshTimePlusMinute = new Date(this.lastRefreshTime.getTime() + 60000);
+            const twoHours = 60000 * 120;
+            const lastRefreshTimePlusTwoHours = new Date(this.lastRefreshTime.getTime() + twoHours);
             const currentTime = new Date();
 
-            if (lastRefreshTimePlusMinute < currentTime) {
+            if (lastRefreshTimePlusTwoHours < currentTime) {
                 this.loadingService.showLoader();
                 await this.loadData(this.timeline);
                 this.loadingService.hideLoader();
