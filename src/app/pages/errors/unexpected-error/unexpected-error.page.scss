@@ -1,8 +1,7 @@
 .error-container {
     width: 560px;
 
-    .json {
-        white-space: pre;
-        overflow-x: scroll;
+    textarea {
+        width: 100%;
     }
 }
