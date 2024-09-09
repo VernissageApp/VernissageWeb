@@ -1,4 +1,4 @@
-<div *ngIf="isValidatingMode()" @fadeIn class="flex-row flex-center">
+<div *ngIf="isValidatingMode()" @fadeIn class="padding-top-30 flex-row flex-center">
     <div class="confirm-container margin-left-10 margin-right-10">
         <mat-card appearance="outlined">
             <mat-card-header>
@@ -14,7 +14,7 @@
     </div>
 </div>
 
-<div *ngIf="isSuccessMode()" class="flex-row flex-center">
+<div *ngIf="isSuccessMode()" class="padding-top-30 flex-row flex-center">
     <div class="confirm-container margin-left-10 margin-right-10">
         <mat-card appearance="outlined">
             <mat-card-header>
@@ -25,14 +25,17 @@
             </mat-card-header>
             <mat-card-content>
                 <strong>Congratulations!</strong> Your email has been confirmed. Your account was successfully
-                created and enabled. You can go to the <a routerLink="/login">login</a> page and use your
-                credentials to sign in into the system. Thank you!
+                created and all features has been enabled.
+                @if (!isLoggedIn) {
+                    You can go to the <a routerLink="/login">login</a> page and use your
+                    credentials to sign in into the system. Thank you!
+                }
             </mat-card-content>
         </mat-card>
     </div>
 </div>
 
-<div *ngIf="isErrorMode()" class="flex-row flex-center">
+<div *ngIf="isErrorMode()" class="padding-top-30 flex-row flex-center">
     <div class="confirm-container margin-left-10 margin-right-10">
         <mat-card appearance="outlined">
             <mat-card-header>

@@ -43,7 +43,7 @@ const routes: Routes = [
     { path: 'login-callback', component: LoginCallbackPage, canActivate: [ loggedOutGuard ] },
     { path: 'reset-password', component: ResetPasswordPage, canActivate: [ loggedOutGuard ], title: 'Vernissage - Reset password' },
     { path: 'register', component: RegisterPage, canActivate: [ loggedOutGuard ], title: 'Vernissage - Register' },
-    { path: 'confirm-email', component: ConfirmEmailPage, canActivate: [ loggedOutGuard ], title: 'Vernissage - Confirm email' },
+    { path: 'confirm-email', component: ConfirmEmailPage, title: 'Vernissage - Confirm email' },
     { path: 'account', component: AccountPage, canActivate: [ authorizationGuard ], title: 'Vernissage - Account' },
     { path: 'home', component: HomePage, data: { reuse: true }, title: 'Vernissage - Home timeline' },
     { path: 'access-forbidden', component: AccessForbiddenPage, title: 'Vernissage - Access forbidden' },
