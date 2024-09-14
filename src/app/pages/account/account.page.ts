@@ -19,6 +19,7 @@ import { ResendEmailConfirmation } from 'src/app/models/resend-email-confirmatio
 import { ChangePasswordDialog } from 'src/app/dialogs/change-password-dialog/change-password.dialog';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { Clipboard } from '@angular/cdk/clipboard';
 import { EnableTwoFactorTokenDialog } from 'src/app/dialogs/enable-two-factor-token/enable-two-factor-token.dialog';
 import { DisableTwoFactorTokenDialog } from 'src/app/dialogs/disable-two-factor-token/disable-two-factor-token.dialog';
 import { CreateAliasDialog } from 'src/app/dialogs/create-alias-dialog/create-alias.dialog';
@@ -35,6 +36,7 @@ import { ConfirmationDialog } from 'src/app/dialogs/confirmation-dialog/confirma
 export class AccountPage extends ResponsiveComponent implements OnInit {
 
     userName = '';
+    verification = '';
     user: User = new User();
     isReady = false;
     twoFactorTokenEnabled = false;
@@ -59,6 +61,7 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
         private windowService: WindowService,
         private router: Router,
         public dialog: MatDialog,
+        private clipboard: Clipboard,
         private loadingService: LoadingService,
         breakpointObserver: BreakpointObserver
     ) {
@@ -79,6 +82,9 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
             } else {
                 this.messageService.showError('Cannot download user settings.');
             }
+
+            const applicationBaseUrl = this.windowService.getApplicationBaseUrl()
+            this.verification = `<a rel="me" href="${applicationBaseUrl}/@${this.user.userName}">Vernissage</a>`;
         } catch {
             this.messageService.showError('Error during downloading user settings.');
             await this.router.navigate(['/home']);
@@ -191,12 +197,18 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
         }
     }
 
+    onCopyVerification(): void {
+        this.clipboard.copy(this.verification);
+        this.messageService.showSuccess('Verification code has been copied into clipboard.');
+    }
+
     async resentConfirmationEmail(): Promise<void> {
         try {
             const resendEmailConfirmation = new ResendEmailConfirmation();
             resendEmailConfirmation.redirectBaseUrl = this.windowService.getApplicationUrl();
 
             await this.accountService.resend(resendEmailConfirmation);
+            this.messageService.showSuccess('The email has been sent and should arrive in your inbox shortly.');
         } catch (error) {
             console.error(error);
             this.messageService.showServerError(error);

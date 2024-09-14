@@ -93,6 +93,32 @@
                         <div></div>
                     </div>
                 </div>
+
+                <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20 padding-top-20">
+                    <div>
+                        <h3>Verification</h3>
+                        <div class="text-muted">
+                            <p>
+                                You can use Fields to verify your identity. All you need is a personal website that others recognize as yours.
+                                By linking to this website from your profile, we will verify that the website links back to your profile and
+                                display a visual indicator to confirm this. Simply copy and paste the code provided below into the HTML of your
+                                website, then add your website's address into one of the extra fields above.
+                            </p>
+                            
+                            <mat-form-field class="width-100" appearance="outline">
+                                <input matInput name="verification" type="text" [ngModel]="verification" aria-label="Verification example" [readonly]="true">
+                                <button matSuffix mat-flat-button type="button" class="margin-right-10" (click)="onCopyVerification()" aria-label="Copy verification">Copy</button>
+                            </mat-form-field>
+
+                            <p>
+                                Tip: The link on your website can be invisible. The important part is rel="me" which prevents impersonation on websites
+                                with user-generated content.
+                            </p>
+                        </div>
+                    </div>
+                    <div></div>
+                </div>
+
             </mat-card-content>
 
             <mat-card-actions>
