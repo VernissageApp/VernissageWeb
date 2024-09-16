@@ -5,8 +5,18 @@
         </div>
 
         <div class="overflow-ellipsis width-100">
-            <div class="overflow-ellipsis"><a [routerLink]="[ '/@' + user.userName ]" class="margin-right-5 fw-600">{{ userDisplayService.displayName(user) }}</a></div>
-            <div class="fw-400 fs-90 text-muted overflow-ellipsis">&#64;{{ user.userName }}</div>
+            <div class="overflow-ellipsis">
+                <a [routerLink]="[ '/@' + user.userName ]" class="margin-right-5 fw-600">{{ userDisplayService.displayName(user) }}</a>
+            </div>
+            <div class="fw-400 fs-90 text-muted overflow-ellipsis">
+                <div>&#64;{{ user.userName }}</div>
+                @if (userDisplayService.verifiedUrl(user)) {
+                    <div class="verification-badge text-success">
+                        <mat-icon [inline]="true" class="fill-symbol verification-icon">check</mat-icon>
+                        <span [innerHTML]="userDisplayService.verifiedUrl(user)" class="green-link"></span>
+                    </div>
+                }
+            </div>
 
             <div *ngIf="showBio" class="bio" [innerHTML]="user.bioHtml"></div>
             <div class="fw-300 fs-90 flex-row flex-wrap">

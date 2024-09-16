@@ -21,4 +21,18 @@ export class UserDisplayService {
 
         return '';
     }
+
+    verifiedUrl(user: User | undefined): string | undefined {
+        if(!user || !user.fields || user.fields.length === 0) {
+            return undefined;
+        }
+
+        for(const field of user.fields) {
+            if (field.isVerified) {
+                return field.valueHtml;
+            }
+        }
+
+        return undefined;
+    }
 }
