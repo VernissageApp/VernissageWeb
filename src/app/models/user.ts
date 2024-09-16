@@ -3,6 +3,7 @@ import { Role } from "./role";
 
 export class User {
     public id?: string;
+    public url?: string;
     public isLocal?: boolean;
     public isBlocked?: boolean;
     public isApproved?: boolean;

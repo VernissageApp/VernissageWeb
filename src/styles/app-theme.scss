@@ -33,6 +33,30 @@
         }
     }
 
+    .green-link {
+        a {
+            &:link {
+                color: mat.m2-get-color-from-palette($green, 800);
+                text-decoration: none;
+            }
+
+            &:visited {
+                color: mat.m2-get-color-from-palette($green, 800);
+                text-decoration: none;
+            }
+
+            &:hover {
+                color: mat.m2-get-color-from-palette($green, 800);
+                text-decoration: none;
+            }
+
+            &:active {
+                color: mat.m2-get-color-from-palette($green, 800);
+                text-decoration: none;
+            }
+        }
+    }
+
     .text-error {
         color: mat.m2-get-color-from-palette($error);
     }
