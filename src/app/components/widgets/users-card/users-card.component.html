@@ -9,7 +9,7 @@
                 <a [routerLink]="[ '/@' + user.userName ]" class="margin-right-5 fw-600">{{ userDisplayService.displayName(user) }}</a>
             </div>
             <div class="fw-400 fs-90 text-muted overflow-ellipsis">
-                <div>&#64;{{ user.userName }}</div>
+                <div class="user-name">&#64;{{ user.userName }}</div>
                 @if (userDisplayService.verifiedUrl(user)) {
                     <div class="verification-badge text-success">
                         <mat-icon [inline]="true" class="fill-symbol verification-icon">check</mat-icon>
