@@ -138,39 +138,44 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
                 temporaryAttachment.blurhash = photo.blurhash;
 
                 if (photo.showMake) {
-                    temporaryAttachment.make = photo.make
+                    temporaryAttachment.make = photo.make;
                 }
 
                 if (photo.showModel) {
-                    temporaryAttachment.model = photo.model
+                    temporaryAttachment.model = photo.model;
                 }
 
                 if (photo.showLens) {
-                    temporaryAttachment.lens = photo.lens
+                    temporaryAttachment.lens = photo.lens;
                 }
 
                 if (photo.showCreateDate) {
-                    temporaryAttachment.createDate = photo.createDate?.toISOString()
+                    temporaryAttachment.createDate = photo.createDate?.toISOString();
                 }
 
                 if (photo.showFocalLenIn35mmFilm) {
-                    temporaryAttachment.focalLenIn35mmFilm = photo.focalLenIn35mmFilm
+                    temporaryAttachment.focalLenIn35mmFilm = photo.focalLenIn35mmFilm;
                 }
                 
-                if (photo.fNumber) {
-                    temporaryAttachment.fNumber = `f/${photo.fNumber}`
+                if (photo.showFNumber && photo.fNumber) {
+                    temporaryAttachment.fNumber = `f/${photo.fNumber}`;
                 }
 
-                if (photo.exposureTime) {
-                    temporaryAttachment.exposureTime = photo.exposureTime
+                if (photo.showExposureTime) {
+                    temporaryAttachment.exposureTime = photo.exposureTime;
                 }
 
-                if (photo.photographicSensitivity) {
-                    temporaryAttachment.photographicSensitivity = photo.photographicSensitivity
+                if (photo.showPhotographicSensitivity) {
+                    temporaryAttachment.photographicSensitivity = photo.photographicSensitivity;
                 }
 
-                if (photo.film) {
-                    temporaryAttachment.film = photo.film
+                if (photo.showFilm) {
+                    temporaryAttachment.film = photo.film;
+                }
+
+                if (photo.showGpsCoordination) {
+                    temporaryAttachment.latitude = photo.latitude;
+                    temporaryAttachment.longitude = photo.longitude;
                 }
 
                 temporaryAttachment.locationId = photo.locationId;
@@ -264,6 +269,14 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
             if (createDate) {
                 uploadPhoto.createDate = new Date(createDate);
                 uploadPhoto.showCreateDate = true;
+            }
+
+            const gpsLatitude = tags['GPSLatitude']?.description.toString();
+            const gpsLongitude = tags['GPSLongitude']?.description.toString();
+            if (gpsLatitude && gpsLongitude) {
+                uploadPhoto.latitude = gpsLatitude;
+                uploadPhoto.longitude = gpsLongitude;
+                uploadPhoto.showGpsCoordination = false;
             }
         });
 

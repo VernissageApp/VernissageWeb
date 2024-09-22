@@ -146,6 +146,10 @@
                         <mat-icon class="margin-right-20" inline="true" matTooltip="Place">place</mat-icon>
                         <span *ngIf="getLocation(currentIndex)?.name" class="location-label"><a class="dashed" target="_blank" [href]="getMapsUrl(currentIndex)">{{ getLocation(currentIndex)?.name }}</a> ({{ getLocation(currentIndex)?.country?.name }})</span>
                     </div>
+                    <div *ngIf="!getLocation(currentIndex) && hasGpsCoordinations(currentIndex)" class="location margin-bottom-10">
+                        <mat-icon class="margin-right-20" inline="true" matTooltip="Place">place</mat-icon>
+                        <span class="location-label"><a class="dashed" target="_blank" [href]="getMapsUrl(currentIndex)">Open map</a> <small class="text-muted"> ({{ getGpsLatitudeToDisplay(currentIndex) }}, {{ getGpsLongitudeToDisplay(currentIndex) }})</small></span>
+                    </div>
 
                     <!-- Licencja -->
                     <div *ngIf="getLicense(currentIndex)" class="license margin-bottom-10">

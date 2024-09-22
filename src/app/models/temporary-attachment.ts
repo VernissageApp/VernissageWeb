@@ -15,4 +15,6 @@ export class TemporaryAttachment {
     public film?: string;
     public locationId?: string;
     public licenseId?: string;
+    public latitude?: string;
+    public longitude?: string;
 }

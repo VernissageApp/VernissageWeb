@@ -8,4 +8,6 @@ export class Exif {
     public exposureTime?: string;
     public photographicSensitivity?: string;
     public film?: string;
+    public latitude?: string
+    public longitude?: string
 }
