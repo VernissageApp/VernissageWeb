@@ -344,13 +344,58 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     getMapsUrl(index: number): string | undefined {
         const location = this.getLocation(index);
         if (location) {
-            const latitude = location.latitude?.replace(',', '.');
-            const longitude  = location.longitude?.replace(',', '.');
+            const latitude = this.getGpsLatitude(index) ?? location.latitude?.replace(',', '.');
+            const longitude = this.getGpsLongitude(index) ?? location.longitude?.replace(',', '.');
+            
+            return `https://www.openstreetmap.org/?mlat=${latitude}&mlon=${longitude}#map=10/${latitude}/${longitude}`;
+        }
+
+        if (this.hasGpsCoordinations(index)) {
+            const latitude = this.getGpsLatitude(index);
+            const longitude = this.getGpsLongitude(index);
             
             return `https://www.openstreetmap.org/?mlat=${latitude}&mlon=${longitude}#map=10/${latitude}/${longitude}`;
         }
 
         return undefined;
+    }
+
+    hasGpsCoordinations(index: number): boolean {
+        return !!this.getGpsLatitude(index) && !!this.getGpsLongitude(index);
+    }
+
+    getGpsLatitude(index: number): string | undefined {
+        const exif = this.getExif(index);
+        if (!exif) {
+            return undefined;
+        }
+
+        if (exif.latitude) {
+            return exif.latitude?.replace(',', '.');
+        }
+
+        return undefined;
+    }
+
+    getGpsLatitudeToDisplay(index: number): string {
+        return this.getGpsLatitude(index)?.slice(0, 6) ?? '';
+    }
+
+    getGpsLongitude(index: number): string | undefined {
+        const exif = this.getExif(index);
+        if (!exif) {
+            return undefined;
+        }
+
+        if (exif.latitude) {
+            return exif.longitude?.replace(',', '.');
+        }
+
+        return undefined;
+    }
+
+    getGpsLongitudeToDisplay(index: number): string {
+        return this.getGpsLongitude(index)?.slice(0, 6) ?? '';
     }
 
     getCreatedAt(): Date | undefined {

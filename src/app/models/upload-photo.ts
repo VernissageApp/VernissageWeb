@@ -18,6 +18,7 @@ export class UploadPhoto {
     public showExposureTime = false;
     public showPhotographicSensitivity = false;
     public showFilm = false;
+    public showGpsCoordination = false;
 
     public make?: string;
     public model?: string;
@@ -28,6 +29,8 @@ export class UploadPhoto {
     public exposureTime?: string;
     public photographicSensitivity?: string;
     public film?: string;
+    public latitude?: string;
+    public longitude?: string;
 
     constructor(photoFile: Blob) {
         this.photoFile = photoFile;
