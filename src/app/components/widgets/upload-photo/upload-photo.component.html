@@ -72,13 +72,18 @@
                 <span class="text-muted">GPS coordinates:</span> 
             </mat-checkbox>
             <div class="flex-grow-2">
-                <mat-form-field appearance="outline" class="margin-bottom-10 width-100">
+                <mat-form-field appearance="outline" class="margin-bottom-20 width-100">
                     <input matInput [name]="'inputGpsLatitude' + index" [(ngModel)]="photo.latitude" [disabled]="!photo.showGpsCoordination" aria-label="GPS latitude" />
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="width-100">
                     <input matInput [name]="'inputGpsLongitude' + index" [(ngModel)]="photo.longitude" [disabled]="!photo.showGpsCoordination" aria-label="GPS longitude" />
                 </mat-form-field>
             </div>
+        </div>
+
+        <div class="margin-bottom-20 margin-left-10 width-100 text-muted fs-90">
+            <strong>Warning:</strong> By sharing the geolocation data of your photo, you are disclosing the exact location where the photo was taken.
+            Please ensure you are comfortable with this information being publicly available before proceeding.
         </div>
 
         <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
