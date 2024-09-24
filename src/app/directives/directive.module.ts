@@ -5,12 +5,16 @@ import { FormsModule } from '@angular/forms';
 import { LazyLoadDirective } from './lazy-load.directive';
 import { AppRouterOutletDirective } from './app-router-outlet.directive';
 import { InfiniteScrollDirective } from './infinite-scroll.directive';
+import { NoteProcessorDirective } from './note-processor.directive';
+import { HrefToRouterLinkDirective } from './href-to-router-link.directive';
 
 @NgModule({
     declarations: [
         LazyLoadDirective,
         AppRouterOutletDirective,
-        InfiniteScrollDirective
+        InfiniteScrollDirective,
+        NoteProcessorDirective,
+        HrefToRouterLinkDirective
     ],
     imports: [
         BrowserModule,
@@ -20,7 +24,9 @@ import { InfiniteScrollDirective } from './infinite-scroll.directive';
     exports: [
         LazyLoadDirective,
         AppRouterOutletDirective,
-        InfiniteScrollDirective
+        InfiniteScrollDirective,
+        NoteProcessorDirective,
+        HrefToRouterLinkDirective
     ]
 })
 export class DirectivesModule { }

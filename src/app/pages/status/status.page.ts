@@ -31,7 +31,7 @@ import { License } from 'src/app/models/license';
 import { WindowService } from 'src/app/services/common/window.service';
 import { RoutingStateService } from 'src/app/services/common/routing-state.service';
 import { DOCUMENT } from '@angular/common';
-import { Meta, Title } from '@angular/platform-browser';
+import { DomSanitizer, Meta, SafeHtml, Title } from '@angular/platform-browser';
 
 @Component({
     selector: 'app-status',
@@ -69,6 +69,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     imageHeight = 32;
     blurhash = 'LEHV6nWB2yk8pyo0adR*.7kCMdnj';
     isLoggedIn = false;
+    rendered?: SafeHtml = '';
 
     constructor(
         @Inject(DOCUMENT) private document: Document,
@@ -88,6 +89,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         private windowService: WindowService,
         private titleService: Title,
         private metaService: Meta,
+        private sanitizer: DomSanitizer,
         breakpointObserver: BreakpointObserver
     ) {
         super(breakpointObserver);
@@ -556,6 +558,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
             return new ImageItem({ src: attachment.originalFile?.url, thumb: attachment.smallFile?.url })
         }); 
 
+        this.rendered = this.sanitizer.bypassSecurityTrustHtml(this.mainStatus?.noteHtml ?? '');
         this.comments = await this.getAllReplies(this.mainStatus.id);
     }
 
