@@ -4,11 +4,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { ScrollNearEndDirective } from './scroll-near-end.directive';
 import { LazyLoadDirective } from './lazy-load.directive';
+import { NoteProcessorDirective } from './note-processor.directive';
+import { HrefToRouterLinkDirective } from './href-to-router-link.directive';
 
 @NgModule({
     declarations: [
         ScrollNearEndDirective,
-        LazyLoadDirective
+        LazyLoadDirective,
+        NoteProcessorDirective,
+        HrefToRouterLinkDirective
     ],
     imports: [
         BrowserModule,
@@ -17,7 +21,9 @@ import { LazyLoadDirective } from './lazy-load.directive';
     ],
     exports: [
         ScrollNearEndDirective,
-        LazyLoadDirective
+        LazyLoadDirective,
+        NoteProcessorDirective,
+        HrefToRouterLinkDirective
     ]
 })
 export class DirectivesModule { }
