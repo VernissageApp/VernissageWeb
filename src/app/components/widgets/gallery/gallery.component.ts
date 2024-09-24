@@ -1,5 +1,5 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, Inject, Input, OnChanges, OnInit, PLATFORM_ID, SimpleChanges } from '@angular/core';
+import { Component, Inject, Input, OnChanges, OnDestroy, OnInit, PLATFORM_ID, SimpleChanges } from '@angular/core';
 import { Subscription, filter } from 'rxjs';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { LinkableResult } from 'src/app/models/linkable-result';
@@ -18,22 +18,24 @@ import { isPlatformBrowser } from '@angular/common';
     styleUrls: ['./gallery.component.scss'],
     animations: fadeInAnimation
 })
-export class GalleryComponent extends ResponsiveComponent implements OnInit, OnChanges {
+export class GalleryComponent extends ResponsiveComponent implements OnInit, OnDestroy, OnChanges {
     @Input() statuses?: LinkableResult<Status>;
     @Input() squareImages = false;
     @Input() hideAvatars = false;
+    @Input() isDetached = false;
 
     gallery?: Status[][];
     sizes?: number[];
     columns = 3;
     isDuringLoadingMode = false;
-    allStatusesLoaded = false;
     avatarVisible = true;
     isBrowser = false;
+    isReady = false;
 
     galleryBreakpointSubscription?: Subscription;
     routeNavigationStartSubscription?: Subscription;
 
+    private isReadyTimeout?: NodeJS.Timeout;
     private startUrl?: URL;
     private currentUrl?: URL;
 
@@ -70,44 +72,54 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnC
                 const navigationStarEvent = event as NavigationStart;
                 this.currentUrl = new URL(navigationStarEvent.url, this.windowService.getApplicationUrl());
             });
+
+        this.isReadyTimeout = setTimeout(() => {
+            this.isReady = true;
+        }, 500);
     }    
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.statuses) {
             this.contextStatusesService.setContextStatuses(this.statuses);
-
-            this.allStatusesLoaded = false;
             this.buildGallery();
         }
     }
 
-    async onNearEndScroll(): Promise<void> {        
-        if (this.currentUrl && this.startUrl?.pathname !== this.currentUrl.pathname) {
-            return;
+    override ngOnDestroy(): void {
+        if (this.isReadyTimeout) {
+            clearTimeout(this.isReadyTimeout);
         }
+    }
 
-        if (this.allStatusesLoaded) {
-            return;
-        }
-
-        if (!this.statuses?.data.length) {
+    async onNearEndScroll(): Promise<void> {
+        if (!this.isReady) {
             return;
         }
 
         if (!this.isDuringLoadingMode) {
             this.isDuringLoadingMode = true;
+
+            if (this.currentUrl && this.startUrl?.pathname !== this.currentUrl.pathname) {
+                this.isDuringLoadingMode = false;
+                return;
+            }
+
+            if (this.contextStatusesService.allOlderStatusesDownloaded) {
+                this.isDuringLoadingMode = false;
+                return;
+            }
+
+            if (!this.statuses?.data.length) {
+                this.isDuringLoadingMode = false;
+                return;
+            }
+
             this.loadingService.showLoader();
 
             const amountOfStatusesBeforeLoadMode = this.statuses.data.length;
-            await this.contextStatusesService.getNext(this.statuses.data[amountOfStatusesBeforeLoadMode - 1].id);
-            const amountOfStatusesAfterLoadMode = this.statuses.data.length;
+            await this.contextStatusesService.loadOlder();
+            this.appendToGallery(amountOfStatusesBeforeLoadMode);
 
-            if (amountOfStatusesBeforeLoadMode === amountOfStatusesAfterLoadMode) {
-                this.allStatusesLoaded = true;
-            } else {
-                this.appendToGallery(amountOfStatusesBeforeLoadMode);
-            }
-            
             this.loadingService.hideLoader();
             this.isDuringLoadingMode = false;
         }

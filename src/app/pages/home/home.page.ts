@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, ChangeDetectorRef } from '@angular/core';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { Status } from 'src/app/models/status';
 import { TimelineService } from 'src/app/services/http/timeline.service';
@@ -12,6 +12,7 @@ import { LinkableResult } from 'src/app/models/linkable-result';
 import { ContextTimeline } from 'src/app/models/context-timeline';
 import { ContextStatusesService } from 'src/app/services/common/context-statuses.service';
 import { SettingsService } from 'src/app/services/http/settings.service';
+import { OnAttach, OnDetach } from 'src/app/directives/app-router-outlet.directive';
 
 @Component({
     selector: 'app-home',
@@ -19,13 +20,14 @@ import { SettingsService } from 'src/app/services/http/settings.service';
     styleUrls: ['./home.page.scss'],
     animations: fadeInAnimation
 })
-export class HomePage extends ResponsiveComponent implements OnInit, OnDestroy {
+export class HomePage extends ResponsiveComponent implements OnInit, OnDestroy, OnAttach, OnDetach {
     statuses?: LinkableResult<Status>;
     timeline = 'private';
     isReady = false;
     isLoggedIn = false;
     isPageVisible = true;
     lastRefreshTime = new Date();
+    isDetached = false;
 
     routeParamsSubscription?: Subscription;
     routeNavigationEndSubscription?: Subscription;
@@ -38,6 +40,7 @@ export class HomePage extends ResponsiveComponent implements OnInit, OnDestroy {
         private settingsService: SettingsService,
         private router: Router,
         private activatedRoute: ActivatedRoute,
+        private changeDetectorRef: ChangeDetectorRef,
         breakpointObserver: BreakpointObserver
     ) {
         super(breakpointObserver);
@@ -51,7 +54,7 @@ export class HomePage extends ResponsiveComponent implements OnInit, OnDestroy {
             .subscribe(async (event) => {
                 const navigationEndEvent = event as NavigationEnd;
                 
-                if (navigationEndEvent.urlAfterRedirects === '/home') {
+                if (navigationEndEvent.urlAfterRedirects.startsWith('/home')) {
                     this.contextStatusesService.setContextStatuses(this.statuses);
                     this.isPageVisible = true;
                 } else {
@@ -80,6 +83,16 @@ export class HomePage extends ResponsiveComponent implements OnInit, OnDestroy {
 
         this.routeParamsSubscription?.unsubscribe();
         this.routeNavigationEndSubscription?.unsubscribe();
+    }
+
+    onDetach(): void {
+        this.isDetached = true;
+        this.changeDetectorRef.detectChanges();
+    }
+
+    onAttach(): void {
+        this.isDetached = false;
+        this.changeDetectorRef.detectChanges();
     }
 
     @HostListener('document:visibilitychange', ['$event'])
@@ -113,25 +126,35 @@ export class HomePage extends ResponsiveComponent implements OnInit, OnDestroy {
         this.lastRefreshTime = new Date();
 
         switch(pageType) {
-            case 'local':
+            case 'local': {
                 this.timeline = 'local';
-                this.statuses = await this.timelineService.public(undefined, undefined, undefined, undefined, true);
-                this.statuses.context = ContextTimeline.local;
+                const statuses = await this.timelineService.public(undefined, undefined, undefined, undefined, true);
+                statuses.context = ContextTimeline.local;
+
+                this.statuses = statuses;
                 break;
-            case 'global':
+            }
+            case 'global': {
                 this.timeline = 'global';
-                this.statuses = await this.timelineService.public(undefined, undefined, undefined, undefined, false);
-                this.statuses.context = ContextTimeline.global;
+                const statuses = await this.timelineService.public(undefined, undefined, undefined, undefined, false);
+                statuses.context = ContextTimeline.global;
+
+                this.statuses = statuses;
                 break;
+            }
             default:
                 if (this.isLoggedIn) {
                     this.timeline = 'private';
-                    this.statuses = await this.timelineService.home();
-                    this.statuses.context = ContextTimeline.home;
+                    const statuses = await this.timelineService.home();
+                    statuses.context = ContextTimeline.home;
+
+                    this.statuses = statuses;
                 } else {
                     this.timeline = 'local';
-                    this.statuses = await this.timelineService.public(undefined, undefined, undefined, undefined, true);
-                    this.statuses.context = ContextTimeline.local;
+                    const statuses = await this.timelineService.public(undefined, undefined, undefined, undefined, true);
+                    statuses.context = ContextTimeline.local;
+
+                    this.statuses = statuses;
                 }
                 break;
         }

@@ -1,29 +1,38 @@
-import { Directive, ElementRef, EventEmitter, HostListener, Input, OnInit, Output } from "@angular/core";
+import { Directive, ElementRef, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { WindowService } from "../services/common/window.service";
+import { fromEvent, tap, throttleTime } from "rxjs";
 
 @Directive({
-    selector: '[appScrollNearEnd]'
+    selector: '[appInfiniteScroll]'
 })
-export class ScrollNearEndDirective implements OnInit {
-    @Output() nearEnd: EventEmitter<void> = new EventEmitter<void>();
+export class InfiniteScrollDirective implements OnInit {
+    @Output() scrolled: EventEmitter<void> = new EventEmitter<void>();
   
-    /**
-     * threshold in PX when to emit before page end scroll
-     */
-    @Input() threshold = 120;
+    @Input() infiniteScrollDistance = 120;
+    @Input() infiniteScrollThrottle = 120;
+    @Input() infiniteScrollDisabled = false;
   
     private window!: Window;
+    eventSub: any;
   
     constructor(private el: ElementRef, private windowService: WindowService) { }
   
     ngOnInit(): void {
-        // save window object for type safety
+        // Save window object for type safety.
         this.window = this.windowService.nativeWindow;
+
+        this.eventSub = fromEvent(window, 'scroll').pipe(
+            throttleTime(this.infiniteScrollThrottle),
+            tap(event => this.windowScrollEvent(event))
+        ).subscribe();
     }
   
-    @HostListener('window:scroll', ['$event.target'])
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    windowScrollEvent(_event: KeyboardEvent) {
+    windowScrollEvent(_event: Event) {
+        if (this.infiniteScrollDisabled) {
+            return;
+        }
+
         // height of whole window page
         const heightOfWholePage = this.window.document.documentElement.scrollHeight;
   
@@ -47,8 +56,8 @@ export class ScrollNearEndDirective implements OnInit {
         heightOfElement - innerHeight - currentScrolledY + spaceOfElementAndPage;
   
         // if the user is near end
-        if (scrollToBottom < this.threshold) {
-            this.nearEnd.emit();
+        if (scrollToBottom < this.infiniteScrollDistance) {
+            this.scrolled.emit();
         }
     }
 }
