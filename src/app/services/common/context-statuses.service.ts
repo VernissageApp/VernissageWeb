@@ -15,6 +15,8 @@ import { FavouritesService } from '../http/favourites.service';
 })
 export class ContextStatusesService {
     private statuses?: LinkableResult<Status>;
+    public allOlderStatusesDownloaded = false;
+    public allNewerStatusesDownloaded = false;
 
     constructor(
         private persistanceService: PersistanceService,
@@ -32,15 +34,38 @@ export class ContextStatusesService {
 
     public setContextStatuses(statuses: LinkableResult<Status> | undefined): void {
         this.statuses = statuses;
+        this.allOlderStatusesDownloaded = false;
+        this.allNewerStatusesDownloaded = false;
+
         this.persistanceService.setJson('statusesContext', this.statuses);
     }
 
     public clearContextStatuses(): void {
         this.statuses = undefined;
+        this.allOlderStatusesDownloaded = false;
+        this.allNewerStatusesDownloaded = false;
     }
 
     public hasContextStatuses(): boolean {
         return !!this.statuses && this.statuses.data.length > 0;
+    }
+
+    public async loadOlder(): Promise<void> {
+        if (!this.statuses?.maxId) {
+            this.allOlderStatusesDownloaded = true;
+            return;
+        }
+
+        await this.loadNextStatuses();
+    }
+
+    public async loadNewer(): Promise<void> {
+        if (!this.statuses?.minId) {
+            this.allNewerStatusesDownloaded = true;
+            return;
+        }
+
+        await this.loadPreviousStatuses();
     }
 
     public async getNext(id: string): Promise<Status | null> {
@@ -93,12 +118,17 @@ export class ContextStatusesService {
 
     private async loadNextStatuses(): Promise<boolean> {
         const older = await this.downloadStatuses(undefined, this.statuses?.maxId);
+
         if (this.statuses && older && older.data.length > 0) {
             this.statuses.data.push(...older.data);
             this.statuses.maxId = older.maxId;
 
             this.persistanceService.setJson('statusesContext', this.statuses);
             return true;
+        }
+
+        if (older?.data.length === 0 || !older?.maxId) {
+            this.allOlderStatusesDownloaded = true;
         }
 
         return false;
@@ -112,6 +142,10 @@ export class ContextStatusesService {
 
             this.persistanceService.setJson('statusesContext', this.statuses);
             return true;
+        }
+
+        if (newer?.data.length === 0 || !newer?.minId) {
+            this.allNewerStatusesDownloaded = true;
         }
 
         return false;

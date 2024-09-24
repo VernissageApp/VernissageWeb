@@ -2,7 +2,7 @@
     <div></div>
 }
 @else if (statuses?.data?.length) {
-    <div class="gallery-container" appScrollNearEnd (nearEnd)="onNearEndScroll()">
+    <div class="gallery-container" appInfiniteScroll [infiniteScrollDistance]="0" [infiniteScrollThrottle]="250" [infiniteScrollDisabled]="isDetached" (scrolled)="onNearEndScroll()">
         <div [ngClass]="{ 'image-gallery': !isHandsetPortrait || squareImages, 'square': squareImages }">
             <div class="column" *ngFor="let items of gallery">
                 @if(items.length > 0) {

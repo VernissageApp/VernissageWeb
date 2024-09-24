@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { Status } from 'src/app/models/status';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
@@ -13,6 +13,7 @@ import { BookmarksService } from 'src/app/services/http/bookmarks.service';
 import { User } from 'src/app/models/user';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 import { UserDisplayService } from 'src/app/services/common/user-display.service';
+import { OnAttach, OnDetach } from 'src/app/directives/app-router-outlet.directive';
 
 @Component({
     selector: 'app-bookmarks',
@@ -20,9 +21,10 @@ import { UserDisplayService } from 'src/app/services/common/user-display.service
     styleUrls: ['./bookmarks.page.scss'],
     animations: fadeInAnimation
 })
-export class BookmarksPage extends ResponsiveComponent implements OnInit, OnDestroy {
+export class BookmarksPage extends ResponsiveComponent implements OnInit, OnDestroy, OnAttach, OnDetach {
     statuses?: LinkableResult<Status>;
     isReady = false;
+    isDetached = false;
 
     public user?: User | null;
     public fullName = '';
@@ -38,6 +40,7 @@ export class BookmarksPage extends ResponsiveComponent implements OnInit, OnDest
         private userDisplayService: UserDisplayService,
         private router: Router,
         private activatedRoute: ActivatedRoute,
+        private changeDetectorRef: ChangeDetectorRef,
         breakpointObserver: BreakpointObserver
     ) {
         super(breakpointObserver);
@@ -75,5 +78,15 @@ export class BookmarksPage extends ResponsiveComponent implements OnInit, OnDest
 
         this.routeParamsSubscription?.unsubscribe();
         this.routeNavigationEndSubscription?.unsubscribe();
+    }
+
+    onDetach(): void { 
+        this.isDetached = true;
+        this.changeDetectorRef.detectChanges();
+    }
+
+    onAttach(): void {
+        this.isDetached = false;
+        this.changeDetectorRef.detectChanges();
     }
 }
