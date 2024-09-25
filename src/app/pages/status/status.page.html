@@ -123,7 +123,9 @@
                     <app-user-card [user]="mainStatus.user"></app-user-card>
 
                     <!-- Note -->
-                    <div id="note" class="note margin-top-10 margin-bottom-20" appNoteProcessor appHrefToRouterLink [innerHTML]="rendered"></div>
+                    <div appHrefToRouterLink>
+                        <div id="note" class="note margin-top-10 margin-bottom-20" appNoteProcessor [innerHTML]="rendered"></div>
+                    </div>
 
                     <!-- Alt text -->
                     <div *ngIf="showAlternativeText && getAltStatus(currentIndex)" class="flex-row alt margin-bottom-10">

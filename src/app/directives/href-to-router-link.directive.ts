@@ -11,11 +11,13 @@ import { WindowService } from "../services/common/window.service";
     
     @HostListener('click', ['$event'])
     onClick(event: Event) {
-        if (!(event.target instanceof HTMLAnchorElement)) {
+
+        const anchorElement = this.findHtmlAnchorElement(event.target);
+        if (!anchorElement) {
             return;
         }
   
-        const href = event.target?.getAttribute('href')?.replace(/(^\s+|\s+$)/gs, '');
+        const href = anchorElement?.getAttribute('href')?.replace(/(^\s+|\s+$)/gs, '');
         if (!href) {
             return;
         }
@@ -32,4 +34,16 @@ import { WindowService } from "../services/common/window.service";
         // Feed the router.
         this.router.navigateByUrl(href);
     }
-  }
+
+    private findHtmlAnchorElement(target: any): HTMLAnchorElement | null {
+        if (target instanceof HTMLAnchorElement) {
+            return target;
+        }
+
+        if (!target.parentNode) {
+            return null
+        }
+
+        return this.findHtmlAnchorElement(target.parentNode);
+    }
+}
