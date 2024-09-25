@@ -79,7 +79,7 @@
                                 } @else {
                                     <div class="text-center">
                                         <p>We do not have this information in the system.</p>
-                                        <p>Check on the user's original <a [href]="user.activityPubProfile" target="_blank">profile page</a>.</p>
+                                        <p class="margin-bottom-0">Check on the user's original <a [href]="user.activityPubProfile" target="_blank">profile page</a>.</p>
                                     </div>
                                 }
                             }
@@ -106,7 +106,7 @@
                                 } @else {
                                     <div class="text-center">
                                         <p>We do not have this information in the system.</p>
-                                        <p>Check on the user's original <a [href]="user.activityPubProfile" target="_blank">profile page</a>.</p>
+                                        <p class="margin-bottom-0">Check on the user's original <a [href]="user.activityPubProfile" target="_blank">profile page</a>.</p>
                                     </div>
                                 }
                             }
@@ -120,12 +120,12 @@
 
     <div *ngIf="profilePageTab === ProfilePageTab.Statuses">
         @if (!user.isLocal) {
-            <div class="remote-gallery text-center">
+            <div class="remote-gallery margin-bottom-20">
                 <mat-card appearance="outlined">
                     <mat-card-content>
                         <div class="text-center">
                             <p>Some posts from this profile may be missing.</p>
-                            <p>See more posts on user's original <a [href]="user.activityPubProfile" target="_blank">profile page</a>.</p>
+                            <p class="margin-bottom-0">See more posts on user's original <a [href]="user.activityPubProfile" target="_blank">profile page</a>.</p>
                         </div>
                     </mat-card-content>
                 </mat-card>
