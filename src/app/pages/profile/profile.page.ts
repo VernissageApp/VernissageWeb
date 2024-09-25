@@ -20,6 +20,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ProfileCodeDialog } from 'src/app/dialogs/profile-code-dialog/profile-code.dialog';
 import { PreferencesService } from 'src/app/services/common/preferences.service';
 import { UserDisplayService } from 'src/app/services/common/user-display.service';
+import { ContextTimeline } from 'src/app/models/context-timeline';
 
 @Component({
     selector: 'app-profile',
@@ -266,7 +267,12 @@ export class ProfilePage extends ResponsiveComponent implements OnInit, OnDestro
             await this.onLoadMoreFollowers();
         } else {
             this.profilePageTab = ProfilePageTab.Statuses;
-            this.statuses = await this.usersService.statuses(this.userName);
+
+            const statuses = await this.usersService.statuses(this.userName);
+            statuses.context = ContextTimeline.user;
+            statuses.user = this.user?.userName;
+
+            this.statuses = statuses;
         }
     }
 
