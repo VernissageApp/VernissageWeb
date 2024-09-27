@@ -83,4 +83,12 @@ export class WindowService {
     openPage(url: string): void {
         this.nativeWindow.open(url, "_blank");
     }
+
+    scrollToTop(): void {
+        this.nativeWindow.scroll({ 
+            top: 0, 
+            left: 0, 
+            behavior: 'smooth' 
+        });
+    }
 }

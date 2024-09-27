@@ -120,15 +120,17 @@
 
     <div *ngIf="profilePageTab === ProfilePageTab.Statuses">
         @if (!user.isLocal) {
-            <div class="remote-gallery margin-bottom-20">
-                <mat-card appearance="outlined">
-                    <mat-card-content>
-                        <div class="text-center">
-                            <p>Some posts from this profile may be missing.</p>
-                            <p class="margin-bottom-0">See more posts on user's original <a [href]="user.activityPubProfile" target="_blank">profile page</a>.</p>
-                        </div>
-                    </mat-card-content>
-                </mat-card>
+            <div class="remote-gallery-container">
+                <div class="remote-gallery margin-auto">
+                    <mat-card appearance="outlined">
+                        <mat-card-content>
+                            <div class="text-center">
+                                <p>Some posts from this profile may be missing.</p>
+                                <p class="margin-bottom-0">See more posts on user's original <a [href]="user.activityPubProfile" target="_blank">profile page</a>.</p>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
             </div>
         }
 

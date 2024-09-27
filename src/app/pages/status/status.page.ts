@@ -166,6 +166,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
             if (nextStatus) {
                 await this.router.navigate(['/statuses', nextStatus.id]);
                 this.hideLeftArrow = false;
+                this.windowService.scrollToTop();
             } else {
                 this.hideRightArrow = true;
             }
@@ -291,15 +292,19 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         return this.contextStatusesService.hasContextStatuses() && !this.isHandset;
     }
 
-    shoudDisplayDeleteButton(): boolean {
+    showBottomContextArrow(): boolean {
+        return this.contextStatusesService.hasContextStatuses() && this.isHandset;
+    }
+
+    shouldDisplayDeleteButton(): boolean {
         return this.isStatusOwner() || this.authorizationService.hasRole(Role.Administrator) || this.authorizationService.hasRole(Role.Moderator);
     }
 
-    shoudDisplayFeatureButton(): boolean {
+    shouldDisplayFeatureButton(): boolean {
         return this.authorizationService.hasRole(Role.Administrator) || this.authorizationService.hasRole(Role.Moderator);
     }
 
-    shoudDisplayDeleteCommentButton(comment: Status): boolean {
+    shouldDisplayDeleteCommentButton(comment: Status): boolean {
         return comment.user?.id === this.signedInUser?.id;
     }
 
