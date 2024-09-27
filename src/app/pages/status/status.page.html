@@ -40,6 +40,30 @@
     </div>
     <div class="photo-margin-bottom"></div>
 
+    @if (showBottomContextArrow()) {
+        <div class="flex-row flex-space-between padding-left-10 padding-right-10 padding-top-10">
+            @if (!hideLeftArrow) {
+                <div>
+                    <button mat-stroked-button (click)="onPrevClick()" class="small-button" aria-label="Previous image">
+                        <mat-icon>arrow_back_ios</mat-icon>
+                    </button>
+                </div>
+            } @else {
+                <div></div>
+            }
+
+            @if (!hideRightArrow) {
+                <div>
+                    <button mat-stroked-button (click)="onNextClick()" class="small-button" aria-label="Next image">
+                        <mat-icon iconPositionEnd>arrow_forward_ios</mat-icon>
+                    </button>
+                </div>
+            } @else {
+                <div></div>
+            }
+        </div>
+    }
+
     <div [ngClass]="{ 'padding-30': !isHandset, 'padding-10': isHandset }">
         <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
 
@@ -75,7 +99,7 @@
                                 <mat-icon class="fill-symbol">bookmark</mat-icon>
                             </button>
 
-                            @if (shoudDisplayFeatureButton()) {
+                            @if (shouldDisplayFeatureButton()) {
                                 <button *ngIf="!mainStatus.featured" mat-icon-button class="margin-right-10" color="primary" matTooltip="Feature" matTooltipPosition="above" aria-label="Feature" (click)="feature()">
                                     <mat-icon class="outline-symbol">stars</mat-icon>
                                 </button>
@@ -106,7 +130,7 @@
                                     <mat-icon class="outline-symbol">report</mat-icon>
                                     <span>Report</span>
                                 </button>
-                                <button *ngIf="shoudDisplayDeleteButton()" mat-menu-item (click)="onDeleteStatus()">
+                                <button *ngIf="shouldDisplayDeleteButton()" mat-menu-item (click)="onDeleteStatus()">
                                     <mat-icon class="outline-symbol">delete</mat-icon>
                                     <span>Delete</span>
                                 </button>
@@ -256,7 +280,7 @@
                                             <mat-icon>warning</mat-icon>
                                             <span>Report</span>
                                         </button>
-                                        <button *ngIf="shoudDisplayDeleteCommentButton(comment.status)" mat-menu-item (click)="onDeleteComment(comment.status)">
+                                        <button *ngIf="shouldDisplayDeleteCommentButton(comment.status)" mat-menu-item (click)="onDeleteComment(comment.status)">
                                             <mat-icon class="outline-symbol">delete</mat-icon>
                                             <span>Delete</span>
                                         </button>
@@ -277,4 +301,5 @@
             </mat-card>
         </div>
     </div>
+
 </div>

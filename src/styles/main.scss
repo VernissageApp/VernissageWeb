@@ -287,3 +287,7 @@ $vernissage-dark-toolbar-theme: mat.m2-define-light-theme((
 .small-text-input {
   @include mat.form-field-density(-3);
 }
+
+.small-button {
+  @include mat.button-density(-3);
+}
