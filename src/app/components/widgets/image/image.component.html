@@ -11,9 +11,15 @@
 
     @if (imageIsLoaded) {
         @if(showAvatar && user) {
-            <div class="avatar">
+            <div class="avatar" [satPopoverAnchor]="popover" (mouseenter)="mouseenter.next()" (mouseleave)="mouseleave.next()">
                 <app-mini-user-card [user]="user" [showUserName]="false" [whiteLink]="true" [size]="avatarSize.verysmall"></app-mini-user-card>
             </div>
+
+            <sat-popover #popover [autoFocus]="false" verticalAlign="below">
+                <div class="popover" (mouseenter)="mouseenter.next()" (mouseleave)="mouseleave.next()">
+                    <app-user-popover [user]="user" [relationship]="relationship"></app-user-popover>
+                </div>
+            </sat-popover>
         }
 
         @if (signedInUser && showFavourites) {

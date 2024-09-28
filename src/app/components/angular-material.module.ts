@@ -32,6 +32,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatProgressBar } from '@angular/material/progress-bar';
 import { GalleryModule } from 'ng-gallery';
 import { QRCodeModule } from 'angularx-qrcode';
+import { SatPopoverModule } from '@ncstate/sat-popover';
+
 
 @NgModule({
     imports: [
@@ -68,7 +70,8 @@ import { QRCodeModule } from 'angularx-qrcode';
         MatExpansionModule,
         MatProgressBar,
         GalleryModule,
-        QRCodeModule
+        QRCodeModule,
+        SatPopoverModule
     ],
     exports: [
         MatToolbarModule,
@@ -104,7 +107,8 @@ import { QRCodeModule } from 'angularx-qrcode';
         MatExpansionModule,
         MatProgressBar,
         GalleryModule,
-        QRCodeModule
+        QRCodeModule,
+        SatPopoverModule
     ]
 })
 export class AngularMaterialModule { }
