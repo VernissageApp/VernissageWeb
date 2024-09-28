@@ -105,7 +105,6 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         this.showAlternativeText = this.preferencesService.showAlternativeText;
 
         this.routeParamsSubscription = this.activatedRoute.params.subscribe(async params => {
-            this.loadingService.showLoader();
             const statusId = params['id'] as string;
 
             this.signedInUser = this.authorizationService.getUser();
@@ -156,8 +155,12 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         if (this.status?.id) {
             const previousStatus = await this.contextStatusesService.getPrevious(this.status?.id);
             if (previousStatus) {
+                if (this.isHandset) {
+                    this.loadingService.showLoader();
+                    this.isReady = false;
+                }
+
                 await this.router.navigate(['/statuses', previousStatus.id], { replaceUrl: true });
-                this.isReady = false;
                 this.hideRightArrow = false;
                 this.windowService.scrollToTop();
             } else {
@@ -170,8 +173,12 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         if (this.status?.id) {
             const nextStatus = await this.contextStatusesService.getNext(this.status?.id);
             if (nextStatus) {
+                if (this.isHandset) {
+                    this.loadingService.showLoader();
+                    this.isReady = false;
+                }
+
                 await this.router.navigate(['/statuses', nextStatus.id], { replaceUrl: true });
-                this.isReady = false;
                 this.hideLeftArrow = false;
                 this.windowService.scrollToTop();
             } else {
