@@ -26,6 +26,7 @@
     "@angular/service-worker": "^18.2.4",
     "@angular/ssr": "^18.2.4",
     "@auth0/angular-jwt": "^5.2.0",
+    "@ncstate/sat-popover": "^13.1.0",
     "@sentry/angular-ivy": "^7.114.0",
     "angularx-qrcode": "^18.0.1",
     "blurhash": "^2.0.5",

@@ -31,6 +31,7 @@ import { InstanceRulesComponent } from './widgets/instance-rules/instance-rules.
 import { CategoryGalleryItemComponent } from './widgets/category-gallery-item/category-gallery-item.component';
 import { HashtagGalleryItemComponent } from './widgets/hashtag-gallery-item/hashtag-gallery-item.component';
 import { UsersGalleryItemComponent } from './widgets/users-gallery-item/users-gallery-item.component';
+import { UserPopoverComponent } from './widgets/user-popover/user-popover.component';
 
 @NgModule({
     declarations: [
@@ -39,6 +40,7 @@ import { UsersGalleryItemComponent } from './widgets/users-gallery-item/users-ga
         PasswordComponent,
         UploadPhotoComponent,
         UserCardComponent,
+        UserPopoverComponent,
         UsersCardComponent,
         FollowButtonsSectionComponent,
         GalleryComponent,
