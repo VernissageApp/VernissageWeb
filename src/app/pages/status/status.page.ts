@@ -32,6 +32,7 @@ import { WindowService } from 'src/app/services/common/window.service';
 import { RoutingStateService } from 'src/app/services/common/routing-state.service';
 import { DOCUMENT } from '@angular/common';
 import { DomSanitizer, Meta, SafeHtml, Title } from '@angular/platform-browser';
+import { LoadingService } from 'src/app/services/common/loading.service';
 
 @Component({
     selector: 'app-status',
@@ -88,6 +89,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         private changeDetectorRef: ChangeDetectorRef,
         private windowService: WindowService,
         private titleService: Title,
+        private loadingService: LoadingService,
         private metaService: Meta,
         private sanitizer: DomSanitizer,
         breakpointObserver: BreakpointObserver
@@ -103,6 +105,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         this.showAlternativeText = this.preferencesService.showAlternativeText;
 
         this.routeParamsSubscription = this.activatedRoute.params.subscribe(async params => {
+            this.loadingService.showLoader();
             const statusId = params['id'] as string;
 
             this.signedInUser = this.authorizationService.getUser();
@@ -112,6 +115,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
             const galleryRef = this.gallery.ref(this.galleryId);
             galleryRef.load(this.images ?? []);
 
+            this.loadingService.hideLoader();
             this.isReady = true;
 
             if (!this.firstCanvasInitialization) {
@@ -152,8 +156,10 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         if (this.status?.id) {
             const previousStatus = await this.contextStatusesService.getPrevious(this.status?.id);
             if (previousStatus) {
-                await this.router.navigate(['/statuses', previousStatus.id]);
+                await this.router.navigate(['/statuses', previousStatus.id], { replaceUrl: true });
+                this.isReady = false;
                 this.hideRightArrow = false;
+                this.windowService.scrollToTop();
             } else {
                 this.hideLeftArrow = true;
             }
@@ -164,7 +170,8 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         if (this.status?.id) {
             const nextStatus = await this.contextStatusesService.getNext(this.status?.id);
             if (nextStatus) {
-                await this.router.navigate(['/statuses', nextStatus.id]);
+                await this.router.navigate(['/statuses', nextStatus.id], { replaceUrl: true });
+                this.isReady = false;
                 this.hideLeftArrow = false;
                 this.windowService.scrollToTop();
             } else {

@@ -44,7 +44,7 @@
         <div class="flex-row flex-space-between padding-left-10 padding-right-10 padding-top-10">
             @if (!hideLeftArrow) {
                 <div>
-                    <button mat-stroked-button (click)="onPrevClick()" class="small-button" aria-label="Previous image">
+                    <button mat-stroked-button (click)="onPrevClick()" class="small-button context-left" aria-label="Previous image">
                         <mat-icon>arrow_back_ios</mat-icon>
                     </button>
                 </div>
@@ -54,7 +54,7 @@
 
             @if (!hideRightArrow) {
                 <div>
-                    <button mat-stroked-button (click)="onNextClick()" class="small-button" aria-label="Next image">
+                    <button mat-stroked-button (click)="onNextClick()" class="small-button context-right" aria-label="Next image">
                         <mat-icon iconPositionEnd>arrow_forward_ios</mat-icon>
                     </button>
                 </div>
@@ -206,7 +206,7 @@
                         <div *ngIf="getExif(currentIndex)?.focalLenIn35mmFilm || getExif(currentIndex)?.fNumber || getExif(currentIndex)?.exposureTime || getExif(currentIndex)?.photographicSensitivity" class="margin-bottom-10">
                             <mat-icon class="margin-right-20" inline="true" matTooltip="Exposure">brightness_7</mat-icon>
                             <span *ngIf="getExif(currentIndex)?.focalLenIn35mmFilm" class="margin-right-15 exif-label">{{ getExif(currentIndex)?.focalLenIn35mmFilm }}mm</span>
-                            <span *ngIf="getExif(currentIndex)?.fNumber" class="margin-right-15 exif-label">{{ getExif(currentIndex)?.fNumber }}</span>
+                            <span *ngIf="getExif(currentIndex)?.fNumber" class="margin-right-15 exif-label">{{ getExif(currentIndex)?.fNumber | slice:0:7 }}</span>
                             <span *ngIf="getExif(currentIndex)?.exposureTime" class="margin-right-15 exif-label">{{ getExif(currentIndex)?.exposureTime }}s</span>
                             <span *ngIf="getExif(currentIndex)?.photographicSensitivity" class="margin-right-15 exif-label">ISO {{ getExif(currentIndex)?.photographicSensitivity }}</span>
                         </div>

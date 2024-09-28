@@ -141,3 +141,23 @@
 .replies {
     padding-left: 40px;
 }
+
+.small-button {
+    min-width: 36px;
+    padding-left: 2px;
+    padding-right: 2px;
+
+    &.context-left {
+        mat-icon {
+            margin-left: 6px;
+            margin-right: 0;
+        }
+    }
+
+    &.context-right {
+        mat-icon {
+            margin-right: 0;
+            margin-left: 4px;
+        }
+    }
+}
