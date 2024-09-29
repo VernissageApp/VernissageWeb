@@ -208,13 +208,4 @@
     .invisible {
         display: none;
     }
-
-    .popover {
-        max-width: 640px;
-        background-color: mat.m2-get-color-from-palette($background, 600-contrast);
-        border: 1px solid mat.m2-get-color-from-palette($background, 900);
-        padding: 8px;
-        border-radius: 6px;
-        margin-top: 6px;
-    }
 }
