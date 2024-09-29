@@ -58,6 +58,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     replyStatus?: Status;
     images?: GalleryItem[];
     imageIsLoaded = false;
+    showSensitiveImage = false;
     firstCanvasInitialization = false;
     urlToGallery?: string;
 
@@ -165,6 +166,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
                 if (this.isHandset) {
                     this.loadingService.showLoader();
                     this.isReady = false;
+                    this.firstCanvasInitialization = false;
                 }
 
                 await this.router.navigate(['/statuses', previousStatus.id], { replaceUrl: true });
@@ -183,6 +185,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
                 if (this.isHandset) {
                     this.loadingService.showLoader();
                     this.isReady = false;
+                    this.firstCanvasInitialization = false;
                 }
 
                 await this.router.navigate(['/statuses', nextStatus.id], { replaceUrl: true });
@@ -566,11 +569,8 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     }
 
     private async loadPageData(statusId: string): Promise<void> {
-        this.imageIsLoaded = false;
-        this.changeDetectorRef.detectChanges();
-
         this.status = await this.statusesService.get(statusId);
-
+        
         if (this.status.reblog) {
             this.mainStatus = this.status.reblog;
         } else {
@@ -582,11 +582,16 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         this.setImageHeight();
         this.setCardMetatags();
 
-        this.images = this.mainStatus.attachments?.map(attachment => {
-            return new ImageItem({ src: attachment.originalFile?.url, thumb: attachment.smallFile?.url })
-        }); 
+        this.imageIsLoaded = false;
+        this.showSensitiveImage = !this.mainStatus.sensitive;
 
-        this.rendered = this.sanitizer.bypassSecurityTrustHtml(this.mainStatus?.noteHtml ?? '');
+        this.images = this.mainStatus?.attachments?.map(attachment => {
+            return new ImageItem({ src: attachment.originalFile?.url, thumb: attachment.smallFile?.url })
+        });
+
+        this.rendered = this.mainStatus?.noteHtml ?? '';
+        this.changeDetectorRef.detectChanges();
+
         this.comments = await this.getAllReplies(this.mainStatus.id);
     }
 
