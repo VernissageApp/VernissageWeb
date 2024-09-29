@@ -29,6 +29,7 @@
 .photo-container {
     width: 100%;
     background-color: #202020;
+    position: relative;
 
     .icon {
         color: white;
@@ -52,7 +53,16 @@
         height: 600px;
     }
 
-    img, canvas {
+    .blurhash {
+        position:absolute;
+        display: block;
+        height: 100%;
+        width: calc(100vw - 80px);
+        max-height: 600px;
+        object-fit: contain;
+    }
+
+    img {
         display: block;
         height: 100%;
         width: 100%;
