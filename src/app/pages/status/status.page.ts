@@ -1,5 +1,6 @@
-import {ChangeDetectorRef, Component, ElementRef, Inject, ViewChild, OnInit, OnDestroy } from '@angular/core';
-import { fadeInAnimation } from "../../animations/fade-in.animation";
+import {ChangeDetectorRef, Component, ElementRef, Inject, ViewChild, OnInit, OnDestroy, PLATFORM_ID } from '@angular/core';
+import { fadeInAnimation } from "src/app/animations/fade-in.animation";
+import { showOrHideAnimation } from 'src/app/animations/show-or-hide.animation';
 import { decode } from 'blurhash';
 import { Subscription } from 'rxjs';
 import { StatusesService } from 'src/app/services/http/statuses.service';
@@ -30,15 +31,16 @@ import { UsersDialogContext, UsersListType } from 'src/app/dialogs/users-dialog/
 import { License } from 'src/app/models/license';
 import { WindowService } from 'src/app/services/common/window.service';
 import { RoutingStateService } from 'src/app/services/common/routing-state.service';
-import { DOCUMENT } from '@angular/common';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { DomSanitizer, Meta, SafeHtml, Title } from '@angular/platform-browser';
 import { LoadingService } from 'src/app/services/common/loading.service';
+
 
 @Component({
     selector: 'app-status',
     templateUrl: './status.page.html',
     styleUrls: ['./status.page.scss'],
-    animations: fadeInAnimation
+    animations: [fadeInAnimation, showOrHideAnimation]
 })
 export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy {
     readonly statusVisibility = StatusVisibility;
@@ -56,6 +58,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     replyStatus?: Status;
     images?: GalleryItem[];
     imageIsLoaded = false;
+    showSensitiveImage = false;
     firstCanvasInitialization = false;
     urlToGallery?: string;
 
@@ -74,6 +77,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
 
     constructor(
         @Inject(DOCUMENT) private document: Document,
+        @Inject(PLATFORM_ID) platformId: object,
         private statusesService: StatusesService,
         private messageService: MessagesService,
         private authorizationService: AuthorizationService,
@@ -95,6 +99,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         breakpointObserver: BreakpointObserver
     ) {
         super(breakpointObserver);
+        this.isBrowser = isPlatformBrowser(platformId);
     }
 
     override async ngOnInit(): Promise<void> {
@@ -119,7 +124,10 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
 
             if (!this.firstCanvasInitialization) {
                 this.changeDetectorRef.detectChanges();
-                this.drawCanvas();
+
+                setTimeout(() => {
+                    this.drawCanvas();
+                });
             }
         });
     }
@@ -158,6 +166,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
                 if (this.isHandset) {
                     this.loadingService.showLoader();
                     this.isReady = false;
+                    this.firstCanvasInitialization = false;
                 }
 
                 await this.router.navigate(['/statuses', previousStatus.id], { replaceUrl: true });
@@ -176,6 +185,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
                 if (this.isHandset) {
                     this.loadingService.showLoader();
                     this.isReady = false;
+                    this.firstCanvasInitialization = false;
                 }
 
                 await this.router.navigate(['/statuses', nextStatus.id], { replaceUrl: true });
@@ -560,7 +570,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
 
     private async loadPageData(statusId: string): Promise<void> {
         this.status = await this.statusesService.get(statusId);
-
+        
         if (this.status.reblog) {
             this.mainStatus = this.status.reblog;
         } else {
@@ -571,13 +581,17 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         this.setImageWidth();
         this.setImageHeight();
         this.setCardMetatags();
+
         this.imageIsLoaded = false;
+        this.showSensitiveImage = !this.mainStatus.sensitive;
 
-        this.images = this.mainStatus.attachments?.map(attachment => {
+        this.images = this.mainStatus?.attachments?.map(attachment => {
             return new ImageItem({ src: attachment.originalFile?.url, thumb: attachment.smallFile?.url })
-        }); 
+        });
 
-        this.rendered = this.sanitizer.bypassSecurityTrustHtml(this.mainStatus?.noteHtml ?? '');
+        this.rendered = this.mainStatus?.noteHtml ?? '';
+        this.changeDetectorRef.detectChanges();
+
         this.comments = await this.getAllReplies(this.mainStatus.id);
     }
 
@@ -607,7 +621,9 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         }
 
         this.blurhash =  this.mainStatus.attachments[0].blurhash ?? 'LEHV6nWB2yk8pyo0adR*.7kCMdnj';
-        this.drawCanvas();
+        setTimeout(() => {
+            this.drawCanvas();
+        });
     }
 
     private setImageWidth(): void {
@@ -645,9 +661,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
             return;
         }
 
-        const pixels = decode(this.blurhash, this.imageWidth, this.imageHeight);
         const ctx = this.canvas.nativeElement.getContext('2d');
-
         if (!ctx) {
             return;
         }
@@ -658,6 +672,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
             return;
         }
 
+        const pixels = decode(this.blurhash, this.imageWidth, this.imageHeight);
         imageData.data.set(pixels);
         ctx.putImageData(imageData!, 0, 0);
 

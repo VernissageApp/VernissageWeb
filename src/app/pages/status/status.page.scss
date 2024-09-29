@@ -29,6 +29,7 @@
 .photo-container {
     width: 100%;
     background-color: #202020;
+    position: relative;
 
     .icon {
         color: white;
@@ -48,16 +49,51 @@
         width: calc(100vw - 80px);
     }
 
-    .photo-image-container-fixed {
-        height: 600px;
+    .content-warning {
+        position: absolute;
+        top:40%;
+        width: 100%;
+        text-align: center;
+        z-index: 101;
+
+        .text {
+            color: rgb(209, 209, 209);
+            background-color: transparent;
+            font-size: 1.2em;
+            text-shadow: #777777 1px 0 4px;
+            margin-bottom: 8px;
+        }
     }
 
-    img, canvas {
+    .blurhash {
+        position: absolute;
         display: block;
         height: 100%;
         width: 100%;
         max-height: 600px;
         object-fit: contain;
+        z-index: 100;
+    }
+
+    img {
+        display: block;
+        height: 100%;
+        width: 100%;
+        max-height: 600px;
+        object-fit: contain;
+        z-index: 99;
+    }
+
+    .photo-image-container-fixed {
+        height: 600px;
+
+        .content-warning {
+            width: calc(100vw - 80px);
+        }
+
+        .blurhash {
+            width: calc(100vw - 80px);
+        }
     }
 }
 
