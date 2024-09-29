@@ -165,8 +165,6 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
             if (previousStatus) {
                 if (this.isHandset) {
                     this.loadingService.showLoader();
-                    this.isReady = false;
-                    this.firstCanvasInitialization = false;
                 }
 
                 await this.router.navigate(['/statuses', previousStatus.id], { replaceUrl: true });
@@ -184,8 +182,6 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
             if (nextStatus) {
                 if (this.isHandset) {
                     this.loadingService.showLoader();
-                    this.isReady = false;
-                    this.firstCanvasInitialization = false;
                 }
 
                 await this.router.navigate(['/statuses', nextStatus.id], { replaceUrl: true });
