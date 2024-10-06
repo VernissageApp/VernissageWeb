@@ -5,6 +5,7 @@ export class PublicSettings {
     public webPushVapidPublicKey?: string;
 
     public patreonUrl?: string;
+    public mastodonUrl?: string;
     public totalCost = 0;
     public usersSupport = 0;
 

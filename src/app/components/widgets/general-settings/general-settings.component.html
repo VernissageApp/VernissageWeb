@@ -115,6 +115,18 @@
         </mat-form-field>
     </div>
 
+    <div class="mastodon-url">
+        <mat-form-field appearance="outline">
+            <mat-label>Mastodon url</mat-label>
+            <input matInput name="mastodonUrl" #mastodonUrl="ngModel" [(ngModel)]="settings.mastodonUrl"
+                placeholder="Mastodon url" aria-label="Mastodon url" />
+            <mat-hint align="start"><span class="text-muted">If the instance has its official account on Mastodon, you can define its address here.
+                If the Vernissage instance address is also provided on Mastodon, there will be information
+                indicating that the account has been verified by Mastodon.</span>
+            </mat-hint>
+        </mat-form-field>
+    </div>
+
     <mat-divider></mat-divider>
     <h3>Financial support</h3>
 

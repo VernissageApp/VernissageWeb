@@ -33,6 +33,7 @@ export class Settings {
     public webContactUserId = '';
     public systemDefaultUserId = '';
     public patreonUrl = '';
+    public mastodonUrl = '';
 
     public isOpenAIEnabled = false;
     public openAIKey = '';
