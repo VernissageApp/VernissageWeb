@@ -169,8 +169,20 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
                     temporaryAttachment.photographicSensitivity = photo.photographicSensitivity;
                 }
 
+                if (photo.showSoftware) {
+                    temporaryAttachment.software = photo.software;
+                }
+
                 if (photo.showFilm) {
                     temporaryAttachment.film = photo.film;
+                }
+
+                if (photo.showChemistry) {
+                    temporaryAttachment.chemistry = photo.chemistry;
+                }
+
+                if (photo.showScanner) {
+                    temporaryAttachment.scanner = photo.scanner;
                 }
 
                 if (photo.showGpsCoordination) {
@@ -269,6 +281,12 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
             if (createDate) {
                 uploadPhoto.createDate = new Date(createDate);
                 uploadPhoto.showCreateDate = true;
+            }
+
+            const software = tags['CreatorTool']?.description.toString() ?? tags['Software']?.description.toString();
+            if (software) {
+                uploadPhoto.software = software;
+                uploadPhoto.showSoftware = true;
             }
 
             const gpsLatitude = tags['GPSLatitude']?.description.toString();

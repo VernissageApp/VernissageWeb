@@ -153,11 +153,38 @@
         </div>
 
         <div class="flex-row flex-responsive  flex-stretch gap-16 small-text-input margin-bottom-10">
+            <mat-checkbox class="exif-label" [name]="'software' + index" color="primary" [disableRipple]="true" [(ngModel)]="photo.showSoftware">
+                <span class="text-muted">Software:</span>
+            </mat-checkbox>
+            <mat-form-field appearance="outline" class="flex-grow-2">
+                <input matInput [name]="'inputSoftware' + index" [(ngModel)]="photo.software" [disabled]="!photo.showSoftware" aria-label="Software" />
+            </mat-form-field>
+        </div>
+
+        <div class="flex-row flex-responsive  flex-stretch gap-16 small-text-input margin-bottom-10">
             <mat-checkbox class="exif-label" [name]="'film' + index" color="primary" [disableRipple]="true" [(ngModel)]="photo.showFilm">
                 <span class="text-muted">Film:</span>
             </mat-checkbox>
             <mat-form-field appearance="outline" class="flex-grow-2">
-                <input matInput [name]="'inputFilm' + index" [(ngModel)]="photo.film" [disabled]="!photo.showFilm" aria-label="ISO" />
+                <input matInput [name]="'inputFilm' + index" [(ngModel)]="photo.film" [disabled]="!photo.showFilm" aria-label="Film" />
+            </mat-form-field>
+        </div>
+
+        <div class="flex-row flex-responsive  flex-stretch gap-16 small-text-input margin-bottom-10">
+            <mat-checkbox class="exif-label" [name]="'chemistry' + index" color="primary" [disableRipple]="true" [(ngModel)]="photo.showChemistry">
+                <span class="text-muted">Chemistry:</span>
+            </mat-checkbox>
+            <mat-form-field appearance="outline" class="flex-grow-2">
+                <input matInput [name]="'inputChemistry' + index" [(ngModel)]="photo.chemistry" [disabled]="!photo.showChemistry" aria-label="Chemistry" />
+            </mat-form-field>
+        </div>
+
+        <div class="flex-row flex-responsive  flex-stretch gap-16 small-text-input margin-bottom-10">
+            <mat-checkbox class="exif-label" [name]="'scanner' + index" color="primary" [disableRipple]="true" [(ngModel)]="photo.showScanner">
+                <span class="text-muted">Scanner:</span>
+            </mat-checkbox>
+            <mat-form-field appearance="outline" class="flex-grow-2">
+                <input matInput [name]="'inputScanner' + index" [(ngModel)]="photo.scanner" [disabled]="!photo.showScanner" aria-label="Scanner" />
             </mat-form-field>
         </div>
 

@@ -17,7 +17,10 @@ export class UploadPhoto {
     public showFNumber = false;
     public showExposureTime = false;
     public showPhotographicSensitivity = false;
+    public showSoftware = false;
     public showFilm = false;
+    public showChemistry = false;
+    public showScanner = false;
     public showGpsCoordination = false;
 
     public make?: string;
@@ -28,7 +31,10 @@ export class UploadPhoto {
     public fNumber?: string;
     public exposureTime?: string;
     public photographicSensitivity?: string;
+    public software?: string;
     public film?: string;
+    public chemistry?: string;
+    public scanner?: string;
     public latitude?: string;
     public longitude?: string;
 

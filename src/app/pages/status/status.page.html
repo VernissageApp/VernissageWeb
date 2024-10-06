@@ -220,9 +220,24 @@
                             <span *ngIf="getExif(currentIndex)?.photographicSensitivity" class="margin-right-15 exif-label">ISO {{ getExif(currentIndex)?.photographicSensitivity }}</span>
                         </div>
 
+                        <div *ngIf="getExif(currentIndex)?.software" class="margin-bottom-10">
+                            <mat-icon class="margin-right-20" inline="true" matTooltip="Software">settings_photo_camera</mat-icon>
+                            <span class="exif-label">{{ getExif(currentIndex)?.software }}</span>
+                        </div>
+                        
                         <div *ngIf="getExif(currentIndex)?.film" class="margin-bottom-10">
                             <mat-icon class="margin-right-20" inline="true" matTooltip="Camera roll">camera_roll</mat-icon>
                             <span class="exif-label">{{ getExif(currentIndex)?.film }}</span>
+                        </div>
+
+                        <div *ngIf="getExif(currentIndex)?.chemistry" class="margin-bottom-10">
+                            <mat-icon class="margin-right-20" inline="true" matTooltip="Develop chemistry">experiment</mat-icon>
+                            <span class="exif-label">{{ getExif(currentIndex)?.chemistry }}</span>
+                        </div>
+
+                        <div *ngIf="getExif(currentIndex)?.scanner" class="margin-bottom-10">
+                            <mat-icon class="margin-right-20" inline="true" matTooltip="Scanner">scanner</mat-icon>
+                            <span class="exif-label">{{ getExif(currentIndex)?.scanner }}</span>
                         </div>
                     </div>
 
