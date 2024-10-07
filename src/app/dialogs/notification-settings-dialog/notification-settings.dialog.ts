@@ -96,6 +96,7 @@ export class NotificationSettingsDialog implements OnInit {
             await this.subscribeToPush();
 
             if (!this.endpoint || !this.p256dh || !this.auth) {
+                this.messageService.showError('Error during generating encryption keys for Web push.');
                 return;
             }
 
@@ -128,12 +129,13 @@ export class NotificationSettingsDialog implements OnInit {
 
     async subscribeToPush(): Promise<void> {
         if (!this.settingsService.publicSettings?.webPushVapidPublicKey) {
+            this.messageService.showError('Web push public key is not set.');
             return;
         }
 
         try {
             if (!this.swPushService.isEnabled) {
-                console.info("Notification is not enabled.");
+                this.messageService.showError('Web push notifications for the website are disabled in the browser.');
                 return;
             }
 
@@ -146,6 +148,7 @@ export class NotificationSettingsDialog implements OnInit {
             this.p256dh = jsonObject.keys?.p256dh;
             this.auth = jsonObject.keys?.auth;
         } catch (err) {
+            this.messageService.showError('Unexpected error during generating Web push subscription.');
             console.error('Could not subscribe due to:', err);
         }
     }
