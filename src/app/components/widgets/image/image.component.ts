@@ -78,6 +78,7 @@ export class ImageComponent implements OnInit, OnDestroy, AfterViewInit {
             .pipe(filter(event => event instanceof NavigationStart))  
             .subscribe(() => {
                 this.popover?.close();
+                this.popover = undefined;
             });
     }
 
