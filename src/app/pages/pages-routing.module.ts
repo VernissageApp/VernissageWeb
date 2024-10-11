@@ -68,12 +68,12 @@ const routes: Routes = [
     { path: 'bookmarks', component: BookmarksPage, data: { reuse: true }, title: 'Vernissage - Bookmarks' },
     { path: 'favourites', component: FavouritesPage, data: { reuse: true }, title: 'Vernissage - Favourites' },
     { path: 'users', component: UsersPage, canActivate: [ authorizationGuard ], title: 'Vernissage - Users' },
-    { path: 'actors/:userName', data: { reuse: true }, component: ProfilePage, children: [
+    { path: 'actors/:userName', component: ProfilePage, children: [
         { path: 'posts', component: ProfilePage },
         { path: 'following', component: ProfilePage },
         { path: 'followers', component: ProfilePage }
     ]},
-    { path: ':userName', data: { reuse: true }, component: ProfilePage, children: [
+    { path: ':userName', component: ProfilePage, children: [
         { path: 'posts', component: ProfilePage },
         { path: 'following', component: ProfilePage },
         { path: 'followers', component: ProfilePage }
