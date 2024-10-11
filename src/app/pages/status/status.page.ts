@@ -32,7 +32,7 @@ import { License } from 'src/app/models/license';
 import { WindowService } from 'src/app/services/common/window.service';
 import { RoutingStateService } from 'src/app/services/common/routing-state.service';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
-import { DomSanitizer, Meta, SafeHtml, Title } from '@angular/platform-browser';
+import { Meta, SafeHtml, Title } from '@angular/platform-browser';
 import { LoadingService } from 'src/app/services/common/loading.service';
 
 
@@ -95,7 +95,6 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         private titleService: Title,
         private loadingService: LoadingService,
         private metaService: Meta,
-        private sanitizer: DomSanitizer,
         breakpointObserver: BreakpointObserver
     ) {
         super(breakpointObserver);
@@ -154,9 +153,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     }
 
     onBackClick(): void {
-        if (this.urlToGallery) {
-            this.router.navigateByUrl(this.urlToGallery);
-        }
+        history.back();
     }
 
     async onPrevClick(): Promise<void> {
