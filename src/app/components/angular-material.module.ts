@@ -30,6 +30,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatProgressBar } from '@angular/material/progress-bar';
+import { MatTabsModule } from '@angular/material/tabs';
 import { GalleryModule } from 'ng-gallery';
 import { QRCodeModule } from 'angularx-qrcode';
 import { SatPopoverModule } from '@ncstate/sat-popover';
@@ -69,6 +70,7 @@ import { SatPopoverModule } from '@ncstate/sat-popover';
         MatProgressSpinnerModule,
         MatExpansionModule,
         MatProgressBar,
+        MatTabsModule,
         GalleryModule,
         QRCodeModule,
         SatPopoverModule
@@ -106,6 +108,7 @@ import { SatPopoverModule } from '@ncstate/sat-popover';
         MatProgressSpinnerModule,
         MatExpansionModule,
         MatProgressBar,
+        MatTabsModule,
         GalleryModule,
         QRCodeModule,
         SatPopoverModule

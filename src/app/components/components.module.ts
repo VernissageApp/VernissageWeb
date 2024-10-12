@@ -32,6 +32,9 @@ import { CategoryGalleryItemComponent } from './widgets/category-gallery-item/ca
 import { HashtagGalleryItemComponent } from './widgets/hashtag-gallery-item/hashtag-gallery-item.component';
 import { UsersGalleryItemComponent } from './widgets/users-gallery-item/users-gallery-item.component';
 import { UserPopoverComponent } from './widgets/user-popover/user-popover.component';
+import { HashtagsSearchComponent } from './widgets/hashtags-search/hashtags-search.component';
+import { StatusesSearchComponent } from './widgets/statuses-search/statuses-search.component';
+import { StatusPropertiesComponent } from './widgets/status-properties/status-properties.component';
 
 @NgModule({
     declarations: [
@@ -57,7 +60,10 @@ import { UserPopoverComponent } from './widgets/user-popover/user-popover.compon
         ImageComponent,
         GeneralSettingsComponent,
         DomainBlocksComponent,
-        InstanceRulesComponent
+        InstanceRulesComponent,
+        HashtagsSearchComponent,
+        StatusesSearchComponent,
+        StatusPropertiesComponent
     ],
     exports: [
         BrowserModule,
@@ -81,12 +87,16 @@ import { UserPopoverComponent } from './widgets/user-popover/user-popover.compon
         AvatarComponent,
         UsersGalleryComponent,
         HashtagGalleryComponent,
+        HashtagGalleryItemComponent,
         CategoryGalleryComponent,
         BlurhashImageComponent,
         ImageComponent,
         GeneralSettingsComponent,
         DomainBlocksComponent,
         InstanceRulesComponent,
+        HashtagsSearchComponent,
+        StatusesSearchComponent,
+        StatusPropertiesComponent,
         DirectivesModule
     ],
     imports: [

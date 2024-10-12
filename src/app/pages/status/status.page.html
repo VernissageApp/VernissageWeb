@@ -242,19 +242,7 @@
                     </div>
 
                     <!-- Status properties -->
-                    <div class="flex-row properties text-muted">
-                        <div class="margin-right-15" matTooltip="Published date" aria-label="Published date">{{ mainStatus.createdAt | date: 'short' }}</div>
-                        <ng-container [ngSwitch]="mainStatus.visibility">
-                            <mat-icon class="margin-right-15" *ngSwitchCase="statusVisibility.Public" matTooltip="Public">public</mat-icon>
-                            <mat-icon class="margin-right-15" *ngSwitchCase="statusVisibility.Followers" matTooltip="Followers">people</mat-icon>
-                            <mat-icon class="margin-right-15" *ngSwitchCase="statusVisibility.Mentioned" matTooltip="Mentioned">person</mat-icon>
-                        </ng-container>
-                        <mat-icon *ngIf="mainStatus.application" class="margin-right-15" [matTooltip]="mainStatus.application" aria-label="Application">settings_applications</mat-icon>
-                        <mat-icon matTooltip="Number of reblogs" aria-label="Number of reblogs">rocket</mat-icon>
-                        <div  class="margin-right-15">{{ mainStatus.reblogsCount }}</div>
-                        <mat-icon matTooltip="Number of likes" aria-label="Number of likes">star</mat-icon>
-                        <div>{{ mainStatus.favouritesCount }}</div>
-                    </div>
+                    <app-status-properties [status]="mainStatus"></app-status-properties>
                 </mat-card-content>
             </mat-card>
 

@@ -9,6 +9,9 @@ import { Subscription } from 'rxjs';
 import { LoadingService } from 'src/app/services/common/loading.service';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { Hashtag } from 'src/app/models/hashtag';
+import { Status } from 'src/app/models/status';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 
 @Component({
     selector: 'app-search',
@@ -18,7 +21,13 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 })
 export class SearchPage extends ResponsiveComponent implements AfterViewInit, OnInit, OnDestroy {
     search = '';
+    type = 'users'
+
+    selectedIndex = 0;
     users: User[] = [];
+    hashtags: Hashtag[] = [];
+    statuses: Status[] = [];
+
     usersRelationships: Relationship[] = [];
     routeParamsSubscription?: Subscription;
     searchExecuted = false;
@@ -42,27 +51,44 @@ export class SearchPage extends ResponsiveComponent implements AfterViewInit, On
         this.routeParamsSubscription = this.activatedRoute.queryParams.subscribe(async params => {
             this.loadingService.showLoader();
 
-            const query = params['query'];
-            this.search = query;
+            this.type = params['type'];
+            this.search = params['query'];
 
-            if (!query) {
+            if (!this.search) {
                 this.searchExecuted = false;
             }
 
             if ((this.search?.trim().length ?? 0) === 0) {
                 this.usersRelationships = [];
                 this.users = [];
-                this.loadingService.hideLoader();
+                this.hashtags = [];
+                this.statuses = [];
 
+                this.loadingService.hideLoader();
                 return;
             }
 
-            const searchResults = await this.searchService.search(this.search);
+            switch (this.type) {
+                case 'users':
+                    this.selectedIndex = 0;
+                    break;
+                case 'hashtags':
+                    this.selectedIndex = 1;
+                    break;
+                case 'statuses':
+                    this.selectedIndex = 2;
+                    break;
+            }
+
+            const searchResults = await this.searchService.search(this.search, this.type);
+
             if (searchResults.users && searchResults.users.length !== 0) {                
                 this.usersRelationships = await this.relationshipsService.getAll(searchResults.users?.map(x => x.id ?? ''))
             }
     
             this.users = searchResults.users ?? [];
+            this.hashtags = searchResults.hashtags ?? [];
+            this.statuses = searchResults.statuses ?? [];
 
             this.searchExecuted = true;
             this.loadingService.hideLoader();
@@ -79,7 +105,42 @@ export class SearchPage extends ResponsiveComponent implements AfterViewInit, On
         this.routeParamsSubscription?.unsubscribe();
     }
 
+    getMainStatus(status: Status): Status {
+        return status.reblog ?? status;
+    }
+
+    onSelectedTabChange(event: MatTabChangeEvent): void {
+        console.log(event);
+        let selectedType = '';
+        switch (event.index) {
+            case 0: 
+                selectedType = 'users';
+                break;
+            case 1:
+                selectedType = 'hashtags';
+                break;
+            case 2:
+                selectedType = 'statuses';
+                break;
+        }
+
+        this.router.navigate([], { relativeTo: this.activatedRoute, queryParams: { query: this.search, type: selectedType }, queryParamsHandling: 'merge' });
+    }
+
     async onSubmit(): Promise<void> {
-        this.router.navigate([], { relativeTo: this.activatedRoute, queryParams: { query: this.search }, queryParamsHandling: 'merge' });
+        const type = this.getSearchType();
+        this.router.navigate([], { relativeTo: this.activatedRoute, queryParams: { query: this.search, type: type }, queryParamsHandling: 'merge' });
+    }
+
+    private getSearchType(): string {
+        if (this.search.startsWith('#')) {
+            return 'hashtags';
+        }
+
+        if (this.search.startsWith('@')) {
+            return 'users';
+        }
+
+        return 'statuses';
     }
 }
