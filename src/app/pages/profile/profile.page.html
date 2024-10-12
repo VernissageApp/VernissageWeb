@@ -1,4 +1,4 @@
-<div *ngIf="user && isReady" @fadeIn>
+<div *ngIf="user && isReady">
     <img class="header-image" alt="header profile" [src]="this.user.headerUrl ?? 'assets/header.jpg'" />
     <img class="avatar-image" alt="avatar profile" [src]="this.user.avatarUrl ?? 'assets/avatar.svg'" (click)="onAvatarClick()" (keydown.enter)="onAvatarClick()" tabindex="0" />
 

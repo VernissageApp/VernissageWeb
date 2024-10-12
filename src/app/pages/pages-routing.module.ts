@@ -68,12 +68,12 @@ const routes: Routes = [
     { path: 'bookmarks', component: BookmarksPage, data: { reuse: true }, title: 'Vernissage - Bookmarks' },
     { path: 'favourites', component: FavouritesPage, data: { reuse: true }, title: 'Vernissage - Favourites' },
     { path: 'users', component: UsersPage, canActivate: [ authorizationGuard ], title: 'Vernissage - Users' },
-    { path: 'actors/:userName', component: ProfilePage, children: [
+    { path: 'actors/:userName', data: { reuse: true }, component: ProfilePage, children: [
         { path: 'posts', component: ProfilePage },
         { path: 'following', component: ProfilePage },
         { path: 'followers', component: ProfilePage }
     ]},
-    { path: ':userName', component: ProfilePage, children: [
+    { path: ':userName', data: { reuse: true }, component: ProfilePage, children: [
         { path: 'posts', component: ProfilePage },
         { path: 'following', component: ProfilePage },
         { path: 'followers', component: ProfilePage }
@@ -85,7 +85,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' })],
+    imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled', enableViewTransitions: true })],
     exports: [RouterModule]
 })
 export class PagesRoutingModule { }
