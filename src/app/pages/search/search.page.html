@@ -14,19 +14,58 @@
                     </mat-card-content>
                 </mat-card>
 
-
-                @if (users.length > 0) {
-                    <mat-card class="users-card" appearance="outlined">
+                @if (searchExecuted) {
+                    <mat-card appearance="outlined">
                         <mat-card-content>
-                            <app-users-card [users]="users" [relationships]="usersRelationships" [showBio]="true"></app-users-card>
+                            
+                            <mat-tab-group mat-stretch-tabs animationDuration="0ms" [selectedIndex]="selectedIndex" (selectedTabChange)="onSelectedTabChange($event)">
+                                <mat-tab label="Users">
+                                    @if (users.length > 0) {
+                                        <div class="margin-top-20 margin-bottom-20">
+                                            <app-users-card [users]="users" [relationships]="usersRelationships" [showBio]="true"></app-users-card>
+                                        </div>
+                                    }
+
+                                    @if (searchExecuted && users.length === 0) {
+                                        <div class="text-center text-muted margin-top-20 margin-bottom-20">
+                                            No users found.
+                                        </div>
+                                    }
+                                </mat-tab>
+                                <mat-tab label="Hashtags">
+                                    @if (hashtags.length > 0) {
+                                        <div class="margin-top-20 margin-bottom-20">
+                                            @for (hashtag of hashtags; track hashtag.name) {
+                                                <app-hashtags-search [hashtag]="hashtag"></app-hashtags-search>
+                                            }
+                                        </div>
+                                    }
+
+                                    @if (searchExecuted && hashtags.length === 0) {
+                                        <div class="text-center text-muted margin-top-20 margin-bottom-20">
+                                            No hashtags found.
+                                        </div>
+                                    }
+                                </mat-tab>
+                                <mat-tab label="Statuses">
+                                    @if (statuses.length > 0) {
+                                        <div class="margin-top-20 margin-bottom-20">
+                                            @for (status of statuses; track status.id) {
+                                                <app-statuses-search [status]="status"></app-statuses-search>
+                                            }
+                                        </div>
+                                    }
+
+                                    @if (searchExecuted && statuses.length === 0) {
+                                        <div class="text-center text-muted margin-top-20 margin-bottom-20">
+                                            No statuses found.
+                                        </div>
+                                    }
+                                </mat-tab>
+                            </mat-tab-group>
+
                         </mat-card-content>
                     </mat-card>
-                }
-
-                @if (searchExecuted && users.length === 0) {
-                    <div>
-                        No results found.
-                    </div>
                 }
             </div>
         </div>
