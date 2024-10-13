@@ -36,7 +36,7 @@
                     <div></div>
                 </div>
 
-                <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
+                <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-10">
                     <mat-form-field appearance="outline">
                         <mat-label>Language</mat-label>
                         <mat-select [(value)]="user.locale">
@@ -44,6 +44,16 @@
                             <mat-option value="pl_PL">Polish (polski)</mat-option>
                         </mat-select>
                     </mat-form-field>
+                    <div></div>
+                </div>
+
+                <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
+                    <div>
+                        <mat-checkbox name="manuallyApprovesFollowers" color="primary" [disableRipple]="true" [(ngModel)]="user.manuallyApprovesFollowers">Manually accept new followers</mat-checkbox>
+                        <div class="text-muted checkbox-hint">
+                            People will need to wait for you to accept their follow request. Check this option if you prefer to manually review follow requests and decide whether to accept or reject new followers, or uncheck it to allow people to follow you without requiring approval.
+                        </div>
+                    </div>
                     <div></div>
                 </div>
 
@@ -96,7 +106,7 @@
 
                 <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20 padding-top-20">
                     <div>
-                        <h3>Verification</h3>
+                        <div class="fw-400 margin-bottom-5">Self-verification of the account</div>
                         <div class="text-muted">
                             <p>
                                 You can use Fields to verify your identity. All you need is a personal website that others recognize as yours.

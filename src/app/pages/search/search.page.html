@@ -1,16 +1,14 @@
 <div @fadeIn [ngClass]="{ 'padding-30': !isHandset, 'padding-10': isHandset }">
     <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
 
-        <div class="flex-row flex-space-around padding-left-10 padding-right-10">
+        <div class="flex-row flex-space-around">
             <div class="search width-100">
                 <mat-card class="margin-bottom-20" appearance="outlined">
                     <mat-card-content>
-                        <div class="flex-row flex-responsive flex-align-center gap-16">
-                            <mat-form-field appearance="outline">
-                                <input #queryInput matInput name="query" [(ngModel)]="search" cdkFocusInitial aria-label="Query" />
-                            </mat-form-field>
-                            <button mat-flat-button color="primary">Search</button>
-                        </div>
+                        <mat-form-field appearance="outline">
+                            <input #queryInput matInput name="query" [(ngModel)]="search" cdkFocusInitial aria-label="Query" />
+                            <button matSuffix mat-flat-button type="submit" color="primary" class="margin-right-10" aria-label="Search">Search</button>
+                        </mat-form-field>
                     </mat-card-content>
                 </mat-card>
 
