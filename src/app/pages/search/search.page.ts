@@ -137,7 +137,7 @@ export class SearchPage extends ResponsiveComponent implements AfterViewInit, On
             return 'hashtags';
         }
 
-        if (this.search.startsWith('@')) {
+        if (this.search.includes('@')) {
             return 'users';
         }
 
