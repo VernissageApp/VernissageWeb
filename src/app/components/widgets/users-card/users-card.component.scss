@@ -2,15 +2,14 @@
     align-items: center;
     display: flex;
     gap: 10px;
-    padding-bottom: 10px;
-    padding-top: 10px;
+    padding-bottom: 12px;
+    padding-top: 12px;
 
     .user-display-name {
         display: flex;
         gap: 10px;
         flex: 1 1 auto;
         overflow: hidden;
-        align-items: center;
     }
 
     .user-name {
