@@ -225,7 +225,8 @@ $vernissage-dark-theme: mat.m2-define-dark-theme((
     primary: mat.m2-define-palette(mat.$m2-blue-palette),
     accent: mat.m2-define-palette(mat.$m2-lime-palette),
     warn: $vernissage-light-warn
-  )
+  ),
+  typography: $my-typography
 ));
 
 $vernissage-dark-toolbar-theme: mat.m2-define-light-theme((
