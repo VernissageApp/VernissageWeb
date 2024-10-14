@@ -55,8 +55,8 @@ const routes: Routes = [
     { path: 'notifications', component: NotificationsPage, canActivate: [ authorizationGuard ], title: 'Vernissage - Notifications' },
     { path: 'invitations', component: InvitationsPage, canActivate: [ authorizationGuard ], title: 'Vernissage - Invitations' },
     { path: 'settings', component: SettingsPage, canActivate: [ authorizationGuard ], title: 'Vernissage - Settings' },
-    { path: 'trending', component: TrendingPage, title: 'Vernissage - Trending' },
-    { path: 'editors', component: EditorsPage, title: 'Vernissage - Editor\'s choice' },
+    { path: 'trending', component: TrendingPage, data: { reuse: true }, title: 'Vernissage - Trending' },
+    { path: 'editors', component: EditorsPage, data: { reuse: true }, title: 'Vernissage - Editor\'s choice' },
     { path: 'categories', component: CategoriesPage, title: 'Vernissage - Categories' },
     { path: 'preferences', component: PreferencesPage, canActivate: [ authorizationGuard ], title: 'Vernissage - Preferences' },
     { path: 'reports', component: ReportsPage, canActivate: [ authorizationGuard ], title: 'Vernissage - Reports' },
@@ -68,12 +68,12 @@ const routes: Routes = [
     { path: 'bookmarks', component: BookmarksPage, data: { reuse: true }, title: 'Vernissage - Bookmarks' },
     { path: 'favourites', component: FavouritesPage, data: { reuse: true }, title: 'Vernissage - Favourites' },
     { path: 'users', component: UsersPage, canActivate: [ authorizationGuard ], title: 'Vernissage - Users' },
-    { path: 'actors/:userName', data: { reuse: true }, component: ProfilePage, children: [
+    { path: 'actors/:userName', component: ProfilePage, data: { reuse: true }, children: [
         { path: 'posts', component: ProfilePage },
         { path: 'following', component: ProfilePage },
         { path: 'followers', component: ProfilePage }
     ]},
-    { path: ':userName', data: { reuse: true }, component: ProfilePage, children: [
+    { path: ':userName', component: ProfilePage, data: { reuse: true }, children: [
         { path: 'posts', component: ProfilePage },
         { path: 'following', component: ProfilePage },
         { path: 'followers', component: ProfilePage }

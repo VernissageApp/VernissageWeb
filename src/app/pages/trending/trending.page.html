@@ -22,7 +22,7 @@
         </mat-radio-group>
     </div>
 
-    <app-gallery *ngIf="selectedTrending === 'statuses'" [statuses]="statuses"></app-gallery>
+    <app-gallery *ngIf="selectedTrending === 'statuses'" [statuses]="statuses" [isDetached]="isDetached"></app-gallery>
     <app-users-gallery *ngIf="selectedTrending === 'users'" [users]="users"></app-users-gallery>
     <app-hashtag-gallery *ngIf="selectedTrending === 'hashtags'" [hashtags]="hashtags"></app-hashtag-gallery>
 </div>

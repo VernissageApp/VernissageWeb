@@ -1,9 +1,10 @@
 import { BreakpointObserver } from "@angular/cdk/layout";
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from "@angular/core";
 import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { fadeInAnimation } from "src/app/animations/fade-in.animation";
 import { ResponsiveComponent } from "src/app/common/responsive";
+import { OnAttach, OnDetach } from "src/app/directives/app-router-outlet.directive";
 import { ContextTimeline } from "src/app/models/context-timeline";
 import { Hashtag } from "src/app/models/hashtag";
 import { LinkableResult } from "src/app/models/linkable-result";
@@ -21,7 +22,7 @@ import { TrendingService } from "src/app/services/http/trending.service";
     styleUrls: ['./trending.page.scss'],
     animations: fadeInAnimation
 })
-export class TrendingPage extends ResponsiveComponent implements OnInit, OnDestroy {
+export class TrendingPage extends ResponsiveComponent implements OnInit, OnDestroy, OnAttach, OnDetach {
     readonly trendingPeriod = TrendingPeriod;
 
     statuses?: LinkableResult<Status>;
@@ -31,7 +32,9 @@ export class TrendingPage extends ResponsiveComponent implements OnInit, OnDestr
     period = TrendingPeriod.Daily;
     trending = 'statuses';
     selectedTrending = 'statuses';
+
     isReady = false;
+    isDetached = false;
     showHashtags = false;
 
     routeParamsSubscription?: Subscription;
@@ -43,6 +46,7 @@ export class TrendingPage extends ResponsiveComponent implements OnInit, OnDestr
         private authorizationService: AuthorizationService,
         private router: Router,
         private activatedRoute: ActivatedRoute,
+        private changeDetectorRef: ChangeDetectorRef,
         breakpointObserver: BreakpointObserver
     ) {
         super(breakpointObserver);
@@ -87,6 +91,16 @@ export class TrendingPage extends ResponsiveComponent implements OnInit, OnDestr
         super.ngOnDestroy();
 
         this.routeParamsSubscription?.unsubscribe();
+    }
+
+    onDetach(): void {
+        this.isDetached = true;
+        this.changeDetectorRef.detectChanges();
+    }
+
+    onAttach(): void {
+        this.isDetached = false;
+        this.changeDetectorRef.detectChanges();
     }
 
     onSelectionChange(): void {

@@ -15,6 +15,6 @@
         </section>
     </div>
 
-    <app-gallery *ngIf="selectedTab === 'statuses'" [statuses]="statuses"></app-gallery>
+    <app-gallery *ngIf="selectedTab === 'statuses'" [statuses]="statuses" [isDetached]="isDetached"></app-gallery>
     <app-users-gallery *ngIf="selectedTab === 'users'" [users]="users"></app-users-gallery>
 </div>
