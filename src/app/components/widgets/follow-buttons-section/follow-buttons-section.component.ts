@@ -337,7 +337,7 @@ export class FollowButtonsSectionComponent implements OnInit {
             return false;
         }
 
-        if (!this.authorizationService.hasRole(Role.Moderator) || !this.authorizationService.hasRole(Role.Administrator)) {
+        if (!this.authorizationService.hasRole(Role.Moderator) && !this.authorizationService.hasRole(Role.Administrator)) {
             return false;
         }
 
@@ -353,7 +353,7 @@ export class FollowButtonsSectionComponent implements OnInit {
             return false;
         }
 
-        if (!this.authorizationService.hasRole(Role.Moderator) || !this.authorizationService.hasRole(Role.Administrator)) {
+        if (!this.authorizationService.hasRole(Role.Moderator) && !this.authorizationService.hasRole(Role.Administrator)) {
             return false;
         }
 
