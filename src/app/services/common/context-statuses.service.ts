@@ -185,7 +185,7 @@ export class ContextStatusesService {
         }
 
         if (this.statuses?.context === ContextTimeline.editors) {
-            return await this.timelineService.featured(minId, maxId, undefined, undefined);
+            return await this.timelineService.featuredStatuses(minId, maxId, undefined, undefined);
         }
 
         if (this.statuses?.context === ContextTimeline.hashtag && this.statuses.hashtag) {

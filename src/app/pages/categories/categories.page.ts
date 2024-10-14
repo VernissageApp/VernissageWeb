@@ -62,7 +62,7 @@ export class CategoriesPage extends ResponsiveComponent implements OnInit, OnDes
             return true;
         }
 
-        if (this.settingsService.publicSettings?.showEditorsChoiceForAnonymous) {
+        if (this.settingsService.publicSettings?.showCategoriesForAnonymous) {
             return true;
         }
 
