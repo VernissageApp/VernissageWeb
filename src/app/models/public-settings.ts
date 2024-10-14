@@ -12,6 +12,7 @@ export class PublicSettings {
     public showLocalTimelineForAnonymous = false;
     public showTrendingForAnonymous = false;
     public showEditorsChoiceForAnonymous = false;
+    public showEditorsUsersChoiceForAnonymous = false;
     public showHashtagsForAnonymous = false;
     public showCategoriesForAnonymous = false;
 }

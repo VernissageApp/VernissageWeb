@@ -47,6 +47,8 @@ export enum EventType {
     UserRolesDisconnect = 'userRolesDisconnect',
     UserApprove = 'userApprove',
     UserReject = 'userReject',
+    UserFeature = 'userFeature',
+    UserUnfeature = 'userUnfeature',
     UsersStatuses = 'usersStatuses',
     
     AvatarUpdate = 'avatarUpdate',
@@ -106,7 +108,8 @@ export enum EventType {
     TimelinesPublic = 'timelinesPublic',
     TimelinesCategories = 'timelinesCategories',
     TimelinesHashtags = 'timelinesHashtags',
-    TimelinesFeatured = 'timelinesFeatured',
+    TimelinesFeatured = 'timelinesFeaturedStatuses',
+    TimelinesFeaturedUsers = 'timelinesFeaturedUsers',
     TimelinesHome = 'timelinesHome',
     
     FollowRequestList = 'followRequestList',

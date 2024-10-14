@@ -5,7 +5,7 @@
     <button @fadeIn *ngIf="showApproveFollowButton && !isDuringRelationshipAction" type="button" (click)="onApproveFollow()" mat-flat-button aria-label="Approve follow">Approve follow</button>
     <button @fadeIn *ngIf="showApproveFollowButton && !isDuringRelationshipAction" type="button" (click)="onRejectFollow()" mat-flat-button aria-label="Approve follow">Reject follow</button>
 
-    <ng-container *ngIf="showOpenOriginalProfileButton || showMuteButton || showUnmuteButton || showReportButton">
+    <ng-container *ngIf="showOpenOriginalProfileButton || showMuteButton || showUnmuteButton || showFeatureButton || showUnfeatureButton || showReportButton">
         <button class="more-button" mat-flat-button [matMenuTriggerFor]="dropdownMenuOne2" color="primary" aria-label="More options">
             <mat-icon>more_vert</mat-icon>
         </button>
@@ -13,6 +13,8 @@
             <button *ngIf="showOpenOriginalProfileButton" (click)="onOriginalProfile()" mat-menu-item><mat-icon>public</mat-icon> Open original profile</button>
             <button *ngIf="showMuteButton" (click)="openMuteAccountDialog()" mat-menu-item><mat-icon>voice_over_off</mat-icon> Mute</button>
             <button *ngIf="showUnmuteButton" (click)="unmuteAccount()" mat-menu-item><mat-icon>record_voice_over</mat-icon> Unmute</button>
+            <button *ngIf="showFeatureButton" (click)="onFeature()" mat-menu-item><mat-icon class="outline-symbol">stars</mat-icon> Feature</button>
+            <button *ngIf="showUnfeatureButton" (click)="onUnfeature()" mat-menu-item><mat-icon class="fill-symbol">stars</mat-icon> Undo feature</button>
             <button *ngIf="showReportButton" (click)="onReportDialog()" mat-menu-item><mat-icon>report</mat-icon> Report</button>
         </mat-menu>
     </ng-container>

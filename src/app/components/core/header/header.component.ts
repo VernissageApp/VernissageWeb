@@ -64,7 +64,7 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
             this.fullName = this.userDisplayService.displayName(this.user);
 
             this.showTrending = this.isLoggedIn || (this.settingsService.publicSettings?.showTrendingForAnonymous ?? false);
-            this.showEditorsChoice = this.isLoggedIn || (this.settingsService.publicSettings?.showEditorsChoiceForAnonymous ?? false);
+            this.showEditorsChoice = this.isLoggedIn || ((this.settingsService.publicSettings?.showEditorsChoiceForAnonymous ?? false) || (this.settingsService.publicSettings?.showEditorsUsersChoiceForAnonymous ?? false));
             this.showCategories = this.isLoggedIn || (this.settingsService.publicSettings?.showCategoriesForAnonymous ?? false);
 
             this.messagesSubscription = this.swPushService.messages.subscribe(async () => {

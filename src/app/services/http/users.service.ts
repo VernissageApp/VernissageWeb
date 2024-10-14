@@ -66,6 +66,16 @@ export class UsersService {
         return await firstValueFrom(event$);
     }
 
+    public async feature(userName: string): Promise<User> {
+        const event$ = this.httpClient.post<User>(this.windowService.apiUrl() + '/api/v1/users/@' + userName + '/feature', null);
+        return await firstValueFrom(event$);
+    }
+
+    public async unfeature(userName: string): Promise<User> {
+        const event$ = this.httpClient.post<User>(this.windowService.apiUrl() + '/api/v1/users/@' + userName + '/unfeature', null);
+        return await firstValueFrom(event$);
+    }
+
     public async enable(userName: string): Promise<void> {
         const event$ = this.httpClient.post(this.windowService.apiUrl() + '/api/v1/users/@' + userName + '/enable', null);
         await firstValueFrom(event$);

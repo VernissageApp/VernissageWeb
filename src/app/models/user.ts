@@ -29,6 +29,7 @@ export class User {
     public followingCount = 0;
     public twoFactorEnabled = false;
     public manuallyApprovesFollowers = false;
+    public featured = false;
     public createdAt = '';
     public updatedAt = '';
 }

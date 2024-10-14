@@ -6,6 +6,7 @@ import { MuteAccountDialog } from 'src/app/dialogs/mute-account-dialog/mute-acco
 import { ReportData } from 'src/app/dialogs/report-dialog/report-data';
 import { ReportDialog } from 'src/app/dialogs/report-dialog/report.dialog';
 import { Relationship } from 'src/app/models/relationship';
+import { Role } from 'src/app/models/role';
 import { User } from 'src/app/models/user';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 import { MessagesService } from 'src/app/services/common/messages.service';
@@ -35,6 +36,8 @@ export class FollowButtonsSectionComponent implements OnInit {
     showOpenOriginalProfileButton = false;
     showMuteButton = false;
     showUnmuteButton = false;
+    showFeatureButton = false;
+    showUnfeatureButton = false;
     showReportButton = false;
     signedInUser?: User;
 
@@ -201,6 +204,40 @@ export class FollowButtonsSectionComponent implements OnInit {
         }
     }
 
+    async onFeature(): Promise<void> {
+        if (this.user?.userName) {
+            try {
+                const internalUser = await this.usersService.feature(this.user?.userName);
+                this.user.featured = internalUser.featured;
+                this.recalculateRelationship();
+
+                this.changeDetectorRef.detectChanges();
+                this.relationChanged.emit(this.relationship);
+                this.messageService.showSuccess('You are featured the user.');
+            } catch (error) {
+                console.error(error);
+                this.messageService.showServerError(error);
+            }
+        }
+    }
+
+    async onUnfeature(): Promise<void> {
+        if (this.user?.userName) {
+            try {
+                const internalUser = await this.usersService.unfeature(this.user?.userName);
+                this.user.featured = internalUser.featured;
+                this.recalculateRelationship();
+
+                this.changeDetectorRef.detectChanges();
+                this.relationChanged.emit(this.relationship);
+                this.messageService.showSuccess('You are undo featured the user.');
+            } catch (error) {
+                console.error(error);
+                this.messageService.showServerError(error);
+            }
+        }
+    }
+
     private shouldShowFollowButton(): boolean {
         if (!this.signedInUser) {
             return false;
@@ -278,7 +315,7 @@ export class FollowButtonsSectionComponent implements OnInit {
         return isMuted === null || isMuted === false;
     }
 
-    private shouldShowUnnuteButton(): boolean {
+    private shouldShowUnmuteButton(): boolean {
         if (!this.signedInUser) {
             return false;
         }
@@ -289,6 +326,38 @@ export class FollowButtonsSectionComponent implements OnInit {
 
         const isMuted = this.relationship?.mutedStatuses ||  this.relationship?.mutedReblogs || this.relationship?.mutedNotifications;
         return isMuted === true;
+    }
+
+    private shouldShowFeatureButton(): boolean {
+        if (!this.signedInUser) {
+            return false;
+        }
+
+        if (this.signedInUser.id === this.user?.id) {
+            return false;
+        }
+
+        if (!this.authorizationService.hasRole(Role.Moderator) || !this.authorizationService.hasRole(Role.Administrator)) {
+            return false;
+        }
+
+        return this.user?.featured === false;
+    }
+
+    private shouldShowUnfeatureButton(): boolean {
+        if (!this.signedInUser) {
+            return false;
+        }
+
+        if (this.signedInUser.id === this.user?.id) {
+            return false;
+        }
+
+        if (!this.authorizationService.hasRole(Role.Moderator) || !this.authorizationService.hasRole(Role.Administrator)) {
+            return false;
+        }
+
+        return this.user?.featured === true;
     }
 
     private shouldShowReportButton(): boolean {
@@ -309,7 +378,9 @@ export class FollowButtonsSectionComponent implements OnInit {
         this.showApproveFollowButton = this.shouldShowApproveFollowButton();
         this.showOpenOriginalProfileButton = this.shouldShowOpenOriginalProfileButton();
         this.showMuteButton = this.shouldShowMuteButton();
-        this.showUnmuteButton = this.shouldShowUnnuteButton();
+        this.showUnmuteButton = this.shouldShowUnmuteButton();
+        this.showFeatureButton = this.shouldShowFeatureButton();
+        this.showUnfeatureButton = this.shouldShowUnfeatureButton();
         this.showReportButton = this.shouldShowReportButton();
     }
 }
