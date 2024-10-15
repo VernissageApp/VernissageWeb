@@ -95,9 +95,8 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
         await this.router.navigate(['/login']);
     }
 
-    async onLogoClick(): Promise<void> {
+    clearReuseRoute(): void {
         this.clearReuseStrategyState();
-        await this.router.navigate(['/']);
     }
 
     isRegistrationEnabled(): boolean {
