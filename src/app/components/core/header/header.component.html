@@ -1,23 +1,23 @@
 <nav>
     <mat-toolbar color="primary">
-        <a class="logo link" (click)="onLogoClick()" (keydown.enter)="onLogoClick()" tabindex="0">Vernissage <div class="beta"></div></a>
+        <a class="logo link" [routerLink]="['/']" (click)="clearReuseRoute()" (keydown.enter)="onLogoClick()" tabindex="0">Vernissage <div class="beta"></div></a>
 
         @if (deviceResolution === resolution.handsetLandscape || deviceResolution === resolution.tablet || deviceResolution === resolution.browser) {
             @if (deviceResolution === resolution.handsetLandscape) {
                 @if (showTrending) {
-                    <button mat-icon-button color="primary" [routerLink]="['/trending']" aria-label="Trending">
+                    <button mat-icon-button color="primary" [routerLink]="['/trending']" (click)="clearReuseRoute()" aria-label="Trending">
                         <mat-icon>trending_up</mat-icon>
                     </button>
                 }
                 
                 @if (showEditorsChoice) {
-                    <button mat-icon-button color="primary" [routerLink]="['/editors']" aria-label="Editor's choice">
+                    <button mat-icon-button color="primary" [routerLink]="['/editors']"(click)="clearReuseRoute()" aria-label="Editor's choice">
                         <mat-icon>stars</mat-icon>
                     </button>
                 }
 
                 @if (showCategories) {
-                    <button mat-icon-button color="primary" [routerLink]="['/categories']" aria-label="Categories">
+                    <button mat-icon-button color="primary" [routerLink]="['/categories']" (click)="clearReuseRoute()" aria-label="Categories">
                         <mat-icon>loyalty</mat-icon>
                     </button>
                 }
@@ -25,19 +25,19 @@
 
             @if (deviceResolution === resolution.tablet || deviceResolution === resolution.browser) {
                 @if(showTrending) {
-                    <button mat-button color="primary" [routerLink]="['/trending']" aria-label="Trending" class="margin-right-5">
+                    <button mat-button color="primary" [routerLink]="['/trending']" (click)="clearReuseRoute()" aria-label="Trending" class="margin-right-5">
                         <mat-icon>trending_up</mat-icon> Trending
                     </button>
                 }
 
                 @if (showEditorsChoice) {
-                    <button mat-button color="primary" [routerLink]="['/editors']" aria-label="Editor's choice" class="margin-right-5">
+                    <button mat-button color="primary" [routerLink]="['/editors']" (click)="clearReuseRoute()" aria-label="Editor's choice" class="margin-right-5">
                         <mat-icon>stars</mat-icon> Editor's choice
                     </button>
                 }
 
                 @if (showCategories) {
-                    <button mat-button color="primary" [routerLink]="['/categories']" aria-label="Categories" class="margin-right-5">
+                    <button mat-button color="primary" [routerLink]="['/categories']" (click)="clearReuseRoute()" aria-label="Categories" class="margin-right-5">
                         <mat-icon>loyalty</mat-icon> Categories
                     </button>
                 }
@@ -64,21 +64,21 @@
                 </button>
                 <mat-menu #discover="matMenu">
                     @if (showTrending) {
-                        <button mat-menu-item [routerLink]="['/trending']" aria-label="Trending">
+                        <button mat-menu-item [routerLink]="['/trending']" (click)="clearReuseRoute()" aria-label="Trending">
                             <mat-icon>timeline</mat-icon>
                             <span>Trending</span>
                         </button>
                     }
 
                     @if (showEditorsChoice) {
-                        <button mat-menu-item [routerLink]="['/editors']" aria-label="Editor's choice">
+                        <button mat-menu-item [routerLink]="['/editors']" (click)="clearReuseRoute()" aria-label="Editor's choice">
                             <mat-icon>stars</mat-icon>
                             <span>Editor's choice</span>
                         </button>
                     }
 
                     @if (showCategories) {
-                        <button mat-menu-item [routerLink]="['/categories']" aria-label="Categories">
+                        <button mat-menu-item [routerLink]="['/categories']" (click)="clearReuseRoute()" aria-label="Categories">
                             <mat-icon>loyalty</mat-icon>
                             <span>Categories</span>
                         </button>
