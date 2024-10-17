@@ -1,12 +1,25 @@
 <div class="image-container">
-    @if (!imageIsLoaded) {
-        <canvas class="blurhash" #canvas width="32" height="32"></canvas>
-    }
 
-    @if (horizontal) {
-        <img class="image-item" [ngClass]="{ 'img-vertical': !horizontal, 'img-horizontal': horizontal }" [src]="imageSrc" (load)="onImageLoaded()" alt="Status image" />
-    } @else {
-        <img class="image-item" [ngClass]="{ 'img-vertical': !horizontal, 'img-horizontal': horizontal }" [src]="imageSrc" [width]="width" [height]="height" (load)="onImageLoaded()" alt="Status image" />
+    @if (imageSrc && imageSrc.length > 0) {
+        @if (horizontal) {
+            @if (!imageIsLoaded) {
+                <canvas class="blurhash display-none" #canvas width="32" height="32"></canvas>
+            }
+
+            <img class="image-item" [ngClass]="{ 'img-vertical': !horizontal, 'img-horizontal': horizontal }" [src]="imageSrc" (load)="onImageLoaded()" alt="Status image" />
+        } @else {
+            <canvas class="blurhash display-none" #canvas width="32" height="32"></canvas>
+            <img
+                class="image-item"
+                [ngClass]="{ 'img-vertical': !horizontal, 'img-horizontal': horizontal }"
+                [ngSrc]="imageSrc"
+                [width]="width"
+                [height]="height"
+                [placeholder]="dataUrl" [placeholderConfig]="{ blur: false }"
+                [priority]="internalPriority"
+                (load)="onImageLoaded()"
+                alt="Status image" />
+        }
     }
 
     @if (imageIsLoaded) {
@@ -23,7 +36,7 @@
         }
 
         @if (signedInUser && showFavourites) {
-            <div class="favourite" (click)="favouriteToogle(); $event.preventDefault(); $event.stopPropagation();" (keydown.enter)="favouriteToogle(); $event.preventDefault(); $event.stopPropagation();" tabindex="0">
+            <div class="favourite" (click)="favouriteToggle(); $event.preventDefault(); $event.stopPropagation();" (keydown.enter)="favouriteToggle(); $event.preventDefault(); $event.stopPropagation();" tabindex="0">
                 <mat-icon *ngIf="!getMainStatus()?.favourited" class="outline-symbol">grade</mat-icon>
                 <mat-icon *ngIf="getMainStatus()?.favourited" class="fill-symbol">grade</mat-icon>
             </div>

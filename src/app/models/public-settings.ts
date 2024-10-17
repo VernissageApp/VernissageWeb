@@ -3,6 +3,7 @@ export class PublicSettings {
     public maximumNumberOfInvitations = 0;
     public isOpenAIEnabled = false;
     public webPushVapidPublicKey?: string;
+    public s3Address?: string;
 
     public patreonUrl?: string;
     public mastodonUrl?: string;

@@ -39,6 +39,11 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
         if (internalMastodonUrl.length > 0) {
             this.createMastodonLink(internalMastodonUrl);
         }
+
+        const s3Address = this.settingsService.publicSettings?.s3Address ?? '';
+        if (s3Address.length > 0) {
+            this.createPreloadLink(s3Address);
+        }
     }
 
     ngAfterViewInit(): void {
@@ -53,10 +58,20 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
         this.loadingStateChangesSubscription?.unsubscribe();
     }
 
+    // e.g. <link href="https://mastodon.social/@account" rel="me">
     private createMastodonLink(url: string): void {
         const link: HTMLLinkElement = this.documentRef.createElement('link');
         link.setAttribute('href', url);
         link.setAttribute('rel', 'me');
+
+        this.documentRef.head.appendChild(link);
+    }
+
+    // e.g. <link rel="preconnect" href="https://s3.eu-central-1.amazonaws.com">
+    private createPreloadLink(url: string): void {
+        const link: HTMLLinkElement = this.documentRef.createElement('link');
+        link.setAttribute('href', url);
+        link.setAttribute('rel', 'preconnect');
 
         this.documentRef.head.appendChild(link);
     }

@@ -2,23 +2,27 @@
     <div></div>
 }
 @else if (statuses?.data?.length) {
-    <div class="gallery-container" appInfiniteScroll [infiniteScrollDistance]="0" [infiniteScrollThrottle]="250" [infiniteScrollDisabled]="isDetached" (scrolled)="onNearEndScroll()">
+    <div class="gallery-container" appInfiniteScroll [infiniteScrollDistance]="250" [infiniteScrollThrottle]="200" [infiniteScrollDisabled]="isDetached" (scrolled)="onNearEndScroll()">
         <div [ngClass]="{ 'image-gallery': !isHandsetPortrait || squareImages, 'square': squareImages }">
-            <div class="column" *ngFor="let items of gallery">
-                @if(items.length > 0) {
-                    <div @fadeIn *ngFor="let status of items; trackBy:trackByFn">
-                        <a [routerLink]="['/statuses', status.id]" [ariaLabel]="'Status added by: ' + getMainStatus(status).user?.userName">
-                            @if (getMainStatus(status).sensitive) {
-                                <app-blurhash-image [horizontal]="false" [avatarVisible]="avatarVisible && !hideAvatars" [status]="status"></app-blurhash-image>
-                            } @else {
-                                <app-image [horizontal]="false" [avatarVisible]="avatarVisible && !hideAvatars" [status]="status"></app-image>
-                            }
-                        </a>
-                    </div>
-                } @else {
-                    <div class="placeholder"></div>
-                }
-            </div>
+            @for (items of gallery; track $index) {
+                <div class="column">
+                    @if(items.length > 0) {
+                        @for (galleryStatus of items; track galleryStatus.status.id) {
+                            <div @fadeIn>
+                                <a [routerLink]="['/statuses', galleryStatus.status.id]" [ariaLabel]="'Status added by: ' + getMainStatus(galleryStatus.status).user?.userName">
+                                    @if (getMainStatus(galleryStatus.status).sensitive) {
+                                        <app-blurhash-image [horizontal]="false" [avatarVisible]="avatarVisible && !hideAvatars" [status]="galleryStatus.status"></app-blurhash-image>
+                                    } @else {
+                                        <app-image [horizontal]="false" [avatarVisible]="avatarVisible && !hideAvatars" [status]="galleryStatus.status" [priority]="galleryStatus.priority"></app-image>
+                                    }
+                                </a>
+                            </div>
+                        }
+                    } @else {
+                        <div class="placeholder"></div>
+                    }
+                </div>
+            }
         </div>
     </div>
     
