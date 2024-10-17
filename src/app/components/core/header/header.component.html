@@ -119,7 +119,7 @@
 
             <div>
                 <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu with actions">
-                    <img class="avatar" [src]="avatarUrl" alt="Avatar">
+                    <img class="avatar" [ngSrc]="avatarUrl" width="600" height="600" alt="Avatar" priority />
                 </button>
                 <mat-menu #menu="matMenu">
                     <button mat-menu-item [routerLink]="['/@' + user.userName]" aria-label="Signed in as">

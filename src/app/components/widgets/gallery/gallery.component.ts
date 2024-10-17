@@ -11,6 +11,7 @@ import { ResponsiveComponent } from 'src/app/common/responsive';
 import { NavigationStart, Router } from '@angular/router';
 import { WindowService } from 'src/app/services/common/window.service';
 import { isPlatformBrowser } from '@angular/common';
+import { GalleryStatus } from 'src/app/models/gallery-status';
 
 @Component({
     selector: 'app-gallery',
@@ -19,12 +20,14 @@ import { isPlatformBrowser } from '@angular/common';
     animations: fadeInAnimation
 })
 export class GalleryComponent extends ResponsiveComponent implements OnInit, OnDestroy, OnChanges {
+    readonly amountOfPriorityImages = 8;
+
     @Input() statuses?: LinkableResult<Status>;
     @Input() squareImages = false;
     @Input() hideAvatars = false;
     @Input() isDetached = false;
 
-    gallery?: Status[][];
+    gallery?: GalleryStatus[][];
     sizes?: number[];
     columns = 3;
     isDuringLoadingMode = false;
@@ -125,10 +128,6 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
         }
     }
 
-    trackByFn(_: number, item: Status): string | undefined{
-        return item.id;
-    }
-
     private buildGallery(): void {
         this.gallery = [];
         this.sizes = [];
@@ -142,12 +141,12 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
             return;
         }
 
-        for (const status of this.statuses.data) {
+        for (const [index, status] of this.statuses.data.entries()) {
             const imageHeight = this.getImageConstraitHeight(status);
             const smallerColumnIndex = this.getSmallerColumnIndex(imageHeight);
 
             this.sizes[smallerColumnIndex] = this.sizes[smallerColumnIndex] + imageHeight;
-            this.gallery[smallerColumnIndex].push(status);
+            this.gallery[smallerColumnIndex].push(new GalleryStatus(status, index < this.amountOfPriorityImages));
         }
     }
 
@@ -171,7 +170,7 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
             const smallerColumnIndex = this.getSmallerColumnIndex(imageHeight);
 
             this.sizes[smallerColumnIndex] = this.sizes[smallerColumnIndex] + imageHeight;
-            this.gallery[smallerColumnIndex].push(status);
+            this.gallery[smallerColumnIndex].push(new GalleryStatus(status, false));
         }
     }
 

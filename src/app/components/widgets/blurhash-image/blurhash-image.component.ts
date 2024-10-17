@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Inject, Input, PLATFORM_ID, ViewChild, OnInit, OnDestroy } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Inject, Input, PLATFORM_ID, ViewChild, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { decode } from 'blurhash';
 import { AvatarSize } from '../avatar/avatar-size';
 import { User } from 'src/app/models/user';
@@ -47,6 +47,7 @@ export class BlurhashImageComponent implements AfterViewInit, OnInit, OnDestroy 
     showBlurhash = true;
     showAltIcon = false;
     showFavourites = false;
+    canvasIsLoaded = false;
 
     get showAvatar() { return this.preferencesService.showAvatars && this.avatarVisible; }
 
@@ -56,6 +57,7 @@ export class BlurhashImageComponent implements AfterViewInit, OnInit, OnDestroy 
         private statusesService: StatusesService,
         private messageService: MessagesService,
         private relationshipsService: RelationshipsService,
+        private changeDetectorRef: ChangeDetectorRef,
         private router: Router,
         private authorizationService: AuthorizationService) {
             this.isBrowser = isPlatformBrowser(platformId);
@@ -156,6 +158,9 @@ export class BlurhashImageComponent implements AfterViewInit, OnInit, OnDestroy 
 
         imageData.data.set(pixels);
         ctx.putImageData(imageData!, 0, 0);
+
+        this.canvasIsLoaded = true;
+        this.changeDetectorRef.detectChanges();
     }
 
     protected getMainStatus(): Status | undefined {
