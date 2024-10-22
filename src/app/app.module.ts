@@ -20,6 +20,8 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { SettingsService } from './services/http/settings.service';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { isPlatformBrowser } from '@angular/common';
+import { ErrorItemsService } from './services/http/error-items.service';
+import { RandomGeneratorService } from './services/common/random-generator.service';
 
 const httpInterceptor = (platformId: object, authorizationService: AuthorizationService) => 
     new APIInterceptor(platformId, authorizationService);
@@ -69,7 +71,7 @@ const httpInterceptor = (platformId: object, authorizationService: Authorization
             deps: [PLATFORM_ID]
         },
         {
-            provide: ErrorHandler, useClass: GlobalErrorHandler, deps: [PLATFORM_ID, Injector, NgZone, AuthorizationService, PersistanceService, LoadingService]
+            provide: ErrorHandler, useClass: GlobalErrorHandler, deps: [PLATFORM_ID, Injector, NgZone, AuthorizationService, PersistanceService, LoadingService, ErrorItemsService, RandomGeneratorService]
         },
         provideHttpClient(withFetch(), withInterceptorsFromDi()),
         provideClientHydration()

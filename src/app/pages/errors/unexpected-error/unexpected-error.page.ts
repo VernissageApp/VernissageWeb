@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { PersistanceService } from 'src/app/services/persistance/persistance.service';
 
@@ -14,11 +14,20 @@ export class UnexpectedErrorPage implements OnInit, OnDestroy {
     errorExpanded = false;
     interval: any;
     errorMessage?: string;
+    code?: string;
 
-    constructor(private persistanceService: PersistanceService, private router: Router) {
+    constructor(
+        private persistanceService: PersistanceService,
+        private router: Router,
+        private activatedRoute: ActivatedRoute) {
     }
 
     ngOnInit(): void {
+        const codeFromQuery = this.activatedRoute.snapshot.queryParamMap.get('code');
+        if (codeFromQuery) {
+            this.code = codeFromQuery;
+        }
+
         this.interval = setInterval(async ()=> {
             if (this.errorExpanded) {
                 if (this.interval) {

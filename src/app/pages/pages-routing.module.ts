@@ -36,6 +36,7 @@ import { TermsPage } from './terms/terms.page';
 import { PrivacyPage } from './privacy/privacy.page';
 import { BookmarksPage } from './bookmarks/bookmarks.page';
 import { FavouritesPage } from './favourites/favourites.page';
+import { ErrorItemsPage } from './error-items/error-items.page';
 
 const routes: Routes = [
     { path: 'login', component: LoginPage, canActivate: [ loggedOutGuard ], title: 'Vernissage - Login' },
@@ -68,6 +69,7 @@ const routes: Routes = [
     { path: 'bookmarks', component: BookmarksPage, data: { reuse: true }, title: 'Vernissage - Bookmarks' },
     { path: 'favourites', component: FavouritesPage, data: { reuse: true }, title: 'Vernissage - Favourites' },
     { path: 'users', component: UsersPage, canActivate: [ authorizationGuard ], title: 'Vernissage - Users' },
+    { path: 'error-items', component: ErrorItemsPage, canActivate: [ authorizationGuard ], title: 'Vernissage - Errors' },
     { path: 'actors/:userName', component: ProfilePage, data: { reuse: true }, children: [
         { path: 'posts', component: ProfilePage },
         { path: 'following', component: ProfilePage },

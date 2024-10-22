@@ -157,6 +157,10 @@
                         <mat-icon>feedback</mat-icon>
                         <span>Reports</span>
                     </button>
+                    <button *ngIf="isAdministrator() || isModerator()" mat-menu-item [routerLink]="['/error-items']" aria-label="Errors">
+                        <mat-icon>release_alert</mat-icon>
+                        <span>Errors</span>
+                    </button>
                     <button *ngIf="isAdministrator()" mat-menu-item [routerLink]="['/settings']" aria-label="Settings">
                         <mat-icon>settings</mat-icon>
                         <span>Settings</span>

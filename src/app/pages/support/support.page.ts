@@ -8,6 +8,7 @@ import { SettingsService } from 'src/app/services/http/settings.service';
 import { HealthService } from 'src/app/services/http/health.service';
 import { Health } from 'src/app/models/health';
 import { MessagesService } from 'src/app/services/common/messages.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
     selector: 'app-support',
@@ -16,6 +17,8 @@ import { MessagesService } from 'src/app/services/common/messages.service';
     animations: fadeInAnimation
 })
 export class SupportPage extends ResponsiveComponent implements OnInit {
+    readonly clientVersion = environment.version;
+
     isReady = false;
     instance?: Instance;
     patreonUrl?: string;

@@ -1,17 +1,20 @@
 import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
-import { Injector, NgZone } from '@angular/core';
+import { ErrorHandler, Injector, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { ForbiddenError } from 'src/app/errors/forbidden-error';
 import { ObjectNotFoundError } from 'src/app/errors/object-not-found-error';
 import { PageNotFoundError } from 'src/app/errors/page-not-found-error';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 import { LoadingService } from '../services/common/loading.service';
-import { SentryErrorHandler } from '@sentry/angular-ivy';
+import { ErrorItemsService } from '../services/http/error-items.service';
+import { RandomGeneratorService } from '../services/common/random-generator.service';
+import { ErrorItem } from '../models/error-item';
 import { isPlatformBrowser } from '@angular/common';
 import { PersistanceService } from '../services/persistance/persistance.service';
 import { CustomError } from '../errors/custom-error';
+import { environment } from 'src/environments/environment';
 
-export class GlobalErrorHandler extends SentryErrorHandler {
+export class GlobalErrorHandler implements ErrorHandler {
     private isBrowser = false;
 
     constructor(
@@ -20,9 +23,10 @@ export class GlobalErrorHandler extends SentryErrorHandler {
         private zone: NgZone,
         private authorizationService: AuthorizationService,
         private persistanceService: PersistanceService,
-        private loadingService: LoadingService
+        private loadingService: LoadingService,
+        private errorItemsService: ErrorItemsService,
+        private randomGeneratorService: RandomGeneratorService
     ) {
-        super();
         this.isBrowser = isPlatformBrowser(platformId);
     }
 
@@ -30,11 +34,11 @@ export class GlobalErrorHandler extends SentryErrorHandler {
         return this.injector.get(Router);
     }
 
-    override async handleError(error: any): Promise<void> {
+    async handleError(error: any): Promise<void> {
         await this.zone.run(async () => {
             console.error(error);
-            super.handleError(error);
-            this.storeInLocalStorage(error);
+            const stringified = this.getStringFromError(error);
+            this.persistanceService.set('exception', stringified.trim());
 
             this.loadingService.hideLoader();
 
@@ -73,7 +77,20 @@ export class GlobalErrorHandler extends SentryErrorHandler {
                         break;
                 }
             } else {
-                await this.router.navigate(['/unexpected-error'], { skipLocationChange: true });
+                
+                const errorCode = this.randomGeneratorService.generateString(10);
+
+                // We don't need to send error when we render page on server.
+                if (this.isBrowser) {
+                    try {                    
+                        const errorItem = new ErrorItem(errorCode, 'Unexpected client error.', stringified.trim(), environment.version);
+                        await this.errorItemsService.post(errorItem);
+                    } catch (logError) {
+                        console.error(logError);
+                    }
+                }
+
+                await this.router.navigate(['/unexpected-error'], { skipLocationChange: true, queryParams: { code: errorCode } });
             }
         });
     }
@@ -98,18 +115,18 @@ export class GlobalErrorHandler extends SentryErrorHandler {
         return error instanceof ForbiddenError || (error.rejection && error.rejection instanceof ForbiddenError);
     }
 
-    private storeInLocalStorage(error: any): void {
+    private getStringFromError(error: any): string {
         if (error instanceof Error) {
             const plainObject = this.toPlainObject(error);
             const stringified = JSON.stringify(plainObject, null, 2);
-            this.persistanceService.set('exception', stringified.trim());
+            return stringified;
         } else if (typeof error === 'object' && error !== null) {
             const stringified = JSON.stringify(error, null, 2);
-            this.persistanceService.set('exception', stringified.trim());
+            return stringified;
         } else {
             const customError = new CustomError(error);
             const stringified = JSON.stringify(customError, null, 2);
-            this.persistanceService.set('exception', stringified.trim());
+            return stringified;
         }
     }
 
