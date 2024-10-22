@@ -37,7 +37,7 @@ export class UsersPage extends ResponsiveComponent implements OnInit {
     routeParamsSubscription?: Subscription;
 
     private readonly displayedColumnsHandsetPortrait: string[] = ['avatar', 'userName', 'actions'];
-    private readonly displayedColumnsHandserLandscape: string[] = ['avatar', 'userName', 'createdAt', 'actions'];
+    private readonly displayedColumnsHandsetLandscape: string[] = ['avatar', 'userName', 'createdAt', 'actions'];
     private readonly displayedColumnsTablet: string[] = ['avatar', 'userName', 'userFullName', 'email', 'isApproved', 'createdAt', 'actions'];
     private readonly displayedColumnsBrowser: string[] = ['avatar', 'userName', 'userFullName', 'email', 'isLocal', 'isApproved', 'statuses', 'createdAt', 'actions'];
     
@@ -219,7 +219,7 @@ export class UsersPage extends ResponsiveComponent implements OnInit {
     }
 
     protected override onHandsetLandscape(): void {
-        this.displayedColumns = this.displayedColumnsHandserLandscape;
+        this.displayedColumns = this.displayedColumnsHandsetLandscape;
     }
 
     protected override onTablet(): void {

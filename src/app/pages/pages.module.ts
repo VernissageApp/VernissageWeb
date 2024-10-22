@@ -37,6 +37,7 @@ import { TermsPage } from './terms/terms.page';
 import { PrivacyPage } from './privacy/privacy.page';
 import { BookmarksPage } from './bookmarks/bookmarks.page';
 import { FavouritesPage } from './favourites/favourites.page';
+import { ErrorItemsPage } from './error-items/error-items.page';
 
 @NgModule({
     imports: [
@@ -77,7 +78,8 @@ import { FavouritesPage } from './favourites/favourites.page';
         TermsPage,
         PrivacyPage,
         BookmarksPage,
-        FavouritesPage
+        FavouritesPage,
+        ErrorItemsPage
     ],
     exports: [
         ComponentsModule,
@@ -113,7 +115,8 @@ import { FavouritesPage } from './favourites/favourites.page';
         TermsPage,
         PrivacyPage,
         BookmarksPage,
-        FavouritesPage
+        FavouritesPage,
+        ErrorItemsPage
     ]
 })
 export class PagesModule { }

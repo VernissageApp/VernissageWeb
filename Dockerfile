@@ -11,7 +11,7 @@ WORKDIR /usr/local/app
 COPY ./ /usr/local/app/
 
 # Update web build number.
-RUN commit=$(git rev-parse --short HEAD) && sed -i -e "s/buildx/$commit/g" src/app/pages/support/support.page.html
+RUN commit=$(git rev-parse --short HEAD) && sed -i -e "s/buildx/$commit/g" src/environments/environment.ts
 
 # Install all the dependencies
 RUN npm install --force
