@@ -35,6 +35,7 @@ import { UserPopoverComponent } from './widgets/user-popover/user-popover.compon
 import { HashtagsSearchComponent } from './widgets/hashtags-search/hashtags-search.component';
 import { StatusesSearchComponent } from './widgets/statuses-search/statuses-search.component';
 import { StatusPropertiesComponent } from './widgets/status-properties/status-properties.component';
+import { UserSelectorComponent } from './widgets/user-selector/user-selector.component';
 
 @NgModule({
     declarations: [
@@ -44,6 +45,7 @@ import { StatusPropertiesComponent } from './widgets/status-properties/status-pr
         UploadPhotoComponent,
         UserCardComponent,
         UserPopoverComponent,
+        UserSelectorComponent,
         UsersCardComponent,
         FollowButtonsSectionComponent,
         GalleryComponent,
@@ -80,6 +82,7 @@ import { StatusPropertiesComponent } from './widgets/status-properties/status-pr
         UploadPhotoComponent,
         UsersCardComponent,
         UserCardComponent,
+        UserSelectorComponent,
         FollowButtonsSectionComponent,
         GalleryComponent,
         MiniUserCardComponent,

@@ -21,8 +21,8 @@ export class UsersService {
         return await firstValueFrom(event$);
     }
 
-    public async profile(userName: string): Promise<User> {
-        const event$ = this.httpClient.get<User>(this.windowService.apiUrl() +  '/api/v1/users/' + userName);
+    public async profile(userNameOrId: string): Promise<User> {
+        const event$ = this.httpClient.get<User>(this.windowService.apiUrl() +  '/api/v1/users/' + userNameOrId);
         return await firstValueFrom(event$);
     }
 

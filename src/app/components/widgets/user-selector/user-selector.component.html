@@ -1,0 +1,31 @@
+<mat-form-field class="width-100" appearance="outline">
+    <mat-label>{{ label }}</mat-label>
+    <input
+        type="text"
+        [name]="name + '-input'"
+        [id]="name + '-input'"
+        matInput
+        (change)="onChange()"
+        [ngModel]="selectedUser"
+        (ngModelChange)="onModelChange($event)"
+        #userSelector="ngModel"
+        [attr.aria-label]="label"
+        [matAutocomplete]="autoUsers"
+        [required]="isRequired"
+        [appAutocompleteValid]="true"
+        [disabled]="isReadOnly" />
+    <mat-autocomplete
+        #autoUsers="matAutocomplete"
+        [displayWith]="userDisplayFn" 
+        (optionSelected)='onSelectedUser($event.option.value)'>
+        <mat-option *ngFor="let option of filteredUsers" [value]="option">
+            {{ option.name }} <small>(&#64;{{ option.userName }})</small>
+        </mat-option>
+    </mat-autocomplete>
+    <button [name]="name + '-clear'" [id]="name + '-clear'" type="button" *ngIf="selectedUser && !isReadOnly" matSuffix mat-icon-button aria-label="Clear" (click)="onChange()">
+        <mat-icon class="text-muted">backspace</mat-icon>
+    </button>
+    <mat-spinner *ngIf="isUsersLoading" matSuffix [diameter]="16"></mat-spinner>
+    <mat-error *ngIf="userSelector.invalid && userSelector.errors?.required">Chose user.</mat-error>
+    <mat-error *ngIf="userSelector.invalid && userSelector.errors?.appAutocompleteValid">Chose user from list.</mat-error>
+</mat-form-field>
