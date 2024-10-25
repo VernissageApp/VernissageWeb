@@ -4,6 +4,7 @@ import { SettingsService } from 'src/app/services/http/settings.service';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { EventType } from 'src/app/models/event-type';
 import { InstanceService } from 'src/app/services/http/instance.service';
+import { User } from 'src/app/models/user';
 
 @Component({
     selector: 'app-general-settings',
@@ -12,9 +13,11 @@ import { InstanceService } from 'src/app/services/http/instance.service';
 })
 export class GeneralSettingsComponent {
     @Input() settings!: Settings;
+    @Input() webContactUser?: User;
+    @Input() systemDefaultUser?: User;
 
     eventTypes = Object.values(EventType);
-
+    
     constructor(
         private settingsService: SettingsService,
         private messageService: MessagesService,
@@ -24,6 +27,9 @@ export class GeneralSettingsComponent {
     async onSubmit(): Promise<void> {
         try {
             if (this.settings) {
+                this.settings.webContactUserId = this.webContactUser?.id ?? '';
+                this.settings.systemDefaultUserId = this.systemDefaultUser?.id ?? '';
+
                 await this.settingsService.put(this.settings);
 
                 await Promise.all([

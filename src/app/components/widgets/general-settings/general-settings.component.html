@@ -52,11 +52,11 @@
     </div>
 
     <div class="margin-bottom-20">
-        <mat-form-field appearance="outline">
-            <mat-label>Web contact user id</mat-label>
-            <input matInput name="webContactUserId" #webContactUserId="ngModel" [(ngModel)]="settings.webContactUserId"
-                placeholder="Web contact user id" aria-label="Web contact user id" />
-        </mat-form-field>
+        <app-user-selector name="webContactUserId" label="Web contact user id" [(selectedUser)]="webContactUser"></app-user-selector>
+    </div>
+
+    <div class="margin-bottom-20">
+        <app-user-selector name="systemDefaultUserId" label="Default system user id" [(selectedUser)]="systemDefaultUser"></app-user-selector>
     </div>
 
     <div class="margin-bottom-20">
@@ -96,14 +96,6 @@
             <mat-label>Maximum file size</mat-label>
             <input matInput type="number" name="imageSizeLimit" #imageSizeLimit="ngModel" [(ngModel)]="settings.imageSizeLimit"
                 placeholder="Maximum file size" aria-label="Maximum file size" />
-        </mat-form-field>
-    </div>
-
-    <div class="margin-bottom-20">
-        <mat-form-field appearance="outline">
-            <mat-label>Default system user id</mat-label>
-            <input matInput name="systemDefaultUserId" #systemDefaultUserId="ngModel" [(ngModel)]="settings.systemDefaultUserId"
-                placeholder="Default system user id" aria-label="Default system user id" />
         </mat-form-field>
     </div>
 

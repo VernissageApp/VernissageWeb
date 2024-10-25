@@ -5,13 +5,15 @@ import { UniqueEmailValidatorDirective } from './directives/unique-email-validat
 import { UniqueUserNameValidatorDirective } from './directives/unique-user-name-validator.directive';
 import { PasswordValidatorDirective } from './directives/password-validator.directive';
 import { MaxLengthValidatorDirective } from './directives/max-length-validator.directive';
+import { AutocompleteValidDirective } from './directives/autocomplete-valid.directive';
 
 @NgModule({
     declarations: [
         UniqueEmailValidatorDirective,
         UniqueUserNameValidatorDirective,
         PasswordValidatorDirective,
-        MaxLengthValidatorDirective
+        MaxLengthValidatorDirective,
+        AutocompleteValidDirective
     ],
     imports: [
         CommonModule
@@ -20,7 +22,8 @@ import { MaxLengthValidatorDirective } from './directives/max-length-validator.d
         UniqueEmailValidatorDirective,
         UniqueUserNameValidatorDirective,
         PasswordValidatorDirective,
-        MaxLengthValidatorDirective
+        MaxLengthValidatorDirective,
+        AutocompleteValidDirective
     ]
 })
 export class ValidationsModule { }
