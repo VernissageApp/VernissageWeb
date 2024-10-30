@@ -106,7 +106,6 @@
         margin-top: 4px;
         background-color: mat.m2-get-color-from-palette($foreground);
         opacity: 0.6;
-        cursor: pointer;
         border-width: 1px;
         border-style: dashed;
         border-color: mat.m2-get-color-from-palette($grey);
@@ -121,19 +120,36 @@
             font-size: 64px;
         }
 
-        &:hover {
-            background-color: mat.m2-get-color-from-palette($primary);
-            path {
-                fill: white;
-            }
-        }
-
         &.small {
             width: 80px;
             height: 50px;
 
             .plus {
                 padding-top: 6px;
+            }
+        }
+
+        &.active {
+            cursor: pointer;
+
+            &:hover {
+                background-color: mat.m2-get-color-from-palette($primary);
+
+                path {
+                    fill: white;
+                }
+            }
+        }
+
+        &.inactive {
+            cursor: default;
+
+            &:hover {
+                background-color: mat.m2-get-color-from-palette($foreground);
+
+                path {
+                    fill: mat.m2-get-color-from-palette($primary);
+                }
             }
         }
     }

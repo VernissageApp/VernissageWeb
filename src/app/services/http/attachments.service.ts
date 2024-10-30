@@ -18,6 +18,16 @@ export class AttachmentsService {
         return await firstValueFrom(event$);
     }
 
+    public async uploadHdrImage(id: string, formData: FormData): Promise<TemporaryAttachment> {
+        const event$ = this.httpClient.post<TemporaryAttachment>(this.windowService.apiUrl() + '/api/v1/attachments/' + id + '/hdr', formData);
+        return await firstValueFrom(event$);
+    }
+
+    public async deleteHdrImage(id: string): Promise<TemporaryAttachment> {
+        const event$ = this.httpClient.delete<TemporaryAttachment>(this.windowService.apiUrl() + '/api/v1/attachments/' + id + '/hdr');
+        return await firstValueFrom(event$);
+    }
+
     public async updateAttachment(temporaryAttachmentDto: TemporaryAttachment): Promise<void> {
         const event$ = this.httpClient.put(this.windowService.apiUrl() + '/api/v1/attachments/' + temporaryAttachmentDto.id, temporaryAttachmentDto);
         await firstValueFrom(event$);

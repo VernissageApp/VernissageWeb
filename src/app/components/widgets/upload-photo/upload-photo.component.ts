@@ -1,9 +1,11 @@
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, startWith } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
 import { map, switchMap } from 'rxjs/operators';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
+import { ResponsiveComponent } from 'src/app/common/responsive';
 import { Country } from 'src/app/models/country';
 import { License } from 'src/app/models/license';
 import { Location } from 'src/app/models/location';
@@ -20,7 +22,9 @@ import { SettingsService } from 'src/app/services/http/settings.service';
     styleUrls: ['./upload-photo.component.scss'],
     animations: fadeInAnimation
 })
-export class UploadPhotoComponent implements OnInit {
+export class UploadPhotoComponent extends ResponsiveComponent implements OnInit {
+    readonly defaultMaxHdrFileSize = 4194304;
+
     @Input() photo!: UploadPhoto;
     @Input() licenses!: License[];
     @Input() index = 0;
@@ -41,10 +45,15 @@ export class UploadPhotoComponent implements OnInit {
         private locationService: LocationsService,
         private attachmentsService: AttachmentsService,
         private messageService: MessagesService,
-        private settingsService: SettingsService
-    ) { }
+        private settingsService: SettingsService,
+        breakpointObserver: BreakpointObserver
+    ) {
+        super(breakpointObserver);
+    }
 
-    async ngOnInit(): Promise<void> {
+    override async ngOnInit(): Promise<void> {
+        super.ngOnInit();
+
         this.allCountries = await this.countriesService.all();
 
         this.filteredCountries = this.countriesControl.valueChanges.pipe(
@@ -103,8 +112,61 @@ export class UploadPhotoComponent implements OnInit {
         }
     }
 
+    async onHdrPhotoSelected(event: any): Promise<void> {
+        try {
+            const file = event.target.files[0];
+            if (file.size > this.defaultMaxHdrFileSize) {
+                this.messageService.showError('Uploaded file is too large. Maximum size is 4MB.');
+                return;
+            }
+
+            this.photo.photoHdrFile = file;
+            if (!this.photo.photoHdrFile) {
+                return;
+            }
+
+            this.setPhotoData();
+            const formData = new FormData();
+            formData.append('file', this.photo.photoHdrFile);
+            const temporaryAttachment = await this.attachmentsService.uploadHdrImage(this.photo.id, formData);
+
+            this.photo.id = temporaryAttachment.id;
+            this.photo.isHdrUploaded = true;
+
+            event.target.value = '';
+        } catch (error) {
+            console.error(error);
+            this.messageService.showServerError(error);
+        }
+    }
+
+    async onHdrDelete(): Promise<void> {
+        try {
+            await this.attachmentsService.deleteHdrImage(this.photo.id);
+            this.photo.isHdrUploaded = false;
+            this.photo.photoHdrFile = undefined;
+            this.photo.photoHdrSrc = undefined;
+        } catch (error) {
+            console.error(error);
+            this.messageService.showServerError(error);
+        }
+    }
+
     private filterCountry(value: string): Country[] {
         const filterValue = value.toLowerCase();
         return this.allCountries.filter(option => option.name?.toLowerCase().includes(filterValue));
+    }
+
+    private setPhotoData(): void {
+        if (!this.photo.photoHdrFile) {
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = async () => {
+            this.photo.photoHdrSrc = reader.result as string;
+        }
+
+        reader.readAsDataURL(this.photo.photoHdrFile);
     }
 }

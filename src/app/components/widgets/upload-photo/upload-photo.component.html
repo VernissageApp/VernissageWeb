@@ -64,6 +64,10 @@
         </mat-autocomplete>
     </mat-form-field>
 
+    <div class="margin-bottom-10 margin-top-20">
+        <mat-divider></mat-divider>
+    </div>
+
     <div class="text-muted">Exif metadata</div>
     <div class="exif-values">
 
@@ -104,7 +108,7 @@
             </mat-form-field>
         </div>
 
-        <div class="flex-row flex-responsive  flex-stretch gap-16 small-text-input margin-bottom-10">
+        <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
             <mat-checkbox class="exif-label" [name]="'lens' + index" color="primary" [disableRipple]="true" [(ngModel)]="photo.showLens">
                 <span class="text-muted">Lens:</span>
             </mat-checkbox>
@@ -113,7 +117,7 @@
             </mat-form-field>
         </div>
 
-        <div class="flex-row flex-responsive  flex-stretch gap-16 small-text-input margin-bottom-10">
+        <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
             <mat-checkbox class="exif-label" [name]="'focalLenIn35mmFilm' + index" color="primary" [disableRipple]="true" [(ngModel)]="photo.showFocalLenIn35mmFilm">
                 <span class="text-muted">Focal length:</span>
             </mat-checkbox>
@@ -123,7 +127,7 @@
             </mat-form-field>
         </div>
 
-        <div class="flex-row flex-responsive  flex-stretch gap-16 small-text-input margin-bottom-10">
+        <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
             <mat-checkbox class="exif-label" [name]="'fNumber' + index" color="primary" [disableRipple]="true" [(ngModel)]="photo.showFNumber">
                 <span class="text-muted">Aperture:</span>
             </mat-checkbox>
@@ -133,7 +137,7 @@
             </mat-form-field>
         </div>
 
-        <div class="flex-row flex-responsive  flex-stretch gap-16 small-text-input margin-bottom-10">
+        <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
             <mat-checkbox class="exif-label" [name]="'exposureTime' + index" color="primary" [disableRipple]="true" [(ngModel)]="photo.showExposureTime">
                 <span class="text-muted">Exposure time:</span>
             </mat-checkbox>
@@ -143,7 +147,7 @@
             </mat-form-field>
         </div>
 
-        <div class="flex-row flex-responsive  flex-stretch gap-16 small-text-input margin-bottom-10">
+        <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
             <mat-checkbox class="exif-label" [name]="'photographicSensitivity' + index" color="primary" [disableRipple]="true" [(ngModel)]="photo.showPhotographicSensitivity">
                 <span class="text-muted">ISO:</span>
             </mat-checkbox>
@@ -152,7 +156,7 @@
             </mat-form-field>
         </div>
 
-        <div class="flex-row flex-responsive  flex-stretch gap-16 small-text-input margin-bottom-10">
+        <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
             <mat-checkbox class="exif-label" [name]="'software' + index" color="primary" [disableRipple]="true" [(ngModel)]="photo.showSoftware">
                 <span class="text-muted">Software:</span>
             </mat-checkbox>
@@ -161,7 +165,7 @@
             </mat-form-field>
         </div>
 
-        <div class="flex-row flex-responsive  flex-stretch gap-16 small-text-input margin-bottom-10">
+        <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
             <mat-checkbox class="exif-label" [name]="'film' + index" color="primary" [disableRipple]="true" [(ngModel)]="photo.showFilm">
                 <span class="text-muted">Film:</span>
             </mat-checkbox>
@@ -170,7 +174,7 @@
             </mat-form-field>
         </div>
 
-        <div class="flex-row flex-responsive  flex-stretch gap-16 small-text-input margin-bottom-10">
+        <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
             <mat-checkbox class="exif-label" [name]="'chemistry' + index" color="primary" [disableRipple]="true" [(ngModel)]="photo.showChemistry">
                 <span class="text-muted">Chemistry:</span>
             </mat-checkbox>
@@ -179,7 +183,7 @@
             </mat-form-field>
         </div>
 
-        <div class="flex-row flex-responsive  flex-stretch gap-16 small-text-input margin-bottom-10">
+        <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
             <mat-checkbox class="exif-label" [name]="'scanner' + index" color="primary" [disableRipple]="true" [(ngModel)]="photo.showScanner">
                 <span class="text-muted">Scanner:</span>
             </mat-checkbox>
@@ -188,7 +192,7 @@
             </mat-form-field>
         </div>
 
-        <div class="flex-row flex-responsive  flex-stretch gap-16 small-text-input margin-bottom-10">
+        <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
             <mat-checkbox class="exif-label" [name]="'createDate' + index" color="primary" [disableRipple]="true" [(ngModel)]="photo.showCreateDate">
                 <span class="text-muted">Create date:</span>
             </mat-checkbox>
@@ -196,5 +200,61 @@
                 <input matInput type="datetime-local" [name]="'inputCreateDate' + index" [ngModel]="photo.createDate | date:'yyyy-MM-ddTHH:mm'" (ngModelChange)="photo.createDate = $event" [disabled]="!photo.showCreateDate" aria-label="Create date" />
             </mat-form-field>
         </div>
+    </div>
+
+    <div class="margin-bottom-10 margin-top-20">
+        <mat-divider></mat-divider>
+    </div>
+
+    <div class="text-muted">
+        HDR image version
+        
+        <div class="pull-right">
+            @if (photo.photoHdrSrc) {
+                @if (photo.isHdrUploaded) {
+                    <button mat-stroked-button color="warn" class="small-button" (click)="onHdrDelete()">Delete HDR version</button>
+                } @else {
+                    <mat-spinner class="display-inline-block" [diameter]="18"></mat-spinner>
+                }
+            }
+        </div>
+        <div class="pull-right">
+            <input hidden name="hdr-image" type="file" #photoFileUpload accept="image/avif" (change)="onHdrPhotoSelected($event)">
+        </div>
+    </div>
+    <div class="flex-row gap-16 margin-top-10">
+        <div class="flex-align-start hdr-image margin-bottom-20">
+            @if (photo.photoHdrSrc) {                
+                <img [src]="photo.photoHdrSrc" alt="Uploaded photo" />
+            } @else {
+                @if (!photo.isUploaded) {
+                    <div class="dropzone small inactive">
+                        <div class="plus">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M20.889 10.889H13.111V3.11097C13.111 2.4974 12.6136 2 12 2C11.3864 2 10.889 2.4974 10.889 3.11097V10.889H3.11097C2.4974 10.889 2 11.3864 2 12C2 12.6136 2.4974 13.111 3.11097 13.111H10.889V20.889C10.889 21.5026 11.3864 22 12 22C12.6136 22 13.111 21.5026 13.111 20.889V13.111H20.889C21.5026 13.111 22 12.6136 22 12C22 11.3864 21.5026 10.889 20.889 10.889Z" fill="#0870D1"></path></svg>
+                        </div>
+                    </div>
+                } @else {
+                    <div class="dropzone small active" (click)="photoFileUpload.click()" (keydown.enter)="photoFileUpload.click()" tabindex="0">
+                        <div class="plus">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M20.889 10.889H13.111V3.11097C13.111 2.4974 12.6136 2 12 2C11.3864 2 10.889 2.4974 10.889 3.11097V10.889H3.11097C2.4974 10.889 2 11.3864 2 12C2 12.6136 2.4974 13.111 3.11097 13.111H10.889V20.889C10.889 21.5026 11.3864 22 12 22C12.6136 22 13.111 21.5026 13.111 20.889V13.111H20.889C21.5026 13.111 22 12.6136 22 12C22 11.3864 21.5026 10.889 20.889 10.889Z" fill="#0870D1"></path></svg>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+
+        <div class="flex-grow-3 width-100 text-muted fs-90">
+            <p class="padding-top-5">
+                You have the option to include an HDR version of the image (AVIF).
+                This version will only be displayed in the status details on the Vernissage platform.
+                Maximum file size is 4MB.
+            </p>
+        </div>
+
+    </div>
+
+    <div class="width-100 text-muted fs-90">
+        <strong>Warning:</strong> The uploaded image will be preserved as the original file without any modifications.
+        Ensure that it does not contain any metadata you do not wish to make public before uploading.
     </div>
 </div>

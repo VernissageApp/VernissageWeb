@@ -29,6 +29,7 @@ export class PreferencesPage extends ResponsiveComponent implements OnInit {
     showAvatars = false;
     showFavourites = false;
     showAltIcon = false;
+    alwaysShowSdrPhoto = false;
 
     constructor(
         @Inject(DOCUMENT) private document: Document,
@@ -52,6 +53,7 @@ export class PreferencesPage extends ResponsiveComponent implements OnInit {
         this.showAvatars = this.preferencesService.showAvatars;
         this.showFavourites = this.preferencesService.showFavourites;
         this.showAltIcon = this.preferencesService.showAltIcon;
+        this.alwaysShowSdrPhoto = this.preferencesService.alwaysShowSdrPhoto;
 
         this.isReady = true;
     }
@@ -98,6 +100,10 @@ export class PreferencesPage extends ResponsiveComponent implements OnInit {
     onShowAltIconChange(): void {
         this.clearReuseStrategyState();
         this.preferencesService.showAltIcon = this.showAltIcon;
+    }
+
+    onAlwaysShowSdrPhotoChange(): void {
+        this.preferencesService.alwaysShowSdrPhoto = this.alwaysShowSdrPhoto;
     }
 
     private clearReuseStrategyState(): void {
