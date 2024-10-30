@@ -34,6 +34,7 @@
     "hammerjs": "^2.0.8",
     "ng-gallery": "^11.0.0",
     "ngx-captcha": "^13.0.0",
+    "ngx-device-detector": "^8.0.0",
     "rxjs": "^7.8.1",
     "ssr-window": "^4.0.2",
     "tslib": "^2.7.0",

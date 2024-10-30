@@ -62,7 +62,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
-        this.maxFileSize = this.instanceService.instance?.configuration?.attachments?.imageSizeLimit ?? 10485760;
+        this.maxFileSize = this.instanceService.instance?.configuration?.attachments?.imageSizeLimit ?? this.defaultMaxFileSize;
         this.maxStatusLength = this.instanceService.instance?.configuration?.statuses?.maxCharacters ?? 500;
         this.isOpenAIEnabled = this.settingsService.publicSettings?.isOpenAIEnabled ?? false;
 
@@ -126,7 +126,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
     }
 
     protected allPhotosUploaded(): boolean {
-        return !this.photos.some(x => !x.isUploaded);
+        return !this.photos.some(x => !x.isUploaded || (x.photoHdrFile && !x.isHdrUploaded));
     }
 
     async onSubmit(): Promise<void> {

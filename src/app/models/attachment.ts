@@ -7,6 +7,7 @@ export class Attachment {
     public id = '';
     public originalFile?: FileInfo;
     public smallFile?: FileInfo;
+    public originalHdrFile?: FileInfo;
     public description?: string;
     public blurhash?: string;
     public metadata?: Metadata;

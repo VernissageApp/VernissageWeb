@@ -34,7 +34,7 @@ import { RoutingStateService } from 'src/app/services/common/routing-state.servi
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { Meta, SafeHtml, Title } from '@angular/platform-browser';
 import { LoadingService } from 'src/app/services/common/loading.service';
-
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
     selector: 'app-status',
@@ -95,6 +95,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         private titleService: Title,
         private loadingService: LoadingService,
         private metaService: Meta,
+        private deviceDetectorService: DeviceDetectorService,
         breakpointObserver: BreakpointObserver
     ) {
         super(breakpointObserver);
@@ -579,7 +580,15 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         this.showSensitiveImage = !this.mainStatus.sensitive;
 
         this.images = this.mainStatus?.attachments?.map(attachment => {
-            return new ImageItem({ src: attachment.originalFile?.url, thumb: attachment.smallFile?.url })
+            if (this.preferencesService.alwaysShowSdrPhoto) {
+                return new ImageItem({ src: attachment.originalFile?.url, thumb: attachment.smallFile?.url });
+            }
+
+            if (attachment.originalHdrFile?.url && this.deviceDetectorService.browser === "Chrome" && this.deviceDetectorService.isDesktop()) {
+                return new ImageItem({ src: attachment.originalHdrFile?.url, thumb: attachment.smallFile?.url });
+            }
+
+            return new ImageItem({ src: attachment.originalFile?.url, thumb: attachment.smallFile?.url });
         });
 
         this.rendered = this.mainStatus?.noteHtml ?? '';

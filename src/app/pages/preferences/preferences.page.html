@@ -88,6 +88,12 @@
                             Show ALT icon <div class="text-muted fs-90">ALT icon will be displayed on timelines.</div>
                         </mat-slide-toggle>
                     </div>
+
+                    <div class="margin-bottom-20">
+                        <mat-slide-toggle color="warn" name="alwaysShowSdrPhoto" [(ngModel)]="alwaysShowSdrPhoto" (ngModelChange)="onAlwaysShowSdrPhotoChange()">
+                            Always display SDR photo <div class="text-muted fs-90">Instead of HDR version o photo always SDR version will be displayed.</div>
+                        </mat-slide-toggle>
+                    </div>
                 </mat-card-content>
             </mat-card>
         </div>

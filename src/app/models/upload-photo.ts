@@ -3,6 +3,10 @@ export class UploadPhoto {
     public photoSrc?: string;
     public isUploaded = false;
 
+    public photoHdrFile?: Blob;
+    public photoHdrSrc?: string;
+    public isHdrUploaded = false;
+
     public id = '';
     public description?: string;
     public blurhash?: string;

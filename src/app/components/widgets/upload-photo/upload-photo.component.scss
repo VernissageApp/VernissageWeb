@@ -8,3 +8,13 @@
         height: 0;
     }
 }
+
+.hdr-image {
+    width: 100px;
+
+    img {
+        object-fit: cover;
+        width: 80px;
+        height: 50px;
+    }
+}

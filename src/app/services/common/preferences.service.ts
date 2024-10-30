@@ -77,4 +77,12 @@ export class PreferencesService {
     public set showAltIcon(showAltIcon: boolean) {
         this.cookieService.set('showAltIcon', showAltIcon ? 'true' : 'false', { expires: this.longFuture });
     }
+
+    public get alwaysShowSdrPhoto(): boolean {
+        return (this.cookieService.get('alwaysShowSdrPhoto') ?? 'false') === 'true';
+    }
+
+    public set alwaysShowSdrPhoto(alwaysShowSdrPhoto: boolean) {
+        this.cookieService.set('alwaysShowSdrPhoto', alwaysShowSdrPhoto ? 'true' : 'false', { expires: this.longFuture });
+    }
 }
