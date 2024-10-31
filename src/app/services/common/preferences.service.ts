@@ -1,5 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, Renderer2 } from '@angular/core';
 import { SsrCookieService } from './ssr-cookie.service';
+import { WindowService } from './window.service';
+import { DOCUMENT } from '@angular/common';
 
 // We are storing preferences in the cookies instead of local storage because of
 // Server Side Rendering. The cookies are send to server even with the first browser
@@ -11,7 +13,10 @@ import { SsrCookieService } from './ssr-cookie.service';
 export class PreferencesService {
     private readonly longFuture = new Date('Sat, 01 Jan 2050 00:00:00 GMT');
 
-    constructor(private cookieService: SsrCookieService) {
+    constructor(
+        @Inject(DOCUMENT) private document: Document,
+        private cookieService: SsrCookieService,
+        private windowService: WindowService) {
     }
 
     public get isLightTheme(): boolean {
@@ -84,5 +89,22 @@ export class PreferencesService {
 
     public set alwaysShowSdrPhoto(alwaysShowSdrPhoto: boolean) {
         this.cookieService.set('alwaysShowSdrPhoto', alwaysShowSdrPhoto ? 'true' : 'false', { expires: this.longFuture });
+    }
+
+    public toggleTheme(renderer: Renderer2): void {
+        const isLightThemeInternal = this.isLightTheme;
+        this.isLightTheme = !isLightThemeInternal;
+
+        this.applyTheme(renderer);
+    }
+
+    public applyTheme(renderer: Renderer2): void {
+        if (this.isLightTheme) {
+            renderer.removeClass(this.document.body, 'dark-theme');
+            this.windowService.nativeWindow.document.querySelector('meta[name="theme-color"]')?.setAttribute("content", "#fafafa");
+        } else {
+            renderer.addClass(this.document.body, 'dark-theme');
+            this.windowService.nativeWindow.document.querySelector('meta[name="theme-color"]')?.setAttribute("content", "#303030");
+        }
     }
 }

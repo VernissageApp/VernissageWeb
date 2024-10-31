@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
 import { RouteReuseStrategy, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -13,6 +13,7 @@ import { CustomReuseStrategy } from 'src/app/common/custom-reuse-strategy';
 import { SwPush } from '@angular/service-worker';
 import { UserDisplayService } from 'src/app/services/common/user-display.service';
 import { SettingsService } from 'src/app/services/http/settings.service';
+import { PreferencesService } from 'src/app/services/common/preferences.service';
 
 @Component({
     selector: 'app-header',
@@ -30,6 +31,7 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
     public showTrending = false;
     public showEditorsChoice = false;
     public showCategories = false;
+    public isLightTheme = false;
 
     private userChangeSubscription?: Subscription;
     private notificationChangeSubscription?: Subscription;
@@ -44,6 +46,8 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
         private routeReuseStrategy: RouteReuseStrategy,
         private router: Router,
         private swPushService: SwPush,
+        private preferencesService: PreferencesService,
+        private renderer: Renderer2,
         breakpointObserver: BreakpointObserver
     ) {
         super(breakpointObserver)
@@ -55,6 +59,7 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
         this.user = this.authorizationService.getUser();
         this.isLoggedIn = await this.authorizationService.isLoggedIn();
         this.avatarUrl = this.user?.avatarUrl ?? 'assets/avatar.svg';
+        this.isLightTheme = this.preferencesService.isLightTheme;
 
         this.userChangeSubscription = this.authorizationService.changes.subscribe(async (user) => {
             this.user = user;
@@ -113,6 +118,11 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
 
     isRegistrationByInvitationsOpened(): boolean {
         return this.instanceService.instance?.registrationOpened === false && this.instanceService.instance?.registrationByInvitationsOpened === true;
+    }
+
+    onThemeToggle(): void {
+        this.preferencesService.toggleTheme(this.renderer);
+        this.isLightTheme = this.preferencesService.isLightTheme;
     }
 
     private async loadNotificationCount(): Promise<void> {
