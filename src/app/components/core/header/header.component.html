@@ -101,6 +101,9 @@
         }
 
         @if(!user || !isLoggedIn) {
+            <button mat-icon-button color="primary" class="margin-right-5" (click)="onThemeToggle()" aria-label="Switch theme">
+                <mat-icon>{{ isLightTheme ? 'dark_mode' : 'light_mode' }}</mat-icon>
+            </button>
             <button *ngIf="isRegistrationEnabled()" mat-stroked-button color="primary" [routerLink]="['/register']" class="margin-right-5">Sign up</button>
             <button mat-button [routerLink]="['/login']">Log in</button>
         }
