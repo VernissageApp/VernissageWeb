@@ -146,6 +146,17 @@
     }
 }
 
+.hdr {
+    mat-icon {
+        transform: scale(1.6);
+        opacity: 0.8;
+    }
+
+    .hdr-label {
+        vertical-align: top;
+    }
+}
+
 .alt {
     mat-icon {
         transform: scale(1.6);

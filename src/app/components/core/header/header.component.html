@@ -1,5 +1,48 @@
 <nav>
     <mat-toolbar color="primary">
+        @if (deviceResolution === resolution.handsetPortrait) {
+            @if (showTrending || showEditorsChoice || showCategories) {
+                <button mat-icon-button [matMenuTriggerFor]="discover" color="primary" class="hamburger-menu" aria-label="More options">
+                    <mat-icon>menu</mat-icon>
+                </button>
+                <mat-menu #discover="matMenu">
+                    @if (showTrending) {
+                        <button mat-menu-item [routerLink]="['/trending']" (click)="clearReuseRoute()" aria-label="Trending">
+                            <mat-icon>timeline</mat-icon>
+                            <span>Trending</span>
+                        </button>
+                    }
+
+                    @if (showEditorsChoice) {
+                        <button mat-menu-item [routerLink]="['/editors']" (click)="clearReuseRoute()" aria-label="Editor's choice">
+                            <mat-icon>stars</mat-icon>
+                            <span>Editor's choice</span>
+                        </button>
+                    }
+
+                    @if (showCategories) {
+                        <button mat-menu-item [routerLink]="['/categories']" (click)="clearReuseRoute()" aria-label="Categories">
+                            <mat-icon>loyalty</mat-icon>
+                            <span>Categories</span>
+                        </button>
+                    }
+
+                    @if (user && isLoggedIn) {
+                        <mat-divider></mat-divider>
+
+                        <button mat-menu-item [routerLink]="['/upload']" aria-label="Upload">
+                            <mat-icon>arrow_upward</mat-icon>
+                            <span>Upload</span>
+                        </button>
+                        <button mat-menu-item [routerLink]="['/search']" aria-label="Search">
+                            <mat-icon>search</mat-icon>
+                            <span>Search</span>
+                        </button>
+                    }
+                </mat-menu>
+            }
+        }
+
         <a class="logo link" [routerLink]="['/']" (click)="clearReuseRoute()" tabindex="0">Vernissage <div class="beta"></div></a>
 
         @if (deviceResolution === resolution.handsetLandscape || deviceResolution === resolution.tablet || deviceResolution === resolution.browser) {
@@ -57,63 +100,24 @@
             }
         }
 
-        @if (deviceResolution === resolution.handsetPortrait) {
-            @if (showTrending || showEditorsChoice || showCategories) {
-                <button mat-icon-button [matMenuTriggerFor]="discover" color="primary" aria-label="More options">
-                    <mat-icon>menu</mat-icon>
-                </button>
-                <mat-menu #discover="matMenu">
-                    @if (showTrending) {
-                        <button mat-menu-item [routerLink]="['/trending']" (click)="clearReuseRoute()" aria-label="Trending">
-                            <mat-icon>timeline</mat-icon>
-                            <span>Trending</span>
-                        </button>
-                    }
-
-                    @if (showEditorsChoice) {
-                        <button mat-menu-item [routerLink]="['/editors']" (click)="clearReuseRoute()" aria-label="Editor's choice">
-                            <mat-icon>stars</mat-icon>
-                            <span>Editor's choice</span>
-                        </button>
-                    }
-
-                    @if (showCategories) {
-                        <button mat-menu-item [routerLink]="['/categories']" (click)="clearReuseRoute()" aria-label="Categories">
-                            <mat-icon>loyalty</mat-icon>
-                            <span>Categories</span>
-                        </button>
-                    }
-
-                    @if (user && isLoggedIn) {
-                        <mat-divider></mat-divider>
-
-                        <button mat-menu-item [routerLink]="['/upload']" aria-label="Upload">
-                            <mat-icon>arrow_upward</mat-icon>
-                            <span>Upload</span>
-                        </button>
-                        <button mat-menu-item [routerLink]="['/search']" aria-label="Search">
-                            <mat-icon>search</mat-icon>
-                            <span>Search</span>
-                        </button>
-                    }
-                </mat-menu>
-            }
-        }
-
         @if(!user || !isLoggedIn) {
-            <button mat-icon-button color="primary" class="margin-right-5" (click)="onThemeToggle()" aria-label="Switch theme">
-                <mat-icon>{{ isLightTheme ? 'dark_mode' : 'light_mode' }}</mat-icon>
-            </button>
+            @if (!isHandsetPortrait) {
+                <button mat-icon-button color="primary" class="margin-right-5" (click)="onThemeToggle()" aria-label="Switch theme">
+                    <mat-icon>{{ isLightTheme ? 'dark_mode' : 'light_mode' }}</mat-icon>
+                </button>
+            }
             <button *ngIf="isRegistrationEnabled()" mat-stroked-button color="primary" [routerLink]="['/register']" class="margin-right-5">Sign up</button>
             <button mat-button [routerLink]="['/login']">Log in</button>
         }
 
         @if (user && isLoggedIn) {
-            <mat-divider class="menu-divider" [vertical]="true"></mat-divider>
+            @if (deviceResolution !== resolution.handsetPortrait) {
+                <mat-divider class="menu-divider" [vertical]="true"></mat-divider>
 
-            <button *ngIf="deviceResolution !== resolution.handsetPortrait" mat-icon-button color="primary" [routerLink]="['/search']" aria-label="Search">
-                <mat-icon>search</mat-icon>
-            </button>
+                <button mat-icon-button color="primary" [routerLink]="['/search']" aria-label="Search">
+                    <mat-icon>search</mat-icon>
+                </button>
+            }
 
             <button mat-icon-button color="primary" [routerLink]="['/notifications']" aria-label="Notifications">
                 <mat-icon *ngIf="notificationCounter" [matBadge]="notificationCounter" matBadgeColor="warn" matBadgeSize="small">notifications_none</mat-icon>

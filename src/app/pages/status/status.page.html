@@ -1,14 +1,20 @@
 <div *ngIf="mainStatus && isReady" @fadeIn>
     <div class="photo-margin-top">
-        <div *ngIf="showBackArrow()" class="back-container" (click)="onBackClick()" (keydown.enter)="onBackClick()" tabindex="0">
-            <mat-icon>arrow_back</mat-icon>
-            <span class="back-label">Back</span>
-        </div>
+        @if (showBackArrow()) {
+            <div class="back-container" (click)="onBackClick()" (keydown.enter)="onBackClick()" tabindex="0">
+                <mat-icon>arrow_back</mat-icon>
+                <span class="back-label">Back</span>
+            </div>
+        }
     </div>
+
     <div class="photo-container" [ngClass]="{ 'photo-container-table': showContextArrows() }">
-        <div *ngIf="showContextArrows()" class="icon" (click)="onPrevClick()" (keydown.enter)="onPrevClick()" tabindex="0">
-            <mat-icon *ngIf="!hideLeftArrow">arrow_back_ios</mat-icon>
-        </div>
+        @if (showContextArrows()) {
+            <div class="icon" (click)="onPrevClick()" (keydown.enter)="onPrevClick()" tabindex="0">
+                <mat-icon *ngIf="!hideLeftArrow">arrow_back_ios</mat-icon>
+            </div>
+        }
+
         <div class="display-inline">
             <ng-container *ngIf="images">
                 <ng-container *ngIf="images.length === 1">
@@ -43,9 +49,12 @@
                 </ng-container>
             </ng-container>
         </div>
-        <div *ngIf="showContextArrows()" class="icon" (click)="onNextClick()" (keydown.enter)="onNextClick()" tabindex="0">
-            <mat-icon *ngIf="!hideRightArrow">arrow_forward_ios</mat-icon>
-        </div>
+
+        @if (showContextArrows()) {
+            <div class="icon" (click)="onNextClick()" (keydown.enter)="onNextClick()" tabindex="0">
+                <mat-icon *ngIf="!hideRightArrow">arrow_forward_ios</mat-icon>
+            </div>
+        }
     </div>
     <div class="photo-margin-bottom"></div>
 
@@ -161,85 +170,119 @@
                     </div>
 
                     <!-- Alt text -->
-                    <div *ngIf="showAlternativeText && getAltStatus(currentIndex)" class="flex-row alt margin-bottom-10">
-                        <div>
-                            <mat-icon class="margin-right-20" inline="true" matTooltip="Alt">remove_red_eye</mat-icon>
+                     @if (showAlternativeText && getAltStatus(currentIndex)) {
+                        <div class="flex-row alt margin-bottom-10">
+                            <div>
+                                <mat-icon class="margin-right-20" inline="true" matTooltip="Alt">remove_red_eye</mat-icon>
+                            </div>
+                            <div>
+                                <span class="alt-label">{{ getAltStatus(currentIndex) }}</span>
+                            </div>
                         </div>
-                        <div>
-                            <span class="alt-label">{{ getAltStatus(currentIndex) }}</span>
-                        </div>
-                    </div>
+                    }
 
                     <!-- Category -->
-                    <div *ngIf="mainStatus.category" class="category margin-bottom-10">
-                        <mat-icon class="margin-right-20" inline="true" matTooltip="Category">loyalty</mat-icon>
-                        <span class="category-label">{{ mainStatus.category.name }}</span>
-                    </div>
+                     @if (mainStatus.category) {
+                        <div class="category margin-bottom-10">
+                            <mat-icon class="margin-right-20" inline="true" matTooltip="Category">loyalty</mat-icon>
+                            <span class="category-label">{{ mainStatus.category.name }}</span>
+                        </div>
+                    }
 
                     <!-- Location -->
-                    <div *ngIf="getLocation(currentIndex)" class="location margin-bottom-10">
-                        <mat-icon class="margin-right-20" inline="true" matTooltip="Place">place</mat-icon>
-                        <span *ngIf="getLocation(currentIndex)?.name" class="location-label"><a class="dashed" target="_blank" [href]="getMapsUrl(currentIndex)">{{ getLocation(currentIndex)?.name }}</a> ({{ getLocation(currentIndex)?.country?.name }})</span>
-                    </div>
-                    <div *ngIf="!getLocation(currentIndex) && hasGpsCoordinations(currentIndex)" class="location margin-bottom-10">
-                        <mat-icon class="margin-right-20" inline="true" matTooltip="Place">place</mat-icon>
-                        <span class="location-label"><a class="dashed" target="_blank" [href]="getMapsUrl(currentIndex)">Open map</a> <small class="text-muted"> ({{ getGpsLatitudeToDisplay(currentIndex) }}, {{ getGpsLongitudeToDisplay(currentIndex) }})</small></span>
-                    </div>
+                     @if (getLocation(currentIndex)) {
+                        <div class="location margin-bottom-10">
+                            <mat-icon class="margin-right-20" inline="true" matTooltip="Place">place</mat-icon>
+                            <span *ngIf="getLocation(currentIndex)?.name" class="location-label"><a class="dashed" target="_blank" [href]="getMapsUrl(currentIndex)">{{ getLocation(currentIndex)?.name }}</a> ({{ getLocation(currentIndex)?.country?.name }})</span>
+                        </div>
+                    }
+                    @if (!getLocation(currentIndex) && hasGpsCoordinations(currentIndex)) {
+                        <div class="location margin-bottom-10">
+                            <mat-icon class="margin-right-20" inline="true" matTooltip="Place">place</mat-icon>
+                            <span class="location-label"><a class="dashed" target="_blank" [href]="getMapsUrl(currentIndex)">Open map</a> <small class="text-muted"> ({{ getGpsLatitudeToDisplay(currentIndex) }}, {{ getGpsLongitudeToDisplay(currentIndex) }})</small></span>
+                        </div>
+                    }
 
-                    <!-- Licencja -->
-                    <div *ngIf="getLicense(currentIndex)" class="license margin-bottom-10">
-                        <mat-icon class="margin-right-20" inline="true" matTooltip="License">license</mat-icon>
-                        <span *ngIf="getLicense(currentIndex)?.name" class="license-label">
-                            @if (getLicense(currentIndex)?.url) {
-                                <a class="dashed" target="_blank" [href]="getLicense(currentIndex)?.url">{{ getLicense(currentIndex)?.name }}</a><ng-container *ngIf="getLicense(currentIndex)?.code"> ({{ getLicense(currentIndex)?.code }})</ng-container>
-                            } @else {
-                                {{ getLicense(currentIndex)?.name }}<ng-container *ngIf="getLicense(currentIndex)?.code"> ({{ getLicense(currentIndex)?.code }})</ng-container>
-                            }
-                        </span>
-                    </div>
-
-                    <!-- Exif -->
-                    <div *ngIf="getExif(currentIndex)" class="exif">
-                        <div *ngIf="getExif(currentIndex)?.make || getExif(currentIndex)?.model" class="margin-bottom-10">
-                            <mat-icon class="margin-right-20" inline="true" matTooltip="Camera">camera_alt</mat-icon>
-                            <span class="exif-label">
-                                <span *ngIf="getExif(currentIndex)?.make">{{ getExif(currentIndex)?.make }}</span>&nbsp;<span *ngIf="getExif(currentIndex)?.model">{{ getExif(currentIndex)?.model }}</span>
+                    <!-- License -->
+                     @if (getLicense(currentIndex)) {
+                        <div class="license margin-bottom-10">
+                            <mat-icon class="margin-right-20" inline="true" matTooltip="License">license</mat-icon>
+                            <span *ngIf="getLicense(currentIndex)?.name" class="license-label">
+                                @if (getLicense(currentIndex)?.url) {
+                                    <a class="dashed" target="_blank" [href]="getLicense(currentIndex)?.url">{{ getLicense(currentIndex)?.name }}</a><ng-container *ngIf="getLicense(currentIndex)?.code"> ({{ getLicense(currentIndex)?.code }})</ng-container>
+                                } @else {
+                                    {{ getLicense(currentIndex)?.name }}<ng-container *ngIf="getLicense(currentIndex)?.code"> ({{ getLicense(currentIndex)?.code }})</ng-container>
+                                }
                             </span>
                         </div>
+                    }
 
-                        <div *ngIf="getExif(currentIndex)?.lens" class="margin-bottom-10">
-                            <mat-icon class="margin-right-20" inline="true" matTooltip="Lens">camera</mat-icon>
-                            <span class="exif-label">{{ getExif(currentIndex)?.lens }}</span>
-                        </div>
+                    <!-- Exif -->
+                     @if (getExif(currentIndex)) {
+                        <div class="exif">
+                            @if (getExif(currentIndex)?.make || getExif(currentIndex)?.model) {
+                                <div class="margin-bottom-10">
+                                    <mat-icon class="margin-right-20" inline="true" matTooltip="Camera">camera_alt</mat-icon>
+                                    <span class="exif-label">
+                                        <span *ngIf="getExif(currentIndex)?.make">{{ getExif(currentIndex)?.make }}</span>&nbsp;<span *ngIf="getExif(currentIndex)?.model">{{ getExif(currentIndex)?.model }}</span>
+                                    </span>
+                                </div>
+                            }
 
-                        <div *ngIf="getExif(currentIndex)?.focalLenIn35mmFilm || getExif(currentIndex)?.fNumber || getExif(currentIndex)?.exposureTime || getExif(currentIndex)?.photographicSensitivity" class="margin-bottom-10">
-                            <mat-icon class="margin-right-20" inline="true" matTooltip="Exposure">brightness_7</mat-icon>
-                            <span *ngIf="getExif(currentIndex)?.focalLenIn35mmFilm" class="margin-right-15 exif-label">{{ getExif(currentIndex)?.focalLenIn35mmFilm }}mm</span>
-                            <span *ngIf="getExif(currentIndex)?.fNumber" class="margin-right-15 exif-label">{{ getExif(currentIndex)?.fNumber | slice:0:7 }}</span>
-                            <span *ngIf="getExif(currentIndex)?.exposureTime" class="margin-right-15 exif-label">{{ getExif(currentIndex)?.exposureTime }}s</span>
-                            <span *ngIf="getExif(currentIndex)?.photographicSensitivity" class="margin-right-15 exif-label">ISO {{ getExif(currentIndex)?.photographicSensitivity }}</span>
-                        </div>
+                            @if (getExif(currentIndex)?.lens) {
+                                <div class="margin-bottom-10">
+                                    <mat-icon class="margin-right-20" inline="true" matTooltip="Lens">camera</mat-icon>
+                                    <span class="exif-label">{{ getExif(currentIndex)?.lens }}</span>
+                                </div>
+                            }
 
-                        <div *ngIf="getExif(currentIndex)?.software" class="margin-bottom-10">
-                            <mat-icon class="margin-right-20" inline="true" matTooltip="Software">settings_photo_camera</mat-icon>
-                            <span class="exif-label">{{ getExif(currentIndex)?.software }}</span>
-                        </div>
-                        
-                        <div *ngIf="getExif(currentIndex)?.film" class="margin-bottom-10">
-                            <mat-icon class="margin-right-20" inline="true" matTooltip="Camera roll">camera_roll</mat-icon>
-                            <span class="exif-label">{{ getExif(currentIndex)?.film }}</span>
-                        </div>
+                            @if (getExif(currentIndex)?.focalLenIn35mmFilm || getExif(currentIndex)?.fNumber || getExif(currentIndex)?.exposureTime || getExif(currentIndex)?.photographicSensitivity) {
+                                <div class="margin-bottom-10">
+                                    <mat-icon class="margin-right-20" inline="true" matTooltip="Exposure">brightness_7</mat-icon>
+                                    <span *ngIf="getExif(currentIndex)?.focalLenIn35mmFilm" class="margin-right-15 exif-label">{{ getExif(currentIndex)?.focalLenIn35mmFilm }}mm</span>
+                                    <span *ngIf="getExif(currentIndex)?.fNumber" class="margin-right-15 exif-label">{{ getExif(currentIndex)?.fNumber | slice:0:7 }}</span>
+                                    <span *ngIf="getExif(currentIndex)?.exposureTime" class="margin-right-15 exif-label">{{ getExif(currentIndex)?.exposureTime }}s</span>
+                                    <span *ngIf="getExif(currentIndex)?.photographicSensitivity" class="margin-right-15 exif-label">ISO {{ getExif(currentIndex)?.photographicSensitivity }}</span>
+                                </div>
+                            }
 
-                        <div *ngIf="getExif(currentIndex)?.chemistry" class="margin-bottom-10">
-                            <mat-icon class="margin-right-20" inline="true" matTooltip="Develop chemistry">experiment</mat-icon>
-                            <span class="exif-label">{{ getExif(currentIndex)?.chemistry }}</span>
-                        </div>
+                            @if (getExif(currentIndex)?.software) {
+                                <div class="margin-bottom-10">
+                                    <mat-icon class="margin-right-20" inline="true" matTooltip="Software">settings_photo_camera</mat-icon>
+                                    <span class="exif-label">{{ getExif(currentIndex)?.software }}</span>
+                                </div>
+                            }
+                            
+                            @if (getExif(currentIndex)?.film) {
+                                <div class="margin-bottom-10">
+                                    <mat-icon class="margin-right-20" inline="true" matTooltip="Camera roll">camera_roll</mat-icon>
+                                    <span class="exif-label">{{ getExif(currentIndex)?.film }}</span>
+                                </div>
+                            }
 
-                        <div *ngIf="getExif(currentIndex)?.scanner" class="margin-bottom-10">
-                            <mat-icon class="margin-right-20" inline="true" matTooltip="Scanner">scanner</mat-icon>
-                            <span class="exif-label">{{ getExif(currentIndex)?.scanner }}</span>
+                            @if (getExif(currentIndex)?.chemistry) {
+                                <div class="margin-bottom-10">
+                                    <mat-icon class="margin-right-20" inline="true" matTooltip="Develop chemistry">experiment</mat-icon>
+                                    <span class="exif-label">{{ getExif(currentIndex)?.chemistry }}</span>
+                                </div>
+                            }
+
+                            @if (getExif(currentIndex)?.scanner) {
+                                <div class="margin-bottom-10">
+                                    <mat-icon class="margin-right-20" inline="true" matTooltip="Scanner">scanner</mat-icon>
+                                    <span class="exif-label">{{ getExif(currentIndex)?.scanner }}</span>
+                                </div>
+                            }
                         </div>
-                    </div>
+                    }
+
+                    <!-- HDR-->
+                    @if (showHdrIcon(currentIndex)) {
+                        <div class="hdr margin-bottom-10">
+                            <mat-icon class="margin-right-20" inline="true" matTooltip="HDR">unknown_2</mat-icon>
+                            <span class="hdr-label">High Dynamic Range <span matTooltip="Not supported by browser" class="fs-90 text-muted">{{ isHdrRendered() ? '(displayed)' : '(not displayed)' }}</span></span>
+                        </div>
+                    }
 
                     <!-- Status properties -->
                     <app-status-properties [status]="mainStatus"></app-status-properties>
@@ -252,62 +295,69 @@
                     <mat-card-title>Comments</mat-card-title>
                 </mat-card-header>
                 <mat-card-content>
-                    <app-comment-reply *ngIf="signedInUser" [signedInUser]="signedInUser" [status]="mainStatus" (added)="onCommentAdded()"></app-comment-reply>
+                    @if (signedInUser) {
+                        <app-comment-reply [signedInUser]="signedInUser" [status]="mainStatus" (added)="onCommentAdded()"></app-comment-reply>
+                    }
 
-                    <ng-container *ngIf="(comments?.length ?? 0) > 0">
-                        <div *ngFor="let comment of comments; trackBy:trackByCommentFn">
-                            <div class="flex-row gap-8 padding-top-5 comments" [ngClass]="{ 'replies': !comment.showDivider, 'padding-top-15': comment.showDivider }">
-                                <div>
-                                    <app-avatar [user]="comment.status.user" [size]="avatarSize.medium"></app-avatar>
-                                </div>
-                                <div>
+                    @if ((comments?.length ?? 0) > 0) {
+                        @for (comment of comments; track comment.status.id) {
+                            <div>
+                                <div class="flex-row gap-8 padding-top-5 comments" [ngClass]="{ 'replies': !comment.showDivider, 'padding-top-15': comment.showDivider }">
                                     <div>
-                                        <a [routerLink]="[ '/@' + comment.status.user?.userName ]" class="margin-right-5 fw-600">{{ comment.status.user?.name }}</a>
+                                        <app-avatar [user]="comment.status.user" [size]="avatarSize.medium"></app-avatar>
                                     </div>
                                     <div>
-                                        <span class="fw-400 fs-90 text-muted">&#64;{{ comment.status.user?.userName }}</span>
+                                        <div>
+                                            <a [routerLink]="[ '/@' + comment.status.user?.userName ]" class="margin-right-5 fw-600">{{ comment.status.user?.name }}</a>
+                                        </div>
+                                        <div>
+                                            <span class="fw-400 fs-90 text-muted">&#64;{{ comment.status.user?.userName }}</span>
+                                        </div>
+                                        <div [innerHTML]="comment.status.noteHtml"></div>
                                     </div>
-                                    <div [innerHTML]="comment.status.noteHtml"></div>
+                                    <div *ngIf="signedInUser" class="flex-grow-1 text-right">
+                                        <mat-icon class="favourited fill-symbol" *ngIf="comment.status.favourited">star</mat-icon>
+                                        <button mat-icon-button [matMenuTriggerFor]="menu" class="margin-right-10" color="primary" aria-label="More options">
+                                            <mat-icon>more_vert</mat-icon>
+                                        </button>
+                                        <mat-menu #menu="matMenu">
+                                            <button *ngIf="!comment.status.favourited" mat-menu-item (click)="favouriteComment(comment.status)">
+                                                <mat-icon>star_border</mat-icon>
+                                                <span>Like</span>
+                                            </button>
+                                            <button *ngIf="comment.status.favourited" mat-menu-item (click)="unfavouriteComment(comment.status)">
+                                                <mat-icon>star</mat-icon>
+                                                <span>Unlike</span>
+                                            </button>
+                                            <button mat-menu-item (click)="onReply(comment.status)">
+                                                <mat-icon>reply</mat-icon>
+                                                <span>Reply</span>
+                                            </button>
+                                            <mat-divider></mat-divider>
+                                            <button mat-menu-item (click)="onReportDialog(comment.status)">
+                                                <mat-icon>warning</mat-icon>
+                                                <span>Report</span>
+                                            </button>
+                                            <button *ngIf="shouldDisplayDeleteCommentButton(comment.status)" mat-menu-item (click)="onDeleteComment(comment.status)">
+                                                <mat-icon class="outline-symbol">delete</mat-icon>
+                                                <span>Delete</span>
+                                            </button>
+                                        </mat-menu>
+                                    </div>
                                 </div>
-                                <div *ngIf="signedInUser" class="flex-grow-1 text-right">
-                                    <mat-icon class="favourited fill-symbol" *ngIf="comment.status.favourited">star</mat-icon>
-                                    <button mat-icon-button [matMenuTriggerFor]="menu" class="margin-right-10" color="primary" aria-label="More options">
-                                        <mat-icon>more_vert</mat-icon>
-                                    </button>
-                                    <mat-menu #menu="matMenu">
-                                        <button *ngIf="!comment.status.favourited" mat-menu-item (click)="favouriteComment(comment.status)">
-                                            <mat-icon>star_border</mat-icon>
-                                            <span>Like</span>
-                                        </button>
-                                        <button *ngIf="comment.status.favourited" mat-menu-item (click)="unfavouriteComment(comment.status)">
-                                            <mat-icon>star</mat-icon>
-                                            <span>Unlike</span>
-                                        </button>
-                                        <button mat-menu-item (click)="onReply(comment.status)">
-                                            <mat-icon>reply</mat-icon>
-                                            <span>Reply</span>
-                                        </button>
-                                        <mat-divider></mat-divider>
-                                        <button mat-menu-item (click)="onReportDialog(comment.status)">
-                                            <mat-icon>warning</mat-icon>
-                                            <span>Report</span>
-                                        </button>
-                                        <button *ngIf="shouldDisplayDeleteCommentButton(comment.status)" mat-menu-item (click)="onDeleteComment(comment.status)">
-                                            <mat-icon class="outline-symbol">delete</mat-icon>
-                                            <span>Delete</span>
-                                        </button>
-                                    </mat-menu>
-                                </div>
-                            </div>
-                            <div *ngIf="replyStatus?.id === comment.status.id" class="text-right padding-top-5">
-                                <app-comment-reply [signedInUser]="signedInUser" [status]="comment.status" [showCancel]="true" (cancel)="onReply(undefined)" (added)="onCommentAdded()"></app-comment-reply>
-                            </div>
-                        </div>
-                    </ng-container>
 
-                    <ng-container *ngIf="(comments?.length ?? 0) === 0">
+                                @if (replyStatus?.id === comment.status.id) {
+                                    <div class="text-right padding-top-5">
+                                        <app-comment-reply [signedInUser]="signedInUser" [status]="comment.status" [showCancel]="true" (cancel)="onReply(undefined)" (added)="onCommentAdded()"></app-comment-reply>
+                                    </div>
+                                }
+                            </div>
+                        }
+                    }
+
+                    @if ((comments?.length ?? 0) === 0) {
                         <div>There is nothing to read here yet.</div>
-                    </ng-container>
+                    }
                     
                 </mat-card-content>
             </mat-card>

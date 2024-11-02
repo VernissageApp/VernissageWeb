@@ -143,10 +143,6 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         this.imageIsLoaded = true;
     }
 
-    trackByCommentFn(_: number, item: StatusComment): string | undefined{
-        return item.status.id;
-    }
-
     openInFullScreen() {
         this.lightbox.open(this.currentIndex, this.galleryId, {
             panelClass: 'fullscreen'
@@ -423,6 +419,27 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         return this.getGpsLongitude(index)?.slice(0, 6) ?? '';
     }
 
+    showHdrIcon(index: number): boolean {
+        const attachment = this.mainStatus?.attachments?.at(index);
+        if (attachment) {
+            return !!attachment.originalHdrFile;
+        }
+
+        return false;
+    }
+
+    isHdrRendered(): boolean {
+        if (this.preferencesService.alwaysShowSdrPhoto) {
+            return false;
+        }
+
+        if (this.browserSupportsHdr()) {
+            return true;
+        }
+
+        return false;
+    }
+
     getCreatedAt(): Date | undefined {
         if (this.mainStatus?.createdAt) {
             return new Date(this.mainStatus.createdAt);
@@ -584,7 +601,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
                 return new ImageItem({ src: attachment.originalFile?.url, thumb: attachment.smallFile?.url });
             }
 
-            if (attachment.originalHdrFile?.url && this.deviceDetectorService.browser === "Chrome" && this.deviceDetectorService.isDesktop()) {
+            if (attachment.originalHdrFile?.url && this.browserSupportsHdr()) {
                 return new ImageItem({ src: attachment.originalHdrFile?.url, thumb: attachment.smallFile?.url });
             }
 
@@ -721,6 +738,10 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
 
         // <meta name="twitter:card" content="summary_large_image">
         this.metaService.updateTag({ property: 'twitter:card', content: 'summary_large_image' });
+    }
+
+    private browserSupportsHdr(): boolean {
+        return this.deviceDetectorService.browser === "Chrome" && this.deviceDetectorService.isDesktop();
     }
 
     htmlToText(value: string): string {
