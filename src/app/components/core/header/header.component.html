@@ -111,11 +111,13 @@
         }
 
         @if (user && isLoggedIn) {
-            <mat-divider class="menu-divider" [vertical]="true"></mat-divider>
+            @if (deviceResolution !== resolution.handsetPortrait) {
+                <mat-divider class="menu-divider" [vertical]="true"></mat-divider>
 
-            <button *ngIf="deviceResolution !== resolution.handsetPortrait" mat-icon-button color="primary" [routerLink]="['/search']" aria-label="Search">
-                <mat-icon>search</mat-icon>
-            </button>
+                <button mat-icon-button color="primary" [routerLink]="['/search']" aria-label="Search">
+                    <mat-icon>search</mat-icon>
+                </button>
+            }
 
             <button mat-icon-button color="primary" [routerLink]="['/notifications']" aria-label="Notifications">
                 <mat-icon *ngIf="notificationCounter" [matBadge]="notificationCounter" matBadgeColor="warn" matBadgeSize="small">notifications_none</mat-icon>
