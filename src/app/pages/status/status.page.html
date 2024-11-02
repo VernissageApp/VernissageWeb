@@ -280,7 +280,7 @@
                     @if (showHdrIcon(currentIndex)) {
                         <div class="hdr margin-bottom-10">
                             <mat-icon class="margin-right-20" inline="true" matTooltip="HDR">unknown_2</mat-icon>
-                            <span class="hdr-label">High Dynamic Range <span matTooltip="Not supported by browser" class="fs-90 text-muted">{{ isHdrRendered() ? '(displayed)' : '(not displayed)' }}</span></span>
+                            <span class="hdr-label">High Dynamic Range <span [matTooltip]="isHdrRendered() ? 'Supported by browser' : 'Not supported by browser'" class="fs-90 text-muted">{{ isHdrRendered() ? '(displayed)' : '(not displayed)' }}</span></span>
                         </div>
                     }
 
