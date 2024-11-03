@@ -30,6 +30,7 @@ export class User {
     public twoFactorEnabled = false;
     public manuallyApprovesFollowers = false;
     public featured = false;
+    public lastLoginDate = '';
     public createdAt = '';
     public updatedAt = '';
 }

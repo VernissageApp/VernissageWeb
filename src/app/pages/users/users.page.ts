@@ -30,6 +30,7 @@ export class UsersPage extends ResponsiveComponent implements OnInit {
     readonly role = Role;
 
     search = '';
+    onlyLocal = false;
     isReady = false;
     pageIndex = 0;
     users?: PaginableResult<User>;
@@ -38,8 +39,8 @@ export class UsersPage extends ResponsiveComponent implements OnInit {
 
     private readonly displayedColumnsHandsetPortrait: string[] = ['avatar', 'userName', 'actions'];
     private readonly displayedColumnsHandsetLandscape: string[] = ['avatar', 'userName', 'createdAt', 'actions'];
-    private readonly displayedColumnsTablet: string[] = ['avatar', 'userName', 'userFullName', 'email', 'isApproved', 'createdAt', 'actions'];
-    private readonly displayedColumnsBrowser: string[] = ['avatar', 'userName', 'userFullName', 'email', 'isLocal', 'isApproved', 'statuses', 'createdAt', 'actions'];
+    private readonly displayedColumnsTablet: string[] = ['avatar', 'userName', 'email', 'isApproved', 'lastLoginDate', 'createdAt', 'actions'];
+    private readonly displayedColumnsBrowser: string[] = ['avatar', 'userName', 'email', 'isLocal', 'isApproved', 'statuses', 'lastLoginDate', 'createdAt', 'actions'];
     
     constructor(
         private authorizationService: AuthorizationService,
@@ -68,13 +69,16 @@ export class UsersPage extends ResponsiveComponent implements OnInit {
             const pageString = params['page'] as string;
             const sizeString = params['size'] as string;
             const query = params['query'] as string;
+            const local = params['onlyLocal'] as string;
 
             const page = pageString ? +pageString : 0;
             const size = sizeString ? +sizeString : 10;
 
             this.pageIndex = page;
             this.search = query
-            this.users = await this.usersService.get(page + 1, size, query);
+            this.onlyLocal = local === 'true';
+
+            this.users = await this.usersService.get(page + 1, size, query, this.onlyLocal);
 
             this.isReady = true;
             this.loadingService.hideLoader();
@@ -83,7 +87,7 @@ export class UsersPage extends ResponsiveComponent implements OnInit {
 
     async onSubmit(): Promise<void> {
         const navigationExtras: NavigationExtras = {
-            queryParams: { query: this.search },
+            queryParams: { query: this.search, onlyLocal: this.onlyLocal },
             queryParamsHandling: 'merge'
         };
 
