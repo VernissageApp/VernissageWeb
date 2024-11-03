@@ -18,6 +18,11 @@
                                 </mat-form-field>
                                 <button mat-flat-button color="primary">Search</button>
                             </div>
+                            <div class="margin-top-5">
+                                <mat-checkbox name="isLocal" color="primary" [disableRipple]="true" [(ngModel)]="onlyLocal">
+                                    Only local
+                                </mat-checkbox>
+                            </div>
                         </form>
                     </mat-card-content>
                 </mat-card>
@@ -29,20 +34,8 @@
                 <ng-container matColumnDef="avatar">
                     <th mat-header-cell *matHeaderCellDef></th>
                     <td mat-cell *matCellDef="let element">
-                        <app-avatar [user]="element" [size]="avatarSize.medium"></app-avatar>
-                    </td>
-                </ng-container>
-
-                <!-- User Name Column -->
-                <ng-container matColumnDef="userName">
-                    <th mat-header-cell *matHeaderCellDef> User name </th>
-                    <td mat-cell *matCellDef="let element">
                         <div class="flex-row gap-8 flex-align-center">
-                            <div class="user-name-link">
-                                <a [routerLink]="['/@' + element.userName ]">
-                                    {{ element.userName }}    
-                                </a>                            
-                            </div>
+                            <app-avatar [user]="element" [size]="avatarSize.medium"></app-avatar>
                             <mat-chip-set *ngIf="!isHandset" aria-label="Roles">
                                 <mat-chip-option *ngIf="element.roles?.includes(role.Administrator)" [disableRipple]="true" disabled>A</mat-chip-option>
                                 <mat-chip-option *ngIf="element.roles?.includes(role.Moderator)" [disableRipple]="true" disabled>M</mat-chip-option>
@@ -52,11 +45,18 @@
                     </td>
                 </ng-container>
 
-                <!-- User Full Name Column -->
-                <ng-container matColumnDef="userFullName">
-                    <th mat-header-cell *matHeaderCellDef> Full name </th>
+                <!-- User Name Column -->
+                <ng-container matColumnDef="userName">
+                    <th mat-header-cell *matHeaderCellDef> Name </th>
                     <td mat-cell *matCellDef="let element">
-                        {{ element.name }}
+                        <div class="user-name-link">
+                            <a [routerLink]="['/@' + element.userName ]">
+                                {{ element.userName }}
+                            </a>
+                        </div>
+                        <div class="name">
+                            {{ element.name }}
+                        </div>
                     </td>
                 </ng-container>
 
@@ -95,6 +95,16 @@
                     <th mat-header-cell *matHeaderCellDef> Statuses </th>
                     <td mat-cell *matCellDef="let element">
                         {{ element.statusesCount }}
+                    </td>
+                </ng-container>
+
+                <!-- Last login Column -->
+                <ng-container matColumnDef="lastLoginDate">
+                    <th mat-header-cell *matHeaderCellDef> Last login </th>
+                    <td mat-cell *matCellDef="let element">
+                        <span *ngIf="element.lastLoginDate">
+                            {{ element.lastLoginDate | date: 'short' }}
+                        </span>
                     </td>
                 </ng-container>
 
