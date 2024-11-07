@@ -1,16 +1,16 @@
 export class Relationship {
     public userId?: string
     
-    /// If signed in user is following particural user (`source -> target`).
+    /// If signed in user is following particular user (`source -> target`).
     public following = false;
     
-    /// If signed in user is followed by particural user (`source <- target`)
+    /// If signed in user is followed by particular user (`source <- target`)
     public followedBy = false;
     
     /// If signed in user requested follow (`source -> (request) -> target`).
     public requested = false;
     
-    /// If signed in user has been requested by particural user (`source <- (request) <- target`).
+    /// If signed in user has been requested by particular user (`source <- (request) <- target`).
     public requestedBy = false;
 
     /// If signed in user muted user's statuses.
