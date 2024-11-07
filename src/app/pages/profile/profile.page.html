@@ -17,7 +17,7 @@
             }
 
             <div class="padding-top-10">
-                <app-follow-buttons-section [user]="user" [relationship]="relationship" (relationChanged)="onMainRelationChanged()"></app-follow-buttons-section>
+                <app-follow-buttons-section [user]="user" [relationship]="relationship" (relationChanged)="onMainRelationChanged($event)"></app-follow-buttons-section>
             </div>
 
             @if (signedInUser?.id === user.id) {

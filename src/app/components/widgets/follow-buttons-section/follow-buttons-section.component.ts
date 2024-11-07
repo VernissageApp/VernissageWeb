@@ -137,7 +137,12 @@ export class FollowButtonsSectionComponent implements OnInit {
 
                 this.changeDetectorRef.detectChanges();
                 this.relationChanged.emit(this.relationship);
-                this.messageService.showSuccess('You are following the user.');
+                
+                if (this.relationship.following) {
+                    this.messageService.showSuccess('You are following the user.');
+                } else {
+                    this.messageService.showSuccess('The follow request has been sent.');
+                }
             } catch (error) {
                 console.error(error);
                 this.messageService.showServerError(error);
@@ -156,7 +161,7 @@ export class FollowButtonsSectionComponent implements OnInit {
 
                 this.changeDetectorRef.detectChanges();
                 this.relationChanged.emit(this.relationship);
-                this.messageService.showSuccess('You are unfollowed the user.');
+                this.messageService.showSuccess('You have unfollowed the user.');
             } catch (error) {
                 console.error(error);
                 this.messageService.showServerError(error);
@@ -175,7 +180,7 @@ export class FollowButtonsSectionComponent implements OnInit {
 
                 this.changeDetectorRef.detectChanges();
                 this.relationChanged.emit(this.relationship);
-                this.messageService.showSuccess('User is now following you.');
+                this.messageService.showSuccess('You have accepted the user\'s follow request.');
             } catch (error) {
                 console.error(error);
                 this.messageService.showServerError(error);
@@ -194,7 +199,7 @@ export class FollowButtonsSectionComponent implements OnInit {
 
                 this.changeDetectorRef.detectChanges();
                 this.relationChanged.emit(this.relationship);
-                this.messageService.showSuccess('User is now following you.');
+                this.messageService.showSuccess('You have declined the user\'s follow request');
             } catch (error) {
                 console.error(error);
                 this.messageService.showServerError(error);
@@ -213,7 +218,7 @@ export class FollowButtonsSectionComponent implements OnInit {
 
                 this.changeDetectorRef.detectChanges();
                 this.relationChanged.emit(this.relationship);
-                this.messageService.showSuccess('You are featured the user.');
+                this.messageService.showSuccess('You have featured the user.');
             } catch (error) {
                 console.error(error);
                 this.messageService.showServerError(error);
@@ -230,7 +235,7 @@ export class FollowButtonsSectionComponent implements OnInit {
 
                 this.changeDetectorRef.detectChanges();
                 this.relationChanged.emit(this.relationship);
-                this.messageService.showSuccess('You are undo featured the user.');
+                this.messageService.showSuccess('You have removed the user from featured.');
             } catch (error) {
                 console.error(error);
                 this.messageService.showServerError(error);

@@ -21,6 +21,7 @@ import { ProfileCodeDialog } from 'src/app/dialogs/profile-code-dialog/profile-c
 import { PreferencesService } from 'src/app/services/common/preferences.service';
 import { UserDisplayService } from 'src/app/services/common/user-display.service';
 import { ContextTimeline } from 'src/app/models/context-timeline';
+import { MessagesService } from 'src/app/services/common/messages.service';
 
 @Component({
     selector: 'app-profile',
@@ -30,6 +31,11 @@ import { ContextTimeline } from 'src/app/models/context-timeline';
 })
 export class ProfilePage extends ResponsiveComponent implements OnInit, OnDestroy {
     readonly ProfilePageTab = ProfilePageTab;
+    readonly relationshipRefreshTime = 2500;
+    readonly relationshipRefreshMaxCounter = 10;
+
+    relationshipRefreshInterval: any;
+    relationshipRefreshCounter = 0;
 
     isReady = false;
     allFollowingDisplayed = false;
@@ -62,6 +68,7 @@ export class ProfilePage extends ResponsiveComponent implements OnInit, OnDestro
         private usersService: UsersService,
         private relationshipsService: RelationshipsService,
         private loadingService: LoadingService,
+        private messagesService: MessagesService,
         private router: Router,
         private activatedRoute: ActivatedRoute,
         private titleService: Title,
@@ -159,9 +166,13 @@ export class ProfilePage extends ResponsiveComponent implements OnInit, OnDestro
         this.routeParamsSubscription?.unsubscribe();
         this.routeNavigationEndSubscription?.unsubscribe();
         this.routeNavigationStartSubscription?.unsubscribe()
+
+        if (this.relationshipRefreshInterval) {
+            clearInterval(this.relationshipRefreshInterval);
+        }
     }
 
-    async onMainRelationChanged(): Promise<void> {
+    async onMainRelationChanged(relationship: Relationship): Promise<void> {
         this.user = await this.usersService.profile(this.userName);
         if (this.profilePageTab === ProfilePageTab.Followers) {
             const internalFollowers = await this.usersService.followers(this.userName);
@@ -171,6 +182,29 @@ export class ProfilePage extends ResponsiveComponent implements OnInit, OnDestro
             }
 
             this.followers = internalFollowers;
+        }
+
+        // When we send follow request, we can refresh the relationship object automatically.
+        if (relationship.following === false && relationship.requested === true) {
+            if (this.relationshipRefreshInterval) {
+                clearInterval(this.relationshipRefreshInterval);
+            }
+
+            this.relationshipRefreshInterval = setInterval(async () => {
+                this.relationship = await this.downloadRelationship();
+                this.relationshipRefreshCounter = this.relationshipRefreshCounter  + 1;
+
+                if (this.relationship?.following === true) {
+                    this.messagesService.showSuccess('Your follow request has been accepted.');
+                }
+
+                // When we try 10 times or request is approved we should cancel.
+                if (this.relationship?.following === true || this.relationshipRefreshCounter >= this.relationshipRefreshMaxCounter) {
+                    if (this.relationshipRefreshInterval) {
+                        clearInterval(this.relationshipRefreshInterval);
+                    }
+                }
+            }, this.relationshipRefreshTime);
         }
     }
 
