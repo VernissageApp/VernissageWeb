@@ -1,7 +1,7 @@
 <div @fadeIn>
     <!-- Image -->
     <a [routerLink]="['/statuses', status.id]" [ariaLabel]="'Status added by: ' + mainStatus.user?.userName">
-        @if (mainStatus.sensitive) {
+        @if (mainStatus.sensitive && !alwaysShowNSFW) {
             <app-blurhash-image [horizontal]="false" [avatarVisible]="false" [status]="status"></app-blurhash-image>
         } @else {
             <app-image [horizontal]="false" [avatarVisible]="false" [status]="status"></app-image>

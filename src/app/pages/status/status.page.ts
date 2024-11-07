@@ -68,6 +68,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     hideLeftArrow = false;
     hideRightArrow = false;
     showAlternativeText = false;
+    alwaysShowNSFW = false;
     galleryId = 'statusPageLightbox';
     imageWidth = 32;
     imageHeight = 32;
@@ -108,6 +109,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
 
         this.urlToGallery = this.routingStateService.getPreviousUrl();
         this.showAlternativeText = this.preferencesService.showAlternativeText;
+        this.alwaysShowNSFW = this.preferencesService.alwaysShowNSFW;
 
         this.routeParamsSubscription = this.activatedRoute.params.subscribe(async params => {
             const statusId = params['id'] as string;

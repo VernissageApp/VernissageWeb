@@ -1,9 +1,7 @@
 <div class="blurhash-container">
-    @if (showBlurhash) {
-        <div class="text">{{ text }}</div>
-        <canvas class="blurhash" #canvas width="32" height="32"></canvas>
-    }
 
+    <div class="text">{{ text }}</div>
+    <canvas class="blurhash" #canvas width="32" height="32"></canvas>
     <img class="image-item" [ngClass]="{ 'img-vertical': !horizontal, 'img-horizontal': horizontal }" [src]="imageSrc" alt="Status image" />
 
     @if (canvasIsLoaded) {
@@ -20,7 +18,7 @@
         }
 
         @if (signedInUser && showFavourites) {
-            <div class="favourite" (click)="favouriteToogle(); $event.preventDefault(); $event.stopPropagation();" (keydown.enter)="favouriteToogle(); $event.preventDefault(); $event.stopPropagation();" tabindex="0">
+            <div class="favourite" (click)="favouriteToggle(); $event.preventDefault(); $event.stopPropagation();" (keydown.enter)="favouriteToggle(); $event.preventDefault(); $event.stopPropagation();" tabindex="0">
                 <mat-icon *ngIf="!getMainStatus()?.favourited" class="outline-symbol">grade</mat-icon>
                 <mat-icon *ngIf="getMainStatus()?.favourited" class="fill-symbol">grade</mat-icon>
             </div>

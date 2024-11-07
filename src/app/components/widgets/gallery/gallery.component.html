@@ -10,7 +10,7 @@
                         @for (galleryStatus of items; track galleryStatus.status.id) {
                             <div @fadeIn>
                                 <a [routerLink]="['/statuses', galleryStatus.status.id]" [ariaLabel]="'Status added by: ' + getMainStatus(galleryStatus.status).user?.userName">
-                                    @if (getMainStatus(galleryStatus.status).sensitive) {
+                                    @if (getMainStatus(galleryStatus.status).sensitive && !alwaysShowNSFW) {
                                         <app-blurhash-image [horizontal]="false" [avatarVisible]="avatarVisible && !hideAvatars" [status]="galleryStatus.status"></app-blurhash-image>
                                     } @else {
                                         <app-image [horizontal]="false" [avatarVisible]="avatarVisible && !hideAvatars" [status]="galleryStatus.status" [priority]="galleryStatus.priority"></app-image>

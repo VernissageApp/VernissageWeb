@@ -12,6 +12,7 @@ import { NavigationStart, Router } from '@angular/router';
 import { WindowService } from 'src/app/services/common/window.service';
 import { isPlatformBrowser } from '@angular/common';
 import { GalleryStatus } from 'src/app/models/gallery-status';
+import { PreferencesService } from 'src/app/services/common/preferences.service';
 
 @Component({
     selector: 'app-gallery',
@@ -30,6 +31,7 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
     gallery?: GalleryStatus[][];
     sizes?: number[];
     columns = 3;
+    alwaysShowNSFW = false;
     isDuringLoadingMode = false;
     avatarVisible = true;
     isBrowser = false;
@@ -45,6 +47,7 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
     constructor(
         @Inject(PLATFORM_ID) platformId: object,
         private loadingService: LoadingService,
+        private preferencesService: PreferencesService,
         private router: Router,
         private contextStatusesService: ContextStatusesService,
         private galleryBreakpointObserver: BreakpointObserver,
@@ -56,6 +59,7 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
 
     override ngOnInit(): void {
         this.startUrl = new URL(this.router.routerState.snapshot.url, this.windowService.getApplicationUrl());
+        this.alwaysShowNSFW = this.preferencesService.alwaysShowNSFW;
 
         this.galleryBreakpointSubscription = this.galleryBreakpointObserver.observe([Breakpoints.XSmall]).subscribe(result => {
             if (result.matches) {

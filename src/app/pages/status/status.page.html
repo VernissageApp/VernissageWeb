@@ -19,7 +19,7 @@
             <ng-container *ngIf="images">
                 <ng-container *ngIf="images.length === 1">
                     <div [ngClass]="{ 'photo-image-container-fixed': !isHandset }">
-                        @if (mainStatus.sensitive) {
+                        @if (mainStatus.sensitive && !alwaysShowNSFW) {
                             <div [@show]="!showSensitiveImage ? 'true' : 'false'" class="content-warning">
                                 <div class="text">{{ mainStatus.contentWarning ?? '' }}</div>
                                 <button mat-stroked-button (click)="showSensitiveImage = true">Show image</button>
