@@ -6,6 +6,7 @@ import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { Status } from 'src/app/models/status';
 import { StatusVisibility } from 'src/app/models/status-visibility';
+import { PreferencesService } from 'src/app/services/common/preferences.service';
 
 @Component({
     selector: 'app-statuses-search',
@@ -21,9 +22,11 @@ export class StatusesSearchComponent extends ResponsiveComponent implements OnIn
     mainStatus!: Status;
     rendered?: SafeHtml = '';
     isBrowser = false;
+    alwaysShowNSFW = false;
 
     constructor(
         @Inject(PLATFORM_ID) platformId: object,
+        private preferencesService: PreferencesService,
         breakpointObserver: BreakpointObserver
     ) {
         super(breakpointObserver);
@@ -31,6 +34,9 @@ export class StatusesSearchComponent extends ResponsiveComponent implements OnIn
     }
 
     override ngOnInit(): void {
+        super.ngOnInit();
+
+        this.alwaysShowNSFW = this.preferencesService.alwaysShowNSFW;
         this.mainStatus = this.getMainStatus(this.status);
         this.rendered = this.mainStatus?.noteHtml ?? '';
     }

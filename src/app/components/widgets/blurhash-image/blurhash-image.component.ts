@@ -44,7 +44,6 @@ export class BlurhashImageComponent implements AfterViewInit, OnInit, OnDestroy 
     @ViewChild('canvas', { static: false }) readonly canvas?: ElementRef<HTMLCanvasElement>;
     @ViewChild('img', { static: false }) readonly img?: ElementRef<HTMLImageElement>;
 
-    showBlurhash = true;
     showAltIcon = false;
     showFavourites = false;
     canvasIsLoaded = false;
@@ -70,7 +69,6 @@ export class BlurhashImageComponent implements AfterViewInit, OnInit, OnDestroy 
         this.user = this.getMainStatus()?.user;
         this.text = this.getMainStatus()?.contentWarning;
 
-        this.showBlurhash = !this.preferencesService.alwaysShowNSFW;
         this.showAltIcon = this.preferencesService.showAltIcon;
         this.showFavourites = this.preferencesService.showFavourites;
 
@@ -89,9 +87,7 @@ export class BlurhashImageComponent implements AfterViewInit, OnInit, OnDestroy 
     }
 
     ngAfterViewInit(): void {
-        if (this.showBlurhash) {
-            this.drawCanvas();
-        }
+        this.drawCanvas();
 
         this.mouseenter
             .pipe(switchMap(() => of(null).pipe(delay(500), takeUntil(this.mouseleave))))
@@ -110,7 +106,7 @@ export class BlurhashImageComponent implements AfterViewInit, OnInit, OnDestroy 
             });
     }
 
-    async favouriteToogle(): Promise<void> {
+    async favouriteToggle(): Promise<void> {
         const mainStatus = this.getMainStatus();
 
         if (mainStatus) {
