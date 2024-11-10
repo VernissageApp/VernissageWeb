@@ -20,7 +20,7 @@ export function app(): express.Express {
                     directives: {
                         baseUri: ["'self'"],
                         defaultSrc: ["'none'"],
-                        connectSrc: ["'self'"],
+                        connectSrc: ["'self'", "https://fonts.gstatic.com", cspImg],
                         formAction: ["'self'"],
                         objectSrc: ["'none'"],
                         frameAncestors: ["'none'"],
