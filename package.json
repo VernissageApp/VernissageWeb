@@ -31,6 +31,7 @@
     "blurhash": "^2.0.5",
     "exifreader": "^4.23.5",
     "express": "^4.21.0",
+    "helmet": "^8.0.0",
     "hammerjs": "^2.0.8",
     "ng-gallery": "^11.0.0",
     "ngx-captcha": "^13.0.0",
