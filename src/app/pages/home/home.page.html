@@ -1,16 +1,7 @@
-<div *ngIf="isReady" @fadeIn>
-
-    <div class="flex-row flex-align-center flex-space-between margin-bottom-10" [ngClass]="{ 'padding-30': !isHandset, 'padding-10': isHandset }">
-        <h1>Timeline</h1>
-
-        <section class="small-button-toggle">
-            <mat-button-toggle-group [(ngModel)]="timeline" (ngModelChange)="onTimelineChange()" [hideSingleSelectionIndicator]="true" aria-label="Timeline type">
-                <mat-button-toggle *ngIf="isLoggedIn" value="private"><mat-icon>person</mat-icon><span *ngIf="!isHandset"> Private</span></mat-button-toggle>
-                <mat-button-toggle value="local"><mat-icon>communities</mat-icon><span *ngIf="!isHandset"> Local</span></mat-button-toggle>
-                <mat-button-toggle value="global"><mat-icon>hub</mat-icon><span *ngIf="!isHandset"> All</span></mat-button-toggle>
-            </mat-button-toggle-group>
-        </section>
-    </div>
-
-    <app-gallery [statuses]="statuses" [isDetached]="isDetached"></app-gallery>
-</div>
+@if (isReady) {
+    @if(!user || !isLoggedIn) {
+        <app-home-signout></app-home-signout>
+    } @else {
+        <app-home-signin></app-home-signin>
+    }
+}

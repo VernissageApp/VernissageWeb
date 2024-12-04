@@ -36,6 +36,8 @@ import { HashtagsSearchComponent } from './widgets/hashtags-search/hashtags-sear
 import { StatusesSearchComponent } from './widgets/statuses-search/statuses-search.component';
 import { StatusPropertiesComponent } from './widgets/status-properties/status-properties.component';
 import { UserSelectorComponent } from './widgets/user-selector/user-selector.component';
+import { HomeSigninComponent } from './widgets/home-signin/home-signin.component';
+import { HomeSignoutComponent } from './widgets/home-signout/home-signout.component';
 
 @NgModule({
     declarations: [
@@ -65,7 +67,9 @@ import { UserSelectorComponent } from './widgets/user-selector/user-selector.com
         InstanceRulesComponent,
         HashtagsSearchComponent,
         StatusesSearchComponent,
-        StatusPropertiesComponent
+        StatusPropertiesComponent,
+        HomeSigninComponent,
+        HomeSignoutComponent
     ],
     exports: [
         BrowserModule,
@@ -100,6 +104,8 @@ import { UserSelectorComponent } from './widgets/user-selector/user-selector.com
         HashtagsSearchComponent,
         StatusesSearchComponent,
         StatusPropertiesComponent,
+        HomeSigninComponent,
+        HomeSignoutComponent,
         DirectivesModule
     ],
     imports: [
