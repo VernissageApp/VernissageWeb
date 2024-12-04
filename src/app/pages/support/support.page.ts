@@ -22,6 +22,7 @@ export class SupportPage extends ResponsiveComponent implements OnInit {
     isReady = false;
     instance?: Instance;
     patreonUrl?: string;
+    mastodonUrl?: string;
     totalCost = 0;
     usersSupport = 0;
     health?: Health;
@@ -44,6 +45,11 @@ export class SupportPage extends ResponsiveComponent implements OnInit {
         const internalPatreonUrl = this.settingsService.publicSettings?.patreonUrl ?? '';
         if (internalPatreonUrl.length > 0) {
             this.patreonUrl = internalPatreonUrl;
+        }
+
+        const internalMastodonUrl = this.settingsService.publicSettings?.mastodonUrl ?? '';
+        if (internalMastodonUrl.length > 0) {
+            this.mastodonUrl = internalMastodonUrl;
         }
 
         this.totalCost = this.settingsService.publicSettings?.totalCost ?? 0;
