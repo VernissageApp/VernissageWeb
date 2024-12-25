@@ -81,7 +81,9 @@
                         <div *ngIf="isRegistrationByInvitationsOpened()">
                             <mat-form-field appearance="outline">
                                 <mat-label>Invitation code</mat-label>
-                                <input matInput name="inviteToken" [(ngModel)]="user.inviteToken" #inviteToken="ngModel" type="text" aria-label="Invitation token" />
+                                <input matInput name="inviteToken" [(ngModel)]="user.inviteToken" #inviteToken="ngModel" type="text" aria-label="Invitation token" appMaxLength="11" [required]="!isRegistrationByApprovalOpened()" />
+                                <mat-error *ngIf="inviteToken.invalid && inviteToken.errors?.required">Enter invitation code.</mat-error>
+                                <mat-error *ngIf="inviteToken.invalid && inviteToken.errors?.appMaxLength">Invitation code is too long.</mat-error>
                             </mat-form-field>
                         </div>
 
@@ -90,7 +92,8 @@
                                 <mat-label>Reason</mat-label>
                                 <textarea matInput name="reason" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2"
                                           cdkAutosizeMaxRows="6"  #reasonInput="ngModel" [(ngModel)]="user.reason"
-                                          aria-label="Reason" appMaxLength="500"></textarea>
+                                          aria-label="Reason" appMaxLength="500" [required]="!isRegistrationByInvitationsOpened()"></textarea>
+                                <mat-error *ngIf="reasonInput.invalid && reasonInput.errors?.required">Enter reason.</mat-error>
                                 <mat-error *ngIf="reasonInput.invalid && reasonInput.errors?.appMaxLength">Reason is too long.</mat-error>
                             </mat-form-field>
                         </div>
@@ -100,7 +103,7 @@
                         <div class="flex-row register-actions">
                             <button type="submit" mat-flat-button (click)="registerMode = RegisterMode.Register" [disabled]="isSubmittingMode()" color="primary" aria-label="Register">Register</button>
                             <mat-spinner *ngIf="isSubmittingMode()" [diameter]="18" class="margin-left-10 margin-top-5"></mat-spinner>
-                            <div *ngIf="isErrorMode()" class="mat-small text-error margin-left-10">{{ errorMessage }}</div>
+                            <div *ngIf="isErrorMode()" class="mat-small text-error margin-left-10 margin-top-10">{{ errorMessage }}</div>
                         </div>
                     </mat-card-actions>
                 </mat-card>
