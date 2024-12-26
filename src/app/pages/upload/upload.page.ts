@@ -289,9 +289,21 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
                 uploadPhoto.showSoftware = true;
             }
 
-            const gpsLatitude = tags['GPSLatitude']?.description.toString();
-            const gpsLongitude = tags['GPSLongitude']?.description.toString();
+            let gpsLatitude = tags['GPSLatitude']?.description?.toString();
+            let gpsLongitude = tags['GPSLongitude']?.description?.toString();
+
+            const gpsLatitudeRef = tags['GPSLatitudeRef']?.value?.toString().toUpperCase();
+            const gpsLongitudeRef = tags['GPSLongitudeRef']?.value?.toString().toUpperCase();
+
             if (gpsLatitude && gpsLongitude) {
+                if (gpsLatitudeRef === 'S' && !gpsLatitude.startsWith('-')) {
+                    gpsLatitude = '-' + gpsLatitude;
+                }
+
+                if (gpsLongitudeRef === 'W' && !gpsLongitude.startsWith('-')) {
+                    gpsLongitude = '-' + gpsLongitude;
+                }
+
                 uploadPhoto.latitude = gpsLatitude;
                 uploadPhoto.longitude = gpsLongitude;
                 uploadPhoto.showGpsCoordination = false;

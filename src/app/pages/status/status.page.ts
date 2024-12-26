@@ -394,14 +394,28 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         }
 
         if (exif.latitude) {
-            return exif.latitude?.replace(',', '.');
+            let latitude = exif.latitude?.replace(',', '.').toUpperCase();
+
+            if (latitude.endsWith('S')) {
+                latitude = latitude.replace('S', '');
+
+                if (!latitude.startsWith('-')) {
+                    latitude = '-' + latitude;
+                }
+            }
+
+            if (latitude.endsWith('N')) {
+                latitude = latitude.replace('N', '');
+            }
+
+            return latitude;
         }
 
         return undefined;
     }
 
     getGpsLatitudeToDisplay(index: number): string {
-        return this.getGpsLatitude(index)?.slice(0, 6) ?? '';
+        return this.getGpsLatitude(index)?.slice(0, 10) ?? '';
     }
 
     getGpsLongitude(index: number): string | undefined {
@@ -410,15 +424,29 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
             return undefined;
         }
 
-        if (exif.latitude) {
-            return exif.longitude?.replace(',', '.');
+        if (exif.longitude) {
+            let longitude = exif.longitude?.replace(',', '.').toUpperCase();
+
+            if (longitude.endsWith('W')) {
+                longitude = longitude.replace('W', '');
+
+                if (!longitude.startsWith('-')) {
+                    longitude = '-' + longitude;
+                }
+            }
+
+            if (longitude.endsWith('E')) {
+                longitude = longitude.replace('E', '');
+            }
+
+            return longitude;
         }
 
         return undefined;
     }
 
     getGpsLongitudeToDisplay(index: number): string {
-        return this.getGpsLongitude(index)?.slice(0, 6) ?? '';
+        return this.getGpsLongitude(index)?.slice(0, 10) ?? '';
     }
 
     showHdrIcon(index: number): boolean {
