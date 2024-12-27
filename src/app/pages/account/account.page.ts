@@ -26,6 +26,9 @@ import { CreateAliasDialog } from 'src/app/dialogs/create-alias-dialog/create-al
 import { UserAlias } from 'src/app/models/user-alias';
 import { UserAliasesService } from 'src/app/services/http/user-aliases.service';
 import { ConfirmationDialog } from 'src/app/dialogs/confirmation-dialog/confirmation.dialog';
+import { ArchivesService } from 'src/app/services/http/archives.service';
+import { Archive } from 'src/app/models/archive';
+import { ArchiveStatus } from 'src/app/models/archive-status';
 
 @Component({
     selector: 'app-account',
@@ -34,6 +37,7 @@ import { ConfirmationDialog } from 'src/app/dialogs/confirmation-dialog/confirma
     animations: fadeInAnimation
 })
 export class AccountPage extends ResponsiveComponent implements OnInit {
+    readonly archiveStatus = ArchiveStatus;
 
     userName = '';
     verification = '';
@@ -41,8 +45,14 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
     isReady = false;
     twoFactorTokenEnabled = false;
 
-    readonly displayedColumns: string[] = ['alias', 'actions'];
+    readonly aliasDisplayedColumns: string[] = ['alias', 'actions'];
+
+    archivesDisplayedColumns: string[] = [];
+    private readonly archivesDisplayedColumnsFull: string[] = ['requestDate', 'startDate', 'endDate', 'status', 'download'];
+    private readonly archivesDisplayedColumnsMinimum: string[] = ['requestDate', 'download'];
+
     userAliases: UserAlias[] = [];
+    archives: Archive[] = [];
 
     selectedAvatarFile: any = null;
     avatarSrc?: string;
@@ -59,6 +69,7 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
         private userAliasesService: UserAliasesService,
         private messageService: MessagesService,
         private windowService: WindowService,
+        private archivesService: ArchivesService,
         private router: Router,
         public dialog: MatDialog,
         private clipboard: Clipboard,
@@ -79,6 +90,7 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
                 this.userName = userFromToken?.userName;
                 await this.loadUserData();
                 await this.loadUserAliases();
+                await this.loadArchives();
             } else {
                 this.messageService.showError('Cannot download user settings.');
             }
@@ -92,6 +104,22 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
             this.isReady = true;
             this.loadingService.hideLoader();
         }
+    }
+
+    protected override onHandsetPortrait(): void {
+        this.archivesDisplayedColumns = this.archivesDisplayedColumnsMinimum;
+    }
+
+    protected override onHandsetLandscape(): void {
+        this.archivesDisplayedColumns = this.archivesDisplayedColumnsMinimum;
+    }
+
+    protected override onTablet(): void {
+        this.archivesDisplayedColumns = this.archivesDisplayedColumnsMinimum;
+    }
+
+    protected override onBrowser(): void {
+        this.archivesDisplayedColumns = this.archivesDisplayedColumnsFull;
     }
 
     async onSubmit(): Promise<void> {
@@ -280,14 +308,55 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
             if (result?.confirmed) {
                 try {
                     await this.userAliasesService.delete(userAlias.id);
-                    this.messageService.showSuccess('Account alias has been deleted.');
                     await this.loadUserAliases();
+
+                    this.messageService.showSuccess('Account alias has been deleted.');
                 } catch (error) {
                     console.error(error);
                     this.messageService.showServerError(error);
                 }
             }
         });
+    }
+
+    async onRequestArchive(): Promise<void> {
+        try {
+            await this.archivesService.create();
+            await this.loadArchives();
+
+            this.messageService.showSuccess('Archive has been requested.');
+        } catch (error) {
+            console.error(error);
+            this.messageService.showServerError(error);
+        }
+    }
+
+    showRequestArchiveButton(): boolean {
+        if (this.archives?.length === 0) {
+            return true;
+        }
+
+        if (this.archives.some(x => x.status === ArchiveStatus.New || x.status === ArchiveStatus.Processing)) {
+            return false;
+        }
+
+        const readyArchives = this.archives.filter(x => x.status === ArchiveStatus.Ready);
+        if (readyArchives?.length > 0) {
+            const readyArchive = readyArchives[0];
+            if (readyArchive && readyArchive.requestDate) {
+                const requestDate = new Date(readyArchive.requestDate);
+                requestDate.setMonth(requestDate.getMonth() + 1);
+
+                console.log(requestDate);
+
+                const currentDate = new Date();
+                if (requestDate > currentDate) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     private async loadUserData(): Promise<void> {
@@ -298,5 +367,9 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
 
     private async loadUserAliases(): Promise<void> {
         this.userAliases = await this.userAliasesService.get();
+    }
+
+    private async loadArchives(): Promise<void> {
+        this.archives = await this.archivesService.get();
     }
 }
