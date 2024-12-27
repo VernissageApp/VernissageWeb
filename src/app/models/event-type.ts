@@ -154,5 +154,8 @@ export enum EventType {
     UserAliasesDelete = 'userAliasesDelete',
 
     ActorRead = 'actorRead',
-    HealthRead = 'healthRead'
+    HealthRead = 'healthRead',
+
+    ArchivesList = 'archivesList',
+    ArchivesCreate = 'archivesCreate'
 }
