@@ -308,7 +308,8 @@
                 <div>
                     You can request an archive containing your posts and uploaded media. The exported data will be provided
                     in the ActivityPub format, ensuring compatibility with any compliant software. Archives may be requested
-                    once every 30 days.
+                    once every 30 days. Archives are generated once a day, and you will be notified via email once your
+                    archive is ready.
                 </div>
                 <div class="text-right">
                     @if (showRequestArchiveButton()) {
@@ -379,7 +380,7 @@
                         <th mat-header-cell *matHeaderCellDef></th>
                         <td mat-cell *matCellDef="let element">
                             @if (element.status === archiveStatus.Ready) {
-                                <a href="#">Download your archive</a>
+                                <a [href]="element.fileName" target="_blank">Download your archive</a>
                             }
                         </td>
                     </ng-container>
