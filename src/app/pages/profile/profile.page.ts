@@ -27,7 +27,8 @@ import { MessagesService } from 'src/app/services/common/messages.service';
     selector: 'app-profile',
     templateUrl: './profile.page.html',
     styleUrls: ['./profile.page.scss'],
-    animations: fadeInAnimation
+    animations: fadeInAnimation,
+    standalone: false
 })
 export class ProfilePage extends ResponsiveComponent implements OnInit, OnDestroy {
     readonly ProfilePageTab = ProfilePageTab;

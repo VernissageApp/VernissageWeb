@@ -9,7 +9,8 @@ import { UserDisplayService } from 'src/app/services/common/user-display.service
 @Component({
     selector: 'app-users-card',
     templateUrl: './users-card.component.html',
-    styleUrls: ['./users-card.component.scss']
+    styleUrls: ['./users-card.component.scss'],
+    standalone: false
 })
 export class UsersCardComponent extends ResponsiveComponent {
     readonly avatarSize = AvatarSize;

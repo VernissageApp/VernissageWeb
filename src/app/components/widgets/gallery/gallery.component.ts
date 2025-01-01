@@ -18,7 +18,8 @@ import { PreferencesService } from 'src/app/services/common/preferences.service'
     selector: 'app-gallery',
     templateUrl: './gallery.component.html',
     styleUrls: ['./gallery.component.scss'],
-    animations: fadeInAnimation
+    animations: fadeInAnimation,
+    standalone: false
 })
 export class GalleryComponent extends ResponsiveComponent implements OnInit, OnDestroy, OnChanges {
     readonly amountOfPriorityImages = 8;

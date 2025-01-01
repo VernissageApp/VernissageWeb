@@ -12,7 +12,8 @@ import { AuthorizationService } from 'src/app/services/authorization/authorizati
     selector: 'app-confirm-email',
     templateUrl: './confirm-email.page.html',
     styleUrls: ['./confirm-email.page.scss'],
-    animations: fadeInAnimation
+    animations: fadeInAnimation,
+    standalone: false
 })
 export class ConfirmEmailPage implements OnInit {
 

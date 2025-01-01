@@ -13,7 +13,8 @@ import { InstanceBlockedDomainsService } from 'src/app/services/http/instance-bl
 @Component({
     selector: 'app-domain-blocks',
     templateUrl: './domain-blocks.component.html',
-    styleUrls: ['./domain-blocks.component.scss']
+    styleUrls: ['./domain-blocks.component.scss'],
+    standalone: false
 })
 export class DomainBlocksComponent extends ResponsiveComponent implements OnInit {
     domains?: PaginableResult<InstanceBlockedDomain>;

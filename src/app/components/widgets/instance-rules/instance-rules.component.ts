@@ -13,7 +13,8 @@ import { RulesService } from 'src/app/services/http/rules.service';
 @Component({
     selector: 'app-instance-rules',
     templateUrl: './instance-rules.component.html',
-    styleUrls: ['./instance-rules.component.scss']
+    styleUrls: ['./instance-rules.component.scss'],
+    standalone: false
 })
 export class InstanceRulesComponent extends ResponsiveComponent implements OnInit {
     rules?: PaginableResult<Rule>;

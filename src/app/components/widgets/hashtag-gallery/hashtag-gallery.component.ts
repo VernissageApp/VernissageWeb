@@ -10,7 +10,8 @@ import { LinkableResult } from 'src/app/models/linkable-result';
     selector: 'app-hashtag-gallery',
     templateUrl: './hashtag-gallery.component.html',
     styleUrls: ['./hashtag-gallery.component.scss'],
-    animations: fadeInAnimation
+    animations: fadeInAnimation,
+    standalone: false
 })
 export class HashtagGalleryComponent extends ResponsiveComponent {
     @Input() hashtags?: LinkableResult<Hashtag>;

@@ -36,7 +36,8 @@ import { FileSaverService } from 'ngx-filesaver';
     selector: 'app-account',
     templateUrl: './account.page.html',
     styleUrls: ['./account.page.scss'],
-    animations: fadeInAnimation
+    animations: fadeInAnimation,
+    standalone: false
 })
 export class AccountPage extends ResponsiveComponent implements OnInit {
     readonly archiveStatus = ArchiveStatus;

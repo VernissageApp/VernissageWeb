@@ -4,7 +4,8 @@ import { NgForm, NgModel } from '@angular/forms';
 @Component({
     selector: 'app-password',
     templateUrl: './password.component.html',
-    styleUrls: ['./password.component.scss']
+    styleUrls: ['./password.component.scss'],
+    standalone: false
 })
 export class PasswordComponent {
     isPasswordVisible = false;

@@ -6,7 +6,8 @@ import { PreferencesService } from 'src/app/services/common/preferences.service'
 @Component({
     selector: 'app-avatar',
     templateUrl: './avatar.component.html',
-    styleUrls: ['./avatar.component.scss']
+    styleUrls: ['./avatar.component.scss'],
+    standalone: false
 })
 export class AvatarComponent implements OnInit {
     readonly avatarSize = AvatarSize;

@@ -9,7 +9,8 @@ import { Category } from 'src/app/models/category';
     selector: 'app-category-gallery',
     templateUrl: './category-gallery.component.html',
     styleUrls: ['./category-gallery.component.scss'],
-    animations: fadeInAnimation
+    animations: fadeInAnimation,
+    standalone: false
 })
 export class CategoryGalleryComponent extends ResponsiveComponent {
     @Input() categories?: Category[] = [];

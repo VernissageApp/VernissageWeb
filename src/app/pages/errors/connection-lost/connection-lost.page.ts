@@ -5,7 +5,8 @@ import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
     selector: 'app-connection-lost',
     templateUrl: './connection-lost.page.html',
     styleUrls: ['./connection-lost.page.scss'],
-    animations: fadeInAnimation
+    animations: fadeInAnimation,
+    standalone: false
 })
 export class ConnectionLostPage {
 }

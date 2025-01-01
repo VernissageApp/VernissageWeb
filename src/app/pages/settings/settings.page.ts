@@ -15,7 +15,8 @@ import { UsersService } from 'src/app/services/http/users.service';
     selector: 'app-settings',
     templateUrl: './settings.page.html',
     styleUrls: ['./settings.page.scss'],
-    animations: fadeInAnimation
+    animations: fadeInAnimation,
+    standalone: false
 })
 export class SettingsPage extends ResponsiveComponent implements OnInit {
     isReady = false;

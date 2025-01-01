@@ -9,7 +9,8 @@ import { User } from 'src/app/models/user';
 @Component({
     selector: 'app-general-settings',
     templateUrl: './general-settings.component.html',
-    styleUrls: ['./general-settings.component.scss']
+    styleUrls: ['./general-settings.component.scss'],
+    standalone: false
 })
 export class GeneralSettingsComponent {
     @Input() settings!: Settings;

@@ -19,7 +19,8 @@ import { OnAttach, OnDetach } from 'src/app/directives/app-router-outlet.directi
     selector: 'app-favourites',
     templateUrl: './favourites.page.html',
     styleUrls: ['./favourites.page.scss'],
-    animations: fadeInAnimation
+    animations: fadeInAnimation,
+    standalone: false
 })
 export class FavouritesPage extends ResponsiveComponent implements OnInit, OnDestroy, OnAttach, OnDetach {
     statuses?: LinkableResult<Status>;

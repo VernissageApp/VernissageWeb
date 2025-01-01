@@ -3,7 +3,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-content-warning-dialog',
-    templateUrl: 'content-warning.dialog.html'
+    templateUrl: 'content-warning.dialog.html',
+    standalone: false
 })
 export class ContentWarningDialog {
     contentWarning = '';

@@ -24,7 +24,8 @@ import { SettingsService } from 'src/app/services/http/settings.service';
     selector: 'app-upload',
     templateUrl: './upload.page.html',
     styleUrls: ['./upload.page.scss'],
-    animations: fadeInAnimation
+    animations: fadeInAnimation,
+    standalone: false
 })
 export class UploadPage extends ResponsiveComponent implements OnInit {
     readonly StatusVisibility = StatusVisibility;

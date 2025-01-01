@@ -1,7 +1,8 @@
 import { AfterViewInit, Directive, ElementRef, EventEmitter, OnDestroy, Output } from '@angular/core';
 
 @Directive({
-    selector: '[appLazyLoad]'
+    selector: '[appLazyLoad]',
+    standalone: false
 })
 export class LazyLoadDirective implements AfterViewInit, OnDestroy {
     @Output() lazyLoad = new EventEmitter<boolean>();

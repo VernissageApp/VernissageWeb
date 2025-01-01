@@ -3,8 +3,9 @@ import { Router } from "@angular/router";
 import { WindowService } from "../services/common/window.service";
 
 @Directive({
-    selector: '[appHrefToRouterLink]'
-  })
+    selector: '[appHrefToRouterLink]',
+    standalone: false
+})
   export class HrefToRouterLinkDirective {
     constructor(private router: Router, private windowService: WindowService) {
     }

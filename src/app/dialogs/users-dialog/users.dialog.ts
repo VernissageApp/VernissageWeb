@@ -9,7 +9,8 @@ import { UsersDialogContext, UsersListType } from './users-dialog-context';
 @Component({
     selector: 'app-users-dialog',
     templateUrl: 'users.dialog.html',
-    styleUrls: ['./users.dialog.scss']
+    styleUrls: ['./users.dialog.scss'],
+    standalone: false
 })
 export class UsersDialog implements OnInit {
     users?: LinkableResult<User>

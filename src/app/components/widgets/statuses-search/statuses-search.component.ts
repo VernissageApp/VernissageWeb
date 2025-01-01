@@ -12,7 +12,8 @@ import { PreferencesService } from 'src/app/services/common/preferences.service'
     selector: 'app-statuses-search',
     templateUrl: './statuses-search.component.html',
     styleUrls: ['./statuses-search.component.scss'],
-    animations: fadeInAnimation
+    animations: fadeInAnimation,
+    standalone: false
 })
 export class StatusesSearchComponent extends ResponsiveComponent implements OnInit {
     readonly statusVisibility = StatusVisibility;

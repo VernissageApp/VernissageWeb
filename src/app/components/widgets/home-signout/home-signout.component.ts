@@ -18,7 +18,8 @@ import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
     selector: 'app-home-signout',
     templateUrl: './home-signout.component.html',
     styleUrls: ['./home-signout.component.scss'],
-    animations: fadeInAnimation
+    animations: fadeInAnimation,
+    standalone: false
 })
 export class HomeSignoutComponent extends ResponsiveComponent implements OnInit, OnDestroy, OnAttach, OnDetach {
     statuses?: LinkableResult<Status>;

@@ -7,7 +7,8 @@ import { RulesService } from 'src/app/services/http/rules.service';
 @Component({
     selector: 'app-instance-rule-dialog',
     templateUrl: 'instance-rule.dialog.html',
-    styleUrls: ['instance-rule.dialog.scss']
+    styleUrls: ['instance-rule.dialog.scss'],
+    standalone: false
 })
 export class InstanceRuleDialog {
     order = 0;

@@ -7,7 +7,8 @@ import { AccountService } from 'src/app/services/http/account.service';
 
 @Component({
     selector: 'app-change-email-dialog',
-    templateUrl: 'change-email.dialog.html'
+    templateUrl: 'change-email.dialog.html',
+    standalone: false
 })
 export class ChangeEmailDialog {
     email = '';

@@ -6,7 +6,8 @@ import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
     selector: 'app-access-forbidden',
     templateUrl: './access-forbidden.page.html',
     styleUrls: ['./access-forbidden.page.scss'],
-    animations: fadeInAnimation
+    animations: fadeInAnimation,
+    standalone: false
 })
 export class AccessForbiddenPage implements OnInit, OnDestroy {
     value = 100;

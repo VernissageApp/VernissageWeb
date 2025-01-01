@@ -40,7 +40,8 @@ import { DeviceDetectorService } from 'ngx-device-detector';
     selector: 'app-status',
     templateUrl: './status.page.html',
     styleUrls: ['./status.page.scss'],
-    animations: [fadeInAnimation, showOrHideAnimation]
+    animations: [fadeInAnimation, showOrHideAnimation],
+    standalone: false
 })
 export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy {
     readonly statusVisibility = StatusVisibility;

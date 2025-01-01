@@ -18,7 +18,8 @@ import { RelationshipsService } from 'src/app/services/http/relationships.servic
 @Component({
     selector: 'app-image',
     templateUrl: './image.component.html',
-    styleUrls: ['./image.component.scss']
+    styleUrls: ['./image.component.scss'],
+    standalone: false
 })
 export class ImageComponent implements OnInit, OnDestroy, AfterViewInit, OnChanges {
     readonly avatarSize = AvatarSize;

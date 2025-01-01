@@ -22,7 +22,8 @@ import { RandomGeneratorService } from 'src/app/services/common/random-generator
     selector: 'app-error-items',
     templateUrl: './error-items.page.html',
     styleUrls: ['./error-items.page.scss'],
-    animations: fadeInAnimation
+    animations: fadeInAnimation,
+    standalone: false
 })
 export class ErrorItemsPage extends ResponsiveComponent implements OnInit {
     readonly errorItemSource = ErrorItemSource;

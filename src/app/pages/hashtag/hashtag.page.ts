@@ -14,7 +14,8 @@ import { TimelineService } from "src/app/services/http/timeline.service";
     selector: 'app-hashtag',
     templateUrl: './hashtag.page.html',
     styleUrls: ['./hashtag.page.scss'],
-    animations: fadeInAnimation
+    animations: fadeInAnimation,
+    standalone: false
 })
 export class HashtagPage extends ResponsiveComponent implements OnInit, OnDestroy {
     statuses?: LinkableResult<Status>;

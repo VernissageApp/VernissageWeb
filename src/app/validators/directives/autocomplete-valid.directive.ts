@@ -4,10 +4,11 @@ import { NG_VALIDATORS, Validator, UntypedFormControl, ValidationErrors } from '
 @Directive({
     selector: '[appAutocompleteValid]',
     providers: [{
-        provide: NG_VALIDATORS,
-        useExisting: AutocompleteValidDirective,
-        multi: true
-    }]
+            provide: NG_VALIDATORS,
+            useExisting: AutocompleteValidDirective,
+            multi: true
+        }],
+    standalone: false
 })
 
 export class AutocompleteValidDirective implements Validator {

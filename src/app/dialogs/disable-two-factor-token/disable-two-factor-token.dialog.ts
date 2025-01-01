@@ -6,7 +6,8 @@ import { AccountService } from 'src/app/services/http/account.service';
 
 @Component({
     selector: 'app-disable-two-factor-token-dialog',
-    templateUrl: 'disable-two-factor-token.dialog.html'
+    templateUrl: 'disable-two-factor-token.dialog.html',
+    standalone: false
 })
 export class DisableTwoFactorTokenDialog {
     code = '';

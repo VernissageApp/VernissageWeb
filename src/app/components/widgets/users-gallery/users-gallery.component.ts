@@ -10,7 +10,8 @@ import { User } from 'src/app/models/user';
     selector: 'app-users-gallery',
     templateUrl: './users-gallery.component.html',
     styleUrls: ['./users-gallery.component.scss'],
-    animations: fadeInAnimation
+    animations: fadeInAnimation,
+    standalone: false
 })
 export class UsersGalleryComponent extends ResponsiveComponent {
     @Input() users?: LinkableResult<User>;

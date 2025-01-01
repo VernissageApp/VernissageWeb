@@ -9,7 +9,8 @@ import { Relationship } from 'src/app/models/relationship';
 @Component({
     selector: 'app-user-popover',
     templateUrl: './user-popover.component.html',
-    styleUrls: ['./user-popover.component.scss']
+    styleUrls: ['./user-popover.component.scss'],
+    standalone: false
 })
 export class UserPopoverComponent extends ResponsiveComponent {
     readonly avatarSize = AvatarSize;

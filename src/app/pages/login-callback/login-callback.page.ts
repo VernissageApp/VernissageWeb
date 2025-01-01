@@ -7,7 +7,8 @@ import { AuthorizationService } from 'src/app/services/authorization/authorizati
 @Component({
     selector: 'app-login-callback',
     templateUrl: './login-callback.page.html',
-    styleUrls: ['./login-callback.page.scss']
+    styleUrls: ['./login-callback.page.scss'],
+    standalone: false
 })
 export class LoginCallbackPage implements OnInit {
     public errorMessage?: string;

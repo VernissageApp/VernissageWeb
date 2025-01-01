@@ -7,7 +7,8 @@ import { InstanceBlockedDomainsService } from 'src/app/services/http/instance-bl
 @Component({
     selector: 'app-instance-blocked-domain-dialog',
     templateUrl: 'instance-blocked-domain.dialog.html',
-    styleUrls: ['instance-blocked-domain.dialog.scss']
+    styleUrls: ['instance-blocked-domain.dialog.scss'],
+    standalone: false
 })
 export class InstanceBlockedDomainDialog {
     domain = '';

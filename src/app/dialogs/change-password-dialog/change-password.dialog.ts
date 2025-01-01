@@ -6,7 +6,8 @@ import { AccountService } from 'src/app/services/http/account.service';
 
 @Component({
     selector: 'app-change-password-dialog',
-    templateUrl: 'change-password.dialog.html'
+    templateUrl: 'change-password.dialog.html',
+    standalone: false
 })
 export class ChangePasswordDialog {
     oldPassword = '';

@@ -6,7 +6,8 @@ import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
     selector: 'app-page-not-found',
     templateUrl: './page-not-found.page.html',
     styleUrls: ['./page-not-found.page.scss'],
-    animations: fadeInAnimation
+    animations: fadeInAnimation,
+    standalone: false
 })
 export class PageNotFoundPage implements OnInit, OnDestroy {
     value = 100;

@@ -10,7 +10,8 @@ import { NgForm } from '@angular/forms';
 @Component({
     selector: 'app-comment-reply',
     templateUrl: './comment-reply.component.html',
-    styleUrls: ['./comment-reply.component.scss']
+    styleUrls: ['./comment-reply.component.scss'],
+    standalone: false
 })
 export class CommentReplyComponent {
     readonly avatarSize = AvatarSize;

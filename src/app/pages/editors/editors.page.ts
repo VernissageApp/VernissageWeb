@@ -18,7 +18,8 @@ import { TimelineService } from "src/app/services/http/timeline.service";
     selector: 'app-editors',
     templateUrl: './editors.page.html',
     styleUrls: ['./editors.page.scss'],
-    animations: fadeInAnimation
+    animations: fadeInAnimation,
+    standalone: false
 })
 export class EditorsPage extends ResponsiveComponent implements OnInit, OnDestroy, OnAttach, OnDetach {
     statuses?: LinkableResult<Status>;
