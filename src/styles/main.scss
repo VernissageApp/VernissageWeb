@@ -11,7 +11,8 @@
 @import './notification-icons';
 @import './general';
 
-@include mat.core();
+@include mat.elevation-classes();
+@include mat.app-background();
 
 // =======================================================================
 // Enable typography with hierarchy.
@@ -237,7 +238,8 @@ $vernissage-dark-toolbar-theme: mat.m2-define-light-theme((
 // Enable light and dark themes.
 
 // Set core theme.
-@include mat.core-theme($vernissage-light-theme);
+@include mat.elevation-classes();
+@include mat.app-background();
 
 // Use theme for all components.
 @include mat.all-component-themes($vernissage-light-theme);
@@ -259,7 +261,8 @@ $vernissage-dark-toolbar-theme: mat.m2-define-light-theme((
   // https://github.com/angular/components/blob/main/guides/duplicate-theming-styles.md
 
   // Set dark core colors.
-  @include mat.core-color($vernissage-dark-theme);
+  @include mat.elevation-classes();
+  @include mat.app-background();
 
   // Use dark colors for all components.
   @include mat.all-component-colors($vernissage-dark-theme);
