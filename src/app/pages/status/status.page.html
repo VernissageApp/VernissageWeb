@@ -36,12 +36,12 @@
                         class="custom-gallery"
                         [ngClass]="{ 'custom-gallery-browser': showContextArrows() }"
                         [items]="images"
-                        [dots]="true"
-                        [thumb]="false"
+                        bullets
+                        bulletPosition="bottom"
+                        [bulletSize]="8"
                         [counter]="false"
                         [nav]="false"
                         [autoHeight]="galleryAutoheight"
-                        [dotsSize]="8"
                         (itemClick)="openInFullScreen()"
                         (indexChange)="onImageIndexChange($event)">
                     </gallery>
