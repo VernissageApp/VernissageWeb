@@ -42,10 +42,6 @@ export class CategoryGalleryItemComponent extends ResponsiveComponent implements
         this.statuses = await this.timelineService.category(this.category.name, undefined, undefined, undefined, this.numberOfVisibleStatuses, undefined);
     }
 
-    trackByFn(_: number, item: Status): string {
-        return item.id;
-    }
-
     getMainStatus(status: Status): Status {
         return status.reblog ?? status;
     }

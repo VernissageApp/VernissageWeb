@@ -2,19 +2,21 @@
     <app-user-card [user]="user"></app-user-card>
     <div class="images-container">
         <div class="flex-row">
-            <ng-container *ngFor="let status of statuses?.data; trackBy:trackByFn">
-                <a [routerLink]="['/statuses', status.id]" [ariaLabel]="'Status added by: ' + getMainStatus(status).user?.userName" (click)="onStatusClick()">
-                    @if (getMainStatus(status).sensitive && !alwaysShowNSFW) {
-                        <div @fadeIn class="blurhash">
-                            <app-blurhash-image [horizontal]="true" [status]="status" [avatarVisible]="false"></app-blurhash-image>
-                        </div>
-                    } @else {
-                        <div @fadeIn class="image">
-                            <app-image [horizontal]="true" [status]="status" [avatarVisible]="false"></app-image>
-                        </div>
-                    }
-                </a>
-            </ng-container>
+            @if (statuses && statuses.data) {
+                @for (status of statuses.data; track status.id) {
+                    <a [routerLink]="['/statuses', status.id]" [ariaLabel]="'Status added by: ' + getMainStatus(status).user?.userName" (click)="onStatusClick()">
+                        @if (getMainStatus(status).sensitive && !alwaysShowNSFW) {
+                            <div @fadeIn class="blurhash">
+                                <app-blurhash-image [horizontal]="true" [status]="status" [avatarVisible]="false"></app-blurhash-image>
+                            </div>
+                        } @else {
+                            <div @fadeIn class="image">
+                                <app-image [horizontal]="true" [status]="status" [avatarVisible]="false"></app-image>
+                            </div>
+                        }
+                    </a>
+                }
+            }
         </div>
     </div>
 </div>

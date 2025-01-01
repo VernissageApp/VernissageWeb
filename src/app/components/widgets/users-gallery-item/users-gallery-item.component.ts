@@ -44,10 +44,6 @@ export class UsersGalleryItemComponent extends ResponsiveComponent implements On
         }
     }
 
-    trackByFn(_: number, item: Status): string | undefined{
-        return item.id;
-    }
-
     getMainStatus(status: Status): Status {
         return status.reblog ?? status;
     }

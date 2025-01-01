@@ -42,10 +42,6 @@ export class HashtagGalleryItemComponent extends ResponsiveComponent implements 
         this.statuses = await this.timelineService.hashtag(this.hashtag.name, undefined, undefined, undefined, this.numberOfVisibleStatuses, undefined);
     }
 
-    trackByFn(_: number, item: Status): string | undefined{
-        return item.id;
-    }
-
     getMainStatus(status: Status): Status {
         return status.reblog ?? status;
     }
