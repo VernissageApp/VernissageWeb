@@ -1,4 +1,4 @@
-import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
+import { BrowserModule, provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { NgModule, ErrorHandler, Injector, NgZone, isDevMode, PLATFORM_ID, inject, provideAppInitializer } from '@angular/core';
 import { HTTP_INTERCEPTORS, provideHttpClient, withFetch, withInterceptorsFromDi } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -72,7 +72,7 @@ const httpInterceptor = (platformId: object, authorizationService: Authorization
             provide: ErrorHandler, useClass: GlobalErrorHandler, deps: [PLATFORM_ID, Injector, NgZone, AuthorizationService, PersistanceService, LoadingService, ErrorItemsService, RandomGeneratorService]
         },
         provideHttpClient(withFetch(), withInterceptorsFromDi()),
-        provideClientHydration()
+        provideClientHydration(withEventReplay())
     ]
 })
 export class AppModule {
