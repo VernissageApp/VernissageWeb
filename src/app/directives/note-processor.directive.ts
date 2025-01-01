@@ -2,7 +2,8 @@ import { Directive, Input, Inject, OnDestroy, ElementRef, NgZone, PLATFORM_ID } 
 import { isPlatformBrowser } from '@angular/common';
 
 @Directive({
-    selector: '[appNoteProcessor]'
+    selector: '[appNoteProcessor]',
+    standalone: false
 })
 export class NoteProcessorDirective implements OnDestroy {
 

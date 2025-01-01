@@ -18,7 +18,8 @@ import { RelationshipsService } from 'src/app/services/http/relationships.servic
 @Component({
     selector: 'app-blurhash-image',
     templateUrl: './blurhash-image.component.html',
-    styleUrls: ['./blurhash-image.component.scss']
+    styleUrls: ['./blurhash-image.component.scss'],
+    standalone: false
 })
 export class BlurhashImageComponent implements AfterViewInit, OnInit, OnDestroy {
     readonly avatarSize = AvatarSize;

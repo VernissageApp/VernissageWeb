@@ -7,7 +7,8 @@ import { ReportData } from './report-data';
 
 @Component({
     selector: 'app-report-dialog',
-    templateUrl: 'report.dialog.html'
+    templateUrl: 'report.dialog.html',
+    standalone: false
 })
 export class ReportDialog implements OnInit {
     comment = '';

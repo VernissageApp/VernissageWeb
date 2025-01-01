@@ -20,7 +20,8 @@ import { UsersService } from 'src/app/services/http/users.service';
     templateUrl: './follow-buttons-section.component.html',
     styleUrls: ['./follow-buttons-section.component.scss'],
     animations: fadeInAnimation,
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class FollowButtonsSectionComponent implements OnInit {
     @Input() user?: User;

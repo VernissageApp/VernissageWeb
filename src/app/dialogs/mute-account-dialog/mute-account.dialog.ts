@@ -4,7 +4,8 @@ import { UserMuteRequest } from 'src/app/models/user-mute-request';
 
 @Component({
     selector: 'app-mute-account-dialog',
-    templateUrl: 'mute-account.dialog.html'
+    templateUrl: 'mute-account.dialog.html',
+    standalone: false
 })
 export class MuteAccountDialog {
     muteStatuses = false;

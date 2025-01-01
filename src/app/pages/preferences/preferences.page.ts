@@ -11,7 +11,8 @@ import { CustomReuseStrategy } from 'src/app/common/custom-reuse-strategy';
     selector: 'app-preferences',
     templateUrl: './preferences.page.html',
     styleUrls: ['./preferences.page.scss'],
-    animations: fadeInAnimation
+    animations: fadeInAnimation,
+    standalone: false
 })
 export class PreferencesPage extends ResponsiveComponent implements OnInit {
     isReady = false;

@@ -32,9 +32,10 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatProgressBar } from '@angular/material/progress-bar';
 import { MatTabsModule } from '@angular/material/tabs';
 import { GalleryModule } from 'ng-gallery';
-import { QRCodeModule } from 'angularx-qrcode';
 import { SatPopoverModule } from '@ncstate/sat-popover';
 import { FileSaverModule } from 'ngx-filesaver';
+
+import { QRCodeComponent } from 'angularx-qrcode';
 
 @NgModule({
     imports: [
@@ -72,9 +73,9 @@ import { FileSaverModule } from 'ngx-filesaver';
         MatProgressBar,
         MatTabsModule,
         GalleryModule,
-        QRCodeModule,
         SatPopoverModule,
-        FileSaverModule
+        FileSaverModule,
+        QRCodeComponent
     ],
     exports: [
         MatToolbarModule,
@@ -111,9 +112,9 @@ import { FileSaverModule } from 'ngx-filesaver';
         MatProgressBar,
         MatTabsModule,
         GalleryModule,
-        QRCodeModule,
         SatPopoverModule,
-        FileSaverModule
+        FileSaverModule,
+        QRCodeComponent
     ]
 })
 export class AngularMaterialModule { }

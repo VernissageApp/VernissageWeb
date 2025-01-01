@@ -13,7 +13,8 @@ import { TimelineService } from 'src/app/services/http/timeline.service';
     selector: 'app-category-gallery-item',
     templateUrl: './category-gallery-item.component.html',
     styleUrls: ['./category-gallery-item.component.scss'],
-    animations: fadeInAnimation
+    animations: fadeInAnimation,
+    standalone: false
 })
 export class CategoryGalleryItemComponent extends ResponsiveComponent implements OnInit {
     private readonly numberOfVisibleStatuses = 10;

@@ -11,7 +11,8 @@ import { fadeInAnimation } from "../../animations/fade-in.animation";
     selector: 'app-forgot-password',
     templateUrl: './forgot-password.page.html',
     styleUrls: ['./forgot-password.page.scss'],
-    animations: fadeInAnimation
+    animations: fadeInAnimation,
+    standalone: false
 })
 export class ForgotPasswordPage implements OnInit {
 

@@ -1,5 +1,5 @@
-import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
-import { NgModule, APP_INITIALIZER, ErrorHandler, Injector, NgZone, isDevMode, PLATFORM_ID } from '@angular/core';
+import { BrowserModule, provideClientHydration, withEventReplay } from '@angular/platform-browser';
+import { NgModule, ErrorHandler, Injector, NgZone, isDevMode, PLATFORM_ID, inject, provideAppInitializer } from '@angular/core';
 import { HTTP_INTERCEPTORS, provideHttpClient, withFetch, withInterceptorsFromDi } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MAT_CHECKBOX_DEFAULT_OPTIONS, MatCheckboxDefaultOptions } from '@angular/material/checkbox';
@@ -46,12 +46,10 @@ const httpInterceptor = (platformId: object, authorizationService: Authorization
     providers: [
         { provide: RouteReuseStrategy, useClass: CustomReuseStrategy },
         { provide: MAT_CHECKBOX_DEFAULT_OPTIONS, useValue: { clickAction: 'check' } as MatCheckboxDefaultOptions },
-        {
-            provide: APP_INITIALIZER,
-            useFactory: appInitialization,
-            deps: [AuthorizationService, InstanceService, SettingsService],
-            multi: true
-        },
+        provideAppInitializer(() => {
+            const initializerFn = (appInitialization)(inject(AuthorizationService), inject(InstanceService), inject(SettingsService));
+            return initializerFn();
+        }),
         {
             provide: HTTP_INTERCEPTORS,
             useFactory: httpInterceptor,
@@ -74,7 +72,7 @@ const httpInterceptor = (platformId: object, authorizationService: Authorization
             provide: ErrorHandler, useClass: GlobalErrorHandler, deps: [PLATFORM_ID, Injector, NgZone, AuthorizationService, PersistanceService, LoadingService, ErrorItemsService, RandomGeneratorService]
         },
         provideHttpClient(withFetch(), withInterceptorsFromDi()),
-        provideClientHydration()
+        provideClientHydration(withEventReplay())
     ]
 })
 export class AppModule {

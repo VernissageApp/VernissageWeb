@@ -18,7 +18,8 @@ import { PreferencesService } from 'src/app/services/common/preferences.service'
 @Component({
     selector: 'app-header',
     templateUrl: './header.component.html',
-    styleUrls: ['./header.component.scss']
+    styleUrls: ['./header.component.scss'],
+    standalone: false
 })
 export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDestroy {
     readonly resolution = Resolution;

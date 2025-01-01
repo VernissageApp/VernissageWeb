@@ -23,7 +23,8 @@ import { ConfirmationDialog } from 'src/app/dialogs/confirmation-dialog/confirma
     selector: 'app-users',
     templateUrl: './users.page.html',
     styleUrls: ['./users.page.scss'],
-    animations: fadeInAnimation
+    animations: fadeInAnimation,
+    standalone: false
 })
 export class UsersPage extends ResponsiveComponent implements OnInit {
     readonly avatarSize = AvatarSize

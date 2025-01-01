@@ -20,7 +20,8 @@ import { TrendingService } from "src/app/services/http/trending.service";
     selector: 'app-trending',
     templateUrl: './trending.page.html',
     styleUrls: ['./trending.page.scss'],
-    animations: fadeInAnimation
+    animations: fadeInAnimation,
+    standalone: false
 })
 export class TrendingPage extends ResponsiveComponent implements OnInit, OnDestroy, OnAttach, OnDetach {
     readonly trendingPeriod = TrendingPeriod;

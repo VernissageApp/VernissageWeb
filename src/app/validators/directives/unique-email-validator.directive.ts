@@ -10,7 +10,8 @@ import { RegisterService } from 'src/app/services/http/register.service';
     selector: '[appUniqueEmail]',
     providers: [
         { provide: NG_ASYNC_VALIDATORS, useExisting: UniqueEmailValidatorDirective, multi: true }
-    ]
+    ],
+    standalone: false
 })
 export class UniqueEmailValidatorDirective implements AsyncValidator {
 

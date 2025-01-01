@@ -18,7 +18,8 @@ import { MatDialog } from '@angular/material/dialog';
     selector: 'app-notifications',
     templateUrl: './notifications.page.html',
     styleUrls: ['./notifications.page.scss'],
-    animations: fadeInAnimation
+    animations: fadeInAnimation,
+    standalone: false
 })
 export class NotificationsPage extends ResponsiveComponent implements OnInit {
     readonly notificationType = NotificationType;

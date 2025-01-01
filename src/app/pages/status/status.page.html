@@ -36,12 +36,12 @@
                         class="custom-gallery"
                         [ngClass]="{ 'custom-gallery-browser': showContextArrows() }"
                         [items]="images"
-                        [dots]="true"
-                        [thumb]="false"
+                        bullets
+                        bulletPosition="bottom"
+                        [bulletSize]="8"
                         [counter]="false"
                         [nav]="false"
                         [autoHeight]="galleryAutoheight"
-                        [dotsSize]="8"
                         (itemClick)="openInFullScreen()"
                         (indexChange)="onImageIndexChange($event)">
                     </gallery>
@@ -348,7 +348,7 @@
 
                                 @if (replyStatus?.id === comment.status.id) {
                                     <div class="text-right padding-top-5">
-                                        <app-comment-reply [signedInUser]="signedInUser" [status]="comment.status" [showCancel]="true" (cancel)="onReply(undefined)" (added)="onCommentAdded()"></app-comment-reply>
+                                        <app-comment-reply [signedInUser]="signedInUser" [status]="comment.status" [showCancel]="true" (clickCancel)="onReply(undefined)" (added)="onCommentAdded()"></app-comment-reply>
                                     </div>
                                 }
                             </div>

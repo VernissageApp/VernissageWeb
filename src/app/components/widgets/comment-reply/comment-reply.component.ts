@@ -10,7 +10,8 @@ import { NgForm } from '@angular/forms';
 @Component({
     selector: 'app-comment-reply',
     templateUrl: './comment-reply.component.html',
-    styleUrls: ['./comment-reply.component.scss']
+    styleUrls: ['./comment-reply.component.scss'],
+    standalone: false
 })
 export class CommentReplyComponent {
     readonly avatarSize = AvatarSize;
@@ -18,7 +19,7 @@ export class CommentReplyComponent {
     @Input() signedInUser?: User;
     @Input() status?: Status;
     @Input() showCancel = false;
-    @Output() cancel = new EventEmitter();
+    @Output() clickCancel = new EventEmitter();
     @Output() added = new EventEmitter();
 
     @ViewChild('commentForm') commentForm?: NgForm;
@@ -54,6 +55,6 @@ export class CommentReplyComponent {
     }
 
     onCancel(): void {
-        this.cancel.emit();
+        this.clickCancel.emit();
     }
 }

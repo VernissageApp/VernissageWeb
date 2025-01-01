@@ -6,7 +6,8 @@ import { UserDisplayService } from 'src/app/services/common/user-display.service
 @Component({
     selector: 'app-mini-user-card',
     templateUrl: './mini-user-card.component.html',
-    styleUrls: ['./mini-user-card.component.scss']
+    styleUrls: ['./mini-user-card.component.scss'],
+    standalone: false
 })
 export class MiniUserCardComponent {
     readonly avatarSize = AvatarSize;

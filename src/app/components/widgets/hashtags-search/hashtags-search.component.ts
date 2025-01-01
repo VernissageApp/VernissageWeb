@@ -12,7 +12,8 @@ import { TimelineService } from 'src/app/services/http/timeline.service';
     selector: 'app-hashtags-search',
     templateUrl: './hashtags-search.component.html',
     styleUrls: ['./hashtags-search.component.scss'],
-    animations: fadeInAnimation
+    animations: fadeInAnimation,
+    standalone: false
 })
 export class HashtagsSearchComponent extends ResponsiveComponent {
     private readonly numberOfVisibleStatuses = 10;

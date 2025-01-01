@@ -12,7 +12,8 @@ import { fadeInAnimation } from "../../animations/fade-in.animation";
     selector: 'app-reset-password',
     templateUrl: './reset-password.page.html',
     styleUrls: ['./reset-password.page.scss'],
-    animations: fadeInAnimation
+    animations: fadeInAnimation,
+    standalone: false
 })
 export class ResetPasswordPage implements OnInit, OnDestroy {
 

@@ -19,7 +19,8 @@ import { OnAttach, OnDetach } from 'src/app/directives/app-router-outlet.directi
     selector: 'app-bookmarks',
     templateUrl: './bookmarks.page.html',
     styleUrls: ['./bookmarks.page.scss'],
-    animations: fadeInAnimation
+    animations: fadeInAnimation,
+    standalone: false
 })
 export class BookmarksPage extends ResponsiveComponent implements OnInit, OnDestroy, OnAttach, OnDetach {
     statuses?: LinkableResult<Status>;

@@ -13,7 +13,8 @@ import { TimelineService } from 'src/app/services/http/timeline.service';
     selector: 'app-hashtag-gallery-item',
     templateUrl: './hashtag-gallery-item.component.html',
     styleUrls: ['./hashtag-gallery-item.component.scss'],
-    animations: fadeInAnimation
+    animations: fadeInAnimation,
+    standalone: false
 })
 export class HashtagGalleryItemComponent extends ResponsiveComponent implements OnInit {
     private readonly numberOfVisibleStatuses = 10;

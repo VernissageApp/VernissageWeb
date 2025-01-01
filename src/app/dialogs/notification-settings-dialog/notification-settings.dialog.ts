@@ -13,7 +13,8 @@ import { SettingsService } from 'src/app/services/http/settings.service';
 @Component({
     selector: 'app-notification-settings-dialog',
     templateUrl: 'notification-settings.dialog.html',
-    styleUrls: ['notification-settings.dialog.scss']
+    styleUrls: ['notification-settings.dialog.scss'],
+    standalone: false
 })
 export class NotificationSettingsDialog implements OnInit {
     notificationsEnabled = false;

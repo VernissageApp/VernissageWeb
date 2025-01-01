@@ -18,7 +18,8 @@ import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
     selector: 'app-home-signin',
     templateUrl: './home-signin.component.html',
     styleUrls: ['./home-signin.component.scss'],
-    animations: fadeInAnimation
+    animations: fadeInAnimation,
+    standalone: false
 })
 export class HomeSigninComponent extends ResponsiveComponent implements OnInit, OnDestroy, OnAttach, OnDetach {
     statuses?: LinkableResult<Status>;

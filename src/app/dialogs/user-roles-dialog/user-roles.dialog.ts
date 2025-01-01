@@ -7,7 +7,8 @@ import { UsersService } from 'src/app/services/http/users.service';
 
 @Component({
     selector: 'app-user-roles-dialog',
-    templateUrl: 'user-roles.dialog.html'
+    templateUrl: 'user-roles.dialog.html',
+    standalone: false
 })
 export class UserRolesDialog implements OnInit {
     isAdministrator = false;

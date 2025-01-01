@@ -4,10 +4,11 @@ import { NG_VALIDATORS, Validator, FormControl, ValidationErrors } from '@angula
 @Directive({
     selector: '[appMaxLength]',
     providers: [{
-        provide: NG_VALIDATORS,
-        useExisting: MaxLengthValidatorDirective,
-        multi: true
-    }]
+            provide: NG_VALIDATORS,
+            useExisting: MaxLengthValidatorDirective,
+            multi: true
+        }],
+    standalone: false
 })
 
 export class MaxLengthValidatorDirective implements Validator {

@@ -18,7 +18,8 @@ import { Rule } from 'src/app/models/rule';
     selector: 'app-register',
     templateUrl: './register.page.html',
     styleUrls: ['./register.page.scss'],
-    animations: fadeInAnimation
+    animations: fadeInAnimation,
+    standalone: false
 })
 export class RegisterPage implements OnInit {
     readonly RegisterMode = RegisterMode;

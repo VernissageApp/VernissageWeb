@@ -7,7 +7,8 @@ import { InstanceService } from "src/app/services/http/instance.service";
 @Component({
     selector: 'app-footer',
     templateUrl: './footer.component.html',
-    styleUrls: ['./footer.component.scss']
+    styleUrls: ['./footer.component.scss'],
+    standalone: false
 })
 export class FooterComponent extends ResponsiveComponent implements OnInit {
     currentDate = new Date();

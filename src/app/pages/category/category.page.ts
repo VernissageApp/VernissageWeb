@@ -14,7 +14,8 @@ import { TimelineService } from "src/app/services/http/timeline.service";
     selector: 'app-category',
     templateUrl: './category.page.html',
     styleUrls: ['./category.page.scss'],
-    animations: fadeInAnimation
+    animations: fadeInAnimation,
+    standalone: false
 })
 export class CategoryPage extends ResponsiveComponent implements OnInit, OnDestroy {
     statuses?: LinkableResult<Status>;

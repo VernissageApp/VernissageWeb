@@ -16,7 +16,8 @@ import { PublicSettings } from 'src/app/models/public-settings';
     selector: 'app-invitations',
     templateUrl: './invitations.page.html',
     styleUrls: ['./invitations.page.scss'],
-    animations: fadeInAnimation
+    animations: fadeInAnimation,
+    standalone: false
 })
 export class InvitationsPage extends ResponsiveComponent implements OnInit {
     isReady = false;

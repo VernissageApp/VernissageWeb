@@ -7,7 +7,8 @@ import { UserAliasesService } from 'src/app/services/http/user-aliases.service';
 @Component({
     selector: 'app-create-alias-dialog',
     templateUrl: 'create-alias.dialog.html',
-    styleUrls: ['create-alias.dialog.scss']
+    styleUrls: ['create-alias.dialog.scss'],
+    standalone: false
 })
 export class CreateAliasDialog {
     alias = '';

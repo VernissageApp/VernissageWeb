@@ -10,7 +10,8 @@ import { InstanceService } from 'src/app/services/http/instance.service';
     selector: 'app-terms',
     templateUrl: './terms.page.html',
     styleUrls: ['./terms.page.scss'],
-    animations: fadeInAnimation
+    animations: fadeInAnimation,
+    standalone: false
 })
 export class TermsPage extends ResponsiveComponent implements OnInit {
     isReady = false;

@@ -23,7 +23,8 @@ import { ContentWarningDialog } from 'src/app/dialogs/content-warning-dialog/con
     selector: 'app-reports',
     templateUrl: './reports.page.html',
     styleUrls: ['./reports.page.scss'],
-    animations: fadeInAnimation
+    animations: fadeInAnimation,
+    standalone: false
 })
 export class ReportsPage extends ResponsiveComponent implements OnInit {
     readonly avatarSize = AvatarSize;

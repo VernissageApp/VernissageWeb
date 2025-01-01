@@ -3,7 +3,8 @@ import { WindowService } from "../services/common/window.service";
 import { fromEvent, tap, throttleTime } from "rxjs";
 
 @Directive({
-    selector: '[appInfiniteScroll]'
+    selector: '[appInfiniteScroll]',
+    standalone: false
 })
 export class InfiniteScrollDirective implements OnInit {
     @Output() scrolled: EventEmitter<void> = new EventEmitter<void>();

@@ -7,7 +7,8 @@ import { PersistanceService } from 'src/app/services/persistance/persistance.ser
     selector: 'app-unexpected-error',
     templateUrl: './unexpected-error.page.html',
     styleUrls: ['./unexpected-error.page.scss'],
-    animations: fadeInAnimation
+    animations: fadeInAnimation,
+    standalone: false
 })
 export class UnexpectedErrorPage implements OnInit, OnDestroy {
     value = 100;

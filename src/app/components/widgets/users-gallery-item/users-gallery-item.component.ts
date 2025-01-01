@@ -13,7 +13,8 @@ import { UsersService } from 'src/app/services/http/users.service';
     selector: 'app-users-gallery-item',
     templateUrl: './users-gallery-item.component.html',
     styleUrls: ['./users-gallery-item.component.scss'],
-    animations: fadeInAnimation
+    animations: fadeInAnimation,
+    standalone: false
 })
 export class UsersGalleryItemComponent extends ResponsiveComponent implements OnInit {
     private readonly numberOfVisibleStatuses = 10;

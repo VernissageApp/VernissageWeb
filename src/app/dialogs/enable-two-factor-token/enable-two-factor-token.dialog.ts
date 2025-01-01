@@ -8,7 +8,8 @@ import { AccountService } from 'src/app/services/http/account.service';
 @Component({
     selector: 'app-enable-two-factor-token-dialog',
     templateUrl: 'enable-two-factor-token.dialog.html',
-    styleUrls: ['enable-two-factor-token.dialog.scss']
+    styleUrls: ['enable-two-factor-token.dialog.scss'],
+    standalone: false
 })
 export class EnableTwoFactorTokenDialog implements OnInit {
     twoFactorToken?: TwoFactorToken;

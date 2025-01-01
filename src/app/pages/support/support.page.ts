@@ -14,7 +14,8 @@ import { environment } from 'src/environments/environment';
     selector: 'app-support',
     templateUrl: './support.page.html',
     styleUrls: ['./support.page.scss'],
-    animations: fadeInAnimation
+    animations: fadeInAnimation,
+    standalone: false
 })
 export class SupportPage extends ResponsiveComponent implements OnInit {
     readonly clientVersion = environment.version;

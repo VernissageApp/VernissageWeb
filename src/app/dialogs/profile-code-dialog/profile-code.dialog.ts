@@ -6,7 +6,8 @@ import { WindowService } from 'src/app/services/common/window.service';
 @Component({
     selector: 'app-profile-code-dialog',
     templateUrl: 'profile-code.dialog.html',
-    styleUrls: ['profile-code.dialog.scss']
+    styleUrls: ['profile-code.dialog.scss'],
+    standalone: false
 })
 export class ProfileCodeDialog {
     userName = '';

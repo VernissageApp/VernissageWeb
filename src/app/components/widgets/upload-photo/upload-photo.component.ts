@@ -20,7 +20,8 @@ import { SettingsService } from 'src/app/services/http/settings.service';
     selector: 'app-upload-photo',
     templateUrl: './upload-photo.component.html',
     styleUrls: ['./upload-photo.component.scss'],
-    animations: fadeInAnimation
+    animations: fadeInAnimation,
+    standalone: false
 })
 export class UploadPhotoComponent extends ResponsiveComponent implements OnInit {
     readonly defaultMaxHdrFileSize = 4194304;

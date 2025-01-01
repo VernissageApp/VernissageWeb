@@ -19,7 +19,8 @@ import { PushSubscriptionsService } from 'src/app/services/http/push-subscriptio
     selector: 'app-login',
     templateUrl: './login.page.html',
     styleUrls: ['./login.page.scss'],
-    animations: fadeInAnimation
+    animations: fadeInAnimation,
+    standalone: false
 })
 export class LoginPage implements OnInit {
     readonly LoginMode = LoginMode;

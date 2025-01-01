@@ -8,7 +8,8 @@ import { WindowService } from 'src/app/services/common/window.service';
     selector: 'app-privacy',
     templateUrl: './privacy.page.html',
     styleUrls: ['./privacy.page.scss'],
-    animations: fadeInAnimation
+    animations: fadeInAnimation,
+    standalone: false
 })
 export class PrivacyPage extends ResponsiveComponent implements OnInit {
     isReady = false;

@@ -10,8 +10,9 @@ import { UsersService } from 'src/app/services/http/users.service';
     selector: 'app-user-selector',
     templateUrl: './user-selector.component.html',
     styleUrls: ['./user-selector.component.scss'],
-    viewProviders: [ { provide: ControlContainer, useExisting: NgForm } ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class UserSelectorComponent implements OnInit, OnDestroy {
     @Input() name!: string;

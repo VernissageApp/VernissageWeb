@@ -7,7 +7,8 @@ import { AccountService } from 'src/app/services/http/account.service';
 
 @Component({
     selector: 'app-delete-account-dialog',
-    templateUrl: 'delete-account.dialog.html'
+    templateUrl: 'delete-account.dialog.html',
+    standalone: false
 })
 export class DeleteAccountDialog {
     email = '';

@@ -14,7 +14,8 @@ import { SettingsService } from "src/app/services/http/settings.service";
     selector: 'app-categories',
     templateUrl: './categories.page.html',
     styleUrls: ['./categories.page.scss'],
-    animations: fadeInAnimation
+    animations: fadeInAnimation,
+    standalone: false
 })
 export class CategoriesPage extends ResponsiveComponent implements OnInit, OnDestroy {
     isReady = false;
