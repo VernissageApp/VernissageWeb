@@ -19,7 +19,7 @@ export class CommentReplyComponent {
     @Input() signedInUser?: User;
     @Input() status?: Status;
     @Input() showCancel = false;
-    @Output() cancel = new EventEmitter();
+    @Output() clickCancel = new EventEmitter();
     @Output() added = new EventEmitter();
 
     @ViewChild('commentForm') commentForm?: NgForm;
@@ -55,6 +55,6 @@ export class CommentReplyComponent {
     }
 
     onCancel(): void {
-        this.cancel.emit();
+        this.clickCancel.emit();
     }
 }

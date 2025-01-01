@@ -36,7 +36,8 @@ module.exports = tseslint.config(
           suffixes: ["Page", "Component", "Dialog"]
         },
       ],
-      "@typescript-eslint/no-explicit-any": "off"
+      "@typescript-eslint/no-explicit-any": "off",
+      "@angular-eslint/prefer-standalone": "off"
     },
   },
   {
