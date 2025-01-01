@@ -29,6 +29,8 @@ import { ConfirmationDialog } from 'src/app/dialogs/confirmation-dialog/confirma
 import { ArchivesService } from 'src/app/services/http/archives.service';
 import { Archive } from 'src/app/models/archive';
 import { ArchiveStatus } from 'src/app/models/archive-status';
+import { ExportsService } from 'src/app/services/http/exports.service';
+import { FileSaverService } from 'ngx-filesaver';
 
 @Component({
     selector: 'app-account',
@@ -70,6 +72,8 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
         private messageService: MessagesService,
         private windowService: WindowService,
         private archivesService: ArchivesService,
+        private exportsService: ExportsService,
+        private fileSaverService: FileSaverService,
         private router: Router,
         public dialog: MatDialog,
         private clipboard: Clipboard,
@@ -329,6 +333,16 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
             console.error(error);
             this.messageService.showServerError(error);
         }
+    }
+
+    async onDownloadFollowing(): Promise<void> {
+        const blob = await this.exportsService.following();
+        this.fileSaverService.save(blob, 'following.csv');
+    }
+
+    async onDownloadBookmarks(): Promise<void> {
+        const blob = await this.exportsService.bookmarks();
+        this.fileSaverService.save(blob, 'bookmarks.csv');
     }
 
     showRequestArchiveButton(): boolean {

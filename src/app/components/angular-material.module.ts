@@ -34,7 +34,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { GalleryModule } from 'ng-gallery';
 import { QRCodeModule } from 'angularx-qrcode';
 import { SatPopoverModule } from '@ncstate/sat-popover';
-
+import { FileSaverModule } from 'ngx-filesaver';
 
 @NgModule({
     imports: [
@@ -73,7 +73,8 @@ import { SatPopoverModule } from '@ncstate/sat-popover';
         MatTabsModule,
         GalleryModule,
         QRCodeModule,
-        SatPopoverModule
+        SatPopoverModule,
+        FileSaverModule
     ],
     exports: [
         MatToolbarModule,
@@ -111,7 +112,8 @@ import { SatPopoverModule } from '@ncstate/sat-popover';
         MatTabsModule,
         GalleryModule,
         QRCodeModule,
-        SatPopoverModule
+        SatPopoverModule,
+        FileSaverModule
     ]
 })
 export class AngularMaterialModule { }
