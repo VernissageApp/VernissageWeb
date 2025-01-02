@@ -6,6 +6,7 @@ import { MAT_CHECKBOX_DEFAULT_OPTIONS, MatCheckboxDefaultOptions } from '@angula
 import { GlobalErrorHandler } from 'src/app/handlers/global-error-handler';
 import { InstanceService } from 'src/app/services/http/instance.service';
 import { appInitialization } from './app-initialization';
+import { HammerModule } from "@angular/platform-browser";
 
 import { RouteReuseStrategy } from '@angular/router';
 import { AppComponent } from './app.component';
@@ -15,7 +16,7 @@ import { PagesModule } from './pages/pages.module';
 import { APIInterceptor } from './interceptors/api.interceptor';
 import { LoadingService } from './services/common/loading.service';
 import { CustomReuseStrategy } from './common/custom-reuse-strategy';
-import { HammerModule } from "../../node_modules/@angular/platform-browser";
+
 import { MatIconRegistry } from '@angular/material/icon';
 import { SettingsService } from './services/http/settings.service';
 import { ServiceWorkerModule } from '@angular/service-worker';
