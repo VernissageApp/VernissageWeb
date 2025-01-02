@@ -47,6 +47,8 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     readonly statusVisibility = StatusVisibility;
     readonly avatarSize = AvatarSize;
 
+    private readonly oneSecond = 1000;
+
     @ViewChild('canvas', { static: false }) readonly canvas?: ElementRef<HTMLCanvasElement>;
 
     isReady = false;
@@ -60,6 +62,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     images?: GalleryItem[];
     imageIsLoaded = false;
     showSensitiveImage = false;
+    showSensitiveCanvas = false;
     firstCanvasInitialization = false;
     urlToGallery?: string;
 
@@ -76,6 +79,8 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     blurhash = 'LEHV6nWB2yk8pyo0adR*.7kCMdnj';
     isLoggedIn = false;
     rendered?: SafeHtml = '';
+
+    
 
     constructor(
         @Inject(DOCUMENT) private document: Document,
@@ -188,6 +193,14 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
                 this.hideRightArrow = true;
             }
         }
+    }
+
+    onShowSensitiveImageClick(): void {
+        this.showSensitiveImage = true;
+        
+        setTimeout(() => {
+            this.showSensitiveCanvas = false;
+        }, this.oneSecond);
     }
 
     protected override onHandsetPortrait(): void {
@@ -626,6 +639,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
 
         this.imageIsLoaded = false;
         this.showSensitiveImage = !this.mainStatus.sensitive;
+        this.showSensitiveCanvas = this.mainStatus.sensitive;
 
         this.images = this.mainStatus?.attachments?.map(attachment => {
             if (this.preferencesService.alwaysShowSdrPhoto) {
