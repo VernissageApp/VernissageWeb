@@ -20,8 +20,15 @@ mat-toolbar {
 }
 
 a.logo {
-    font-family: 'Fleur De Leah', cursive;
-    font-size:32px;
+    .image {
+        position: relative;
+        display: inline-block;
+        top: 6px;
+        width: 116px;
+        height: 44px;    
+        background-image: url('/assets/logo-light.svg');
+        background-size: 116px 44px;
+    }
 
     .beta {
         position: relative;
@@ -29,7 +36,7 @@ a.logo {
         width: 30px;
         height: 15px;
         left: -18px;
-        top: -12px;
+        top: -22px;
         background-image: url('/assets/beta-light.png');
         background-size: 30px 15px;
     }
@@ -37,6 +44,10 @@ a.logo {
 
 :host-context(.dark-theme) {
     a.logo {
+        .image {
+            background-image: url('/assets/logo-dark.svg');
+        }
+
         .beta {
             background-image: url('/assets/beta-dark.png');
         }

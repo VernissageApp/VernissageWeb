@@ -43,7 +43,10 @@
             }
         }
 
-        <a class="logo link" [routerLink]="['/']" (click)="clearReuseRoute()" tabindex="0">Vernissage <div class="beta"></div></a>
+        <a class="logo link" [routerLink]="['/']" (click)="clearReuseRoute()" tabindex="0">
+            <div class="image"></div>
+            <div class="beta"></div>
+        </a>
 
         @if (deviceResolution === resolution.handsetLandscape || deviceResolution === resolution.tablet || deviceResolution === resolution.browser) {
             @if (deviceResolution === resolution.handsetLandscape) {
