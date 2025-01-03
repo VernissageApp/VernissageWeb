@@ -162,7 +162,11 @@
                         <div class="flex-spacer"></div>
 
                         <!-- Reblog user card -->
-                        <app-mini-user-card *ngIf="status?.reblog" [user]="status?.user"></app-mini-user-card>
+                        @if (status?.reblog) {
+                            @if (status?.user; as userObject) {
+                                <app-mini-user-card *ngIf="status?.reblog" [user]="userObject"></app-mini-user-card>
+                            }
+                        }
                     </div>
 
                     <!-- User card -->

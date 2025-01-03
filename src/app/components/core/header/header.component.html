@@ -123,7 +123,7 @@
             }
 
             <button mat-icon-button color="primary" [routerLink]="['/notifications']" aria-label="Notifications">
-                <mat-icon *ngIf="notificationCounter" [matBadge]="notificationCounter" matBadgeColor="warn" matBadgeSize="small">notifications_none</mat-icon>
+                <mat-icon *ngIf="notificationCounter" [matBadge]="notificationCounter" matBadgeColor="warn" matBadgeSize="small" aria-hidden="false">notifications_none</mat-icon>
                 <mat-icon *ngIf="!notificationCounter">notifications_none</mat-icon>
             </button>
 

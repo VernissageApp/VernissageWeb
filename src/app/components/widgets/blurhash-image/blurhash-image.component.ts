@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Inject, Input, PLATFORM_ID, ViewChild, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Inject, PLATFORM_ID, OnInit, OnDestroy, input, computed, viewChild, signal } from '@angular/core';
 import { decode } from 'blurhash';
 import { AvatarSize } from '../avatar/avatar-size';
 import { User } from 'src/app/models/user';
@@ -22,34 +22,33 @@ import { RelationshipsService } from 'src/app/services/http/relationships.servic
     standalone: false
 })
 export class BlurhashImageComponent implements AfterViewInit, OnInit, OnDestroy {
-    readonly avatarSize = AvatarSize;
-    
-    @Input() horizontal = true;
-    @Input() status?: Status;
-    @Input() avatarVisible = true;
+    public avatarVisible = input(true);
+    public horizontal = input(true);
+    public status = input.required<Status>();
 
-    @ViewChild('popover') popover?: SatPopoverComponent;
-    mouseenter = new Subject<void>();
-    mouseleave = new Subject<void>();
-    routeNavigationStartSubscription?: Subscription;
+    protected readonly avatarSize = AvatarSize;
+    protected mainStatus = computed(() => { return this.status()?.reblog ?? this.status(); });
+    protected mouseenter = new Subject<void>();
+    protected mouseleave = new Subject<void>();
 
-    imageSrc?: string;
-    alt?: string;
-    blurhash?: string;
-    user?: User;
-    relationship?: Relationship;
-    text?: string;
-    signedInUser?: User;
-    isBrowser = false;
-    
-    @ViewChild('canvas', { static: false }) readonly canvas?: ElementRef<HTMLCanvasElement>;
-    @ViewChild('img', { static: false }) readonly img?: ElementRef<HTMLImageElement>;
+    protected imageSrc = signal('');
+    protected alt = signal<string | undefined>(undefined);
+    protected user = signal<User | undefined>(undefined);
+    protected relationship = signal<Relationship | undefined>(undefined);
+    protected contentWarning = signal<string | undefined>(undefined);
+    protected signedInUser = signal<User | undefined>(undefined);
+    protected showAltIcon = signal(false);
+    protected showFavourites = signal(false);
+    protected showAvatar = signal(false);
+    protected canvasIsLoaded = signal(false);
+    protected isFavourited = signal(false);
 
-    showAltIcon = false;
-    showFavourites = false;
-    canvasIsLoaded = false;
+    private popover = viewChild<SatPopoverComponent | undefined>('popover');
+    private canvas = viewChild<ElementRef<HTMLCanvasElement> | undefined>('canvas');
 
-    get showAvatar() { return this.preferencesService.showAvatars && this.avatarVisible; }
+    private routeNavigationStartSubscription?: Subscription;
+    private isBrowser = false;
+    private blurhash = '';
 
     constructor(
         @Inject(PLATFORM_ID) platformId: object,
@@ -57,33 +56,34 @@ export class BlurhashImageComponent implements AfterViewInit, OnInit, OnDestroy 
         private statusesService: StatusesService,
         private messageService: MessagesService,
         private relationshipsService: RelationshipsService,
-        private changeDetectorRef: ChangeDetectorRef,
         private router: Router,
         private authorizationService: AuthorizationService) {
             this.isBrowser = isPlatformBrowser(platformId);
     }
 
     ngOnInit(): void {
-        this.imageSrc = this.getMainAttachmentSrc();
-        this.alt = this.getMainAttachmentAlt();
+        this.imageSrc.set(this.getMainAttachmentSrc());
+        this.alt.set(this.getMainAttachmentAlt());
+        this.user.set(this.mainStatus().user);
+        this.isFavourited.set(this.mainStatus().favourited);
+        this.contentWarning.set(this.mainStatus().contentWarning);
+        this.signedInUser.set(this.authorizationService.getUser());
+
+        this.showAltIcon.set(this.preferencesService.showAltIcon);
+        this.showFavourites.set(this.preferencesService.showFavourites);
+        this.showAvatar.set(this.preferencesService.showAvatars && this.avatarVisible());
+
         this.blurhash = this.getMainAttachmentBlurhash();
-        this.user = this.getMainStatus()?.user;
-        this.text = this.getMainStatus()?.contentWarning;
-
-        this.showAltIcon = this.preferencesService.showAltIcon;
-        this.showFavourites = this.preferencesService.showFavourites;
-
-        this.signedInUser = this.authorizationService.getUser();
 
         this.routeNavigationStartSubscription = this.router.events
             .pipe(filter(event => event instanceof NavigationStart))  
             .subscribe(() => {
-                this.popover?.close();
+                this.popover()?.close();
             });
     }
 
     ngOnDestroy(): void {
-        this.popover?.close();
+        this.popover()?.close();
         this.routeNavigationStartSubscription?.unsubscribe();
     }
 
@@ -93,38 +93,36 @@ export class BlurhashImageComponent implements AfterViewInit, OnInit, OnDestroy 
         this.mouseenter
             .pipe(switchMap(() => of(null).pipe(delay(500), takeUntil(this.mouseleave))))
             .subscribe(async () => {
-                this.popover?.open();
+                this.popover()?.open();
 
-                if (this.user && this.user.id && this.signedInUser?.id !== this.user.id) {
-                    this.relationship = await this.relationshipsService.get(this.user.id);
+                const userInternal = this.user();
+                if (userInternal && userInternal.id && this.signedInUser()?.id !== userInternal.id) {
+                    const downloadedRelationship = await this.relationshipsService.get(userInternal.id);
+                    this.relationship.set(downloadedRelationship);
                 }
             });
   
         this.mouseleave
             .pipe(switchMap(() => of(null).pipe(delay(500), takeUntil(this.mouseenter))))
             .subscribe(() => {
-                this.popover?.close();
+                this.popover()?.close();
             });
     }
 
     async favouriteToggle(): Promise<void> {
-        const mainStatus = this.getMainStatus();
-
-        if (mainStatus) {
-            try {
-                if (mainStatus.favourited) {
-                    await this.statusesService.unfavourite(mainStatus.id);
-                    mainStatus.favourited = false;
-                    this.messageService.showSuccess('Status unfavourited.');
-                } else {
-                    await this.statusesService.favourite(mainStatus.id);
-                    mainStatus.favourited = true;
-                    this.messageService.showSuccess('Status favourited.');
-                }
-            } catch (error) {
-                console.error(error);
-                this.messageService.showServerError(error);
+        try {
+            if (this.isFavourited()) {
+                await this.statusesService.unfavourite(this.mainStatus().id);
+                this.isFavourited.set(false);
+                this.messageService.showSuccess('Your like has been undone..');
+            } else {
+                await this.statusesService.favourite(this.mainStatus().id);
+                this.isFavourited.set(true);
+                this.messageService.showSuccess('Status favourited.');
             }
+        } catch (error) {
+            console.error(error);
+            this.messageService.showServerError(error);
         }
     }
 
@@ -137,12 +135,13 @@ export class BlurhashImageComponent implements AfterViewInit, OnInit, OnDestroy 
             return;
         }
 
-        if (!this.canvas) {
+        const internalCanvas = this.canvas();
+        if (!internalCanvas) {
             return;
         }
 
         const pixels = decode(this.blurhash, 32, 32);
-        const ctx = this.canvas.nativeElement.getContext('2d');
+        const ctx = internalCanvas.nativeElement.getContext('2d');
 
         if (!ctx) {
             return;
@@ -156,52 +155,35 @@ export class BlurhashImageComponent implements AfterViewInit, OnInit, OnDestroy 
         imageData.data.set(pixels);
         ctx.putImageData(imageData!, 0, 0);
 
-        this.canvasIsLoaded = true;
-        this.changeDetectorRef.detectChanges();
-    }
-
-    protected getMainStatus(): Status | undefined {
-        return this.status?.reblog ?? this.status;
+        this.canvasIsLoaded.set(true);
     }
 
     private getMainAttachmentSrc(): string {
-        if (this.status) {
-            const mainAttachment = this.getMainAttachment(this.status);
-            return mainAttachment?.smallFile?.url ?? '';
-        }
-
-        return '';
+        const mainAttachment = this.getMainAttachment();
+        return mainAttachment?.smallFile?.url ?? '';
     }
 
     private getMainAttachmentAlt(): string | undefined {
-        if (this.status) {
-            const mainAttachment = this.getMainAttachment(this.status);
-            return mainAttachment?.description;
-        }
-
-        return undefined;
-    }
-
-    private getMainAttachment(status: Status): Attachment | null {
-        const mainStatus = status.reblog ?? status;
-
-        if (!mainStatus.attachments) {
-            return null;
-        }
-    
-        if (mainStatus.attachments?.length === 0) {
-            return null;
-        }
-    
-        return mainStatus.attachments[0]
+        const mainAttachment = this.getMainAttachment();
+        return mainAttachment?.description;
     }
 
     getMainAttachmentBlurhash(): string {
-        if (this.status) {
-            const mainAttachment = this.getMainAttachment(this.status);
-            return mainAttachment?.blurhash ?? 'LEHV6nWB2yk8pyo0adR*.7kCMdnj';
+        const mainAttachment = this.getMainAttachment();
+        return mainAttachment?.blurhash ?? 'LEHV6nWB2yk8pyo0adR*.7kCMdnj';
+    }
+
+    private getMainAttachment(): Attachment | null {
+        const internalMainStatus = this.mainStatus();
+
+        if (!internalMainStatus.attachments) {
+            return null;
+        }
+    
+        if (internalMainStatus.attachments?.length === 0) {
+            return null;
         }
 
-        return 'LEHV6nWB2yk8pyo0adR*.7kCMdnj';
+        return internalMainStatus.attachments[0];
     }
 }

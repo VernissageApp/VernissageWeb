@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, input, OnInit, signal } from '@angular/core';
 import { User } from 'src/app/models/user';
 import { AvatarSize } from './avatar-size';
 import { PreferencesService } from 'src/app/services/common/preferences.service';
@@ -10,17 +10,16 @@ import { PreferencesService } from 'src/app/services/common/preferences.service'
     standalone: false
 })
 export class AvatarComponent implements OnInit {
-    readonly avatarSize = AvatarSize;
+    public user = input.required<User | undefined>();
+    public size = input<AvatarSize>(AvatarSize.huge);
 
-    @Input() user?: User;
-    @Input() size: AvatarSize = AvatarSize.huge;
-
-    isCircle = false;
+    protected readonly avatarSize = AvatarSize;
+    protected isCircle = signal(false);
 
     constructor(private preferencesService: PreferencesService) {
     }
 
     ngOnInit(): void {
-        this.isCircle = this.preferencesService.isCircleAvatar;
+        this.isCircle.set(this.preferencesService.isCircleAvatar);
     }
 }

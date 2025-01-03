@@ -1,125 +1,127 @@
-<div *ngIf="isReady" @fadeIn [ngClass]="{ 'padding-30': !isHandset, 'padding-10': isHandset }">
+@if (isReady()) {
+    <div @fadeIn [ngClass]="{ 'padding-30': !isHandset, 'padding-10': isHandset }">
 
-    <div class="flex-row flex-align-center flex-space-between margin-bottom-10">
-        <h1>Support</h1>
-        @if (patreonUrl) {
-            <a class="patreon" mat-flat-button color="primary" [href]="patreonUrl" target="_blank"><img src="assets/patreon-white.svg" width="16" height="16" alt="patreon"> Support us</a>
+        <div class="flex-row flex-align-center flex-space-between margin-bottom-10">
+            <h1>Support</h1>
+            @if (patreonUrl(); as patreonUrlString) {
+                <a class="patreon" mat-flat-button color="primary" [href]="patreonUrlString" target="_blank"><img src="assets/patreon-white.svg" width="16" height="16" alt="patreon"> Support us</a>
+            }
+        </div>
+
+        <!-- Other information. -->
+        @if (instance(); as instanceObject) {
+            @if (instanceObject.longDescription) {
+                <div class="description margin-bottom-20" [innerHTML]="instanceObject.longDescription"></div>
+            }
+
+            <h3>
+                Instance information
+            </h3>
+
+            <dl>
+                @if (instanceObject.title) {
+                    <dt>Title:</dt>
+                    <dd>{{ instanceObject.title }}</dd>
+                }
+
+                @if (instanceObject.description) {
+                    <dt>Description:</dt>
+                    <dd>{{ instanceObject.description }}</dd>
+                }
+
+                @if (instanceObject.version) {
+                    <dt>API version:</dt>
+                    <dd>{{ instanceObject.version }}</dd>
+                }
+
+                <dt>WEB version:</dt>
+                <dd>{{ clientVersion }}</dd>
+
+                @if (instanceObject.languages) {
+                    <dt>Languages:</dt>
+                    <dd>{{ instanceObject.languages.join(',') }}</dd>
+                }
+
+                <dt>Max status characters:</dt>
+                <dd>{{ instanceObject.configuration?.statuses?.maxCharacters ?? 0 }}</dd>
+
+                <dt>Max media attachments:</dt>
+                <dd>{{ instanceObject.configuration?.statuses?.maxMediaAttachments ?? 0 }}</dd>
+
+                <dt>Image size limit:</dt>
+                <dd>{{ (instanceObject.configuration?.attachments?.imageSizeLimit ?? 0) / 1024 / 1024 }} MB</dd>
+
+                @if (instanceObject.email) {
+                    <dt>Email:</dt>
+                    <dd>{{ instanceObject.email }}</dd>
+                }
+
+                @if (instanceObject.contact) {
+                    <dt>Contact account:</dt>
+                    <dd><app-mini-user-card [user]="instanceObject.contact"></app-mini-user-card></dd>
+                }
+            </dl>
         }
+
+        @if(totalCost() > 0) {
+            <h3>
+                Financial support
+            </h3>
+            <dl>
+                <dt>Total cost:</dt>
+                <dd>${{ totalCost() }} / month</dd>
+
+                <dt>Community support:</dt>
+                <dd>${{ usersSupport() }} / month</dd>
+            </dl>
+        }
+
+        <h3>
+            Health status
+        </h3>
+        <dl>
+            <dt>Database:</dt>
+            @if (health(); as healthObject) {
+                <dd>{{ healthObject.isDatabaseHealthy ? 'ok' : 'error' }}</dd>
+            } @else {
+                <dd>checking...</dd>
+            }
+
+            <dt>Redis queues:</dt>
+            @if (health(); as healthObject) {
+                <dd>{{ healthObject.isQueueHealthy ? 'ok' : 'error' }}</dd>
+            } @else {
+                <dd>checking...</dd>
+            }
+
+            <dt>Storage:</dt>
+            @if (health(); as healthObject) {
+                <dd>{{ healthObject.isStorageHealthy ? 'ok' : 'error' }}</dd>
+            } @else {
+                <dd>checking...</dd>
+            }
+
+            <dt>Web push service:</dt>
+            @if (health(); as healthObject) {
+                <dd>{{ healthObject.isWebPushHealthy ? 'ok' : 'error' }}</dd>
+            } @else {
+                <dd>checking...</dd>
+            }
+        </dl>
+
+        <h3>
+            Helpful links
+        </h3>
+        <ul>
+            <li class="margin-bottom-10"><a [routerLink]="['/terms']">Terms of Service</a></li>
+            <li class="margin-bottom-10"><a [routerLink]="['/privacy']">Privacy policy</a></li>
+            <li class="margin-bottom-10"><a href="https://github.com/VernissageApp/VernissageServer" target="_blank">Source code</a></li>
+            <li class="margin-bottom-10"><a href="https://api.vernissage.photos/" target="_blank">API documentation</a></li>
+            <li class="margin-bottom-10"><a href="https://github.com/VernissageApp/VernissageServer/issues" target="_blank">Report a bug</a></li>
+
+            @if (mastodonUrl(); as mastodonUrlString) {
+                <li class="margin-bottom-10"><a [href]="mastodonUrlString" target="_blank">Mastodon</a></li>
+            }
+        </ul>
     </div>
-
-    <!-- Other informations. -->
-    @if (instance) {
-        @if (instance.longDescription) {
-            <div class="description margin-bottom-20" [innerHTML]="instance.longDescription"></div>
-        }
-
-        <h3>
-            Instance information
-        </h3>
-
-        <dl>
-            @if (instance.title) {
-                <dt>Title:</dt>
-                <dd>{{ instance.title }}</dd>
-            }
-
-            @if (instance.description) {
-                <dt>Description:</dt>
-                <dd>{{ instance.description }}</dd>
-            }
-
-            @if (instance.version) {
-                <dt>API version:</dt>
-                <dd>{{ instance.version }}</dd>
-            }
-
-            <dt>WEB version:</dt>
-            <dd>{{ clientVersion }}</dd>
-
-            @if (instance.languages) {
-                <dt>Languages:</dt>
-                <dd>{{ instance.languages.join(',') }}</dd>
-            }
-
-            <dt>Max status characters:</dt>
-            <dd>{{ instance.configuration?.statuses?.maxCharacters ?? 0 }}</dd>
-
-            <dt>Max media attachments:</dt>
-            <dd>{{ instance.configuration?.statuses?.maxMediaAttachments ?? 0 }}</dd>
-
-            <dt>Image size limit:</dt>
-            <dd>{{ (instance.configuration?.attachments?.imageSizeLimit ?? 0) / 1024 / 1024 }} MB</dd>
-
-            @if (instance.email) {
-                <dt>Email:</dt>
-                <dd>{{ instance.email }}</dd>
-            }
-
-            @if (instance.contact) {
-                <dt>Contact account:</dt>
-                <dd><app-mini-user-card [user]="instance.contact"></app-mini-user-card></dd>
-            }
-        </dl>
-    }
-
-    @if(totalCost > 0) {
-        <h3>
-            Financial support
-        </h3>
-        <dl>
-            <dt>Total cost:</dt>
-            <dd>${{ totalCost }} / month</dd>
-
-            <dt>Community support:</dt>
-            <dd>${{ usersSupport }} / month</dd>
-        </dl>
-    }
-
-    <h3>
-        Health status
-    </h3>
-    <dl>
-        <dt>Database:</dt>
-        @if (health) {
-            <dd>{{ health.isDatabaseHealthy ? 'ok' : 'error' }}</dd>
-        } @else {
-            <dd>checking...</dd>
-        }
-
-        <dt>Redis queues:</dt>
-        @if (health) {
-            <dd>{{ health.isQueueHealthy ? 'ok' : 'error' }}</dd>
-        } @else {
-            <dd>checking...</dd>
-        }
-
-        <dt>Storage:</dt>
-        @if (health) {
-            <dd>{{ health.isStorageHealthy ? 'ok' : 'error' }}</dd>
-        } @else {
-            <dd>checking...</dd>
-        }
-
-        <dt>Web push service:</dt>
-        @if (health) {
-            <dd>{{ health.isWebPushHealthy ? 'ok' : 'error' }}</dd>
-        } @else {
-            <dd>checking...</dd>
-        }
-    </dl>
-
-    <h3>
-        Helpful links
-    </h3>
-    <ul>
-        <li class="margin-bottom-10"><a [routerLink]="['/terms']">Terms of Service</a></li>
-        <li class="margin-bottom-10"><a [routerLink]="['/privacy']">Privacy policy</a></li>
-        <li class="margin-bottom-10"><a href="https://github.com/VernissageApp/VernissageServer" target="_blank">Source code</a></li>
-        <li class="margin-bottom-10"><a href="https://api.vernissage.photos/" target="_blank">API documentation</a></li>
-        <li class="margin-bottom-10"><a href="https://github.com/VernissageApp/VernissageServer/issues" target="_blank">Report a bug</a></li>
-
-        @if (mastodonUrl) {
-            <li class="margin-bottom-10"><a [href]="mastodonUrl" target="_blank">Mastodon</a></li>
-        }
-    </ul>
-</div>
+}

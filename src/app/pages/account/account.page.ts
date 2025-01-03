@@ -362,8 +362,6 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
                 const requestDate = new Date(readyArchive.requestDate);
                 requestDate.setMonth(requestDate.getMonth() + 1);
 
-                console.log(requestDate);
-
                 const currentDate = new Date();
                 if (requestDate > currentDate) {
                     return false;

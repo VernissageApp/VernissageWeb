@@ -27,10 +27,10 @@
         </div>
     </div>
 
-    @if (getRelationship(user)) {
+    @if (getRelationship(user); as relationshipObject) {
         <app-follow-buttons-section
             [user]="user"
-            [relationship]="getRelationship(user)"
+            [relationship]="relationshipObject"
             (relationChanged)="onRelationChanged($event)"
             [singleButton]="true">
         </app-follow-buttons-section>

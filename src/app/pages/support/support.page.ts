@@ -1,5 +1,5 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal, WritableSignal } from '@angular/core';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { Instance } from 'src/app/models/instance';
@@ -18,15 +18,16 @@ import { environment } from 'src/environments/environment';
     standalone: false
 })
 export class SupportPage extends ResponsiveComponent implements OnInit {
-    readonly clientVersion = environment.version;
+    protected readonly clientVersion = environment.version;
 
-    isReady = false;
-    instance?: Instance;
-    patreonUrl?: string;
-    mastodonUrl?: string;
-    totalCost = 0;
-    usersSupport = 0;
-    health?: Health;
+    protected instance: WritableSignal<Instance | undefined> = signal(undefined);
+    protected health: WritableSignal<Health | undefined> = signal(undefined);
+    protected patreonUrl: WritableSignal<string | undefined> = signal(undefined);
+    protected mastodonUrl: WritableSignal<string | undefined> = signal(undefined);
+
+    protected isReady = signal(false);
+    protected totalCost = signal(0);
+    protected usersSupport = signal(0);
 
     constructor(
         private instanceService: InstanceService,
@@ -41,30 +42,31 @@ export class SupportPage extends ResponsiveComponent implements OnInit {
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
 
-        this.instance = this.instanceService.instance;
+        this.instance.set(this.instanceService.instance);
 
         const internalPatreonUrl = this.settingsService.publicSettings?.patreonUrl ?? '';
         if (internalPatreonUrl.length > 0) {
-            this.patreonUrl = internalPatreonUrl;
+            this.patreonUrl.set(internalPatreonUrl);
         }
 
         const internalMastodonUrl = this.settingsService.publicSettings?.mastodonUrl ?? '';
         if (internalMastodonUrl.length > 0) {
-            this.mastodonUrl = internalMastodonUrl;
+            this.mastodonUrl.set(internalMastodonUrl);
         }
 
-        this.totalCost = this.settingsService.publicSettings?.totalCost ?? 0;
-        this.usersSupport = this.settingsService.publicSettings?.usersSupport ?? 0;
+        this.totalCost.set(this.settingsService.publicSettings?.totalCost ?? 0);
+        this.usersSupport.set(this.settingsService.publicSettings?.usersSupport ?? 0);
         this.loadHealthStatus();
 
-        this.isReady = true;
+        this.isReady.set(true);
     }
 
     private async loadHealthStatus(): Promise<void> {
         try {
-            this.health = await this.healthService.get();
+            const healthInternal = await this.healthService.get();
+            this.health.set(healthInternal);
         } catch {
-            this.health = new Health();
+            this.health.set(new Health());
             this.messageService.showError('Error during downloading system health status.');
         }
     }

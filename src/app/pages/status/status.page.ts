@@ -532,7 +532,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         try {
             if (this.mainStatus) {
                 this.mainStatus = await this.statusesService.unfavourite(this.mainStatus.id);
-                this.messageService.showSuccess('Status unfavorited.');
+                this.messageService.showSuccess('Your like has been undone.');
             }
         } catch (error) {
             console.error(error);

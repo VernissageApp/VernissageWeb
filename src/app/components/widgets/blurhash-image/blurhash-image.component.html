@@ -1,31 +1,37 @@
 <div class="blurhash-container">
 
-    <div class="text">{{ text }}</div>
+    <div class="content-warning">{{ contentWarning() }}</div>
     <canvas class="blurhash" #canvas width="32" height="32"></canvas>
-    <img class="image-item" [ngClass]="{ 'img-vertical': !horizontal, 'img-horizontal': horizontal }" [src]="imageSrc" alt="Status image" />
+    <img class="image-item" [ngClass]="{ 'img-vertical': !horizontal(), 'img-horizontal': horizontal() }" [src]="imageSrc()" alt="Status image" />
 
-    @if (canvasIsLoaded) {
-        @if(showAvatar && user) {
-            <div class="avatar" [satPopoverAnchor]="popover" (mouseenter)="mouseenter.next()" (mouseleave)="mouseleave.next()">
-                <app-mini-user-card [user]="user" [showUserName]="false" [whiteLink]="true" [size]="avatarSize.verysmall"></app-mini-user-card>
-            </div>
-
-            <sat-popover #popover [autoFocus]="false" verticalAlign="below">
-                <div class="popover" (mouseenter)="mouseenter.next()" (mouseleave)="mouseleave.next()">
-                    <app-user-popover [user]="user" [relationship]="relationship"></app-user-popover>
+    @if (canvasIsLoaded()) {
+        @if (showAvatar()) {
+            @if (user(); as userObject) {
+                <div class="avatar" [satPopoverAnchor]="popover" (mouseenter)="mouseenter.next()" (mouseleave)="mouseleave.next()">
+                    <app-mini-user-card [user]="userObject" [showUserName]="false" [whiteLink]="true" [size]="avatarSize.verysmall"></app-mini-user-card>
                 </div>
-            </sat-popover>
+
+                <sat-popover #popover [autoFocus]="false" verticalAlign="below">
+                    <div class="popover" (mouseenter)="mouseenter.next()" (mouseleave)="mouseleave.next()">
+                        <app-user-popover [user]="userObject" [relationship]="relationship()"></app-user-popover>
+                    </div>
+                </sat-popover>
+            }
         }
 
-        @if (signedInUser && showFavourites) {
+        @if(showAltIcon() && alt()) {
+            <div class="alt" [matTooltip]="alt()" matTooltipPosition="above">ALT</div>
+        }
+
+        @if (signedInUser() && showFavourites()) {
             <div class="favourite" (click)="favouriteToggle(); $event.preventDefault(); $event.stopPropagation();" (keydown.enter)="favouriteToggle(); $event.preventDefault(); $event.stopPropagation();" tabindex="0">
-                <mat-icon *ngIf="!getMainStatus()?.favourited" class="outline-symbol">grade</mat-icon>
-                <mat-icon *ngIf="getMainStatus()?.favourited" class="fill-symbol">grade</mat-icon>
+                @if (isFavourited()) {
+                    <mat-icon class="fill-symbol">grade</mat-icon>
+                }
+                @else {
+                    <mat-icon class="outline-symbol">grade</mat-icon>
+                }
             </div>
-        }
-
-        @if(showAltIcon && alt) {
-            <div class="alt" [matTooltip]="alt" matTooltipPosition="above">ALT</div>
         }
     }
 </div>

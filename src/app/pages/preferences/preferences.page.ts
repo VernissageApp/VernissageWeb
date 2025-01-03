@@ -1,6 +1,5 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, model, OnInit, Renderer2, signal } from '@angular/core';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
-import { EventType } from 'src/app/models/event-type';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { PreferencesService } from 'src/app/services/common/preferences.service';
@@ -15,20 +14,17 @@ import { CustomReuseStrategy } from 'src/app/common/custom-reuse-strategy';
     standalone: false
 })
 export class PreferencesPage extends ResponsiveComponent implements OnInit {
-    isReady = false;
-    preferences: string[] = [];
-    eventTypes = Object.values(EventType);
+    protected isReady = signal(false);
 
-    isLightTheme = true;
-    isCircleAvatar = true;
-    isSquareImages = true;
-
-    alwaysShowNSFW = false;
-    showAlternativeText = false;
-    showAvatars = false;
-    showFavourites = false;
-    showAltIcon = false;
-    alwaysShowSdrPhoto = false;
+    protected isLightTheme = model(true);
+    protected isCircleAvatar = model(true);
+    protected isSquareImages = model(true);
+    protected alwaysShowNSFW = model(false);
+    protected showAlternativeText = model(false);
+    protected showAvatars = model(false);
+    protected showFavourites = model(false);
+    protected showAltIcon = model(false);
+    protected alwaysShowSdrPhoto = model(false);
 
     constructor(
         private preferencesService: PreferencesService,
@@ -42,58 +38,58 @@ export class PreferencesPage extends ResponsiveComponent implements OnInit {
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
 
-        this.isLightTheme = this.preferencesService.isLightTheme;
-        this.isCircleAvatar = this.preferencesService.isCircleAvatar;
-        this.isSquareImages = this.preferencesService.isSquareImages;
-        this.alwaysShowNSFW = this.preferencesService.alwaysShowNSFW;
-        this.showAlternativeText = this.preferencesService.showAlternativeText;
-        this.showAvatars = this.preferencesService.showAvatars;
-        this.showFavourites = this.preferencesService.showFavourites;
-        this.showAltIcon = this.preferencesService.showAltIcon;
-        this.alwaysShowSdrPhoto = this.preferencesService.alwaysShowSdrPhoto;
+        this.isLightTheme.set(this.preferencesService.isLightTheme);
+        this.isCircleAvatar.set(this.preferencesService.isCircleAvatar);
+        this.isSquareImages.set(this.preferencesService.isSquareImages);
+        this.alwaysShowNSFW.set(this.preferencesService.alwaysShowNSFW);
+        this.showAlternativeText.set(this.preferencesService.showAlternativeText);
+        this.showAvatars.set(this.preferencesService.showAvatars);
+        this.showFavourites.set(this.preferencesService.showFavourites);
+        this.showAltIcon.set(this.preferencesService.showAltIcon);
+        this.alwaysShowSdrPhoto.set(this.preferencesService.alwaysShowSdrPhoto);
 
-        this.isReady = true;
+        this.isReady.set(true);
     }
 
     onThemeChange(): void {
-        this.preferencesService.isLightTheme = this.isLightTheme;
+        this.preferencesService.isLightTheme = this.isLightTheme();
         this.preferencesService.applyTheme(this.renderer);
     }
 
     onAvatarChange(): void {
-        this.preferencesService.isCircleAvatar = this.isCircleAvatar;
+        this.preferencesService.isCircleAvatar = this.isCircleAvatar();
     }
 
     onSquareImageChange(): void {
-        this.preferencesService.isSquareImages = this.isSquareImages;
+        this.preferencesService.isSquareImages = this.isSquareImages();
     }
 
     onAlwaysShowNSFWChange(): void {
         this.clearReuseStrategyState();
-        this.preferencesService.alwaysShowNSFW = this.alwaysShowNSFW;
+        this.preferencesService.alwaysShowNSFW = this.alwaysShowNSFW();
     }
 
     onShowAlternativeTextChange(): void {
-        this.preferencesService.showAlternativeText = this.showAlternativeText;
+        this.preferencesService.showAlternativeText = this.showAlternativeText();
     }
 
     onShowAvatarsChange(): void {
         this.clearReuseStrategyState();
-        this.preferencesService.showAvatars = this.showAvatars;
+        this.preferencesService.showAvatars = this.showAvatars();
     }
 
     onShowFavouritesChange(): void {
         this.clearReuseStrategyState();
-        this.preferencesService.showFavourites = this.showFavourites;
+        this.preferencesService.showFavourites = this.showFavourites();
     }
 
     onShowAltIconChange(): void {
         this.clearReuseStrategyState();
-        this.preferencesService.showAltIcon = this.showAltIcon;
+        this.preferencesService.showAltIcon = this.showAltIcon();
     }
 
     onAlwaysShowSdrPhotoChange(): void {
-        this.preferencesService.alwaysShowSdrPhoto = this.alwaysShowSdrPhoto;
+        this.preferencesService.alwaysShowSdrPhoto = this.alwaysShowSdrPhoto();
     }
 
     private clearReuseStrategyState(): void {

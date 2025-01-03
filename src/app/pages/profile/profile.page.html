@@ -16,9 +16,11 @@
                 </div>
             }
 
-            <div class="padding-top-10">
-                <app-follow-buttons-section [user]="user" [relationship]="relationship" (relationChanged)="onMainRelationChanged($event)"></app-follow-buttons-section>
-            </div>
+            @if (relationship) {
+                <div class="padding-top-10">
+                    <app-follow-buttons-section [user]="user" [relationship]="relationship" (relationChanged)="onMainRelationChanged($event)"></app-follow-buttons-section>
+                </div>
+            }
 
             @if (signedInUser?.id === user.id) {
                 <div class="flex-row flex-center gap-8">

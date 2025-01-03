@@ -1,101 +1,103 @@
-<div *ngIf="isReady && preferences" @fadeIn [ngClass]="{ 'padding-30': !isHandset, 'padding-10': isHandset }">
-    <div class="flex-row flex-space-around">
-        <div class="preferences-container width-100">
-            <section>
-                <h1>Preferences</h1>
-            </section>
+@if(isReady()) {
+    <div @fadeIn [ngClass]="{ 'padding-30': !isHandset, 'padding-10': isHandset }">
+        <div class="flex-row flex-space-around">
+            <div class="preferences-container width-100">
+                <section>
+                    <h1>Preferences</h1>
+                </section>
 
-            <mat-card *ngIf="preferences" class="preferences-card" appearance="outlined">
-                <mat-card-content>
-                    <h4>Theme</h4>
-                    <div class="margin-bottom-20">
-                        <mat-radio-group name="theme" [(ngModel)]="isLightTheme" (ngModelChange)="onThemeChange()" aria-label="Select theme">
-                            <div>
-                                <mat-radio-button [value]="true" [disableRipple]="true"> Light</mat-radio-button>
-                            </div>
-                            <div>
-                                <mat-radio-button [value]="false" [disableRipple]="true"> Dark</mat-radio-button>
-                            </div>
-                        </mat-radio-group>
-                    </div>
+                <mat-card class="preferences-card" appearance="outlined">
+                    <mat-card-content>
+                        <h4>Theme</h4>
+                        <div class="margin-bottom-20">
+                            <mat-radio-group name="theme" [(ngModel)]="isLightTheme" (ngModelChange)="onThemeChange()" aria-label="Select theme">
+                                <div>
+                                    <mat-radio-button [value]="true" [disableRipple]="true"> Light</mat-radio-button>
+                                </div>
+                                <div>
+                                    <mat-radio-button [value]="false" [disableRipple]="true"> Dark</mat-radio-button>
+                                </div>
+                            </mat-radio-group>
+                        </div>
 
-                    <mat-divider></mat-divider>
+                        <mat-divider></mat-divider>
 
-                    <div class="margin-top-20">
-                        <h4>Avatar</h4>
-                    </div>
+                        <div class="margin-top-20">
+                            <h4>Avatar</h4>
+                        </div>
 
-                    <div class="margin-bottom-20">
-                        <mat-radio-group name="avatar" [(ngModel)]="isCircleAvatar" (ngModelChange)="onAvatarChange()" aria-label="Select avatar">
-                            <div>
-                                <mat-radio-button [value]="true" [disableRipple]="true"> Circle</mat-radio-button>
-                            </div>
-                            <div>
-                                <mat-radio-button [value]="false" [disableRipple]="true"> Rounded rectangle</mat-radio-button>
-                            </div>
-                        </mat-radio-group>
-                    </div>
+                        <div class="margin-bottom-20">
+                            <mat-radio-group name="avatar" [(ngModel)]="isCircleAvatar" (ngModelChange)="onAvatarChange()" aria-label="Select avatar">
+                                <div>
+                                    <mat-radio-button [value]="true" [disableRipple]="true"> Circle</mat-radio-button>
+                                </div>
+                                <div>
+                                    <mat-radio-button [value]="false" [disableRipple]="true"> Rounded rectangle</mat-radio-button>
+                                </div>
+                            </mat-radio-group>
+                        </div>
 
-                    <mat-divider></mat-divider>
+                        <mat-divider></mat-divider>
 
-                    <div class="margin-top-20">
-                        <h4>User's profile gallery</h4>
-                    </div>
+                        <div class="margin-top-20">
+                            <h4>User's profile gallery</h4>
+                        </div>
 
-                    <div class="margin-bottom-20">
-                        <mat-radio-group name="square" [(ngModel)]="isSquareImages" (ngModelChange)="onSquareImageChange()" aria-label="Select image view">
-                            <div>
-                                <mat-radio-button [value]="true" [disableRipple]="true"> Square images</mat-radio-button>
-                            </div>
-                            <div>
-                                <mat-radio-button [value]="false" [disableRipple]="true"> Orginal ratio</mat-radio-button>
-                            </div>
-                        </mat-radio-group>
-                    </div>
+                        <div class="margin-bottom-20">
+                            <mat-radio-group name="square" [(ngModel)]="isSquareImages" (ngModelChange)="onSquareImageChange()" aria-label="Select image view">
+                                <div>
+                                    <mat-radio-button [value]="true" [disableRipple]="true"> Square images</mat-radio-button>
+                                </div>
+                                <div>
+                                    <mat-radio-button [value]="false" [disableRipple]="true"> Original ratio</mat-radio-button>
+                                </div>
+                            </mat-radio-group>
+                        </div>
 
-                    <mat-divider></mat-divider>
+                        <mat-divider></mat-divider>
 
-                    <div class="margin-top-20">
-                        <h4>Media settings</h4>
-                    </div>
+                        <div class="margin-top-20">
+                            <h4>Media settings</h4>
+                        </div>
 
-                    <div class="margin-bottom-20">
-                        <mat-slide-toggle color="warn" name="alwaysShowNSFW" [(ngModel)]="alwaysShowNSFW" (ngModelChange)="onAlwaysShowNSFWChange()">
-                            Always show NSFW <div class="text-muted fs-90">Force show all NSFW (sensitive) media without warnings.</div>
-                        </mat-slide-toggle>
-                    </div>
+                        <div class="margin-bottom-20">
+                            <mat-slide-toggle color="warn" name="alwaysShowNSFW" [(ngModel)]="alwaysShowNSFW" (ngModelChange)="onAlwaysShowNSFWChange()">
+                                Always show NSFW <div class="text-muted fs-90">Force show all NSFW (sensitive) media without warnings.</div>
+                            </mat-slide-toggle>
+                        </div>
 
-                    <div class="margin-bottom-20">
-                        <mat-slide-toggle color="warn" name="showAlternativeText" [(ngModel)]="showAlternativeText" (ngModelChange)="onShowAlternativeTextChange()">
-                            Show alternative text <div class="text-muted fs-90">Show alternative text if present on status details screen.</div>
-                        </mat-slide-toggle>
-                    </div>
+                        <div class="margin-bottom-20">
+                            <mat-slide-toggle color="warn" name="showAlternativeText" [(ngModel)]="showAlternativeText" (ngModelChange)="onShowAlternativeTextChange()">
+                                Show alternative text <div class="text-muted fs-90">Show alternative text if present on status details screen.</div>
+                            </mat-slide-toggle>
+                        </div>
 
-                    <div class="margin-bottom-20">
-                        <mat-slide-toggle color="warn" name="showAvatars" [(ngModel)]="showAvatars" (ngModelChange)="onShowAvatarsChange()">
-                            Show avatars <div class="text-muted fs-90">Avatars will be displayed on timelines.</div>
-                        </mat-slide-toggle>
-                    </div>
+                        <div class="margin-bottom-20">
+                            <mat-slide-toggle color="warn" name="showAvatars" [(ngModel)]="showAvatars" (ngModelChange)="onShowAvatarsChange()">
+                                Show avatars <div class="text-muted fs-90">Avatars will be displayed on timelines.</div>
+                            </mat-slide-toggle>
+                        </div>
 
-                    <div class="margin-bottom-20">
-                        <mat-slide-toggle color="warn" name="showFavourites" [(ngModel)]="showFavourites" (ngModelChange)="onShowFavouritesChange()">
-                            Show favourites <div class="text-muted fs-90">Favourite icon will be displayed on timelines.</div>
-                        </mat-slide-toggle>
-                    </div>
+                        <div class="margin-bottom-20">
+                            <mat-slide-toggle color="warn" name="showFavourites" [(ngModel)]="showFavourites" (ngModelChange)="onShowFavouritesChange()">
+                                Show favourites <div class="text-muted fs-90">Favourite icon will be displayed on timelines.</div>
+                            </mat-slide-toggle>
+                        </div>
 
-                    <div class="margin-bottom-20">
-                        <mat-slide-toggle color="warn" name="showAltIcon" [(ngModel)]="showAltIcon" (ngModelChange)="onShowAltIconChange()">
-                            Show ALT icon <div class="text-muted fs-90">ALT icon will be displayed on timelines.</div>
-                        </mat-slide-toggle>
-                    </div>
+                        <div class="margin-bottom-20">
+                            <mat-slide-toggle color="warn" name="showAltIcon" [(ngModel)]="showAltIcon" (ngModelChange)="onShowAltIconChange()">
+                                Show ALT icon <div class="text-muted fs-90">ALT icon will be displayed on timelines.</div>
+                            </mat-slide-toggle>
+                        </div>
 
-                    <div class="margin-bottom-20">
-                        <mat-slide-toggle color="warn" name="alwaysShowSdrPhoto" [(ngModel)]="alwaysShowSdrPhoto" (ngModelChange)="onAlwaysShowSdrPhotoChange()">
-                            Always display SDR photo <div class="text-muted fs-90">Instead of HDR version o photo always SDR version will be displayed.</div>
-                        </mat-slide-toggle>
-                    </div>
-                </mat-card-content>
-            </mat-card>
+                        <div class="margin-bottom-20">
+                            <mat-slide-toggle color="warn" name="alwaysShowSdrPhoto" [(ngModel)]="alwaysShowSdrPhoto" (ngModelChange)="onAlwaysShowSdrPhotoChange()">
+                                Always display SDR photo <div class="text-muted fs-90">Instead of HDR version o photo always SDR version will be displayed.</div>
+                            </mat-slide-toggle>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </div>
         </div>
     </div>
-</div>
+}

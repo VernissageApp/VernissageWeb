@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, ViewChild, OnInit, OnDestroy } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, OnDestroy, model, signal, viewChild } from '@angular/core';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { User } from 'src/app/models/user';
 import { Relationship } from 'src/app/models/relationship';
@@ -21,19 +21,17 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
     standalone: false
 })
 export class SearchPage extends ResponsiveComponent implements AfterViewInit, OnInit, OnDestroy {
-    search = '';
-    type = 'users'
+    private routeParamsSubscription?: Subscription;
+    private queryInput = viewChild<ElementRef<HTMLInputElement>>('queryInput');
 
-    selectedIndex = 0;
-    users: User[] = [];
-    hashtags: Hashtag[] = [];
-    statuses: Status[] = [];
+    protected search = model('');
+    protected selectedIndex = signal(0);
+    protected searchExecuted = signal(false);
 
-    usersRelationships: Relationship[] = [];
-    routeParamsSubscription?: Subscription;
-    searchExecuted = false;
-
-    @ViewChild('queryInput') queryInput?: ElementRef;
+    protected users = signal<User[]>([]);
+    protected hashtags = signal<Hashtag[]>([]);
+    protected statuses = signal<Status[]>([]);
+    protected usersRelationships = signal<Relationship[]>([]);
 
     constructor(
         private searchService: SearchService,
@@ -52,52 +50,53 @@ export class SearchPage extends ResponsiveComponent implements AfterViewInit, On
         this.routeParamsSubscription = this.activatedRoute.queryParams.subscribe(async params => {
             this.loadingService.showLoader();
 
-            this.type = params['type'];
-            this.search = params['query'];
+            const type = params['type'];
+            this.search.set(params['query']);
 
             if (!this.search) {
-                this.searchExecuted = false;
+                this.searchExecuted.set(false);
             }
 
-            if ((this.search?.trim().length ?? 0) === 0) {
-                this.usersRelationships = [];
-                this.users = [];
-                this.hashtags = [];
-                this.statuses = [];
+            if ((this.search()?.trim().length ?? 0) === 0) {
+                this.usersRelationships.set([]);
+                this.users.set([]);
+                this.hashtags.set([]);
+                this.statuses.set([]);
 
                 this.loadingService.hideLoader();
                 return;
             }
 
-            switch (this.type) {
+            switch (type) {
                 case 'users':
-                    this.selectedIndex = 0;
+                    this.selectedIndex.set(0);
                     break;
                 case 'hashtags':
-                    this.selectedIndex = 1;
+                    this.selectedIndex.set(1);
                     break;
                 case 'statuses':
-                    this.selectedIndex = 2;
+                    this.selectedIndex.set(2);
                     break;
             }
 
-            const searchResults = await this.searchService.search(this.search, this.type);
+            const searchResults = await this.searchService.search(this.search(), type);
 
             if (searchResults.users && searchResults.users.length !== 0) {                
-                this.usersRelationships = await this.relationshipsService.getAll(searchResults.users?.map(x => x.id ?? ''))
+                const relationships = await this.relationshipsService.getAll(searchResults.users?.map(x => x.id ?? ''));
+                this.usersRelationships.set(relationships);
             }
     
-            this.users = searchResults.users ?? [];
-            this.hashtags = searchResults.hashtags ?? [];
-            this.statuses = searchResults.statuses ?? [];
+            this.users.set(searchResults.users ?? []);
+            this.hashtags.set(searchResults.hashtags ?? []);
+            this.statuses.set(searchResults.statuses ?? []);
 
-            this.searchExecuted = true;
+            this.searchExecuted.set(true);
             this.loadingService.hideLoader();
         });
     }
 
     ngAfterViewInit(): void {
-        this.queryInput?.nativeElement.focus();
+        this.queryInput()?.nativeElement.focus();
     }
 
     override ngOnDestroy(): void {
@@ -111,7 +110,6 @@ export class SearchPage extends ResponsiveComponent implements AfterViewInit, On
     }
 
     onSelectedTabChange(event: MatTabChangeEvent): void {
-        console.log(event);
         let selectedType = '';
         switch (event.index) {
             case 0: 
@@ -125,20 +123,20 @@ export class SearchPage extends ResponsiveComponent implements AfterViewInit, On
                 break;
         }
 
-        this.router.navigate([], { relativeTo: this.activatedRoute, queryParams: { query: this.search, type: selectedType }, queryParamsHandling: 'merge' });
+        this.router.navigate([], { relativeTo: this.activatedRoute, queryParams: { query: this.search(), type: selectedType }, queryParamsHandling: 'merge' });
     }
 
     async onSubmit(): Promise<void> {
         const type = this.getSearchType();
-        this.router.navigate([], { relativeTo: this.activatedRoute, queryParams: { query: this.search, type: type }, queryParamsHandling: 'merge' });
+        this.router.navigate([], { relativeTo: this.activatedRoute, queryParams: { query: this.search(), type: type }, queryParamsHandling: 'merge' });
     }
 
     private getSearchType(): string {
-        if (this.search.startsWith('#')) {
+        if (this.search()?.startsWith('#')) {
             return 'hashtags';
         }
 
-        if (this.search.includes('@')) {
+        if (this.search()?.includes('@')) {
             return 'users';
         }
 
