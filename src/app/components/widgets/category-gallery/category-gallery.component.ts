@@ -1,6 +1,6 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { isPlatformBrowser } from '@angular/common';
-import { Component, Inject, Input, PLATFORM_ID } from '@angular/core';
+import { Component, Inject, input, PLATFORM_ID, signal } from '@angular/core';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { Category } from 'src/app/models/category';
@@ -13,18 +13,14 @@ import { Category } from 'src/app/models/category';
     standalone: false
 })
 export class CategoryGalleryComponent extends ResponsiveComponent {
-    @Input() categories?: Category[] = [];
-    isBrowser = false;
+    public categories = input.required<Category[]>();
+    protected isBrowser = signal(false);
 
     constructor(
         @Inject(PLATFORM_ID) platformId: object,
         breakpointObserver: BreakpointObserver
     ) {
         super(breakpointObserver);
-        this.isBrowser = isPlatformBrowser(platformId);
-    }
-
-    trackByCategoryFn(_: number, item: Category): string | undefined {
-        return item.id;
+        this.isBrowser.set(isPlatformBrowser(platformId));
     }
 }

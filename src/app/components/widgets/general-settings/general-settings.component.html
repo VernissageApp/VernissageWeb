@@ -5,7 +5,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>Web title</mat-label>
-            <input matInput name="webTitle" #webTitle="ngModel" [(ngModel)]="settings.webTitle"
+            <input matInput name="webTitle" #webTitle="ngModel" [(ngModel)]="settings().webTitle"
                 placeholder="Web title" aria-label="Web title" />
         </mat-form-field>
     </div>
@@ -13,7 +13,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>Web description</mat-label>
-            <input matInput name="webDescription" #webDescription="ngModel" [(ngModel)]="settings.webDescription"
+            <input matInput name="webDescription" #webDescription="ngModel" [(ngModel)]="settings().webDescription"
                 placeholder="Web description" aria-label="Web description" />
         </mat-form-field>
     </div>
@@ -22,7 +22,7 @@
         <mat-form-field appearance="outline">
             <mat-label>Web long description</mat-label>
             <textarea matInput name="webLongDescription" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4"
-                cdkAutosizeMaxRows="10" placeholder="Web long description" #webLongDescription="ngModel" [(ngModel)]="settings.webLongDescription"
+                cdkAutosizeMaxRows="10" placeholder="Web long description" #webLongDescription="ngModel" [(ngModel)]="settings().webLongDescription"
                 aria-label="Web long description"></textarea>
         </mat-form-field>
     </div>
@@ -30,7 +30,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>Web email</mat-label>
-            <input matInput name="webEmail" #webEmail="ngModel" [(ngModel)]="settings.webEmail"
+            <input matInput name="webEmail" #webEmail="ngModel" [(ngModel)]="settings().webEmail"
                 placeholder="Web email" aria-label="Web email" />
         </mat-form-field>
     </div>
@@ -38,7 +38,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>Web thumbnail url</mat-label>
-            <input matInput name="webThumbnail" #webThumbnail="ngModel" [(ngModel)]="settings.webThumbnail"
+            <input matInput name="webThumbnail" #webThumbnail="ngModel" [(ngModel)]="settings().webThumbnail"
                 placeholder="Web thumbnail ur" aria-label="Web thumbnail ur" />
         </mat-form-field>
     </div>
@@ -46,7 +46,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>Web languages</mat-label>
-            <input matInput name="webLanguages" #webLanguages="ngModel" [(ngModel)]="settings.webLanguages"
+            <input matInput name="webLanguages" #webLanguages="ngModel" [(ngModel)]="settings().webLanguages"
                 placeholder="Web languages" aria-label="Web languages" />
         </mat-form-field>
     </div>
@@ -62,7 +62,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>CORS orgins</mat-label>
-            <input matInput name="corsOrigin" #corsOrigin="ngModel" [(ngModel)]="settings.corsOrigin"
+            <input matInput name="corsOrigin" #corsOrigin="ngModel" [(ngModel)]="settings().corsOrigin"
                 placeholder="CORS orgins" aria-label="CORS orgins" />
         </mat-form-field>
     </div>
@@ -70,7 +70,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>Maximum number of invitations per user</mat-label>
-            <input matInput type="number" name="maximumNumberOfInvitations" #maximumNumberOfInvitations="ngModel" [(ngModel)]="settings.maximumNumberOfInvitations"
+            <input matInput type="number" name="maximumNumberOfInvitations" #maximumNumberOfInvitations="ngModel" [(ngModel)]="settings().maximumNumberOfInvitations"
                 placeholder="Maximum number of invitations" aria-label="Maximum number of invitations" />
         </mat-form-field>
     </div>
@@ -78,7 +78,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>Maximum number of characters in status</mat-label>
-            <input matInput type="number" name="maxCharacters" #maxCharacters="ngModel" [(ngModel)]="settings.maxCharacters"
+            <input matInput type="number" name="maxCharacters" #maxCharacters="ngModel" [(ngModel)]="settings().maxCharacters"
                 placeholder="Maximum number of characters in status" aria-label="Maximum number of characters in status" />
         </mat-form-field>
     </div>
@@ -86,7 +86,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>Maximum number of attachments</mat-label>
-            <input matInput type="number" name="maxMediaAttachments" #maxMediaAttachments="ngModel" [(ngModel)]="settings.maxMediaAttachments"
+            <input matInput type="number" name="maxMediaAttachments" #maxMediaAttachments="ngModel" [(ngModel)]="settings().maxMediaAttachments"
                 placeholder="Maximum number of attachments" aria-label="Maximum number of attachments" />
         </mat-form-field>
     </div>
@@ -94,7 +94,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>Maximum file size</mat-label>
-            <input matInput type="number" name="imageSizeLimit" #imageSizeLimit="ngModel" [(ngModel)]="settings.imageSizeLimit"
+            <input matInput type="number" name="imageSizeLimit" #imageSizeLimit="ngModel" [(ngModel)]="settings().imageSizeLimit"
                 placeholder="Maximum file size" aria-label="Maximum file size" />
         </mat-form-field>
     </div>
@@ -102,7 +102,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>Patreon url</mat-label>
-            <input matInput name="patreonUrl" #patreonUrl="ngModel" [(ngModel)]="settings.patreonUrl"
+            <input matInput name="patreonUrl" #patreonUrl="ngModel" [(ngModel)]="settings().patreonUrl"
                 placeholder="Patreon url" aria-label="Patreon url" />
         </mat-form-field>
     </div>
@@ -110,7 +110,7 @@
     <div class="mastodon-url">
         <mat-form-field appearance="outline">
             <mat-label>Mastodon url</mat-label>
-            <input matInput name="mastodonUrl" #mastodonUrl="ngModel" [(ngModel)]="settings.mastodonUrl"
+            <input matInput name="mastodonUrl" #mastodonUrl="ngModel" [(ngModel)]="settings().mastodonUrl"
                 placeholder="Mastodon url" aria-label="Mastodon url" />
             <mat-hint align="start"><span class="text-muted">If the instance has its official account on Mastodon, you can define its address here.
                 If the Vernissage instance address is also provided on Mastodon, there will be information
@@ -125,7 +125,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>Total cost</mat-label>
-            <input matInput type="number" name="totalCost" #totalCost="ngModel" [(ngModel)]="settings.totalCost"
+            <input matInput type="number" name="totalCost" #totalCost="ngModel" [(ngModel)]="settings().totalCost"
                 placeholder="Total cost" aria-label="Total cost" />
         </mat-form-field>
     </div>
@@ -133,7 +133,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>Users support</mat-label>
-            <input matInput type="number" name="usersSupport" #usersSupport="ngModel" [(ngModel)]="settings.usersSupport"
+            <input matInput type="number" name="usersSupport" #usersSupport="ngModel" [(ngModel)]="settings().usersSupport"
                 placeholder="Users support" aria-label="Users support" />
         </mat-form-field>
     </div>
@@ -143,32 +143,32 @@
 
     <div class="margin-bottom-20">
         <div>
-            <mat-checkbox name="showLocalTimelineForAnonymous" color="primary" [disableRipple]="true" [(ngModel)]="settings.showLocalTimelineForAnonymous">
+            <mat-checkbox name="showLocalTimelineForAnonymous" color="primary" [disableRipple]="true" [(ngModel)]="settings().showLocalTimelineForAnonymous">
                 Show local timeline for anonymous user
             </mat-checkbox>
         </div>
         <div>
-            <mat-checkbox name="showTrendingForAnonymous" color="primary" [disableRipple]="true" [(ngModel)]="settings.showTrendingForAnonymous">
+            <mat-checkbox name="showTrendingForAnonymous" color="primary" [disableRipple]="true" [(ngModel)]="settings().showTrendingForAnonymous">
                 Show trending for anonymous user
             </mat-checkbox>
         </div>
         <div>
-            <mat-checkbox name="showEditorsChoiceForAnonymous" color="primary" [disableRipple]="true" [(ngModel)]="settings.showEditorsChoiceForAnonymous">
+            <mat-checkbox name="showEditorsChoiceForAnonymous" color="primary" [disableRipple]="true" [(ngModel)]="settings().showEditorsChoiceForAnonymous">
                 Show editor's statuses choice for anonymous user
             </mat-checkbox>
         </div>
         <div>
-            <mat-checkbox name="showEditorsUsersChoiceForAnonymous" color="primary" [disableRipple]="true" [(ngModel)]="settings.showEditorsUsersChoiceForAnonymous">
+            <mat-checkbox name="showEditorsUsersChoiceForAnonymous" color="primary" [disableRipple]="true" [(ngModel)]="settings().showEditorsUsersChoiceForAnonymous">
                 Show editor's users choice for anonymous user
             </mat-checkbox>
         </div>
         <div>
-            <mat-checkbox name="showHashtagsForAnonymous" color="primary" [disableRipple]="true" [(ngModel)]="settings.showHashtagsForAnonymous">
+            <mat-checkbox name="showHashtagsForAnonymous" color="primary" [disableRipple]="true" [(ngModel)]="settings().showHashtagsForAnonymous">
                 Show hashtags for anonymous user
             </mat-checkbox>
         </div>
         <div>
-            <mat-checkbox name="showCategoriesForAnonymous" color="primary" [disableRipple]="true" [(ngModel)]="settings.showCategoriesForAnonymous">
+            <mat-checkbox name="showCategoriesForAnonymous" color="primary" [disableRipple]="true" [(ngModel)]="settings().showCategoriesForAnonymous">
                 Show categories for anonymous user
             </mat-checkbox>
         </div>
@@ -179,17 +179,17 @@
 
     <div class="margin-bottom-20">
         <div>
-            <mat-checkbox name="isRegistrationOpened" color="primary" [disableRipple]="true" [(ngModel)]="settings.isRegistrationOpened">
+            <mat-checkbox name="isRegistrationOpened" color="primary" [disableRipple]="true" [(ngModel)]="settings().isRegistrationOpened">
                 Is registration opened
             </mat-checkbox>
         </div>
         <div>
-            <mat-checkbox name="isRegistrationByApprovalOpened" color="primary" [disableRipple]="true" [(ngModel)]="settings.isRegistrationByApprovalOpened">
+            <mat-checkbox name="isRegistrationByApprovalOpened" color="primary" [disableRipple]="true" [(ngModel)]="settings().isRegistrationByApprovalOpened">
                 Is registration by approval opened
             </mat-checkbox>
         </div>
         <div>
-            <mat-checkbox name="isRegistrationByInvitationsOpened" color="primary" [disableRipple]="true" [(ngModel)]="settings.isRegistrationByInvitationsOpened">
+            <mat-checkbox name="isRegistrationByInvitationsOpened" color="primary" [disableRipple]="true" [(ngModel)]="settings().isRegistrationByInvitationsOpened">
                 Is registration by invitations opened
             </mat-checkbox>
         </div>
@@ -201,7 +201,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>Email hostname</mat-label>
-            <input matInput name="emailHostname" #emailHostname="ngModel" [(ngModel)]="settings.emailHostname"
+            <input matInput name="emailHostname" #emailHostname="ngModel" [(ngModel)]="settings().emailHostname"
                 placeholder="Email hostname" aria-label="Email hostname" />
         </mat-form-field>
     </div>
@@ -209,7 +209,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>Email port</mat-label>
-            <input matInput type="number" name="emailPort" #emailPort="ngModel" [(ngModel)]="settings.emailPort"
+            <input matInput type="number" name="emailPort" #emailPort="ngModel" [(ngModel)]="settings().emailPort"
                 placeholder="Email port" aria-label="Email port" />
         </mat-form-field>
     </div>
@@ -217,7 +217,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>Email username</mat-label>
-            <input matInput name="emailUserName" #emailUserName="ngModel" [(ngModel)]="settings.emailUserName"
+            <input matInput name="emailUserName" #emailUserName="ngModel" [(ngModel)]="settings().emailUserName"
                 placeholder="Email username" aria-label="Email username" />
         </mat-form-field>
     </div>
@@ -225,7 +225,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>Email password</mat-label>
-            <input matInput name="emailPassword" #emailPassword="ngModel" [(ngModel)]="settings.emailPassword"
+            <input matInput name="emailPassword" #emailPassword="ngModel" [(ngModel)]="settings().emailPassword"
                 placeholder="Email password" aria-label="Email password" />
         </mat-form-field>
     </div>
@@ -233,7 +233,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>Email from address</mat-label>
-            <input matInput name="emailFromAddress" #emailFromAddress="ngModel" [(ngModel)]="settings.emailFromAddress"
+            <input matInput name="emailFromAddress" #emailFromAddress="ngModel" [(ngModel)]="settings().emailFromAddress"
                 placeholder="Email from address" aria-label="Email from address" />
         </mat-form-field>
     </div>
@@ -241,7 +241,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>Email from name</mat-label>
-            <input matInput name="emailFromName" #emailFromName="ngModel" [(ngModel)]="settings.emailFromName"
+            <input matInput name="emailFromName" #emailFromName="ngModel" [(ngModel)]="settings().emailFromName"
                 placeholder="Email from name" aria-label="Email from name" />
         </mat-form-field>
     </div>
@@ -249,7 +249,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>Email secure method</mat-label>
-            <mat-select [(value)]="settings.emailSecureMethod">
+            <mat-select [(value)]="settings().emailSecureMethod">
                 <mat-option value="none">None</mat-option>
                 <mat-option value="ssl">SSL</mat-option>
                 <mat-option value="startTls">Start TLS</mat-option>
@@ -263,7 +263,7 @@
 
     <div class="margin-bottom-20">
         <div>
-            <mat-checkbox name="isOpenAIEnabled" color="primary" [disableRipple]="true" [(ngModel)]="settings.isOpenAIEnabled">
+            <mat-checkbox name="isOpenAIEnabled" color="primary" [disableRipple]="true" [(ngModel)]="settings().isOpenAIEnabled">
                 Is OpenAPI enabled
             </mat-checkbox>
         </div>
@@ -272,7 +272,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>OpenAI secure key</mat-label>
-            <input matInput name="openAPIKey" #openAPIKey="ngModel" [(ngModel)]="settings.openAIKey"
+            <input matInput name="openAPIKey" #openAPIKey="ngModel" [(ngModel)]="settings().openAIKey"
                 placeholder="OpenAI key" aria-label="OpenAI key" />
         </mat-form-field>
     </div>
@@ -280,7 +280,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>OpenAI model</mat-label>
-            <input matInput name="openAPIModel" #openAPIModel="ngModel" [(ngModel)]="settings.openAIModel"
+            <input matInput name="openAPIModel" #openAPIModel="ngModel" [(ngModel)]="settings().openAIModel"
                 placeholder="OpenAI model" aria-label="OpenAI model" />
         </mat-form-field>
     </div>
@@ -290,7 +290,7 @@
 
     <div class="margin-bottom-20">
         <div>
-            <mat-checkbox name="isWebPushEnabled" color="primary" [disableRipple]="true" [(ngModel)]="settings.isWebPushEnabled">
+            <mat-checkbox name="isWebPushEnabled" color="primary" [disableRipple]="true" [(ngModel)]="settings().isWebPushEnabled">
                 Are WebPush notifications enabled
             </mat-checkbox>
         </div>
@@ -299,7 +299,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>WebPush service endpoint</mat-label>
-            <input matInput name="webPushEndpoint" #openAPIKey="ngModel" [(ngModel)]="settings.webPushEndpoint"
+            <input matInput name="webPushEndpoint" #openAPIKey="ngModel" [(ngModel)]="settings().webPushEndpoint"
                 placeholder="WebPush service endpoint" aria-label="WebPush service endpoint" />
         </mat-form-field>
     </div>
@@ -307,7 +307,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>WebPush service secret key</mat-label>
-            <input matInput name="webPushSecretKey" #openAPIKey="ngModel" [(ngModel)]="settings.webPushSecretKey"
+            <input matInput name="webPushSecretKey" #openAPIKey="ngModel" [(ngModel)]="settings().webPushSecretKey"
                 placeholder="WebPush service secret key" aria-label="WebPush service secret key" />
         </mat-form-field>
     </div>
@@ -315,7 +315,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>WebPush Vapid subject</mat-label>
-            <input matInput name="webPushVapidSubject" #openAPIKey="ngModel" [(ngModel)]="settings.webPushVapidSubject"
+            <input matInput name="webPushVapidSubject" #openAPIKey="ngModel" [(ngModel)]="settings().webPushVapidSubject"
                 placeholder="WebPush Vapid subject" aria-label="WebPush Vapid subject" />
         </mat-form-field>
     </div>
@@ -323,7 +323,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>WebPush Vapid public key</mat-label>
-            <input matInput name="webPushVapidPublicKey" #openAPIKey="ngModel" [(ngModel)]="settings.webPushVapidPublicKey"
+            <input matInput name="webPushVapidPublicKey" #openAPIKey="ngModel" [(ngModel)]="settings().webPushVapidPublicKey"
                 placeholder="WebPush Vapid public key" aria-label="WebPush Vapid public key" />
         </mat-form-field>
     </div>
@@ -331,7 +331,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>WebPush Vapid private key</mat-label>
-            <input matInput name="webPushVapidPrivateKey" #openAPIKey="ngModel" [(ngModel)]="settings.webPushVapidPrivateKey"
+            <input matInput name="webPushVapidPrivateKey" #openAPIKey="ngModel" [(ngModel)]="settings().webPushVapidPrivateKey"
                 placeholder="WebPush Vapid priavte key" aria-label="WebPush Vapid priavte key" />
         </mat-form-field>
     </div>
@@ -341,7 +341,7 @@
     <div class="margin-bottom-20 margin-top-20">
         <mat-form-field>
             <mat-label>Events to log</mat-label>
-            <mat-select [(value)]="settings.eventsToStore" multiple>
+            <mat-select [(value)]="settings().eventsToStore" multiple>
             <mat-option *ngFor="let eventType of eventTypes" [value]="eventType">{{ eventType }}</mat-option>
             </mat-select>
         </mat-form-field>

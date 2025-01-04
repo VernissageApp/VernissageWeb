@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input, model } from '@angular/core';
 import { Settings } from 'src/app/models/settings';
 import { SettingsService } from 'src/app/services/http/settings.service';
 import { MessagesService } from 'src/app/services/common/messages.service';
@@ -13,9 +13,9 @@ import { User } from 'src/app/models/user';
     standalone: false
 })
 export class GeneralSettingsComponent {
-    @Input() settings!: Settings;
-    @Input() webContactUser?: User;
-    @Input() systemDefaultUser?: User;
+    public settings = input.required<Settings>();
+    public webContactUser = model<User>();
+    public systemDefaultUser = model<User>();
 
     eventTypes = Object.values(EventType);
     
@@ -27,11 +27,12 @@ export class GeneralSettingsComponent {
 
     async onSubmit(): Promise<void> {
         try {
-            if (this.settings) {
-                this.settings.webContactUserId = this.webContactUser?.id ?? '';
-                this.settings.systemDefaultUserId = this.systemDefaultUser?.id ?? '';
+            const internalSettings = this.settings();
+            if (internalSettings) {
+                internalSettings.webContactUserId = this.webContactUser()?.id ?? '';
+                internalSettings.systemDefaultUserId = this.systemDefaultUser()?.id ?? '';
 
-                await this.settingsService.put(this.settings);
+                await this.settingsService.put(internalSettings);
 
                 await Promise.all([
                     this.instanceService.load(),

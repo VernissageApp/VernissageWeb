@@ -355,9 +355,11 @@
                                 </div>
 
                                 @if (replyStatus?.id === comment.status.id) {
-                                    <div class="text-right padding-top-5">
-                                        <app-comment-reply [signedInUser]="signedInUser" [status]="comment.status" [showCancel]="true" (clickCancel)="onReply(undefined)" (added)="onCommentAdded()"></app-comment-reply>
-                                    </div>
+                                    @if (signedInUser) {
+                                        <div class="text-right padding-top-5">
+                                            <app-comment-reply [signedInUser]="signedInUser" [status]="comment.status" [showCancel]="true" (clickCancel)="onReply(undefined)" (added)="onCommentAdded()"></app-comment-reply>
+                                        </div>
+                                    }
                                 }
                             </div>
                         }

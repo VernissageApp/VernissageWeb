@@ -1,13 +1,13 @@
 <form name="form" (ngSubmit)="commentForm.form.valid && onSubmitComment()" #commentForm="ngForm" novalidate>
     <div class="flex-row gap-8 comment-add small-text-input">
         <div>
-            <app-avatar [user]="signedInUser" [size]="avatarSize.big"></app-avatar>
+            <app-avatar [user]="signedInUser()" [size]="avatarSize.big"></app-avatar>
         </div>
         <div class="flex-grow-1">
             <mat-form-field appearance="outline" class="width-100">
                 <mat-label>Comment</mat-label>
                 <input
-                    matInput [name]="'comment' + status?.id"
+                    matInput [name]="'comment' + status().id"
                     #commentInput="ngModel"
                     [(ngModel)]="comment"
                     placeholder="Comment"
@@ -21,8 +21,8 @@
                     Comment required.
                 </mat-error>
             </mat-form-field>
-            <a *ngIf="showCancel" href="javascript:void(0)" (click)="onCancel()">Cancel</a>
+            <a *ngIf="showCancel()" href="javascript:void(0)" (click)="onCancel()">Cancel</a>
         </div>
-        <button type="submit" mat-flat-button color="primary" [disabled]="isSendDisabled">Send</button>
+        <button type="submit" mat-flat-button color="primary" [disabled]="isSendDisabled()">Send</button>
     </div>
 </form>

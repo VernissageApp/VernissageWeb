@@ -19,7 +19,7 @@ import { SettingsService } from "src/app/services/http/settings.service";
 })
 export class CategoriesPage extends ResponsiveComponent implements OnInit, OnDestroy {
     isReady = false;
-    categories?: Category[] = [];
+    categories: Category[] = [];
     routeParamsSubscription?: Subscription;
 
     constructor(

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, input, model, output, signal, viewChild } from '@angular/core';
 import { Status } from 'src/app/models/status';
 import { StatusRequest } from 'src/app/models/status-request';
 import { User } from 'src/app/models/user';
@@ -14,18 +14,17 @@ import { NgForm } from '@angular/forms';
     standalone: false
 })
 export class CommentReplyComponent {
-    readonly avatarSize = AvatarSize;
+    public signedInUser = input.required<User>();
+    public status = input.required<Status>();
+    public showCancel = input(false);
+    public clickCancel = output();
+    public added = output();
 
-    @Input() signedInUser?: User;
-    @Input() status?: Status;
-    @Input() showCancel = false;
-    @Output() clickCancel = new EventEmitter();
-    @Output() added = new EventEmitter();
+    protected comment = model('');
+    protected isSendDisabled = signal(false);
+    protected readonly avatarSize = AvatarSize;
 
-    @ViewChild('commentForm') commentForm?: NgForm;
-
-    comment = '';
-    isSendDisabled = false;
+    private commentForm = viewChild<NgForm>('commentForm');
 
     constructor(private statusesService: StatusesService, private messageService: MessagesService) {
     }
@@ -33,16 +32,16 @@ export class CommentReplyComponent {
     async onSubmitComment(): Promise<void> {
         try {
             if (this.status != null) {
-                this.isSendDisabled = true;
+                this.isSendDisabled.set(true);
 
                 const newStatusRequest = new StatusRequest();
-                newStatusRequest.note = this.comment;
-                newStatusRequest.replyToStatusId = this.status.id;
+                newStatusRequest.note = this.comment();
+                newStatusRequest.replyToStatusId = this.status().id;
 
                 await this.statusesService.create(newStatusRequest);
 
-                this.comment = ''
-                this.commentForm?.resetForm();
+                this.comment.set('');
+                this.commentForm()?.resetForm();
                 this.messageService.showSuccess('Comment has been added.');
                 this.added.emit();
             }
@@ -50,7 +49,7 @@ export class CommentReplyComponent {
             console.error(error);
             this.messageService.showServerError(error);
         } finally {
-            this.isSendDisabled = false;
+            this.isSendDisabled.set(false);
         }
     }
 

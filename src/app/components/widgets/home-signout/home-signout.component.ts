@@ -1,7 +1,6 @@
-import { Component, OnInit, OnDestroy, HostListener, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, ChangeDetectorRef, signal } from '@angular/core';
 import { Status } from 'src/app/models/status';
 import { TimelineService } from 'src/app/services/http/timeline.service';
-import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subscription, filter } from 'rxjs';
 import { LoadingService } from 'src/app/services/common/loading.service';
@@ -22,19 +21,18 @@ import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
     standalone: false
 })
 export class HomeSignoutComponent extends ResponsiveComponent implements OnInit, OnDestroy, OnAttach, OnDetach {
-    statuses?: LinkableResult<Status>;
-    isReady = false;
-    showEditorsChoice = false;
-    isPageVisible = true;
-    lastRefreshTime = new Date();
-    isDetached = false;
-    mastodonUrl?: string;
-
-    routeParamsSubscription?: Subscription;
-    routeNavigationEndSubscription?: Subscription;
+    protected statuses = signal<LinkableResult<Status> | undefined>(undefined);
+    protected isReady = signal(false);
+    protected showEditorsChoice = signal(false);
+    protected isDetached = signal(false);
+    protected mastodonUrl = signal<string | undefined>(undefined);
+    
+    private isPageVisible = true;
+    private lastRefreshTime = new Date();
+    private routeParamsSubscription?: Subscription;
+    private routeNavigationEndSubscription?: Subscription;
 
     constructor(
-        private authorizationService: AuthorizationService,
         private contextStatusesService: ContextStatusesService,
         private timelineService: TimelineService,
         private loadingService: LoadingService,
@@ -52,10 +50,8 @@ export class HomeSignoutComponent extends ResponsiveComponent implements OnInit,
 
         const internalMastodonUrl = this.settingsService.publicSettings?.mastodonUrl ?? '';
         if (internalMastodonUrl.length > 0) {
-            this.mastodonUrl = internalMastodonUrl;
+            this.mastodonUrl.set(internalMastodonUrl);
         }
-
-        
 
         this.routeNavigationEndSubscription = this.router.events
             .pipe(filter(event => event instanceof NavigationEnd))  
@@ -63,7 +59,7 @@ export class HomeSignoutComponent extends ResponsiveComponent implements OnInit,
                 const navigationEndEvent = event as NavigationEnd;
                 
                 if (navigationEndEvent.urlAfterRedirects.startsWith('/home')) {
-                    this.contextStatusesService.setContextStatuses(this.statuses);
+                    this.contextStatusesService.setContextStatuses(this.statuses());
                     this.isPageVisible = true;
                 } else {
                     this.isPageVisible = false;
@@ -74,7 +70,7 @@ export class HomeSignoutComponent extends ResponsiveComponent implements OnInit,
             this.loadingService.showLoader();
             await this.loadData();
 
-            this.isReady = true;
+            this.isReady.set(true);
             this.loadingService.hideLoader();
         });
     }
@@ -87,12 +83,12 @@ export class HomeSignoutComponent extends ResponsiveComponent implements OnInit,
     }
 
     onDetach(): void {
-        this.isDetached = true;
+        this.isDetached.set(true);
         this.changeDetectorRef.detectChanges();
     }
 
     onAttach(): void {
-        this.isDetached = false;
+        this.isDetached.set(false);
         this.changeDetectorRef.detectChanges();
     }
 
@@ -112,14 +108,14 @@ export class HomeSignoutComponent extends ResponsiveComponent implements OnInit,
     }
 
     private async loadData(): Promise<void> {
-        this.showEditorsChoice = this.settingsService.publicSettings?.showEditorsChoiceForAnonymous ?? false;
+        this.showEditorsChoice.set(this.settingsService.publicSettings?.showEditorsChoiceForAnonymous ?? false);
         
-        if (this.showEditorsChoice) {
+        if (this.showEditorsChoice()) {
             this.lastRefreshTime = new Date();
             const statuses = await this.timelineService.featuredStatuses(undefined, undefined, undefined, undefined);
             statuses.context = ContextTimeline.editors;
 
-            this.statuses = statuses;
+            this.statuses.set(statuses);
         }
     }
 }

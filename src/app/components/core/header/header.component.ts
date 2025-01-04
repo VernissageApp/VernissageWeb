@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
+import { Component, OnInit, OnDestroy, Renderer2, signal, computed } from '@angular/core';
 import { RouteReuseStrategy, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -22,17 +22,16 @@ import { PreferencesService } from 'src/app/services/common/preferences.service'
     standalone: false
 })
 export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDestroy {
-    readonly resolution = Resolution;
-
-    public notificationCounter = 0;
-    public user?: User | null;
-    public avatarUrl = "assets/avatar.svg";
-    public fullName = '';
-    public isLoggedIn = false;
-    public showTrending = false;
-    public showEditorsChoice = false;
-    public showCategories = false;
-    public isLightTheme = false;
+    protected readonly resolution = Resolution;
+    protected notificationCounter = signal(0);
+    protected user = signal<User | undefined>(undefined);
+    protected avatarUrl = computed(() => this.user()?.avatarUrl ?? 'assets/avatar.svg');
+    protected fullName = computed(() => this.userDisplayService.displayName(this.user()));
+    protected isLoggedIn = signal(false);
+    protected showTrending = signal(false);
+    protected showEditorsChoice = signal(false);
+    protected showCategories = signal(false);
+    protected isLightTheme = signal(false);
 
     private userChangeSubscription?: Subscription;
     private notificationChangeSubscription?: Subscription;
@@ -57,21 +56,22 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
 
-        this.user = this.authorizationService.getUser();
-        this.isLoggedIn = await this.authorizationService.isLoggedIn();
-        this.avatarUrl = this.user?.avatarUrl ?? 'assets/avatar.svg';
-        this.isLightTheme = this.preferencesService.isLightTheme;
+        const isLoggedInInternal = await this.authorizationService.isLoggedIn();
+        const userInternal = this.authorizationService.getUser();
+
+        this.isLightTheme.set(this.preferencesService.isLightTheme);
+        this.user.set(userInternal);
+        this.isLoggedIn.set(isLoggedInInternal);
 
         this.userChangeSubscription = this.authorizationService.changes.subscribe(async (user) => {
-            this.user = user;
+            this.user.set(user);
 
-            this.isLoggedIn = await this.authorizationService.isLoggedIn();
-            this.avatarUrl = this.user?.avatarUrl ?? 'assets/avatar.svg';
-            this.fullName = this.userDisplayService.displayName(this.user);
+            const isLoggedInInternal = await this.authorizationService.isLoggedIn();
+            this.isLoggedIn.set(isLoggedInInternal);
 
-            this.showTrending = this.isLoggedIn || (this.settingsService.publicSettings?.showTrendingForAnonymous ?? false);
-            this.showEditorsChoice = this.isLoggedIn || ((this.settingsService.publicSettings?.showEditorsChoiceForAnonymous ?? false) || (this.settingsService.publicSettings?.showEditorsUsersChoiceForAnonymous ?? false));
-            this.showCategories = this.isLoggedIn || (this.settingsService.publicSettings?.showCategoriesForAnonymous ?? false);
+            this.showTrending.set(isLoggedInInternal || (this.settingsService.publicSettings?.showTrendingForAnonymous ?? false));
+            this.showEditorsChoice.set(isLoggedInInternal || ((this.settingsService.publicSettings?.showEditorsChoiceForAnonymous ?? false) || (this.settingsService.publicSettings?.showEditorsUsersChoiceForAnonymous ?? false)));
+            this.showCategories.set(isLoggedInInternal || (this.settingsService.publicSettings?.showCategoriesForAnonymous ?? false));
 
             this.messagesSubscription = this.swPushService.messages.subscribe(async () => {
                 await this.loadNotificationCount();
@@ -82,7 +82,7 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
         });
 
         this.notificationChangeSubscription = this.notificationsService.changes.subscribe(async (count) => {
-            this.notificationCounter = count;
+            this.notificationCounter.set(count);
             this.notificationsService.setApplicationBadge(count);
         });
     }
@@ -123,14 +123,14 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
 
     onThemeToggle(): void {
         this.preferencesService.toggleTheme(this.renderer);
-        this.isLightTheme = this.preferencesService.isLightTheme;
+        this.isLightTheme.set(this.preferencesService.isLightTheme);
     }
 
     private async loadNotificationCount(): Promise<void> {
         try {
-            if (this.user) {
+            if (this.user()) {
                 const notificationCount = await this.notificationsService.count();
-                this.notificationCounter = notificationCount.amount;
+                this.notificationCounter.set(notificationCount.amount);
             }
         } catch(error) {
             console.error(error);

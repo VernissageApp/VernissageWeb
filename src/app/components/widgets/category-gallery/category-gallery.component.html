@@ -1,10 +1,12 @@
-@if (!isBrowser) {
+@if (!isBrowser()) {
     <div></div>
 }
-@else if (categories?.length) {
-    <div *ngFor="let category of categories; trackBy:trackByCategoryFn">
-        <app-category-gallery-item [category]="category"></app-category-gallery-item>
-    </div>
+@else if (categories().length) {
+    @for (category of categories(); track category.id) {
+        <div>
+            <app-category-gallery-item [category]="category"></app-category-gallery-item>
+        </div>        
+    }
 } @else {
     <div class="text-muted padding-top-30 width-100 text-center">
         <h2 class="empty-page">

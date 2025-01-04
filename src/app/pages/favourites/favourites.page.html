@@ -8,5 +8,7 @@
 
     </section>
 
-    <app-gallery [statuses]="statuses" [isDetached]="isDetached"></app-gallery>
+    @if (statuses) {
+        <app-gallery [statuses]="statuses" [isDetached]="isDetached"></app-gallery>
+    }
 </div>

@@ -1,5 +1,5 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, input, OnInit, signal } from '@angular/core';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { Hashtag } from 'src/app/models/hashtag';
@@ -17,11 +17,12 @@ import { TimelineService } from 'src/app/services/http/timeline.service';
     standalone: false
 })
 export class HashtagGalleryItemComponent extends ResponsiveComponent implements OnInit {
-    private readonly numberOfVisibleStatuses = 10;
+    public hashtag = input.required<Hashtag>();
+    
+    protected statuses = signal<LinkableResult<Status> | undefined>(undefined);
+    protected alwaysShowNSFW = signal(false);
 
-    @Input() hashtag!: Hashtag;
-    statuses?: LinkableResult<Status>;
-    alwaysShowNSFW = false;
+    private readonly numberOfVisibleStatuses = 10;
 
     constructor(
         private timelineService: TimelineService,
@@ -35,11 +36,12 @@ export class HashtagGalleryItemComponent extends ResponsiveComponent implements 
     override ngOnInit(): void {
         super.ngOnInit();
 
-        this.alwaysShowNSFW = this.preferencesService.alwaysShowNSFW;
+        this.alwaysShowNSFW.set(this.preferencesService.alwaysShowNSFW);
     }
 
     async lazyLoadData(): Promise<void> {
-        this.statuses = await this.timelineService.hashtag(this.hashtag.name, undefined, undefined, undefined, this.numberOfVisibleStatuses, undefined);
+        const downloadedStatuses = await this.timelineService.hashtag(this.hashtag().name, undefined, undefined, undefined, this.numberOfVisibleStatuses, undefined);
+        this.statuses.set(downloadedStatuses);
     }
 
     getMainStatus(status: Status): Status {
@@ -47,6 +49,6 @@ export class HashtagGalleryItemComponent extends ResponsiveComponent implements 
     }
 
     onStatusClick(): void {
-        this.contextStatusesService.setContextStatuses(this.statuses);
+        this.contextStatusesService.setContextStatuses(this.statuses());
     }
 }

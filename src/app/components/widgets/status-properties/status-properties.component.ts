@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { Status } from 'src/app/models/status';
 import { StatusVisibility } from 'src/app/models/status-visibility';
@@ -12,6 +12,6 @@ import { StatusVisibility } from 'src/app/models/status-visibility';
     standalone: false
 })
 export class StatusPropertiesComponent {
-    readonly statusVisibility = StatusVisibility;
-    @Input() status!: Status;
+    public status = input.required<Status>();
+    protected readonly statusVisibility = StatusVisibility;
 }

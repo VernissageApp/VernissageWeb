@@ -2,10 +2,10 @@
     @if (!isBrowser) {
         <div></div>
     }
-    @else if (hashtags?.data?.length) {
-        <div *ngFor="let hashtag of hashtags?.data; trackBy:trackByHashtagFn">
+    @else if (hashtags()?.data?.length) {
+        @for (hashtag of hashtags()?.data; track hashtag.name) {
             <app-hashtag-gallery-item [hashtag]="hashtag"></app-hashtag-gallery-item>
-        </div>
+        }
     } @else {
         <div class="text-muted padding-top-30 width-100 text-center">
             <h2 class="empty-page">

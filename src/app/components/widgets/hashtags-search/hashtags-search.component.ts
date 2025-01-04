@@ -1,6 +1,6 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { isPlatformBrowser } from '@angular/common';
-import { Component, Inject, Input, PLATFORM_ID } from '@angular/core';
+import { Component, Inject, input, PLATFORM_ID, signal } from '@angular/core';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { Hashtag } from 'src/app/models/hashtag';
@@ -16,11 +16,12 @@ import { TimelineService } from 'src/app/services/http/timeline.service';
     standalone: false
 })
 export class HashtagsSearchComponent extends ResponsiveComponent {
-    private readonly numberOfVisibleStatuses = 10;
+    public hashtag = input.required<Hashtag>();
 
-    @Input() hashtag!: Hashtag;
-    statuses?: LinkableResult<Status>;
-    isBrowser = false;
+    protected statuses = signal<LinkableResult<Status> | undefined>(undefined);
+    protected isBrowser = signal(false);
+
+    private readonly numberOfVisibleStatuses = 10;
 
     constructor(
         @Inject(PLATFORM_ID) platformId: object,
@@ -28,11 +29,12 @@ export class HashtagsSearchComponent extends ResponsiveComponent {
         breakpointObserver: BreakpointObserver
     ) {
         super(breakpointObserver);
-        this.isBrowser = isPlatformBrowser(platformId);
+        this.isBrowser.set(isPlatformBrowser(platformId));
     }
 
     async lazyLoadData(): Promise<void> {
-        this.statuses = await this.timelineService.hashtag(this.hashtag.name, undefined, undefined, undefined, this.numberOfVisibleStatuses, undefined);
+        const downloadedStatuses = await this.timelineService.hashtag(this.hashtag().name, undefined, undefined, undefined, this.numberOfVisibleStatuses, undefined);
+        this.statuses.set(downloadedStatuses);
     }
 
     getImageSrc(status: Status): string | undefined {

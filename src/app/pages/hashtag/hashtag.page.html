@@ -3,5 +3,7 @@
         <h1><mat-icon>tag</mat-icon> {{ hashtag }}</h1>
     </section>
 
-    <app-gallery [statuses]="statuses"></app-gallery>
+    @if (statuses) {
+        <app-gallery [statuses]="statuses"></app-gallery>
+    }
 </div>
