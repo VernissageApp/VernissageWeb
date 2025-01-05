@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, model } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ChangeEmail } from 'src/app/models/change-email';
 import { MessagesService } from 'src/app/services/common/messages.service';
@@ -11,7 +11,7 @@ import { AccountService } from 'src/app/services/http/account.service';
     standalone: false
 })
 export class ChangeEmailDialog {
-    email = '';
+    protected email = model('');
 
     constructor(
         private accountService: AccountService,
@@ -27,7 +27,7 @@ export class ChangeEmailDialog {
     async onSubmit(): Promise<void> {
         try {
             const changeEmail = new ChangeEmail();
-            changeEmail.email = this.email;
+            changeEmail.email = this.email();
             changeEmail.redirectBaseUrl = this.windowService.getApplicationUrl();
 
             await this.accountService.changeEmail(changeEmail);

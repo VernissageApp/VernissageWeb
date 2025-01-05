@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, model } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { UserMuteRequest } from 'src/app/models/user-mute-request';
 
@@ -8,10 +8,10 @@ import { UserMuteRequest } from 'src/app/models/user-mute-request';
     standalone: false
 })
 export class MuteAccountDialog {
-    muteStatuses = false;
-    muteReblogs = false;
-    muteNotifications = false;
-    muteEnd?: Date;
+    protected muteStatuses = model(false);
+    protected muteReblogs = model(false);
+    protected muteNotifications = model(false);
+    protected muteEnd = model<Date>();
 
     constructor(public dialogRef: MatDialogRef<MuteAccountDialog>) {
     }
@@ -21,7 +21,7 @@ export class MuteAccountDialog {
     }
 
     async onSubmit(): Promise<void> {
-        const userMuteRequest = new UserMuteRequest(this.muteStatuses, this.muteReblogs, this.muteNotifications, this.muteEnd);
+        const userMuteRequest = new UserMuteRequest(this.muteStatuses(), this.muteReblogs(), this.muteNotifications(), this.muteEnd());
         this.dialogRef.close(userMuteRequest);
     }
 }

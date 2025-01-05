@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit, signal } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
@@ -7,13 +7,16 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
     styleUrls: ['confirmation.dialog.scss'],
     standalone: false
 })
-export class ConfirmationDialog {
-    order = 0;
-    text = '';
+export class ConfirmationDialog implements OnInit {
+    protected text = signal('');
 
     constructor(
         public dialogRef: MatDialogRef<ConfirmationDialog>,
         @Inject(MAT_DIALOG_DATA) public data?: string) {
+    }
+
+    ngOnInit(): void {
+        this.text.set(this.data ?? '');
     }
 
     onNoClick(): void {

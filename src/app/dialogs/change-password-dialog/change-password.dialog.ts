@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, model, signal } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ChangePassword } from 'src/app/models/change-password';
 import { MessagesService } from 'src/app/services/common/messages.service';
@@ -10,9 +10,9 @@ import { AccountService } from 'src/app/services/http/account.service';
     standalone: false
 })
 export class ChangePasswordDialog {
-    oldPassword = '';
-    password = '';
-    passwordIsValid = true;
+    protected oldPassword = model('');
+    protected password = model('');
+    protected passwordIsValid = signal(true);
 
     constructor(
         private accountService: AccountService,
@@ -20,8 +20,8 @@ export class ChangePasswordDialog {
         public dialogRef: MatDialogRef<ChangePasswordDialog>
     ) { }
 
-    passwordValid(valid: boolean): void {
-        this.passwordIsValid = valid;
+    onPasswordValid(valid: boolean): void {
+        this.passwordIsValid.set(valid);
     }
 
     onNoClick(): void {
@@ -31,8 +31,8 @@ export class ChangePasswordDialog {
     async onSubmit(): Promise<void> {
         try {
             const changePassword = new ChangePassword();
-            changePassword.currentPassword = this.oldPassword;
-            changePassword.newPassword = this.password;
+            changePassword.currentPassword = this.oldPassword();
+            changePassword.newPassword = this.password();
 
             await this.accountService.changePassword(changePassword);
 

@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, model } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
@@ -7,9 +7,11 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
     standalone: false
 })
 export class ContentWarningDialog {
-    contentWarning = '';
+    protected contentWarning = model('');
 
-    constructor(public dialogRef: MatDialogRef<ContentWarningDialog>, @Inject(MAT_DIALOG_DATA) public data?: string) {
+    constructor(
+        public dialogRef: MatDialogRef<ContentWarningDialog>,
+        @Inject(MAT_DIALOG_DATA) public data?: string) {
     }
 
     onNoClick(): void {
