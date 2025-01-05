@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, model, OnDestroy, OnInit, signal } from '@angular/core';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { ForbiddenError } from 'src/app/errors/forbidden-error';
 import { MessagesService } from 'src/app/services/common/messages.service';
@@ -26,18 +26,18 @@ import { ConfirmationDialog } from 'src/app/dialogs/confirmation-dialog/confirma
     animations: fadeInAnimation,
     standalone: false
 })
-export class UsersPage extends ResponsiveComponent implements OnInit {
-    readonly avatarSize = AvatarSize
-    readonly role = Role;
+export class UsersPage extends ResponsiveComponent implements OnInit, OnDestroy {
+    protected readonly avatarSize = AvatarSize
+    protected readonly role = Role;
 
-    search = '';
-    onlyLocal = false;
-    isReady = false;
-    pageIndex = 0;
-    users?: PaginableResult<User>;
-    displayedColumns: string[] = [];
-    routeParamsSubscription?: Subscription;
+    protected search = model('');
+    protected onlyLocal = model(false);
+    protected isReady = signal(false);
+    protected users = signal<PaginableResult<User> | undefined>(undefined);
+    protected pageIndex = signal(0);
+    protected displayedColumns = signal<string[]>([]);
 
+    private routeParamsSubscription?: Subscription;
     private readonly displayedColumnsHandsetPortrait: string[] = ['avatar', 'userName', 'actions'];
     private readonly displayedColumnsHandsetLandscape: string[] = ['avatar', 'userName', 'createdAt', 'actions'];
     private readonly displayedColumnsTablet: string[] = ['avatar', 'userName', 'email', 'isApproved', 'lastLoginDate', 'createdAt', 'actions'];
@@ -75,20 +75,26 @@ export class UsersPage extends ResponsiveComponent implements OnInit {
             const page = pageString ? +pageString : 0;
             const size = sizeString ? +sizeString : 10;
 
-            this.pageIndex = page;
-            this.search = query
-            this.onlyLocal = local === 'true';
+            this.pageIndex.set(page);
+            this.search.set(query);
+            this.onlyLocal.set(local === 'true');
 
-            this.users = await this.usersService.get(page + 1, size, query, this.onlyLocal);
+            const downloadedUsers = await this.usersService.get(page + 1, size, query, this.onlyLocal());
+            this.users.set(downloadedUsers);
 
-            this.isReady = true;
+            this.isReady.set(true);
             this.loadingService.hideLoader();
         });
     }
 
+    override ngOnDestroy(): void {
+        super.ngOnDestroy();
+        this.routeParamsSubscription?.unsubscribe();
+    }
+
     async onSubmit(): Promise<void> {
         const navigationExtras: NavigationExtras = {
-            queryParams: { query: this.search, onlyLocal: this.onlyLocal },
+            queryParams: { query: this.search(), onlyLocal: this.onlyLocal() },
             queryParamsHandling: 'merge'
         };
 
@@ -220,19 +226,19 @@ export class UsersPage extends ResponsiveComponent implements OnInit {
     }
 
     protected override onHandsetPortrait(): void {
-        this.displayedColumns = this.displayedColumnsHandsetPortrait;
+        this.displayedColumns?.set(this.displayedColumnsHandsetPortrait);
     }
 
     protected override onHandsetLandscape(): void {
-        this.displayedColumns = this.displayedColumnsHandsetLandscape;
+        this.displayedColumns?.set(this.displayedColumnsHandsetLandscape);
     }
 
     protected override onTablet(): void {
-        this.displayedColumns = this.displayedColumnsTablet;
+        this.displayedColumns?.set(this.displayedColumnsTablet);
     }
 
     protected override onBrowser(): void {
-        this.displayedColumns = this.displayedColumnsBrowser;
+        this.displayedColumns?.set(this.displayedColumnsBrowser);
     }
 
     isAdministrator(): boolean {

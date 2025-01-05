@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, ElementRef, Inject, ViewChild, OnInit, OnDestroy, PLATFORM_ID } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Inject, OnInit, OnDestroy, PLATFORM_ID, signal, viewChild } from '@angular/core';
 import { fadeInAnimation } from "src/app/animations/fade-in.animation";
 import { showOrHideAnimation } from 'src/app/animations/show-or-hide.animation';
 import { decode } from 'blurhash';
@@ -8,7 +8,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Status } from 'src/app/models/status';
 import { Exif } from 'src/app/models/exif';
 import { Location } from 'src/app/models/location';
-import { StatusVisibility } from 'src/app/models/status-visibility';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 import { ResponsiveComponent } from 'src/app/common/responsive';
@@ -44,43 +43,37 @@ import { DeviceDetectorService } from 'ngx-device-detector';
     standalone: false
 })
 export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy {
-    readonly statusVisibility = StatusVisibility;
-    readonly avatarSize = AvatarSize;
+    protected readonly avatarSize = AvatarSize;
+    protected isReady = signal(false);
+    protected status = signal<Status | undefined>(undefined);
+    protected mainStatus = signal<Status | undefined>(undefined);
+    protected comments = signal<StatusComment[] | undefined>(undefined);
+    protected signedInUser = signal<User | undefined>(undefined);
+    protected replyStatus =  signal<Status | undefined>(undefined);
+    protected images = signal<GalleryItem[] | undefined>(undefined);
+    protected imageIsLoaded = signal(false);
+    protected showSensitiveImage = signal(false);
+    protected showSensitiveCanvas = signal(false);
+    protected galleryAutoheight = signal(false);
+    protected currentIndex = signal(0);
+    protected hideLeftArrow = signal(false);
+    protected hideRightArrow = signal(false);
+    protected showAlternativeText = signal(false);
+    protected alwaysShowNSFW = signal(false);
+    protected imageWidth = signal(32);
+    protected imageHeight = signal(32);
+    protected isLoggedIn = signal(false);
+    protected rendered = signal<SafeHtml>('');
 
+    private canvas = viewChild<ElementRef<HTMLCanvasElement> | undefined>('canvas');    
+    private routeParamsSubscription?: Subscription;
+    private routeNavigationEndSubscription?: Subscription;
     private readonly oneSecond = 1000;
-
-    @ViewChild('canvas', { static: false }) readonly canvas?: ElementRef<HTMLCanvasElement>;
-
-    isReady = false;
-    status?: Status;
-    comments?: StatusComment[];
-    mainStatus?: Status;
-    routeParamsSubscription?: Subscription;
-    routeNavigationEndSubscription?: Subscription;
-    signedInUser?: User;
-    replyStatus?: Status;
-    images?: GalleryItem[];
-    imageIsLoaded = false;
-    showSensitiveImage = false;
-    showSensitiveCanvas = false;
-    firstCanvasInitialization = false;
-    urlToGallery?: string;
-
-    isBrowser = false;
-    galleryAutoheight = false;
-    currentIndex = 0;
-    hideLeftArrow = false;
-    hideRightArrow = false;
-    showAlternativeText = false;
-    alwaysShowNSFW = false;
-    galleryId = 'statusPageLightbox';
-    imageWidth = 32;
-    imageHeight = 32;
-    blurhash = 'LEHV6nWB2yk8pyo0adR*.7kCMdnj';
-    isLoggedIn = false;
-    rendered?: SafeHtml = '';
-
-    
+    private firstCanvasInitialization = false;
+    private urlToGallery?: string;
+    private isBrowser = false;
+    private galleryId = 'statusPageLightbox';
+    private blurhash = 'LEHV6nWB2yk8pyo0adR*.7kCMdnj';
 
     constructor(
         @Inject(DOCUMENT) private document: Document,
@@ -111,24 +104,28 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
-        this.isReady = false;
+        this.isReady.set(false);
 
         this.urlToGallery = this.routingStateService.getPreviousUrl();
-        this.showAlternativeText = this.preferencesService.showAlternativeText;
-        this.alwaysShowNSFW = this.preferencesService.alwaysShowNSFW;
+        this.showAlternativeText.set(this.preferencesService.showAlternativeText);
+        this.alwaysShowNSFW.set(this.preferencesService.alwaysShowNSFW);
 
         this.routeParamsSubscription = this.activatedRoute.params.subscribe(async params => {
             const statusId = params['id'] as string;
 
-            this.signedInUser = this.authorizationService.getUser();
-            this.isLoggedIn = await  this.authorizationService.isLoggedIn();
+            const signedInUserInternal = this.authorizationService.getUser()
+            const isLoggedInInternal = await  this.authorizationService.isLoggedIn();
+            
+            this.signedInUser.set(signedInUserInternal);
+            this.isLoggedIn.set(isLoggedInInternal);
+
             await this.loadPageData(statusId);
 
             const galleryRef = this.gallery.ref(this.galleryId);
-            galleryRef.load(this.images ?? []);
+            galleryRef.load(this.images() ?? []);
 
             this.loadingService.hideLoader();
-            this.isReady = true;
+            this.isReady.set(true);
 
             if (!this.firstCanvasInitialization) {
                 this.changeDetectorRef.detectChanges();
@@ -147,83 +144,87 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         this.routeNavigationEndSubscription?.unsubscribe();
     }
 
-    onImageLoaded(): void {
-        this.imageIsLoaded = true;
+    protected onImageLoaded(): void {
+        this.imageIsLoaded.set(true);
     }
 
-    openInFullScreen() {
-        this.lightbox.open(this.currentIndex, this.galleryId, {
+    protected openInFullScreen() {
+        this.lightbox.open(this.currentIndex(), this.galleryId, {
             panelClass: 'fullscreen'
         });
     }
 
-    onBackClick(): void {
+    protected onBackClick(): void {
         history.back();
     }
 
-    async onPrevClick(): Promise<void> {
-        if (this.status?.id) {
-            const previousStatus = await this.contextStatusesService.getPrevious(this.status?.id);
+    protected async onPrevClick(): Promise<void> {
+        const internalStatus = this.status();
+
+        if (internalStatus?.id) {
+            const previousStatus = await this.contextStatusesService.getPrevious(internalStatus.id);
             if (previousStatus) {
                 if (this.isHandset) {
                     this.loadingService.showLoader();
                 }
 
                 await this.router.navigate(['/statuses', previousStatus.id], { replaceUrl: true });
-                this.hideRightArrow = false;
+                this.hideRightArrow.set(false);
                 this.windowService.scrollToTop();
             } else {
-                this.hideLeftArrow = true;
+                this.hideLeftArrow.set(true);
             }
         }
     }
 
-    async onNextClick(): Promise<void> {
-        if (this.status?.id) {
-            const nextStatus = await this.contextStatusesService.getNext(this.status?.id);
+    protected async onNextClick(): Promise<void> {
+        const internalStatus = this.status();
+
+        if (internalStatus?.id) {
+            const nextStatus = await this.contextStatusesService.getNext(internalStatus.id);
             if (nextStatus) {
                 if (this.isHandset) {
                     this.loadingService.showLoader();
                 }
 
                 await this.router.navigate(['/statuses', nextStatus.id], { replaceUrl: true });
-                this.hideLeftArrow = false;
+                this.hideLeftArrow.set(false);
                 this.windowService.scrollToTop();
             } else {
-                this.hideRightArrow = true;
+                this.hideRightArrow.set(true);
             }
         }
     }
 
-    onShowSensitiveImageClick(): void {
-        this.showSensitiveImage = true;
+    protected onShowSensitiveImageClick(): void {
+        this.showSensitiveImage.set(true);
         
         setTimeout(() => {
-            this.showSensitiveCanvas = false;
+            this.showSensitiveCanvas.set(false);
         }, this.oneSecond);
     }
 
     protected override onHandsetPortrait(): void {
-        this.galleryAutoheight = true;
+        this.galleryAutoheight?.set(true);
     }
 
     protected override onHandsetLandscape(): void {
-        this.galleryAutoheight = true;
+        this.galleryAutoheight?.set(true);
     }
 
     protected override onTablet(): void {
-        this.galleryAutoheight = false;
+        this.galleryAutoheight?.set(false);
     }
 
     protected override onBrowser(): void {
-        this.galleryAutoheight = false;
+        this.galleryAutoheight?.set(false);
     }
 
-    onImageIndexChange(event: any): void {
-        this.currentIndex = event.currIndex;
+    protected onImageIndexChange(event: any): void {
+        this.currentIndex.set(event.currIndex);
     }
 
-    async onReportDialog(reportedStatus: Status): Promise<void> {
+    protected async onReportDialog(reportedStatus: Status): Promise<void> {
         const dialogRef = this.dialog.open(ReportDialog, {
             width: '500px',
             data: new ReportData(reportedStatus?.user, reportedStatus)
@@ -242,15 +243,17 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         });
     }
 
-    async onDeleteStatus(): Promise<void> {
+    protected async onDeleteStatus(): Promise<void> {
         const dialogRef = this.dialog.open(DeleteStatusDialog, {
             width: '500px'
         });
 
         dialogRef.afterClosed().subscribe(async (result) => {
-            if (result && this.status?.id) {
+            const internalStatus = this.status();
+
+            if (result && internalStatus?.id) {
                 try {
-                    await this.statusesService.delete(this.status?.id);
+                    await this.statusesService.delete(internalStatus.id);
 
                     this.messageService.showSuccess('Status has been deleted.');
                     await this.router.navigate(['/']);
@@ -262,7 +265,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         });
     }
 
-    async onDeleteComment(comment: Status): Promise<void> {
+    protected async onDeleteComment(comment: Status): Promise<void> {
         const dialogRef = this.dialog.open(DeleteStatusDialog, {
             width: '500px'
         });
@@ -273,8 +276,10 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
                     await this.statusesService.delete(comment?.id);
                     this.messageService.showSuccess('Status has been deleted.');
 
-                    if (this.mainStatus) {
-                        this.comments = await this.getAllReplies(this.mainStatus.id);
+                    const internalMainStatus = this.mainStatus();
+                    if (internalMainStatus) {
+                        const downloadedComments = await this.getAllReplies(internalMainStatus.id);
+                        this.comments.set(downloadedComments);
                     }
                 } catch (error) {
                     console.error(error);
@@ -284,66 +289,65 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         });
     }
 
-    async onBoostedByDialog(): Promise<void> {
-        if (!this.mainStatus?.id) {
+    protected async onBoostedByDialog(): Promise<void> {
+        const internalMainStatus = this.mainStatus();
+        if (!internalMainStatus?.id) {
             return;
         }
 
         this.dialog.open(UsersDialog, {
             width: '500px',
-            data: new UsersDialogContext(this.mainStatus.id, UsersListType.reblogged, 'Boosted by')
+            data: new UsersDialogContext(internalMainStatus.id, UsersListType.reblogged, 'Boosted by')
         });
     }
 
-    async onFavouritedByDialog(): Promise<void> {
-        if (!this.mainStatus?.id) {
+    protected async onFavouritedByDialog(): Promise<void> {
+        const internalMainStatus = this.mainStatus();
+        if (!internalMainStatus?.id) {
             return;
         }
 
         this.dialog.open(UsersDialog, {
             width: '500px',
-            data: new UsersDialogContext(this.mainStatus.id, UsersListType.favourited, 'Favourited by')
+            data: new UsersDialogContext(internalMainStatus.id, UsersListType.favourited, 'Favourited by')
         });
     }
 
-    onOpenOrginalPage(): void {
-        if (!this.mainStatus?.activityPubUrl) {
+    protected onOpenOriginalPage(): void {
+        const internalMainStatus = this.mainStatus();
+        if (!internalMainStatus?.activityPubUrl) {
             return;
         }
 
-        this.windowService.openPage(this.mainStatus.activityPubUrl);
+        this.windowService.openPage(internalMainStatus.activityPubUrl);
     }
 
-    showBackArrow(): boolean {
+    protected showBackArrow(): boolean {
         return !this.isHandset && !!this.urlToGallery;
     }
 
-    showContextArrows(): boolean {
+    protected showContextArrows(): boolean {
         return this.contextStatusesService.hasContextStatuses() && !this.isHandset;
     }
 
-    showBottomContextArrow(): boolean {
+    protected showBottomContextArrow(): boolean {
         return this.contextStatusesService.hasContextStatuses() && this.isHandset;
     }
 
-    shouldDisplayDeleteButton(): boolean {
+    protected shouldDisplayDeleteButton(): boolean {
         return this.isStatusOwner() || this.authorizationService.hasRole(Role.Administrator) || this.authorizationService.hasRole(Role.Moderator);
     }
 
-    shouldDisplayFeatureButton(): boolean {
+    protected shouldDisplayFeatureButton(): boolean {
         return this.authorizationService.hasRole(Role.Administrator) || this.authorizationService.hasRole(Role.Moderator);
     }
 
     shouldDisplayDeleteCommentButton(comment: Status): boolean {
-        return comment.user?.id === this.signedInUser?.id;
+        return comment.user?.id === this.signedInUser()?.id;
     }
 
-    isStatusOwner(): boolean {
-        return this.mainStatus?.user?.id === this.signedInUser?.id;
-    }
-
-    getAltStatus(index: number): string | undefined {
-        const attachment = this.mainStatus?.attachments?.at(index);
+    protected getAltStatus(index: number): string | undefined {
+        const attachment = this.mainStatus()?.attachments?.at(index);
         if (attachment) {
             return attachment.description;
         }
@@ -351,8 +355,8 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         return undefined;        
     }
 
-    getExif(index: number): Exif | undefined {
-        const attachment = this.mainStatus?.attachments?.at(index);
+    protected getExif(index: number): Exif | undefined {
+        const attachment = this.mainStatus()?.attachments?.at(index);
         if (attachment) {
             return attachment.metadata?.exif;
         }
@@ -360,8 +364,8 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         return undefined;
     }
 
-    getLocation(index: number): Location | undefined {
-        const attachment = this.mainStatus?.attachments?.at(index);
+    protected getLocation(index: number): Location | undefined {
+        const attachment = this.mainStatus()?.attachments?.at(index);
         if (attachment) {
             return attachment.location;
         }
@@ -369,8 +373,8 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         return undefined;
     }
 
-    getLicense(index: number): License | undefined {
-        const attachment = this.mainStatus?.attachments?.at(index);
+    protected getLicense(index: number): License | undefined {
+        const attachment = this.mainStatus()?.attachments?.at(index);
         if (attachment) {
             return attachment.license;
         }
@@ -378,7 +382,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         return undefined;
     }
 
-    getMapsUrl(index: number): string | undefined {
+    protected getMapsUrl(index: number): string | undefined {
         const location = this.getLocation(index);
         if (location) {
             const latitude = this.getGpsLatitude(index) ?? location.latitude?.replace(',', '.');
@@ -397,11 +401,11 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         return undefined;
     }
 
-    hasGpsCoordinations(index: number): boolean {
+    protected hasGpsCoordinations(index: number): boolean {
         return !!this.getGpsLatitude(index) && !!this.getGpsLongitude(index);
     }
 
-    getGpsLatitude(index: number): string | undefined {
+    protected getGpsLatitude(index: number): string | undefined {
         const exif = this.getExif(index);
         if (!exif) {
             return undefined;
@@ -428,11 +432,11 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         return undefined;
     }
 
-    getGpsLatitudeToDisplay(index: number): string {
+    protected getGpsLatitudeToDisplay(index: number): string {
         return this.getGpsLatitude(index)?.slice(0, 10) ?? '';
     }
 
-    getGpsLongitude(index: number): string | undefined {
+    protected getGpsLongitude(index: number): string | undefined {
         const exif = this.getExif(index);
         if (!exif) {
             return undefined;
@@ -459,12 +463,12 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         return undefined;
     }
 
-    getGpsLongitudeToDisplay(index: number): string {
+    protected getGpsLongitudeToDisplay(index: number): string {
         return this.getGpsLongitude(index)?.slice(0, 10) ?? '';
     }
 
-    showHdrIcon(index: number): boolean {
-        const attachment = this.mainStatus?.attachments?.at(index);
+    protected showHdrIcon(index: number): boolean {
+        const attachment = this.mainStatus()?.attachments?.at(index);
         if (attachment) {
             return !!attachment.originalHdrFile;
         }
@@ -472,7 +476,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         return false;
     }
 
-    isHdrRendered(): boolean {
+    protected isHdrRendered(): boolean {
         if (this.preferencesService.alwaysShowSdrPhoto) {
             return false;
         }
@@ -484,18 +488,12 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         return false;
     }
 
-    getCreatedAt(): Date | undefined {
-        if (this.mainStatus?.createdAt) {
-            return new Date(this.mainStatus.createdAt);
-        }
-
-        return undefined;
-    }
-
-    async reblog(): Promise<void> {
+    protected async reblog(): Promise<void> {
         try {
-            if (this.mainStatus) {
-                this.mainStatus = await this.statusesService.reblog(this.mainStatus.id);
+            const internalMainStatus = this.mainStatus();
+            if (internalMainStatus) {
+                const downloadedMainStatus = await this.statusesService.reblog(internalMainStatus.id);
+                this.mainStatus.set(downloadedMainStatus);
                 this.messageService.showSuccess('Status boosted.');
             }
         } catch (error) {
@@ -504,10 +502,12 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         }
     }
 
-    async unreblog(): Promise<void> {
+    protected async unreblog(): Promise<void> {
         try {
-            if (this.mainStatus) {
-                this.mainStatus = await this.statusesService.unreblog(this.mainStatus.id);
+            const internalMainStatus = this.mainStatus();
+            if (internalMainStatus) {
+                const downloadedMainStatus = await this.statusesService.unreblog(internalMainStatus.id);
+                this.mainStatus.set(downloadedMainStatus);
                 this.messageService.showSuccess('Status unboosted.');
             }
         } catch (error) {
@@ -516,10 +516,12 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         }
     }
 
-    async favourite(): Promise<void> {
+    protected async favourite(): Promise<void> {
         try {
-            if (this.mainStatus) {
-                this.mainStatus = await this.statusesService.favourite(this.mainStatus.id);
+            const internalMainStatus = this.mainStatus();
+            if (internalMainStatus) {
+                const downloadedMainStatus = await this.statusesService.favourite(internalMainStatus.id);
+                this.mainStatus.set(downloadedMainStatus);
                 this.messageService.showSuccess('Status favourited.');
             }
         } catch (error) {
@@ -528,10 +530,12 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         }
     }
 
-    async unfavourite(): Promise<void> {
+    protected async unfavourite(): Promise<void> {
         try {
-            if (this.mainStatus) {
-                this.mainStatus = await this.statusesService.unfavourite(this.mainStatus.id);
+            const internalMainStatus = this.mainStatus();
+            if (internalMainStatus) {
+                const downloadMainStatus = await this.statusesService.unfavourite(internalMainStatus.id);
+                this.mainStatus.set(downloadMainStatus);
                 this.messageService.showSuccess('Your like has been undone.');
             }
         } catch (error) {
@@ -540,10 +544,12 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         }
     }
 
-    async bookmark(): Promise<void> {
+    protected async bookmark(): Promise<void> {
         try {
-            if (this.mainStatus) {
-                this.mainStatus = await this.statusesService.bookmark(this.mainStatus.id);
+            const internalMainStatus = this.mainStatus();
+            if (internalMainStatus) {
+                const downloadedMainStatus = await this.statusesService.bookmark(internalMainStatus.id);
+                this.mainStatus.set(downloadedMainStatus);
                 this.messageService.showSuccess('Status bookmarked.');
             }
         } catch (error) {
@@ -552,10 +558,12 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         }
     }
 
-    async unbookmark(): Promise<void> {
+    protected async unbookmark(): Promise<void> {
         try {
-            if (this.mainStatus) {
-                this.mainStatus = await this.statusesService.unbookmark(this.mainStatus.id);
+            const internalMainStatus = this.mainStatus();
+            if (internalMainStatus) {
+                const downloadedMainStatus = await this.statusesService.unbookmark(internalMainStatus.id);
+                this.mainStatus.set(downloadedMainStatus);
                 this.messageService.showSuccess('Status unbookmarked.');
             }
         } catch (error) {
@@ -564,10 +572,12 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         }
     }
 
-    async feature(): Promise<void> {
+    protected async feature(): Promise<void> {
         try {
-            if (this.mainStatus) {
-                this.mainStatus = await this.statusesService.feature(this.mainStatus.id);
+            const internalMainStatus = this.mainStatus();
+            if (internalMainStatus) {
+                const downloadedMainStatus = await this.statusesService.feature(internalMainStatus.id);
+                this.mainStatus.set(downloadedMainStatus);
                 this.messageService.showSuccess('Status featured.');
             }
         } catch (error) {
@@ -576,10 +586,12 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         }
     }
 
-    async unfeature(): Promise<void> {
+    protected async unfeature(): Promise<void> {
         try {
-            if (this.mainStatus) {
-                this.mainStatus = await this.statusesService.unfeature(this.mainStatus.id);
+            const internalMainStatus = this.mainStatus();
+            if (internalMainStatus) {
+                const downloadMainStatus = await this.statusesService.unfeature(internalMainStatus.id);
+                this.mainStatus.set(downloadMainStatus);
                 this.messageService.showSuccess('Status unfeatured.');
             }
         } catch (error) {
@@ -588,7 +600,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         }
     }
 
-    async favouriteComment(status: Status): Promise<void> {
+    protected async favouriteComment(status: Status): Promise<void> {
         try {
             await this.statusesService.favourite(status.id);
             status.favourited = true;
@@ -600,7 +612,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         }
     }
 
-    async unfavouriteComment(status: Status): Promise<void> {
+    protected async unfavouriteComment(status: Status): Promise<void> {
         try {
             await this.statusesService.unfavourite(status.id);
             status.favourited = false;
@@ -612,24 +624,27 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         }
     }
 
-    onReply(status?: Status): void {
-        this.replyStatus = status;
+    protected onReply(status?: Status): void {
+        this.replyStatus.set(status);
     }
 
-    async onCommentAdded(): Promise<void> {
-        if (this.mainStatus) {
+    protected async onCommentAdded(): Promise<void> {
+        const internalMainStatus = this.mainStatus();
+        if (internalMainStatus) {
             this.onReply(undefined);
-            this.comments = await this.getAllReplies(this.mainStatus.id);
+            const downloadedComments = await this.getAllReplies(internalMainStatus.id);
+            this.comments.set(downloadedComments);
         }
     }
 
     private async loadPageData(statusId: string): Promise<void> {
-        this.status = await this.statusesService.get(statusId);
+        const downloadedStatus = await this.statusesService.get(statusId);
+        this.status.set(downloadedStatus);
         
-        if (this.status.reblog) {
-            this.mainStatus = this.status.reblog;
+        if (downloadedStatus.reblog) {
+            this.mainStatus.set(downloadedStatus.reblog);
         } else {
-            this.mainStatus = this.status;
+            this.mainStatus.set(downloadedStatus);
         }
 
         this.setBlurhash();
@@ -637,11 +652,17 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         this.setImageHeight();
         this.setCardMetatags();
 
-        this.imageIsLoaded = false;
-        this.showSensitiveImage = !this.mainStatus.sensitive;
-        this.showSensitiveCanvas = this.mainStatus.sensitive;
+        this.imageIsLoaded.set(false);
 
-        this.images = this.mainStatus?.attachments?.map(attachment => {
+        if (this.mainStatus()?.sensitive) {
+            this.showSensitiveImage.set(false);
+            this.showSensitiveCanvas.set(true);
+        } else {
+            this.showSensitiveImage.set(true);
+            this.showSensitiveCanvas.set(false);
+        }
+
+        const internalImages = this.mainStatus()?.attachments?.map(attachment => {
             if (this.preferencesService.alwaysShowSdrPhoto) {
                 return new ImageItem({ src: attachment.originalFile?.url, thumb: attachment.smallFile?.url });
             }
@@ -653,10 +674,15 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
             return new ImageItem({ src: attachment.originalFile?.url, thumb: attachment.smallFile?.url });
         });
 
-        this.rendered = this.mainStatus?.noteHtml ?? '';
+        this.images.set(internalImages);
+        this.rendered.set(this.mainStatus()?.noteHtml ?? '');
         this.changeDetectorRef.detectChanges();
 
-        this.comments = await this.getAllReplies(this.mainStatus.id);
+        const mainStatusId = this.mainStatus()?.id;
+        if (mainStatusId) {
+            const downloadedComments = await this.getAllReplies(mainStatusId);
+            this.comments.set(downloadedComments);
+        }
     }
 
     private async getAllReplies(statusId: string): Promise<StatusComment[]> {
@@ -680,40 +706,43 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     }
 
     private setBlurhash(): void {
-        if (!this.mainStatus?.attachments || this.mainStatus?.attachments?.length === 0) {
+        const internalMainStatus = this.mainStatus();
+        if (!internalMainStatus?.attachments || internalMainStatus?.attachments?.length === 0) {
             return;
         }
 
-        this.blurhash =  this.mainStatus.attachments[0].blurhash ?? 'LEHV6nWB2yk8pyo0adR*.7kCMdnj';
+        this.blurhash = internalMainStatus.attachments[0].blurhash ?? 'LEHV6nWB2yk8pyo0adR*.7kCMdnj';
         setTimeout(() => {
             this.drawCanvas();
         });
     }
 
     private setImageWidth(): void {
-        if (!this.mainStatus?.attachments || this.mainStatus?.attachments?.length === 0) {
+        const internalMainStatus = this.mainStatus();
+        if (!internalMainStatus?.attachments || internalMainStatus?.attachments?.length === 0) {
             return;
         }
 
-        const width = this.mainStatus.attachments[0].smallFile?.width;
+        const width = internalMainStatus.attachments[0].smallFile?.width;
         if (!width) {
             return;
         }
 
-        this.imageWidth = width;
+        this.imageWidth.set(width);
     }
 
     private setImageHeight(): void {
-        if (!this.mainStatus?.attachments || this.mainStatus?.attachments?.length === 0) {
+        const internalMainStatus = this.mainStatus();
+        if (!internalMainStatus?.attachments || internalMainStatus?.attachments?.length === 0) {
             return;
         }
 
-        const height = this.mainStatus.attachments[0].smallFile?.height;
+        const height = internalMainStatus.attachments[0].smallFile?.height;
         if (!height) {
             return;
         }
 
-        this.imageHeight = height;
+        this.imageHeight.set(height);
     }
 
     private drawCanvas(): void {
@@ -725,18 +754,18 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
             return;
         }
 
-        const ctx = this.canvas.nativeElement.getContext('2d');
+        const ctx = this.canvas()?.nativeElement.getContext('2d');
         if (!ctx) {
             return;
         }
 
-        ctx.clearRect(0, 0, this.imageWidth, this.imageHeight);
-        const imageData = ctx.createImageData(this.imageWidth, this.imageHeight);
+        ctx.clearRect(0, 0, this.imageWidth(), this.imageHeight());
+        const imageData = ctx.createImageData(this.imageWidth(), this.imageHeight());
         if (!imageData) {
             return;
         }
 
-        const pixels = decode(this.blurhash, this.imageWidth, this.imageHeight);
+        const pixels = decode(this.blurhash, this.imageWidth(), this.imageHeight());
         imageData.data.set(pixels);
         ctx.putImageData(imageData!, 0, 0);
 
@@ -744,8 +773,11 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     }
 
     private setCardMetatags(): void {
-        const statusTitle = (this.mainStatus?.user?.name ?? '') + ` (@${this.mainStatus?.user?.userName ?? ''})`;
-        const statusDescription = this.htmlToText(this.mainStatus?.note ?? '');
+        const internalStatus = this.status();
+        const internalMainStatus = this.mainStatus();
+
+        const statusTitle = (internalMainStatus?.user?.name ?? '') + ` (@${internalMainStatus?.user?.userName ?? ''})`;
+        const statusDescription = this.htmlToText(internalMainStatus?.note ?? '');
 
         // <title>John Doe (@john@vernissage.xxx)</title>
         this.titleService.setTitle(statusTitle);
@@ -768,8 +800,8 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         // <meta property="og:logo" content="https://vernissage.xxx/assets/icons/icon-128x128.png" />
         this.metaService.updateTag({ property: 'og:logo', content: `https://${this.windowService.getApplicationBaseUrl()}/assets/icons/icon-128x128.png` });
 
-        if (this.status?.attachments && this.status?.attachments.length > 0) {
-            const firstImage = this.status?.attachments[0];
+        if (internalStatus?.attachments && internalStatus?.attachments.length > 0) {
+            const firstImage = internalStatus?.attachments[0];
 
             // <meta property="og:image" content="https://files.vernissage.xxx/media_attachments/files/112348.png">
             this.metaService.updateTag({ property: 'og:image', content: firstImage.smallFile?.url ?? '' });
@@ -789,9 +821,13 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         return this.deviceDetectorService.browser === "Chrome" && this.deviceDetectorService.isDesktop();
     }
 
-    htmlToText(value: string): string {
+    private htmlToText(value: string): string {
         const temp = this.document.createElement('div');
         temp.innerHTML = value;
         return temp.textContent || temp.innerText || '';
+    }
+
+    private isStatusOwner(): boolean {
+        return this.mainStatus()?.user?.id === this.signedInUser()?.id;
     }
 }

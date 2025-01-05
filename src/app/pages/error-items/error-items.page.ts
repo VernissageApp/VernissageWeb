@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, model, OnDestroy, OnInit, signal } from '@angular/core';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { ForbiddenError } from 'src/app/errors/forbidden-error';
 import { MessagesService } from 'src/app/services/common/messages.service';
@@ -25,16 +25,15 @@ import { RandomGeneratorService } from 'src/app/services/common/random-generator
     animations: fadeInAnimation,
     standalone: false
 })
-export class ErrorItemsPage extends ResponsiveComponent implements OnInit {
-    readonly errorItemSource = ErrorItemSource;
+export class ErrorItemsPage extends ResponsiveComponent implements OnInit, OnDestroy {
+    protected readonly errorItemSource = ErrorItemSource;
+    protected search = model('');
+    protected isReady = signal(false);    
+    protected pageIndex = signal(0);
+    protected errorItems = signal<PaginableResult<ErrorItem> | undefined>(undefined);
+    protected displayedColumns = signal<string[]>([]);
 
-    search = '';
-    isReady = false;
-    pageIndex = 0;
-    errorItems?: PaginableResult<ErrorItem>;
-    displayedColumns: string[] = [];
-    routeParamsSubscription?: Subscription;
-
+    private routeParamsSubscription?: Subscription;
     private readonly displayedColumnsHandsetPortrait: string[] = ['message', 'actions'];
     private readonly displayedColumnsHandsetLandscape: string[] = ['code', 'message', 'actions'];
     private readonly displayedColumnsTablet: string[] = ['code', 'message', 'createdAt', 'actions'];
@@ -71,18 +70,24 @@ export class ErrorItemsPage extends ResponsiveComponent implements OnInit {
             const page = pageString ? +pageString : 0;
             const size = sizeString ? +sizeString : 10;
 
-            this.pageIndex = page;
-            this.search = query
-            this.errorItems = await this.errorItemsService.get(page + 1, size, query);
+            this.pageIndex.set(page);
+            this.search.set(query);
 
-            this.isReady = true;
+            const downloadedErrorItems = await this.errorItemsService.get(page + 1, size, query);
+            this.errorItems.set(downloadedErrorItems);
+
+            this.isReady.set(true);
             this.loadingService.hideLoader();
         });
     }
 
+    override async ngOnDestroy(): Promise<void> {
+        this.routeParamsSubscription?.unsubscribe();
+    }
+
     async onSubmit(): Promise<void> {
         const navigationExtras: NavigationExtras = {
-            queryParams: { query: this.search },
+            queryParams: { query: this.search() },
             queryParamsHandling: 'merge'
         };
 
@@ -127,26 +132,26 @@ export class ErrorItemsPage extends ResponsiveComponent implements OnInit {
     }
 
     protected override onHandsetPortrait(): void {
-        this.displayedColumns = this.displayedColumnsHandsetPortrait;
+        this.displayedColumns?.set(this.displayedColumnsHandsetPortrait);
     }
 
     protected override onHandsetLandscape(): void {
-        this.displayedColumns = this.displayedColumnsHandsetLandscape;
+        this.displayedColumns?.set(this.displayedColumnsHandsetLandscape);
     }
 
     protected override onTablet(): void {
-        this.displayedColumns = this.displayedColumnsTablet;
+        this.displayedColumns?.set(this.displayedColumnsTablet);
     }
 
     protected override onBrowser(): void {
-        this.displayedColumns = this.displayedColumnsBrowser;
+        this.displayedColumns?.set(this.displayedColumnsBrowser);
     }
 
-    isAdministrator(): boolean {
+    private isAdministrator(): boolean {
         return this.authorizationService.hasRole(Role.Administrator);
     }
 
-    isModerator(): boolean {
+    private isModerator(): boolean {
         return this.authorizationService.hasRole(Role.Moderator);
     }
 }

@@ -10,12 +10,12 @@
                     </mat-card-header>
                     <mat-card-content>
                         <div class="login-content">
-                            @if (loginMode === LoginMode.UserNameAndPassword) {
+                            @if (loginPageMode() === loginMode.UserNameAndPassword) {
                                 <!-- Username. -->
                                 <mat-form-field appearance="outline">
                                     <mat-label>Username or email</mat-label>
-                                    <input matInput [errorStateMatcher]="dirtyErrorStateMatcher" name="userNameOrEmail" [(ngModel)]="login.userNameOrEmail" #userNameOrEmail="ngModel" type="text" placeholder="Username or email" aria-label="Username or email" required />
-                                    <mat-error *ngIf="userNameOrEmail.dirty && userNameOrEmail.invalid && userNameOrEmail.errors?.required">Enter username or email.</mat-error>
+                                    <input matInput [errorStateMatcher]="dirtyErrorStateMatcher" name="userNameOrEmail" [(ngModel)]="userNameOrEmail" #userNameOrEmailInput="ngModel" type="text" placeholder="Username or email" aria-label="Username or email" required />
+                                    <mat-error *ngIf="userNameOrEmailInput.dirty && userNameOrEmailInput.invalid && userNameOrEmailInput.errors?.required">Enter username or email.</mat-error>
                                 </mat-form-field>
 
                                 <!-- Password. -->
@@ -24,8 +24,8 @@
                                 </div>
                                 <mat-form-field appearance="outline">
                                     <mat-label>Password</mat-label>
-                                    <input matInput [errorStateMatcher]="dirtyErrorStateMatcher" name="password" [(ngModel)]="login.password" #password="ngModel" type="password" placeholder="Password" aria-label="Password" required />
-                                    <mat-error *ngIf="password.dirty && password.invalid && password.errors?.required">Enter password.</mat-error>
+                                    <input matInput [errorStateMatcher]="dirtyErrorStateMatcher" name="password" [(ngModel)]="password" #passwordInput="ngModel" type="password" placeholder="Password" aria-label="Password" required />
+                                    <mat-error *ngIf="passwordInput.dirty && passwordInput.invalid && passwordInput.errors?.required">Enter password.</mat-error>
                                 </mat-form-field>
                             }
                             @else {
@@ -33,9 +33,12 @@
                                 <mat-form-field appearance="outline">
                                     <mat-label>Token</mat-label>
                                     <input matInput [errorStateMatcher]="alwaysErrorStateMatcher" inputmode="numeric" name="token" [(ngModel)]="twoFactorToken" #twoFactorTokenInput="ngModel" type="text" placeholder="Two factor token" aria-label="Two factor token" required />
-                                    <mat-error *ngIf="tokenMessage">{{ tokenMessage }}</mat-error>
+                                    
+                                    @if (tokenMessage(); as tokenMessageString) {
+                                        <mat-error>{{ tokenMessageString }}</mat-error>
+                                    }
                                 </mat-form-field>
-                                <mat-checkbox class="margin-bottom-20" name="trustMachine" [disableRipple]="true" [(ngModel)]="login.trustMachine">
+                                <mat-checkbox class="margin-bottom-20" name="trustMachine" [disableRipple]="true" [(ngModel)]="trustMachine">
                                     Trust this machine for the next 30 days.
                                 </mat-checkbox>
                             }
@@ -43,12 +46,18 @@
                     </mat-card-content>
                     <mat-card-actions>
                         <div class="flex-row login-actions">
-                            @if (loginMode === LoginMode.TwoFactorToken) {
-                                <button type="button" mat-stroked-button (click)="onCancelTwoFactor()" [disabled]="isSubmitting" class="margin-right-5" aria-label="Cancel">Cancel</button>
+                            @if (loginPageMode() === loginMode.TwoFactorToken) {
+                                <button type="button" mat-stroked-button (click)="onCancelTwoFactor()" [disabled]="isSubmitting()" class="margin-right-5" aria-label="Cancel">Cancel</button>
                             }
-                            <button type="submit" mat-flat-button [disabled]="isSubmitting" color="primary" aria-label="Login">Login</button>
-                            <mat-spinner *ngIf="isSubmitting" [diameter]="18" class="margin-left-10 margin-top-5"></mat-spinner>
-                            <div *ngIf="errorMessage" class="mat-small text-error margin-left-10 margin-top-10">{{ errorMessage }}</div>
+                            <button type="submit" mat-flat-button [disabled]="isSubmitting()" color="primary" aria-label="Login">Login</button>
+
+                            @if (isSubmitting()) {
+                                <mat-spinner [diameter]="18" class="margin-left-10 margin-top-5"></mat-spinner>
+                            }
+
+                            @if (errorMessage(); as errorMessageString) {
+                                <div class="mat-small text-error margin-left-10 margin-top-10">{{ errorMessageString }}</div>
+                            }
                         </div>
                     </mat-card-actions>
                     <mat-card-footer *ngIf="isRegistrationEnabled()">
@@ -61,15 +70,23 @@
             </form>
 
             <!-- Sign in via external account. -->
-            <div *ngIf="authClients && authClients.length > 0" class="separator margin-top-20 margin-bottom-20">Or via Social Account</div>
-            <div class="external-sign-in">
-                <div *ngFor="let authClient of authClients">
-                    <a [href]="getExternalProviderUrl(authClient)" type="button" mat-flat-button color="basic">
-                        <div *ngIf="authClient.svgIcon" class='icon' [innerHTML]="authClient.svgIcon | sanitizeHtml"></div>
-                        &nbsp;{{ authClient.name }}
-                    </a>
-                </div>
-            </div>
+            @if (authClients(); as authClientsArray) {
+                @if (authClientsArray.length > 0) {
+                    <div class="separator margin-top-20 margin-bottom-20">Or via Social Account</div>
+                    <div class="external-sign-in">
+                        @for (authClient of authClientsArray; track authClient.id) {
+                            <div>
+                                <a [href]="getExternalProviderUrl(authClient)" type="button" mat-flat-button color="basic">
+                                    @if (authClient.svgIcon) {
+                                        <div class='icon' [innerHTML]="authClient.svgIcon | sanitizeHtml"></div>
+                                    }
+                                    &nbsp;{{ authClient.name }}
+                                </a>
+                            </div>
+                        }
+                    </div>
+                }
+            }
 
             <!-- Footer with privacy policy. -->
             <app-footer></app-footer>

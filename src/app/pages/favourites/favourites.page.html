@@ -1,14 +1,16 @@
-<div *ngIf="isReady" @fadeIn>
-    <section [ngClass]="{ 'padding-30': !isHandset, 'padding-10': isHandset }">
-        <h1>Favourites</h1>
+@if (isReady()) {
+    <div @fadeIn>
+        <section [ngClass]="{ 'padding-30': !isHandset, 'padding-10': isHandset }">
+            <h1>Favourites</h1>
 
-        @if (user) {
-            <a [routerLink]="['/@' + user.userName]" aria-label="Account link">{{ fullName }}</a>
+            @if (user(); as userInternal) {
+                <a [routerLink]="['/@' + userInternal.userName]" aria-label="Account link">{{ fullName() }}</a>
+            }
+
+        </section>
+
+        @if (statuses(); as statusesArray) {
+            <app-gallery [statuses]="statusesArray" [isDetached]="isDetached()"></app-gallery>
         }
-
-    </section>
-
-    @if (statuses) {
-        <app-gallery [statuses]="statuses" [isDetached]="isDetached"></app-gallery>
-    }
-</div>
+    </div>
+}

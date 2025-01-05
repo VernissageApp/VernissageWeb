@@ -94,6 +94,8 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
     }    
 
     override ngOnDestroy(): void {
+        super.ngOnDestroy();
+
         if (this.isReadyTimeout) {
             clearTimeout(this.isReadyTimeout);
         }

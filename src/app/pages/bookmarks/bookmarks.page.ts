@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, signal } from '@angular/core';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { Status } from 'src/app/models/status';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
@@ -23,15 +23,15 @@ import { OnAttach, OnDetach } from 'src/app/directives/app-router-outlet.directi
     standalone: false
 })
 export class BookmarksPage extends ResponsiveComponent implements OnInit, OnDestroy, OnAttach, OnDetach {
-    statuses?: LinkableResult<Status>;
-    isReady = false;
-    isDetached = false;
+    protected statuses = signal<LinkableResult<Status> | undefined>(undefined);
+    protected isReady = signal(false);
+    protected isDetached = signal(false);
 
-    public user?: User | null;
-    public fullName = '';
+    protected user = signal<User | undefined>(undefined);
+    protected fullName = signal('');
 
-    routeParamsSubscription?: Subscription;
-    routeNavigationEndSubscription?: Subscription;
+    private routeParamsSubscription?: Subscription;
+    private routeNavigationEndSubscription?: Subscription;
 
     constructor(
         private contextStatusesService: ContextStatusesService,
@@ -55,7 +55,7 @@ export class BookmarksPage extends ResponsiveComponent implements OnInit, OnDest
             .subscribe(async (event) => {
                 const navigationEndEvent = event as NavigationEnd;
                 if (navigationEndEvent.urlAfterRedirects === '/bookmarks') {
-                    this.contextStatusesService.setContextStatuses(this.statuses);
+                    this.contextStatusesService.setContextStatuses(this.statuses());
                 }
             });
 
@@ -63,13 +63,15 @@ export class BookmarksPage extends ResponsiveComponent implements OnInit, OnDest
 
             this.loadingService.showLoader();
 
-            this.user = this.authorizationService.getUser();
-            this.fullName = this.userDisplayService.displayName(this.user);
+            this.user.set(this.authorizationService.getUser());
+            this.fullName.set(this.userDisplayService.displayName(this.user()));
 
-            this.statuses = await this.bookmarksService.list();
-            this.statuses.context = ContextTimeline.bookmarks;
+            const downloadedStatuses = await this.bookmarksService.list();
+            downloadedStatuses.context = ContextTimeline.bookmarks;
 
-            this.isReady = true;
+            this.statuses.set(downloadedStatuses);
+
+            this.isReady.set(true);
             this.loadingService.hideLoader();
         });
     }
@@ -82,12 +84,12 @@ export class BookmarksPage extends ResponsiveComponent implements OnInit, OnDest
     }
 
     onDetach(): void { 
-        this.isDetached = true;
+        this.isDetached.set(true);
         this.changeDetectorRef.detectChanges();
     }
 
     onAttach(): void {
-        this.isDetached = false;
+        this.isDetached.set(false);
         this.changeDetectorRef.detectChanges();
     }
 }

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 
@@ -10,18 +10,22 @@ import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
     standalone: false
 })
 export class PageNotFoundPage implements OnInit, OnDestroy {
-    value = 100;
-    interval: any;
+    protected value = signal(100);
+    private interval: NodeJS.Timeout | undefined;
 
     constructor(private router: Router) {
     }
 
     async ngOnInit(): Promise<void> {
         this.interval = setInterval(async ()=> {
-            this.value = this.value - 4;
-            if (this.value < 0) {
-                await this.router.navigate(['/']);
-            }
+            this.value.update(progress => {
+                progress = progress - 4;
+                if (progress < 0) {
+                    this.router.navigate(['/']);
+                }
+
+                return progress;
+            });
         }, 200);
     }
 

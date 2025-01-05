@@ -1,5 +1,5 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { WindowService } from 'src/app/services/common/window.service';
@@ -12,8 +12,8 @@ import { WindowService } from 'src/app/services/common/window.service';
     standalone: false
 })
 export class PrivacyPage extends ResponsiveComponent implements OnInit {
-    isReady = false;
-    apiService = '';
+    protected isReady = signal(false);
+    protected apiService = signal('');
 
     constructor(
         private windowService: WindowService,
@@ -23,7 +23,7 @@ export class PrivacyPage extends ResponsiveComponent implements OnInit {
     }
 
     override ngOnInit(): void {
-        this.isReady = true;
-        this.apiService = this.windowService.apiService();
+        this.isReady.set(true);
+        this.apiService.set(this.windowService.apiService());
     }
 }

@@ -26,7 +26,7 @@
             <mat-card-content>
                 <strong>Congratulations!</strong> Your email has been confirmed. Your account was successfully
                 created and all features has been enabled.
-                @if (!isLoggedIn) {
+                @if (!isLoggedIn()) {
                     You can go to the <a routerLink="/login">login</a> page and use your
                     credentials to sign in into the system. Thank you!
                 }

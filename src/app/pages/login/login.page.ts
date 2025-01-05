@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, model, OnInit, signal } from '@angular/core';
 import { Router, ActivatedRoute, RouteReuseStrategy } from '@angular/router';
 
 import { Login } from 'src/app/models/login';
@@ -23,19 +23,23 @@ import { PushSubscriptionsService } from 'src/app/services/http/push-subscriptio
     standalone: false
 })
 export class LoginPage implements OnInit {
-    readonly LoginMode = LoginMode;
+    protected readonly loginMode = LoginMode;
 
-    login = new Login('', '', false);
-    twoFactorToken = '';
-    loginMode = LoginMode.UserNameAndPassword;
-    dirtyErrorStateMatcher = new DirtyErrorStateMatcher();
-    alwaysErrorStateMatcher = new AlwaysErrorStateMatcher();
+    protected userNameOrEmail = model('');
+    protected password = model('');
+    protected trustMachine = model(false);
+    protected twoFactorToken = model('');
+    protected authClients = signal<AuthClient[] | undefined>(undefined);
+    protected isSubmitting = signal(false);
 
-    errorMessage?: string;
-    tokenMessage?: string;
-    returnUrl?: string;
-    authClients?: AuthClient[];
-    isSubmitting = false;
+    protected loginPageMode = signal(LoginMode.UserNameAndPassword);
+    protected dirtyErrorStateMatcher = new DirtyErrorStateMatcher();
+    protected alwaysErrorStateMatcher = new AlwaysErrorStateMatcher();
+
+    protected errorMessage = signal<string | undefined>(undefined);
+    protected tokenMessage = signal<string | undefined>(undefined);
+
+    private returnUrl?: string;
 
     constructor(
         private accountService: AccountService,
@@ -54,21 +58,25 @@ export class LoginPage implements OnInit {
             this.returnUrl = params.returnUrl;
         });
 
-        this.authClients = await this.authClientsService.getList();
+        const downloadAuthClients = await this.authClientsService.getList();
+        this.authClients.set(downloadAuthClients);
     }
 
     onCancelTwoFactor(): void {
-        this.twoFactorToken = '';
-        this.tokenMessage = undefined;
-        this.loginMode = LoginMode.UserNameAndPassword;
+        this.twoFactorToken.set('');
+        this.tokenMessage.set(undefined);
+        this.loginPageMode.set(LoginMode.UserNameAndPassword);
     }
 
     async onSubmit(): Promise<void> {
-        this.isSubmitting = true;
+        this.isSubmitting.set(true);
 
         try {
             this.clearReuseStrategyState();
-            const userPayloadToken = await this.accountService.login(this.login, this.twoFactorToken);
+
+            const login = new Login(this.userNameOrEmail(), this.password(), this.trustMachine());
+            const userPayloadToken = await this.accountService.login(login, this.twoFactorToken());
+
             await this.authorizationService.signIn(userPayloadToken);
             await this.pushSubscriptionsService.updatePushSubscription();
 
@@ -78,26 +86,26 @@ export class LoginPage implements OnInit {
                 await this.router.navigate(['/home']);
             }
         } catch (error: any) {
-            this.errorMessage = undefined;
+            this.errorMessage.set(undefined);
 
             if (error.error.code === 'twoFactorTokenNotFound') {
-                this.tokenMessage = 'Enter token from authentication app.';
-                this.loginMode = LoginMode.TwoFactorToken;
+                this.tokenMessage.set('Enter token from authentication app.');
+                this.loginPageMode.set(LoginMode.TwoFactorToken);
             } else if (error.error.code === 'tokenNotValid') {
-                this.tokenMessage = 'Token is not valid. Plase enter new token.';
+                this.tokenMessage.set('Token is not valid. Please enter new token.');
             } else if (error.error.code === 'invalidLoginCredentials') {
-                this.errorMessage = 'Invalid credentials.';
+                this.errorMessage.set('Invalid credentials.');
             } else if (error.error.code === 'emailNotConfirmed') {
-                this.errorMessage = 'Your email is not confirmed. Check your inbox or reset your password.';
+                this.errorMessage.set('Your email is not confirmed. Check your inbox or reset your password.');
             } else if (error.error.code === 'userAccountIsBlocked') {
-                this.errorMessage = 'Your account is blocked. Contact with our support.';
+                this.errorMessage.set('Your account is blocked. Contact with our support.');
             } else if (error.error.code === 'userAccountIsNotApproved') {
-                this.errorMessage = 'Your account is not approved yet.';
+                this.errorMessage.set('Your account is not approved yet.');
             } else {
-                this.errorMessage = 'Unknown login error. Try again later.';
+                this.errorMessage.set('Unknown login error. Try again later.');
             }
         } finally {
-            this.isSubmitting = false;
+            this.isSubmitting.set(false);
         }
     }
 

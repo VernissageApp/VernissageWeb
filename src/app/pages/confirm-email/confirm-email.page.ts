@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { ConfirmEmail } from 'src/app/models/confirm-email';
@@ -16,10 +16,10 @@ import { AuthorizationService } from 'src/app/services/authorization/authorizati
     standalone: false
 })
 export class ConfirmEmailPage implements OnInit {
+    protected isLoggedIn = signal(false);
 
-    confirmEmailMode = ConfirmEmailMode.Validating;
-    isBrowser = false;
-    isLoggedIn = false;
+    private confirmEmailMode = ConfirmEmailMode.Validating;
+    private isBrowser = false;
 
     constructor(
         @Inject(PLATFORM_ID) platformId: object,
@@ -35,7 +35,9 @@ export class ConfirmEmailPage implements OnInit {
                 return;
             }
 
-            this.isLoggedIn = await this.authorizationService.isLoggedIn();
+            const isLoggedInInternal = await this.authorizationService.isLoggedIn();
+            this.isLoggedIn.set(isLoggedInInternal);
+
             const confirmEmail = new ConfirmEmail(params.user, params.token);
             try {
                 await this.registerService.confirm(confirmEmail);

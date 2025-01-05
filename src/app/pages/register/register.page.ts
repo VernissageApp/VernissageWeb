@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, signal, model, computed } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { ReCaptchaV3Service } from 'ngx-captcha';
 import { ForbiddenError } from 'src/app/errors/forbidden-error';
@@ -22,13 +22,25 @@ import { Rule } from 'src/app/models/rule';
     standalone: false
 })
 export class RegisterPage implements OnInit {
-    readonly RegisterMode = RegisterMode;
+    protected readonly registerMode = RegisterMode;
+    protected userName = model('');
+    protected email = model('');
+    protected fullName = model('');
+    protected locale = model('en_US');
+    protected password = model('');
+    protected agreement = model(false);
+    protected inviteToken = model('');
+    protected reason = model('');
 
-    user = new RegisterUser();
-    registerMode = RegisterMode.Register;
-    passwordIsValid = false;
+    protected registerPageMode = signal(RegisterMode.Register);
+    protected passwordIsValid = signal(false);
+    protected errorMessage = signal<string | undefined>(undefined);
+    protected isRegistrationByApprovalOpened = signal(false);
+    protected isRegistrationByInvitationsOpened = signal(false);
+    protected serverRules = signal<Rule[]>([]);
 
-    errorMessage?: string;
+    protected isSubmittingMode = computed(() => this.registerPageMode() === RegisterMode.Submitting);
+    protected isErrorMode = computed(() => this.registerPageMode() === RegisterMode.Error);
 
     constructor(
         private registerService: RegisterService,
@@ -45,74 +57,69 @@ export class RegisterPage implements OnInit {
             throw new ForbiddenError();
         }
 
-        this.user.redirectBaseUrl = this.windowService.getApplicationUrl();
-        this.user.locale = 'en_US';
-        this.user.agreement = false;
+        this.isRegistrationByApprovalOpened.set(this.instanceService.instance?.registrationOpened === false && this.instanceService.instance?.registrationByApprovalOpened === true);
+        this.isRegistrationByInvitationsOpened.set(this.instanceService.instance?.registrationOpened === false && this.instanceService.instance?.registrationByInvitationsOpened === true);
+        this.serverRules.set(this.instanceService.instance?.rules ?? []);
     }
 
     async onSubmit(): Promise<void> {
-        this.registerMode = RegisterMode.Submitting;
+        this.registerPageMode.set(RegisterMode.Submitting);
 
-        if (environment.recaptchaKey != "") {
+        if (environment.recaptchaKey != '') {
             this.reCaptchaV3Service.execute(environment.recaptchaKey, 'homepage', async (token) => {
                 await this.registerUser(token);
             });
         } else {
-            await this.registerUser("");
+            await this.registerUser('');
         }
     }
 
-    isSubmittingMode(): boolean {
-        return this.registerMode === RegisterMode.Submitting;
+    onPasswordValid(valid: boolean): void {
+        this.passwordIsValid.set(valid);
     }
 
-    isErrorMode(): boolean {
-        return this.registerMode === RegisterMode.Error;
-    }
-
-    passwordValid(valid: boolean): void {
-        this.passwordIsValid = valid;
-    }
-
-    isRegistrationByApprovalOpened(): boolean {
-        return this.instanceService.instance?.registrationOpened === false && this.instanceService.instance?.registrationByApprovalOpened === true;
-    }
-
-    isRegistrationByInvitationsOpened(): boolean {
-        return this.instanceService.instance?.registrationOpened === false && this.instanceService.instance?.registrationByInvitationsOpened === true;
-    }
-
-    serverRules(): Rule[] {
-        return this.instanceService.instance?.rules ?? [];
+    onRegisterClick(): void {
+        this.registerPageMode.set(RegisterMode.Register);
     }
 
     private async registerUser(token: string): Promise<void> {
         try {
-            this.user.securityToken = token;
+            const user = new RegisterUser();
+            user.redirectBaseUrl = this.windowService.getApplicationUrl();
+            user.securityToken = token;
 
-            await this.registerService.register(this.user);
+            user.userName = this.userName();
+            user.email = this.email();
+            user.name = this.fullName();
+            user.locale = this.locale();
+            user.password = this.password();
+            user.agreement = this.agreement();
+            user.inviteToken = this.inviteToken();
+            user.reason = this.reason();
+
+            await this.registerService.register(user);
             this.removeGoogleBadge();
 
             this.messageService.showSuccess('Your account has been created.');
             await this.router.navigate(['/login']);
         } catch (error: any) {
             if (error.error.code === 'userNameIsAlreadyTaken') {
-                this.errorMessage = 'User name is already taken. Please choose different one.';
+                this.errorMessage.set('User name is already taken. Please choose different one.');
             } else if (error.error.code === 'emailIsAlreadyConnected') {
-                this.errorMessage = 'Given email is already connected with other account.';
+                this.errorMessage.set('Given email is already connected with other account.');
             } else if (error.error.code === 'invitationTokenIsInvalid') {
-                this.errorMessage = 'Invitation token is invalid.';
+                this.errorMessage.set('Invitation token is invalid.');
             } else if (error.error.code === 'invitationTokenHasBeenUsed') {
-                this.errorMessage = 'Invitation token has been used.';
+                this.errorMessage.set('Invitation token has been used.');
             } else if (error.error.code === 'userHaveToAcceptAgreement') {
-                this.errorMessage = 'You have to accept server rules.';
+                this.errorMessage.set('You have to accept server rules.');
             } else if (error.error.code === 'disposableEmailCannotBeUsed') {
-                this.errorMessage = 'Disposable email cannot be used.';
+                this.errorMessage.set('Disposable email cannot be used.');
             } else {
-                this.errorMessage = 'Unexpected error occurred. Please try again.';
+                this.errorMessage.set('Unexpected error occurred. Please try again.');
             }
 
-            this.registerMode = RegisterMode.Error;
+            this.registerPageMode.set(RegisterMode.Error);
         }
     }
 

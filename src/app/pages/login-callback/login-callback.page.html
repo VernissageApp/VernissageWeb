@@ -1,2 +1,5 @@
-<div *ngIf="!errorMessage">Authenticating...</div>
-<div *ngIf="errorMessage">{{ errorMessage }}</div>
+@if (errorMessage(); as errorMessageString) {
+    <div>{{ errorMessageString }}</div>
+} @else {
+    <div>Authenticating...</div>
+}

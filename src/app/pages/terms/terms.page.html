@@ -1,154 +1,156 @@
-<div *ngIf="isReady" @fadeIn [ngClass]="{ 'padding-30': !isHandset, 'padding-10': isHandset }">
+@if (isReady()) {
+    <div @fadeIn [ngClass]="{ 'padding-30': !isHandset, 'padding-10': isHandset }">
 
-    <div class="flex-row flex-space-around">
-        <div class="terms-container width-100">
+        <div class="flex-row flex-space-around">
+            <div class="terms-container width-100">
 
-            <div class="flex-row flex-align-center flex-space-between margin-bottom-10">
-                <h1>Terms of Service</h1>
-                <div>Last update: 2023.12.13</div>
-            </div>
+                <div class="flex-row flex-align-center flex-space-between margin-bottom-10">
+                    <h1>Terms of Service</h1>
+                    <div>Last update: 2023.12.13</div>
+                </div>
 
-            <h2>1. Introduction</h2>
-            <div>
-                Our aim is to keep this Agreement as readable as possible, but in some cases for legal reasons, some of the language is required "legalese".
-            </div>
+                <h2>1. Introduction</h2>
+                <div>
+                    Our aim is to keep this Agreement as readable as possible, but in some cases for legal reasons, some of the language is required "legalese".
+                </div>
 
-            <h2>2. Your Acceptance of this Agreement</h2>
-            <div>
-                These terms of service are entered into by and between You and <a [routerLink]="['/']">{{ apiService }}</a> ("{{ apiService }}", "we," "our," or "us").
-                The following terms and conditions, together with any documents they expressly incorporate by reference (collectively "Terms of Service"),
-                govern your access to and use of <a [routerLink]="['/']">{{ apiService }}</a>, including any content, functionality, and services offered
-                on or through <a [routerLink]="['/']">{{ apiService }}</a> (the "Website").
-            </div>
-            <div>
-                Please read the Terms of Service carefully before you start to use the Website.
-            </div>
-            <div>
-                By using the Website, you accept and agree to be bound and abide by these Terms of Service and our Privacy Policy, found at <a href="/privacy">privacy</a>,
-                incorporated herein by reference. If you do not want to agree to these Terms of Service, you must not access or use the Website.
-            </div>
-            <div>
-                You must be at least 13 years old to use this Website. However, children of all ages may use the Website if enabled by a parent or legal guardian.
-                If you are under 18, you represent that you have your parent or guardian's permission to use the Website. Please have them read these Terms of Service with you.
-                If you are a parent or legal guardian of a user under the age of 18, by allowing your child to use the Website, you are subject to the terms of these
-                Terms of Service and responsible for your child's activity on the Website.
-            </div>
-            <div>
-                <ul class="clear-list">
-                    <li>BY ACCESSING AND USING THIS WEBSITE, YOU:</li>
-                    <li>ACCEPT AND AGREE TO BE BOUND AND COMPLY WITH THESE TERMS OF SERVICE;</li>
-                    <li>YOU REPRESENT AND WARRANT THAT YOU ARE THE LEGAL AGE OF MAJORITY UNDER APPLICABLE LAW TO FORM A BINDING CONTRACT WITH US; AND,</li>
-                    <li>YOU AGREE IF YOU ACCESS THE WEBSITE FROM A JURISDICTION WHERE IT IS NOT PERMITTED, YOU DO SO AT YOUR OWN RISK.</li>
+                <h2>2. Your Acceptance of this Agreement</h2>
+                <div>
+                    These terms of service are entered into by and between You and <a [routerLink]="['/']">{{ apiService() }}</a> ("{{ apiService() }}", "we," "our," or "us").
+                    The following terms and conditions, together with any documents they expressly incorporate by reference (collectively "Terms of Service"),
+                    govern your access to and use of <a [routerLink]="['/']">{{ apiService() }}</a>, including any content, functionality, and services offered
+                    on or through <a [routerLink]="['/']">{{ apiService() }}</a> (the "Website").
+                </div>
+                <div>
+                    Please read the Terms of Service carefully before you start to use the Website.
+                </div>
+                <div>
+                    By using the Website, you accept and agree to be bound and abide by these Terms of Service and our Privacy Policy, found at <a href="/privacy">privacy</a>,
+                    incorporated herein by reference. If you do not want to agree to these Terms of Service, you must not access or use the Website.
+                </div>
+                <div>
+                    You must be at least 13 years old to use this Website. However, children of all ages may use the Website if enabled by a parent or legal guardian.
+                    If you are under 18, you represent that you have your parent or guardian's permission to use the Website. Please have them read these Terms of Service with you.
+                    If you are a parent or legal guardian of a user under the age of 18, by allowing your child to use the Website, you are subject to the terms of these
+                    Terms of Service and responsible for your child's activity on the Website.
+                </div>
+                <div>
+                    <ul class="clear-list">
+                        <li>BY ACCESSING AND USING THIS WEBSITE, YOU:</li>
+                        <li>ACCEPT AND AGREE TO BE BOUND AND COMPLY WITH THESE TERMS OF SERVICE;</li>
+                        <li>YOU REPRESENT AND WARRANT THAT YOU ARE THE LEGAL AGE OF MAJORITY UNDER APPLICABLE LAW TO FORM A BINDING CONTRACT WITH US; AND,</li>
+                        <li>YOU AGREE IF YOU ACCESS THE WEBSITE FROM A JURISDICTION WHERE IT IS NOT PERMITTED, YOU DO SO AT YOUR OWN RISK.</li>
+                    </ul>
+                </div>
+
+                <h2>3. Updates to Terms of Service</h2>
+                <div>
+                    We may revise and update these Terms of Service from time to time in our sole discretion. All changes are effective immediately when we post them
+                    and apply to all access to and use of the Website thereafter. Continuing to use the Website following the posting of revised Terms of Service
+                    means that you accept and agree to the changes. You are expected to check this page each time you access this Website so you are aware of any changes,
+                    as they are binding on you.
+                </div>
+
+                <h2>4. Your Responsibilities</h2>
+                <div>
+                    You are required to ensure that all persons who access the Website are aware of this Agreement and comply with it. It is a condition of your
+                    use of the Website that all the information you provide on the Website is correct, current, and complete.
+                </div>
+                <div>
+                    <ul class="clear-list">
+                    <li>YOU ARE SOLELY AND ENTIRELY RESPONSIBLE FOR YOUR USE OF THE WEBSITE AND YOUR COMPUTER, INTERNET AND DATA SECURITY.</li>
+                    </ul>
+                </div>
+
+                <h2>5. Prohibited Activities</h2>
+                <div>
+                    You may use the Website only for lawful purposes and in accordance with these Terms of Service.
+                    You agree not to use the Website when he/she breaks at least one of the rules:
+                </div>
+
+                <ul>
+                    @for (rule of rules(); track rule.id) {
+                        <li>{{ rule.text }}</li>
+                    }
                 </ul>
-            </div>
-
-            <h2>3. Updates to Terms of Service</h2>
-            <div>
-                We may revise and update these Terms of Service from time to time in our sole discretion. All changes are effective immediately when we post them
-                and apply to all access to and use of the Website thereafter. Continuing to use the Website following the posting of revised Terms of Service
-                means that you accept and agree to the changes. You are expected to check this page each time you access this Website so you are aware of any changes,
-                as they are binding on you.
-            </div>
-
-            <h2>4. Your Responsibilities</h2>
-            <div>
-                You are required to ensure that all persons who access the Website are aware of this Agreement and comply with it. It is a condition of your
-                use of the Website that all the information you provide on the Website is correct, current, and complete.
-            </div>
-            <div>
-                <ul class="clear-list">
-                <li>YOU ARE SOLELY AND ENTIRELY RESPONSIBLE FOR YOUR USE OF THE WEBSITE AND YOUR COMPUTER, INTERNET AND DATA SECURITY.</li>
+                
+                <div>
+                    Additionally, you agree not to:
+                </div>
+                <ul>
+                    <li>
+                        Use the Website in any manner that could disable, overburden, damage, or impair the site or interfere with any other party's use of the Website,
+                        including their ability to engage in real-time activities through the Website.
+                    </li>
+                    <li>
+                        Use any device, software, or routine that interferes with the proper working of the Website.
+                    </li>
+                    <li>
+                        Introduce any viruses, Trojan horses, worms, logic bombs, or other material that is malicious or technologically harmful.
+                    </li>
+                    <li>
+                        Attempt to gain unauthorized access to, interfere with, damage, or disrupt any parts of the Website,
+                        the server on which the Website is stored, or any server, computer, or database connected to the Website.
+                    </li>
+                    <li>
+                        Attack the Website via a denial-of-service attack or a distributed denial-of-service attack.
+                    </li>
+                    <li>
+                        Otherwise attempting to interfere with the proper working of the Website.
+                    </li>
                 </ul>
-            </div>
 
-            <h2>5. Prohibited Activities</h2>
-            <div>
-                You may use the Website only for lawful purposes and in accordance with these Terms of Service.
-                You agree not to use the Website when he/she breaks at least one of the rules:
-            </div>
+                <h2>6. Our Rights</h2>
+                <div>
+                    We have the right, without provision of notice to:
+                </div>
+                <ul>
+                    <li>
+                        Take appropriate legal action, including, without limitation, referral to or cooperation with law enforcement or regulatory authorities,
+                        or notifying the harmed party of any illegal or unauthorized use of the Website; and
+                    </li>
+                    <li>
+                        Terminate or suspend your access to all or part of the Website for any or no reason, including, without limitation, any violation of these Terms of Service.
+                    </li>
+                </ul>
 
-            <ul>
-                @for (rule of rules; track $index) {
-                    <li>{{ rule.text }}</li>
-                }
-            </ul>
-            
-            <div>
-                Additionally, you agree not to:
-            </div>
-            <ul>
-                <li>
-                    Use the Website in any manner that could disable, overburden, damage, or impair the site or interfere with any other party's use of the Website,
-                    including their ability to engage in real-time activities through the Website.
-                </li>
-                <li>
-                    Use any device, software, or routine that interferes with the proper working of the Website.
-                </li>
-                <li>
-                    Introduce any viruses, Trojan horses, worms, logic bombs, or other material that is malicious or technologically harmful.
-                </li>
-                <li>
-                    Attempt to gain unauthorized access to, interfere with, damage, or disrupt any parts of the Website,
-                    the server on which the Website is stored, or any server, computer, or database connected to the Website.
-                </li>
-                <li>
-                    Attack the Website via a denial-of-service attack or a distributed denial-of-service attack.
-                </li>
-                <li>
-                    Otherwise attempting to interfere with the proper working of the Website.
-                </li>
-            </ul>
+                <h2>7. Third-Party Links and Content</h2>
+                <div>
+                    For your convenience, this Website may provide links or pointers to third-party sites or third-party content. We make no representations about any other
+                    websites or third-party content that may be accessed from this Website. If you choose to access any such sites, you do so at your own risk. We have no
+                    control over the third-party content or any such third-party sites and accept no responsibility for such sites or for any loss or damage that may arise
+                    from your use of them. You are subject to any terms and conditions of such third-party sites.
+                </div>
 
-            <h2>6. Our Rights</h2>
-            <div>
-                We have the right, without provision of notice to:
-            </div>
-            <ul>
-                <li>
-                    Take appropriate legal action, including, without limitation, referral to or cooperation with law enforcement or regulatory authorities,
-                    or notifying the harmed party of any illegal or unauthorized use of the Website; and
-                </li>
-                <li>
-                    Terminate or suspend your access to all or part of the Website for any or no reason, including, without limitation, any violation of these Terms of Service.
-                </li>
-            </ul>
+                <h2>8. Privacy Policy</h2>
+                <div>
+                    Your provision of personal information through the Website is governed by our privacy policy located at <a [routerLink]="['/privacy']">/privacy</a> (the "Privacy Policy").
+                </div>
+                            
+                <h2>9. Severability</h2>
+                <div>
+                    If any provision of these Terms of Service is illegal or unenforceable under applicable law, the remainder of the provision will be amended
+                    to achieve as closely as possible the effect of the original term and all other provisions of these Terms of Service will continue in full force and effect.
+                </div>
+                            
+                <h2>10. Waiver</h2>
+                <div>
+                    No failure to exercise, and no delay in exercising, on the part of either party, any right or any power hereunder shall operate as a waiver thereof,
+                    nor shall any single or partial exercise of any right or power hereunder preclude further exercise of that or any other right hereunder.
+                </div>
+                
+                <h2>11. Notice</h2>
+                <div>
+                    We may provide any notice to you under these Terms of Service by: (i) sending a message to the email address you provide to us and consent to us using;
+                    or (ii) by posting to the Website. Notices sent by email will be effective when we send the email and notices we provide by posting will be
+                    effective upon posting. It is your responsibility to keep your email address current.
+                </div>
+                <div>
+                    To give us notice under these Terms of Service, you must contact us as by send email to: {{ email() }}.
+                </div>
 
-            <h2>7. Third-Party Links and Content</h2>
-            <div>
-                For your convenience, this Website may provide links or pointers to third-party sites or third-party content. We make no representations about any other
-                websites or third-party content that may be accessed from this Website. If you choose to access any such sites, you do so at your own risk. We have no
-                control over the third-party content or any such third-party sites and accept no responsibility for such sites or for any loss or damage that may arise
-                from your use of them. You are subject to any terms and conditions of such third-party sites.
             </div>
-
-            <h2>8. Privacy Policy</h2>
-            <div>
-                Your provision of personal information through the Website is governed by our privacy policy located at <a [routerLink]="['/privacy']">/privacy</a> (the "Privacy Policy").
-            </div>
-                        
-            <h2>9. Severability</h2>
-            <div>
-                If any provision of these Terms of Service is illegal or unenforceable under applicable law, the remainder of the provision will be amended
-                to achieve as closely as possible the effect of the original term and all other provisions of these Terms of Service will continue in full force and effect.
-            </div>
-                        
-            <h2>10. Waiver</h2>
-            <div>
-                No failure to exercise, and no delay in exercising, on the part of either party, any right or any power hereunder shall operate as a waiver thereof,
-                nor shall any single or partial exercise of any right or power hereunder preclude further exercise of that or any other right hereunder.
-            </div>
-            
-            <h2>11. Notice</h2>
-            <div>
-                We may provide any notice to you under these Terms of Service by: (i) sending a message to the email address you provide to us and consent to us using;
-                or (ii) by posting to the Website. Notices sent by email will be effective when we send the email and notices we provide by posting will be
-                effective upon posting. It is your responsibility to keep your email address current.
-            </div>
-            <div>
-                To give us notice under these Terms of Service, you must contact us as by send email to: {{ email }}.
-            </div>
-
         </div>
-    </div>
 
-</div>
+    </div>
+}

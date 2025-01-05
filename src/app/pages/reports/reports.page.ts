@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { ForbiddenError } from 'src/app/errors/forbidden-error';
 import { Report } from 'src/app/models/report';
@@ -26,15 +26,14 @@ import { ContentWarningDialog } from 'src/app/dialogs/content-warning-dialog/con
     animations: fadeInAnimation,
     standalone: false
 })
-export class ReportsPage extends ResponsiveComponent implements OnInit {
-    readonly avatarSize = AvatarSize;
+export class ReportsPage extends ResponsiveComponent implements OnInit, OnDestroy {
+    protected readonly avatarSize = AvatarSize;
+    protected isReady = signal(false);
+    protected pageIndex = signal(0);
+    protected reports = signal<PaginableResult<Report> | undefined>(undefined);
+    protected displayedColumns = signal<string[]>([]);
 
-    isReady = false;
-    pageIndex = 0;
-    reports?: PaginableResult<Report>;
-    displayedColumns: string[] = [];
-    routeParamsSubscription?: Subscription;
-
+    private routeParamsSubscription?: Subscription;
     private readonly displayedColumnsHandsetPortrait: string[] = ['reportedUser', 'status'];
     private readonly displayedColumnsHandserLandscape: string[] = ['reportedUser', 'status', 'actions'];
     private readonly displayedColumnsTablet: string[] = ['user', 'reportedUser', 'category', 'status', 'actions'];
@@ -70,12 +69,19 @@ export class ReportsPage extends ResponsiveComponent implements OnInit {
             const page = pageString ? +pageString : 0;
             const size = sizeString ? +sizeString : 10;
 
-            this.pageIndex = page;
-            this.reports = await this.reportsService.get(page + 1, size);
+            this.pageIndex.set(page);
+            const downloadedReports = await this.reportsService.get(page + 1, size);
+            this.reports.set(downloadedReports);
 
-            this.isReady = true;
+            this.isReady.set(true);
             this.loadingService.hideLoader();
         });
+    }
+
+    override ngOnDestroy(): void {
+        super.ngOnDestroy();
+
+        this.routeParamsSubscription?.unsubscribe();
     }
 
     async handlePageEvent(pageEvent: PageEvent): Promise<void> {
@@ -88,19 +94,19 @@ export class ReportsPage extends ResponsiveComponent implements OnInit {
     }
 
     protected override onHandsetPortrait(): void {
-        this.displayedColumns = this.displayedColumnsHandsetPortrait;
+        this.displayedColumns?.set(this.displayedColumnsHandsetPortrait);
     }
 
     protected override onHandsetLandscape(): void {
-        this.displayedColumns = this.displayedColumnsHandserLandscape;
+        this.displayedColumns?.set(this.displayedColumnsHandserLandscape);
     }
 
     protected override onTablet(): void {
-        this.displayedColumns = this.displayedColumnsTablet;
+        this.displayedColumns?.set(this.displayedColumnsTablet);
     }
 
     protected override onBrowser(): void {
-        this.displayedColumns = this.displayedColumnsBrowser;
+        this.displayedColumns?.set(this.displayedColumnsBrowser);
     }
 
     onOpen(report: Report): void {
@@ -197,11 +203,11 @@ export class ReportsPage extends ResponsiveComponent implements OnInit {
         });
     }
 
-    isAdministrator(): boolean {
+    private isAdministrator(): boolean {
         return this.authorizationService.hasRole(Role.Administrator);
     }
 
-    isModerator(): boolean {
+    private isModerator(): boolean {
         return this.authorizationService.hasRole(Role.Moderator);
     }
 }
