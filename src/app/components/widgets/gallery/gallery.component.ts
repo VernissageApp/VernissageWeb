@@ -165,19 +165,35 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
         }
 
         const columns = this.galleryColumns();
+
+        // Create temporary array for new statuses (with columns configuration).
+        const internalColumns: GalleryColumn[] = [];
+        for (const column of columns) {
+            const galleryColumn = new GalleryColumn(column.columnId);
+            galleryColumn.size = column.size;
+
+            internalColumns.push(galleryColumn);
+        }
+        
+        // Append new statuses to temporary array.
         for(let i = fromIndex; i < addedStatuses.length; i++) {
             const status = addedStatuses[i];
 
             const imageHeight = this.getImageConstraintHeight(status);
-            const smallerColumnIndex = this.getSmallerColumnIndex(columns, imageHeight);
+            const smallerColumnIndex = this.getSmallerColumnIndex(internalColumns, imageHeight);
 
-            this.galleryColumns.update(columns => {
-                columns[smallerColumnIndex].size = columns[smallerColumnIndex].size + imageHeight;
-                columns[smallerColumnIndex].statuses.push(new GalleryStatus(status, false));
-
-                return columns;
-            });
+            internalColumns[smallerColumnIndex].size = internalColumns[smallerColumnIndex].size + imageHeight;
+            internalColumns[smallerColumnIndex].statuses.push(new GalleryStatus(status, false));
         }
+
+        // Update in one step columns signal (to reduce DOM manipulations).
+        this.galleryColumns.update(columns => {
+            for (let i = 0; i < internalColumns.length; i++) {
+                columns[i].statuses = columns[i].statuses.concat(internalColumns[i].statuses);
+                columns[i].size = internalColumns[i].size;
+            }
+            return columns;
+        });        
     }
 
     getMainStatus(status: Status): Status {
