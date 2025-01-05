@@ -1,5 +1,5 @@
 <div [ngClass]="{ 'padding-left-30 padding-right-30': !isHandset, 'padding-left-10 padding-right-10': isHandset }">
-    @if (!isBrowser) {
+    @if (!isBrowser()) {
         <div></div>
     }
     @else if (hashtags()?.data?.length) {

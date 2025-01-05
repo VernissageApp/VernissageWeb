@@ -1,5 +1,5 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, input, OnInit, signal } from '@angular/core';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { LinkableResult } from 'src/app/models/linkable-result';
@@ -17,11 +17,12 @@ import { UsersService } from 'src/app/services/http/users.service';
     standalone: false
 })
 export class UsersGalleryItemComponent extends ResponsiveComponent implements OnInit {
-    private readonly numberOfVisibleStatuses = 10;
+    public user = input.required<User>();
 
-    @Input() user!: User;
-    statuses?: LinkableResult<Status>;
-    alwaysShowNSFW = false;
+    protected statuses = signal<LinkableResult<Status> | undefined>(undefined);
+    protected alwaysShowNSFW = signal(false);
+
+    private readonly numberOfVisibleStatuses = 10;
 
     constructor(
         private usersService: UsersService,
@@ -35,12 +36,15 @@ export class UsersGalleryItemComponent extends ResponsiveComponent implements On
     override ngOnInit(): void {
         super.ngOnInit();
 
-        this.alwaysShowNSFW = this.preferencesService.alwaysShowNSFW;
+        this.alwaysShowNSFW.set(this.preferencesService.alwaysShowNSFW);
     }
 
     async lazyLoadData(): Promise<void> {
-        if (this.user.userName) {
-            this.statuses = await this.usersService.statuses(this.user.userName, undefined, undefined, undefined, this.numberOfVisibleStatuses);
+        const userInternal = this.user();
+
+        if (userInternal.userName) {
+            const downloadedStatuses = await this.usersService.statuses(userInternal.userName, undefined, undefined, undefined, this.numberOfVisibleStatuses);
+            this.statuses.set(downloadedStatuses);
         }
     }
 
@@ -49,6 +53,6 @@ export class UsersGalleryItemComponent extends ResponsiveComponent implements On
     }
 
     onStatusClick(): void {
-        this.contextStatusesService.setContextStatuses(this.statuses);
+        this.contextStatusesService.setContextStatuses(this.statuses());
     }
 }

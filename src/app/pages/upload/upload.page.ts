@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { encode } from 'blurhash';
 import * as ExifReader from 'exifreader';
@@ -28,9 +28,9 @@ import { SettingsService } from 'src/app/services/http/settings.service';
     standalone: false
 })
 export class UploadPage extends ResponsiveComponent implements OnInit {
-    readonly StatusVisibility = StatusVisibility;
-    readonly defaultMaxFileSize = 10485760;
-    
+    protected readonly statusVisibility = StatusVisibility;
+    protected photos = signal<UploadPhoto[]>([]);
+
     categories: Category[] = [];
     licenses: License[] = [];
     statusText = '';
@@ -45,7 +45,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
     maxFileSize = 0;
     maxStatusLength = 0;
 
-    photos: UploadPhoto[] = [];
+    private readonly defaultMaxFileSize = 10485760;
 
     constructor(
         private messageService: MessagesService,
@@ -82,7 +82,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
             }
 
             const uploadPhoto = new UploadPhoto(event.target.files[0]);
-            this.photos.push(uploadPhoto);
+            this.photos.update(photos => [...photos, uploadPhoto]);
 
             this.setPhotoData(uploadPhoto);
             this.setExifMetadata(uploadPhoto);
@@ -100,20 +100,22 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
     }
 
     onPhotoDelete(photo: UploadPhoto): void {
-        const index = this.photos.indexOf(photo, 0);
-        if (index > -1) {
-            this.photos.splice(index, 1);
-        }
+        this.photos.update(photos => photos.filter(x => x !== photo));
     }
 
     async onGenerateHashtags(): Promise<void> {
         try {
-            if (this.photos.length === 0) {
+            const internalPhotos = this.photos();
+            if (internalPhotos.length === 0) {
+                return;
+            }
+
+            if (!internalPhotos[0].id) {
                 return;
             }
 
             this.hashtagsInProgress = true;
-            const attachmentHashtags = await this.attachmentsService.hashtags(this.photos[0].id);
+            const attachmentHashtags = await this.attachmentsService.hashtags(internalPhotos[0].id);
             if (attachmentHashtags.hashtags && attachmentHashtags.hashtags.length > 0) {
                 const hashtags = attachmentHashtags.hashtags.map(tag => '#' + tag);
                 this.statusText = this.statusText + '\n\n' + hashtags.join(' ');
@@ -127,12 +129,14 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
     }
 
     protected allPhotosUploaded(): boolean {
-        return !this.photos.some(x => !x.isUploaded || (x.photoHdrFile && !x.isHdrUploaded));
+        return !this.photos().some(x => !x.isUploaded || (x.photoHdrFile && !x.isHdrUploaded));
     }
 
     async onSubmit(): Promise<void> {
         try {
-            for (const photo of this.photos) {
+            const internalPhotos = this.photos();
+
+            for (const photo of internalPhotos) {
                 const temporaryAttachment = new TemporaryAttachment();
                 temporaryAttachment.id = photo.id;
                 temporaryAttachment.description = photo.description;
@@ -205,7 +209,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
             status.sensitive = this.isSensitive;
             status.contentWarning = this.contentWarning === '' ? undefined : this.contentWarning;
 
-            for (const photo of this.photos) {
+            for (const photo of internalPhotos) {
                 status.attachmentIds.push(photo.id);
             }
 

@@ -1,5 +1,5 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, input, model, OnInit, signal } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, startWith } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
@@ -24,22 +24,21 @@ import { SettingsService } from 'src/app/services/http/settings.service';
     standalone: false
 })
 export class UploadPhotoComponent extends ResponsiveComponent implements OnInit {
-    readonly defaultMaxHdrFileSize = 4194304;
+    public photo = model.required<UploadPhoto>();
+    public licenses = input.required<License[]>();
+    public index = input.required<number>();
 
-    @Input() photo!: UploadPhoto;
-    @Input() licenses!: License[];
-    @Input() index = 0;
+    protected cities$?: Observable<Location[]>;
+    protected citiesControl = new FormControl<string | Location>('');
+    protected filteredCountries$?: Observable<Country[]>;
+    protected countriesControl = new FormControl<string | Country>('');    
+    protected isOpenAIEnabled = signal(false);
+    protected describeInProgress = signal(false);
 
-    cities$?: Observable<Location[]>;
-    citiesControl = new FormControl<string | Location>('');
-    currentCity?: Location;
-    isOpenAIEnabled = false;
-
-    countriesControl = new FormControl<string | Country>('');
-    allCountries: Country[] = [];
-    filteredCountries?: Observable<Country[]>;
-    currentCountry?: Country;
-    describeInProgress = false;
+    private readonly defaultMaxHdrFileSize = 4194304;
+    private allCountries: Country[] = [];
+    private currentCity?: Location;
+    private currentCountry?: Country;
 
     constructor(
         private countriesService: CountriesService,
@@ -57,7 +56,7 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
 
         this.allCountries = await this.countriesService.all();
 
-        this.filteredCountries = this.countriesControl.valueChanges.pipe(
+        this.filteredCountries$ = this.countriesControl.valueChanges.pipe(
             startWith(''),
             map(value => {
                 const name = typeof value === 'string' ? value : value?.name;
@@ -78,7 +77,7 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
             })
         );
 
-        this.isOpenAIEnabled = this.settingsService.publicSettings?.isOpenAIEnabled ?? false;
+        this.isOpenAIEnabled.set(this.settingsService.publicSettings?.isOpenAIEnabled ?? false);
     }
 
     displayCountryFn(country: Country): string {
@@ -95,21 +94,27 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
 
     selectedCity(location?: Location): void {
         this.currentCity = location;
-        this.photo.locationId = this.currentCity?.id;
+        this.photo.update((photo) => {
+            photo.locationId = this.currentCity?.id;
+            return photo;
+        });
     }
 
     async onGenerateDescription(): Promise<void> {
         try {
-            this.describeInProgress = true;
-            const attachmentDescription = await this.attachmentsService.describe(this.photo.id);
+            this.describeInProgress.set(true);
+            const attachmentDescription = await this.attachmentsService.describe(this.photo().id);
             if (attachmentDescription.description) {
-                this.photo.description = attachmentDescription.description;
+                this.photo.update((photo) => {
+                    photo.description = attachmentDescription.description;
+                    return photo;
+                });
             }
         } catch (error) {
             console.error(error);
             this.messageService.showServerError(error);
         } finally {
-            this.describeInProgress = false;
+            this.describeInProgress.set(false);
         }
     }
 
@@ -121,18 +126,26 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
                 return;
             }
 
-            this.photo.photoHdrFile = file;
-            if (!this.photo.photoHdrFile) {
+            this.photo.update((photo) => {
+                photo.photoHdrFile = file;
+                return photo;
+            });
+
+            if (!file) {
                 return;
             }
 
             this.setPhotoData();
             const formData = new FormData();
-            formData.append('file', this.photo.photoHdrFile);
-            const temporaryAttachment = await this.attachmentsService.uploadHdrImage(this.photo.id, formData);
+            formData.append('file', file);
+            const temporaryAttachment = await this.attachmentsService.uploadHdrImage(this.photo().id, formData);
 
-            this.photo.id = temporaryAttachment.id;
-            this.photo.isHdrUploaded = true;
+            this.photo.update((photo) => {
+                photo.id = temporaryAttachment.id;
+                photo.isHdrUploaded = true;
+
+                return photo;
+            });
 
             event.target.value = '';
         } catch (error) {
@@ -143,10 +156,16 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
 
     async onHdrDelete(): Promise<void> {
         try {
-            await this.attachmentsService.deleteHdrImage(this.photo.id);
-            this.photo.isHdrUploaded = false;
-            this.photo.photoHdrFile = undefined;
-            this.photo.photoHdrSrc = undefined;
+            await this.attachmentsService.deleteHdrImage(this.photo().id);
+
+            this.photo.update((photo) => {
+                photo.isHdrUploaded = false;
+                photo.photoHdrFile = undefined;
+                photo.photoHdrSrc = undefined;
+
+                return photo;
+            });
+
         } catch (error) {
             console.error(error);
             this.messageService.showServerError(error);
@@ -159,15 +178,20 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
     }
 
     private setPhotoData(): void {
-        if (!this.photo.photoHdrFile) {
+        const photoHdrFile = this.photo().photoHdrFile
+        if (!photoHdrFile) {
             return;
         }
 
         const reader = new FileReader();
         reader.onload = async () => {
-            this.photo.photoHdrSrc = reader.result as string;
+            this.photo.update((photo) => {
+                photo.photoHdrSrc = reader.result as string;
+                return photo;
+            });
+            
         }
 
-        reader.readAsDataURL(this.photo.photoHdrFile);
+        reader.readAsDataURL(photoHdrFile);
     }
 }

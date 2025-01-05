@@ -1,11 +1,13 @@
 <div [ngClass]="{ 'padding-left-30 padding-right-30': !isHandset, 'padding-left-10 padding-right-10': isHandset }">
-    @if (!isBrowser) {
+    @if (!isBrowser()) {
         <div></div>
     }
-    @else if (users?.data?.length) {
-        <div *ngFor="let user of users?.data; trackBy:trackByUserFn">
-            <app-users-gallery-item [user]="user"></app-users-gallery-item>
-        </div>
+    @else if (users()?.data?.length) {
+        @for (user of users()?.data; track user.userName) {
+            <div>
+                <app-users-gallery-item [user]="user"></app-users-gallery-item>
+            </div>
+        }
     } @else {
         <div class="text-muted padding-top-30 width-100 text-center">
             <h2 class="empty-page">

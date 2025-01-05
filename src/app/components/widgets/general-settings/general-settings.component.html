@@ -342,7 +342,9 @@
         <mat-form-field>
             <mat-label>Events to log</mat-label>
             <mat-select [(value)]="settings().eventsToStore" multiple>
-            <mat-option *ngFor="let eventType of eventTypes" [value]="eventType">{{ eventType }}</mat-option>
+                @for (eventType of eventTypes(); track eventType) {
+                    <mat-option [value]="eventType">{{ eventType }}</mat-option>
+                }
             </mat-select>
         </mat-form-field>
     </div>

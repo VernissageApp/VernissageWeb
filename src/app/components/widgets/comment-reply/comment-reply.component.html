@@ -21,7 +21,11 @@
                     Comment required.
                 </mat-error>
             </mat-form-field>
-            <a *ngIf="showCancel()" href="javascript:void(0)" (click)="onCancel()">Cancel</a>
+
+            @if (showCancel()) {
+                <a href="javascript:void(0)" (click)="onCancel()">Cancel</a>
+            }
+
         </div>
         <button type="submit" mat-flat-button color="primary" [disabled]="isSendDisabled()">Send</button>
     </div>
