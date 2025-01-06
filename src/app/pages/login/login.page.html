@@ -60,12 +60,15 @@
                             }
                         </div>
                     </mat-card-actions>
-                    <mat-card-footer *ngIf="isRegistrationEnabled()">
-                        <!-- Register new account. -->
-                        <div class="text-center">
-                            <p>You don't have an account yet? <a routerLink="/register">Sign up</a>.</p>
-                        </div>
-                    </mat-card-footer>
+
+                    @if (isRegistrationEnabled()) {
+                        <mat-card-footer>
+                            <!-- Register new account. -->
+                            <div class="text-center">
+                                <p>You don't have an account yet? <a routerLink="/register">Sign up</a>.</p>
+                            </div>
+                        </mat-card-footer>
+                    }
                 </mat-card>
             </form>
 

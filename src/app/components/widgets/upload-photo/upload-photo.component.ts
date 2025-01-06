@@ -54,6 +54,7 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
 
+        this.isOpenAIEnabled.set(this.settingsService.publicSettings?.isOpenAIEnabled ?? false);
         this.allCountries = await this.countriesService.all();
 
         this.filteredCountries$ = this.countriesControl.valueChanges.pipe(
@@ -76,23 +77,21 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
                 return this.locationService.search(this.currentCountry?.code ?? "GB", query)
             })
         );
-
-        this.isOpenAIEnabled.set(this.settingsService.publicSettings?.isOpenAIEnabled ?? false);
     }
 
-    displayCountryFn(country: Country): string {
+    protected displayCountryFn(country: Country): string {
         return country && country.name ? country.name : '';
     }
 
-    displayCityFn(location: Location): string {
+    protected displayCityFn(location: Location): string {
         return location && location.name ? location.name : '';
     }
 
-    selectedCountry(country?: Country): void {
+    protected selectedCountry(country?: Country): void {
         this.currentCountry = country;
     }
 
-    selectedCity(location?: Location): void {
+    protected selectedCity(location?: Location): void {
         this.currentCity = location;
         this.photo.update((photo) => {
             photo.locationId = this.currentCity?.id;
@@ -100,7 +99,7 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
         });
     }
 
-    async onGenerateDescription(): Promise<void> {
+    protected async onGenerateDescription(): Promise<void> {
         try {
             this.describeInProgress.set(true);
             const attachmentDescription = await this.attachmentsService.describe(this.photo().id);
@@ -118,7 +117,7 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
         }
     }
 
-    async onHdrPhotoSelected(event: any): Promise<void> {
+    protected async onHdrPhotoSelected(event: any): Promise<void> {
         try {
             const file = event.target.files[0];
             if (file.size > this.defaultMaxHdrFileSize) {
@@ -154,7 +153,7 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
         }
     }
 
-    async onHdrDelete(): Promise<void> {
+    protected async onHdrDelete(): Promise<void> {
         try {
             await this.attachmentsService.deleteHdrImage(this.photo().id);
 

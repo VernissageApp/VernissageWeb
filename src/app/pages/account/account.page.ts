@@ -125,7 +125,7 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
         this.archivesDisplayedColumns?.set(this.archivesDisplayedColumnsFull);
     }
 
-    async onSubmit(): Promise<void> {
+    protected async onSubmit(): Promise<void> {
         try {
             const userInternal = this.user();
 
@@ -141,7 +141,7 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
         }
     }
 
-    async onAvatarFormSubmit(): Promise<void> {
+    protected async onAvatarFormSubmit(): Promise<void> {
         try {
             if (this.selectedAvatarFile) {
                 const formData = new FormData();
@@ -157,7 +157,7 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
         }
     }
 
-    async onRemoveAvatar(): Promise<void> {
+    protected async onRemoveAvatar(): Promise<void> {
         try {
             const userInternal = this.user();
 
@@ -172,7 +172,7 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
         }
     }
 
-    async onHeaderFormSubmit(): Promise<void> {
+    protected async onHeaderFormSubmit(): Promise<void> {
         try {
             if (this.selectedHeaderFile) {
                 const formData = new FormData();
@@ -188,7 +188,7 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
         }
     }
 
-    async onRemoveHeader(): Promise<void> {
+    protected async onRemoveHeader(): Promise<void> {
         try {
             const userInternal = this.user();
 
@@ -203,11 +203,11 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
         }
     }
 
-    onAddField(): void {
+    protected onAddField(): void {
         this.user().fields?.push(new FlexiField())
     }
 
-    onDeleteField(flexiField: FlexiField): void {
+    protected onDeleteField(flexiField: FlexiField): void {
         this.user.update((userInternal) => {
             const index = userInternal.fields?.indexOf(flexiField);
             if (index != undefined) {
@@ -218,7 +218,7 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
         });
     }
 
-    onAvatarSelected(event: any): void {
+    protected onAvatarSelected(event: any): void {
         this.selectedAvatarFile = event.target.files[0] ?? null;
 
         if (this.selectedAvatarFile) {
@@ -228,7 +228,7 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
         }
     }
 
-    onHeaderSelected(event: any): void {
+    protected onHeaderSelected(event: any): void {
         this.selectedHeaderFile = event.target.files[0] ?? null;
 
         if (this.selectedHeaderFile) {
@@ -238,12 +238,12 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
         }
     }
 
-    onCopyVerification(): void {
+    protected onCopyVerification(): void {
         this.clipboard.copy(this.verification());
         this.messageService.showSuccess('Verification code has been copied into clipboard.');
     }
 
-    async resentConfirmationEmail(): Promise<void> {
+    protected async resentConfirmationEmail(): Promise<void> {
         try {
             const resendEmailConfirmation = new ResendEmailConfirmation();
             resendEmailConfirmation.redirectBaseUrl = this.windowService.getApplicationUrl();
@@ -256,18 +256,18 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
         }
     }
 
-    openChangePasswordDialog(): void {
+    protected openChangePasswordDialog(): void {
         this.dialog.open(ChangePasswordDialog);
     }
 
-    openChangeEmailDialog(): void {
+    protected openChangeEmailDialog(): void {
         const dialogRef = this.dialog.open(ChangeEmailDialog);
         dialogRef.afterClosed().subscribe(async () => {
             await this.loadUserData();
         });
     }
 
-    openDeleteAccountDialog(): void {
+    protected openDeleteAccountDialog(): void {
         const dialogRef = this.dialog.open(DeleteAccountDialog, {
             data: this.user
         });
@@ -283,7 +283,7 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
         });
     }
 
-    openEnableTwoFactorTokenDialog(): void {
+    protected openEnableTwoFactorTokenDialog(): void {
         const dialogRef = this.dialog.open(EnableTwoFactorTokenDialog, {
             data: this.user
         });
@@ -293,7 +293,7 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
         });
     }
 
-    openDisableTwoFactorTokenDialog(): void {
+    protected openDisableTwoFactorTokenDialog(): void {
         const dialogRef = this.dialog.open(DisableTwoFactorTokenDialog, {
             data: this.user
         });
@@ -303,7 +303,7 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
         });
     }
 
-    openCreateAccountDialog(): void {
+    protected openCreateAccountDialog(): void {
         const dialogRef = this.dialog.open(CreateAliasDialog, {
             data: this.user
         });
@@ -313,7 +313,7 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
         });
     }
 
-    onUserAliasDelete(userAlias: UserAlias): void {
+    protected onUserAliasDelete(userAlias: UserAlias): void {
         const dialogRef = this.dialog.open(ConfirmationDialog, {
             width: '500px',
             data: 'Do you want to delete user account alias?'
@@ -334,7 +334,7 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
         });
     }
 
-    async onRequestArchive(): Promise<void> {
+    protected async onRequestArchive(): Promise<void> {
         try {
             await this.archivesService.create();
             await this.loadArchives();
@@ -346,17 +346,17 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
         }
     }
 
-    async onDownloadFollowing(): Promise<void> {
+    protected async onDownloadFollowing(): Promise<void> {
         const blob = await this.exportsService.following();
         this.fileSaverService.save(blob, 'following.csv');
     }
 
-    async onDownloadBookmarks(): Promise<void> {
+    protected async onDownloadBookmarks(): Promise<void> {
         const blob = await this.exportsService.bookmarks();
         this.fileSaverService.save(blob, 'bookmarks.csv');
     }
 
-    showRequestArchiveButton(): boolean {
+    protected showRequestArchiveButton(): boolean {
         const archivesInternal = this.archives();
 
         if (archivesInternal.length === 0) {

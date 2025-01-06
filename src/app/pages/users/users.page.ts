@@ -92,7 +92,7 @@ export class UsersPage extends ResponsiveComponent implements OnInit, OnDestroy 
         this.routeParamsSubscription?.unsubscribe();
     }
 
-    async onSubmit(): Promise<void> {
+    protected async onSubmit(): Promise<void> {
         const navigationExtras: NavigationExtras = {
             queryParams: { query: this.search(), onlyLocal: this.onlyLocal() },
             queryParamsHandling: 'merge'
@@ -101,14 +101,14 @@ export class UsersPage extends ResponsiveComponent implements OnInit, OnDestroy 
         this.router.navigate([], navigationExtras);
     }
 
-    onSetRoles(user: User): void {
+    protected onSetRoles(user: User): void {
         this.dialog.open(UserRolesDialog, {
             width: '500px',
             data: user
         });
     }
 
-    async onSetEnable(user: User): Promise<void> {
+    protected async onSetEnable(user: User): Promise<void> {
         try {
             if (user.userName) {
                 await this.usersService.enable(user.userName);
@@ -122,7 +122,7 @@ export class UsersPage extends ResponsiveComponent implements OnInit, OnDestroy 
         }
     }
 
-    async onSetDisable(user: User): Promise<void> {
+    protected async onSetDisable(user: User): Promise<void> {
         try {
             if (user.userName) {
                 await this.usersService.disable(user.userName);
@@ -136,7 +136,7 @@ export class UsersPage extends ResponsiveComponent implements OnInit, OnDestroy 
         }
     }
 
-    async onApprove(user: User): Promise<void> {
+    protected async onApprove(user: User): Promise<void> {
         try {
             if (user.userName) {
                 await this.usersService.approve(user.userName);
@@ -150,7 +150,7 @@ export class UsersPage extends ResponsiveComponent implements OnInit, OnDestroy 
         }
     }
 
-    async onReject(user: User): Promise<void> {
+    protected async onReject(user: User): Promise<void> {
         try {
             if (user.userName) {
                 await this.usersService.reject(user.userName);
@@ -169,7 +169,7 @@ export class UsersPage extends ResponsiveComponent implements OnInit, OnDestroy 
         }
     }
 
-    async onUserRefresh(user: User): Promise<void> {
+    protected async onUserRefresh(user: User): Promise<void> {
         try {
             if (user.userName) {
                 await this.usersService.refresh(user.userName);
@@ -188,7 +188,7 @@ export class UsersPage extends ResponsiveComponent implements OnInit, OnDestroy 
         }
     }
 
-    async onDelete(user: User): Promise<void> {
+    protected async onDelete(user: User): Promise<void> {
         const dialogRef = this.dialog.open(ConfirmationDialog, {
             width: '500px',
             data: 'Do you want to delete user account?'
@@ -216,7 +216,7 @@ export class UsersPage extends ResponsiveComponent implements OnInit, OnDestroy 
         });
     }
 
-    async handlePageEvent(pageEvent: PageEvent): Promise<void> {
+    protected async handlePageEvent(pageEvent: PageEvent): Promise<void> {
         const navigationExtras: NavigationExtras = {
             queryParams: { page: pageEvent.pageIndex, size: pageEvent.pageSize },
             queryParamsHandling: 'merge'
@@ -241,11 +241,11 @@ export class UsersPage extends ResponsiveComponent implements OnInit, OnDestroy 
         this.displayedColumns?.set(this.displayedColumnsBrowser);
     }
 
-    isAdministrator(): boolean {
+    private isAdministrator(): boolean {
         return this.authorizationService.hasRole(Role.Administrator);
     }
 
-    isModerator(): boolean {
+    private isModerator(): boolean {
         return this.authorizationService.hasRole(Role.Moderator);
     }
 }

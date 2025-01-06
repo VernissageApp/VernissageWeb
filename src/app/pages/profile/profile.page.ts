@@ -181,7 +181,7 @@ export class ProfilePage extends ResponsiveComponent implements OnInit, OnDestro
         }
     }
 
-    async onMainRelationChanged(relationship: Relationship): Promise<void> {
+    protected async onMainRelationChanged(relationship: Relationship): Promise<void> {
         const downloadUser = await this.usersService.profile(this.userName);
         this.user.set(downloadUser);
 
@@ -221,7 +221,7 @@ export class ProfilePage extends ResponsiveComponent implements OnInit, OnDestro
         }
     }
 
-    async onRelationChanged(relationship: Relationship): Promise<void> {
+    protected async onRelationChanged(relationship: Relationship): Promise<void> {
         const downloadUser = await this.usersService.profile(this.userName);
         this.user.set(downloadUser);
 
@@ -234,25 +234,7 @@ export class ProfilePage extends ResponsiveComponent implements OnInit, OnDestro
         }
     }
 
-    private async downloadRelationship(): Promise<Relationship | undefined> {
-        const signedInUser = this.authorizationService.getUser();
-        if (!signedInUser) {
-            return undefined;
-        }
-
-        const internalUser = this.user();
-        if (signedInUser.id === internalUser?.id) {
-            return undefined;
-        }
-
-        if (!internalUser || !internalUser.id) {
-            return undefined;
-        }
-
-        return await this.relationshipsService.get(internalUser.id);
-    }
-
-    async onLoadMoreFollowing(): Promise<void> {
+    protected async onLoadMoreFollowing(): Promise<void> {
         const internalFollowing = await this.usersService.following(this.userName, undefined, this.following()?.maxId, undefined, undefined);
 
         if (this.signedInUser() && (internalFollowing.data?.length ?? 0) !== 0) {
@@ -288,7 +270,7 @@ export class ProfilePage extends ResponsiveComponent implements OnInit, OnDestro
         }
     }
 
-    async onLoadMoreFollowers(): Promise<void> {
+    protected async onLoadMoreFollowers(): Promise<void> {
         const internalFollowers = await this.usersService.followers(this.userName, undefined, this.followers()?.maxId, undefined, undefined);
 
         if (this.signedInUser() && (internalFollowers.data?.length ?? 0) !== 0) {
@@ -323,10 +305,28 @@ export class ProfilePage extends ResponsiveComponent implements OnInit, OnDestro
         }
     }
 
-    onAvatarClick(): void {
+    protected onAvatarClick(): void {
         this.dialog.open(ProfileCodeDialog, {
             data: this.user()?.userName
         });
+    }
+
+    private async downloadRelationship(): Promise<Relationship | undefined> {
+        const signedInUser = this.authorizationService.getUser();
+        if (!signedInUser) {
+            return undefined;
+        }
+
+        const internalUser = this.user();
+        if (signedInUser.id === internalUser?.id) {
+            return undefined;
+        }
+
+        if (!internalUser || !internalUser.id) {
+            return undefined;
+        }
+
+        return await this.relationshipsService.get(internalUser.id);
     }
 
     private async loadPageData(): Promise<void> {
@@ -398,7 +398,7 @@ export class ProfilePage extends ResponsiveComponent implements OnInit, OnDestro
         this.metaService.updateTag({ property: 'twitter:card', content: 'summary_large_image' });
     }
 
-    htmlToText(value: string): string {
+    private htmlToText(value: string): string {
         const temp = this.document.createElement('div');
         temp.innerHTML = value;
         return temp.textContent || temp.innerText || '';

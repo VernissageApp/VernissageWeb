@@ -48,7 +48,7 @@ export class ResetPasswordPage implements OnInit, OnDestroy {
         this.queryParamsSubscription?.unsubscribe();
     }
 
-    async onSubmit(): Promise<void> {
+    protected async onSubmit(): Promise<void> {
         try {
             this.resetPasswordMode.set(ResetPasswordMode.Submitting);
 
@@ -65,7 +65,7 @@ export class ResetPasswordPage implements OnInit, OnDestroy {
         }
     }
 
-    onPasswordValid(valid: boolean): void {
+    protected onPasswordValid(valid: boolean): void {
         this.passwordIsValid.set(valid);
     }
 }

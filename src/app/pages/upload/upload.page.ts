@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, computed, model, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { encode } from 'blurhash';
 import * as ExifReader from 'exifreader';
@@ -19,6 +19,7 @@ import { License } from 'src/app/models/license';
 import { LicensesService } from 'src/app/services/http/liceses.service';
 import { InstanceService } from 'src/app/services/http/instance.service';
 import { SettingsService } from 'src/app/services/http/settings.service';
+import { RandomGeneratorService } from 'src/app/services/common/random-generator.service';
 
 @Component({
     selector: 'app-upload',
@@ -29,22 +30,26 @@ import { SettingsService } from 'src/app/services/http/settings.service';
 })
 export class UploadPage extends ResponsiveComponent implements OnInit {
     protected readonly statusVisibility = StatusVisibility;
+
     protected photos = signal<UploadPhoto[]>([]);
+    protected categories = signal<Category[]>([]);
+    protected licenses = signal<License[]> ([]);
 
-    categories: Category[] = [];
-    licenses: License[] = [];
-    statusText = '';
-    categoryId?: string;
-    visibility = StatusVisibility.Public;
-    commentsDisabled = false;
-    isSensitive = false;
-    contentWarning = '';
-    selectedIndex = 0;
-    isOpenAIEnabled = false;
-    hashtagsInProgress = false;
-    maxFileSize = 0;
-    maxStatusLength = 0;
+    protected statusText = model('');
+    protected categoryId = model<string | undefined>(undefined);
+    protected visibility = model(StatusVisibility.Public);
+    protected commentsDisabled = model(false);
+    protected isSensitive = model(false);
+    protected contentWarning = model('');
+    protected selectedIndex = model(0);
 
+    protected maxStatusLength = signal(0);
+    protected isOpenAIEnabled = signal(false);
+    protected hashtagsInProgress = signal(false);
+    
+    protected allPhotosUploaded = computed(() => !this.photos().some(x => !x.isUploaded || (x.photoHdrFile && !x.isHdrUploaded)));
+
+    private maxFileSize = 0;
     private readonly defaultMaxFileSize = 10485760;
 
     constructor(
@@ -56,6 +61,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
         private instanceService: InstanceService,
         private router: Router,
         private settingsService: SettingsService,
+        private randomGeneratorService: RandomGeneratorService,
         breakpointObserver: BreakpointObserver
     ) {
         super(breakpointObserver);
@@ -64,16 +70,19 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
         this.maxFileSize = this.instanceService.instance?.configuration?.attachments?.imageSizeLimit ?? this.defaultMaxFileSize;
-        this.maxStatusLength = this.instanceService.instance?.configuration?.statuses?.maxCharacters ?? 500;
-        this.isOpenAIEnabled = this.settingsService.publicSettings?.isOpenAIEnabled ?? false;
+        this.maxStatusLength.set(this.instanceService.instance?.configuration?.statuses?.maxCharacters ?? 500);
+        this.isOpenAIEnabled.set(this.settingsService.publicSettings?.isOpenAIEnabled ?? false);
 
-        [this.categories, this.licenses] = await Promise.all([
+        const [internalCategories, internalLicenses] = await Promise.all([
             this.categoriesService.all(),
             this.licensesService.all()
         ]);
+
+        this.categories.set(internalCategories);
+        this.licenses.set(internalLicenses);
     }
 
-    async onPhotoSelected(event: any): Promise<void> {
+    protected async onPhotoSelected(event: any): Promise<void> {
         try {
             const file = event.target.files[0];
             if (file.size > this.maxFileSize) {
@@ -81,29 +90,42 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
                 return;
             }
 
-            const uploadPhoto = new UploadPhoto(event.target.files[0]);
-            this.photos.update(photos => [...photos, uploadPhoto]);
+            const photoUuid = this.randomGeneratorService.generateString(16);
+            const uploadPhoto = new UploadPhoto(photoUuid, event.target.files[0]);
 
             this.setPhotoData(uploadPhoto);
             this.setExifMetadata(uploadPhoto);
+
+            this.photos.update(photos => [...photos, uploadPhoto]);
 
             const formData = new FormData();
             formData.append('file', uploadPhoto.photoFile);
             const temporaryAttachment = await this.attachmentsService.uploadAttachment(formData);
 
-            uploadPhoto.id = temporaryAttachment.id;
-            uploadPhoto.isUploaded = true;
+            this.photos.update(photosArray => {
+                const photo = photosArray.find(item => item.uuid === uploadPhoto.uuid);
+                if (photo) {
+                    photo.id = temporaryAttachment.id;
+                    photo.isUploaded = true;
+                }
+
+                return [...photosArray];
+            });
         } catch (error) {
             console.error(error);
             this.messageService.showServerError(error);
         }
     }
 
-    onPhotoDelete(photo: UploadPhoto): void {
+    protected onImageClick(index: number): void {
+        this.selectedIndex.set(index);
+    }
+
+    protected onPhotoDelete(photo: UploadPhoto): void {
         this.photos.update(photos => photos.filter(x => x !== photo));
     }
 
-    async onGenerateHashtags(): Promise<void> {
+    protected async onGenerateHashtags(): Promise<void> {
         try {
             const internalPhotos = this.photos();
             if (internalPhotos.length === 0) {
@@ -114,25 +136,21 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
                 return;
             }
 
-            this.hashtagsInProgress = true;
+            this.hashtagsInProgress.set(true);
             const attachmentHashtags = await this.attachmentsService.hashtags(internalPhotos[0].id);
             if (attachmentHashtags.hashtags && attachmentHashtags.hashtags.length > 0) {
                 const hashtags = attachmentHashtags.hashtags.map(tag => '#' + tag);
-                this.statusText = this.statusText + '\n\n' + hashtags.join(' ');
+                this.statusText.update((value) => value + '\n\n' + hashtags.join(' '));
             }
         } catch (error) {
             console.error(error);
             this.messageService.showServerError(error);
         } finally {
-            this.hashtagsInProgress = false;
+            this.hashtagsInProgress.set(false);
         }
     }
 
-    protected allPhotosUploaded(): boolean {
-        return !this.photos().some(x => !x.isUploaded || (x.photoHdrFile && !x.isHdrUploaded));
-    }
-
-    async onSubmit(): Promise<void> {
+    protected async onSubmit(): Promise<void> {
         try {
             const internalPhotos = this.photos();
 
@@ -202,12 +220,12 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
             }
 
             const status = new StatusRequest();
-            status.note = this.statusText;
-            status.categoryId = this.categoryId;
-            status.visibility = StatusVisibility.Public;
-            status.commentsDisabled = this.commentsDisabled;
-            status.sensitive = this.isSensitive;
-            status.contentWarning = this.contentWarning === '' ? undefined : this.contentWarning;
+            status.note = this.statusText();
+            status.categoryId = this.categoryId();
+            status.visibility = this.visibility();
+            status.commentsDisabled = this.commentsDisabled();
+            status.sensitive = this.isSensitive();
+            status.contentWarning = this.contentWarning() === '' ? undefined : this.contentWarning();
 
             for (const photo of internalPhotos) {
                 status.attachmentIds.push(photo.id);

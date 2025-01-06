@@ -32,12 +32,12 @@ export class HashtagsSearchComponent extends ResponsiveComponent {
         this.isBrowser.set(isPlatformBrowser(platformId));
     }
 
-    async lazyLoadData(): Promise<void> {
+    protected async lazyLoadData(): Promise<void> {
         const downloadedStatuses = await this.timelineService.hashtag(this.hashtag().name, undefined, undefined, undefined, this.numberOfVisibleStatuses, undefined);
         this.statuses.set(downloadedStatuses);
     }
 
-    getImageSrc(status: Status): string | undefined {
+    protected getImageSrc(status: Status): string | undefined {
         const attachments = this.getMainStatus(status).attachments;
         if (attachments && attachments.length > 0) {
             return attachments[0].smallFile?.url;
@@ -46,7 +46,7 @@ export class HashtagsSearchComponent extends ResponsiveComponent {
         return undefined;
     }
 
-    getMainStatus(status: Status): Status {
+    private getMainStatus(status: Status): Status {
         return status.reblog ?? status;
     }
 }

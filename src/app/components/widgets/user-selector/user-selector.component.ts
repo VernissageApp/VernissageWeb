@@ -52,21 +52,21 @@ export class UserSelectorComponent implements OnInit, OnDestroy {
         this.usersSubscription?.unsubscribe();
     }
 
-    onSelectedUser(user: User): void {
+    protected onSelectedUser(user: User): void {
         this.selectedUser.set(user);
         this.selectedUserChange.emit(user);
     }
 
-    onChange(): void {
+    protected onChange(): void {
         this.selectedUser.set(undefined);
         this.selectedUserChange.emit(undefined);
     }
 
-    onModelChange(value: string): void {
+    protected onModelChange(value: string): void {
         this.textChanged.next(value);
     }
 
-    userDisplayFn(user: User): string  {
+    protected userDisplayFn(user: User): string  {
         if (!user) {
             return '';
         }

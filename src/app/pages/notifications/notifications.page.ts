@@ -61,7 +61,7 @@ export class NotificationsPage extends ResponsiveComponent implements OnInit {
         this.loadingService.hideLoader();
     }
 
-    async onLoadMore(): Promise<void> {
+    protected async onLoadMore(): Promise<void> {
         const internalNotifications = await this.notificationsService.get(undefined, this.maxId(), undefined);
 
         if (this.notifications()) {
@@ -83,7 +83,7 @@ export class NotificationsPage extends ResponsiveComponent implements OnInit {
         }
     }
 
-    getAttachmentUrl(status: Status): string | undefined {
+    protected getAttachmentUrl(status: Status): string | undefined {
         if (status.attachments && status.attachments.length > 0) {
             return status.attachments[0].smallFile?.url;
         }
@@ -91,13 +91,13 @@ export class NotificationsPage extends ResponsiveComponent implements OnInit {
         return undefined
     }
 
-    openNotificationsSettings(): void {
+    protected openNotificationsSettings(): void {
         this.dialog.open(NotificationSettingsDialog, {
             width: '500px'
         });
     }
 
-    getNotificationText(notification: Notification): string {
+    protected getNotificationText(notification: Notification): string {
         switch (notification.notificationType) {
             case NotificationType.Mention:
                 return 'mentioned you';
@@ -124,7 +124,7 @@ export class NotificationsPage extends ResponsiveComponent implements OnInit {
         }
     }
 
-    getNotificationIcon(notification: Notification): string {
+    protected getNotificationIcon(notification: Notification): string {
         switch (notification.notificationType) {
             case NotificationType.Mention:
                 return 'alternate_email';
@@ -151,7 +151,7 @@ export class NotificationsPage extends ResponsiveComponent implements OnInit {
         }
     }
 
-    getNotificationIconClass(notification: Notification): string {
+    protected getNotificationIconClass(notification: Notification): string {
         switch (notification.notificationType) {
             case NotificationType.Mention:
                 return 'mention';

@@ -105,11 +105,7 @@ export class SearchPage extends ResponsiveComponent implements AfterViewInit, On
         this.routeParamsSubscription?.unsubscribe();
     }
 
-    getMainStatus(status: Status): Status {
-        return status.reblog ?? status;
-    }
-
-    onSelectedTabChange(event: MatTabChangeEvent): void {
+    protected onSelectedTabChange(event: MatTabChangeEvent): void {
         let selectedType = '';
         switch (event.index) {
             case 0: 
@@ -126,7 +122,7 @@ export class SearchPage extends ResponsiveComponent implements AfterViewInit, On
         this.router.navigate([], { relativeTo: this.activatedRoute, queryParams: { query: this.search(), type: selectedType }, queryParamsHandling: 'merge' });
     }
 
-    async onSubmit(): Promise<void> {
+    protected async onSubmit(): Promise<void> {
         const type = this.getSearchType();
         this.router.navigate([], { relativeTo: this.activatedRoute, queryParams: { query: this.search(), type: type }, queryParamsHandling: 'merge' });
     }

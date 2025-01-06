@@ -184,13 +184,13 @@
                             </div>
 
                             <!-- Alt text -->
-                            @if (showAlternativeText() && getAltStatus(currentIndex())) {
+                            @if (showAlternativeText() && altStatus()) {
                                 <div class="flex-row alt margin-bottom-10">
                                     <div>
                                         <mat-icon class="margin-right-20" inline="true" matTooltip="Alt">remove_red_eye</mat-icon>
                                     </div>
                                     <div>
-                                        <span class="alt-label">{{ getAltStatus(currentIndex()) }}</span>
+                                        <span class="alt-label">{{ altStatus() }}</span>
                                     </div>
                                 </div>
                             }
@@ -204,97 +204,99 @@
                             }
 
                             <!-- Location -->
-                            @if (getLocation(currentIndex())) {
+                            @if (location()) {
                                 <div class="location margin-bottom-10">
                                     <mat-icon class="margin-right-20" inline="true" matTooltip="Place">place</mat-icon>
-                                    <span *ngIf="getLocation(currentIndex())?.name" class="location-label"><a class="dashed" target="_blank" [href]="getMapsUrl(currentIndex())">{{ getLocation(currentIndex())?.name }}</a> ({{ getLocation(currentIndex())?.country?.name }})</span>
+                                    <span *ngIf="location()?.name" class="location-label"><a class="dashed" target="_blank" [href]="mapsUrl()">{{ location()?.name }}</a> ({{ location()?.country?.name }})</span>
                                 </div>
                             }
-                            @if (!getLocation(currentIndex()) && hasGpsCoordinations(currentIndex())) {
+                            @if (!location() && hasGpsCoordinations()) {
                                 <div class="location margin-bottom-10">
                                     <mat-icon class="margin-right-20" inline="true" matTooltip="Place">place</mat-icon>
-                                    <span class="location-label"><a class="dashed" target="_blank" [href]="getMapsUrl(currentIndex())">Open map</a> <small class="text-muted"> ({{ getGpsLatitudeToDisplay(currentIndex()) }}, {{ getGpsLongitudeToDisplay(currentIndex()) }})</small></span>
+                                    <span class="location-label"><a class="dashed" target="_blank" [href]="mapsUrl()">Open map</a> <small class="text-muted"> ({{ gpsLatitudeToDisplay() }}, {{ gpsLongitudeToDisplay() }})</small></span>
                                 </div>
                             }
 
                             <!-- License -->
-                            @if (getLicense(currentIndex())) {
+                            @if (license(); as internalLicense) {
                                 <div class="license margin-bottom-10">
                                     <mat-icon class="margin-right-20" inline="true" matTooltip="License">license</mat-icon>
-                                    <span *ngIf="getLicense(currentIndex())?.name" class="license-label">
-                                        @if (getLicense(currentIndex())?.url) {
-                                            <a class="dashed" target="_blank" [href]="getLicense(currentIndex())?.url">{{ getLicense(currentIndex())?.name }}</a><ng-container *ngIf="getLicense(currentIndex())?.code"> ({{ getLicense(currentIndex())?.code }})</ng-container>
-                                        } @else {
-                                            {{ getLicense(currentIndex())?.name }}<ng-container *ngIf="getLicense(currentIndex())?.code"> ({{ getLicense(currentIndex())?.code }})</ng-container>
-                                        }
-                                    </span>
+                                    @if (internalLicense.name) {
+                                        <span class="license-label">
+                                            @if (internalLicense.url) {
+                                                <a class="dashed" target="_blank" [href]="internalLicense.url">{{ internalLicense.name }}</a><ng-container *ngIf="internalLicense.code"> ({{ internalLicense.code }})</ng-container>
+                                            } @else {
+                                                {{ internalLicense.name }}<ng-container *ngIf="internalLicense.code"> ({{ internalLicense.code }})</ng-container>
+                                            }
+                                        </span>
+                                    }
                                 </div>
                             }
 
                             <!-- Exif -->
-                            @if (getExif(currentIndex())) {
+                            @if (exif(); as exifInternal) {
                                 <div class="exif">
-                                    @if (getExif(currentIndex())?.make || getExif(currentIndex())?.model) {
+                                    @if (exifInternal.make || exifInternal.model) {
                                         <div class="margin-bottom-10">
                                             <mat-icon class="margin-right-20" inline="true" matTooltip="Camera">camera_alt</mat-icon>
                                             <span class="exif-label">
-                                                <span *ngIf="getExif(currentIndex())?.make">{{ getExif(currentIndex())?.make }}</span>&nbsp;<span *ngIf="getExif(currentIndex())?.model">{{ getExif(currentIndex())?.model }}</span>
+                                                <span *ngIf="exifInternal.make">{{ exifInternal.make }}</span>&nbsp;<span *ngIf="exifInternal.model">{{ exifInternal.model }}</span>
                                             </span>
                                         </div>
                                     }
 
-                                    @if (getExif(currentIndex())?.lens) {
+                                    @if (exifInternal.lens) {
                                         <div class="margin-bottom-10">
                                             <mat-icon class="margin-right-20" inline="true" matTooltip="Lens">camera</mat-icon>
-                                            <span class="exif-label">{{ getExif(currentIndex())?.lens }}</span>
+                                            <span class="exif-label">{{ exifInternal.lens }}</span>
                                         </div>
                                     }
 
-                                    @if (getExif(currentIndex())?.focalLenIn35mmFilm || getExif(currentIndex())?.fNumber || getExif(currentIndex())?.exposureTime || getExif(currentIndex())?.photographicSensitivity) {
+                                    @if (exifInternal.focalLenIn35mmFilm || exifInternal.fNumber || exifInternal.exposureTime || exifInternal.photographicSensitivity) {
                                         <div class="margin-bottom-10">
                                             <mat-icon class="margin-right-20" inline="true" matTooltip="Exposure">brightness_7</mat-icon>
-                                            <span *ngIf="getExif(currentIndex())?.focalLenIn35mmFilm" class="margin-right-15 exif-label">{{ getExif(currentIndex())?.focalLenIn35mmFilm }}mm</span>
-                                            <span *ngIf="getExif(currentIndex())?.fNumber" class="margin-right-15 exif-label">{{ getExif(currentIndex())?.fNumber | slice:0:7 }}</span>
-                                            <span *ngIf="getExif(currentIndex())?.exposureTime" class="margin-right-15 exif-label">{{ getExif(currentIndex())?.exposureTime }}s</span>
-                                            <span *ngIf="getExif(currentIndex())?.photographicSensitivity" class="margin-right-15 exif-label">ISO {{ getExif(currentIndex())?.photographicSensitivity }}</span>
+                                            <span *ngIf="exifInternal.focalLenIn35mmFilm" class="margin-right-15 exif-label">{{ exifInternal.focalLenIn35mmFilm }}mm</span>
+                                            <span *ngIf="exifInternal.fNumber" class="margin-right-15 exif-label">{{ exifInternal.fNumber | slice:0:7 }}</span>
+                                            <span *ngIf="exifInternal.exposureTime" class="margin-right-15 exif-label">{{ exifInternal.exposureTime }}s</span>
+                                            <span *ngIf="exifInternal.photographicSensitivity" class="margin-right-15 exif-label">ISO {{ exifInternal.photographicSensitivity }}</span>
                                         </div>
                                     }
 
-                                    @if (getExif(currentIndex())?.software) {
+                                    @if (exifInternal.software) {
                                         <div class="margin-bottom-10">
                                             <mat-icon class="margin-right-20" inline="true" matTooltip="Software">settings_photo_camera</mat-icon>
-                                            <span class="exif-label">{{ getExif(currentIndex())?.software }}</span>
+                                            <span class="exif-label">{{ exifInternal.software }}</span>
                                         </div>
                                     }
                                     
-                                    @if (getExif(currentIndex())?.film) {
+                                    @if (exifInternal.film) {
                                         <div class="margin-bottom-10">
                                             <mat-icon class="margin-right-20" inline="true" matTooltip="Camera roll">camera_roll</mat-icon>
-                                            <span class="exif-label">{{ getExif(currentIndex())?.film }}</span>
+                                            <span class="exif-label">{{ exifInternal.film }}</span>
                                         </div>
                                     }
 
-                                    @if (getExif(currentIndex())?.chemistry) {
+                                    @if (exifInternal.chemistry) {
                                         <div class="margin-bottom-10">
                                             <mat-icon class="margin-right-20" inline="true" matTooltip="Develop chemistry">experiment</mat-icon>
-                                            <span class="exif-label">{{ getExif(currentIndex())?.chemistry }}</span>
+                                            <span class="exif-label">{{ exifInternal.chemistry }}</span>
                                         </div>
                                     }
 
-                                    @if (getExif(currentIndex())?.scanner) {
+                                    @if (exifInternal.scanner) {
                                         <div class="margin-bottom-10">
                                             <mat-icon class="margin-right-20" inline="true" matTooltip="Scanner">scanner</mat-icon>
-                                            <span class="exif-label">{{ getExif(currentIndex())?.scanner }}</span>
+                                            <span class="exif-label">{{ exifInternal.scanner }}</span>
                                         </div>
                                     }
                                 </div>
                             }
 
                             <!-- HDR-->
-                            @if (showHdrIcon(currentIndex())) {
+                            @if (hasHdrVersion()) {
                                 <div class="hdr margin-bottom-10">
                                     <mat-icon class="margin-right-20" inline="true" matTooltip="HDR">unknown_2</mat-icon>
-                                    <span class="hdr-label">High Dynamic Range <span [matTooltip]="isHdrRendered() ? 'Supported by browser' : 'Not supported by browser'" class="fs-90 text-muted">{{ isHdrRendered() ? '(displayed)' : '(not displayed)' }}</span></span>
+                                    <span class="hdr-label">High Dynamic Range <span [matTooltip]="hasHdrSupport() ? 'Supported by browser' : 'Not supported by browser'" class="fs-90 text-muted">{{ hasHdrSupport() ? '(displayed)' : '(not displayed)' }}</span></span>
                                 </div>
                             }
 

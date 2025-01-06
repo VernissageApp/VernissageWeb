@@ -51,44 +51,44 @@ export class PreferencesPage extends ResponsiveComponent implements OnInit {
         this.isReady.set(true);
     }
 
-    onThemeChange(): void {
+    protected onThemeChange(): void {
         this.preferencesService.isLightTheme = this.isLightTheme();
         this.preferencesService.applyTheme(this.renderer);
     }
 
-    onAvatarChange(): void {
+    protected onAvatarChange(): void {
         this.preferencesService.isCircleAvatar = this.isCircleAvatar();
     }
 
-    onSquareImageChange(): void {
+    protected onSquareImageChange(): void {
         this.preferencesService.isSquareImages = this.isSquareImages();
     }
 
-    onAlwaysShowNSFWChange(): void {
+    protected onAlwaysShowNSFWChange(): void {
         this.clearReuseStrategyState();
         this.preferencesService.alwaysShowNSFW = this.alwaysShowNSFW();
     }
 
-    onShowAlternativeTextChange(): void {
+    protected onShowAlternativeTextChange(): void {
         this.preferencesService.showAlternativeText = this.showAlternativeText();
     }
 
-    onShowAvatarsChange(): void {
+    protected onShowAvatarsChange(): void {
         this.clearReuseStrategyState();
         this.preferencesService.showAvatars = this.showAvatars();
     }
 
-    onShowFavouritesChange(): void {
+    protected onShowFavouritesChange(): void {
         this.clearReuseStrategyState();
         this.preferencesService.showFavourites = this.showFavourites();
     }
 
-    onShowAltIconChange(): void {
+    protected onShowAltIconChange(): void {
         this.clearReuseStrategyState();
         this.preferencesService.showAltIcon = this.showAltIcon();
     }
 
-    onAlwaysShowSdrPhotoChange(): void {
+    protected onAlwaysShowSdrPhotoChange(): void {
         this.preferencesService.alwaysShowSdrPhoto = this.alwaysShowSdrPhoto();
     }
 

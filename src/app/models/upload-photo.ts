@@ -1,4 +1,5 @@
 export class UploadPhoto {
+    public uuid = '';
     public photoFile: Blob;
     public photoSrc?: string;
     public isUploaded = false;
@@ -42,7 +43,8 @@ export class UploadPhoto {
     public latitude?: string;
     public longitude?: string;
 
-    constructor(photoFile: Blob) {
+    constructor(uuid: string, photoFile: Blob) {
+        this.uuid = uuid;
         this.photoFile = photoFile;
     }
 }

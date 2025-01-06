@@ -31,6 +31,7 @@ export class LoginPage implements OnInit {
     protected twoFactorToken = model('');
     protected authClients = signal<AuthClient[] | undefined>(undefined);
     protected isSubmitting = signal(false);
+    protected isRegistrationEnabled = signal(false);
 
     protected loginPageMode = signal(LoginMode.UserNameAndPassword);
     protected dirtyErrorStateMatcher = new DirtyErrorStateMatcher();
@@ -60,15 +61,16 @@ export class LoginPage implements OnInit {
 
         const downloadAuthClients = await this.authClientsService.getList();
         this.authClients.set(downloadAuthClients);
+        this.isRegistrationEnabled.set(this.instanceService.isRegistrationEnabled());
     }
 
-    onCancelTwoFactor(): void {
+    protected onCancelTwoFactor(): void {
         this.twoFactorToken.set('');
         this.tokenMessage.set(undefined);
         this.loginPageMode.set(LoginMode.UserNameAndPassword);
     }
 
-    async onSubmit(): Promise<void> {
+    protected async onSubmit(): Promise<void> {
         this.isSubmitting.set(true);
 
         try {
@@ -109,12 +111,8 @@ export class LoginPage implements OnInit {
         }
     }
 
-    getExternalProviderUrl(authClient: AuthClient): string {
+    protected getExternalProviderUrl(authClient: AuthClient): string {
         return this.windowService.apiUrl() + '/identity/authenticate/' + authClient.uri;
-    }
-
-    isRegistrationEnabled(): boolean {
-        return this.instanceService.isRegistrationEnabled();
     }
 
     private clearReuseStrategyState(): void {

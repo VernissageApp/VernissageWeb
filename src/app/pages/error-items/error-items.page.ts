@@ -85,7 +85,7 @@ export class ErrorItemsPage extends ResponsiveComponent implements OnInit, OnDes
         this.routeParamsSubscription?.unsubscribe();
     }
 
-    async onSubmit(): Promise<void> {
+    protected async onSubmit(): Promise<void> {
         const navigationExtras: NavigationExtras = {
             queryParams: { query: this.search() },
             queryParamsHandling: 'merge'
@@ -94,7 +94,7 @@ export class ErrorItemsPage extends ResponsiveComponent implements OnInit, OnDes
         this.router.navigate([], navigationExtras);
     }
 
-    onDelete(item: ErrorItem): void {
+    protected onDelete(item: ErrorItem): void {
         const dialogRef = this.dialog.open(ConfirmationDialog, {
             width: '500px',
             data: 'Do you want to delete error?'
@@ -122,7 +122,7 @@ export class ErrorItemsPage extends ResponsiveComponent implements OnInit, OnDes
         });
     }
 
-    async handlePageEvent(pageEvent: PageEvent): Promise<void> {
+    protected async handlePageEvent(pageEvent: PageEvent): Promise<void> {
         const navigationExtras: NavigationExtras = {
             queryParams: { page: pageEvent.pageIndex, size: pageEvent.pageSize },
             queryParamsHandling: 'merge'

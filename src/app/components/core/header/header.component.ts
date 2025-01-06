@@ -95,33 +95,33 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
         this.messagesSubscription?.unsubscribe();
     }
 
-    async signOut(): Promise<void> {
+    protected async signOut(): Promise<void> {
         this.clearReuseStrategyState();
         await this.authorizationService.signOut();
         await this.router.navigate(['/login']);
     }
 
-    clearReuseRoute(): void {
+    protected clearReuseRoute(): void {
         this.clearReuseStrategyState();
     }
 
-    isRegistrationEnabled(): boolean {
+    protected isRegistrationEnabled(): boolean {
         return this.instanceService.isRegistrationEnabled();
     }
 
-    isAdministrator(): boolean {
+    protected isAdministrator(): boolean {
         return this.authorizationService.hasRole(Role.Administrator);
     }
 
-    isModerator(): boolean {
+    protected isModerator(): boolean {
         return this.authorizationService.hasRole(Role.Moderator);
     }
 
-    isRegistrationByInvitationsOpened(): boolean {
+    protected isRegistrationByInvitationsOpened(): boolean {
         return this.instanceService.instance?.registrationOpened === false && this.instanceService.instance?.registrationByInvitationsOpened === true;
     }
 
-    onThemeToggle(): void {
+    protected onThemeToggle(): void {
         this.preferencesService.toggleTheme(this.renderer);
         this.isLightTheme.set(this.preferencesService.isLightTheme);
     }

@@ -62,7 +62,7 @@ export class UnexpectedErrorPage implements OnInit, OnDestroy {
         }
     }
 
-    onAfterExpand(): void {
+    protected onAfterExpand(): void {
         this.errorExpanded = true;
         this.value.set(100);
     }

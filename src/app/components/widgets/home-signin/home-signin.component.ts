@@ -111,7 +111,7 @@ export class HomeSigninComponent extends ResponsiveComponent implements OnInit, 
         }
     }
 
-    onTimelineChange(): void {
+    protected onTimelineChange(): void {
         const navigationExtras: NavigationExtras = {
             queryParams: {
                 t: this.timeline()

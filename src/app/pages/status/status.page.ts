@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, Inject, OnInit, OnDestroy, PLATFORM_ID, signal, viewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Inject, OnInit, OnDestroy, PLATFORM_ID, signal, viewChild, computed } from '@angular/core';
 import { fadeInAnimation } from "src/app/animations/fade-in.animation";
 import { showOrHideAnimation } from 'src/app/animations/show-or-hide.animation';
 import { decode } from 'blurhash';
@@ -64,6 +64,17 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     protected imageHeight = signal(32);
     protected isLoggedIn = signal(false);
     protected rendered = signal<SafeHtml>('');
+    protected hasHdrSupport = signal(false);
+
+    protected altStatus = computed(() => this.getAltStatus(this.currentIndex()));
+    protected location = computed(() => this.getLocation(this.currentIndex()));
+    protected license = computed(() => this.getLicense(this.currentIndex()));
+    protected exif = computed(() => this.getExif(this.currentIndex()));
+    protected mapsUrl = computed(() => this.getMapsUrl(this.currentIndex()));
+    protected gpsLatitudeToDisplay = computed(() => this.getGpsLatitude(this.currentIndex())?.slice(0, 10) ?? '');
+    protected gpsLongitudeToDisplay = computed(() => this.getGpsLongitude(this.currentIndex())?.slice(0, 10) ?? '');
+    protected hasGpsCoordinations = computed<boolean>(() => !!this.getGpsLatitude(this.currentIndex()) && !!this.getGpsLongitude(this.currentIndex()));
+    protected hasHdrVersion = computed<boolean>(() => this.showHdrIcon(this.currentIndex()));
 
     private canvas = viewChild<ElementRef<HTMLCanvasElement> | undefined>('canvas');    
     private routeParamsSubscription?: Subscription;
@@ -109,6 +120,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         this.urlToGallery = this.routingStateService.getPreviousUrl();
         this.showAlternativeText.set(this.preferencesService.showAlternativeText);
         this.alwaysShowNSFW.set(this.preferencesService.alwaysShowNSFW);
+        this.hasHdrSupport.set(this.isHdrRendered());
 
         this.routeParamsSubscription = this.activatedRoute.params.subscribe(async params => {
             const statusId = params['id'] as string;
@@ -342,150 +354,8 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         return this.authorizationService.hasRole(Role.Administrator) || this.authorizationService.hasRole(Role.Moderator);
     }
 
-    shouldDisplayDeleteCommentButton(comment: Status): boolean {
+    protected shouldDisplayDeleteCommentButton(comment: Status): boolean {
         return comment.user?.id === this.signedInUser()?.id;
-    }
-
-    protected getAltStatus(index: number): string | undefined {
-        const attachment = this.mainStatus()?.attachments?.at(index);
-        if (attachment) {
-            return attachment.description;
-        }
-
-        return undefined;        
-    }
-
-    protected getExif(index: number): Exif | undefined {
-        const attachment = this.mainStatus()?.attachments?.at(index);
-        if (attachment) {
-            return attachment.metadata?.exif;
-        }
-
-        return undefined;
-    }
-
-    protected getLocation(index: number): Location | undefined {
-        const attachment = this.mainStatus()?.attachments?.at(index);
-        if (attachment) {
-            return attachment.location;
-        }
-
-        return undefined;
-    }
-
-    protected getLicense(index: number): License | undefined {
-        const attachment = this.mainStatus()?.attachments?.at(index);
-        if (attachment) {
-            return attachment.license;
-        }
-
-        return undefined;
-    }
-
-    protected getMapsUrl(index: number): string | undefined {
-        const location = this.getLocation(index);
-        if (location) {
-            const latitude = this.getGpsLatitude(index) ?? location.latitude?.replace(',', '.');
-            const longitude = this.getGpsLongitude(index) ?? location.longitude?.replace(',', '.');
-            
-            return `https://www.openstreetmap.org/?mlat=${latitude}&mlon=${longitude}#map=10/${latitude}/${longitude}`;
-        }
-
-        if (this.hasGpsCoordinations(index)) {
-            const latitude = this.getGpsLatitude(index);
-            const longitude = this.getGpsLongitude(index);
-            
-            return `https://www.openstreetmap.org/?mlat=${latitude}&mlon=${longitude}#map=10/${latitude}/${longitude}`;
-        }
-
-        return undefined;
-    }
-
-    protected hasGpsCoordinations(index: number): boolean {
-        return !!this.getGpsLatitude(index) && !!this.getGpsLongitude(index);
-    }
-
-    protected getGpsLatitude(index: number): string | undefined {
-        const exif = this.getExif(index);
-        if (!exif) {
-            return undefined;
-        }
-
-        if (exif.latitude) {
-            let latitude = exif.latitude?.replace(',', '.').toUpperCase();
-
-            if (latitude.endsWith('S')) {
-                latitude = latitude.replace('S', '');
-
-                if (!latitude.startsWith('-')) {
-                    latitude = '-' + latitude;
-                }
-            }
-
-            if (latitude.endsWith('N')) {
-                latitude = latitude.replace('N', '');
-            }
-
-            return latitude;
-        }
-
-        return undefined;
-    }
-
-    protected getGpsLatitudeToDisplay(index: number): string {
-        return this.getGpsLatitude(index)?.slice(0, 10) ?? '';
-    }
-
-    protected getGpsLongitude(index: number): string | undefined {
-        const exif = this.getExif(index);
-        if (!exif) {
-            return undefined;
-        }
-
-        if (exif.longitude) {
-            let longitude = exif.longitude?.replace(',', '.').toUpperCase();
-
-            if (longitude.endsWith('W')) {
-                longitude = longitude.replace('W', '');
-
-                if (!longitude.startsWith('-')) {
-                    longitude = '-' + longitude;
-                }
-            }
-
-            if (longitude.endsWith('E')) {
-                longitude = longitude.replace('E', '');
-            }
-
-            return longitude;
-        }
-
-        return undefined;
-    }
-
-    protected getGpsLongitudeToDisplay(index: number): string {
-        return this.getGpsLongitude(index)?.slice(0, 10) ?? '';
-    }
-
-    protected showHdrIcon(index: number): boolean {
-        const attachment = this.mainStatus()?.attachments?.at(index);
-        if (attachment) {
-            return !!attachment.originalHdrFile;
-        }
-
-        return false;
-    }
-
-    protected isHdrRendered(): boolean {
-        if (this.preferencesService.alwaysShowSdrPhoto) {
-            return false;
-        }
-
-        if (this.browserSupportsHdr()) {
-            return true;
-        }
-
-        return false;
     }
 
     protected async reblog(): Promise<void> {
@@ -635,6 +505,136 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
             const downloadedComments = await this.getAllReplies(internalMainStatus.id);
             this.comments.set(downloadedComments);
         }
+    }
+
+    private getAltStatus(index: number): string | undefined {
+        const attachment = this.mainStatus()?.attachments?.at(index);
+        if (attachment) {
+            return attachment.description;
+        }
+
+        return undefined;        
+    }
+
+    private getExif(index: number): Exif | undefined {
+        const attachment = this.mainStatus()?.attachments?.at(index);
+        if (attachment) {
+            return attachment.metadata?.exif;
+        }
+
+        return undefined;
+    }
+
+    private getLocation(index: number): Location | undefined {
+        const attachment = this.mainStatus()?.attachments?.at(index);
+        if (attachment) {
+            return attachment.location;
+        }
+
+        return undefined;
+    }
+
+    private getLicense(index: number): License | undefined {
+        const attachment = this.mainStatus()?.attachments?.at(index);
+        if (attachment) {
+            return attachment.license;
+        }
+
+        return undefined;
+    }
+
+    private getMapsUrl(index: number): string | undefined {
+        const locationInternal = this.getLocation(index);
+        if (locationInternal) {
+            const latitude = this.getGpsLatitude(index) ?? locationInternal.latitude?.replace(',', '.');
+            const longitude = this.getGpsLongitude(index) ?? locationInternal.longitude?.replace(',', '.');
+            
+            return `https://www.openstreetmap.org/?mlat=${latitude}&mlon=${longitude}#map=10/${latitude}/${longitude}`;
+        }
+
+        if (this.hasGpsCoordinations()) {
+            const latitude = this.getGpsLatitude(index);
+            const longitude = this.getGpsLongitude(index);
+            
+            return `https://www.openstreetmap.org/?mlat=${latitude}&mlon=${longitude}#map=10/${latitude}/${longitude}`;
+        }
+
+        return undefined;
+    }
+
+    private showHdrIcon(index: number): boolean {
+        const attachment = this.mainStatus()?.attachments?.at(index);
+        if (attachment) {
+            return !!attachment.originalHdrFile;
+        }
+
+        return false;
+    }
+
+    private isHdrRendered(): boolean {
+        if (this.preferencesService.alwaysShowSdrPhoto) {
+            return false;
+        }
+
+        if (this.browserSupportsHdr()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private getGpsLatitude(index: number): string | undefined {
+        const exif = this.getExif(index);
+        if (!exif) {
+            return undefined;
+        }
+
+        if (exif.latitude) {
+            let latitude = exif.latitude?.replace(',', '.').toUpperCase();
+
+            if (latitude.endsWith('S')) {
+                latitude = latitude.replace('S', '');
+
+                if (!latitude.startsWith('-')) {
+                    latitude = '-' + latitude;
+                }
+            }
+
+            if (latitude.endsWith('N')) {
+                latitude = latitude.replace('N', '');
+            }
+
+            return latitude;
+        }
+
+        return undefined;
+    }
+
+    private getGpsLongitude(index: number): string | undefined {
+        const exif = this.getExif(index);
+        if (!exif) {
+            return undefined;
+        }
+
+        if (exif.longitude) {
+            let longitude = exif.longitude?.replace(',', '.').toUpperCase();
+
+            if (longitude.endsWith('W')) {
+                longitude = longitude.replace('W', '');
+
+                if (!longitude.startsWith('-')) {
+                    longitude = '-' + longitude;
+                }
+            }
+
+            if (longitude.endsWith('E')) {
+                longitude = longitude.replace('E', '');
+            }
+
+            return longitude;
+        }
+
+        return undefined;
     }
 
     private async loadPageData(statusId: string): Promise<void> {

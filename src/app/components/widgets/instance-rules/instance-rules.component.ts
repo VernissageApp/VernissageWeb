@@ -43,7 +43,7 @@ export class InstanceRulesComponent extends ResponsiveComponent implements OnIni
         this.rules.set(downloadedRules);
     }
 
-    async handlePageEvent(pageEvent: PageEvent): Promise<void> {
+    protected async handlePageEvent(pageEvent: PageEvent): Promise<void> {
         this.pageIndex.set(pageEvent.pageIndex);
         this.pageSize = pageEvent.pageSize;
 
@@ -51,7 +51,7 @@ export class InstanceRulesComponent extends ResponsiveComponent implements OnIni
         this.rules.set(downloadedRules);
     }
 
-    async onDelete(rule: Rule): Promise<void> {
+    protected async onDelete(rule: Rule): Promise<void> {
         const dialogRef = this.dialog.open(ConfirmationDialog, {
             width: '500px',
             data: 'Do you want to delete instance rule?'
@@ -73,7 +73,7 @@ export class InstanceRulesComponent extends ResponsiveComponent implements OnIni
         });
     }
 
-    openRuleDialog(rule: Rule | undefined): void {
+    protected openRuleDialog(rule: Rule | undefined): void {
         const dialogRef = this.dialog.open(InstanceRuleDialog, {
             width: '500px',
             data: (rule ?? new Rule())

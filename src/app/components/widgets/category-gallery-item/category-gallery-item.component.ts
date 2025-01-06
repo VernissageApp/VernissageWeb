@@ -44,11 +44,11 @@ export class CategoryGalleryItemComponent extends ResponsiveComponent implements
         this.statuses.set(statusesInternal);
     }
 
-    getMainStatus(status: Status): Status {
+    protected getMainStatus(status: Status): Status {
         return status.reblog ?? status;
     }
 
-    onStatusClick(): void {
+    protected onStatusClick(): void {
         this.contextStatusesService.setContextStatuses(this.statuses());
     }
 }

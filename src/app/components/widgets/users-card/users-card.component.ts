@@ -27,15 +27,15 @@ export class UsersCardComponent extends ResponsiveComponent {
         super(breakpointObserver);
     }
 
-    getRelationship(user: User): Relationship | undefined {
+    protected getRelationship(user: User): Relationship | undefined {
         return this.relationships()?.find(x => x.userId === user.id);
     }
 
-    onRelationChanged(relationship: Relationship): void {
+    protected onRelationChanged(relationship: Relationship): void {
         this.relationChanged.emit(relationship);
     }
 
-    onLoadMore(): void {
+    protected onLoadMore(): void {
         this.loadMore.emit();
     }
 }

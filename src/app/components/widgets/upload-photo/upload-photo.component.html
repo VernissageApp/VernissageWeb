@@ -4,12 +4,13 @@
 
     @if (isOpenAIEnabled()) {
         <div class="flex-row flex-end">
-            @if (describeInProgress(); as describeInProgressInternal) {
+            @if (describeInProgress()) {
                 <mat-spinner class="margin-right-10 margin-top-10" [diameter]="18"></mat-spinner>
-                <button mat-stroked-button color="primary" (click)="onGenerateDescription()" [disabled]="!photo().isUploaded || describeInProgressInternal">
-                    <mat-icon>smart_toy</mat-icon> Generate
-                </button>
             }
+
+            <button mat-stroked-button color="primary" (click)="onGenerateDescription()" [disabled]="!photo().isUploaded || describeInProgress()">
+                <mat-icon>smart_toy</mat-icon> Generate
+            </button>
         </div>
     }
 

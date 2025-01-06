@@ -5,7 +5,7 @@
         <div class="padding-bottom-10">
             <div class="flex-row flex-wrap gap-10">
                 @for (photo of photos(); track photo.id; let i = $index) {
-                    <img (click)="selectedIndex = i" (keydown.enter)="selectedIndex = i" tabindex="0" [src]="photo.photoSrc" alt="Uploaded photo" [ngClass]="{ 'selected': selectedIndex === i, 'small': isHandset }" class="photo-thumbnail" />
+                    <img (click)="onImageClick(i)" (keydown.enter)="onImageClick(i)" tabindex="0" [src]="photo.photoSrc" alt="Uploaded photo" [ngClass]="{ 'selected': selectedIndex() === i, 'small': isHandset }" class="photo-thumbnail" />
                 }                
 
                 <div class="dropzone active" [ngClass]="{ 'small': isHandset }" (click)="photoFileUpload.click()" (keydown.enter)="photoFileUpload.click()" tabindex="0">
@@ -29,7 +29,7 @@
                     @for (photo of photos(); track photo.id; let i = $index) {
                         <mat-step>
                             <ng-template matStepLabel>Image data #{{ i + 1 }}</ng-template>
-                            <app-upload-photo [photo]="photo" [index]="i" [licenses]="licenses"></app-upload-photo>
+                            <app-upload-photo [photo]="photo" [index]="i" [licenses]="licenses()"></app-upload-photo>
                             <div class="margin-top-15 flex-row flex-space-between">
                                 <div>
                                     <button *ngIf="i > 0" class="margin-right-10" mat-stroked-button matStepperPrevious>Back</button>
@@ -47,10 +47,12 @@
                             <ng-template matStepLabel>Status</ng-template>
                             <div class="flex-col gap-0 margin-top-5">
 
-                                @if (isOpenAIEnabled) {
+                                @if (isOpenAIEnabled()) {
                                     <div class="flex-row flex-end margin-bottom-10">
-                                        <mat-spinner *ngIf="hashtagsInProgress" class="margin-top-10 margin-right-10" [diameter]="18"></mat-spinner>
-                                        <button mat-stroked-button color="primary" (click)="onGenerateHashtags()" [disabled]="!allPhotosUploaded() || photos.length === 0 || hashtagsInProgress">
+                                        @if (hashtagsInProgress()) {
+                                            <mat-spinner class="margin-top-10 margin-right-10" [diameter]="18"></mat-spinner>
+                                        }
+                                        <button mat-stroked-button color="primary" (click)="onGenerateHashtags()" [disabled]="!allPhotosUploaded() || photos().length === 0 || hashtagsInProgress()">
                                             <mat-icon>smart_toy</mat-icon> Hashtags
                                         </button>
                                     </div>
@@ -60,11 +62,11 @@
                                     <mat-label>Text</mat-label>
                                     <textarea matInput name="statusText" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4"
                                               cdkAutosizeMaxRows="10"  #statusInput="ngModel" [(ngModel)]="statusText" required
-                                              aria-label="Status" [appMaxLength]="maxStatusLength.toString()"></textarea>
+                                              aria-label="Status" [appMaxLength]="maxStatusLength().toString()"></textarea>
                                     @if (!isHandset) {
                                         <mat-hint class="text-muted" align="start">Use “CamelCase” for hashtags, capitalizing the first letter of each word.</mat-hint>
                                     }
-                                    <mat-hint align="end">{{ statusText.length }}/{{ maxStatusLength }}</mat-hint>
+                                    <mat-hint align="end">{{ statusText().length }}/{{ maxStatusLength() }}</mat-hint>
                                     <mat-error *ngIf="statusInput.invalid && statusInput.errors?.required">Enter status text.</mat-error>
                                     <mat-error *ngIf="statusInput.invalid && statusInput.errors?.appMaxLength">Too long status.</mat-error>
                                 </mat-form-field>
@@ -72,7 +74,9 @@
                                 <mat-form-field appearance="outline" class=" margin-bottom-20">
                                     <mat-label>Category</mat-label>
                                     <mat-select [(value)]="categoryId">
-                                        <mat-option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</mat-option>
+                                        @for(category of categories(); track category.id) {
+                                            <mat-option [value]="category.id">{{ category.name }}</mat-option>
+                                        }
                                     </mat-select>
                                 </mat-form-field>
 
@@ -90,7 +94,7 @@
 
                                 <mat-form-field appearance="outline" class="margin-top-10" >
                                     <mat-label>Content warning</mat-label>
-                                    <input [disabled]="!isSensitive" matInput name="status" [(ngModel)]="contentWarning" type="text" aria-label="Content warning" />
+                                    <input [disabled]="!isSensitive()" matInput name="status" [(ngModel)]="contentWarning" type="text" aria-label="Content warning" />
                                 </mat-form-field>
                             </div>
                             <div>

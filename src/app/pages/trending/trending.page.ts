@@ -104,7 +104,7 @@ export class TrendingPage extends ResponsiveComponent implements OnInit, OnDestr
         this.changeDetectorRef.detectChanges();
     }
 
-    onSelectionChange(): void {
+    protected onSelectionChange(): void {
         const navigationExtras: NavigationExtras = {
             queryParams: { trending: this.trending(), period: this.period() },
             queryParamsHandling: 'merge'

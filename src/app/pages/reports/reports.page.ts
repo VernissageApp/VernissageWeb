@@ -109,14 +109,14 @@ export class ReportsPage extends ResponsiveComponent implements OnInit, OnDestro
         this.displayedColumns?.set(this.displayedColumnsBrowser);
     }
 
-    onOpen(report: Report): void {
+    protected onOpen(report: Report): void {
         this.dialog.open(ReportDetailsDialog, {
             width: '500px',
             data: report
         });
     }
 
-    async onClose(report: Report): Promise<void> {
+    protected async onClose(report: Report): Promise<void> {
         try {
             const savedReport = await this.reportsService.close(report.id);
             report.considerationUser = savedReport.considerationUser;
@@ -129,7 +129,7 @@ export class ReportsPage extends ResponsiveComponent implements OnInit, OnDestro
         }
     }
 
-    async onRestore(report: Report): Promise<void> {
+    protected async onRestore(report: Report): Promise<void> {
         try {
             const savedReport = await this.reportsService.restore(report.id);
             report.considerationUser = savedReport.considerationUser;
@@ -142,7 +142,7 @@ export class ReportsPage extends ResponsiveComponent implements OnInit, OnDestro
         }
     }
 
-    async onUnlist(report: Report): Promise<void> {
+    protected async onUnlist(report: Report): Promise<void> {
         try {
             if (!report.status) {
                 return;
@@ -160,7 +160,7 @@ export class ReportsPage extends ResponsiveComponent implements OnInit, OnDestro
         }
     }
 
-    async onDelete(report: Report): Promise<void> {
+    protected async onDelete(report: Report): Promise<void> {
         try {
             if (!report.status) {
                 return;
@@ -174,7 +174,7 @@ export class ReportsPage extends ResponsiveComponent implements OnInit, OnDestro
         }
     }
 
-    async onApplyCW(report: Report): Promise<void> {
+    protected async onApplyCW(report: Report): Promise<void> {
         if (!report.status) {
             return;
         }

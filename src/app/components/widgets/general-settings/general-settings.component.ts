@@ -30,7 +30,7 @@ export class GeneralSettingsComponent implements OnInit {
         this.eventTypes.set(values);
     }
 
-    async onSubmit(): Promise<void> {
+    protected async onSubmit(): Promise<void> {
         try {
             const internalSettings = this.settings();
             if (internalSettings) {

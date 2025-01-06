@@ -125,7 +125,7 @@ export class ImageComponent implements OnInit, OnDestroy, AfterViewInit {
             });
     }
 
-    async favouriteToggle(): Promise<void> {
+    protected async favouriteToggle(): Promise<void> {
         try {
             if (this.isFavourited()) {
                 await this.statusesService.unfavourite(this.mainStatus().id);
@@ -142,7 +142,7 @@ export class ImageComponent implements OnInit, OnDestroy, AfterViewInit {
         }
     }
 
-    onImageLoaded(): void {
+    protected onImageLoaded(): void {
         this.imageIsLoaded.set(true);
     }
 
@@ -191,17 +191,17 @@ export class ImageComponent implements OnInit, OnDestroy, AfterViewInit {
         return mainAttachment?.description;
     }
 
-    getMainAttachmentBlurhash(): string {
+    private getMainAttachmentBlurhash(): string {
         const mainAttachment = this.getMainAttachment();
         return mainAttachment?.blurhash ?? 'LEHV6nWB2yk8pyo0adR*.7kCMdnj';
     }
 
-    getMainAttachmentWidth(): number {
+    private getMainAttachmentWidth(): number {
         const mainAttachment = this.getMainAttachment();
         return mainAttachment?.smallFile?.width ?? 0;
     }
 
-    getMainAttachmentHeight(): number {
+    private getMainAttachmentHeight(): number {
         const mainAttachment = this.getMainAttachment();
         return mainAttachment?.smallFile?.height ?? 0;
     }

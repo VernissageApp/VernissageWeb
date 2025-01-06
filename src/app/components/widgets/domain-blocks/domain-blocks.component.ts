@@ -43,7 +43,7 @@ export class DomainBlocksComponent extends ResponsiveComponent implements OnInit
         this.domains.set(domainsInternal);
     }
 
-    async handlePageEvent(pageEvent: PageEvent): Promise<void> {
+    protected async handlePageEvent(pageEvent: PageEvent): Promise<void> {
         this.pageIndex.set(pageEvent.pageIndex);
         this.pageSize = pageEvent.pageSize;
 
@@ -51,7 +51,7 @@ export class DomainBlocksComponent extends ResponsiveComponent implements OnInit
         this.domains.set(domainsInternal);
     }
 
-    async onDelete(instanceBlockedDomain: InstanceBlockedDomain): Promise<void> {
+    protected async onDelete(instanceBlockedDomain: InstanceBlockedDomain): Promise<void> {
         const dialogRef = this.dialog.open(ConfirmationDialog, {
             width: '500px',
             data: 'Do you want to delete instance blocked domain?'
@@ -73,7 +73,7 @@ export class DomainBlocksComponent extends ResponsiveComponent implements OnInit
         });
     }
 
-    openInstanceBlockedDomainDialog(instanceBlockedDomain: InstanceBlockedDomain | undefined): void {
+    protected openInstanceBlockedDomainDialog(instanceBlockedDomain: InstanceBlockedDomain | undefined): void {
         const dialogRef = this.dialog.open(InstanceBlockedDomainDialog, {
             width: '500px',
             data: (instanceBlockedDomain ?? new InstanceBlockedDomain())

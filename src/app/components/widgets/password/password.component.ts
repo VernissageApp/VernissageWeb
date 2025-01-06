@@ -18,11 +18,11 @@ export class PasswordComponent {
 
     private password = viewChild<NgModel | undefined>('password');
 
-    togglePassword(): void {
+    protected togglePassword(): void {
         this.isPasswordVisible.update(value => !value);
     }
 
-    passwordChanged(): void {
+    protected passwordChanged(): void {
         this.passwordTextChange.emit(this.passwordText() ?? '');
         this.passwordValid.emit(this.password()?.valid ?? false);
     }

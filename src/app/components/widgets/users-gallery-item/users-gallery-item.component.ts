@@ -39,7 +39,7 @@ export class UsersGalleryItemComponent extends ResponsiveComponent implements On
         this.alwaysShowNSFW.set(this.preferencesService.alwaysShowNSFW);
     }
 
-    async lazyLoadData(): Promise<void> {
+    protected async lazyLoadData(): Promise<void> {
         const userInternal = this.user();
 
         if (userInternal.userName) {
@@ -48,11 +48,11 @@ export class UsersGalleryItemComponent extends ResponsiveComponent implements On
         }
     }
 
-    getMainStatus(status: Status): Status {
+    protected getMainStatus(status: Status): Status {
         return status.reblog ?? status;
     }
 
-    onStatusClick(): void {
+    protected onStatusClick(): void {
         this.contextStatusesService.setContextStatuses(this.statuses());
     }
 }

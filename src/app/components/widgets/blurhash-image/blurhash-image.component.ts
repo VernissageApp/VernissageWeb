@@ -109,7 +109,7 @@ export class BlurhashImageComponent implements AfterViewInit, OnInit, OnDestroy 
             });
     }
 
-    async favouriteToggle(): Promise<void> {
+    protected async favouriteToggle(): Promise<void> {
         try {
             if (this.isFavourited()) {
                 await this.statusesService.unfavourite(this.mainStatus().id);
@@ -168,7 +168,7 @@ export class BlurhashImageComponent implements AfterViewInit, OnInit, OnDestroy 
         return mainAttachment?.description;
     }
 
-    getMainAttachmentBlurhash(): string {
+    private getMainAttachmentBlurhash(): string {
         const mainAttachment = this.getMainAttachment();
         return mainAttachment?.blurhash ?? 'LEHV6nWB2yk8pyo0adR*.7kCMdnj';
     }

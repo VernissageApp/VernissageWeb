@@ -74,11 +74,11 @@ export class RegisterPage implements OnInit {
         }
     }
 
-    onPasswordValid(valid: boolean): void {
+    protected onPasswordValid(valid: boolean): void {
         this.passwordIsValid.set(valid);
     }
 
-    onRegisterClick(): void {
+    protected onRegisterClick(): void {
         this.registerPageMode.set(RegisterMode.Register);
     }
 

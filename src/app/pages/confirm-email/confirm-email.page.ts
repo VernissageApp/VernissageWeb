@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, PLATFORM_ID, signal } from '@angular/core';
+import { Component, computed, Inject, OnInit, PLATFORM_ID, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { ConfirmEmail } from 'src/app/models/confirm-email';
@@ -18,7 +18,11 @@ import { AuthorizationService } from 'src/app/services/authorization/authorizati
 export class ConfirmEmailPage implements OnInit {
     protected isLoggedIn = signal(false);
 
-    private confirmEmailMode = ConfirmEmailMode.Validating;
+    protected isValidatingMode = computed(() => this.confirmEmailMode() === ConfirmEmailMode.Validating);
+    protected isErrorMode = computed(() => this.confirmEmailMode() === ConfirmEmailMode.Error);
+    protected isSuccessMode = computed(() => this.confirmEmailMode() === ConfirmEmailMode.Success);
+
+    private confirmEmailMode = signal(ConfirmEmailMode.Validating);
     private isBrowser = false;
 
     constructor(
@@ -41,22 +45,10 @@ export class ConfirmEmailPage implements OnInit {
             const confirmEmail = new ConfirmEmail(params.user, params.token);
             try {
                 await this.registerService.confirm(confirmEmail);
-                this.confirmEmailMode = ConfirmEmailMode.Success;
+                this.confirmEmailMode.set(ConfirmEmailMode.Success);
             } catch {
-                this.confirmEmailMode = ConfirmEmailMode.Error;
+                this.confirmEmailMode.set(ConfirmEmailMode.Error);
             }
         });
-    }
-
-    isValidatingMode(): boolean {
-        return this.confirmEmailMode === ConfirmEmailMode.Validating;
-    }
-
-    isErrorMode(): boolean {
-        return this.confirmEmailMode === ConfirmEmailMode.Error;
-    }
-
-    isSuccessMode(): boolean {
-        return this.confirmEmailMode === ConfirmEmailMode.Success;
     }
 }

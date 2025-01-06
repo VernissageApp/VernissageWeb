@@ -94,6 +94,15 @@ export class EditorsPage extends ResponsiveComponent implements OnInit, OnDestro
         this.changeDetectorRef.detectChanges();
     }
 
+    protected onSelectionChange(): void {
+        const navigationExtras: NavigationExtras = {
+            queryParams: { tab: this.tab() },
+            queryParamsHandling: 'merge'
+        };
+
+        this.router.navigate([], navigationExtras);
+    }
+
     private async loadStatuses(): Promise<void> {
         const downloadedStatuses = await this.timelineService.featuredStatuses(undefined, undefined, undefined, undefined);
         downloadedStatuses.context = ContextTimeline.editors;
@@ -104,15 +113,6 @@ export class EditorsPage extends ResponsiveComponent implements OnInit, OnDestro
     private async loadUsers(): Promise<void> {
         const downloadUsers = await this.timelineService.featuredUsers(undefined, undefined, undefined, undefined);
         this.users.set(downloadUsers);
-    }
-
-    onSelectionChange(): void {
-        const navigationExtras: NavigationExtras = {
-            queryParams: { tab: this.tab() },
-            queryParamsHandling: 'merge'
-        };
-
-        this.router.navigate([], navigationExtras);
     }
 
     private hasAccessToEditorsChoice(): boolean {

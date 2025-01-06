@@ -39,16 +39,16 @@ export class HashtagGalleryItemComponent extends ResponsiveComponent implements 
         this.alwaysShowNSFW.set(this.preferencesService.alwaysShowNSFW);
     }
 
-    async lazyLoadData(): Promise<void> {
+    protected async lazyLoadData(): Promise<void> {
         const downloadedStatuses = await this.timelineService.hashtag(this.hashtag().name, undefined, undefined, undefined, this.numberOfVisibleStatuses, undefined);
         this.statuses.set(downloadedStatuses);
     }
 
-    getMainStatus(status: Status): Status {
+    protected getMainStatus(status: Status): Status {
         return status.reblog ?? status;
     }
 
-    onStatusClick(): void {
+    protected onStatusClick(): void {
         this.contextStatusesService.setContextStatuses(this.statuses());
     }
 }

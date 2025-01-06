@@ -80,7 +80,7 @@ export class InvitationsPage extends ResponsiveComponent implements OnInit {
         this.displayedColumns?.set(this.displayedColumnsBrowser);
     }
 
-    async generate(): Promise<void> {
+    protected async generate(): Promise<void> {
         try {
             await this.invitationsService.generate();
             const downloadedInvitations = await this.invitationsService.get();
@@ -92,7 +92,7 @@ export class InvitationsPage extends ResponsiveComponent implements OnInit {
         }
     }
 
-    async delete(id: string): Promise<void> {
+    protected async delete(id: string): Promise<void> {
         try {
             await this.invitationsService.delete(id);
             const downloadedInvitations = await this.invitationsService.get();
@@ -104,7 +104,7 @@ export class InvitationsPage extends ResponsiveComponent implements OnInit {
         }
     }
 
-    copy(code: string): void {
+    protected copy(code: string): void {
         this.clipboard.copy(code);
         this.messageService.showSuccess('Code has been copied into clipboard.');
     }

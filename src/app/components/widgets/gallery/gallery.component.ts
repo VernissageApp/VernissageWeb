@@ -104,7 +104,7 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
         this.routeNavigationStartSubscription?.unsubscribe();
     }
 
-    async onNearEndScroll(): Promise<void> {
+    protected async onNearEndScroll(): Promise<void> {
         if (!this.isReady) {
             return;
         }
@@ -136,6 +136,10 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
             this.loadingService.hideLoader();
             this.isDuringLoadingMode = false;
         }
+    }
+
+    protected getMainStatus(status: Status): Status {
+        return status.reblog ?? status;
     }
 
     private buildGallery(statusesArray: LinkableResult<Status>): void {
@@ -196,10 +200,6 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
             }
             return columns;
         });        
-    }
-
-    getMainStatus(status: Status): Status {
-        return status.reblog ?? status;
     }
 
     private getSmallerColumnIndex(galleryColumns: GalleryColumn[], currentImageHeight: number): number {

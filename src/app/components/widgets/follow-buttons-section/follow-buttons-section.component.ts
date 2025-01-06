@@ -70,7 +70,7 @@ export class FollowButtonsSectionComponent implements OnInit {
         }
     }
 
-    openMuteAccountDialog(): void {
+    protected openMuteAccountDialog(): void {
         const dialogRef = this.dialog.open(MuteAccountDialog, {
             width: '500px'
         });
@@ -96,11 +96,11 @@ export class FollowButtonsSectionComponent implements OnInit {
         });
     }
 
-    toggleChange(event: MatButtonToggleChange) {
+    protected toggleChange(event: MatButtonToggleChange) {
         event.source.buttonToggleGroup.value = '';
     }
 
-    async unmuteAccount(): Promise<void> {
+    protected async unmuteAccount(): Promise<void> {
         try {
             const internalUser = this.user();
 
@@ -118,7 +118,7 @@ export class FollowButtonsSectionComponent implements OnInit {
         }
     }
 
-    async onReportDialog(): Promise<void> {
+    protected async onReportDialog(): Promise<void> {
         const dialogRef = this.dialog.open(ReportDialog, {
             width: '500px',
             data: new ReportData(this.user(), undefined)
@@ -137,7 +137,7 @@ export class FollowButtonsSectionComponent implements OnInit {
         });
     }
 
-    async onFollow(): Promise<void> {
+    protected async onFollow(): Promise<void> {
         const internalUser = this.user();
 
         if (internalUser.userName) {
@@ -163,7 +163,7 @@ export class FollowButtonsSectionComponent implements OnInit {
         }
     }
 
-    async onUnfollow(): Promise<void> {
+    protected async onUnfollow(): Promise<void> {
         const internalUser = this.user();
 
         if (internalUser.userName) {
@@ -184,7 +184,7 @@ export class FollowButtonsSectionComponent implements OnInit {
         }
     }
 
-    async onApproveFollow(): Promise<void> {
+    protected async onApproveFollow(): Promise<void> {
         const internalUser = this.user();
 
         if (internalUser.id && internalUser.userName) {
@@ -205,7 +205,7 @@ export class FollowButtonsSectionComponent implements OnInit {
         }
     }
 
-    async onRejectFollow(): Promise<void> {
+    protected async onRejectFollow(): Promise<void> {
         const internalUser = this.user();
 
         if (internalUser.id && internalUser.userName) {
@@ -226,7 +226,7 @@ export class FollowButtonsSectionComponent implements OnInit {
         }
     }
 
-    async onFeature(): Promise<void> {
+    protected async onFeature(): Promise<void> {
         const internalUser = this.user();
 
         if (internalUser.userName) {
@@ -244,7 +244,7 @@ export class FollowButtonsSectionComponent implements OnInit {
         }
     }
 
-    async onUnfeature(): Promise<void> {
+    protected async onUnfeature(): Promise<void> {
         const internalUser = this.user();
 
         if (internalUser.userName) {

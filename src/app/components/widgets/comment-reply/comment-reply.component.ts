@@ -29,7 +29,7 @@ export class CommentReplyComponent {
     constructor(private statusesService: StatusesService, private messageService: MessagesService) {
     }
 
-    async onSubmitComment(): Promise<void> {
+    protected async onSubmitComment(): Promise<void> {
         try {
             if (this.status != null) {
                 this.isSendDisabled.set(true);
@@ -53,7 +53,7 @@ export class CommentReplyComponent {
         }
     }
 
-    onCancel(): void {
+    protected onCancel(): void {
         this.clickCancel.emit();
     }
 }
