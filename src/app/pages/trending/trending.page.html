@@ -26,7 +26,7 @@
 
         @if (selectedTrending() === 'statuses') {
             @if (statuses(); as statusesArray) {
-                <app-gallery [statuses]="statusesArray" [isDetached]="isDetached()"></app-gallery>
+                <app-gallery [statuses]="statusesArray"></app-gallery>
             }
         }
 

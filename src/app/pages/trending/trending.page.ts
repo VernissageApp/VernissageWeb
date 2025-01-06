@@ -4,7 +4,6 @@ import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { fadeInAnimation } from "src/app/animations/fade-in.animation";
 import { ResponsiveComponent } from "src/app/common/responsive";
-import { OnAttach, OnDetach } from "src/app/directives/app-router-outlet.directive";
 import { ContextTimeline } from "src/app/models/context-timeline";
 import { Hashtag } from "src/app/models/hashtag";
 import { LinkableResult } from "src/app/models/linkable-result";
@@ -24,7 +23,7 @@ import { TrendingService } from "src/app/services/http/trending.service";
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
-export class TrendingPage extends ResponsiveComponent implements OnInit, OnDestroy, OnAttach, OnDetach {
+export class TrendingPage extends ResponsiveComponent implements OnInit, OnDestroy {
     protected readonly trendingPeriod = TrendingPeriod;
 
     protected statuses = signal<LinkableResult<Status> | undefined>(undefined);
@@ -36,7 +35,6 @@ export class TrendingPage extends ResponsiveComponent implements OnInit, OnDestr
     protected selectedTrending = signal('statuses');
 
     protected isReady = signal(false);
-    protected isDetached = signal(false);
     protected showHashtags = signal(false);
 
     private routeParamsSubscription?: Subscription;
@@ -92,14 +90,6 @@ export class TrendingPage extends ResponsiveComponent implements OnInit, OnDestr
         super.ngOnDestroy();
 
         this.routeParamsSubscription?.unsubscribe();
-    }
-
-    onDetach(): void {
-        this.isDetached.set(true);
-    }
-
-    onAttach(): void {
-        this.isDetached.set(false);
     }
 
     protected onSelectionChange(): void {

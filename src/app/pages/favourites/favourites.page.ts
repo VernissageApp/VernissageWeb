@@ -13,7 +13,6 @@ import { FavouritesService } from 'src/app/services/http/favourites.service';
 import { UserDisplayService } from 'src/app/services/common/user-display.service';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 import { User } from 'src/app/models/user';
-import { OnAttach, OnDetach } from 'src/app/directives/app-router-outlet.directive';
 
 @Component({
     selector: 'app-favourites',
@@ -23,10 +22,9 @@ import { OnAttach, OnDetach } from 'src/app/directives/app-router-outlet.directi
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
-export class FavouritesPage extends ResponsiveComponent implements OnInit, OnDestroy, OnAttach, OnDetach {
+export class FavouritesPage extends ResponsiveComponent implements OnInit, OnDestroy {
     protected statuses = signal<LinkableResult<Status> | undefined>(undefined);
     protected isReady = signal(false);
-    protected isDetached = signal(false);
     protected user = signal<User | undefined>(undefined);
     protected fullName = signal('');
 
@@ -79,13 +77,5 @@ export class FavouritesPage extends ResponsiveComponent implements OnInit, OnDes
 
         this.routeParamsSubscription?.unsubscribe();
         this.routeNavigationEndSubscription?.unsubscribe();
-    }
-
-    onDetach(): void { 
-        this.isDetached.set(true);
-    }
-
-    onAttach(): void {
-        this.isDetached.set(false);
     }
 }

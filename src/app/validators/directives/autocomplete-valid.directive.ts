@@ -1,4 +1,4 @@
-import { Directive, Input } from '@angular/core';
+import { Directive, input } from '@angular/core';
 import { NG_VALIDATORS, Validator, UntypedFormControl, ValidationErrors } from '@angular/forms';
 
 @Directive({
@@ -12,10 +12,10 @@ import { NG_VALIDATORS, Validator, UntypedFormControl, ValidationErrors } from '
 })
 
 export class AutocompleteValidDirective implements Validator {
-    @Input() appAutocompleteValid = true;
+    public appAutocompleteValid = input(true);
 
     validate(formControl: UntypedFormControl): ValidationErrors | null {
-        if (!this.appAutocompleteValid) {
+        if (!this.appAutocompleteValid()) {
             return null;
         }
 

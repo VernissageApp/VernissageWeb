@@ -10,7 +10,6 @@ import { LinkableResult } from 'src/app/models/linkable-result';
 import { ContextTimeline } from 'src/app/models/context-timeline';
 import { ContextStatusesService } from 'src/app/services/common/context-statuses.service';
 import { SettingsService } from 'src/app/services/http/settings.service';
-import { OnAttach, OnDetach } from 'src/app/directives/app-router-outlet.directive';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 
 @Component({
@@ -21,11 +20,10 @@ import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
-export class HomeSignoutComponent extends ResponsiveComponent implements OnInit, OnDestroy, OnAttach, OnDetach {
+export class HomeSignoutComponent extends ResponsiveComponent implements OnInit, OnDestroy {
     protected statuses = signal<LinkableResult<Status> | undefined>(undefined);
     protected isReady = signal(false);
     protected showEditorsChoice = signal(false);
-    protected isDetached = signal(false);
     protected mastodonUrl = signal<string | undefined>(undefined);
     
     private isPageVisible = true;
@@ -80,14 +78,6 @@ export class HomeSignoutComponent extends ResponsiveComponent implements OnInit,
 
         this.routeParamsSubscription?.unsubscribe();
         this.routeNavigationEndSubscription?.unsubscribe();
-    }
-
-    onDetach(): void {
-        this.isDetached.set(true);
-    }
-
-    onAttach(): void {
-        this.isDetached.set(false);
     }
 
     @HostListener('document:visibilitychange', ['$event'])

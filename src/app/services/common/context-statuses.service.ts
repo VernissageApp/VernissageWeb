@@ -50,22 +50,22 @@ export class ContextStatusesService {
         return !!this.statuses && this.statuses.data.length > 0;
     }
 
-    public async loadOlder(): Promise<void> {
+    public async loadOlder(): Promise<LinkableResult<Status> | null> {
         if (!this.statuses?.maxId) {
             this.allOlderStatusesDownloaded = true;
-            return;
+            return null;
         }
 
-        await this.loadNextStatuses();
+        return await this.loadNextStatuses();
     }
 
-    public async loadNewer(): Promise<void> {
+    public async loadNewer(): Promise<LinkableResult<Status> | null> {
         if (!this.statuses?.minId) {
             this.allNewerStatusesDownloaded = true;
-            return;
+            return null;
         }
 
-        await this.loadPreviousStatuses();
+        return await this.loadPreviousStatuses();
     }
 
     public async getNext(id: string): Promise<Status | null> {
@@ -116,7 +116,7 @@ export class ContextStatusesService {
         return this.statuses.data[currentIndex - 1];
     }
 
-    private async loadNextStatuses(): Promise<boolean> {
+    private async loadNextStatuses(): Promise<LinkableResult<Status> | null> {
         const older = await this.downloadStatuses(undefined, this.statuses?.maxId);
 
         if (this.statuses && older && older.data.length > 0) {
@@ -124,31 +124,31 @@ export class ContextStatusesService {
             this.statuses.maxId = older.maxId;
 
             this.persistanceService.setJson('statusesContext', this.statuses);
-            return true;
+            return older;
         }
 
         if (older?.data.length === 0 || !older?.maxId) {
             this.allOlderStatusesDownloaded = true;
         }
 
-        return false;
+        return null;
     }
 
-    private async loadPreviousStatuses(): Promise<boolean> {
+    private async loadPreviousStatuses(): Promise<LinkableResult<Status> | null> {
         const newer = await this.downloadStatuses(this.statuses?.minId, undefined);
         if (this.statuses && newer && newer.data.length > 0) {
             this.statuses.data.unshift(...newer.data);
             this.statuses.minId = newer.minId;
 
             this.persistanceService.setJson('statusesContext', this.statuses);
-            return true;
+            return newer;
         }
 
         if (newer?.data.length === 0 || !newer?.minId) {
             this.allNewerStatusesDownloaded = true;
         }
 
-        return false;
+        return null;
     }
 
     private async downloadStatuses(minId?: string, maxId?: string): Promise<LinkableResult<Status> | null> {

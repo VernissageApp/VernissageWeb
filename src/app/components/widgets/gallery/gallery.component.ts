@@ -1,5 +1,5 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { ChangeDetectionStrategy, Component, effect, Inject, input, OnDestroy, OnInit, PLATFORM_ID, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, Inject, input, OnDestroy, OnInit, PLATFORM_ID, signal } from '@angular/core';
 import { Subscription, filter } from 'rxjs';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { LinkableResult } from 'src/app/models/linkable-result';
@@ -27,13 +27,14 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
     public statuses = input.required<LinkableResult<Status>>();
     public squareImages = input(false);
     public hideAvatars = input(false);
-    public isDetached = input(false);
 
     protected galleryColumns = signal<GalleryColumn[]>([]);
     protected alwaysShowNSFW = signal(false);
     protected avatarVisible = signal(true);
     protected isBrowser = signal(false);
+    protected statusesExists = computed(() => (this.internalStatuses()?.data.length ?? 0) > 0);
 
+    private internalStatuses = signal<LinkableResult<Status> | undefined>(undefined);
     private isReady = false;
     private columns = 3;
     private isDuringLoadingMode = false;
@@ -59,10 +60,11 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
         this.isBrowser.set(isPlatformBrowser(platformId));
 
         effect(() => {
-            const internalStatuses = this.statuses();
+            const inputStatuses = this.statuses();
 
-            this.contextStatusesService.setContextStatuses(internalStatuses);
-            this.buildGallery(internalStatuses);
+            this.internalStatuses.set(inputStatuses);
+            this.contextStatusesService.setContextStatuses(inputStatuses);
+            this.buildGallery(inputStatuses);
         });
     }
 
@@ -74,11 +76,11 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
             if (result.matches) {
                 this.columns = this.squareImages() ? 3 : 1;
                 this.avatarVisible.set(!this.squareImages);
-                this.buildGallery(this.statuses());
+                this.buildGallery(this.internalStatuses());
             } else {
                 this.columns = 3;
                 this.avatarVisible.set(true);
-                this.buildGallery(this.statuses());
+                this.buildGallery(this.internalStatuses());
             }
         });
 
@@ -123,16 +125,15 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
                 return;
             }
 
-            if (!this.statuses()?.data.length) {
+            if (!this.internalStatuses()?.data.length) {
                 this.isDuringLoadingMode = false;
                 return;
             }
 
             this.loadingService.showLoader();
 
-            const amountOfStatusesBeforeLoadMode = this.statuses().data.length;
-            await this.contextStatusesService.loadOlder();
-            this.appendToGallery(amountOfStatusesBeforeLoadMode);
+            const olderStatuses = await this.contextStatusesService.loadOlder();
+            this.appendToGallery(olderStatuses);
 
             this.loadingService.hideLoader();
             this.isDuringLoadingMode = false;
@@ -143,7 +144,7 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
         return status.reblog ?? status;
     }
 
-    private buildGallery(statusesArray: LinkableResult<Status>): void {
+    private buildGallery(statusesArray: LinkableResult<Status> | undefined): void {
         const columns: GalleryColumn[] = [];
 
         for(let i = 0; i < this.columns; i++) {
@@ -151,6 +152,7 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
         }
 
         if (!statusesArray) {
+            this.galleryColumns.set(columns);
             return;
         }
 
@@ -165,9 +167,8 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
         this.galleryColumns.set(columns);
     }
 
-    private appendToGallery(fromIndex: number): void {
-        const addedStatuses = this.statuses()?.data;
-        if (!addedStatuses) {
+    private appendToGallery(statusesArray: LinkableResult<Status> | null): void {
+        if (!statusesArray) {
             return;
         }
 
@@ -183,9 +184,7 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
         }
         
         // Append new statuses to temporary array.
-        for(let i = fromIndex; i < addedStatuses.length; i++) {
-            const status = addedStatuses[i];
-
+        for (const status of statusesArray.data) {
             const imageHeight = this.getImageConstraintHeight(status);
             const smallerColumnIndex = this.getSmallerColumnIndex(internalColumns, imageHeight);
 
@@ -194,12 +193,24 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
         }
 
         // Update in one step columns signal (to reduce DOM manipulations).
+        this.internalStatuses.update((value) => {
+            const newList = new LinkableResult<Status>();
+            newList.data = value?.data.concat(statusesArray.data) ?? [];
+            newList.maxId = value?.maxId;
+            newList.minId = value?.minId;
+            newList.hashtag = value?.hashtag;
+            newList.category = value?.category;
+            newList.user = value?.user;
+
+            return newList;
+        });
+
         this.galleryColumns.update(columns => {
             for (let i = 0; i < internalColumns.length; i++) {
                 columns[i].statuses = columns[i].statuses.concat(internalColumns[i].statuses);
                 columns[i].size = internalColumns[i].size;
             }
-            return columns;
+            return [...columns];
         });        
     }
 

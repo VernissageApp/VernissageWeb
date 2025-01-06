@@ -52,14 +52,6 @@
     </div>
 
     <div class="margin-bottom-20">
-        <app-user-selector name="webContactUserId" label="Web contact user id" [(selectedUser)]="webContactUser"></app-user-selector>
-    </div>
-
-    <div class="margin-bottom-20">
-        <app-user-selector name="systemDefaultUserId" label="Default system user id" [(selectedUser)]="systemDefaultUser"></app-user-selector>
-    </div>
-
-    <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>CORS orgins</mat-label>
             <input matInput name="corsOrigin" #corsOrigin="ngModel" [(ngModel)]="settings().corsOrigin"
@@ -117,6 +109,17 @@
                 indicating that the account has been verified by Mastodon.</span>
             </mat-hint>
         </mat-form-field>
+    </div>
+
+    <mat-divider></mat-divider>
+    <h3>Default accounts</h3>
+
+    <div class="margin-bottom-30">
+        <app-user-selector name="webContactUserId" label="Web contact user id" [(selectedUser)]="webContactUser"></app-user-selector>
+    </div>
+
+    <div class="margin-bottom-30">
+        <app-user-selector name="systemDefaultUserId" label="Default system user id" [(selectedUser)]="systemDefaultUser"></app-user-selector>
     </div>
 
     <mat-divider></mat-divider>

@@ -4,7 +4,6 @@ import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
 import { Subscription } from "rxjs/internal/Subscription";
 import { fadeInAnimation } from "src/app/animations/fade-in.animation";
 import { ResponsiveComponent } from "src/app/common/responsive";
-import { OnAttach, OnDetach } from "src/app/directives/app-router-outlet.directive";
 import { ContextTimeline } from "src/app/models/context-timeline";
 import { LinkableResult } from "src/app/models/linkable-result";
 import { Status } from "src/app/models/status";
@@ -22,12 +21,11 @@ import { TimelineService } from "src/app/services/http/timeline.service";
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
-export class EditorsPage extends ResponsiveComponent implements OnInit, OnDestroy, OnAttach, OnDetach {
+export class EditorsPage extends ResponsiveComponent implements OnInit, OnDestroy {
     protected statuses = signal<LinkableResult<Status> | undefined>(undefined);
     protected users = signal<LinkableResult<User> | undefined>(undefined);
 
     protected isReady = signal(false);
-    protected isDetached = signal(false);
     protected tab = model('statuses');
     protected selectedTab = signal('statuses');
 
@@ -82,14 +80,6 @@ export class EditorsPage extends ResponsiveComponent implements OnInit, OnDestro
         super.ngOnDestroy();
 
         this.routeParamsSubscription?.unsubscribe();
-    }
-
-    onDetach(): void {
-        this.isDetached.set(true);
-    }
-
-    onAttach(): void {
-        this.isDetached.set(false);
     }
 
     protected onSelectionChange(): void {
