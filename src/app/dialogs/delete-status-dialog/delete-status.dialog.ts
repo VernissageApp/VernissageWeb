@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-delete-status-dialog',
     templateUrl: 'delete-status.dialog.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class DeleteStatusDialog {

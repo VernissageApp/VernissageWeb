@@ -5,7 +5,7 @@
         <div class="padding-bottom-10">
             <div class="flex-row flex-wrap gap-10">
                 @for (photo of photos(); track photo.id; let i = $index) {
-                    <img (click)="onImageClick(i)" (keydown.enter)="onImageClick(i)" tabindex="0" [src]="photo.photoSrc" alt="Uploaded photo" [ngClass]="{ 'selected': selectedIndex() === i, 'small': isHandset() }" class="photo-thumbnail" />
+                    <img (click)="onImageClick(i)" (keydown.enter)="onImageClick(i)" tabindex="0" [src]="photo.photoSrc()" alt="Uploaded photo" [ngClass]="{ 'selected': selectedIndex() === i, 'small': isHandset() }" class="photo-thumbnail" />
                 }                
 
                 <div class="dropzone active" [ngClass]="{ 'small': isHandset() }" (click)="photoFileUpload.click()" (keydown.enter)="photoFileUpload.click()" tabindex="0">
@@ -26,7 +26,7 @@
 
             <mat-card-content>
                 <mat-stepper orientation="vertical" [(selectedIndex)]="selectedIndex" #stepper>
-                    @for (photo of photos(); track photo.id; let i = $index) {
+                    @for (photo of photos(); track photo.uuid; let i = $index) {
                         <mat-step>
                             <ng-template matStepLabel>Image data #{{ i + 1 }}</ng-template>
                             <app-upload-photo [photo]="photo" [index]="i" [licenses]="licenses()"></app-upload-photo>

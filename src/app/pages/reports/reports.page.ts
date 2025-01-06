@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { ForbiddenError } from 'src/app/errors/forbidden-error';
 import { Report } from 'src/app/models/report';
@@ -18,12 +18,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { AvatarSize } from 'src/app/components/widgets/avatar/avatar-size';
 import { StatusesService } from 'src/app/services/http/statuses.service';
 import { ContentWarningDialog } from 'src/app/dialogs/content-warning-dialog/content-warning.dialog';
+import { RandomGeneratorService } from 'src/app/services/common/random-generator.service';
 
 @Component({
     selector: 'app-reports',
     templateUrl: './reports.page.html',
     styleUrls: ['./reports.page.scss'],
     animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class ReportsPage extends ResponsiveComponent implements OnInit, OnDestroy {
@@ -41,6 +43,7 @@ export class ReportsPage extends ResponsiveComponent implements OnInit, OnDestro
     
     constructor(
         private authorizationService: AuthorizationService,
+        private randomGeneratorService: RandomGeneratorService,
         private reportsService: ReportsService,
         private statusesService: StatusesService,
         private messageService: MessagesService,
@@ -118,9 +121,8 @@ export class ReportsPage extends ResponsiveComponent implements OnInit, OnDestro
 
     protected async onClose(report: Report): Promise<void> {
         try {
-            const savedReport = await this.reportsService.close(report.id);
-            report.considerationUser = savedReport.considerationUser;
-            report.considerationDate = savedReport.considerationDate;
+            await this.reportsService.close(report.id);
+            await this.refreshList();
 
             this.messageService.showSuccess('Report has been closed.');
         } catch (error) {
@@ -131,9 +133,8 @@ export class ReportsPage extends ResponsiveComponent implements OnInit, OnDestro
 
     protected async onRestore(report: Report): Promise<void> {
         try {
-            const savedReport = await this.reportsService.restore(report.id);
-            report.considerationUser = savedReport.considerationUser;
-            report.considerationDate = savedReport.considerationDate;
+            await this.reportsService.restore(report.id);
+            await this.refreshList();
 
             this.messageService.showSuccess('Report has been restored.');
         } catch (error) {
@@ -149,9 +150,8 @@ export class ReportsPage extends ResponsiveComponent implements OnInit, OnDestro
             }
 
             await this.statusesService.unlist(report.status.id);
-            const savedReport = await this.reportsService.close(report.id);
-            report.considerationUser = savedReport.considerationUser;
-            report.considerationDate = savedReport.considerationDate;
+            await this.reportsService.close(report.id);
+            await this.refreshList();
 
             this.messageService.showSuccess('Status has been unlisted.');
         } catch (error) {
@@ -167,6 +167,8 @@ export class ReportsPage extends ResponsiveComponent implements OnInit, OnDestro
             }
 
             await this.statusesService.delete(report.status.id);
+            await this.refreshList();
+
             this.messageService.showSuccess('Status has been deleted.');
         } catch (error) {
             console.error(error);
@@ -189,10 +191,8 @@ export class ReportsPage extends ResponsiveComponent implements OnInit, OnDestro
                     }
         
                     await this.statusesService.applyContentWarning(result?.statusId, result?.contentWarning);
-
-                    const savedReport = await this.reportsService.close(report.id);
-                    report.considerationUser = savedReport.considerationUser;
-                    report.considerationDate = savedReport.considerationDate;
+                    await this.reportsService.close(report.id);
+                    await this.refreshList();
         
                     this.messageService.showSuccess('Content warning has been added.');
                 } catch (error) {
@@ -209,5 +209,14 @@ export class ReportsPage extends ResponsiveComponent implements OnInit, OnDestro
 
     private isModerator(): boolean {
         return this.authorizationService.hasRole(Role.Moderator);
+    }
+
+    private async refreshList(): Promise<void> {
+        const navigationExtras: NavigationExtras = {
+            queryParams: { t: this.randomGeneratorService.generateString(8) },
+            queryParamsHandling: 'merge'
+        };
+
+        await this.router.navigate([], navigationExtras);
     }
 }

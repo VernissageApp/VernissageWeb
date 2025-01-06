@@ -1,4 +1,4 @@
-import { Component, input, model, output, signal, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, model, output, signal, viewChild } from '@angular/core';
 import { Status } from 'src/app/models/status';
 import { StatusRequest } from 'src/app/models/status-request';
 import { User } from 'src/app/models/user';
@@ -11,6 +11,7 @@ import { NgForm } from '@angular/forms';
     selector: 'app-comment-reply',
     templateUrl: './comment-reply.component.html',
     styleUrls: ['./comment-reply.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class CommentReplyComponent {

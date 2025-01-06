@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, signal, model, computed } from '@angular/core';
+import { Component, OnInit, Inject, signal, model, computed, ChangeDetectionStrategy } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { ReCaptchaV3Service } from 'ngx-captcha';
 import { ForbiddenError } from 'src/app/errors/forbidden-error';
@@ -19,6 +19,7 @@ import { Rule } from 'src/app/models/rule';
     templateUrl: './register.page.html',
     styleUrls: ['./register.page.scss'],
     animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class RegisterPage implements OnInit {

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef, input, model, output, signal } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, input, model, output, signal } from '@angular/core';
 import { ControlContainer, NgForm } from '@angular/forms';
 import { Subject, Subscription } from 'rxjs';
 
@@ -30,8 +30,7 @@ export class UserSelectorComponent implements OnInit, OnDestroy {
     private textChanged = new Subject<string>();
 
     constructor(
-        private usersService: UsersService,
-        private changeDetectorRef: ChangeDetectorRef
+        private usersService: UsersService
     ) { }
 
     ngOnInit(): void {
@@ -44,7 +43,6 @@ export class UserSelectorComponent implements OnInit, OnDestroy {
         ).subscribe(users => {
             this.filteredUsers.set(users);
             this.isUsersLoading.set(false);
-            this.changeDetectorRef.markForCheck();
         });
     }
 

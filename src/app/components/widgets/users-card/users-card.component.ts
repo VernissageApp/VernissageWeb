@@ -1,5 +1,5 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { Relationship } from 'src/app/models/relationship';
 import { User } from 'src/app/models/user';
@@ -10,6 +10,7 @@ import { UserDisplayService } from 'src/app/services/common/user-display.service
     selector: 'app-users-card',
     templateUrl: './users-card.component.html',
     styleUrls: ['./users-card.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class UsersCardComponent extends ResponsiveComponent {

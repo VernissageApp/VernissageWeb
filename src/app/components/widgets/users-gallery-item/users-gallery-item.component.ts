@@ -1,5 +1,5 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component, input, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, OnInit, signal } from '@angular/core';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { LinkableResult } from 'src/app/models/linkable-result';
@@ -14,6 +14,7 @@ import { UsersService } from 'src/app/services/http/users.service';
     templateUrl: './users-gallery-item.component.html',
     styleUrls: ['./users-gallery-item.component.scss'],
     animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class UsersGalleryItemComponent extends ResponsiveComponent implements OnInit {

@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { Subscription, filter } from 'rxjs';
 import { Status } from 'src/app/models/status';
@@ -28,6 +28,7 @@ import { MessagesService } from 'src/app/services/common/messages.service';
     templateUrl: './profile.page.html',
     styleUrls: ['./profile.page.scss'],
     animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class ProfilePage extends ResponsiveComponent implements OnInit, OnDestroy {

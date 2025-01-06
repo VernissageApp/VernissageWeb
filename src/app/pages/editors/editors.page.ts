@@ -1,5 +1,5 @@
 import { BreakpointObserver } from "@angular/cdk/layout";
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, signal, model } from "@angular/core";
+import { Component, OnInit, OnDestroy, signal, model, ChangeDetectionStrategy } from "@angular/core";
 import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
 import { Subscription } from "rxjs/internal/Subscription";
 import { fadeInAnimation } from "src/app/animations/fade-in.animation";
@@ -19,6 +19,7 @@ import { TimelineService } from "src/app/services/http/timeline.service";
     templateUrl: './editors.page.html',
     styleUrls: ['./editors.page.scss'],
     animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class EditorsPage extends ResponsiveComponent implements OnInit, OnDestroy, OnAttach, OnDetach {
@@ -42,7 +43,6 @@ export class EditorsPage extends ResponsiveComponent implements OnInit, OnDestro
         private authorizationService: AuthorizationService,
         private router: Router,
         private activatedRoute: ActivatedRoute,
-        private changeDetectorRef: ChangeDetectorRef,
         breakpointObserver: BreakpointObserver
     ) {
         super(breakpointObserver);
@@ -86,12 +86,10 @@ export class EditorsPage extends ResponsiveComponent implements OnInit, OnDestro
 
     onDetach(): void {
         this.isDetached.set(true);
-        this.changeDetectorRef.detectChanges();
     }
 
     onAttach(): void {
         this.isDetached.set(false);
-        this.changeDetectorRef.detectChanges();
     }
 
     protected onSelectionChange(): void {

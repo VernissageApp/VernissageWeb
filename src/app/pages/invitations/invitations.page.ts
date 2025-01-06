@@ -1,4 +1,4 @@
-import { Component, computed, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, OnInit, signal } from '@angular/core';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { InstanceService } from 'src/app/services/http/instance.service';
 import { ForbiddenError } from 'src/app/errors/forbidden-error';
@@ -17,6 +17,7 @@ import { PublicSettings } from 'src/app/models/public-settings';
     templateUrl: './invitations.page.html',
     styleUrls: ['./invitations.page.scss'],
     animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class InvitationsPage extends ResponsiveComponent implements OnInit {

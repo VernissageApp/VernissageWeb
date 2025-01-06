@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { ForbiddenError } from 'src/app/errors/forbidden-error';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
@@ -16,6 +16,7 @@ import { UsersService } from 'src/app/services/http/users.service';
     templateUrl: './settings.page.html',
     styleUrls: ['./settings.page.scss'],
     animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class SettingsPage extends ResponsiveComponent implements OnInit {

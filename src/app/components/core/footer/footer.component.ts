@@ -1,5 +1,5 @@
 import { BreakpointObserver } from "@angular/cdk/layout";
-import { Component, OnInit, signal } from "@angular/core";
+import { ChangeDetectionStrategy, Component, OnInit, signal } from "@angular/core";
 import { ResponsiveComponent } from "src/app/common/responsive";
 import { WindowService } from "src/app/services/common/window.service";
 
@@ -7,6 +7,7 @@ import { WindowService } from "src/app/services/common/window.service";
     selector: 'app-footer',
     templateUrl: './footer.component.html',
     styleUrls: ['./footer.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class FooterComponent extends ResponsiveComponent implements OnInit {

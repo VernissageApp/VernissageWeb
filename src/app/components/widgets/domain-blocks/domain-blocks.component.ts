@@ -1,5 +1,5 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { ResponsiveComponent } from 'src/app/common/responsive';
@@ -14,6 +14,7 @@ import { InstanceBlockedDomainsService } from 'src/app/services/http/instance-bl
     selector: 'app-domain-blocks',
     templateUrl: './domain-blocks.component.html',
     styleUrls: ['./domain-blocks.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class DomainBlocksComponent extends ResponsiveComponent implements OnInit {

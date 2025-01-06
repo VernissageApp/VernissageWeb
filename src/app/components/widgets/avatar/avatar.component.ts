@@ -1,4 +1,4 @@
-import { Component, input, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, OnInit, signal } from '@angular/core';
 import { User } from 'src/app/models/user';
 import { AvatarSize } from './avatar-size';
 import { PreferencesService } from 'src/app/services/common/preferences.service';
@@ -7,6 +7,7 @@ import { PreferencesService } from 'src/app/services/common/preferences.service'
     selector: 'app-avatar',
     templateUrl: './avatar.component.html',
     styleUrls: ['./avatar.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class AvatarComponent implements OnInit {

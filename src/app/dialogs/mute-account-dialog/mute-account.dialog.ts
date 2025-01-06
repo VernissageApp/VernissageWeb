@@ -1,10 +1,11 @@
-import { Component, model } from '@angular/core';
+import { ChangeDetectionStrategy, Component, model } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { UserMuteRequest } from 'src/app/models/user-mute-request';
 
 @Component({
     selector: 'app-mute-account-dialog',
     templateUrl: 'mute-account.dialog.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class MuteAccountDialog {

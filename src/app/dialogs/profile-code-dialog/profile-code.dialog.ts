@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, OnInit, signal } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { PreferencesService } from 'src/app/services/common/preferences.service';
 import { WindowService } from 'src/app/services/common/window.service';
@@ -7,6 +7,7 @@ import { WindowService } from 'src/app/services/common/window.service';
     selector: 'app-profile-code-dialog',
     templateUrl: 'profile-code.dialog.html',
     styleUrls: ['profile-code.dialog.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class ProfileCodeDialog implements OnInit {

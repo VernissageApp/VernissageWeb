@@ -1,4 +1,4 @@
-import { Component, model } from '@angular/core';
+import { ChangeDetectionStrategy, Component, model } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { UserAlias } from 'src/app/models/user-alias';
 import { MessagesService } from 'src/app/services/common/messages.service';
@@ -8,6 +8,7 @@ import { UserAliasesService } from 'src/app/services/http/user-aliases.service';
     selector: 'app-create-alias-dialog',
     templateUrl: 'create-alias.dialog.html',
     styleUrls: ['create-alias.dialog.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class CreateAliasDialog {

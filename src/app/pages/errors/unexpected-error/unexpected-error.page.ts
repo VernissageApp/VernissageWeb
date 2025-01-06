@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { PersistanceService } from 'src/app/services/persistance/persistance.service';
@@ -8,6 +8,7 @@ import { PersistanceService } from 'src/app/services/persistance/persistance.ser
     templateUrl: './unexpected-error.page.html',
     styleUrls: ['./unexpected-error.page.scss'],
     animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class UnexpectedErrorPage implements OnInit, OnDestroy {

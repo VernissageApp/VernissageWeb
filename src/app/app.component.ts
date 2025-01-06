@@ -1,4 +1,4 @@
-import { Component, OnDestroy, AfterViewInit, ChangeDetectorRef, OnInit, Inject } from '@angular/core';
+import { Component, OnDestroy, AfterViewInit, OnInit, Inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { LoadingService } from './services/common/loading.service';
@@ -11,19 +11,19 @@ import { SettingsService } from './services/http/settings.service';
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
-    showLoader = false;
-    loadingStateChangesSubscription?: Subscription;
+    protected showLoader = signal(false);
+    private loadingStateChangesSubscription?: Subscription;
 
     constructor(
         @Inject(DOCUMENT) private documentRef: Document,
         private loadingService: LoadingService,
         private cookieService: SsrCookieService,
         private settingsService: SettingsService,
-        private routingStateService: RoutingStateService,
-        private changeDetectorRef: ChangeDetectorRef) {
+        private routingStateService: RoutingStateService) {
     }
 
     ngOnInit(): void {
@@ -49,9 +49,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 
     ngAfterViewInit(): void {
         this.loadingStateChangesSubscription = this.loadingService.loadingStateChanges.subscribe(isLoading => {
-            this.showLoader = isLoading;
-            this.changeDetectorRef.detectChanges();
-            this.changeDetectorRef.markForCheck();
+            this.showLoader.set(isLoading);
         });
     }
 

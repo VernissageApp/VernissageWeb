@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, HostListener, ChangeDetectorRef, signal } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, signal, ChangeDetectionStrategy } from '@angular/core';
 import { Status } from 'src/app/models/status';
 import { TimelineService } from 'src/app/services/http/timeline.service';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
@@ -18,6 +18,7 @@ import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
     templateUrl: './home-signout.component.html',
     styleUrls: ['./home-signout.component.scss'],
     animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class HomeSignoutComponent extends ResponsiveComponent implements OnInit, OnDestroy, OnAttach, OnDetach {
@@ -39,7 +40,6 @@ export class HomeSignoutComponent extends ResponsiveComponent implements OnInit,
         private settingsService: SettingsService,
         private router: Router,
         private activatedRoute: ActivatedRoute,
-        private changeDetectorRef: ChangeDetectorRef,
         breakpointObserver: BreakpointObserver
     ) {
         super(breakpointObserver);
@@ -84,12 +84,10 @@ export class HomeSignoutComponent extends ResponsiveComponent implements OnInit,
 
     onDetach(): void {
         this.isDetached.set(true);
-        this.changeDetectorRef.detectChanges();
     }
 
     onAttach(): void {
         this.isDetached.set(false);
-        this.changeDetectorRef.detectChanges();
     }
 
     @HostListener('document:visibilitychange', ['$event'])

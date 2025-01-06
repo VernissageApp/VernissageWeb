@@ -1,5 +1,5 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, effect, Inject, input, OnDestroy, OnInit, PLATFORM_ID, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, Inject, input, OnDestroy, OnInit, PLATFORM_ID, signal } from '@angular/core';
 import { Subscription, filter } from 'rxjs';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { LinkableResult } from 'src/app/models/linkable-result';
@@ -20,6 +20,7 @@ import { GalleryColumn } from 'src/app/models/gallery-column';
     templateUrl: './gallery.component.html',
     styleUrls: ['./gallery.component.scss'],
     animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class GalleryComponent extends ResponsiveComponent implements OnInit, OnDestroy {

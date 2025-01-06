@@ -1,4 +1,4 @@
-import { Component, model, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, model, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -37,6 +37,7 @@ import { FileSaverService } from 'ngx-filesaver';
     templateUrl: './account.page.html',
     styleUrls: ['./account.page.scss'],
     animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class AccountPage extends ResponsiveComponent implements OnInit {

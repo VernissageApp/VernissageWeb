@@ -1,5 +1,5 @@
 import { BreakpointObserver } from "@angular/cdk/layout";
-import { Component, OnInit, OnDestroy, signal } from "@angular/core";
+import { Component, OnInit, OnDestroy, signal, ChangeDetectionStrategy } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs/internal/Subscription";
 import { fadeInAnimation } from "src/app/animations/fade-in.animation";
@@ -15,6 +15,7 @@ import { TimelineService } from "src/app/services/http/timeline.service";
     templateUrl: './hashtag.page.html',
     styleUrls: ['./hashtag.page.scss'],
     animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class HashtagPage extends ResponsiveComponent implements OnInit, OnDestroy {

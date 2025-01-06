@@ -1,5 +1,5 @@
 import { BreakpointObserver } from "@angular/cdk/layout";
-import { Component, OnInit, OnDestroy, signal } from "@angular/core";
+import { Component, OnInit, OnDestroy, signal, ChangeDetectionStrategy } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { fadeInAnimation } from "src/app/animations/fade-in.animation";
@@ -15,6 +15,7 @@ import { SettingsService } from "src/app/services/http/settings.service";
     templateUrl: './categories.page.html',
     styleUrls: ['./categories.page.scss'],
     animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class CategoriesPage extends ResponsiveComponent implements OnInit, OnDestroy {

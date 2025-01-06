@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, signal, computed } from '@angular/core';
+import { Component, OnInit, OnDestroy, signal, computed, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -13,6 +13,7 @@ import { fadeInAnimation } from "../../animations/fade-in.animation";
     templateUrl: './reset-password.page.html',
     styleUrls: ['./reset-password.page.scss'],
     animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class ResetPasswordPage implements OnInit, OnDestroy {

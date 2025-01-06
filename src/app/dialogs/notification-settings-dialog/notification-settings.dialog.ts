@@ -1,4 +1,4 @@
-import { Component, model, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, model, OnInit, signal } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { SwPush } from '@angular/service-worker';
 import { firstValueFrom } from 'rxjs';
@@ -14,6 +14,7 @@ import { SettingsService } from 'src/app/services/http/settings.service';
     selector: 'app-notification-settings-dialog',
     templateUrl: 'notification-settings.dialog.html',
     styleUrls: ['notification-settings.dialog.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class NotificationSettingsDialog implements OnInit {

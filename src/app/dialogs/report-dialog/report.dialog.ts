@@ -1,4 +1,4 @@
-import { Component, Inject, model, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, model, OnInit, signal } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ReportRequest } from 'src/app/models/report-request';
 import { Rule } from 'src/app/models/rule';
@@ -8,6 +8,7 @@ import { ReportData } from './report-data';
 @Component({
     selector: 'app-report-dialog',
     templateUrl: 'report.dialog.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class ReportDialog implements OnInit {

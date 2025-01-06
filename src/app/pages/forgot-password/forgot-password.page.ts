@@ -1,4 +1,4 @@
-import { Component, computed, model, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, model, signal } from '@angular/core';
 
 import { ForgotPassword } from 'src/app/models/forgot-password';
 import { ForgotPasswordMode } from 'src/app/models/forgot-password-mode';
@@ -12,6 +12,7 @@ import { fadeInAnimation } from "../../animations/fade-in.animation";
     templateUrl: './forgot-password.page.html',
     styleUrls: ['./forgot-password.page.scss'],
     animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class ForgotPasswordPage {

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, signal } from '@angular/core';
+import { Component, OnInit, OnDestroy, signal, ChangeDetectionStrategy } from '@angular/core';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { Status } from 'src/app/models/status';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
@@ -20,6 +20,7 @@ import { OnAttach, OnDetach } from 'src/app/directives/app-router-outlet.directi
     templateUrl: './bookmarks.page.html',
     styleUrls: ['./bookmarks.page.scss'],
     animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class BookmarksPage extends ResponsiveComponent implements OnInit, OnDestroy, OnAttach, OnDetach {
@@ -41,7 +42,6 @@ export class BookmarksPage extends ResponsiveComponent implements OnInit, OnDest
         private userDisplayService: UserDisplayService,
         private router: Router,
         private activatedRoute: ActivatedRoute,
-        private changeDetectorRef: ChangeDetectorRef,
         breakpointObserver: BreakpointObserver
     ) {
         super(breakpointObserver);
@@ -85,11 +85,9 @@ export class BookmarksPage extends ResponsiveComponent implements OnInit, OnDest
 
     onDetach(): void { 
         this.isDetached.set(true);
-        this.changeDetectorRef.detectChanges();
     }
 
     onAttach(): void {
         this.isDetached.set(false);
-        this.changeDetectorRef.detectChanges();
     }
 }

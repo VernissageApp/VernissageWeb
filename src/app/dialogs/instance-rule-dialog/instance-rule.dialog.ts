@@ -1,4 +1,4 @@
-import { Component, Inject, model } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, model } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Rule } from 'src/app/models/rule';
 import { MessagesService } from 'src/app/services/common/messages.service';
@@ -8,6 +8,7 @@ import { RulesService } from 'src/app/services/http/rules.service';
     selector: 'app-instance-rule-dialog',
     templateUrl: 'instance-rule.dialog.html',
     styleUrls: ['instance-rule.dialog.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class InstanceRuleDialog {

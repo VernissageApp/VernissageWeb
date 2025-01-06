@@ -1,9 +1,10 @@
-import { Component, Inject, model } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, model } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-content-warning-dialog',
     templateUrl: 'content-warning.dialog.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class ContentWarningDialog {

@@ -1,9 +1,11 @@
 <app-header></app-header>
 <main class="content mat-app-background">
 
-  <div *ngIf="showLoader" class="loading-shade">
-    <mat-spinner [diameter]="36"></mat-spinner>
-  </div>
+    @if (showLoader()) {
+        <div class="loading-shade">
+            <mat-spinner [diameter]="36"></mat-spinner>
+        </div>
+    }
 
-  <app-router-outlet></app-router-outlet>
+    <app-router-outlet></app-router-outlet>
 </main>

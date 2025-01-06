@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Inject, PLATFORM_ID, OnInit, OnDestroy, input, computed, viewChild, signal } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Inject, PLATFORM_ID, OnInit, OnDestroy, input, computed, viewChild, signal, ChangeDetectionStrategy } from '@angular/core';
 import { decode } from 'blurhash';
 import { AvatarSize } from '../avatar/avatar-size';
 import { User } from 'src/app/models/user';
@@ -19,6 +19,7 @@ import { RelationshipsService } from 'src/app/services/http/relationships.servic
     selector: 'app-blurhash-image',
     templateUrl: './blurhash-image.component.html',
     styleUrls: ['./blurhash-image.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class BlurhashImageComponent implements AfterViewInit, OnInit, OnDestroy {

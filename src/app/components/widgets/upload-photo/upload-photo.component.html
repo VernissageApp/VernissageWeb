@@ -3,14 +3,23 @@
 <div class="flex-col gap-0 margin-top-5">
 
     @if (isOpenAIEnabled()) {
-        <div class="flex-row flex-end">
-            @if (describeInProgress()) {
-                <mat-spinner class="margin-right-10 margin-top-10" [diameter]="18"></mat-spinner>
-            }
+        <div class="flex-row flex-space-between">
+            <div class="margin-top-10">
+                @if (!photo().isUploaded()) {
+                    <mat-spinner class="display-inline-block margin-right-10" [diameter]="18"></mat-spinner>
+                    <span class="uploading-text">Uploading...</span>
+                }
+            </div>
 
-            <button mat-stroked-button color="primary" (click)="onGenerateDescription()" [disabled]="!photo().isUploaded || describeInProgress()">
-                <mat-icon>smart_toy</mat-icon> Generate
-            </button>
+            <div class="flex-row flex-right">
+                @if (describeInProgress()) {
+                    <mat-spinner class="margin-right-10 margin-top-10" [diameter]="18"></mat-spinner>
+                }
+
+                <button mat-stroked-button color="primary" (click)="onGenerateDescription()" [disabled]="!photo().isUploaded() || describeInProgress()">
+                    <mat-icon>smart_toy</mat-icon> Generate
+                </button>
+            </div>
         </div>
     }
 
@@ -234,7 +243,7 @@
             @if (photo().photoHdrSrc) {                
                 <img [src]="photo().photoHdrSrc" alt="Uploaded photo" />
             } @else {
-                @if (!photo().isUploaded) {
+                @if (!photo().isUploaded()) {
                     <div class="dropzone small inactive">
                         <div class="plus">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M20.889 10.889H13.111V3.11097C13.111 2.4974 12.6136 2 12 2C11.3864 2 10.889 2.4974 10.889 3.11097V10.889H3.11097C2.4974 10.889 2 11.3864 2 12C2 12.6136 2.4974 13.111 3.11097 13.111H10.889V20.889C10.889 21.5026 11.3864 22 12 22C12.6136 22 13.111 21.5026 13.111 20.889V13.111H20.889C21.5026 13.111 22 12.6136 22 12C22 11.3864 21.5026 10.889 20.889 10.889Z" fill="#0870D1"></path></svg>

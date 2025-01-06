@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
 import { User } from 'src/app/models/user';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 
@@ -6,6 +6,7 @@ import { AuthorizationService } from 'src/app/services/authorization/authorizati
     selector: 'app-home',
     templateUrl: './home.page.html',
     styleUrls: ['./home.page.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class HomePage implements OnInit {

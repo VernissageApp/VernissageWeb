@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, OnInit, signal } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { LinkableResult } from 'src/app/models/linkable-result';
 import { Relationship } from 'src/app/models/relationship';
@@ -10,6 +10,7 @@ import { UsersDialogContext, UsersListType } from './users-dialog-context';
     selector: 'app-users-dialog',
     templateUrl: 'users.dialog.html',
     styleUrls: ['./users.dialog.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class UsersDialog implements OnInit {

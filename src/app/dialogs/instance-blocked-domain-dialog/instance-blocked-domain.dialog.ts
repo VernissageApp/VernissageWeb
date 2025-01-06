@@ -1,4 +1,4 @@
-import { Component, Inject, model } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, model } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { InstanceBlockedDomain } from 'src/app/models/instance-blocked-domain';
 import { MessagesService } from 'src/app/services/common/messages.service';
@@ -8,6 +8,7 @@ import { InstanceBlockedDomainsService } from 'src/app/services/http/instance-bl
     selector: 'app-instance-blocked-domain-dialog',
     templateUrl: 'instance-blocked-domain.dialog.html',
     styleUrls: ['instance-blocked-domain.dialog.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class InstanceBlockedDomainDialog {

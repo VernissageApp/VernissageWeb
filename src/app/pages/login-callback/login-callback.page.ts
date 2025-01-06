@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
 import { IdentityService } from 'src/app/services/http/identity.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IdentityToken } from 'src/app/models/identity-token';
@@ -8,6 +8,7 @@ import { AuthorizationService } from 'src/app/services/authorization/authorizati
     selector: 'app-login-callback',
     templateUrl: './login-callback.page.html',
     styleUrls: ['./login-callback.page.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class LoginCallbackPage implements OnInit {

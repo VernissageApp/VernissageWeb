@@ -1,4 +1,4 @@
-import { Component, model, OnDestroy, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, model, OnDestroy, OnInit, signal } from '@angular/core';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { ForbiddenError } from 'src/app/errors/forbidden-error';
 import { MessagesService } from 'src/app/services/common/messages.service';
@@ -23,6 +23,7 @@ import { RandomGeneratorService } from 'src/app/services/common/random-generator
     templateUrl: './error-items.page.html',
     styleUrls: ['./error-items.page.scss'],
     animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class ErrorItemsPage extends ResponsiveComponent implements OnInit, OnDestroy {

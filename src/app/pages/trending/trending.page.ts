@@ -1,5 +1,5 @@
 import { BreakpointObserver } from "@angular/cdk/layout";
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, signal, model } from "@angular/core";
+import { Component, OnInit, OnDestroy, signal, model, ChangeDetectionStrategy } from "@angular/core";
 import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { fadeInAnimation } from "src/app/animations/fade-in.animation";
@@ -21,6 +21,7 @@ import { TrendingService } from "src/app/services/http/trending.service";
     templateUrl: './trending.page.html',
     styleUrls: ['./trending.page.scss'],
     animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class TrendingPage extends ResponsiveComponent implements OnInit, OnDestroy, OnAttach, OnDetach {
@@ -47,7 +48,6 @@ export class TrendingPage extends ResponsiveComponent implements OnInit, OnDestr
         private authorizationService: AuthorizationService,
         private router: Router,
         private activatedRoute: ActivatedRoute,
-        private changeDetectorRef: ChangeDetectorRef,
         breakpointObserver: BreakpointObserver
     ) {
         super(breakpointObserver);
@@ -96,12 +96,10 @@ export class TrendingPage extends ResponsiveComponent implements OnInit, OnDestr
 
     onDetach(): void {
         this.isDetached.set(true);
-        this.changeDetectorRef.detectChanges();
     }
 
     onAttach(): void {
         this.isDetached.set(false);
-        this.changeDetectorRef.detectChanges();
     }
 
     protected onSelectionChange(): void {

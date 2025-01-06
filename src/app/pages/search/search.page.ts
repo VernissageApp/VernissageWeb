@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, OnDestroy, model, signal, viewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, OnDestroy, model, signal, viewChild, ChangeDetectionStrategy } from '@angular/core';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { User } from 'src/app/models/user';
 import { Relationship } from 'src/app/models/relationship';
@@ -18,6 +18,7 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
     templateUrl: './search.page.html',
     styleUrls: ['./search.page.scss'],
     animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class SearchPage extends ResponsiveComponent implements AfterViewInit, OnInit, OnDestroy {

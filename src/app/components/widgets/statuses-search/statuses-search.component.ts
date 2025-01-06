@@ -1,5 +1,5 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component, computed, Inject, input, OnInit, PLATFORM_ID, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, Inject, input, OnInit, PLATFORM_ID, signal } from '@angular/core';
 import { SafeHtml } from '@angular/platform-browser';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { ResponsiveComponent } from 'src/app/common/responsive';
@@ -11,6 +11,7 @@ import { PreferencesService } from 'src/app/services/common/preferences.service'
     templateUrl: './statuses-search.component.html',
     styleUrls: ['./statuses-search.component.scss'],
     animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class StatusesSearchComponent extends ResponsiveComponent implements OnInit {

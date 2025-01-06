@@ -1,4 +1,4 @@
-import { Component, computed, Inject, OnInit, PLATFORM_ID, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, Inject, OnInit, PLATFORM_ID, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { ConfirmEmail } from 'src/app/models/confirm-email';
@@ -13,6 +13,7 @@ import { AuthorizationService } from 'src/app/services/authorization/authorizati
     templateUrl: './confirm-email.page.html',
     styleUrls: ['./confirm-email.page.scss'],
     animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class ConfirmEmailPage implements OnInit {

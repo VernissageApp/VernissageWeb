@@ -1,4 +1,4 @@
-import { Component, model, OnInit, Renderer2, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, model, OnInit, Renderer2, signal } from '@angular/core';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { BreakpointObserver } from '@angular/cdk/layout';
@@ -11,6 +11,7 @@ import { CustomReuseStrategy } from 'src/app/common/custom-reuse-strategy';
     templateUrl: './preferences.page.html',
     styleUrls: ['./preferences.page.scss'],
     animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class PreferencesPage extends ResponsiveComponent implements OnInit {

@@ -1,4 +1,4 @@
-import { Component, model, OnDestroy, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, model, OnDestroy, OnInit, signal } from '@angular/core';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { ForbiddenError } from 'src/app/errors/forbidden-error';
 import { MessagesService } from 'src/app/services/common/messages.service';
@@ -24,6 +24,7 @@ import { ConfirmationDialog } from 'src/app/dialogs/confirmation-dialog/confirma
     templateUrl: './users.page.html',
     styleUrls: ['./users.page.scss'],
     animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class UsersPage extends ResponsiveComponent implements OnInit, OnDestroy {
@@ -102,9 +103,18 @@ export class UsersPage extends ResponsiveComponent implements OnInit, OnDestroy 
     }
 
     protected onSetRoles(user: User): void {
-        this.dialog.open(UserRolesDialog, {
+        const dialogRef = this.dialog.open(UserRolesDialog, {
             width: '500px',
             data: user
+        });
+     
+        dialogRef.afterClosed().subscribe(async () => {
+            const navigationExtras: NavigationExtras = {
+                queryParams: { t: this.randomGeneratorService.generateString(8) },
+                queryParamsHandling: 'merge'
+            };
+    
+            await this.router.navigate([], navigationExtras);
         });
     }
 

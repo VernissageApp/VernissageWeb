@@ -1,4 +1,4 @@
-import { Component, Inject, model, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, model, OnInit, signal } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TwoFactorToken } from 'src/app/models/two-factor-token';
 import { User } from 'src/app/models/user';
@@ -9,6 +9,7 @@ import { AccountService } from 'src/app/services/http/account.service';
     selector: 'app-enable-two-factor-token-dialog',
     templateUrl: 'enable-two-factor-token.dialog.html',
     styleUrls: ['enable-two-factor-token.dialog.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class EnableTwoFactorTokenDialog implements OnInit {

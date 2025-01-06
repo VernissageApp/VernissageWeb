@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Renderer2, signal, computed } from '@angular/core';
+import { Component, OnInit, OnDestroy, Renderer2, signal, computed, ChangeDetectionStrategy } from '@angular/core';
 import { RouteReuseStrategy, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -19,6 +19,7 @@ import { PreferencesService } from 'src/app/services/common/preferences.service'
     selector: 'app-header',
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDestroy {

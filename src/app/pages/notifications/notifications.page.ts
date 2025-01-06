@@ -1,4 +1,4 @@
-import { Component, OnInit, signal, WritableSignal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, signal, WritableSignal } from '@angular/core';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { Notification } from '../../models/notification';
 import { NotificationsService } from 'src/app/services/http/notifications.service';
@@ -18,6 +18,7 @@ import { MatDialog } from '@angular/material/dialog';
     templateUrl: './notifications.page.html',
     styleUrls: ['./notifications.page.scss'],
     animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class NotificationsPage extends ResponsiveComponent implements OnInit {

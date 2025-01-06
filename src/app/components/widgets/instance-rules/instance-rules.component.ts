@@ -1,5 +1,5 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { ResponsiveComponent } from 'src/app/common/responsive';
@@ -14,6 +14,7 @@ import { RulesService } from 'src/app/services/http/rules.service';
     selector: 'app-instance-rules',
     templateUrl: './instance-rules.component.html',
     styleUrls: ['./instance-rules.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class InstanceRulesComponent extends ResponsiveComponent implements OnInit {

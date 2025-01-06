@@ -1,4 +1,4 @@
-import { Component, computed, model, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, model, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { encode } from 'blurhash';
 import * as ExifReader from 'exifreader';
@@ -26,6 +26,7 @@ import { RandomGeneratorService } from 'src/app/services/common/random-generator
     templateUrl: './upload.page.html',
     styleUrls: ['./upload.page.scss'],
     animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class UploadPage extends ResponsiveComponent implements OnInit {
@@ -47,7 +48,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
     protected isOpenAIEnabled = signal(false);
     protected hashtagsInProgress = signal(false);
     
-    protected allPhotosUploaded = computed(() => !this.photos().some(x => !x.isUploaded || (x.photoHdrFile && !x.isHdrUploaded)));
+    protected allPhotosUploaded = computed(() => !this.photos().some(x => !x.isUploaded() || (x.photoHdrFile && !x.isHdrUploaded)));
 
     private maxFileSize = 0;
     private readonly defaultMaxFileSize = 10485760;
@@ -106,7 +107,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
                 const photo = photosArray.find(item => item.uuid === uploadPhoto.uuid);
                 if (photo) {
                     photo.id = temporaryAttachment.id;
-                    photo.isUploaded = true;
+                    photo.isUploaded.set(true);
                 }
 
                 return [...photosArray];
@@ -245,8 +246,11 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
         const reader = new FileReader();
 
         reader.onload = async () => {
-            uploadPhoto.photoSrc = reader.result as string;
-            uploadPhoto.blurhash = await this.encodeImageToBlurhash(uploadPhoto.photoSrc);
+            const photoSrc = reader.result as string;
+            uploadPhoto.photoSrc.set(photoSrc);
+
+            const blurhash = await this.encodeImageToBlurhash(photoSrc);
+            uploadPhoto.blurhash = blurhash;
         }
 
         reader.readAsDataURL(uploadPhoto.photoFile);

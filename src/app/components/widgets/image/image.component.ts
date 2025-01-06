@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, computed, effect, ElementRef, Inject, input, OnDestroy, OnInit, PLATFORM_ID, signal, viewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, computed, effect, ElementRef, Inject, input, OnDestroy, OnInit, PLATFORM_ID, signal, viewChild } from '@angular/core';
 import { decode } from 'blurhash';
 import { AvatarSize } from '../avatar/avatar-size';
 import { User } from 'src/app/models/user';
@@ -19,6 +19,7 @@ import { RelationshipsService } from 'src/app/services/http/relationships.servic
     selector: 'app-image',
     templateUrl: './image.component.html',
     styleUrls: ['./image.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class ImageComponent implements OnInit, OnDestroy, AfterViewInit {

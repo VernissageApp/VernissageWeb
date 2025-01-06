@@ -1,5 +1,5 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { Rule } from 'src/app/models/rule';
@@ -11,6 +11,7 @@ import { InstanceService } from 'src/app/services/http/instance.service';
     templateUrl: './terms.page.html',
     styleUrls: ['./terms.page.scss'],
     animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class TermsPage extends ResponsiveComponent implements OnInit {

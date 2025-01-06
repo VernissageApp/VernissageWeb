@@ -1,4 +1,4 @@
-import { Component, model, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, model, signal } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ChangePassword } from 'src/app/models/change-password';
 import { MessagesService } from 'src/app/services/common/messages.service';
@@ -7,6 +7,7 @@ import { AccountService } from 'src/app/services/http/account.service';
 @Component({
     selector: 'app-change-password-dialog',
     templateUrl: 'change-password.dialog.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class ChangePasswordDialog {

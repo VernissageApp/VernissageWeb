@@ -1,5 +1,5 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component, input, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, OnInit, signal } from '@angular/core';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { Hashtag } from 'src/app/models/hashtag';
@@ -14,6 +14,7 @@ import { TimelineService } from 'src/app/services/http/timeline.service';
     templateUrl: './hashtag-gallery-item.component.html',
     styleUrls: ['./hashtag-gallery-item.component.scss'],
     animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class HashtagGalleryItemComponent extends ResponsiveComponent implements OnInit {

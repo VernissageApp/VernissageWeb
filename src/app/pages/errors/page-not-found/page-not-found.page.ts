@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 
@@ -7,6 +7,7 @@ import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
     templateUrl: './page-not-found.page.html',
     styleUrls: ['./page-not-found.page.scss'],
     animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class PageNotFoundPage implements OnInit, OnDestroy {

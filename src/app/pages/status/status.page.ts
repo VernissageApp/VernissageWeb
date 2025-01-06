@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, Inject, OnInit, OnDestroy, PLATFORM_ID, signal, viewChild, computed } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, OnDestroy, PLATFORM_ID, signal, viewChild, computed, ChangeDetectionStrategy } from '@angular/core';
 import { fadeInAnimation } from "src/app/animations/fade-in.animation";
 import { showOrHideAnimation } from 'src/app/animations/show-or-hide.animation';
 import { decode } from 'blurhash';
@@ -40,6 +40,7 @@ import { DeviceDetectorService } from 'ngx-device-detector';
     templateUrl: './status.page.html',
     styleUrls: ['./status.page.scss'],
     animations: [fadeInAnimation, showOrHideAnimation],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy {
@@ -76,14 +77,15 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     protected hasGpsCoordinations = computed<boolean>(() => !!this.getGpsLatitude(this.currentIndex()) && !!this.getGpsLongitude(this.currentIndex()));
     protected hasHdrVersion = computed<boolean>(() => this.showHdrIcon(this.currentIndex()));
 
-    private canvas = viewChild<ElementRef<HTMLCanvasElement> | undefined>('canvas');    
+    private canvas = viewChild<ElementRef<HTMLCanvasElement> | undefined>('canvas');
     private routeParamsSubscription?: Subscription;
     private routeNavigationEndSubscription?: Subscription;
     private readonly oneSecond = 1000;
     private firstCanvasInitialization = false;
     private urlToGallery?: string;
     private isBrowser = false;
-    private galleryId = 'statusPageLightbox';
+    private popupGalleryId = 'popupGalleryId';
+    private mainGalleryId = 'mainGalleryId';
     private blurhash = 'LEHV6nWB2yk8pyo0adR*.7kCMdnj';
 
     constructor(
@@ -101,7 +103,6 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         private dialog: MatDialog,
         private gallery: Gallery,
         private lightbox: Lightbox,
-        private changeDetectorRef: ChangeDetectorRef,
         private windowService: WindowService,
         private titleService: Title,
         private loadingService: LoadingService,
@@ -130,18 +131,24 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
             
             this.signedInUser.set(signedInUserInternal);
             this.isLoggedIn.set(isLoggedInInternal);
-
+            this.currentIndex.set(0);
+            
+            // Load status information.
             await this.loadPageData(statusId);
 
-            const galleryRef = this.gallery.ref(this.galleryId);
-            galleryRef.load(this.images() ?? []);
+            // Load images to gallery (and reset gallery state).
+            const mainGallery = this.gallery.ref(this.mainGalleryId);
+            mainGallery.load(this.images() ?? []);
+            mainGallery.set(0);
+
+            // Load images to popup gallery.
+            const popupGallery = this.gallery.ref(this.popupGalleryId);
+            popupGallery.load(this.images() ?? []);
 
             this.loadingService.hideLoader();
             this.isReady.set(true);
 
             if (!this.firstCanvasInitialization) {
-                this.changeDetectorRef.detectChanges();
-
                 setTimeout(() => {
                     this.drawCanvas();
                 });
@@ -161,7 +168,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     }
 
     protected openInFullScreen() {
-        this.lightbox.open(this.currentIndex(), this.galleryId, {
+        this.lightbox.open(this.currentIndex(), this.popupGalleryId, {
             panelClass: 'fullscreen'
         });
     }
@@ -676,7 +683,6 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
 
         this.images.set(internalImages);
         this.rendered.set(this.mainStatus()?.noteHtml ?? '');
-        this.changeDetectorRef.detectChanges();
 
         const mainStatusId = this.mainStatus()?.id;
         if (mainStatusId) {

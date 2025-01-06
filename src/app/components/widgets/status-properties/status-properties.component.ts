@@ -7,8 +7,8 @@ import { StatusVisibility } from 'src/app/models/status-visibility';
     selector: 'app-status-properties',
     templateUrl: './status-properties.component.html',
     styleUrls: ['./status-properties.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
     animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class StatusPropertiesComponent {

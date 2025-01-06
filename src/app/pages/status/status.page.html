@@ -21,6 +21,7 @@
 
                 <div class="display-inline">
                     @if (images(); as imagesInternally) {
+
                         @if (imagesInternally.length === 1) {
                             <div [ngClass]="{ 'photo-image-container-fixed': !isHandset() }">
                                 @if (mainStatusInternal.sensitive && !alwaysShowNSFW()) {
@@ -41,9 +42,9 @@
 
                         @if (imagesInternally.length > 1) {
                             <gallery
+                                id="mainGalleryId"
                                 class="custom-gallery"
                                 [ngClass]="{ 'custom-gallery-browser': showContextArrows() }"
-                                [items]="imagesInternally"
                                 bullets
                                 bulletPosition="bottom"
                                 [bulletSize]="8"

@@ -1,4 +1,4 @@
-import { Component, model } from '@angular/core';
+import { ChangeDetectionStrategy, Component, model } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ChangeEmail } from 'src/app/models/change-email';
 import { MessagesService } from 'src/app/services/common/messages.service';
@@ -8,6 +8,7 @@ import { AccountService } from 'src/app/services/http/account.service';
 @Component({
     selector: 'app-change-email-dialog',
     templateUrl: 'change-email.dialog.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class ChangeEmailDialog {

@@ -1,4 +1,4 @@
-import { Component, input, model, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, model, OnInit, signal } from '@angular/core';
 import { Settings } from 'src/app/models/settings';
 import { SettingsService } from 'src/app/services/http/settings.service';
 import { MessagesService } from 'src/app/services/common/messages.service';
@@ -10,6 +10,7 @@ import { User } from 'src/app/models/user';
     selector: 'app-general-settings',
     templateUrl: './general-settings.component.html',
     styleUrls: ['./general-settings.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class GeneralSettingsComponent implements OnInit {

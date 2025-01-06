@@ -1,4 +1,4 @@
-import { Component, Inject, model, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, model, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Role } from 'src/app/models/role';
 import { User } from 'src/app/models/user';
@@ -8,6 +8,7 @@ import { UsersService } from 'src/app/services/http/users.service';
 @Component({
     selector: 'app-user-roles-dialog',
     templateUrl: 'user-roles.dialog.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class UserRolesDialog implements OnInit {

@@ -1,4 +1,4 @@
-import { Component, model, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, model, OnInit, signal } from '@angular/core';
 import { Router, ActivatedRoute, RouteReuseStrategy } from '@angular/router';
 
 import { Login } from 'src/app/models/login';
@@ -20,6 +20,7 @@ import { PushSubscriptionsService } from 'src/app/services/http/push-subscriptio
     templateUrl: './login.page.html',
     styleUrls: ['./login.page.scss'],
     animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class LoginPage implements OnInit {

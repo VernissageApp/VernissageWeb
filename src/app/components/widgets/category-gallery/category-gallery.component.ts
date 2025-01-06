@@ -1,6 +1,6 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { isPlatformBrowser } from '@angular/common';
-import { Component, Inject, input, PLATFORM_ID, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, input, PLATFORM_ID, signal } from '@angular/core';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { Category } from 'src/app/models/category';
@@ -10,6 +10,7 @@ import { Category } from 'src/app/models/category';
     templateUrl: './category-gallery.component.html',
     styleUrls: ['./category-gallery.component.scss'],
     animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class CategoryGalleryComponent extends ResponsiveComponent {

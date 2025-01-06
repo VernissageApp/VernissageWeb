@@ -1,16 +1,20 @@
+import { signal } from "@angular/core";
+
 export class UploadPhoto {
     public uuid = '';
-    public photoFile: Blob;
-    public photoSrc?: string;
-    public isUploaded = false;
+    
+    public photoSrc = signal<string | undefined>(undefined);
+    public isUploaded = signal(false);
 
+    public blurhash?: string;
+    public photoFile: Blob;
     public photoHdrFile?: Blob;
     public photoHdrSrc?: string;
     public isHdrUploaded = false;
 
     public id = '';
     public description?: string;
-    public blurhash?: string;
+    
     public locationId?: string;
     public licenseId?: string;
 

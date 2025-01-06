@@ -1,5 +1,5 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component, input, model, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, model, OnInit, signal } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, startWith } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
@@ -21,6 +21,7 @@ import { SettingsService } from 'src/app/services/http/settings.service';
     templateUrl: './upload-photo.component.html',
     styleUrls: ['./upload-photo.component.scss'],
     animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class UploadPhotoComponent extends ResponsiveComponent implements OnInit {

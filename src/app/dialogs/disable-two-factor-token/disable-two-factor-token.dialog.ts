@@ -1,4 +1,4 @@
-import { Component, Inject, model } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, model } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { User } from 'src/app/models/user';
 import { MessagesService } from 'src/app/services/common/messages.service';
@@ -7,6 +7,7 @@ import { AccountService } from 'src/app/services/http/account.service';
 @Component({
     selector: 'app-disable-two-factor-token-dialog',
     templateUrl: 'disable-two-factor-token.dialog.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class DisableTwoFactorTokenDialog {

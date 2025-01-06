@@ -1,10 +1,11 @@
-import { Component, signal, output, model, viewChild, input } from '@angular/core';
+import { Component, signal, output, model, viewChild, input, ChangeDetectionStrategy } from '@angular/core';
 import { NgForm, NgModel } from '@angular/forms';
 
 @Component({
     selector: 'app-password',
     templateUrl: './password.component.html',
     styleUrls: ['./password.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class PasswordComponent {

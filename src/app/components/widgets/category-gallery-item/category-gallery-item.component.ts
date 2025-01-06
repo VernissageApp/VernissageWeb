@@ -1,5 +1,5 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component, input, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, OnInit, signal } from '@angular/core';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { Category } from 'src/app/models/category';
@@ -14,6 +14,7 @@ import { TimelineService } from 'src/app/services/http/timeline.service';
     templateUrl: './category-gallery-item.component.html',
     styleUrls: ['./category-gallery-item.component.scss'],
     animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class CategoryGalleryItemComponent extends ResponsiveComponent implements OnInit {
