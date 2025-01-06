@@ -7,7 +7,7 @@
                         <app-avatar [user]="userObject" [size]="avatarSize.huge"></app-avatar>
                     </div>
                     <div>
-                        <div [ngClass]="{ 'flex-row': !isHandset, 'flex-column': isHandset }">
+                        <div [ngClass]="{ 'flex-row': !isHandset(), 'flex-column': isHandset() }">
                             <div><a [routerLink]="[ '/@' + userObject.userName ]" class="margin-right-5 fw-600">{{ userDisplayService.displayName(userObject) }}</a></div>
                             <div class="fw-400 fs-90 text-muted">&#64;{{ userObject.userName }}</div>
 

@@ -22,7 +22,7 @@
                 <div class="display-inline">
                     @if (images(); as imagesInternally) {
                         @if (imagesInternally.length === 1) {
-                            <div [ngClass]="{ 'photo-image-container-fixed': !isHandset }">
+                            <div [ngClass]="{ 'photo-image-container-fixed': !isHandset() }">
                                 @if (mainStatusInternal.sensitive && !alwaysShowNSFW()) {
                                     @if (showSensitiveCanvas()) {
                                         <div [@show]="!showSensitiveImage() ? 'true' : 'false'" class="content-warning">
@@ -92,7 +92,7 @@
                 </div>
             }
 
-            <div [ngClass]="{ 'padding-30': !isHandset, 'padding-10': isHandset }">
+            <div [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
                 <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
 
                     <!-- Left main panel -->

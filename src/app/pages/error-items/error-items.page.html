@@ -1,12 +1,12 @@
 @if (isReady()) {
     @if (errorItems(); as errorItemsArray) {
-        <div @fadeIn [ngClass]="{ 'padding-30': !isHandset, 'padding-10': isHandset }">
+        <div @fadeIn [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
             <div class="flex-row flex-space-around padding-left-10 padding-right-10">
                 <div class="width-100">
-                    <section class="flex-row flex-space-between flex-align-center margin-bottom-20" [ngClass]="{ 'flex-row': !isHandset, 'flex-column': isHandset }">
+                    <section class="flex-row flex-space-between flex-align-center margin-bottom-20" [ngClass]="{ 'flex-row': !isHandset(), 'flex-column': isHandset() }">
                         <h1>
                             <div>Errors</div>
-                            <div *ngIf="!isHandset" class="fs-60 text-muted">List of errors thrown in the system.</div>
+                            <div *ngIf="!isHandset()" class="fs-60 text-muted">List of errors thrown in the system.</div>
                         </h1>
                     </section>
 

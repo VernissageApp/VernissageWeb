@@ -1,5 +1,5 @@
 @if (isReady()) {
-    <div @fadeIn [ngClass]="{ 'padding-30': !isHandset, 'padding-10': isHandset }">
+    <div @fadeIn [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
         <section>
             <h1>Categories</h1>
         </section>

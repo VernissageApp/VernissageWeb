@@ -1,6 +1,6 @@
 @if(isReady()) {
     @if (notifications(); as notificationsArray) {
-        <div @fadeIn [ngClass]="{ 'padding-30': !isHandset, 'padding-10': isHandset }">
+        <div @fadeIn [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
             <div class="flex-row flex-space-around">
                 <div class="notifications-container width-100">
                     <div class="flex-row flex-align-center flex-space-between margin-bottom-20">
@@ -22,7 +22,7 @@
                                     <div class="notification-wrapper">
                                         <div class="notification-display-name">
                                             <div class="user">
-                                                @if (!isHandsetPortrait) {
+                                                @if (!isHandsetPortrait()) {
                                                     <span class="text-muted icon" [ngClass]="getNotificationIconClass(notification)">
                                                         <mat-icon class="fill-symbol">{{ getNotificationIcon(notification) }}</mat-icon>
                                                     </span>
@@ -38,7 +38,7 @@
                                                         <span class="text-muted">{{ getNotificationText(notification) }} </span>
                                                     </div>
                                                 </div>
-                                                @if (!isHandsetPortrait) {
+                                                @if (!isHandsetPortrait()) {
                                                     <div class="fw-400 fs-90 text-muted overflow-ellipsis username">&#64;{{ notification.byUser?.userName }}</div>
                                                 }
                                             </div>

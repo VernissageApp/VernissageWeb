@@ -1,6 +1,6 @@
 @if (isReady()) {
     @if (settings(); as settingsObject) {
-        <div @fadeIn [ngClass]="{ 'padding-30': !isHandset, 'padding-10': isHandset }">
+        <div @fadeIn [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
             <div class="flex-row flex-space-around">
                 <div class="settings-container width-100">
                     <section>
@@ -15,7 +15,7 @@
                                 <mat-panel-title>
                                     General settings
                                 </mat-panel-title>
-                                <mat-panel-description *ngIf="!isHandset">
+                                <mat-panel-description *ngIf="!isHandset()">
                                     Here you can set up general application settings.
                                     <mat-icon>dns</mat-icon>
                                 </mat-panel-description>
@@ -29,7 +29,7 @@
                                 <mat-panel-title>
                                     Instance rules
                                 </mat-panel-title>
-                                <mat-panel-description *ngIf="!isHandset">
+                                <mat-panel-description *ngIf="!isHandset()">
                                     Here you can manage instance rules.
                                     <mat-icon>local_police</mat-icon>
                                 </mat-panel-description>
@@ -43,7 +43,7 @@
                                 <mat-panel-title>
                                     Instance domain blocks
                                 </mat-panel-title>
-                                <mat-panel-description *ngIf="!isHandset">
+                                <mat-panel-description *ngIf="!isHandset()">
                                     Here you can manage domains blocked by instance.
                                     <mat-icon>public_off</mat-icon>
                                 </mat-panel-description>

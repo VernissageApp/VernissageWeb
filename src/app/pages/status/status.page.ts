@@ -176,7 +176,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         if (internalStatus?.id) {
             const previousStatus = await this.contextStatusesService.getPrevious(internalStatus.id);
             if (previousStatus) {
-                if (this.isHandset) {
+                if (this.isHandset()) {
                     this.loadingService.showLoader();
                 }
 
@@ -195,7 +195,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         if (internalStatus?.id) {
             const nextStatus = await this.contextStatusesService.getNext(internalStatus.id);
             if (nextStatus) {
-                if (this.isHandset) {
+                if (this.isHandset()) {
                     this.loadingService.showLoader();
                 }
 
@@ -335,15 +335,15 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     }
 
     protected showBackArrow(): boolean {
-        return !this.isHandset && !!this.urlToGallery;
+        return !this.isHandset() && !!this.urlToGallery;
     }
 
     protected showContextArrows(): boolean {
-        return this.contextStatusesService.hasContextStatuses() && !this.isHandset;
+        return this.contextStatusesService.hasContextStatuses() && !this.isHandset();
     }
 
     protected showBottomContextArrow(): boolean {
-        return this.contextStatusesService.hasContextStatuses() && this.isHandset;
+        return this.contextStatusesService.hasContextStatuses() && this.isHandset();
     }
 
     protected shouldDisplayDeleteButton(): boolean {
