@@ -192,7 +192,7 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
             internalColumns[smallerColumnIndex].statuses.push(new GalleryStatus(status, false));
         }
 
-        // Update in one step columns signal (to reduce DOM manipulations).
+        // Update internal list of statuses (used to rebuild when size of screen is changed).
         this.internalStatuses.update((value) => {
             const newList = new LinkableResult<Status>();
             newList.data = value?.data.concat(statusesArray.data) ?? [];
@@ -205,6 +205,7 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
             return newList;
         });
 
+        // Update in one step columns signal (to reduce DOM manipulations).
         this.galleryColumns.update(columns => {
             for (let i = 0; i < internalColumns.length; i++) {
                 columns[i].statuses = columns[i].statuses.concat(internalColumns[i].statuses);
