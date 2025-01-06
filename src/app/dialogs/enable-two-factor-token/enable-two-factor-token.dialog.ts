@@ -27,11 +27,11 @@ export class EnableTwoFactorTokenDialog implements OnInit {
         this.twoFactorToken.set(downloadedToken);
     }
 
-    onNoClick(): void {
+    protected onNoClick(): void {
         this.dialogRef.close();
     }
 
-    async onSubmit(): Promise<void> {
+    protected async onSubmit(): Promise<void> {
         try {
             await this.accountService.enableTwoFactorToken(this.code());
             this.messageService.showSuccess('Two factor authentication enabled.');

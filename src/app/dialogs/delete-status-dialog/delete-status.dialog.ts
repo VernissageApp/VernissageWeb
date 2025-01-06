@@ -10,11 +10,11 @@ export class DeleteStatusDialog {
     constructor(public dialogRef: MatDialogRef<DeleteStatusDialog>) {
     }
 
-    onNoClick(): void {
+    protected onNoClick(): void {
         this.dialogRef.close();
     }
 
-    async onSubmit(): Promise<void> {
+    protected async onSubmit(): Promise<void> {
         this.dialogRef.close({ confirmation: true });
     }
 }

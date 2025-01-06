@@ -39,7 +39,7 @@ export class UsersDialog implements OnInit {
         this.users.set(downloadedUsers);
     }
 
-    async onLoadMoreFollowing(): Promise<void> {
+    protected async onLoadMoreFollowing(): Promise<void> {
         const internalUsers = await this.getUsers();
 
         if (this.users()) {
@@ -65,7 +65,7 @@ export class UsersDialog implements OnInit {
         }
     }
     
-    onNoClick(): void {
+    protected onNoClick(): void {
         this.dialogRef.close();
     }
 

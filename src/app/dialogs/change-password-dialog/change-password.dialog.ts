@@ -20,15 +20,15 @@ export class ChangePasswordDialog {
         public dialogRef: MatDialogRef<ChangePasswordDialog>
     ) { }
 
-    onPasswordValid(valid: boolean): void {
+    protected onPasswordValid(valid: boolean): void {
         this.passwordIsValid.set(valid);
     }
 
-    onNoClick(): void {
+    protected onNoClick(): void {
         this.dialogRef.close();
     }
 
-    async onSubmit(): Promise<void> {
+    protected async onSubmit(): Promise<void> {
         try {
             const changePassword = new ChangePassword();
             changePassword.currentPassword = this.oldPassword();

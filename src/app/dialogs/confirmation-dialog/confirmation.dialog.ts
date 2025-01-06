@@ -19,11 +19,11 @@ export class ConfirmationDialog implements OnInit {
         this.text.set(this.data ?? '');
     }
 
-    onNoClick(): void {
+    protected onNoClick(): void {
         this.dialogRef.close({ confirmed: false});
     }
 
-    async onSubmit(): Promise<void> {
+    protected async onSubmit(): Promise<void> {
         this.dialogRef.close({ confirmed: true});
     }
 }

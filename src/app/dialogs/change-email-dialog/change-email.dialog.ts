@@ -20,11 +20,11 @@ export class ChangeEmailDialog {
         public dialogRef: MatDialogRef<ChangeEmailDialog>
     ) { }
 
-    onNoClick(): void {
+    protected onNoClick(): void {
         this.dialogRef.close();
     }
 
-    async onSubmit(): Promise<void> {
+    protected async onSubmit(): Promise<void> {
         try {
             const changeEmail = new ChangeEmail();
             changeEmail.email = this.email();

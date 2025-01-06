@@ -25,11 +25,11 @@ export class InstanceRuleDialog {
             }
     }
 
-    onNoClick(): void {
+    protected onNoClick(): void {
         this.dialogRef.close();
     }
 
-    async onSubmit(): Promise<void> {
+    protected async onSubmit(): Promise<void> {
         try {
             if (this.data?.id) {
                 this.data.order = this.order();

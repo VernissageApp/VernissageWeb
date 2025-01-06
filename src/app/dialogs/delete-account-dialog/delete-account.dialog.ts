@@ -15,11 +15,11 @@ export class DeleteAccountDialog {
         @Inject(MAT_DIALOG_DATA) public data: User
     ) { }
 
-    onNoClick(): void {
+    protected onNoClick(): void {
         this.dialogRef.close();
     }
 
-    async onSubmit(): Promise<void> {
+    protected async onSubmit(): Promise<void> {
         this.dialogRef.close({ confirmed: true});
     }
 }

@@ -19,11 +19,11 @@ export class CreateAliasDialog {
         public dialogRef: MatDialogRef<CreateAliasDialog>) {
     }
 
-    onNoClick(): void {
+    protected onNoClick(): void {
         this.dialogRef.close();
     }
 
-    async onSubmit(): Promise<void> {
+    protected async onSubmit(): Promise<void> {
         try {
             const newUserAlias = new UserAlias();
             newUserAlias.alias = this.alias();

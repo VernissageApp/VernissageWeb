@@ -19,11 +19,11 @@ export class DisableTwoFactorTokenDialog {
         @Inject(MAT_DIALOG_DATA) public data?: User) {
     }
 
-    onNoClick(): void {
+    protected onNoClick(): void {
         this.dialogRef.close();
     }
 
-    async onSubmit(): Promise<void> {
+    protected async onSubmit(): Promise<void> {
         try {
             await this.accountService.disableTwoFactorToken(this.code());
             this.messageService.showSuccess('Two factor authentication disabled.');

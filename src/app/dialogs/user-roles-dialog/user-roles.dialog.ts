@@ -27,7 +27,7 @@ export class UserRolesDialog implements OnInit {
         this.isModerator.set(this.data?.roles?.includes(Role.Moderator) ?? false);
     }
 
-    async onChangeAdministrator(): Promise<void> {
+    protected async onChangeAdministrator(): Promise<void> {
         if (this.data?.userName) {
             try {
                 if (this.isAdministrator()) {
@@ -52,7 +52,7 @@ export class UserRolesDialog implements OnInit {
         }
     }
 
-    async onChangeModerator(): Promise<void> {
+    protected async onChangeModerator(): Promise<void> {
         if (this.data?.userName) {
             try {
                 if (this.isModerator()) {
@@ -77,11 +77,7 @@ export class UserRolesDialog implements OnInit {
         }
     }
 
-    onNoClick(): void {
+    protected onNoClick(): void {
         this.dialogRef.close();
-    }
-
-    async onSubmit(): Promise<void> {
-        this.dialogRef.close({});
     }
 }

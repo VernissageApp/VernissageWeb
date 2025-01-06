@@ -42,11 +42,11 @@ export class ReportDialog implements OnInit {
         this.isLocal.set(this.data?.user?.isLocal ?? false);
     }
 
-    onNoClick(): void {
+    protected onNoClick(): void {
         this.dialogRef.close();
     }
 
-    async onSubmit(): Promise<void> {
+    protected async onSubmit(): Promise<void> {
         const reportRequest = new ReportRequest();
         reportRequest.reportedUserId = this.data?.user?.id;
         reportRequest.statusId = this.data?.status?.id;

@@ -73,25 +73,25 @@ export class NotificationSettingsDialog implements OnInit {
         this.loadingService.hideLoader();
     }
 
-    isAdministrator(): boolean {
+    protected isAdministrator(): boolean {
         return this.authorizationService.hasRole(Role.Administrator);
     }
 
-    isModerator(): boolean {
+    protected isModerator(): boolean {
         return this.authorizationService.hasRole(Role.Moderator);
     }
 
-    onNoClick(): void {
+    protected onNoClick(): void {
         this.dialogRef.close();
     }
 
-    onNotificationsChange(): void {
+    protected onNotificationsChange(): void {
         if (this.notificationsEnabled()) {
             this.subscribeToPush();
         }
     }
 
-    async onSubmit(): Promise<void> {
+    protected async onSubmit(): Promise<void> {
         try {
             await this.subscribeToPush();
 
@@ -127,7 +127,7 @@ export class NotificationSettingsDialog implements OnInit {
         }
     }
 
-    async subscribeToPush(): Promise<void> {
+    private async subscribeToPush(): Promise<void> {
         if (!this.settingsService.publicSettings?.webPushVapidPublicKey) {
             this.messageService.showError('Web push public key is not set.');
             return;

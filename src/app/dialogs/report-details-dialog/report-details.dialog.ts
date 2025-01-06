@@ -45,7 +45,7 @@ export class ReportDetailsDialog implements OnInit {
         this.isLocal.set(this.data?.reportedUser?.isLocal ?? false);
     }
 
-    onNoClick(): void {
+    protected onNoClick(): void {
         this.dialogRef.close();
     }
 }

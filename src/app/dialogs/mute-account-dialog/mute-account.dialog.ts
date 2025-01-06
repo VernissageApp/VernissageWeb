@@ -16,11 +16,11 @@ export class MuteAccountDialog {
     constructor(public dialogRef: MatDialogRef<MuteAccountDialog>) {
     }
 
-    onNoClick(): void {
+    protected onNoClick(): void {
         this.dialogRef.close();
     }
 
-    async onSubmit(): Promise<void> {
+    protected async onSubmit(): Promise<void> {
         const userMuteRequest = new UserMuteRequest(this.muteStatuses(), this.muteReblogs(), this.muteNotifications(), this.muteEnd());
         this.dialogRef.close(userMuteRequest);
     }
