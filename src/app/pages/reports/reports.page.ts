@@ -9,7 +9,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 import { ReportsService } from 'src/app/services/http/reports.service';
 import { Role } from 'src/app/models/role';
-import { PaginableResult } from 'src/app/models/paginable-result';
+import { PagedResult } from 'src/app/models/paged-result';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -32,12 +32,12 @@ export class ReportsPage extends ResponsiveComponent implements OnInit, OnDestro
     protected readonly avatarSize = AvatarSize;
     protected isReady = signal(false);
     protected pageIndex = signal(0);
-    protected reports = signal<PaginableResult<Report> | undefined>(undefined);
+    protected reports = signal<PagedResult<Report> | undefined>(undefined);
     protected displayedColumns = signal<string[]>([]);
 
     private routeParamsSubscription?: Subscription;
     private readonly displayedColumnsHandsetPortrait: string[] = ['reportedUser', 'status'];
-    private readonly displayedColumnsHandserLandscape: string[] = ['reportedUser', 'status', 'actions'];
+    private readonly displayedColumnsHandsetLandscape: string[] = ['reportedUser', 'status', 'actions'];
     private readonly displayedColumnsTablet: string[] = ['user', 'reportedUser', 'category', 'status', 'actions'];
     private readonly displayedColumnsBrowser: string[] = ['user', 'reportedUser', 'status', 'category', 'considerationUser', 'considerationDate', 'actions'];
     
@@ -101,7 +101,7 @@ export class ReportsPage extends ResponsiveComponent implements OnInit, OnDestro
     }
 
     protected override onHandsetLandscape(): void {
-        this.displayedColumns?.set(this.displayedColumnsHandserLandscape);
+        this.displayedColumns?.set(this.displayedColumnsHandsetLandscape);
     }
 
     protected override onTablet(): void {

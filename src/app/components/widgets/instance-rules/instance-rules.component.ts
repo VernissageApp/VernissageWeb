@@ -5,7 +5,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { ConfirmationDialog } from 'src/app/dialogs/confirmation-dialog/confirmation.dialog';
 import { InstanceRuleDialog } from 'src/app/dialogs/instance-rule-dialog/instance-rule.dialog';
-import { PaginableResult } from 'src/app/models/paginable-result';
+import { PagedResult } from 'src/app/models/paged-result';
 import { Rule } from 'src/app/models/rule';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { RulesService } from 'src/app/services/http/rules.service';
@@ -18,13 +18,13 @@ import { RulesService } from 'src/app/services/http/rules.service';
     standalone: false
 })
 export class InstanceRulesComponent extends ResponsiveComponent implements OnInit {
-    protected rules = signal<PaginableResult<Rule> | undefined>(undefined);
+    protected rules = signal<PagedResult<Rule> | undefined>(undefined);
     protected displayedColumns = signal<string[]>([]);
     protected pageIndex = signal(0);
     
     private pageSize = 10;
     private readonly displayedColumnsHandsetPortrait: string[] = ['text', 'actions'];
-    private readonly displayedColumnsHandserLandscape: string[] = ['text', 'actions'];
+    private readonly displayedColumnsHandsetLandscape: string[] = ['text', 'actions'];
     private readonly displayedColumnsTablet: string[] = ['order', 'text', 'actions'];
     private readonly displayedColumnsBrowser: string[] = ['order', 'text', 'actions'];
 
@@ -93,7 +93,7 @@ export class InstanceRulesComponent extends ResponsiveComponent implements OnIni
     }
 
     protected override onHandsetLandscape(): void {
-        this.displayedColumns?.set(this.displayedColumnsHandserLandscape);
+        this.displayedColumns?.set(this.displayedColumnsHandsetLandscape);
     }
 
     protected override onTablet(): void {

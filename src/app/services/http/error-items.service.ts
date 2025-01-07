@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { WindowService } from '../common/window.service';
 import { ErrorItem } from 'src/app/models/error-item';
-import { PaginableResult } from 'src/app/models/paginable-result';
+import { PagedResult } from 'src/app/models/paged-result';
 
 @Injectable({
     providedIn: 'root'
@@ -15,8 +15,8 @@ export class ErrorItemsService {
     constructor(private httpClient: HttpClient, private windowService: WindowService) {
     }
 
-    public async get(page: number, size: number, query: string): Promise<PaginableResult<ErrorItem>> {
-        const event$ = this.httpClient.get<PaginableResult<ErrorItem>>(this.windowService.apiUrl() + `/api/v1/error-items?page=${page}&size=${size}&query=${query ?? ''}`);
+    public async get(page: number, size: number, query: string): Promise<PagedResult<ErrorItem>> {
+        const event$ = this.httpClient.get<PagedResult<ErrorItem>>(this.windowService.apiUrl() + `/api/v1/error-items?page=${page}&size=${size}&query=${query ?? ''}`);
         return await firstValueFrom(event$);
     }
 

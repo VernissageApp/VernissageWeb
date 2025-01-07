@@ -28,7 +28,7 @@ export class InvitationsPage extends ResponsiveComponent implements OnInit {
     protected canGenerateNewInvitations = computed(() => (this.invitations?.length ?? 0) < (this.publicSettings()?.maximumNumberOfInvitations ?? 0));
 
     private readonly displayedColumnsHandsetPortrait: string[] = ['code', 'actions'];
-    private readonly displayedColumnsHandserLandscape: string[] = ['code', 'actions'];
+    private readonly displayedColumnsHandsetLandscape: string[] = ['code', 'actions'];
     private readonly displayedColumnsTablet: string[] = ['code', 'invited', 'actions'];
     private readonly displayedColumnsBrowser: string[] = ['code', 'createdAt', 'invited', 'actions'];
     
@@ -70,7 +70,7 @@ export class InvitationsPage extends ResponsiveComponent implements OnInit {
     }
 
     protected override onHandsetLandscape(): void {
-        this.displayedColumns?.set(this.displayedColumnsHandserLandscape);
+        this.displayedColumns?.set(this.displayedColumnsHandsetLandscape);
     }
 
     protected override onTablet(): void {

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
-import { PersistanceService } from 'src/app/services/persistance/persistance.service';
+import { PersistenceService } from 'src/app/services/persistance/persistance.service';
 
 @Component({
     selector: 'app-unexpected-error',
@@ -20,7 +20,7 @@ export class UnexpectedErrorPage implements OnInit, OnDestroy {
     private interval: NodeJS.Timeout | undefined;
 
     constructor(
-        private persistanceService: PersistanceService,
+        private persistenceService: PersistenceService,
         private router: Router,
         private activatedRoute: ActivatedRoute) {
     }
@@ -50,10 +50,10 @@ export class UnexpectedErrorPage implements OnInit, OnDestroy {
             });
         }, 200);
 
-        const errorObject = this.persistanceService.get('exception');
+        const errorObject = this.persistenceService.get('exception');
         if (errorObject) {
             this.errorMessage.set(errorObject.toString());
-            this.persistanceService.remove('exception');
+            this.persistenceService.remove('exception');
         }
     }
 

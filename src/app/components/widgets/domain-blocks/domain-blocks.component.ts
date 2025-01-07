@@ -6,7 +6,7 @@ import { ResponsiveComponent } from 'src/app/common/responsive';
 import { ConfirmationDialog } from 'src/app/dialogs/confirmation-dialog/confirmation.dialog';
 import { InstanceBlockedDomainDialog } from 'src/app/dialogs/instance-blocked-domain-dialog/instance-blocked-domain.dialog';
 import { InstanceBlockedDomain } from 'src/app/models/instance-blocked-domain';
-import { PaginableResult } from 'src/app/models/paginable-result';
+import { PagedResult } from 'src/app/models/paged-result';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { InstanceBlockedDomainsService } from 'src/app/services/http/instance-blocked-domains.service';
 
@@ -18,13 +18,13 @@ import { InstanceBlockedDomainsService } from 'src/app/services/http/instance-bl
     standalone: false
 })
 export class DomainBlocksComponent extends ResponsiveComponent implements OnInit {
-    protected domains = signal<PaginableResult<InstanceBlockedDomain> | undefined>(undefined);
+    protected domains = signal<PagedResult<InstanceBlockedDomain> | undefined>(undefined);
     protected displayedColumns = signal<string[]>([]);
     protected pageIndex = signal(0);
 
     private pageSize = 10;
     private readonly displayedColumnsHandsetPortrait: string[] = ['domain', 'actions'];
-    private readonly displayedColumnsHandserLandscape: string[] = ['domain', 'actions'];
+    private readonly displayedColumnsHandsetLandscape: string[] = ['domain', 'actions'];
     private readonly displayedColumnsTablet: string[] = ['domain', 'actions'];
     private readonly displayedColumnsBrowser: string[] = ['domain', 'actions'];
 
@@ -93,7 +93,7 @@ export class DomainBlocksComponent extends ResponsiveComponent implements OnInit
     }
 
     protected override onHandsetLandscape(): void {
-        this.displayedColumns?.set(this.displayedColumnsHandserLandscape);
+        this.displayedColumns?.set(this.displayedColumnsHandsetLandscape);
     }
 
     protected override onTablet(): void {

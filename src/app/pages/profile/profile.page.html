@@ -45,7 +45,7 @@
                     <div class="margin-auto fields-container padding-top-10">
                         <mat-card *ngIf="(userInternal.fields?.length ?? 0) > 0" appearance="outlined">
                             <mat-card-content>
-                                <ng-container *ngFor="let item of userInternal.fields; let i = index">
+                                @for (item of userInternal.fields; track item.id; let i = $index) {
                                     <div class="flex-row flex-align-center flex-space-between margin-bottom-10">
                                         <div>
                                             <div class="field-key text-muted">{{ item.key }}</div>
@@ -58,7 +58,7 @@
                                         </div>
                                     </div>
                                     <mat-divider *ngIf="(i + 1) < (userInternal.fields?.length ?? 0)" class="padding-bottom-5"></mat-divider>
-                                </ng-container>
+                                }
                             </mat-card-content>
                         </mat-card>
                     </div>

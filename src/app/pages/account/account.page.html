@@ -72,37 +72,34 @@
                     <div></div>
                 </div>
 
-                <div *ngFor="let field of user().fields; let i = index">
-
-                    <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
-                        <mat-form-field appearance="outline">
-                            <mat-label>Key</mat-label>
-                            <input matInput [name]="'key-' + i" #key="ngModel" [(ngModel)]="field.key" placeholder="Key" aria-label="Key" appMaxLength="500" />
-                            <mat-error *ngIf="key.invalid && key.errors?.appMaxLength">
-                                Too long key.
-                            </mat-error>
-                        </mat-form-field>
-                        <div></div>
-                    </div>
-
-                    <div class="flex-row flex-responsive flex-stretch gap-16">
-                        <mat-form-field appearance="outline">
-                            <mat-label>Value</mat-label>
-                            <input matInput [name]="'value-' + i" #value="ngModel" [(ngModel)]="field.value" placeholder="Value" aria-label="Value" appMaxLength="500" />
-                            <mat-error *ngIf="value.invalid && value.errors?.appMaxLength">
-                                Too long value.
-                            </mat-error>
-                        </mat-form-field>
-                        <div></div>
-                    </div>
-
-                    <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
-                        <div class="text-right">
-                            <button mat-stroked-button color="primary" type="button" (click)="onDeleteField(field)">Delete</button>
+                @for (field of user().fields; track field.id; let i = $index) {
+                    <div>
+                        <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Key</mat-label>
+                                <input matInput [name]="'key-' + i" #key="ngModel" [(ngModel)]="field.key" placeholder="Key" aria-label="Key" appMaxLength="500" />
+                                <mat-error *ngIf="key.invalid && key.errors?.appMaxLength">Too long key.</mat-error>
+                            </mat-form-field>
+                            <div></div>
                         </div>
-                        <div></div>
+
+                        <div class="flex-row flex-responsive flex-stretch gap-16">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Value</mat-label>
+                                <input matInput [name]="'value-' + i" #value="ngModel" [(ngModel)]="field.value" placeholder="Value" aria-label="Value" appMaxLength="500" />
+                                <mat-error *ngIf="value.invalid && value.errors?.appMaxLength">Too long value.</mat-error>
+                            </mat-form-field>
+                            <div></div>
+                        </div>
+
+                        <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
+                            <div class="text-right">
+                                <button mat-stroked-button color="primary" type="button" (click)="onDeleteField(field)">Delete</button>
+                            </div>
+                            <div></div>
+                        </div>
                     </div>
-                </div>
+                }
 
                 <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20 padding-top-20">
                     <div>

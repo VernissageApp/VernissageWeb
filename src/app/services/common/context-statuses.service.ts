@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { LinkableResult } from 'src/app/models/linkable-result';
 import { Status } from 'src/app/models/status';
-import { PersistanceService } from '../persistance/persistance.service';
+import { PersistenceService } from '../persistance/persistance.service';
 import { ContextTimeline } from 'src/app/models/context-timeline';
 import { TimelineService } from '../http/timeline.service';
 import { TrendingService } from '../http/trending.service';
@@ -19,14 +19,14 @@ export class ContextStatusesService {
     public allNewerStatusesDownloaded = false;
 
     constructor(
-        private persistanceService: PersistanceService,
+        private persistenceService: PersistenceService,
         private timelineService: TimelineService,
         private bookmarksService: BookmarksService,
         private favouritesService: FavouritesService,
         private usersService: UsersService,
         private trendingService: TrendingService
     ) {
-        const statusesFromStorage = this.persistanceService.getJson('statusesContext') as LinkableResult<Status>;
+        const statusesFromStorage = this.persistenceService.getJson('statusesContext') as LinkableResult<Status>;
         if (statusesFromStorage) {
             this.statuses = statusesFromStorage;
         }
@@ -37,7 +37,7 @@ export class ContextStatusesService {
         this.allOlderStatusesDownloaded = false;
         this.allNewerStatusesDownloaded = false;
 
-        this.persistanceService.setJson('statusesContext', this.statuses);
+        this.persistenceService.setJson('statusesContext', this.statuses);
     }
 
     public clearContextStatuses(): void {
@@ -123,7 +123,7 @@ export class ContextStatusesService {
             this.statuses.data.push(...older.data);
             this.statuses.maxId = older.maxId;
 
-            this.persistanceService.setJson('statusesContext', this.statuses);
+            this.persistenceService.setJson('statusesContext', this.statuses);
             return older;
         }
 
@@ -140,7 +140,7 @@ export class ContextStatusesService {
             this.statuses.data.unshift(...newer.data);
             this.statuses.minId = newer.minId;
 
-            this.persistanceService.setJson('statusesContext', this.statuses);
+            this.persistenceService.setJson('statusesContext', this.statuses);
             return newer;
         }
 

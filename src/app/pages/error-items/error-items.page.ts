@@ -7,7 +7,7 @@ import { ResponsiveComponent } from 'src/app/common/responsive';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 import { Role } from 'src/app/models/role';
-import { PaginableResult } from 'src/app/models/paginable-result';
+import { PagedResult } from 'src/app/models/paged-result';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -31,7 +31,7 @@ export class ErrorItemsPage extends ResponsiveComponent implements OnInit, OnDes
     protected search = model('');
     protected isReady = signal(false);    
     protected pageIndex = signal(0);
-    protected errorItems = signal<PaginableResult<ErrorItem> | undefined>(undefined);
+    protected errorItems = signal<PagedResult<ErrorItem> | undefined>(undefined);
     protected displayedColumns = signal<string[]>([]);
 
     private routeParamsSubscription?: Subscription;
