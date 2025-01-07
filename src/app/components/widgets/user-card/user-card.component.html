@@ -1,18 +1,20 @@
-<div *ngIf="user" class="flex-row flex-space-between padding-bottom-10 padding-top-10">
-    <div class="flex-row gap-8">
-        <div>
-            <app-avatar [user]="user" [size]="avatarSize.huge"></app-avatar>
-        </div>
-        <div>
-            <div [ngClass]="{ 'flex-row': !isHandset, 'flex-column': isHandset }">
-                <div><a [routerLink]="[ '/@' + user.userName ]" class="margin-right-5 fw-600">{{ userDisplayService.displayName(user) }}</a></div>
-                <div class="fw-400 fs-90 text-muted">&#64;{{ user.userName }}</div>
+@if (user(); as userInternal) {
+    <div class="flex-row flex-space-between padding-bottom-10 padding-top-10">
+        <div class="flex-row gap-8">
+            <div>
+                <app-avatar [user]="userInternal" [size]="avatarSize.huge"></app-avatar>
             </div>
-            <div class="fw-300 fs-90">
-                <span class="margin-right-15"><span class="fw-500">{{ user.statusesCount }}</span> Posts</span>
-                <span class="margin-right-15"><span class="fw-500">{{ user.followersCount }}</span> Followers</span>
-                <span><span class="fw-500">{{ user.followingCount }}</span> Following</span>
+            <div>
+                <div [ngClass]="{ 'flex-row': !isHandset(), 'flex-column': isHandset() }">
+                    <div><a [routerLink]="[ '/@' + userInternal.userName ]" class="margin-right-5 fw-600">{{ userDisplayService.displayName(userInternal) }}</a></div>
+                    <div class="fw-400 fs-90 text-muted">&#64;{{ userInternal.userName }}</div>
+                </div>
+                <div class="fw-300 fs-90">
+                    <span class="margin-right-15"><span class="fw-500">{{ userInternal.statusesCount }}</span> Posts</span>
+                    <span class="margin-right-15"><span class="fw-500">{{ userInternal.followersCount }}</span> Followers</span>
+                    <span><span class="fw-500">{{ userInternal.followingCount }}</span> Following</span>
+                </div>
             </div>
         </div>
     </div>
-</div>
+}

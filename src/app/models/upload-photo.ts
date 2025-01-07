@@ -1,15 +1,20 @@
-export class UploadPhoto {
-    public photoFile: Blob;
-    public photoSrc?: string;
-    public isUploaded = false;
+import { signal } from "@angular/core";
 
+export class UploadPhoto {
+    public uuid = '';
+    
+    public photoSrc = signal<string | undefined>(undefined);
+    public isUploaded = signal(false);
+
+    public blurhash?: string;
+    public photoFile: Blob;
     public photoHdrFile?: Blob;
     public photoHdrSrc?: string;
     public isHdrUploaded = false;
 
     public id = '';
     public description?: string;
-    public blurhash?: string;
+    
     public locationId?: string;
     public licenseId?: string;
 
@@ -42,7 +47,8 @@ export class UploadPhoto {
     public latitude?: string;
     public longitude?: string;
 
-    constructor(photoFile: Blob) {
+    constructor(uuid: string, photoFile: Blob) {
+        this.uuid = uuid;
         this.photoFile = photoFile;
     }
 }

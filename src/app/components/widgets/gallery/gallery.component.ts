@@ -1,5 +1,5 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, Inject, Input, OnChanges, OnDestroy, OnInit, PLATFORM_ID, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, Inject, input, OnDestroy, OnInit, PLATFORM_ID, signal } from '@angular/core';
 import { Subscription, filter } from 'rxjs';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { LinkableResult } from 'src/app/models/linkable-result';
@@ -13,34 +13,36 @@ import { WindowService } from 'src/app/services/common/window.service';
 import { isPlatformBrowser } from '@angular/common';
 import { GalleryStatus } from 'src/app/models/gallery-status';
 import { PreferencesService } from 'src/app/services/common/preferences.service';
+import { GalleryColumn } from 'src/app/models/gallery-column';
 
 @Component({
     selector: 'app-gallery',
     templateUrl: './gallery.component.html',
     styleUrls: ['./gallery.component.scss'],
     animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
-export class GalleryComponent extends ResponsiveComponent implements OnInit, OnDestroy, OnChanges {
-    readonly amountOfPriorityImages = 8;
+export class GalleryComponent extends ResponsiveComponent implements OnInit, OnDestroy {
+    public statuses = input.required<LinkableResult<Status>>();
+    public squareImages = input(false);
+    public hideAvatars = input(false);
 
-    @Input() statuses?: LinkableResult<Status>;
-    @Input() squareImages = false;
-    @Input() hideAvatars = false;
-    @Input() isDetached = false;
+    protected galleryColumns = signal<GalleryColumn[]>([]);
+    protected alwaysShowNSFW = signal(false);
+    protected avatarVisible = signal(true);
+    protected isBrowser = signal(false);
+    protected statusesExists = computed(() => (this.internalStatuses().data.length ?? 0) > 0);
 
-    gallery?: GalleryStatus[][];
-    sizes?: number[];
-    columns = 3;
-    alwaysShowNSFW = false;
-    isDuringLoadingMode = false;
-    avatarVisible = true;
-    isBrowser = false;
-    isReady = false;
-
-    galleryBreakpointSubscription?: Subscription;
-    routeNavigationStartSubscription?: Subscription;
-
+    private internalStatuses = signal<LinkableResult<Status>>(new LinkableResult<Status>());
+    private isReady = false;
+    private columns = 3;
+    private isDuringLoadingMode = false;
+    
+    private galleryBreakpointSubscription?: Subscription;
+    private routeNavigationStartSubscription?: Subscription;
+    private readonly amountOfPriorityImages = 8;
+    private readonly minimalFileSize = 1;
     private isReadyTimeout?: NodeJS.Timeout;
     private startUrl?: URL;
     private currentUrl?: URL;
@@ -55,22 +57,30 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
         private windowService: WindowService
     ) {
         super(galleryBreakpointObserver);
-        this.isBrowser = isPlatformBrowser(platformId);
+        this.isBrowser.set(isPlatformBrowser(platformId));
+
+        effect(() => {
+            const inputStatuses = this.statuses();
+
+            this.internalStatuses.set(inputStatuses);
+            this.contextStatusesService.setContextStatuses(inputStatuses);
+            this.buildGallery(inputStatuses);
+        });
     }
 
     override ngOnInit(): void {
         this.startUrl = new URL(this.router.routerState.snapshot.url, this.windowService.getApplicationUrl());
-        this.alwaysShowNSFW = this.preferencesService.alwaysShowNSFW;
+        this.alwaysShowNSFW.set(this.preferencesService.alwaysShowNSFW);
 
         this.galleryBreakpointSubscription = this.galleryBreakpointObserver.observe([Breakpoints.XSmall]).subscribe(result => {
             if (result.matches) {
-                this.columns = this.squareImages ? 3 : 1;
-                this.avatarVisible = !this.squareImages;
-                this.buildGallery();
+                this.columns = this.squareImages() ? 3 : 1;
+                this.avatarVisible.set(!this.squareImages);
+                this.buildGallery(this.internalStatuses());
             } else {
                 this.columns = 3;
-                this.avatarVisible = true;
-                this.buildGallery();
+                this.avatarVisible.set(true);
+                this.buildGallery(this.internalStatuses());
             }
         });
 
@@ -86,20 +96,18 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
         }, 500);
     }    
 
-    ngOnChanges(changes: SimpleChanges): void {
-        if (changes.statuses) {
-            this.contextStatusesService.setContextStatuses(this.statuses);
-            this.buildGallery();
-        }
-    }
-
     override ngOnDestroy(): void {
+        super.ngOnDestroy();
+
         if (this.isReadyTimeout) {
             clearTimeout(this.isReadyTimeout);
         }
+
+        this.galleryBreakpointSubscription?.unsubscribe();
+        this.routeNavigationStartSubscription?.unsubscribe();
     }
 
-    async onNearEndScroll(): Promise<void> {
+    protected async onNearEndScroll(): Promise<void> {
         if (!this.isReady) {
             return;
         }
@@ -117,82 +125,93 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
                 return;
             }
 
-            if (!this.statuses?.data.length) {
+            if (!this.internalStatuses().data.length) {
                 this.isDuringLoadingMode = false;
                 return;
             }
 
             this.loadingService.showLoader();
 
-            const amountOfStatusesBeforeLoadMode = this.statuses.data.length;
-            await this.contextStatusesService.loadOlder();
-            this.appendToGallery(amountOfStatusesBeforeLoadMode);
+            const olderStatuses = await this.contextStatusesService.loadOlder();
+            this.appendToGallery(olderStatuses);
 
             this.loadingService.hideLoader();
             this.isDuringLoadingMode = false;
         }
     }
 
-    private buildGallery(): void {
-        this.gallery = [];
-        this.sizes = [];
-
-        for(let i = 0; i < this.columns; i++) {
-            this.gallery?.push([]);
-            this.sizes.push(0);
-        }
-
-        if (!this.statuses) {
-            return;
-        }
-
-        for (const [index, status] of this.statuses.data.entries()) {
-            const imageHeight = this.getImageConstraitHeight(status);
-            const smallerColumnIndex = this.getSmallerColumnIndex(imageHeight);
-
-            this.sizes[smallerColumnIndex] = this.sizes[smallerColumnIndex] + imageHeight;
-            this.gallery[smallerColumnIndex].push(new GalleryStatus(status, index < this.amountOfPriorityImages));
-        }
-    }
-
-    private appendToGallery(fromIndex: number): void {
-        if (!this.sizes) {
-            return;
-        }
-
-        if (!this.gallery) {
-            return;
-        }
-
-        if (!this.statuses?.data) {
-            return;
-        }
-
-        for(let i = fromIndex; i < this.statuses.data.length; i++) {
-            const status = this.statuses.data[i];
-
-            const imageHeight = this.getImageConstraitHeight(status);
-            const smallerColumnIndex = this.getSmallerColumnIndex(imageHeight);
-
-            this.sizes[smallerColumnIndex] = this.sizes[smallerColumnIndex] + imageHeight;
-            this.gallery[smallerColumnIndex].push(new GalleryStatus(status, false));
-        }
-    }
-
-    getMainStatus(status: Status): Status {
+    protected getMainStatus(status: Status): Status {
         return status.reblog ?? status;
     }
 
-    private getSmallerColumnIndex(currentImageHeight: number): number {
-        if (!this.sizes) {
-            return 0;
+    private buildGallery(statusesArray: LinkableResult<Status> | undefined): void {
+        const columns: GalleryColumn[] = [];
+
+        for(let i = 0; i < this.columns; i++) {
+            columns.push(new GalleryColumn(i + 1));
         }
 
+        if (!statusesArray) {
+            this.galleryColumns.set(columns);
+            return;
+        }
+
+        for (const [index, status] of statusesArray.data.entries()) {
+            const imageHeight = this.getImageConstraintHeight(status);
+            const smallerColumnIndex = this.getSmallerColumnIndex(columns, imageHeight);
+
+            columns[smallerColumnIndex].size = columns[smallerColumnIndex].size + imageHeight;
+            columns[smallerColumnIndex].statuses.push(new GalleryStatus(status, index < this.amountOfPriorityImages));
+        }
+
+        this.galleryColumns.set(columns);
+    }
+
+    private appendToGallery(statusesArray: LinkableResult<Status> | null): void {
+        if (!statusesArray) {
+            return;
+        }
+
+        const columns = this.galleryColumns();
+
+        // Create temporary array for new statuses (with columns configuration).
+        const internalColumns: GalleryColumn[] = [];
+        for (const column of columns) {
+            const galleryColumn = new GalleryColumn(column.columnId);
+            galleryColumn.size = column.size;
+
+            internalColumns.push(galleryColumn);
+        }
+        
+        // Append new statuses to temporary array.
+        for (const status of statusesArray.data) {
+            const imageHeight = this.getImageConstraintHeight(status);
+            const smallerColumnIndex = this.getSmallerColumnIndex(internalColumns, imageHeight);
+
+            internalColumns[smallerColumnIndex].size = internalColumns[smallerColumnIndex].size + imageHeight;
+            internalColumns[smallerColumnIndex].statuses.push(new GalleryStatus(status, false));
+        }
+
+        // Update internal list of statuses (used to rebuild when size of screen is changed).
+        this.internalStatuses.update((value) => LinkableResult.copy(value));
+
+        // Update in one step columns signal (to reduce DOM manipulations).
+        this.galleryColumns.update(columns => {
+            for (let i = 0; i < internalColumns.length; i++) {
+                columns[i].statuses = columns[i].statuses.concat(internalColumns[i].statuses);
+                columns[i].size = internalColumns[i].size;
+            }
+            return [...columns];
+        });        
+    }
+
+    private getSmallerColumnIndex(galleryColumns: GalleryColumn[], currentImageHeight: number): number {
         let index = 0;
         let minSize = 999999999;
-        for(let i = 0; i < this.sizes.length; i++) {
-            if ((this.sizes[i] + currentImageHeight) < minSize) {
-                minSize = this.sizes[i] + currentImageHeight;
+
+        for(let i = galleryColumns.length - 1; i >= 0; i--) {
+            if ((galleryColumns[i].size + currentImageHeight) <= minSize) {
+                minSize = galleryColumns[i].size + currentImageHeight;
                 index = i;
             }
         }
@@ -214,15 +233,15 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
         return mainStatus.attachments[0]
     }
 
-    private getImageConstraitHeight(status: Status): number {
-        if (this.squareImages) {
-            return 1;
+    private getImageConstraintHeight(status: Status): number {
+        if (this.squareImages()) {
+            return this.minimalFileSize;
         }
 
         const mainAttachment = this.getMainAttachment(status);
 
-        const height = mainAttachment?.originalFile?.height ?? 0.0;
-        const width = mainAttachment?.originalFile?.width ?? 0.0;
+        const height = mainAttachment?.originalFile?.height ?? this.minimalFileSize;
+        const width = mainAttachment?.originalFile?.width ?? this.minimalFileSize;
 
         return height / width;
     }

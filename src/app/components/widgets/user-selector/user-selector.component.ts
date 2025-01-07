@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy, Output, EventEmitter, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, input, model, output, signal } from '@angular/core';
 import { ControlContainer, NgForm } from '@angular/forms';
 import { Subject, Subscription } from 'rxjs';
 
@@ -15,36 +15,34 @@ import { UsersService } from 'src/app/services/http/users.service';
     standalone: false
 })
 export class UserSelectorComponent implements OnInit, OnDestroy {
-    @Input() name!: string;
-    @Input() label = 'User';
-    @Input() isRequired = false;
-    @Input() isReadOnly = false;
+    public name = input.required<string>();
+    public label = input('User');
+    public isRequired = input(false);
+    public isReadOnly = input(false);
 
-    @Input() selectedUser?: User;
-    @Output() selectedUserChange = new EventEmitter<User | undefined>();
+    public selectedUser = model<User>();
+    public selectedUserChange = output<User | undefined>();
 
-    filteredUsers?: User[];
+    protected filteredUsers = signal<User[] | undefined>(undefined);
+    protected isUsersLoading = signal(false);
 
-    usersSubscription?: Subscription;
-    isUsersLoading?: boolean;
-    textChanged = new Subject<string>();
+    private usersSubscription?: Subscription;
+    private textChanged = new Subject<string>();
 
     constructor(
-        private usersService: UsersService,
-        private changeDetectorRef: ChangeDetectorRef
+        private usersService: UsersService
     ) { }
 
     ngOnInit(): void {
         this.usersSubscription = this.textChanged.pipe(
             debounceTime(300),
             switchMap(async value => {
-                this.isUsersLoading = true;
+                this.isUsersLoading.set(true);
                 return await this.filterUsers(value);
             })
         ).subscribe(users => {
-            this.filteredUsers = users;
-            this.isUsersLoading = false;
-            this.changeDetectorRef.markForCheck();
+            this.filteredUsers.set(users);
+            this.isUsersLoading.set(false);
         });
     }
 
@@ -52,21 +50,21 @@ export class UserSelectorComponent implements OnInit, OnDestroy {
         this.usersSubscription?.unsubscribe();
     }
 
-    onSelectedUser(user: User): void {
-        this.selectedUser = user;
+    protected onSelectedUser(user: User): void {
+        this.selectedUser.set(user);
         this.selectedUserChange.emit(user);
     }
 
-    onChange(): void {
-        this.selectedUser = undefined;
+    protected onChange(): void {
+        this.selectedUser.set(undefined);
         this.selectedUserChange.emit(undefined);
     }
 
-    onModelChange(value: string): void {
+    protected onModelChange(value: string): void {
         this.textChanged.next(value);
     }
 
-    userDisplayFn(user: User): string  {
+    protected userDisplayFn(user: User): string  {
         if (!user) {
             return '';
         }
@@ -84,7 +82,7 @@ export class UserSelectorComponent implements OnInit, OnDestroy {
             return [];
         }
 
-        this.selectedUser = undefined;
+        this.selectedUser.set(undefined);
         this.selectedUserChange.emit(undefined);
 
         const result = await this.usersService.get(0, 40, value);

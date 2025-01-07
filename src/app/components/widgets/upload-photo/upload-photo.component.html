@@ -1,24 +1,38 @@
+@let internalIndex = index();
+
 <div class="flex-col gap-0 margin-top-5">
 
-    @if (isOpenAIEnabled) {
-        <div class="flex-row flex-end">
-            <mat-spinner *ngIf="describeInProgress" class="margin-right-10 margin-top-10" [diameter]="18"></mat-spinner>
-            <button mat-stroked-button color="primary" (click)="onGenerateDescription()" [disabled]="!photo.isUploaded || describeInProgress">
-                <mat-icon>smart_toy</mat-icon> Generate
-            </button>
+    @if (isOpenAIEnabled()) {
+        <div class="flex-row flex-space-between">
+            <div class="margin-top-10">
+                @if (!photo().isUploaded()) {
+                    <mat-spinner class="display-inline-block margin-right-10" [diameter]="18"></mat-spinner>
+                    <span class="uploading-text">Uploading...</span>
+                }
+            </div>
+
+            <div class="flex-row flex-right">
+                @if (describeInProgress()) {
+                    <mat-spinner class="margin-right-10 margin-top-10" [diameter]="18"></mat-spinner>
+                }
+
+                <button mat-stroked-button color="primary" (click)="onGenerateDescription()" [disabled]="!photo().isUploaded() || describeInProgress()">
+                    <mat-icon>smart_toy</mat-icon> Generate
+                </button>
+            </div>
         </div>
     }
 
     <mat-form-field appearance="outline" class="margin-top-10">
         <mat-label>Alt text</mat-label>
         <textarea
-                matInput [name]="'altText-' + index"
+                matInput [name]="'altText-' + internalIndex"
                 cdkTextareaAutosize
                 #autosize="cdkTextareaAutosize"
                 cdkAutosizeMinRows="4"
                 cdkAutosizeMaxRows="10"
                 #altTextInput="ngModel"
-                [(ngModel)]="photo.description"
+                [(ngModel)]="photo().description"
                 aria-label="Alt text"
                 appMaxLength="2000"></textarea>
         <mat-error *ngIf="altTextInput.invalid && altTextInput.errors?.appMaxLength">Too long alt text.</mat-error>
@@ -26,10 +40,12 @@
 
     <mat-form-field appearance="outline">
         <mat-label>License</mat-label>
-        <mat-select [(value)]="photo.licenseId">
-            <mat-option *ngFor="let license of licenses" [value]="license.id">
-                {{ license.name }} <ng-container *ngIf="license.code">({{ license.code }})</ng-container>
-            </mat-option>
+        <mat-select [(value)]="photo().licenseId">
+            @for (license of licenses(); track license.id) {
+                <mat-option [value]="license.id">
+                    {{ license.name }} <ng-container *ngIf="license.code">({{ license.code }})</ng-container>
+                </mat-option>
+            }
         </mat-select>
     </mat-form-field>
 
@@ -43,7 +59,7 @@
                [formControl]="countriesControl"
                [matAutocomplete]="autoCountry">
         <mat-autocomplete autoActiveFirstOption #autoCountry="matAutocomplete" [displayWith]="displayCountryFn" (optionSelected)="selectedCountry($event.option.value)">
-            <mat-option *ngFor="let option of filteredCountries | async" [value]="option">
+            <mat-option *ngFor="let option of filteredCountries$ | async" [value]="option">
                 {{ option.name }} <small class="text-muted">({{ option.code }})</small>
             </mat-option>
         </mat-autocomplete>
@@ -72,15 +88,15 @@
     <div class="exif-values">
 
         <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
-            <mat-checkbox class="exif-label" [name]="'gpsCoordination' + index" color="primary" [disableRipple]="true" [(ngModel)]="photo.showGpsCoordination">
+            <mat-checkbox class="exif-label" [name]="'gpsCoordination' + internalIndex" color="primary" [disableRipple]="true" [(ngModel)]="photo().showGpsCoordination">
                 <span class="text-muted">GPS coordinates:</span> 
             </mat-checkbox>
             <div class="flex-grow-2">
                 <mat-form-field appearance="outline" class="margin-bottom-20 width-100">
-                    <input matInput [name]="'inputGpsLatitude' + index" [(ngModel)]="photo.latitude" [disabled]="!photo.showGpsCoordination" aria-label="GPS latitude" />
+                    <input matInput [name]="'inputGpsLatitude' + internalIndex" [(ngModel)]="photo().latitude" [disabled]="!photo().showGpsCoordination" aria-label="GPS latitude" />
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="width-100">
-                    <input matInput [name]="'inputGpsLongitude' + index" [(ngModel)]="photo.longitude" [disabled]="!photo.showGpsCoordination" aria-label="GPS longitude" />
+                    <input matInput [name]="'inputGpsLongitude' + internalIndex" [(ngModel)]="photo().longitude" [disabled]="!photo().showGpsCoordination" aria-label="GPS longitude" />
                 </mat-form-field>
             </div>
         </div>
@@ -91,113 +107,113 @@
         </div>
 
         <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
-            <mat-checkbox class="exif-label" [name]="'make' + index" color="primary" [disableRipple]="true" [(ngModel)]="photo.showMake">
+            <mat-checkbox class="exif-label" [name]="'make' + internalIndex" color="primary" [disableRipple]="true" [(ngModel)]="photo().showMake">
                 <span class="text-muted">Manufacturer:</span> 
             </mat-checkbox>
             <mat-form-field appearance="outline" class="flex-grow-2">
-                <input matInput [name]="'inputMake' + index" [(ngModel)]="photo.make" [disabled]="!photo.showMake" aria-label="Manufacturer" />
+                <input matInput [name]="'inputMake' + internalIndex" [(ngModel)]="photo().make" [disabled]="!photo().showMake" aria-label="Manufacturer" />
             </mat-form-field>
         </div>
 
         <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
-            <mat-checkbox class="exif-label" [name]="'model' + index" color="primary" [disableRipple]="true" [(ngModel)]="photo.showModel">
+            <mat-checkbox class="exif-label" [name]="'model' + internalIndex" color="primary" [disableRipple]="true" [(ngModel)]="photo().showModel">
                 <span class="text-muted">Model:</span>
             </mat-checkbox>
             <mat-form-field appearance="outline" class="flex-grow-2">
-                <input matInput [name]="'inputModel' + index" [(ngModel)]="photo.model" [disabled]="!photo.showModel" aria-label="Model" />
+                <input matInput [name]="'inputModel' + internalIndex" [(ngModel)]="photo().model" [disabled]="!photo().showModel" aria-label="Model" />
             </mat-form-field>
         </div>
 
         <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
-            <mat-checkbox class="exif-label" [name]="'lens' + index" color="primary" [disableRipple]="true" [(ngModel)]="photo.showLens">
+            <mat-checkbox class="exif-label" [name]="'lens' + internalIndex" color="primary" [disableRipple]="true" [(ngModel)]="photo().showLens">
                 <span class="text-muted">Lens:</span>
             </mat-checkbox>
             <mat-form-field appearance="outline" class="flex-grow-2">
-                <input matInput [name]="'inputLens' + index" [(ngModel)]="photo.lens" [disabled]="!photo.showLens" aria-label="Lens" />
+                <input matInput [name]="'inputLens' + internalIndex" [(ngModel)]="photo().lens" [disabled]="!photo().showLens" aria-label="Lens" />
             </mat-form-field>
         </div>
 
         <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
-            <mat-checkbox class="exif-label" [name]="'focalLenIn35mmFilm' + index" color="primary" [disableRipple]="true" [(ngModel)]="photo.showFocalLenIn35mmFilm">
+            <mat-checkbox class="exif-label" [name]="'focalLenIn35mmFilm' + internalIndex" color="primary" [disableRipple]="true" [(ngModel)]="photo().showFocalLenIn35mmFilm">
                 <span class="text-muted">Focal length:</span>
             </mat-checkbox>
             <mat-form-field appearance="outline" class="flex-grow-2">
-                <input matInput [name]="'inputFocalLenIn35mmFilm' + index" [(ngModel)]="photo.focalLenIn35mmFilm" [disabled]="!photo.showFocalLenIn35mmFilm" aria-label="Focal length" />
+                <input matInput [name]="'inputFocalLenIn35mmFilm' + internalIndex" [(ngModel)]="photo().focalLenIn35mmFilm" [disabled]="!photo().showFocalLenIn35mmFilm" aria-label="Focal length" />
                 <span class="text-muted" matSuffix>mm&nbsp;&nbsp;</span>
             </mat-form-field>
         </div>
 
         <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
-            <mat-checkbox class="exif-label" [name]="'fNumber' + index" color="primary" [disableRipple]="true" [(ngModel)]="photo.showFNumber">
+            <mat-checkbox class="exif-label" [name]="'fNumber' + internalIndex" color="primary" [disableRipple]="true" [(ngModel)]="photo().showFNumber">
                 <span class="text-muted">Aperture:</span>
             </mat-checkbox>
             <mat-form-field appearance="outline" class="flex-grow-2">
                 <span class="text-muted" matTextPrefix>f/</span>
-                <input matInput [name]="'inputFNumber' + index" [(ngModel)]="photo.fNumber" [disabled]="!photo.showFNumber" aria-label="Aperture" />
+                <input matInput [name]="'inputFNumber' + internalIndex" [(ngModel)]="photo().fNumber" [disabled]="!photo().showFNumber" aria-label="Aperture" />
             </mat-form-field>
         </div>
 
         <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
-            <mat-checkbox class="exif-label" [name]="'exposureTime' + index" color="primary" [disableRipple]="true" [(ngModel)]="photo.showExposureTime">
+            <mat-checkbox class="exif-label" [name]="'exposureTime' + internalIndex" color="primary" [disableRipple]="true" [(ngModel)]="photo().showExposureTime">
                 <span class="text-muted">Exposure time:</span>
             </mat-checkbox>
             <mat-form-field appearance="outline" class="flex-grow-2">
-                <input matInput [name]="'inputExposureTime' + index" [(ngModel)]="photo.exposureTime" [disabled]="!photo.showExposureTime" aria-label="Exposure time" />
+                <input matInput [name]="'inputExposureTime' + internalIndex" [(ngModel)]="photo().exposureTime" [disabled]="!photo().showExposureTime" aria-label="Exposure time" />
                 <span class="text-muted" matSuffix>sec&nbsp;&nbsp;</span>
             </mat-form-field>
         </div>
 
         <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
-            <mat-checkbox class="exif-label" [name]="'photographicSensitivity' + index" color="primary" [disableRipple]="true" [(ngModel)]="photo.showPhotographicSensitivity">
+            <mat-checkbox class="exif-label" [name]="'photographicSensitivity' + internalIndex" color="primary" [disableRipple]="true" [(ngModel)]="photo().showPhotographicSensitivity">
                 <span class="text-muted">ISO:</span>
             </mat-checkbox>
             <mat-form-field appearance="outline" class="flex-grow-2">
-                <input matInput [name]="'inputPhotographicSensitivity' + index" [(ngModel)]="photo.photographicSensitivity" [disabled]="!photo.showPhotographicSensitivity" aria-label="ISO" />
+                <input matInput [name]="'inputPhotographicSensitivity' + internalIndex" [(ngModel)]="photo().photographicSensitivity" [disabled]="!photo().showPhotographicSensitivity" aria-label="ISO" />
             </mat-form-field>
         </div>
 
         <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
-            <mat-checkbox class="exif-label" [name]="'software' + index" color="primary" [disableRipple]="true" [(ngModel)]="photo.showSoftware">
+            <mat-checkbox class="exif-label" [name]="'software' + internalIndex" color="primary" [disableRipple]="true" [(ngModel)]="photo().showSoftware">
                 <span class="text-muted">Software:</span>
             </mat-checkbox>
             <mat-form-field appearance="outline" class="flex-grow-2">
-                <input matInput [name]="'inputSoftware' + index" [(ngModel)]="photo.software" [disabled]="!photo.showSoftware" aria-label="Software" />
+                <input matInput [name]="'inputSoftware' + internalIndex" [(ngModel)]="photo().software" [disabled]="!photo().showSoftware" aria-label="Software" />
             </mat-form-field>
         </div>
 
         <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
-            <mat-checkbox class="exif-label" [name]="'film' + index" color="primary" [disableRipple]="true" [(ngModel)]="photo.showFilm">
+            <mat-checkbox class="exif-label" [name]="'film' + internalIndex" color="primary" [disableRipple]="true" [(ngModel)]="photo().showFilm">
                 <span class="text-muted">Film:</span>
             </mat-checkbox>
             <mat-form-field appearance="outline" class="flex-grow-2">
-                <input matInput [name]="'inputFilm' + index" [(ngModel)]="photo.film" [disabled]="!photo.showFilm" aria-label="Film" />
+                <input matInput [name]="'inputFilm' + internalIndex" [(ngModel)]="photo().film" [disabled]="!photo().showFilm" aria-label="Film" />
             </mat-form-field>
         </div>
 
         <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
-            <mat-checkbox class="exif-label" [name]="'chemistry' + index" color="primary" [disableRipple]="true" [(ngModel)]="photo.showChemistry">
+            <mat-checkbox class="exif-label" [name]="'chemistry' + internalIndex" color="primary" [disableRipple]="true" [(ngModel)]="photo().showChemistry">
                 <span class="text-muted">Chemistry:</span>
             </mat-checkbox>
             <mat-form-field appearance="outline" class="flex-grow-2">
-                <input matInput [name]="'inputChemistry' + index" [(ngModel)]="photo.chemistry" [disabled]="!photo.showChemistry" aria-label="Chemistry" />
+                <input matInput [name]="'inputChemistry' + internalIndex" [(ngModel)]="photo().chemistry" [disabled]="!photo().showChemistry" aria-label="Chemistry" />
             </mat-form-field>
         </div>
 
         <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
-            <mat-checkbox class="exif-label" [name]="'scanner' + index" color="primary" [disableRipple]="true" [(ngModel)]="photo.showScanner">
+            <mat-checkbox class="exif-label" [name]="'scanner' + internalIndex" color="primary" [disableRipple]="true" [(ngModel)]="photo().showScanner">
                 <span class="text-muted">Scanner:</span>
             </mat-checkbox>
             <mat-form-field appearance="outline" class="flex-grow-2">
-                <input matInput [name]="'inputScanner' + index" [(ngModel)]="photo.scanner" [disabled]="!photo.showScanner" aria-label="Scanner" />
+                <input matInput [name]="'inputScanner' + internalIndex" [(ngModel)]="photo().scanner" [disabled]="!photo().showScanner" aria-label="Scanner" />
             </mat-form-field>
         </div>
 
         <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
-            <mat-checkbox class="exif-label" [name]="'createDate' + index" color="primary" [disableRipple]="true" [(ngModel)]="photo.showCreateDate">
+            <mat-checkbox class="exif-label" [name]="'createDate' + internalIndex" color="primary" [disableRipple]="true" [(ngModel)]="photo().showCreateDate">
                 <span class="text-muted">Create date:</span>
             </mat-checkbox>
             <mat-form-field appearance="outline" class="flex-grow-2">
-                <input matInput type="datetime-local" [name]="'inputCreateDate' + index" [ngModel]="photo.createDate | date:'yyyy-MM-ddTHH:mm'" (ngModelChange)="photo.createDate = $event" [disabled]="!photo.showCreateDate" aria-label="Create date" />
+                <input matInput type="datetime-local" [name]="'inputCreateDate' + internalIndex" [ngModel]="photo().createDate | date:'yyyy-MM-ddTHH:mm'" (ngModelChange)="photo().createDate = $event" [disabled]="!photo().showCreateDate" aria-label="Create date" />
             </mat-form-field>
         </div>
     </div>
@@ -210,8 +226,8 @@
         HDR image version
         
         <div class="pull-right">
-            @if (photo.photoHdrSrc) {
-                @if (photo.isHdrUploaded) {
+            @if (photo().photoHdrSrc) {
+                @if (photo().isHdrUploaded) {
                     <button mat-stroked-button color="warn" class="small-button" (click)="onHdrDelete()">Delete HDR version</button>
                 } @else {
                     <mat-spinner class="display-inline-block" [diameter]="18"></mat-spinner>
@@ -224,10 +240,10 @@
     </div>
     <div class="flex-row gap-16 margin-top-10">
         <div class="flex-align-start hdr-image margin-bottom-20">
-            @if (photo.photoHdrSrc) {                
-                <img [src]="photo.photoHdrSrc" alt="Uploaded photo" />
+            @if (photo().photoHdrSrc) {                
+                <img [src]="photo().photoHdrSrc" alt="Uploaded photo" />
             } @else {
-                @if (!photo.isUploaded) {
+                @if (!photo().isUploaded()) {
                     <div class="dropzone small inactive">
                         <div class="plus">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M20.889 10.889H13.111V3.11097C13.111 2.4974 12.6136 2 12 2C11.3864 2 10.889 2.4974 10.889 3.11097V10.889H3.11097C2.4974 10.889 2 11.3864 2 12C2 12.6136 2.4974 13.111 3.11097 13.111H10.889V20.889C10.889 21.5026 11.3864 22 12 22C12.6136 22 13.111 21.5026 13.111 20.889V13.111H20.889C21.5026 13.111 22 12.6136 22 12C22 11.3864 21.5026 10.889 20.889 10.889Z" fill="#0870D1"></path></svg>

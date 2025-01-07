@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, model, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Role } from 'src/app/models/role';
 import { User } from 'src/app/models/user';
@@ -8,12 +8,13 @@ import { UsersService } from 'src/app/services/http/users.service';
 @Component({
     selector: 'app-user-roles-dialog',
     templateUrl: 'user-roles.dialog.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class UserRolesDialog implements OnInit {
-    isAdministrator = false;
-    isModerator = false;
-    isMember = true;
+    protected isAdministrator = model(false);
+    protected isModerator = model(false);
+    protected isMember = model(true);
 
     constructor(
         private usersService: UsersService,
@@ -23,14 +24,14 @@ export class UserRolesDialog implements OnInit {
     }
 
     ngOnInit(): void {
-        this.isAdministrator = this.data?.roles?.includes(Role.Administrator) ?? false;
-        this.isModerator = this.data?.roles?.includes(Role.Moderator) ?? false;
+        this.isAdministrator.set(this.data?.roles?.includes(Role.Administrator) ?? false);
+        this.isModerator.set(this.data?.roles?.includes(Role.Moderator) ?? false);
     }
 
-    async onChangeAdministrator(): Promise<void> {
+    protected async onChangeAdministrator(): Promise<void> {
         if (this.data?.userName) {
             try {
-                if (this.isAdministrator) {
+                if (this.isAdministrator()) {
                     this.usersService.connect(this.data?.userName, Role.Administrator);
 
                     this.data.roles?.push(Role.Administrator);
@@ -52,10 +53,10 @@ export class UserRolesDialog implements OnInit {
         }
     }
 
-    async onChangeModerator(): Promise<void> {
+    protected async onChangeModerator(): Promise<void> {
         if (this.data?.userName) {
             try {
-                if (this.isModerator) {
+                if (this.isModerator()) {
                     this.usersService.connect(this.data?.userName, Role.Moderator);
 
                     this.data.roles?.push(Role.Moderator);
@@ -77,11 +78,7 @@ export class UserRolesDialog implements OnInit {
         }
     }
 
-    onNoClick(): void {
+    protected onNoClick(): void {
         this.dialogRef.close();
-    }
-
-    async onSubmit(): Promise<void> {
-        this.dialogRef.close({});
     }
 }

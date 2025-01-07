@@ -1,26 +1,30 @@
-import { Component, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, OnInit, signal } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-confirmation-dialog',
     templateUrl: 'confirmation.dialog.html',
     styleUrls: ['confirmation.dialog.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
-export class ConfirmationDialog {
-    order = 0;
-    text = '';
+export class ConfirmationDialog implements OnInit {
+    protected text = signal('');
 
     constructor(
         public dialogRef: MatDialogRef<ConfirmationDialog>,
         @Inject(MAT_DIALOG_DATA) public data?: string) {
     }
 
-    onNoClick(): void {
+    ngOnInit(): void {
+        this.text.set(this.data ?? '');
+    }
+
+    protected onNoClick(): void {
         this.dialogRef.close({ confirmed: false});
     }
 
-    async onSubmit(): Promise<void> {
+    protected async onSubmit(): Promise<void> {
         this.dialogRef.close({ confirmed: true});
     }
 }

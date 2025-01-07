@@ -1,4 +1,4 @@
-export abstract class  PersistanceService {
+export abstract class  PersistenceService {
     abstract set(key: string, value: string): void;
     abstract setJson(key: string, data: any): void;
     abstract get(key: string): string | null;
@@ -6,7 +6,7 @@ export abstract class  PersistanceService {
     abstract remove(key: string): void;
 }
 
-export class PersistanceBrowserService implements PersistanceService {
+export class PersistenceBrowserService implements PersistenceService {
 
     set(key: string, value: string): void {
         localStorage.setItem(key, value);
@@ -48,7 +48,7 @@ export class PersistanceBrowserService implements PersistanceService {
     }
 }
 
-export class PersistanceServerService implements PersistanceService {
+export class PersistenceServerService implements PersistenceService {
     dictionary:any = {};
 
     set(key: string, value: string): void {

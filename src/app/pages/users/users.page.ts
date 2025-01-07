@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, model, OnDestroy, OnInit, signal } from '@angular/core';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { ForbiddenError } from 'src/app/errors/forbidden-error';
 import { MessagesService } from 'src/app/services/common/messages.service';
@@ -7,7 +7,7 @@ import { ResponsiveComponent } from 'src/app/common/responsive';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 import { Role } from 'src/app/models/role';
-import { PaginableResult } from 'src/app/models/paginable-result';
+import { PagedResult } from 'src/app/models/paged-result';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -24,20 +24,21 @@ import { ConfirmationDialog } from 'src/app/dialogs/confirmation-dialog/confirma
     templateUrl: './users.page.html',
     styleUrls: ['./users.page.scss'],
     animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
-export class UsersPage extends ResponsiveComponent implements OnInit {
-    readonly avatarSize = AvatarSize
-    readonly role = Role;
+export class UsersPage extends ResponsiveComponent implements OnInit, OnDestroy {
+    protected readonly avatarSize = AvatarSize
+    protected readonly role = Role;
 
-    search = '';
-    onlyLocal = false;
-    isReady = false;
-    pageIndex = 0;
-    users?: PaginableResult<User>;
-    displayedColumns: string[] = [];
-    routeParamsSubscription?: Subscription;
+    protected search = model('');
+    protected onlyLocal = model(false);
+    protected isReady = signal(false);
+    protected users = signal<PagedResult<User> | undefined>(undefined);
+    protected pageIndex = signal(0);
+    protected displayedColumns = signal<string[]>([]);
 
+    private routeParamsSubscription?: Subscription;
     private readonly displayedColumnsHandsetPortrait: string[] = ['avatar', 'userName', 'actions'];
     private readonly displayedColumnsHandsetLandscape: string[] = ['avatar', 'userName', 'createdAt', 'actions'];
     private readonly displayedColumnsTablet: string[] = ['avatar', 'userName', 'email', 'isApproved', 'lastLoginDate', 'createdAt', 'actions'];
@@ -75,34 +76,49 @@ export class UsersPage extends ResponsiveComponent implements OnInit {
             const page = pageString ? +pageString : 0;
             const size = sizeString ? +sizeString : 10;
 
-            this.pageIndex = page;
-            this.search = query
-            this.onlyLocal = local === 'true';
+            this.pageIndex.set(page);
+            this.search.set(query);
+            this.onlyLocal.set(local === 'true');
 
-            this.users = await this.usersService.get(page + 1, size, query, this.onlyLocal);
+            const downloadedUsers = await this.usersService.get(page + 1, size, query, this.onlyLocal());
+            this.users.set(downloadedUsers);
 
-            this.isReady = true;
+            this.isReady.set(true);
             this.loadingService.hideLoader();
         });
     }
 
-    async onSubmit(): Promise<void> {
+    override ngOnDestroy(): void {
+        super.ngOnDestroy();
+        this.routeParamsSubscription?.unsubscribe();
+    }
+
+    protected async onSubmit(): Promise<void> {
         const navigationExtras: NavigationExtras = {
-            queryParams: { query: this.search, onlyLocal: this.onlyLocal },
+            queryParams: { query: this.search(), onlyLocal: this.onlyLocal() },
             queryParamsHandling: 'merge'
         };
 
         this.router.navigate([], navigationExtras);
     }
 
-    onSetRoles(user: User): void {
-        this.dialog.open(UserRolesDialog, {
+    protected onSetRoles(user: User): void {
+        const dialogRef = this.dialog.open(UserRolesDialog, {
             width: '500px',
             data: user
         });
+     
+        dialogRef.afterClosed().subscribe(async () => {
+            const navigationExtras: NavigationExtras = {
+                queryParams: { t: this.randomGeneratorService.generateString(8) },
+                queryParamsHandling: 'merge'
+            };
+    
+            await this.router.navigate([], navigationExtras);
+        });
     }
 
-    async onSetEnable(user: User): Promise<void> {
+    protected async onSetEnable(user: User): Promise<void> {
         try {
             if (user.userName) {
                 await this.usersService.enable(user.userName);
@@ -116,7 +132,7 @@ export class UsersPage extends ResponsiveComponent implements OnInit {
         }
     }
 
-    async onSetDisable(user: User): Promise<void> {
+    protected async onSetDisable(user: User): Promise<void> {
         try {
             if (user.userName) {
                 await this.usersService.disable(user.userName);
@@ -130,7 +146,7 @@ export class UsersPage extends ResponsiveComponent implements OnInit {
         }
     }
 
-    async onApprove(user: User): Promise<void> {
+    protected async onApprove(user: User): Promise<void> {
         try {
             if (user.userName) {
                 await this.usersService.approve(user.userName);
@@ -144,7 +160,7 @@ export class UsersPage extends ResponsiveComponent implements OnInit {
         }
     }
 
-    async onReject(user: User): Promise<void> {
+    protected async onReject(user: User): Promise<void> {
         try {
             if (user.userName) {
                 await this.usersService.reject(user.userName);
@@ -163,7 +179,7 @@ export class UsersPage extends ResponsiveComponent implements OnInit {
         }
     }
 
-    async onUserRefresh(user: User): Promise<void> {
+    protected async onUserRefresh(user: User): Promise<void> {
         try {
             if (user.userName) {
                 await this.usersService.refresh(user.userName);
@@ -182,7 +198,7 @@ export class UsersPage extends ResponsiveComponent implements OnInit {
         }
     }
 
-    async onDelete(user: User): Promise<void> {
+    protected async onDelete(user: User): Promise<void> {
         const dialogRef = this.dialog.open(ConfirmationDialog, {
             width: '500px',
             data: 'Do you want to delete user account?'
@@ -210,7 +226,7 @@ export class UsersPage extends ResponsiveComponent implements OnInit {
         });
     }
 
-    async handlePageEvent(pageEvent: PageEvent): Promise<void> {
+    protected async handlePageEvent(pageEvent: PageEvent): Promise<void> {
         const navigationExtras: NavigationExtras = {
             queryParams: { page: pageEvent.pageIndex, size: pageEvent.pageSize },
             queryParamsHandling: 'merge'
@@ -220,26 +236,26 @@ export class UsersPage extends ResponsiveComponent implements OnInit {
     }
 
     protected override onHandsetPortrait(): void {
-        this.displayedColumns = this.displayedColumnsHandsetPortrait;
+        this.displayedColumns?.set(this.displayedColumnsHandsetPortrait);
     }
 
     protected override onHandsetLandscape(): void {
-        this.displayedColumns = this.displayedColumnsHandsetLandscape;
+        this.displayedColumns?.set(this.displayedColumnsHandsetLandscape);
     }
 
     protected override onTablet(): void {
-        this.displayedColumns = this.displayedColumnsTablet;
+        this.displayedColumns?.set(this.displayedColumnsTablet);
     }
 
     protected override onBrowser(): void {
-        this.displayedColumns = this.displayedColumnsBrowser;
+        this.displayedColumns?.set(this.displayedColumnsBrowser);
     }
 
-    isAdministrator(): boolean {
+    private isAdministrator(): boolean {
         return this.authorizationService.hasRole(Role.Administrator);
     }
 
-    isModerator(): boolean {
+    private isModerator(): boolean {
         return this.authorizationService.hasRole(Role.Moderator);
     }
 }

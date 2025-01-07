@@ -1,6 +1,6 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { isPlatformBrowser } from '@angular/common';
-import { Component, Inject, Input, PLATFORM_ID } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, input, PLATFORM_ID, signal } from '@angular/core';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { LinkableResult } from 'src/app/models/linkable-result';
@@ -11,21 +11,18 @@ import { User } from 'src/app/models/user';
     templateUrl: './users-gallery.component.html',
     styleUrls: ['./users-gallery.component.scss'],
     animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class UsersGalleryComponent extends ResponsiveComponent {
-    @Input() users?: LinkableResult<User>;
-    isBrowser = false;
+    public users = input<LinkableResult<User>>();
+    protected isBrowser = signal(false);
 
     constructor(
         @Inject(PLATFORM_ID) platformId: object,
         breakpointObserver: BreakpointObserver
     ) {
         super(breakpointObserver);
-        this.isBrowser = isPlatformBrowser(platformId);
-    }
-
-    trackByUserFn(_: number, item: User): string | undefined{
-        return item.userName;
+        this.isBrowser.set(isPlatformBrowser(platformId));
     }
 }

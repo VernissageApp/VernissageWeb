@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, model, OnInit, signal } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ReportRequest } from 'src/app/models/report-request';
 import { Rule } from 'src/app/models/rule';
@@ -8,15 +8,19 @@ import { ReportData } from './report-data';
 @Component({
     selector: 'app-report-dialog',
     templateUrl: 'report.dialog.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class ReportDialog implements OnInit {
-    comment = '';
-    forward = false;
-    category = '';
-    ruleIds: number[] = [];
+    protected comment = model('');
+    protected forward = model(false);
+    protected category = model('');
+    protected ruleIds = model<number[]>([]);
 
-    categories = [
+    protected isLocal = signal(false);
+    protected rules = signal<Rule[]>([]);
+
+    protected categories = signal([
         "Abusive",
         "Copyright",
         "Impersonation",
@@ -26,9 +30,7 @@ export class ReportDialog implements OnInit {
         "Terrorism",
         "Underage",
         "Violence"
-    ];
-
-    rules: Rule[] = []
+    ]);
 
     constructor(
         private instanceService: InstanceService,
@@ -37,21 +39,22 @@ export class ReportDialog implements OnInit {
     }
 
     ngOnInit(): void {
-        this.rules = this.instanceService.instance?.rules ?? [];
+        this.rules.set(this.instanceService.instance?.rules ?? []);
+        this.isLocal.set(this.data?.user?.isLocal ?? false);
     }
 
-    onNoClick(): void {
+    protected onNoClick(): void {
         this.dialogRef.close();
     }
 
-    async onSubmit(): Promise<void> {
+    protected async onSubmit(): Promise<void> {
         const reportRequest = new ReportRequest();
         reportRequest.reportedUserId = this.data?.user?.id;
         reportRequest.statusId = this.data?.status?.id;
-        reportRequest.category = this.category;
-        reportRequest.comment = this.comment;
-        reportRequest.forward = this.forward;
-        reportRequest.ruleIds = this.ruleIds;
+        reportRequest.category = this.category();
+        reportRequest.comment = this.comment();
+        reportRequest.forward = this.forward();
+        reportRequest.ruleIds = this.ruleIds();
 
         this.dialogRef.close(reportRequest);
     }

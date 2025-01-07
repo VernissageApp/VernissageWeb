@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, model } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ChangeEmail } from 'src/app/models/change-email';
 import { MessagesService } from 'src/app/services/common/messages.service';
@@ -8,10 +8,11 @@ import { AccountService } from 'src/app/services/http/account.service';
 @Component({
     selector: 'app-change-email-dialog',
     templateUrl: 'change-email.dialog.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class ChangeEmailDialog {
-    email = '';
+    protected email = model('');
 
     constructor(
         private accountService: AccountService,
@@ -20,14 +21,14 @@ export class ChangeEmailDialog {
         public dialogRef: MatDialogRef<ChangeEmailDialog>
     ) { }
 
-    onNoClick(): void {
+    protected onNoClick(): void {
         this.dialogRef.close();
     }
 
-    async onSubmit(): Promise<void> {
+    protected async onSubmit(): Promise<void> {
         try {
             const changeEmail = new ChangeEmail();
-            changeEmail.email = this.email;
+            changeEmail.email = this.email();
             changeEmail.redirectBaseUrl = this.windowService.getApplicationUrl();
 
             await this.accountService.changeEmail(changeEmail);

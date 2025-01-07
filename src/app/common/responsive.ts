@@ -1,5 +1,5 @@
 import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit, signal } from "@angular/core";
 import { Subscription } from "rxjs";
 
 export enum Resolution {
@@ -23,10 +23,10 @@ export class ResponsiveComponent implements OnInit, OnDestroy {
     protected onTablet?() : void;
     protected onBrowser?() : void;
 
-    protected deviceResolution = Resolution.browser;
-    protected isHandset = false;
-    protected isHandsetPortrait = false;
-    protected isHandsetLandscape = false;
+    protected deviceResolution = signal(Resolution.browser);
+    protected isHandset = signal(false);
+    protected isHandsetPortrait = signal(false);
+    protected isHandsetLandscape = signal(false);
 
     constructor(private breakpointObserver: BreakpointObserver) {
         this.breakpointSubscription = this.breakpointObserver
@@ -46,31 +46,31 @@ export class ResponsiveComponent implements OnInit, OnDestroy {
 
     private callFunction(): void {
         if (this.isHandsetPortraitLayout()) {
-            this.deviceResolution = Resolution.handsetPortrait;
-            this.isHandset = true;
-            this.isHandsetPortrait = true;
-            this.isHandsetLandscape = false;
+            this.deviceResolution.set(Resolution.handsetPortrait);
+            this.isHandset.set(true);
+            this.isHandsetPortrait.set(true);
+            this.isHandsetLandscape.set(false);
 
             this.onHandsetPortrait?.();
         } else if (this.isHandsetLandscapeLayout()) {
-            this.deviceResolution = Resolution.handsetLandscape;
-            this.isHandset = true;
-            this.isHandsetPortrait = false;
-            this.isHandsetLandscape = true;
+            this.deviceResolution.set(Resolution.handsetLandscape);
+            this.isHandset.set(true);
+            this.isHandsetPortrait.set(false);
+            this.isHandsetLandscape.set(true);
 
             this.onHandsetLandscape?.();
         } else if (this.isTabletLayout()) {
-            this.deviceResolution = Resolution.tablet;
-            this.isHandset = false;
-            this.isHandsetPortrait = false;
-            this.isHandsetLandscape = false;
+            this.deviceResolution.set(Resolution.tablet);
+            this.isHandset.set(false);
+            this.isHandsetPortrait.set(false);
+            this.isHandsetLandscape.set(false);
 
             this.onTablet?.();
         } else {
-            this.deviceResolution = Resolution.browser;
-            this.isHandset = false;
-            this.isHandsetPortrait = false;
-            this.isHandsetLandscape = false;
+            this.deviceResolution.set(Resolution.browser);
+            this.isHandset.set(false);
+            this.isHandsetPortrait.set(false);
+            this.isHandsetLandscape.set(false);
 
             this.onBrowser?.();
         }

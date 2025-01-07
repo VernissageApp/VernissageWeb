@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, model, OnInit, signal } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { SwPush } from '@angular/service-worker';
 import { firstValueFrom } from 'rxjs';
@@ -14,26 +14,27 @@ import { SettingsService } from 'src/app/services/http/settings.service';
     selector: 'app-notification-settings-dialog',
     templateUrl: 'notification-settings.dialog.html',
     styleUrls: ['notification-settings.dialog.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class NotificationSettingsDialog implements OnInit {
-    notificationsEnabled = false;
-    switchDisabled = false;
-    endpoint?: string;
-    p256dh?: string;
-    auth?: string;
+    protected notificationsEnabled = model(false);
+    protected switchDisabled = signal(false);
 
-    webPushNotificationsEnabled = true;
-    webPushMentionEnabled = true;
-    webPushStatusEnabled = true;
-    webPushReblogEnabled = true;
-    webPushFollowEnabled = true;
-    webPushFollowRequestEnabled = true;
-    webPushFavouriteEnabled = true;
-    webPushUpdateEnabled = true;
-    webPushAdminSignUpEnabled = true;
-    webPushAdminReportEnabled = true;
-    webPushNewCommentEnabled = true;
+    protected webPushMentionEnabled = model(true);
+    protected webPushStatusEnabled = model(true);
+    protected webPushReblogEnabled = model(true);
+    protected webPushFollowEnabled = model(true);
+    protected webPushFollowRequestEnabled = model(true);
+    protected webPushFavouriteEnabled = model(true);
+    protected webPushUpdateEnabled = model(true);
+    protected webPushAdminSignUpEnabled = model(true);
+    protected webPushAdminReportEnabled = model(true);
+    protected webPushNewCommentEnabled = model(true);
+
+    private endpoint?: string;
+    private p256dh?: string;
+    private auth?: string;
 
     constructor(
         private messageService: MessagesService,
@@ -55,44 +56,43 @@ export class NotificationSettingsDialog implements OnInit {
         const currentSubscription = await this.pushSubscriptionsService.getPushSubscription(subscription?.endpoint);
 
         if (currentSubscription) {
-            this.webPushNotificationsEnabled = currentSubscription.webPushNotificationsEnabled;
-            this.webPushMentionEnabled = currentSubscription.webPushMentionEnabled;
-            this.webPushStatusEnabled = currentSubscription.webPushStatusEnabled;
-            this.webPushReblogEnabled = currentSubscription.webPushReblogEnabled;
-            this.webPushFollowEnabled = currentSubscription.webPushFollowEnabled;
-            this.webPushFollowRequestEnabled = currentSubscription.webPushFollowRequestEnabled;
-            this.webPushFavouriteEnabled = currentSubscription.webPushFavouriteEnabled;
-            this.webPushUpdateEnabled = currentSubscription.webPushUpdateEnabled;
-            this.webPushAdminSignUpEnabled = currentSubscription.webPushAdminSignUpEnabled;
-            this.webPushAdminReportEnabled = currentSubscription.webPushAdminReportEnabled;
-            this.webPushNewCommentEnabled = currentSubscription.webPushNewCommentEnabled;
+            this.webPushMentionEnabled.set(currentSubscription.webPushMentionEnabled);
+            this.webPushStatusEnabled.set(currentSubscription.webPushStatusEnabled);
+            this.webPushReblogEnabled.set(currentSubscription.webPushReblogEnabled);
+            this.webPushFollowEnabled.set(currentSubscription.webPushFollowEnabled);
+            this.webPushFollowRequestEnabled.set(currentSubscription.webPushFollowRequestEnabled);
+            this.webPushFavouriteEnabled.set(currentSubscription.webPushFavouriteEnabled);
+            this.webPushUpdateEnabled.set(currentSubscription.webPushUpdateEnabled);
+            this.webPushAdminSignUpEnabled.set(currentSubscription.webPushAdminSignUpEnabled);
+            this.webPushAdminReportEnabled.set(currentSubscription.webPushAdminReportEnabled);
+            this.webPushNewCommentEnabled.set(currentSubscription.webPushNewCommentEnabled);
         }
 
-        this.switchDisabled = Notification.permission == 'denied';
-        this.notificationsEnabled = Notification.permission == 'granted' && !!currentSubscription?.webPushNotificationsEnabled;
+        this.switchDisabled.set(Notification.permission == 'denied');
+        this.notificationsEnabled.set(Notification.permission == 'granted' && !!currentSubscription?.webPushNotificationsEnabled);
 
         this.loadingService.hideLoader();
     }
 
-    isAdministrator(): boolean {
+    protected isAdministrator(): boolean {
         return this.authorizationService.hasRole(Role.Administrator);
     }
 
-    isModerator(): boolean {
+    protected isModerator(): boolean {
         return this.authorizationService.hasRole(Role.Moderator);
     }
 
-    onNoClick(): void {
+    protected onNoClick(): void {
         this.dialogRef.close();
     }
 
-    onNotificationsChange(): void {
-        if (this.notificationsEnabled) {
+    protected onNotificationsChange(): void {
+        if (this.notificationsEnabled()) {
             this.subscribeToPush();
         }
     }
 
-    async onSubmit(): Promise<void> {
+    protected async onSubmit(): Promise<void> {
         try {
             await this.subscribeToPush();
 
@@ -106,17 +106,17 @@ export class NotificationSettingsDialog implements OnInit {
             pusSubscription.userAgentPublicKey = this.p256dh;
             pusSubscription.auth = this.auth;
 
-            pusSubscription.webPushNotificationsEnabled = this.notificationsEnabled;
-            pusSubscription.webPushMentionEnabled = this.webPushMentionEnabled;
-            pusSubscription.webPushStatusEnabled = this.webPushStatusEnabled;
-            pusSubscription.webPushReblogEnabled = this.webPushReblogEnabled;
-            pusSubscription.webPushFollowEnabled = this.webPushFollowEnabled;
-            pusSubscription.webPushFollowRequestEnabled = this.webPushFollowRequestEnabled;
-            pusSubscription.webPushFavouriteEnabled = this.webPushFavouriteEnabled;
-            pusSubscription.webPushUpdateEnabled = this.webPushUpdateEnabled;
-            pusSubscription.webPushAdminSignUpEnabled = this.webPushAdminSignUpEnabled;
-            pusSubscription.webPushAdminReportEnabled = this.webPushAdminReportEnabled;
-            pusSubscription.webPushNewCommentEnabled = this.webPushNewCommentEnabled;
+            pusSubscription.webPushNotificationsEnabled = this.notificationsEnabled();
+            pusSubscription.webPushMentionEnabled = this.webPushMentionEnabled();
+            pusSubscription.webPushStatusEnabled = this.webPushStatusEnabled();
+            pusSubscription.webPushReblogEnabled = this.webPushReblogEnabled();
+            pusSubscription.webPushFollowEnabled = this.webPushFollowEnabled();
+            pusSubscription.webPushFollowRequestEnabled = this.webPushFollowRequestEnabled();
+            pusSubscription.webPushFavouriteEnabled = this.webPushFavouriteEnabled();
+            pusSubscription.webPushUpdateEnabled = this.webPushUpdateEnabled();
+            pusSubscription.webPushAdminSignUpEnabled = this.webPushAdminSignUpEnabled();
+            pusSubscription.webPushAdminReportEnabled = this.webPushAdminReportEnabled();
+            pusSubscription.webPushNewCommentEnabled = this.webPushNewCommentEnabled();
 
             await this.pushSubscriptionsService.create(pusSubscription);
             this.messageService.showSuccess('Notification settings has been saved.');
@@ -128,7 +128,7 @@ export class NotificationSettingsDialog implements OnInit {
         }
     }
 
-    async subscribeToPush(): Promise<void> {
+    private async subscribeToPush(): Promise<void> {
         if (!this.settingsService.publicSettings?.webPushVapidPublicKey) {
             this.messageService.showError('Web push public key is not set.');
             return;

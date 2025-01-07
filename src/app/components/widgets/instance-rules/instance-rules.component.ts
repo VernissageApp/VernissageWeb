@@ -1,11 +1,11 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { ConfirmationDialog } from 'src/app/dialogs/confirmation-dialog/confirmation.dialog';
 import { InstanceRuleDialog } from 'src/app/dialogs/instance-rule-dialog/instance-rule.dialog';
-import { PaginableResult } from 'src/app/models/paginable-result';
+import { PagedResult } from 'src/app/models/paged-result';
 import { Rule } from 'src/app/models/rule';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { RulesService } from 'src/app/services/http/rules.service';
@@ -14,16 +14,17 @@ import { RulesService } from 'src/app/services/http/rules.service';
     selector: 'app-instance-rules',
     templateUrl: './instance-rules.component.html',
     styleUrls: ['./instance-rules.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class InstanceRulesComponent extends ResponsiveComponent implements OnInit {
-    rules?: PaginableResult<Rule>;
-    displayedColumns: string[] = [];
-    pageIndex = 0;
-    pageSize = 10;
-
+    protected rules = signal<PagedResult<Rule> | undefined>(undefined);
+    protected displayedColumns = signal<string[]>([]);
+    protected pageIndex = signal(0);
+    
+    private pageSize = 10;
     private readonly displayedColumnsHandsetPortrait: string[] = ['text', 'actions'];
-    private readonly displayedColumnsHandserLandscape: string[] = ['text', 'actions'];
+    private readonly displayedColumnsHandsetLandscape: string[] = ['text', 'actions'];
     private readonly displayedColumnsTablet: string[] = ['order', 'text', 'actions'];
     private readonly displayedColumnsBrowser: string[] = ['order', 'text', 'actions'];
 
@@ -39,17 +40,19 @@ export class InstanceRulesComponent extends ResponsiveComponent implements OnIni
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
 
-        this.rules = await this.rulesService.get(this.pageIndex + 1, this.pageSize);
+        const downloadedRules = await this.rulesService.get(this.pageIndex() + 1, this.pageSize);
+        this.rules.set(downloadedRules);
     }
 
-    async handlePageEvent(pageEvent: PageEvent): Promise<void> {
-        this.pageIndex = pageEvent.pageIndex;
+    protected async handlePageEvent(pageEvent: PageEvent): Promise<void> {
+        this.pageIndex.set(pageEvent.pageIndex);
         this.pageSize = pageEvent.pageSize;
 
-        this.rules = await this.rulesService.get(this.pageIndex + 1, this.pageSize);
+        const downloadedRules = await this.rulesService.get(this.pageIndex() + 1, this.pageSize);
+        this.rules.set(downloadedRules);
     }
 
-    async onDelete(rule: Rule): Promise<void> {
+    protected async onDelete(rule: Rule): Promise<void> {
         const dialogRef = this.dialog.open(ConfirmationDialog, {
             width: '500px',
             data: 'Do you want to delete instance rule?'
@@ -60,7 +63,9 @@ export class InstanceRulesComponent extends ResponsiveComponent implements OnIni
                 try {
                     await this.rulesService.delete(rule.id);
                     this.messageService.showSuccess('Rule has been deleted.');
-                    this.rules = await this.rulesService.get(this.pageIndex + 1, this.pageSize);
+
+                    const downloadedRules = await this.rulesService.get(this.pageIndex() + 1, this.pageSize);
+                    this.rules.set(downloadedRules);
                 } catch (error) {
                     console.error(error);
                     this.messageService.showServerError(error);
@@ -69,7 +74,7 @@ export class InstanceRulesComponent extends ResponsiveComponent implements OnIni
         });
     }
 
-    openRuleDialog(rule: Rule | undefined): void {
+    protected openRuleDialog(rule: Rule | undefined): void {
         const dialogRef = this.dialog.open(InstanceRuleDialog, {
             width: '500px',
             data: (rule ?? new Rule())
@@ -77,24 +82,25 @@ export class InstanceRulesComponent extends ResponsiveComponent implements OnIni
 
         dialogRef.afterClosed().subscribe(async (result) => {
             if (result?.confirmed) {
-                this.rules = await this.rulesService.get(this.pageIndex + 1, this.pageSize);
+                const downloadedRules = await this.rulesService.get(this.pageIndex() + 1, this.pageSize);
+                this.rules.set(downloadedRules);
             }
         });
     }
 
     protected override onHandsetPortrait(): void {
-        this.displayedColumns = this.displayedColumnsHandsetPortrait;
+        this.displayedColumns?.set(this.displayedColumnsHandsetPortrait);
     }
 
     protected override onHandsetLandscape(): void {
-        this.displayedColumns = this.displayedColumnsHandserLandscape;
+        this.displayedColumns?.set(this.displayedColumnsHandsetLandscape);
     }
 
     protected override onTablet(): void {
-        this.displayedColumns = this.displayedColumnsTablet;
+        this.displayedColumns?.set(this.displayedColumnsTablet);
     }
 
     protected override onBrowser(): void {
-        this.displayedColumns = this.displayedColumnsBrowser;
+        this.displayedColumns?.set(this.displayedColumnsBrowser);
     }
 }

@@ -1,12 +1,14 @@
-<div @fadeIn [ngClass]="{ 'padding-30': !isHandset, 'padding-10': isHandset }">
+<div @fadeIn [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
     <h1>Upload a photos</h1>
 
     <div class="flex-row flex-responsive flex-stretch">
         <div class="padding-bottom-10">
             <div class="flex-row flex-wrap gap-10">
-                <img *ngFor="let photo of photos; let i = index;" (click)="selectedIndex = i" (keydown.enter)="selectedIndex = i" tabindex="0" [src]="photo.photoSrc" alt="Uploaded photo" [ngClass]="{ 'selected': selectedIndex === i, 'small': isHandset }" class="photo-thumbnail" />
+                @for (photo of photos(); track photo.id; let i = $index) {
+                    <img (click)="onImageClick(i)" (keydown.enter)="onImageClick(i)" tabindex="0" [src]="photo.photoSrc()" alt="Uploaded photo" [ngClass]="{ 'selected': selectedIndex() === i, 'small': isHandset() }" class="photo-thumbnail" />
+                }                
 
-                <div class="dropzone active" [ngClass]="{ 'small': isHandset }" (click)="photoFileUpload.click()" (keydown.enter)="photoFileUpload.click()" tabindex="0">
+                <div class="dropzone active" [ngClass]="{ 'small': isHandset() }" (click)="photoFileUpload.click()" (keydown.enter)="photoFileUpload.click()" tabindex="0">
                     <div class="plus">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M20.889 10.889H13.111V3.11097C13.111 2.4974 12.6136 2 12 2C11.3864 2 10.889 2.4974 10.889 3.11097V10.889H3.11097C2.4974 10.889 2 11.3864 2 12C2 12.6136 2.4974 13.111 3.11097 13.111H10.889V20.889C10.889 21.5026 11.3864 22 12 22C12.6136 22 13.111 21.5026 13.111 20.889V13.111H20.889C21.5026 13.111 22 12.6136 22 12C22 11.3864 21.5026 10.889 20.889 10.889Z" fill="#0870D1"></path></svg>
                     </div>
@@ -24,28 +26,33 @@
 
             <mat-card-content>
                 <mat-stepper orientation="vertical" [(selectedIndex)]="selectedIndex" #stepper>
-                    <mat-step *ngFor="let photo of photos; let i = index;">
-                        <ng-template matStepLabel>Image data #{{ i + 1 }}</ng-template>
-                        <app-upload-photo [photo]="photo" [index]="i" [licenses]="licenses"></app-upload-photo>
-                        <div class="margin-top-15 flex-row flex-space-between">
-                            <div>
-                                <button *ngIf="i > 0" class="margin-right-10" mat-stroked-button matStepperPrevious>Back</button>
-                                <button mat-flat-button color="primary" matStepperNext>Next</button>
+                    @for (photo of photos(); track photo.uuid; let i = $index) {
+                        <mat-step>
+                            <ng-template matStepLabel>Image data #{{ i + 1 }}</ng-template>
+                            <app-upload-photo [photo]="photo" [index]="i" [licenses]="licenses()"></app-upload-photo>
+                            <div class="margin-top-15 flex-row flex-space-between">
+                                <div>
+                                    <button *ngIf="i > 0" class="margin-right-10" mat-stroked-button matStepperPrevious>Back</button>
+                                    <button mat-flat-button color="primary" matStepperNext>Next</button>
+                                </div>
+                                <div>
+                                    <button mat-flat-button color="warn" (click)="onPhotoDelete(photo)">Delete</button>
+                                </div>
                             </div>
-                            <div>
-                                <button mat-flat-button color="warn" (click)="onPhotoDelete(photo)">Delete</button>
-                            </div>
-                        </div>
-                    </mat-step>
+                        </mat-step>
+                    }
+
                     <mat-step>
                         <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
                             <ng-template matStepLabel>Status</ng-template>
                             <div class="flex-col gap-0 margin-top-5">
 
-                                @if (isOpenAIEnabled) {
+                                @if (isOpenAIEnabled()) {
                                     <div class="flex-row flex-end margin-bottom-10">
-                                        <mat-spinner *ngIf="hashtagsInProgress" class="margin-top-10 margin-right-10" [diameter]="18"></mat-spinner>
-                                        <button mat-stroked-button color="primary" (click)="onGenerateHashtags()" [disabled]="!allPhotosUploaded() || photos.length === 0 || hashtagsInProgress">
+                                        @if (hashtagsInProgress()) {
+                                            <mat-spinner class="margin-top-10 margin-right-10" [diameter]="18"></mat-spinner>
+                                        }
+                                        <button mat-stroked-button color="primary" (click)="onGenerateHashtags()" [disabled]="!allPhotosUploaded() || photos().length === 0 || hashtagsInProgress()">
                                             <mat-icon>smart_toy</mat-icon> Hashtags
                                         </button>
                                     </div>
@@ -53,13 +60,22 @@
 
                                 <mat-form-field appearance="outline" class="margin-bottom-20">
                                     <mat-label>Text</mat-label>
-                                    <textarea matInput name="statusText" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4"
-                                              cdkAutosizeMaxRows="10"  #statusInput="ngModel" [(ngModel)]="statusText" required
-                                              aria-label="Status" [appMaxLength]="maxStatusLength.toString()"></textarea>
-                                    @if (!isHandset) {
+                                    <textarea
+                                        matInput
+                                        name="statusText"
+                                        cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4" cdkAutosizeMaxRows="10" 
+                                        #statusInput="ngModel"
+                                        [(ngModel)]="statusText"
+                                        required
+                                        aria-label="Status"
+                                        [appMaxLength]="maxStatusLength().toString()">
+                                    </textarea>
+
+                                    @if (!isHandset()) {
                                         <mat-hint class="text-muted" align="start">Use “CamelCase” for hashtags, capitalizing the first letter of each word.</mat-hint>
                                     }
-                                    <mat-hint align="end">{{ statusText.length }}/{{ maxStatusLength }}</mat-hint>
+
+                                    <mat-hint class="text-muted" align="end">{{ statusText().length }}/{{ maxStatusLength() }}</mat-hint>
                                     <mat-error *ngIf="statusInput.invalid && statusInput.errors?.required">Enter status text.</mat-error>
                                     <mat-error *ngIf="statusInput.invalid && statusInput.errors?.appMaxLength">Too long status.</mat-error>
                                 </mat-form-field>
@@ -67,16 +83,18 @@
                                 <mat-form-field appearance="outline" class=" margin-bottom-20">
                                     <mat-label>Category</mat-label>
                                     <mat-select [(value)]="categoryId">
-                                        <mat-option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</mat-option>
+                                        @for(category of categories(); track category.id) {
+                                            <mat-option [value]="category.id">{{ category.name }}</mat-option>
+                                        }
                                     </mat-select>
                                 </mat-form-field>
 
                                 <mat-form-field appearance="outline">
                                     <mat-label>Visibility</mat-label>
                                     <mat-select required [(value)]="visibility">
-                                        <mat-option [value]="StatusVisibility.Public">Everyone</mat-option>
-                                        <mat-option [value]="StatusVisibility.Followers">Followers only</mat-option>
-                                        <mat-option [value]="StatusVisibility.Mentioned">Mentioned people only</mat-option>
+                                        <mat-option [value]="statusVisibility.Public">Everyone</mat-option>
+                                        <mat-option [value]="statusVisibility.Followers">Followers only</mat-option>
+                                        <mat-option [value]="statusVisibility.Mentioned">Mentioned people only</mat-option>
                                     </mat-select>
                                 </mat-form-field>
 
@@ -85,7 +103,7 @@
 
                                 <mat-form-field appearance="outline" class="margin-top-10" >
                                     <mat-label>Content warning</mat-label>
-                                    <input [disabled]="!isSensitive" matInput name="status" [(ngModel)]="contentWarning" type="text" aria-label="Content warning" />
+                                    <input [disabled]="!isSensitive()" matInput name="status" [(ngModel)]="contentWarning" type="text" aria-label="Content warning" />
                                 </mat-form-field>
                             </div>
                             <div>

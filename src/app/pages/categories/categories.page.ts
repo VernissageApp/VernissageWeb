@@ -1,5 +1,5 @@
 import { BreakpointObserver } from "@angular/cdk/layout";
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, signal, ChangeDetectionStrategy } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { fadeInAnimation } from "src/app/animations/fade-in.animation";
@@ -15,12 +15,14 @@ import { SettingsService } from "src/app/services/http/settings.service";
     templateUrl: './categories.page.html',
     styleUrls: ['./categories.page.scss'],
     animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class CategoriesPage extends ResponsiveComponent implements OnInit, OnDestroy {
-    isReady = false;
-    categories?: Category[] = [];
-    routeParamsSubscription?: Subscription;
+    protected isReady = signal(false);
+    protected categories = signal<Category[]>([]);
+
+    private routeParamsSubscription?: Subscription;
 
     constructor(
         private categoriesService: CategoriesService,
@@ -45,9 +47,10 @@ export class CategoriesPage extends ResponsiveComponent implements OnInit, OnDes
 
             this.loadingService.showLoader();
 
-            this.categories = await this.categoriesService.all(true);
-            this.isReady = true;
+            const downloadedCategories = await this.categoriesService.all(true);
+            this.categories.set(downloadedCategories);
 
+            this.isReady.set(true);
             this.loadingService.hideLoader();
         });
     }

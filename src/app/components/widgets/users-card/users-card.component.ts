@@ -1,5 +1,5 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { Relationship } from 'src/app/models/relationship';
 import { User } from 'src/app/models/user';
@@ -10,35 +10,33 @@ import { UserDisplayService } from 'src/app/services/common/user-display.service
     selector: 'app-users-card',
     templateUrl: './users-card.component.html',
     styleUrls: ['./users-card.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class UsersCardComponent extends ResponsiveComponent {
-    readonly avatarSize = AvatarSize;
+    public users = input<User[]>();
+    public relationships = input<Relationship[]>();
+    public showBio = input(false);
+    public showLoadMore = input(false);
+    
+    public relationChanged = output<Relationship>();
+    public loadMore = output();
 
-    @Input() users?: User[];
-    @Input() relationships?: Relationship[];
-    @Input() showBio = false;
-    @Input() showLoadMore = false;
-    @Output() relationChanged = new EventEmitter<Relationship>();
-    @Output() loadMore = new EventEmitter();
+    protected readonly avatarSize = AvatarSize;
 
     constructor(protected userDisplayService: UserDisplayService, breakpointObserver: BreakpointObserver) {
         super(breakpointObserver);
     }
 
-    getRelationship(user: User): Relationship | undefined {
-        return this.relationships?.find(x => x.userId === user.id);
+    protected getRelationship(user: User): Relationship | undefined {
+        return this.relationships()?.find(x => x.userId === user.id);
     }
 
-    onRelationChanged(relationship: Relationship): void {
+    protected onRelationChanged(relationship: Relationship): void {
         this.relationChanged.emit(relationship);
     }
 
-    onLoadMore(): void {
+    protected onLoadMore(): void {
         this.loadMore.emit();
-    }
-
-    trackByFn(_: number, item: User): string | undefined{
-        return item.id;
     }
 }

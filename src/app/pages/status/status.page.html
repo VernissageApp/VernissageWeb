@@ -1,371 +1,400 @@
-<div *ngIf="mainStatus && isReady" @fadeIn>
-    <div class="photo-margin-top">
-        @if (showBackArrow()) {
-            <div class="back-container" (click)="onBackClick()" (keydown.enter)="onBackClick()" tabindex="0">
-                <mat-icon>arrow_back</mat-icon>
-                <span class="back-label">Back</span>
+@if (isReady()) {
+    @if (mainStatus(); as mainStatusInternal) {
+        <div @fadeIn>
+            <div class="photo-margin-top">
+                @if (showBackArrow()) {
+                    <div class="back-container" (click)="onBackClick()" (keydown.enter)="onBackClick()" tabindex="0">
+                        <mat-icon>arrow_back</mat-icon>
+                        <span class="back-label">Back</span>
+                    </div>
+                }
             </div>
-        }
-    </div>
 
-    <div class="photo-container" [ngClass]="{ 'photo-container-table': showContextArrows() }">
-        @if (showContextArrows()) {
-            <div class="icon" (click)="onPrevClick()" (keydown.enter)="onPrevClick()" tabindex="0">
-                <mat-icon *ngIf="!hideLeftArrow">arrow_back_ios</mat-icon>
-            </div>
-        }
-
-        <div class="display-inline">
-            <ng-container *ngIf="images">
-                <ng-container *ngIf="images.length === 1">
-                    <div [ngClass]="{ 'photo-image-container-fixed': !isHandset }">
-                        @if (mainStatus.sensitive && !alwaysShowNSFW) {
-                            @if (showSensitiveCanvas) {
-                                <div [@show]="!showSensitiveImage ? 'true' : 'false'" class="content-warning">
-                                    <div class="text">{{ mainStatus.contentWarning ?? '' }}</div>
-                                    <button mat-stroked-button (click)="onShowSensitiveImageClick()">Show image</button>
-                                </div>
-                                <canvas [@showOrHide]="!showSensitiveImage ? 'true' : 'false'" class="blurhash" #canvas [width]="imageWidth" [height]="imageHeight"></canvas>
-                            }
-
-                            <img class="link" [@show]="showSensitiveImage ? 'true' : 'false'" [src]="images[0].data?.src" (click)="openInFullScreen()" (keydown.enter)="openInFullScreen()" tabindex="0" (load)="onImageLoaded()" alt="Status image" />
-                        } @else {
-                            <img class="link" [@show]="imageIsLoaded ? 'true' : 'false'" [src]="images[0].data?.src" (click)="openInFullScreen()" (keydown.enter)="openInFullScreen()" tabindex="0" (load)="onImageLoaded()" alt="Status image" />
+            <div class="photo-container" [ngClass]="{ 'photo-container-table': showContextArrows() }">
+                @if (showContextArrows()) {
+                    <div class="icon" (click)="onPrevClick()" (keydown.enter)="onPrevClick()" tabindex="0">
+                        @if (!hideLeftArrow()) {
+                            <mat-icon>arrow_back_ios</mat-icon>
                         }
                     </div>
-                </ng-container>
-                <ng-container *ngIf="images.length > 1">                
-                    <gallery
-                        class="custom-gallery"
-                        [ngClass]="{ 'custom-gallery-browser': showContextArrows() }"
-                        [items]="images"
-                        bullets
-                        bulletPosition="bottom"
-                        [bulletSize]="8"
-                        [counter]="false"
-                        [nav]="false"
-                        [autoHeight]="galleryAutoheight"
-                        [autoplay]="true"
-                        (itemClick)="openInFullScreen()"
-                        (indexChange)="onImageIndexChange($event)">
-                    </gallery>
+                }
 
-                </ng-container>
-            </ng-container>
-        </div>
+                <div class="display-inline">
+                    @if (images(); as imagesInternally) {
 
-        @if (showContextArrows()) {
-            <div class="icon" (click)="onNextClick()" (keydown.enter)="onNextClick()" tabindex="0">
-                <mat-icon *ngIf="!hideRightArrow">arrow_forward_ios</mat-icon>
-            </div>
-        }
-    </div>
-    <div class="photo-margin-bottom"></div>
+                        @if (imagesInternally.length === 1) {
+                            <div [ngClass]="{ 'photo-image-container-fixed': !isHandset() }">
+                                @if (mainStatusInternal.sensitive && !alwaysShowNSFW()) {
+                                    @if (showSensitiveCanvas()) {
+                                        <div [@show]="!showSensitiveImage() ? 'true' : 'false'" class="content-warning">
+                                            <div class="text">{{ mainStatusInternal.contentWarning ?? '' }}</div>
+                                            <button mat-stroked-button (click)="onShowSensitiveImageClick()">Show image</button>
+                                        </div>
+                                        <canvas [@showOrHide]="!showSensitiveImage() ? 'true' : 'false'" class="blurhash" #canvas [width]="imageWidth()" [height]="imageHeight()"></canvas>
+                                    }
 
-    @if (showBottomContextArrow()) {
-        <div class="flex-row flex-space-between padding-left-10 padding-right-10 padding-top-10">
-            @if (!hideLeftArrow) {
-                <div>
-                    <button mat-stroked-button (click)="onPrevClick()" class="small-button context-left" aria-label="Previous image">
-                        <mat-icon>arrow_back_ios</mat-icon>
-                    </button>
-                </div>
-            } @else {
-                <div></div>
-            }
-
-            @if (!hideRightArrow) {
-                <div>
-                    <button mat-stroked-button (click)="onNextClick()" class="small-button context-right" aria-label="Next image">
-                        <mat-icon iconPositionEnd>arrow_forward_ios</mat-icon>
-                    </button>
-                </div>
-            } @else {
-                <div></div>
-            }
-        </div>
-    }
-
-    <div [ngClass]="{ 'padding-30': !isHandset, 'padding-10': isHandset }">
-        <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
-
-            <!-- Left main panel -->
-            <mat-card class="flex-grow-2 height-100" appearance="outlined">
-                <mat-card-content>
-
-                    <div class="flex-row flex-wrap">
-
-                        <!-- Actions panel -->
-                        <ng-container *ngIf="isLoggedIn">
-                            <button *ngIf="!mainStatus.reblogged" mat-icon-button class="margin-right-10" color="primary" matTooltip="Boost" matTooltipPosition="above" aria-label="Boost" (click)="reblog()">
-                                <mat-icon class="outline-symbol">rocket_launch</mat-icon>
-                            </button>
-
-                            <button *ngIf="mainStatus.reblogged" mat-icon-button class="margin-right-10" color="primary" matTooltip="Unboost" matTooltipPosition="above" aria-label="Unboost" (click)="unreblog()">
-                                <mat-icon class="fill-symbol">rocket_launch</mat-icon>
-                            </button>
-
-                            <button *ngIf="!mainStatus.favourited" mat-icon-button class="margin-right-10" color="primary" matTooltip="Like" matTooltipPosition="above" aria-label="Like" (click)="favourite()">
-                                <mat-icon class="outline-symbol">grade</mat-icon>
-                            </button>
-
-                            <button *ngIf="mainStatus.favourited" mat-icon-button class="margin-right-10" color="primary" matTooltip="Unlike" matTooltipPosition="above" aria-label="Unlike" (click)="unfavourite()">
-                                <mat-icon class="fill-symbol">grade</mat-icon>
-                            </button>
-
-                            <button *ngIf="!mainStatus.bookmarked" mat-icon-button class="margin-right-10" color="primary" matTooltip="Bookmark" matTooltipPosition="above" aria-label="Bookmark" (click)="bookmark()">
-                                <mat-icon class="outline-symbol">bookmark</mat-icon>
-                            </button>
-
-                            <button *ngIf="mainStatus.bookmarked" mat-icon-button class="margin-right-10" color="primary" matTooltip="Unbookmark" matTooltipPosition="above" aria-label="Unbookmark" (click)="unbookmark()">
-                                <mat-icon class="fill-symbol">bookmark</mat-icon>
-                            </button>
-
-                            @if (shouldDisplayFeatureButton()) {
-                                <button *ngIf="!mainStatus.featured" mat-icon-button class="margin-right-10" color="primary" matTooltip="Feature" matTooltipPosition="above" aria-label="Feature" (click)="feature()">
-                                    <mat-icon class="outline-symbol">stars</mat-icon>
-                                </button>
-
-                                <button *ngIf="mainStatus.featured" mat-icon-button class="margin-right-10" color="primary" matTooltip="Unfeature" matTooltipPosition="above" aria-label="Unfeature" (click)="unfeature()">
-                                    <mat-icon class="fill-symbol">stars</mat-icon>
-                                </button>
-                            }
-
-                            <button mat-icon-button [matMenuTriggerFor]="menu" class="margin-right-10" color="primary" aria-label="More options">
-                                <mat-icon>more_vert</mat-icon>
-                            </button>
-                            <mat-menu #menu="matMenu">
-                                <button mat-menu-item (click)="onBoostedByDialog()">
-                                    <mat-icon class="fill-symbol">rocket_launch</mat-icon>
-                                    <span>Boosted by</span>
-                                </button>
-                                <button mat-menu-item (click)="onFavouritedByDialog()">
-                                    <mat-icon class="fill-symbol">grade</mat-icon>
-                                    <span>Favourited by</span>
-                                </button>
-                                <button *ngIf="!mainStatus.isLocal" mat-menu-item (click)="onOpenOrginalPage()">
-                                    <mat-icon class="fill-symbol">export_notes</mat-icon>
-                                    <span>Open orginal page</span>
-                                </button>
-                                <mat-divider></mat-divider>
-                                <button mat-menu-item (click)="onReportDialog(mainStatus)">
-                                    <mat-icon class="outline-symbol">report</mat-icon>
-                                    <span>Report</span>
-                                </button>
-                                <button *ngIf="shouldDisplayDeleteButton()" mat-menu-item (click)="onDeleteStatus()">
-                                    <mat-icon class="outline-symbol">delete</mat-icon>
-                                    <span>Delete</span>
-                                </button>
-                            </mat-menu>
-                        </ng-container>
-
-                        <div class="flex-spacer"></div>
-
-                        <!-- Reblog user card -->
-                        <app-mini-user-card *ngIf="status?.reblog" [user]="status?.user"></app-mini-user-card>
-                    </div>
-
-                    <!-- User card -->
-                    <app-user-card [user]="mainStatus.user"></app-user-card>
-
-                    <!-- Note -->
-                    <div appHrefToRouterLink>
-                        <div id="note" class="note margin-top-10 margin-bottom-20" appNoteProcessor [innerHTML]="rendered"></div>
-                    </div>
-
-                    <!-- Alt text -->
-                     @if (showAlternativeText && getAltStatus(currentIndex)) {
-                        <div class="flex-row alt margin-bottom-10">
-                            <div>
-                                <mat-icon class="margin-right-20" inline="true" matTooltip="Alt">remove_red_eye</mat-icon>
-                            </div>
-                            <div>
-                                <span class="alt-label">{{ getAltStatus(currentIndex) }}</span>
-                            </div>
-                        </div>
-                    }
-
-                    <!-- Category -->
-                     @if (mainStatus.category) {
-                        <div class="category margin-bottom-10">
-                            <mat-icon class="margin-right-20" inline="true" matTooltip="Category">loyalty</mat-icon>
-                            <span class="category-label">{{ mainStatus.category.name }}</span>
-                        </div>
-                    }
-
-                    <!-- Location -->
-                     @if (getLocation(currentIndex)) {
-                        <div class="location margin-bottom-10">
-                            <mat-icon class="margin-right-20" inline="true" matTooltip="Place">place</mat-icon>
-                            <span *ngIf="getLocation(currentIndex)?.name" class="location-label"><a class="dashed" target="_blank" [href]="getMapsUrl(currentIndex)">{{ getLocation(currentIndex)?.name }}</a> ({{ getLocation(currentIndex)?.country?.name }})</span>
-                        </div>
-                    }
-                    @if (!getLocation(currentIndex) && hasGpsCoordinations(currentIndex)) {
-                        <div class="location margin-bottom-10">
-                            <mat-icon class="margin-right-20" inline="true" matTooltip="Place">place</mat-icon>
-                            <span class="location-label"><a class="dashed" target="_blank" [href]="getMapsUrl(currentIndex)">Open map</a> <small class="text-muted"> ({{ getGpsLatitudeToDisplay(currentIndex) }}, {{ getGpsLongitudeToDisplay(currentIndex) }})</small></span>
-                        </div>
-                    }
-
-                    <!-- License -->
-                     @if (getLicense(currentIndex)) {
-                        <div class="license margin-bottom-10">
-                            <mat-icon class="margin-right-20" inline="true" matTooltip="License">license</mat-icon>
-                            <span *ngIf="getLicense(currentIndex)?.name" class="license-label">
-                                @if (getLicense(currentIndex)?.url) {
-                                    <a class="dashed" target="_blank" [href]="getLicense(currentIndex)?.url">{{ getLicense(currentIndex)?.name }}</a><ng-container *ngIf="getLicense(currentIndex)?.code"> ({{ getLicense(currentIndex)?.code }})</ng-container>
+                                    <img class="link" [@show]="showSensitiveImage() ? 'true' : 'false'" [src]="imagesInternally[0].data?.src" (click)="openInFullScreen()" (keydown.enter)="openInFullScreen()" tabindex="0" (load)="onImageLoaded()" alt="Status image" />
                                 } @else {
-                                    {{ getLicense(currentIndex)?.name }}<ng-container *ngIf="getLicense(currentIndex)?.code"> ({{ getLicense(currentIndex)?.code }})</ng-container>
+                                    <img class="link" [@show]="imageIsLoaded() ? 'true' : 'false'" [src]="imagesInternally[0].data?.src" (click)="openInFullScreen()" (keydown.enter)="openInFullScreen()" tabindex="0" (load)="onImageLoaded()" alt="Status image" />
                                 }
-                            </span>
+                            </div>
+                        }
+
+                        @if (imagesInternally.length > 1) {
+                            <gallery
+                                id="mainGalleryId"
+                                class="custom-gallery"
+                                [ngClass]="{ 'custom-gallery-browser': showContextArrows() }"
+                                bullets
+                                bulletPosition="bottom"
+                                [bulletSize]="8"
+                                [counter]="false"
+                                [nav]="false"
+                                [autoHeight]="galleryAutoheight()"
+                                [autoplay]="true"
+                                (itemClick)="openInFullScreen()"
+                                (indexChange)="onImageIndexChange($event)">
+                            </gallery>
+                        }
+                    }
+                </div>
+
+                @if (showContextArrows()) {
+                    <div class="icon" (click)="onNextClick()" (keydown.enter)="onNextClick()" tabindex="0">
+                        @if (!hideRightArrow()) {
+                            <mat-icon>arrow_forward_ios</mat-icon>
+                        }
+                    </div>
+                }
+            </div>
+            <div class="photo-margin-bottom"></div>
+
+            @if (showBottomContextArrow()) {
+                <div class="flex-row flex-space-between padding-left-10 padding-right-10 padding-top-10">
+                    @if (!hideLeftArrow()) {
+                        <div>
+                            <button mat-stroked-button (click)="onPrevClick()" class="small-button context-left" aria-label="Previous image">
+                                <mat-icon>arrow_back_ios</mat-icon>
+                            </button>
                         </div>
+                    } @else {
+                        <div></div>
                     }
 
-                    <!-- Exif -->
-                     @if (getExif(currentIndex)) {
-                        <div class="exif">
-                            @if (getExif(currentIndex)?.make || getExif(currentIndex)?.model) {
-                                <div class="margin-bottom-10">
-                                    <mat-icon class="margin-right-20" inline="true" matTooltip="Camera">camera_alt</mat-icon>
-                                    <span class="exif-label">
-                                        <span *ngIf="getExif(currentIndex)?.make">{{ getExif(currentIndex)?.make }}</span>&nbsp;<span *ngIf="getExif(currentIndex)?.model">{{ getExif(currentIndex)?.model }}</span>
-                                    </span>
+                    @if (!hideRightArrow()) {
+                        <div>
+                            <button mat-stroked-button (click)="onNextClick()" class="small-button context-right" aria-label="Next image">
+                                <mat-icon iconPositionEnd>arrow_forward_ios</mat-icon>
+                            </button>
+                        </div>
+                    } @else {
+                        <div></div>
+                    }
+                </div>
+            }
+
+            <div [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
+                <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
+
+                    <!-- Left main panel -->
+                    <mat-card class="flex-grow-2 height-100" appearance="outlined">
+                        <mat-card-content>
+
+                            <div class="flex-row flex-wrap">
+
+                                <!-- Actions panel -->
+                                @if (isLoggedIn()) {
+                                    <button *ngIf="!mainStatusInternal.reblogged" mat-icon-button class="margin-right-10" color="primary" matTooltip="Boost" matTooltipPosition="above" aria-label="Boost" (click)="reblog()">
+                                        <mat-icon class="outline-symbol">rocket_launch</mat-icon>
+                                    </button>
+
+                                    <button *ngIf="mainStatusInternal.reblogged" mat-icon-button class="margin-right-10" color="primary" matTooltip="Unboost" matTooltipPosition="above" aria-label="Unboost" (click)="unreblog()">
+                                        <mat-icon class="fill-symbol">rocket_launch</mat-icon>
+                                    </button>
+
+                                    <button *ngIf="!mainStatusInternal.favourited" mat-icon-button class="margin-right-10" color="primary" matTooltip="Like" matTooltipPosition="above" aria-label="Like" (click)="favourite()">
+                                        <mat-icon class="outline-symbol">grade</mat-icon>
+                                    </button>
+
+                                    <button *ngIf="mainStatusInternal.favourited" mat-icon-button class="margin-right-10" color="primary" matTooltip="Unlike" matTooltipPosition="above" aria-label="Unlike" (click)="unfavourite()">
+                                        <mat-icon class="fill-symbol">grade</mat-icon>
+                                    </button>
+
+                                    <button *ngIf="!mainStatusInternal.bookmarked" mat-icon-button class="margin-right-10" color="primary" matTooltip="Bookmark" matTooltipPosition="above" aria-label="Bookmark" (click)="bookmark()">
+                                        <mat-icon class="outline-symbol">bookmark</mat-icon>
+                                    </button>
+
+                                    <button *ngIf="mainStatusInternal.bookmarked" mat-icon-button class="margin-right-10" color="primary" matTooltip="Unbookmark" matTooltipPosition="above" aria-label="Unbookmark" (click)="unbookmark()">
+                                        <mat-icon class="fill-symbol">bookmark</mat-icon>
+                                    </button>
+
+                                    @if (shouldDisplayFeatureButton()) {
+                                        <button *ngIf="!mainStatusInternal.featured" mat-icon-button class="margin-right-10" color="primary" matTooltip="Feature" matTooltipPosition="above" aria-label="Feature" (click)="feature()">
+                                            <mat-icon class="outline-symbol">stars</mat-icon>
+                                        </button>
+
+                                        <button *ngIf="mainStatusInternal.featured" mat-icon-button class="margin-right-10" color="primary" matTooltip="Unfeature" matTooltipPosition="above" aria-label="Unfeature" (click)="unfeature()">
+                                            <mat-icon class="fill-symbol">stars</mat-icon>
+                                        </button>
+                                    }
+
+                                    <button mat-icon-button [matMenuTriggerFor]="menu" class="margin-right-10" color="primary" aria-label="More options">
+                                        <mat-icon>more_vert</mat-icon>
+                                    </button>
+                                    <mat-menu #menu="matMenu">
+                                        <button mat-menu-item (click)="onBoostedByDialog()">
+                                            <mat-icon class="fill-symbol">rocket_launch</mat-icon>
+                                            <span>Boosted by</span>
+                                        </button>
+                                        <button mat-menu-item (click)="onFavouritedByDialog()">
+                                            <mat-icon class="fill-symbol">grade</mat-icon>
+                                            <span>Favourited by</span>
+                                        </button>
+                                        <button *ngIf="!mainStatusInternal.isLocal" mat-menu-item (click)="onOpenOriginalPage()">
+                                            <mat-icon class="fill-symbol">export_notes</mat-icon>
+                                            <span>Open original page</span>
+                                        </button>
+                                        <mat-divider></mat-divider>
+                                        <button mat-menu-item (click)="onReportDialog(mainStatusInternal)">
+                                            <mat-icon class="outline-symbol">report</mat-icon>
+                                            <span>Report</span>
+                                        </button>
+                                        <button *ngIf="shouldDisplayDeleteButton()" mat-menu-item (click)="onDeleteStatus()">
+                                            <mat-icon class="outline-symbol">delete</mat-icon>
+                                            <span>Delete</span>
+                                        </button>
+                                    </mat-menu>
+                                }
+
+                                <div class="flex-spacer"></div>
+
+                                <!-- Reblog user card -->
+                                @if (status()?.reblog) {
+                                    @if (status()?.user; as userObject) {
+                                        <app-mini-user-card [user]="userObject"></app-mini-user-card>
+                                    }
+                                }
+                            </div>
+
+                            <!-- User card -->
+                            <app-user-card [user]="mainStatusInternal.user"></app-user-card>
+
+                            <!-- Note -->
+                            <div appHrefToRouterLink>
+                                <div id="note" class="note margin-top-10 margin-bottom-20" appNoteProcessor [innerHTML]="rendered()"></div>
+                            </div>
+
+                            <!-- Alt text -->
+                            @if (showAlternativeText() && altStatus()) {
+                                <div class="flex-row alt margin-bottom-10">
+                                    <div>
+                                        <mat-icon class="margin-right-20" inline="true" matTooltip="Alt">remove_red_eye</mat-icon>
+                                    </div>
+                                    <div>
+                                        <span class="alt-label">{{ altStatus() }}</span>
+                                    </div>
                                 </div>
                             }
 
-                            @if (getExif(currentIndex)?.lens) {
-                                <div class="margin-bottom-10">
-                                    <mat-icon class="margin-right-20" inline="true" matTooltip="Lens">camera</mat-icon>
-                                    <span class="exif-label">{{ getExif(currentIndex)?.lens }}</span>
+                            <!-- Category -->
+                            @if (mainStatusInternal.category) {
+                                <div class="category margin-bottom-10">
+                                    <mat-icon class="margin-right-20" inline="true" matTooltip="Category">loyalty</mat-icon>
+                                    <span class="category-label">{{ mainStatusInternal.category.name }}</span>
                                 </div>
                             }
 
-                            @if (getExif(currentIndex)?.focalLenIn35mmFilm || getExif(currentIndex)?.fNumber || getExif(currentIndex)?.exposureTime || getExif(currentIndex)?.photographicSensitivity) {
-                                <div class="margin-bottom-10">
-                                    <mat-icon class="margin-right-20" inline="true" matTooltip="Exposure">brightness_7</mat-icon>
-                                    <span *ngIf="getExif(currentIndex)?.focalLenIn35mmFilm" class="margin-right-15 exif-label">{{ getExif(currentIndex)?.focalLenIn35mmFilm }}mm</span>
-                                    <span *ngIf="getExif(currentIndex)?.fNumber" class="margin-right-15 exif-label">{{ getExif(currentIndex)?.fNumber | slice:0:7 }}</span>
-                                    <span *ngIf="getExif(currentIndex)?.exposureTime" class="margin-right-15 exif-label">{{ getExif(currentIndex)?.exposureTime }}s</span>
-                                    <span *ngIf="getExif(currentIndex)?.photographicSensitivity" class="margin-right-15 exif-label">ISO {{ getExif(currentIndex)?.photographicSensitivity }}</span>
+                            <!-- Location -->
+                            @if (location()) {
+                                <div class="location margin-bottom-10">
+                                    <mat-icon class="margin-right-20" inline="true" matTooltip="Place">place</mat-icon>
+                                    <span *ngIf="location()?.name" class="location-label"><a class="dashed" target="_blank" [href]="mapsUrl()">{{ location()?.name }}</a> ({{ location()?.country?.name }})</span>
+                                </div>
+                            }
+                            @if (!location() && hasGpsCoordinations()) {
+                                <div class="location margin-bottom-10">
+                                    <mat-icon class="margin-right-20" inline="true" matTooltip="Place">place</mat-icon>
+                                    <span class="location-label"><a class="dashed" target="_blank" [href]="mapsUrl()">Open map</a> <small class="text-muted"> ({{ gpsLatitudeToDisplay() }}, {{ gpsLongitudeToDisplay() }})</small></span>
                                 </div>
                             }
 
-                            @if (getExif(currentIndex)?.software) {
-                                <div class="margin-bottom-10">
-                                    <mat-icon class="margin-right-20" inline="true" matTooltip="Software">settings_photo_camera</mat-icon>
-                                    <span class="exif-label">{{ getExif(currentIndex)?.software }}</span>
+                            <!-- License -->
+                            @if (license(); as internalLicense) {
+                                <div class="license margin-bottom-10">
+                                    <mat-icon class="margin-right-20" inline="true" matTooltip="License">license</mat-icon>
+                                    @if (internalLicense.name) {
+                                        <span class="license-label">
+                                            @if (internalLicense.url) {
+                                                <a class="dashed" target="_blank" [href]="internalLicense.url">{{ internalLicense.name }}</a><ng-container *ngIf="internalLicense.code"> ({{ internalLicense.code }})</ng-container>
+                                            } @else {
+                                                {{ internalLicense.name }}<ng-container *ngIf="internalLicense.code"> ({{ internalLicense.code }})</ng-container>
+                                            }
+                                        </span>
+                                    }
                                 </div>
+                            }
+
+                            <!-- Exif -->
+                            @if (exif(); as exifInternal) {
+                                <div class="exif">
+                                    @if (exifInternal.make || exifInternal.model) {
+                                        <div class="margin-bottom-10">
+                                            <mat-icon class="margin-right-20" inline="true" matTooltip="Camera">camera_alt</mat-icon>
+                                            <span class="exif-label">
+                                                <span *ngIf="exifInternal.make">{{ exifInternal.make }}</span>&nbsp;<span *ngIf="exifInternal.model">{{ exifInternal.model }}</span>
+                                            </span>
+                                        </div>
+                                    }
+
+                                    @if (exifInternal.lens) {
+                                        <div class="margin-bottom-10">
+                                            <mat-icon class="margin-right-20" inline="true" matTooltip="Lens">camera</mat-icon>
+                                            <span class="exif-label">{{ exifInternal.lens }}</span>
+                                        </div>
+                                    }
+
+                                    @if (exifInternal.focalLenIn35mmFilm || exifInternal.fNumber || exifInternal.exposureTime || exifInternal.photographicSensitivity) {
+                                        <div class="margin-bottom-10">
+                                            <mat-icon class="margin-right-20" inline="true" matTooltip="Exposure">brightness_7</mat-icon>
+                                            <span *ngIf="exifInternal.focalLenIn35mmFilm" class="margin-right-15 exif-label">{{ exifInternal.focalLenIn35mmFilm }}mm</span>
+                                            <span *ngIf="exifInternal.fNumber" class="margin-right-15 exif-label">{{ exifInternal.fNumber | slice:0:7 }}</span>
+                                            <span *ngIf="exifInternal.exposureTime" class="margin-right-15 exif-label">{{ exifInternal.exposureTime }}s</span>
+                                            <span *ngIf="exifInternal.photographicSensitivity" class="margin-right-15 exif-label">ISO {{ exifInternal.photographicSensitivity }}</span>
+                                        </div>
+                                    }
+
+                                    @if (exifInternal.software) {
+                                        <div class="margin-bottom-10">
+                                            <mat-icon class="margin-right-20" inline="true" matTooltip="Software">settings_photo_camera</mat-icon>
+                                            <span class="exif-label">{{ exifInternal.software }}</span>
+                                        </div>
+                                    }
+                                    
+                                    @if (exifInternal.film) {
+                                        <div class="margin-bottom-10">
+                                            <mat-icon class="margin-right-20" inline="true" matTooltip="Camera roll">camera_roll</mat-icon>
+                                            <span class="exif-label">{{ exifInternal.film }}</span>
+                                        </div>
+                                    }
+
+                                    @if (exifInternal.chemistry) {
+                                        <div class="margin-bottom-10">
+                                            <mat-icon class="margin-right-20" inline="true" matTooltip="Develop chemistry">experiment</mat-icon>
+                                            <span class="exif-label">{{ exifInternal.chemistry }}</span>
+                                        </div>
+                                    }
+
+                                    @if (exifInternal.scanner) {
+                                        <div class="margin-bottom-10">
+                                            <mat-icon class="margin-right-20" inline="true" matTooltip="Scanner">scanner</mat-icon>
+                                            <span class="exif-label">{{ exifInternal.scanner }}</span>
+                                        </div>
+                                    }
+                                </div>
+                            }
+
+                            <!-- HDR-->
+                            @if (hasHdrVersion()) {
+                                <div class="hdr margin-bottom-10">
+                                    <mat-icon class="margin-right-20" inline="true" matTooltip="HDR">unknown_2</mat-icon>
+                                    <span class="hdr-label">High Dynamic Range <span [matTooltip]="hasHdrSupport() ? 'Supported by browser' : 'Not supported by browser'" class="fs-90 text-muted">{{ hasHdrSupport() ? '(displayed)' : '(not displayed)' }}</span></span>
+                                </div>
+                            }
+
+                            <!-- Status properties -->
+                            <app-status-properties [status]="mainStatusInternal"></app-status-properties>
+                        </mat-card-content>
+                    </mat-card>
+
+                    <!-- Right comments panel -->
+                    <mat-card class="height-100" appearance="outlined">
+                        <mat-card-header>
+                            <mat-card-title>Comments</mat-card-title>
+                        </mat-card-header>
+                        <mat-card-content>
+                            @if (signedInUser(); as signedInUserInternal) {
+                                <app-comment-reply [signedInUser]="signedInUserInternal" [status]="mainStatusInternal" (added)="onCommentAdded()"></app-comment-reply>
+                            }
+
+                            @if ((comments()?.length ?? 0) > 0) {
+                                @for (comment of comments(); track comment.status.id) {
+                                    <div class="padding-top-10 comments">
+                                        <div class="flex-row gap-8" [ngClass]="{ 'replies': !comment.showDivider, 'padding-top-15': comment.showDivider }">
+                                            <div>
+                                                <app-avatar [user]="comment.status.user" [size]="avatarSize.medium"></app-avatar>
+                                            </div>
+                                            <div>
+                                                <div>
+                                                    <a [routerLink]="[ '/@' + comment.status.user?.userName ]" class="margin-right-5 fw-600">{{ comment.status.user?.name }}</a>
+                                                </div>
+                                                <div>
+                                                    <span class="fw-400 fs-90 text-muted">&#64;{{ comment.status.user?.userName }}</span>
+                                                </div>
+                                                <div [innerHTML]="comment.status.noteHtml"></div>
+                                            </div>
+
+                                            @if (signedInUser()) {
+                                                <div class="comment-actions flex-grow-1 text-right">
+                                                    @if (comment.status.favourited) {
+                                                        <mat-icon class="favourited fill-symbol">star</mat-icon>
+                                                    }
+
+                                                    <button mat-icon-button [matMenuTriggerFor]="menu" class="margin-right-10" color="primary" aria-label="More options">
+                                                        <mat-icon>more_vert</mat-icon>
+                                                    </button>
+                                                    <mat-menu #menu="matMenu">
+                                                        <button *ngIf="!comment.status.favourited" mat-menu-item (click)="favouriteComment(comment.status)">
+                                                            <mat-icon>star_border</mat-icon>
+                                                            <span>Like</span>
+                                                        </button>
+                                                        <button *ngIf="comment.status.favourited" mat-menu-item (click)="unfavouriteComment(comment.status)">
+                                                            <mat-icon>star</mat-icon>
+                                                            <span>Unlike</span>
+                                                        </button>
+                                                        <button mat-menu-item (click)="onReply(comment.status)">
+                                                            <mat-icon>reply</mat-icon>
+                                                            <span>Reply</span>
+                                                        </button>
+                                                        <mat-divider></mat-divider>
+                                                        <button mat-menu-item (click)="onReportDialog(comment.status)">
+                                                            <mat-icon>warning</mat-icon>
+                                                            <span>Report</span>
+                                                        </button>
+                                                        <button *ngIf="shouldDisplayDeleteCommentButton(comment.status)" mat-menu-item (click)="onDeleteComment(comment.status)">
+                                                            <mat-icon class="outline-symbol">delete</mat-icon>
+                                                            <span>Delete</span>
+                                                        </button>
+                                                    </mat-menu>
+                                                </div>
+                                            }
+                                        </div>
+
+                                        @if (comment.status.favouritesCount > 0) {
+                                            <div class="text-muted fs-80 margin-left-40" [ngClass]="{ 'replies': !comment.showDivider }">
+                                                Comment liked by {{ comment.status.favouritesCount }} {{ comment.status.favouritesCount === 1 ? 'person' : 'people'}}.
+                                            </div>
+                                        }
+
+                                        @if (replyStatus()?.id === comment.status.id) {
+                                            @if (signedInUser(); as signedInUserInternal) {
+                                                <div class="text-right padding-top-5">
+                                                    <app-comment-reply [signedInUser]="signedInUserInternal" [status]="comment.status" [showCancel]="true" (clickCancel)="onReply(undefined)" (added)="onCommentAdded()"></app-comment-reply>
+                                                </div>
+                                            }
+                                        }
+                                    </div>
+                                }
+                            }
+
+                            @if ((comments()?.length ?? 0) === 0) {
+                                <div>There is nothing to read here yet.</div>
                             }
                             
-                            @if (getExif(currentIndex)?.film) {
-                                <div class="margin-bottom-10">
-                                    <mat-icon class="margin-right-20" inline="true" matTooltip="Camera roll">camera_roll</mat-icon>
-                                    <span class="exif-label">{{ getExif(currentIndex)?.film }}</span>
-                                </div>
-                            }
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </div>
 
-                            @if (getExif(currentIndex)?.chemistry) {
-                                <div class="margin-bottom-10">
-                                    <mat-icon class="margin-right-20" inline="true" matTooltip="Develop chemistry">experiment</mat-icon>
-                                    <span class="exif-label">{{ getExif(currentIndex)?.chemistry }}</span>
-                                </div>
-                            }
-
-                            @if (getExif(currentIndex)?.scanner) {
-                                <div class="margin-bottom-10">
-                                    <mat-icon class="margin-right-20" inline="true" matTooltip="Scanner">scanner</mat-icon>
-                                    <span class="exif-label">{{ getExif(currentIndex)?.scanner }}</span>
-                                </div>
-                            }
-                        </div>
-                    }
-
-                    <!-- HDR-->
-                    @if (showHdrIcon(currentIndex)) {
-                        <div class="hdr margin-bottom-10">
-                            <mat-icon class="margin-right-20" inline="true" matTooltip="HDR">unknown_2</mat-icon>
-                            <span class="hdr-label">High Dynamic Range <span [matTooltip]="isHdrRendered() ? 'Supported by browser' : 'Not supported by browser'" class="fs-90 text-muted">{{ isHdrRendered() ? '(displayed)' : '(not displayed)' }}</span></span>
-                        </div>
-                    }
-
-                    <!-- Status properties -->
-                    <app-status-properties [status]="mainStatus"></app-status-properties>
-                </mat-card-content>
-            </mat-card>
-
-            <!-- Right comments panel -->
-            <mat-card class="height-100" appearance="outlined">
-                <mat-card-header>
-                    <mat-card-title>Comments</mat-card-title>
-                </mat-card-header>
-                <mat-card-content>
-                    @if (signedInUser) {
-                        <app-comment-reply [signedInUser]="signedInUser" [status]="mainStatus" (added)="onCommentAdded()"></app-comment-reply>
-                    }
-
-                    @if ((comments?.length ?? 0) > 0) {
-                        @for (comment of comments; track comment.status.id) {
-                            <div>
-                                <div class="flex-row gap-8 padding-top-5 comments" [ngClass]="{ 'replies': !comment.showDivider, 'padding-top-15': comment.showDivider }">
-                                    <div>
-                                        <app-avatar [user]="comment.status.user" [size]="avatarSize.medium"></app-avatar>
-                                    </div>
-                                    <div>
-                                        <div>
-                                            <a [routerLink]="[ '/@' + comment.status.user?.userName ]" class="margin-right-5 fw-600">{{ comment.status.user?.name }}</a>
-                                        </div>
-                                        <div>
-                                            <span class="fw-400 fs-90 text-muted">&#64;{{ comment.status.user?.userName }}</span>
-                                        </div>
-                                        <div [innerHTML]="comment.status.noteHtml"></div>
-                                    </div>
-                                    <div *ngIf="signedInUser" class="flex-grow-1 text-right">
-                                        <mat-icon class="favourited fill-symbol" *ngIf="comment.status.favourited">star</mat-icon>
-                                        <button mat-icon-button [matMenuTriggerFor]="menu" class="margin-right-10" color="primary" aria-label="More options">
-                                            <mat-icon>more_vert</mat-icon>
-                                        </button>
-                                        <mat-menu #menu="matMenu">
-                                            <button *ngIf="!comment.status.favourited" mat-menu-item (click)="favouriteComment(comment.status)">
-                                                <mat-icon>star_border</mat-icon>
-                                                <span>Like</span>
-                                            </button>
-                                            <button *ngIf="comment.status.favourited" mat-menu-item (click)="unfavouriteComment(comment.status)">
-                                                <mat-icon>star</mat-icon>
-                                                <span>Unlike</span>
-                                            </button>
-                                            <button mat-menu-item (click)="onReply(comment.status)">
-                                                <mat-icon>reply</mat-icon>
-                                                <span>Reply</span>
-                                            </button>
-                                            <mat-divider></mat-divider>
-                                            <button mat-menu-item (click)="onReportDialog(comment.status)">
-                                                <mat-icon>warning</mat-icon>
-                                                <span>Report</span>
-                                            </button>
-                                            <button *ngIf="shouldDisplayDeleteCommentButton(comment.status)" mat-menu-item (click)="onDeleteComment(comment.status)">
-                                                <mat-icon class="outline-symbol">delete</mat-icon>
-                                                <span>Delete</span>
-                                            </button>
-                                        </mat-menu>
-                                    </div>
-                                </div>
-
-                                @if (replyStatus?.id === comment.status.id) {
-                                    <div class="text-right padding-top-5">
-                                        <app-comment-reply [signedInUser]="signedInUser" [status]="comment.status" [showCancel]="true" (clickCancel)="onReply(undefined)" (added)="onCommentAdded()"></app-comment-reply>
-                                    </div>
-                                }
-                            </div>
-                        }
-                    }
-
-                    @if ((comments?.length ?? 0) === 0) {
-                        <div>There is nothing to read here yet.</div>
-                    }
-                    
-                </mat-card-content>
-            </mat-card>
         </div>
-    </div>
-
-</div>
+    }
+}

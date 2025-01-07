@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, model, signal } from '@angular/core';
 
 import { ForgotPassword } from 'src/app/models/forgot-password';
 import { ForgotPasswordMode } from 'src/app/models/forgot-password-mode';
@@ -12,12 +12,17 @@ import { fadeInAnimation } from "../../animations/fade-in.animation";
     templateUrl: './forgot-password.page.html',
     styleUrls: ['./forgot-password.page.scss'],
     animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
-export class ForgotPasswordPage implements OnInit {
+export class ForgotPasswordPage {
+    protected email = model('');
+    protected forgotPasswordMode = signal(ForgotPasswordMode.ForgotPassword);
 
-    forgotPassword = new ForgotPassword();
-    forgotPasswordMode = ForgotPasswordMode.ForgotPassword;
+    protected isForgotPasswordMode = computed(() => this.forgotPasswordMode() === ForgotPasswordMode.ForgotPassword);
+    protected isSubmittingMode = computed(() => this.forgotPasswordMode() === ForgotPasswordMode.Submitting);
+    protected isUserNotExistsMode = computed(() => this.forgotPasswordMode() === ForgotPasswordMode.UserNotExists);
+    protected isSuccessMode = computed(() => this.forgotPasswordMode() === ForgotPasswordMode.Success);
 
     constructor(
         private forgotPasswordService: ForgotPasswordService,
@@ -25,43 +30,28 @@ export class ForgotPasswordPage implements OnInit {
         private windowService: WindowService) {
     }
 
-    ngOnInit(): void {
-        this.forgotPassword.redirectBaseUrl = this.windowService.getApplicationUrl();
-    }
-
     async onSubmit(): Promise<void> {
         try {
-            this.forgotPasswordMode = ForgotPasswordMode.Submitting;
-            await this.forgotPasswordService.token(this.forgotPassword);
-            this.forgotPasswordMode = ForgotPasswordMode.Success;
+            this.forgotPasswordMode.set(ForgotPasswordMode.Submitting);
+
+            const forgotPassword = new ForgotPassword()
+            forgotPassword.redirectBaseUrl = this.windowService.getApplicationUrl();
+            forgotPassword.email = this.email();
+
+            await this.forgotPasswordService.token(forgotPassword);
+            this.forgotPasswordMode.set(ForgotPasswordMode.Success);
         } catch (error: any) {
             if (error.error.code === 'userNotFound') {
-                this.forgotPasswordMode = ForgotPasswordMode.UserNotExists;
+                this.forgotPasswordMode.set(ForgotPasswordMode.UserNotExists);
                 return;
             }
 
-            this.forgotPasswordMode = ForgotPasswordMode.ForgotPassword;
+            this.forgotPasswordMode.set(ForgotPasswordMode.ForgotPassword);
             this.messagesService.showError('Unexpected error during resetting your password. Please try again.');
         }
     }
 
-    isForgotPasswordMode(): boolean {
-        return this.forgotPasswordMode === ForgotPasswordMode.ForgotPassword;
-    }
-
-    isSubmittingMode(): boolean {
-        return this.forgotPasswordMode === ForgotPasswordMode.Submitting;
-    }
-
-    isUserNotExistsMode(): boolean {
-        return this.forgotPasswordMode === ForgotPasswordMode.UserNotExists;
-    }
-
-    isSuccessMode(): boolean {
-        return this.forgotPasswordMode === ForgotPasswordMode.Success;
-    }
-
     resetMode(): void {
-        this.forgotPasswordMode = ForgotPasswordMode.ForgotPassword;
+        this.forgotPasswordMode.set(ForgotPasswordMode.ForgotPassword);
     }
 }

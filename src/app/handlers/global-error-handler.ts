@@ -10,7 +10,7 @@ import { ErrorItemsService } from '../services/http/error-items.service';
 import { RandomGeneratorService } from '../services/common/random-generator.service';
 import { ErrorItem } from '../models/error-item';
 import { isPlatformBrowser } from '@angular/common';
-import { PersistanceService } from '../services/persistance/persistance.service';
+import { PersistenceService } from '../services/persistance/persistance.service';
 import { CustomError } from '../errors/custom-error';
 import { environment } from 'src/environments/environment';
 
@@ -22,7 +22,7 @@ export class GlobalErrorHandler implements ErrorHandler {
         private injector: Injector,
         private zone: NgZone,
         private authorizationService: AuthorizationService,
-        private persistanceService: PersistanceService,
+        private persistenceService: PersistenceService,
         private loadingService: LoadingService,
         private errorItemsService: ErrorItemsService,
         private randomGeneratorService: RandomGeneratorService
@@ -38,7 +38,7 @@ export class GlobalErrorHandler implements ErrorHandler {
         await this.zone.run(async () => {
             console.error(error);
             const stringified = this.getStringFromError(error);
-            this.persistanceService.set('exception', stringified.trim());
+            this.persistenceService.set('exception', stringified.trim());
 
             this.loadingService.hideLoader();
 

@@ -4,28 +4,43 @@
     <div class="flex-col gap-0 margin-top-5">
         <mat-form-field appearance="outline" class="width-100 padding-top-10">
             <mat-label>Comment</mat-label>
-            <textarea matInput name="comment" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4"
-                cdkAutosizeMaxRows="10" placeholder="Comment" #commentModel="ngModel" [(ngModel)]="comment"
-                aria-label="Comment" disabled></textarea>
+            <textarea
+                matInput
+                name="comment"
+                cdkTextareaAutosize
+                #autosize="cdkTextareaAutosize"
+                cdkAutosizeMinRows="4"
+                cdkAutosizeMaxRows="10"
+                placeholder="Comment"
+                #commentModel="ngModel"
+                [(ngModel)]="comment"
+                aria-label="Comment"
+                disabled></textarea>
         </mat-form-field>
     
         <mat-form-field appearance="outline">
             <mat-label>Category</mat-label>
             <mat-select [(value)]="category" disabled>
-                <mat-option *ngFor="let item of categories" [value]="item">{{ item }}</mat-option>
+                @for (item of categories(); track item) {
+                    <mat-option [value]="item">{{ item }}</mat-option>
+                }
             </mat-select>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
             <mat-label>Server rules</mat-label>
             <mat-select [(value)]="ruleIds" multiple disabled>
-                <mat-option *ngFor="let rule of rules" [value]="rule.id">{{ rule.text }}</mat-option>
+                @for (rule of rules(); track rule.id) {
+                    <mat-option [value]="rule.id">{{ rule.text }}</mat-option>
+                }
             </mat-select>
         </mat-form-field>
 
-        <mat-checkbox *ngIf="data?.user?.isLocal === false" name="forward" color="primary" [disableRipple]="true" [(ngModel)]="forward" disabled>
-            Should the report be forwarded to the remote admin?
-        </mat-checkbox>
+        @if (!isLocal()) {
+            <mat-checkbox name="forward" color="primary" [disableRipple]="true" [(ngModel)]="forward" disabled>
+                Should the report be forwarded to the remote admin?
+            </mat-checkbox>
+        }
     </div>
 </div>
 <div mat-dialog-actions>

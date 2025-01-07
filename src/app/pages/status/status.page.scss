@@ -180,8 +180,16 @@
 }
 
 .comments {
-    .favourited {
-        transform: scale(0.8);
+    ::ng-deep p {
+        margin: 0;
+    }
+
+    .comment-actions {
+        min-width: 86px;
+
+        .favourited {
+            transform: scale(0.6);
+        }
     }
 }
 

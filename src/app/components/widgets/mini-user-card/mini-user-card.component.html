@@ -1,13 +1,15 @@
-<div *ngIf="user" class="flex-row flex-align-center gap-8">
-    <div>
-        <app-avatar [user]="user" [size]="size"></app-avatar>
-    </div>
-    <div class="flex-row flex-responsive username" [ngClass]="{ 'white': whiteLink }">
-        <div class="fullname">
-            <a [routerLink]="[ '/@' + user.userName ]" (click)="$event.stopPropagation();$event.preventDefault()" class="margin-right-5 fw-400">{{ userDisplayService.displayName(user) }}</a>
+@if (user(); as userObject) {
+    <div class="flex-row flex-align-center gap-8">
+        <div>
+            <app-avatar [user]="userObject" [size]="size()"></app-avatar>
         </div>
-        @if (showUserName) {
-            <div class="fw-400 fs-90 text-muted account">&#64;{{ user.userName }}</div>
-        }
+        <div class="flex-row flex-responsive username" [ngClass]="{ 'white': whiteLink() }">
+            <div class="fullname">
+                <a [routerLink]="[ '/@' + userObject.userName ]" (click)="$event.stopPropagation();$event.preventDefault()" class="margin-right-5 fw-400">{{ userDisplayService.displayName(userObject) }}</a>
+            </div>
+            @if (showUserName()) {
+                <div class="fw-400 fs-90 text-muted account">&#64;{{ userObject.userName }}</div>
+            }
+        </div>
     </div>
-</div>
+}

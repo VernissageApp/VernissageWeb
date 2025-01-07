@@ -34,16 +34,25 @@
     .favourite {
         position: absolute;
         bottom: 10px;
-        left: 4px;
-        transform: scale(0.7);
-        color: rgba(255, 255, 255, 0.6);
-        z-index: 104;
+        right: 4px;
+        z-index: 103;
+        width: 60px;
+        height: 60px;
+
+        mat-icon {
+            position: relative;
+            top: 38px;
+            left: 36px;
+            transform: scale(0.8);
+            color: rgba(255, 255, 255, 0.8);
+            text-shadow: rgb(0, 0, 0, 0.6) 1px 0 6px;
+        }
     }
 
     .alt {
         position: absolute;
         bottom: 10px;
-        right: 4px;
+        left: 4px;
         background-color: rgba(0, 0, 0, 0.6);
         padding-left: 10px;
         padding-right: 10px;

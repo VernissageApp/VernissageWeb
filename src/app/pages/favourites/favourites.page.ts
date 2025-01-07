@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, signal, ChangeDetectionStrategy } from '@angular/core';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { Status } from 'src/app/models/status';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
@@ -13,24 +13,23 @@ import { FavouritesService } from 'src/app/services/http/favourites.service';
 import { UserDisplayService } from 'src/app/services/common/user-display.service';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 import { User } from 'src/app/models/user';
-import { OnAttach, OnDetach } from 'src/app/directives/app-router-outlet.directive';
 
 @Component({
     selector: 'app-favourites',
     templateUrl: './favourites.page.html',
     styleUrls: ['./favourites.page.scss'],
     animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
-export class FavouritesPage extends ResponsiveComponent implements OnInit, OnDestroy, OnAttach, OnDetach {
-    statuses?: LinkableResult<Status>;
-    isReady = false;
-    isDetached = false;
+export class FavouritesPage extends ResponsiveComponent implements OnInit, OnDestroy {
+    protected statuses = signal<LinkableResult<Status> | undefined>(undefined);
+    protected isReady = signal(false);
+    protected user = signal<User | undefined>(undefined);
+    protected fullName = signal('');
 
-    public user?: User | null;
-    public fullName = '';
-    routeParamsSubscription?: Subscription;
-    routeNavigationEndSubscription?: Subscription;
+    private routeParamsSubscription?: Subscription;
+    private routeNavigationEndSubscription?: Subscription;
 
     constructor(
         private contextStatusesService: ContextStatusesService,
@@ -40,7 +39,6 @@ export class FavouritesPage extends ResponsiveComponent implements OnInit, OnDes
         private userDisplayService: UserDisplayService,
         private router: Router,
         private activatedRoute: ActivatedRoute,
-        private changeDetectorRef: ChangeDetectorRef,
         breakpointObserver: BreakpointObserver
     ) {
         super(breakpointObserver);
@@ -54,21 +52,22 @@ export class FavouritesPage extends ResponsiveComponent implements OnInit, OnDes
             .subscribe(async (event) => {
                 const navigationEndEvent = event as NavigationEnd;
                 if (navigationEndEvent.urlAfterRedirects === '/favourites') {
-                    this.contextStatusesService.setContextStatuses(this.statuses);
+                    this.contextStatusesService.setContextStatuses(this.statuses());
                 }
             });
 
         this.routeParamsSubscription = this.activatedRoute.queryParams.subscribe(async () => {
-
             this.loadingService.showLoader();
 
-            this.user = this.authorizationService.getUser();
-            this.fullName = this.userDisplayService.displayName(this.user);
+            this.user.set(this.authorizationService.getUser());
+            this.fullName.set(this.userDisplayService.displayName(this.user()));
 
-            this.statuses = await this.favouritesService.list();
-            this.statuses.context = ContextTimeline.favourites;
+            const downloadedStatuses = await this.favouritesService.list();
+            downloadedStatuses.context = ContextTimeline.favourites;
 
-            this.isReady = true;
+            this.statuses.set(downloadedStatuses);
+
+            this.isReady.set(true);
             this.loadingService.hideLoader();
         });
     }
@@ -78,15 +77,5 @@ export class FavouritesPage extends ResponsiveComponent implements OnInit, OnDes
 
         this.routeParamsSubscription?.unsubscribe();
         this.routeNavigationEndSubscription?.unsubscribe();
-    }
-
-    onDetach(): void { 
-        this.isDetached = true;
-        this.changeDetectorRef.detectChanges();
-    }
-
-    onAttach(): void {
-        this.isDetached = false;
-        this.changeDetectorRef.detectChanges();
     }
 }

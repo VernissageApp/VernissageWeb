@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
 import { User } from 'src/app/models/user';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 
@@ -6,20 +6,23 @@ import { AuthorizationService } from 'src/app/services/authorization/authorizati
     selector: 'app-home',
     templateUrl: './home.page.html',
     styleUrls: ['./home.page.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class HomePage implements OnInit {
-    public user?: User | null;
-    public isLoggedIn = false;
-    public isReady = false;
+    protected user = signal<User | undefined>(undefined);
+    protected isLoggedIn = signal(false);
+    protected isReady = signal(false);
 
     constructor(private authorizationService: AuthorizationService) {
     }
 
     async ngOnInit(): Promise<void> {
-        this.user = this.authorizationService.getUser();
-        this.isLoggedIn = await this.authorizationService.isLoggedIn();
+        this.user.set(this.authorizationService.getUser());
 
-        this.isReady = true;
+        const isLoggedInInternal = await this.authorizationService.isLoggedIn();
+        this.isLoggedIn.set(isLoggedInInternal);
+
+        this.isReady.set(true);
     }
 }

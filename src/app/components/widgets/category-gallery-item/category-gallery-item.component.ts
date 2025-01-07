@@ -1,5 +1,5 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, OnInit, signal } from '@angular/core';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { Category } from 'src/app/models/category';
@@ -14,14 +14,16 @@ import { TimelineService } from 'src/app/services/http/timeline.service';
     templateUrl: './category-gallery-item.component.html',
     styleUrls: ['./category-gallery-item.component.scss'],
     animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class CategoryGalleryItemComponent extends ResponsiveComponent implements OnInit {
-    private readonly numberOfVisibleStatuses = 10;
+    public category = input.required<Category>();
+    
+    protected statuses = signal<LinkableResult<Status> | undefined>(undefined);
+    protected alwaysShowNSFW = signal(false);
 
-    @Input() category!: Category;
-    statuses?: LinkableResult<Status>;
-    alwaysShowNSFW = false;
+    private readonly numberOfVisibleStatuses = 10;
 
     constructor(
         private timelineService: TimelineService,
@@ -35,18 +37,19 @@ export class CategoryGalleryItemComponent extends ResponsiveComponent implements
     override ngOnInit(): void {
         super.ngOnInit();
 
-        this.alwaysShowNSFW = this.preferencesService.alwaysShowNSFW;
+        this.alwaysShowNSFW.set(this.preferencesService.alwaysShowNSFW);
     }
 
     async lazyLoadData(): Promise<void> {
-        this.statuses = await this.timelineService.category(this.category.name, undefined, undefined, undefined, this.numberOfVisibleStatuses, undefined);
+        const statusesInternal = await this.timelineService.category(this.category().name, undefined, undefined, undefined, this.numberOfVisibleStatuses, undefined);
+        this.statuses.set(statusesInternal);
     }
 
-    getMainStatus(status: Status): Status {
+    protected getMainStatus(status: Status): Status {
         return status.reblog ?? status;
     }
 
-    onStatusClick(): void {
-        this.contextStatusesService.setContextStatuses(this.statuses);
+    protected onStatusClick(): void {
+        this.contextStatusesService.setContextStatuses(this.statuses());
     }
 }

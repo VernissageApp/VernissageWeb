@@ -1,24 +1,26 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
-import { PersistanceService } from 'src/app/services/persistance/persistance.service';
+import { PersistenceService } from 'src/app/services/persistance/persistance.service';
 
 @Component({
     selector: 'app-unexpected-error',
     templateUrl: './unexpected-error.page.html',
     styleUrls: ['./unexpected-error.page.scss'],
     animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class UnexpectedErrorPage implements OnInit, OnDestroy {
-    value = 100;
-    errorExpanded = false;
-    interval: any;
-    errorMessage?: string;
-    code?: string;
+    protected value = signal(100);
+    protected errorMessage = signal<string | undefined>(undefined);
+    protected code = signal<string | undefined>(undefined);
+
+    private errorExpanded = false;
+    private interval: NodeJS.Timeout | undefined;
 
     constructor(
-        private persistanceService: PersistanceService,
+        private persistenceService: PersistenceService,
         private router: Router,
         private activatedRoute: ActivatedRoute) {
     }
@@ -26,7 +28,7 @@ export class UnexpectedErrorPage implements OnInit, OnDestroy {
     ngOnInit(): void {
         const codeFromQuery = this.activatedRoute.snapshot.queryParamMap.get('code');
         if (codeFromQuery) {
-            this.code = codeFromQuery;
+            this.code.set(codeFromQuery);
         }
 
         this.interval = setInterval(async ()=> {
@@ -38,16 +40,20 @@ export class UnexpectedErrorPage implements OnInit, OnDestroy {
                 return;
             }
 
-            this.value = this.value - 4;
-            if (this.value < 0) {
-                await this.router.navigate(['/']);
-            }
+            this.value.update(progress => {
+                progress = progress - 4;
+                if (progress < 0) {
+                    this.router.navigate(['/']);
+                }
+
+                return progress;
+            });
         }, 200);
 
-        const errorObject = this.persistanceService.get('exception');
+        const errorObject = this.persistenceService.get('exception');
         if (errorObject) {
-            this.errorMessage = errorObject.toString();
-            this.persistanceService.remove('exception');
+            this.errorMessage.set(errorObject.toString());
+            this.persistenceService.remove('exception');
         }
     }
 
@@ -57,8 +63,8 @@ export class UnexpectedErrorPage implements OnInit, OnDestroy {
         }
     }
 
-    onAfterExpand(): void {
+    protected onAfterExpand(): void {
         this.errorExpanded = true;
-        this.value = 100;
+        this.value.set(100);
     }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, model, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -37,31 +37,30 @@ import { FileSaverService } from 'ngx-filesaver';
     templateUrl: './account.page.html',
     styleUrls: ['./account.page.scss'],
     animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class AccountPage extends ResponsiveComponent implements OnInit {
-    readonly archiveStatus = ArchiveStatus;
+    protected readonly archiveStatus = ArchiveStatus;
+    protected verification = signal('');
+    protected user = model<User>(new User());
+    protected isReady = signal(false);
 
-    userName = '';
-    verification = '';
-    user: User = new User();
-    isReady = false;
-    twoFactorTokenEnabled = false;
+    protected aliasDisplayedColumns = signal<string[]>(['alias', 'actions']);
+    protected archivesDisplayedColumns = signal<string[]>([]);
 
-    readonly aliasDisplayedColumns: string[] = ['alias', 'actions'];
+    protected userAliases = signal<UserAlias[]>([]);
+    protected archives = signal<Archive[]>([]);
 
-    archivesDisplayedColumns: string[] = [];
+    protected avatarSrc = signal('assets/avatar-placeholder.svg');
+    protected headerSrc = signal('assets/header-placeholder.svg');
+
+    private selectedAvatarFile: any = null;
+    private selectedHeaderFile: any = null;
+    
+    private userName = '';
     private readonly archivesDisplayedColumnsFull: string[] = ['requestDate', 'startDate', 'endDate', 'status', 'download'];
     private readonly archivesDisplayedColumnsMinimum: string[] = ['requestDate', 'download'];
-
-    userAliases: UserAlias[] = [];
-    archives: Archive[] = [];
-
-    selectedAvatarFile: any = null;
-    avatarSrc?: string;
-
-    selectedHeaderFile: any = null;
-    headerSrc?: string
 
     constructor(
         private usersService: UsersService,
@@ -101,36 +100,38 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
             }
 
             const applicationBaseUrl = this.windowService.getApplicationBaseUrl()
-            this.verification = `<a rel="me" href="${applicationBaseUrl}/@${this.user.userName}">Vernissage</a>`;
+            this.verification.set(`<a rel="me" href="${applicationBaseUrl}/@${this.user().userName}">Vernissage</a>`);
         } catch {
             this.messageService.showError('Error during downloading user settings.');
             await this.router.navigate(['/home']);
         } finally {
-            this.isReady = true;
+            this.isReady.set(true);
             this.loadingService.hideLoader();
         }
     }
 
     protected override onHandsetPortrait(): void {
-        this.archivesDisplayedColumns = this.archivesDisplayedColumnsMinimum;
+        this.archivesDisplayedColumns?.set(this.archivesDisplayedColumnsMinimum);
     }
 
     protected override onHandsetLandscape(): void {
-        this.archivesDisplayedColumns = this.archivesDisplayedColumnsMinimum;
+        this.archivesDisplayedColumns?.set(this.archivesDisplayedColumnsMinimum);
     }
 
     protected override onTablet(): void {
-        this.archivesDisplayedColumns = this.archivesDisplayedColumnsMinimum;
+        this.archivesDisplayedColumns?.set(this.archivesDisplayedColumnsMinimum);
     }
 
     protected override onBrowser(): void {
-        this.archivesDisplayedColumns = this.archivesDisplayedColumnsFull;
+        this.archivesDisplayedColumns?.set(this.archivesDisplayedColumnsFull);
     }
 
-    async onSubmit(): Promise<void> {
+    protected async onSubmit(): Promise<void> {
         try {
-            if (this.user.userName != null) {
-                await this.usersService.update(this.user.userName, this.user);
+            const userInternal = this.user();
+
+            if (userInternal.userName != null) {
+                await this.usersService.update(userInternal.userName, userInternal);
                 await this.authorizationService.refreshAccessToken();
 
                 this.messageService.showSuccess('Settings was saved.');
@@ -141,7 +142,7 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
         }
     }
 
-    async onAvatarFormSubmit(): Promise<void> {
+    protected async onAvatarFormSubmit(): Promise<void> {
         try {
             if (this.selectedAvatarFile) {
                 const formData = new FormData();
@@ -157,9 +158,11 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
         }
     }
 
-    async onRemoveAvatar(): Promise<void> {
+    protected async onRemoveAvatar(): Promise<void> {
         try {
-            if (this.user.avatarUrl) {
+            const userInternal = this.user();
+
+            if (userInternal.avatarUrl) {
                 await this.avatarsService.deleteAvatar(this.userName);
                 await this.loadUserData()
                 this.messageService.showSuccess('Avatar has ben deleted.');
@@ -170,7 +173,7 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
         }
     }
 
-    async onHeaderFormSubmit(): Promise<void> {
+    protected async onHeaderFormSubmit(): Promise<void> {
         try {
             if (this.selectedHeaderFile) {
                 const formData = new FormData();
@@ -186,9 +189,11 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
         }
     }
 
-    async onRemoveHeader(): Promise<void> {
+    protected async onRemoveHeader(): Promise<void> {
         try {
-            if (this.user.headerUrl) {
+            const userInternal = this.user();
+
+            if (userInternal.headerUrl) {
                 await this.headersService.deleteHeader(this.userName);
                 await this.loadUserData();
                 this.messageService.showSuccess('Header has ben deleted.');
@@ -199,43 +204,47 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
         }
     }
 
-    onAddField(): void {
-        this.user.fields?.push(new FlexiField())
+    protected onAddField(): void {
+        this.user().fields?.push(new FlexiField())
     }
 
-    onDeleteField(flexiField: FlexiField): void {
-        const index = this.user.fields?.indexOf(flexiField);
-        if (index != undefined) {
-            this.user.fields?.splice(index, 1);
-        }
+    protected onDeleteField(flexiField: FlexiField): void {
+        this.user.update((userInternal) => {
+            const index = userInternal.fields?.indexOf(flexiField);
+            if (index != undefined) {
+                userInternal.fields?.splice(index, 1);
+            }
+
+            return userInternal;
+        });
     }
 
-    onAvatarSelected(event: any): void {
+    protected onAvatarSelected(event: any): void {
         this.selectedAvatarFile = event.target.files[0] ?? null;
 
         if (this.selectedAvatarFile) {
             const reader = new FileReader();
-            reader.onload = () => this.avatarSrc = reader.result as string;
+            reader.onload = () => this.avatarSrc.set(reader.result as string);
             reader.readAsDataURL(this.selectedAvatarFile);
         }
     }
 
-    onHeaderSelected(event: any): void {
+    protected onHeaderSelected(event: any): void {
         this.selectedHeaderFile = event.target.files[0] ?? null;
 
         if (this.selectedHeaderFile) {
             const reader = new FileReader();
-            reader.onload = () => this.headerSrc = reader.result as string;
+            reader.onload = () => this.headerSrc.set(reader.result as string);
             reader.readAsDataURL(this.selectedHeaderFile);
         }
     }
 
-    onCopyVerification(): void {
-        this.clipboard.copy(this.verification);
+    protected onCopyVerification(): void {
+        this.clipboard.copy(this.verification());
         this.messageService.showSuccess('Verification code has been copied into clipboard.');
     }
 
-    async resentConfirmationEmail(): Promise<void> {
+    protected async resentConfirmationEmail(): Promise<void> {
         try {
             const resendEmailConfirmation = new ResendEmailConfirmation();
             resendEmailConfirmation.redirectBaseUrl = this.windowService.getApplicationUrl();
@@ -248,32 +257,34 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
         }
     }
 
-    openChangePasswordDialog(): void {
+    protected openChangePasswordDialog(): void {
         this.dialog.open(ChangePasswordDialog);
     }
 
-    openChangeEmailDialog(): void {
+    protected openChangeEmailDialog(): void {
         const dialogRef = this.dialog.open(ChangeEmailDialog);
         dialogRef.afterClosed().subscribe(async () => {
             await this.loadUserData();
         });
     }
 
-    openDeleteAccountDialog(): void {
+    protected openDeleteAccountDialog(): void {
         const dialogRef = this.dialog.open(DeleteAccountDialog, {
             data: this.user
         });
 
         dialogRef.afterClosed().subscribe(async (result) => {
-            if (result?.confirmed && this.user.userName) {
-                await this.usersService.delete(this.user.userName);
+            const userInternal = this.user();
+
+            if (result?.confirmed && userInternal.userName) {
+                await this.usersService.delete(userInternal.userName);
                 await this.authorizationService.signOut();
                 await this.router.navigate(['/']);
             }
         });
     }
 
-    openEnableTwoFactorTokenDialog(): void {
+    protected openEnableTwoFactorTokenDialog(): void {
         const dialogRef = this.dialog.open(EnableTwoFactorTokenDialog, {
             data: this.user
         });
@@ -283,7 +294,7 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
         });
     }
 
-    openDisableTwoFactorTokenDialog(): void {
+    protected openDisableTwoFactorTokenDialog(): void {
         const dialogRef = this.dialog.open(DisableTwoFactorTokenDialog, {
             data: this.user
         });
@@ -293,7 +304,7 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
         });
     }
 
-    openCreateAccountDialog(): void {
+    protected openCreateAccountDialog(): void {
         const dialogRef = this.dialog.open(CreateAliasDialog, {
             data: this.user
         });
@@ -303,7 +314,7 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
         });
     }
 
-    onUserAliasDelete(userAlias: UserAlias): void {
+    protected onUserAliasDelete(userAlias: UserAlias): void {
         const dialogRef = this.dialog.open(ConfirmationDialog, {
             width: '500px',
             data: 'Do you want to delete user account alias?'
@@ -324,7 +335,7 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
         });
     }
 
-    async onRequestArchive(): Promise<void> {
+    protected async onRequestArchive(): Promise<void> {
         try {
             await this.archivesService.create();
             await this.loadArchives();
@@ -336,33 +347,33 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
         }
     }
 
-    async onDownloadFollowing(): Promise<void> {
+    protected async onDownloadFollowing(): Promise<void> {
         const blob = await this.exportsService.following();
         this.fileSaverService.save(blob, 'following.csv');
     }
 
-    async onDownloadBookmarks(): Promise<void> {
+    protected async onDownloadBookmarks(): Promise<void> {
         const blob = await this.exportsService.bookmarks();
         this.fileSaverService.save(blob, 'bookmarks.csv');
     }
 
-    showRequestArchiveButton(): boolean {
-        if (this.archives?.length === 0) {
+    protected showRequestArchiveButton(): boolean {
+        const archivesInternal = this.archives();
+
+        if (archivesInternal.length === 0) {
             return true;
         }
 
-        if (this.archives.some(x => x.status === ArchiveStatus.New || x.status === ArchiveStatus.Processing)) {
+        if (archivesInternal.some(x => x.status === ArchiveStatus.New || x.status === ArchiveStatus.Processing)) {
             return false;
         }
 
-        const readyArchives = this.archives.filter(x => x.status === ArchiveStatus.Ready);
+        const readyArchives = archivesInternal.filter(x => x.status === ArchiveStatus.Ready);
         if (readyArchives?.length > 0) {
             const readyArchive = readyArchives[0];
             if (readyArchive && readyArchive.requestDate) {
                 const requestDate = new Date(readyArchive.requestDate);
                 requestDate.setMonth(requestDate.getMonth() + 1);
-
-                console.log(requestDate);
 
                 const currentDate = new Date();
                 if (requestDate > currentDate) {
@@ -375,16 +386,20 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
     }
 
     private async loadUserData(): Promise<void> {
-        this.user = await this.usersService.profile(this.userName);
-        this.avatarSrc = this.user.avatarUrl ?? 'assets/avatar-placeholder.svg';
-        this.headerSrc = this.user.headerUrl ?? 'assets/header-placeholder.svg';
+        const downloadedUser = await this.usersService.profile(this.userName);
+
+        this.user.set(downloadedUser);
+        this.avatarSrc.set(this.user().avatarUrl ?? 'assets/avatar-placeholder.svg');
+        this.headerSrc.set(this.user().headerUrl ?? 'assets/header-placeholder.svg');
     }
 
     private async loadUserAliases(): Promise<void> {
-        this.userAliases = await this.userAliasesService.get();
+        const downloadedAliases = await this.userAliasesService.get();
+        this.userAliases.set(downloadedAliases);
     }
 
     private async loadArchives(): Promise<void> {
-        this.archives = await this.archivesService.get();
+        const downloadedArchives = await this.archivesService.get();
+        this.archives.set(downloadedArchives);
     }
 }

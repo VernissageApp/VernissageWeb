@@ -1,11 +1,11 @@
-import { AfterViewInit, Directive, ElementRef, EventEmitter, OnDestroy, Output } from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, OnDestroy, output } from '@angular/core';
 
 @Directive({
     selector: '[appLazyLoad]',
     standalone: false
 })
 export class LazyLoadDirective implements AfterViewInit, OnDestroy {
-    @Output() lazyLoad = new EventEmitter<boolean>();
+    public lazyLoad = output<boolean>();
 
     private intersectionObserver?: IntersectionObserver;
 

@@ -28,6 +28,7 @@ a.logo {
         height: 44px;    
         background-image: url('/assets/logo-light.svg');
         background-size: 116px 44px;
+        background-repeat: no-repeat;
     }
 
     .beta {
@@ -39,6 +40,7 @@ a.logo {
         top: -22px;
         background-image: url('/assets/beta-light.png');
         background-size: 30px 15px;
+        background-repeat: no-repeat;
     }
 }
 

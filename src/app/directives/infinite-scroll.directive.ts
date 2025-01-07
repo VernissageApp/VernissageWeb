@@ -1,36 +1,55 @@
-import { Directive, ElementRef, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Directive, ElementRef, input, OnDestroy, OnInit, output } from "@angular/core";
 import { WindowService } from "../services/common/window.service";
-import { fromEvent, tap, throttleTime } from "rxjs";
+import { fromEvent, Subscription, tap, throttleTime } from "rxjs";
+import { RandomGeneratorService } from "../services/common/random-generator.service";
+import { LazyLoaderService } from "../services/common/lazy-loader.service";
 
 @Directive({
     selector: '[appInfiniteScroll]',
     standalone: false
 })
-export class InfiniteScrollDirective implements OnInit {
-    @Output() scrolled: EventEmitter<void> = new EventEmitter<void>();
+export class InfiniteScrollDirective implements OnInit, OnDestroy {
+    public scrolled = output();
   
-    @Input() infiniteScrollDistance = 120;
-    @Input() infiniteScrollThrottle = 120;
-    @Input() infiniteScrollDisabled = false;
+    public infiniteScrollDistance = input(120);
+    public infiniteScrollThrottle = input(120);
+    public infiniteScrollDisabled = input(false);
   
     private window!: Window;
-    eventSub: any;
+    private controlId!: string;
+    private eventSub?: Subscription;
   
-    constructor(private el: ElementRef, private windowService: WindowService) { }
+    constructor(
+        private el: ElementRef,
+        private windowService: WindowService,
+        private random: RandomGeneratorService,
+        private lazyLoaderService: LazyLoaderService
+    ) { }
   
     ngOnInit(): void {
+        this.controlId = this.random.generateString(10);
+        this.lazyLoaderService.loaderId.set(this.controlId);
+
         // Save window object for type safety.
         this.window = this.windowService.nativeWindow;
 
         this.eventSub = fromEvent(window, 'scroll').pipe(
-            throttleTime(this.infiniteScrollThrottle),
+            throttleTime(this.infiniteScrollThrottle()),
             tap(event => this.windowScrollEvent(event))
         ).subscribe();
+    }
+
+    ngOnDestroy(): void {
+        this.eventSub?.unsubscribe();
     }
   
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     windowScrollEvent(_event: Event) {
-        if (this.infiniteScrollDisabled) {
+        if (this.controlId !== this.lazyLoaderService.loaderId()) {
+            return;
+        }
+
+        if (this.infiniteScrollDisabled()) {
             return;
         }
 
@@ -57,7 +76,7 @@ export class InfiniteScrollDirective implements OnInit {
         heightOfElement - innerHeight - currentScrolledY + spaceOfElementAndPage;
   
         // if the user is near end
-        if (scrollToBottom < this.infiniteScrollDistance) {
+        if (scrollToBottom < this.infiniteScrollDistance()) {
             this.scrolled.emit();
         }
     }

@@ -6,6 +6,7 @@ import { UserPayloadToken } from '../../models/user-payload-token';
 import { Role } from 'src/app/models/role';
 import { ServerRefreshTokenNotExistsError } from 'src/app/errors/server-refresh-token-not-exists-error';
 import { isPlatformBrowser } from '@angular/common';
+import { PersistenceService } from '../persistance/persistance.service';
 
 @Injectable({
     providedIn: 'root'
@@ -17,10 +18,12 @@ export class AuthorizationService {
     private oneSecond = 1000;
     private userPayloadToken?: UserPayloadToken;
     private isBrowser = false;
+    private readonly xsrfTokenName = 'xsrf-token';
 
     constructor(
         @Inject(PLATFORM_ID) platformId: object,
         private accountService: AccountService,
+        private persistenceService: PersistenceService,
         private zone: NgZone) {
             this.isBrowser = isPlatformBrowser(platformId);
     }
@@ -53,7 +56,8 @@ export class AuthorizationService {
     }
 
     getXsrfToken(): string {
-        return this.userPayloadToken?.xsrfToken ?? 'unknown';
+        const xsrfTokenFromStorage = this.persistenceService.get(this.xsrfTokenName);
+        return xsrfTokenFromStorage ?? 'unknown';
     }
 
     hasRole(role: Role): boolean {
@@ -83,6 +87,7 @@ export class AuthorizationService {
         }
 
         this.userPayloadToken = userPayloadToken;
+        this.persistenceService.set(this.xsrfTokenName, userPayloadToken.xsrfToken);
 
         const expirationTime = tokenExpirationTime.getTime();
         const tokenExpirationSeconds = Math.round(expirationTime / this.oneSecond);
@@ -100,9 +105,12 @@ export class AuthorizationService {
         
         if (this.isBrowser && this.userPayloadToken)  {
             this.userPayloadToken = undefined;
+            this.persistenceService.remove(this.xsrfTokenName);
+
             await this.accountService.logout();
         } else {
             this.userPayloadToken = undefined;
+            this.persistenceService.remove(this.xsrfTokenName);
         }
 
         this.changes.next(undefined);

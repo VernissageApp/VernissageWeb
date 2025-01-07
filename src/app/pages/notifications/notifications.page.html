@@ -1,70 +1,87 @@
-<div *ngIf="isReady && notifications" @fadeIn [ngClass]="{ 'padding-30': !isHandset, 'padding-10': isHandset }">
-    <div class="flex-row flex-space-around">
-        <div class="notifications-container width-100">
-            <div class="flex-row flex-align-center flex-space-between margin-bottom-20">
-                <h1>Notifications</h1>
+@if(isReady()) {
+    @if (notifications(); as notificationsArray) {
+        <div @fadeIn [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
+            <div class="flex-row flex-space-around">
+                <div class="notifications-container width-100">
+                    <div class="flex-row flex-align-center flex-space-between margin-bottom-20">
+                        <h1>Notifications</h1>
 
-                @if (showEnableNotificationButton) {
-                    <button mat-flat-button color="primary" (click)="openNotificationsSettings()">
-                        <mat-icon>notifications_none</mat-icon>
-                        Settings
-                    </button>
-                }
-            </div>
+                        @if (showEnableNotificationButton()) {
+                            <button mat-flat-button color="primary" (click)="openNotificationsSettings()">
+                                <mat-icon>notifications_none</mat-icon>
+                                Settings
+                            </button>
+                        }
+                    </div>
 
-            <!-- List of notifications. -->
-            <mat-card *ngIf="notifications.data.length > 0" class="notifications-card" appearance="outlined">
-                <mat-card-content>
-                    <div *ngFor="let notification of notifications.data; trackBy:trackByFn">
-                        <div class="notification-wrapper">
-                            <div class="notification-display-name">
-                                <div class="user">
-                                    @if (!isHandsetPortrait) {
-                                        <span class="text-muted icon" [ngClass]="getNotificationIconClass(notification)">
-                                            <mat-icon class="fill-symbol">{{ getNotificationIcon(notification) }}</mat-icon>
-                                        </span>
-                                    }
-                                    <app-avatar [user]="notification.byUser" [size]="avatarSize.huge"></app-avatar>
-                                </div>
-                                <div class="overflow-ellipsis">
-                                    <div class="overflow-ellipsis margin-top-5 fullname flex-row flex-responsive">
-                                        <div class="overflow-ellipsis">
-                                            <a [routerLink]="[ '/@' + notification.byUser?.userName ]" class="margin-right-5 fw-600">{{ notification.byUser?.name }}</a>
+                    <!-- List of notifications. -->
+                    @if(notificationsArray.length > 0) {
+                        <mat-card class="notifications-card" appearance="outlined">
+                            <mat-card-content>
+                                @for (notification of notificationsArray; track notification.id) {
+                                    <div class="notification-wrapper">
+                                        <div class="notification-display-name">
+                                            <div class="user">
+                                                @if (!isHandsetPortrait()) {
+                                                    <span class="text-muted icon" [ngClass]="getNotificationIconClass(notification)">
+                                                        <mat-icon class="fill-symbol">{{ getNotificationIcon(notification) }}</mat-icon>
+                                                    </span>
+                                                }
+                                                <app-avatar [user]="notification.byUser" [size]="avatarSize.huge"></app-avatar>
+                                            </div>
+                                            <div class="overflow-ellipsis">
+                                                <div class="overflow-ellipsis margin-top-5 fullname flex-row flex-responsive">
+                                                    <div class="overflow-ellipsis">
+                                                        <a [routerLink]="[ '/@' + notification.byUser?.userName ]" class="margin-right-5 fw-600">{{ notification.byUser?.name }}</a>
+                                                    </div>
+                                                    <div class="overflow-ellipsis">
+                                                        <span class="text-muted">{{ getNotificationText(notification) }} </span>
+                                                    </div>
+                                                </div>
+                                                @if (!isHandsetPortrait()) {
+                                                    <div class="fw-400 fs-90 text-muted overflow-ellipsis username">&#64;{{ notification.byUser?.userName }}</div>
+                                                }
+                                            </div>
                                         </div>
-                                        <div class="overflow-ellipsis">
-                                            <span class="text-muted">{{ getNotificationText(notification) }} </span>
-                                        </div>
+
+                                        @if (notification.mainStatus && getAttachmentUrl(notification.mainStatus)) {
+                                            <div class="status">
+                                                <a [routerLink]="['/statuses', notification.mainStatus.id]">
+                                                    <img [src]="getAttachmentUrl(notification.mainStatus)" class="" alt="Status image" />
+                                                </a>
+                                            </div>
+                                        }
+                                        @else if (notification.status && getAttachmentUrl(notification.status)) {
+                                            <div class="status">
+                                                <a [routerLink]="['/statuses', notification.status.id]">
+                                                    <img [src]="getAttachmentUrl(notification.status)" class="" alt="Status image" />
+                                                </a>
+                                            </div>
+                                        }
+
+                                        @if (notification.notificationType === notificationType.AdminReport) {
+                                            <button mat-stroked-button [routerLink]="['/reports']">Reports</button>
+                                        }
                                     </div>
-                                    @if (!isHandsetPortrait) {
-                                        <div class="fw-400 fs-90 text-muted overflow-ellipsis username">&#64;{{ notification.byUser?.userName }}</div>
-                                    }
-                                </div>
-                            </div>
+                                }
 
-                            @if (notification.status && getAttachemntUrl(notification.status)) {
-                                <div class="status">
-                                    <a [routerLink]="['/statuses', notification.status.id]">
-                                        <img [src]="getAttachemntUrl(notification.status)" class="" alt="Status image" />
-                                    </a>
-                                </div>
-                            }
+                                @if(showLoadMore()) {
+                                    <div class="flex-row flex-space-around">
+                                        <button mat-button (click)="onLoadMore()">Load more...</button>
+                                    </div>
+                                }
+                            </mat-card-content>
+                        </mat-card>
+                    }
 
-                            @if (notification.notificationType === notificationType.AdminReport) {
-                                <button mat-stroked-button [routerLink]="['/reports']">Reports</button>
-                            }
+                    <!-- No results found. -->
+                    @if (notificationsArray.length === 0) {
+                        <div>
+                            No results found.
                         </div>
-                    </div>
-
-                    <div *ngIf="showLoadMore" class="flex-row flex-space-around">
-                        <button mat-button (click)="onLoadMore()">Load more...</button>
-                    </div>
-                </mat-card-content>
-            </mat-card>
-
-            <!-- No results found. -->
-            <div *ngIf="notifications.data.length === 0">
-                No results found.
+                    }
+                </div>
             </div>
         </div>
-    </div>
-</div>
+    }
+}

@@ -1,6 +1,6 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { isPlatformBrowser } from '@angular/common';
-import { Component, Inject, Input, PLATFORM_ID } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, input, PLATFORM_ID, signal } from '@angular/core';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { Hashtag } from 'src/app/models/hashtag';
@@ -13,14 +13,16 @@ import { TimelineService } from 'src/app/services/http/timeline.service';
     templateUrl: './hashtags-search.component.html',
     styleUrls: ['./hashtags-search.component.scss'],
     animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class HashtagsSearchComponent extends ResponsiveComponent {
-    private readonly numberOfVisibleStatuses = 10;
+    public hashtag = input.required<Hashtag>();
 
-    @Input() hashtag!: Hashtag;
-    statuses?: LinkableResult<Status>;
-    isBrowser = false;
+    protected statuses = signal<LinkableResult<Status> | undefined>(undefined);
+    protected isBrowser = signal(false);
+
+    private readonly numberOfVisibleStatuses = 10;
 
     constructor(
         @Inject(PLATFORM_ID) platformId: object,
@@ -28,14 +30,15 @@ export class HashtagsSearchComponent extends ResponsiveComponent {
         breakpointObserver: BreakpointObserver
     ) {
         super(breakpointObserver);
-        this.isBrowser = isPlatformBrowser(platformId);
+        this.isBrowser.set(isPlatformBrowser(platformId));
     }
 
-    async lazyLoadData(): Promise<void> {
-        this.statuses = await this.timelineService.hashtag(this.hashtag.name, undefined, undefined, undefined, this.numberOfVisibleStatuses, undefined);
+    protected async lazyLoadData(): Promise<void> {
+        const downloadedStatuses = await this.timelineService.hashtag(this.hashtag().name, undefined, undefined, undefined, this.numberOfVisibleStatuses, undefined);
+        this.statuses.set(downloadedStatuses);
     }
 
-    getImageSrc(status: Status): string | undefined {
+    protected getImageSrc(status: Status): string | undefined {
         const attachments = this.getMainStatus(status).attachments;
         if (attachments && attachments.length > 0) {
             return attachments[0].smallFile?.url;
@@ -44,7 +47,7 @@ export class HashtagsSearchComponent extends ResponsiveComponent {
         return undefined;
     }
 
-    getMainStatus(status: Status): Status {
+    private getMainStatus(status: Status): Status {
         return status.reblog ?? status;
     }
 }

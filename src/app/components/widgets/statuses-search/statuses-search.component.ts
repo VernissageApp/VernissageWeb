@@ -1,11 +1,9 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { isPlatformBrowser } from '@angular/common';
-import { Component, Inject, Input, OnInit, PLATFORM_ID } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, Inject, input, OnInit, PLATFORM_ID, signal } from '@angular/core';
 import { SafeHtml } from '@angular/platform-browser';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { Status } from 'src/app/models/status';
-import { StatusVisibility } from 'src/app/models/status-visibility';
 import { PreferencesService } from 'src/app/services/common/preferences.service';
 
 @Component({
@@ -13,17 +11,15 @@ import { PreferencesService } from 'src/app/services/common/preferences.service'
     templateUrl: './statuses-search.component.html',
     styleUrls: ['./statuses-search.component.scss'],
     animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class StatusesSearchComponent extends ResponsiveComponent implements OnInit {
-    readonly statusVisibility = StatusVisibility;
-    private readonly numberOfVisibleStatuses = 10;
+    public status = input.required<Status>();
 
-    @Input() status!: Status;
-    mainStatus!: Status;
-    rendered?: SafeHtml = '';
-    isBrowser = false;
-    alwaysShowNSFW = false;
+    protected alwaysShowNSFW = signal(false);
+    protected mainStatus = computed(() => this.status().reblog ?? this.status());
+    protected rendered = computed<SafeHtml>(() => this.mainStatus()?.noteHtml ?? '');
 
     constructor(
         @Inject(PLATFORM_ID) platformId: object,
@@ -31,18 +27,11 @@ export class StatusesSearchComponent extends ResponsiveComponent implements OnIn
         breakpointObserver: BreakpointObserver
     ) {
         super(breakpointObserver);
-        this.isBrowser = isPlatformBrowser(platformId);
     }
 
     override ngOnInit(): void {
         super.ngOnInit();
 
-        this.alwaysShowNSFW = this.preferencesService.alwaysShowNSFW;
-        this.mainStatus = this.getMainStatus(this.status);
-        this.rendered = this.mainStatus?.noteHtml ?? '';
-    }
-
-    getMainStatus(status: Status): Status {
-        return status.reblog ?? status;
+        this.alwaysShowNSFW.set(this.preferencesService.alwaysShowNSFW);
     }
 }

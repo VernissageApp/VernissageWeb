@@ -1,29 +1,30 @@
-import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, signal, output, model, viewChild, input, ChangeDetectionStrategy } from '@angular/core';
 import { NgForm, NgModel } from '@angular/forms';
 
 @Component({
     selector: 'app-password',
     templateUrl: './password.component.html',
     styleUrls: ['./password.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class PasswordComponent {
-    isPasswordVisible = false;
+    public passwordText = model<string>();
+    public passwordTextChange = output<string>();
 
-    @Input() passwordText?: string;
-    @Input() form?: NgForm;
+    public form = input<NgForm | undefined>();
+    public passwordValid = output<boolean>();
 
-    @Output() passwordTextChange = new EventEmitter<string>();
-    @Output() passwordValid = new EventEmitter<boolean>();
+    protected isPasswordVisible = signal(false);
 
-    @ViewChild('password') password?: NgModel;
+    private password = viewChild<NgModel | undefined>('password');
 
-    togglePassword(): void {
-        this.isPasswordVisible = !this.isPasswordVisible;
+    protected togglePassword(): void {
+        this.isPasswordVisible.update(value => !value);
     }
 
-    passwordChanged(): void {
-        this.passwordTextChange.emit(this.passwordText);
-        this.passwordValid.emit(this.password?.valid ?? false);
+    protected passwordChanged(): void {
+        this.passwordTextChange.emit(this.passwordText() ?? '');
+        this.passwordValid.emit(this.password()?.valid ?? false);
     }
 }

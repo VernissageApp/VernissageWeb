@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, model, OnInit, signal } from '@angular/core';
 import { Settings } from 'src/app/models/settings';
 import { SettingsService } from 'src/app/services/http/settings.service';
 import { MessagesService } from 'src/app/services/common/messages.service';
@@ -10,14 +10,15 @@ import { User } from 'src/app/models/user';
     selector: 'app-general-settings',
     templateUrl: './general-settings.component.html',
     styleUrls: ['./general-settings.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
-export class GeneralSettingsComponent {
-    @Input() settings!: Settings;
-    @Input() webContactUser?: User;
-    @Input() systemDefaultUser?: User;
+export class GeneralSettingsComponent implements OnInit {
+    public settings = input.required<Settings>();
+    public webContactUser = model<User>();
+    public systemDefaultUser = model<User>();
 
-    eventTypes = Object.values(EventType);
+    protected eventTypes = signal<string[]>([]);
     
     constructor(
         private settingsService: SettingsService,
@@ -25,13 +26,19 @@ export class GeneralSettingsComponent {
         private instanceService: InstanceService) {
     }
 
-    async onSubmit(): Promise<void> {
-        try {
-            if (this.settings) {
-                this.settings.webContactUserId = this.webContactUser?.id ?? '';
-                this.settings.systemDefaultUserId = this.systemDefaultUser?.id ?? '';
+    ngOnInit(): void {
+        const values = Object.values(EventType);
+        this.eventTypes.set(values);
+    }
 
-                await this.settingsService.put(this.settings);
+    protected async onSubmit(): Promise<void> {
+        try {
+            const internalSettings = this.settings();
+            if (internalSettings) {
+                internalSettings.webContactUserId = this.webContactUser()?.id ?? '';
+                internalSettings.systemDefaultUserId = this.systemDefaultUser()?.id ?? '';
+
+                await this.settingsService.put(internalSettings);
 
                 await Promise.all([
                     this.instanceService.load(),

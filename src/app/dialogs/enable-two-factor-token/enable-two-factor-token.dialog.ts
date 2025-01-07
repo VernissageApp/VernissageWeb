@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, model, OnInit, signal } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TwoFactorToken } from 'src/app/models/two-factor-token';
 import { User } from 'src/app/models/user';
@@ -9,11 +9,12 @@ import { AccountService } from 'src/app/services/http/account.service';
     selector: 'app-enable-two-factor-token-dialog',
     templateUrl: 'enable-two-factor-token.dialog.html',
     styleUrls: ['enable-two-factor-token.dialog.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class EnableTwoFactorTokenDialog implements OnInit {
-    twoFactorToken?: TwoFactorToken;
-    code = '';
+    protected twoFactorToken = signal<TwoFactorToken | undefined>(undefined);
+    protected code = model('');
 
     constructor(
         private accountService: AccountService,
@@ -23,16 +24,17 @@ export class EnableTwoFactorTokenDialog implements OnInit {
     }
 
     async ngOnInit(): Promise<void> {
-        this.twoFactorToken = await this.accountService.getTwoFactorToken();
+        const downloadedToken = await this.accountService.getTwoFactorToken();
+        this.twoFactorToken.set(downloadedToken);
     }
 
-    onNoClick(): void {
+    protected onNoClick(): void {
         this.dialogRef.close();
     }
 
-    async onSubmit(): Promise<void> {
+    protected async onSubmit(): Promise<void> {
         try {
-            await this.accountService.enableTwoFactorToken(this.code);
+            await this.accountService.enableTwoFactorToken(this.code());
             this.messageService.showSuccess('Two factor authentication enabled.');
             this.dialogRef.close({});
         } catch (error) {

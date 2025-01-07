@@ -1,10 +1,9 @@
 import { BreakpointObserver } from "@angular/cdk/layout";
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from "@angular/core";
+import { Component, OnInit, OnDestroy, signal, model, ChangeDetectionStrategy } from "@angular/core";
 import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
 import { Subscription } from "rxjs/internal/Subscription";
 import { fadeInAnimation } from "src/app/animations/fade-in.animation";
 import { ResponsiveComponent } from "src/app/common/responsive";
-import { OnAttach, OnDetach } from "src/app/directives/app-router-outlet.directive";
 import { ContextTimeline } from "src/app/models/context-timeline";
 import { LinkableResult } from "src/app/models/linkable-result";
 import { Status } from "src/app/models/status";
@@ -19,21 +18,21 @@ import { TimelineService } from "src/app/services/http/timeline.service";
     templateUrl: './editors.page.html',
     styleUrls: ['./editors.page.scss'],
     animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
-export class EditorsPage extends ResponsiveComponent implements OnInit, OnDestroy, OnAttach, OnDetach {
-    statuses?: LinkableResult<Status>;
-    users?: LinkableResult<User>;
-    isReady = false;
-    isDetached = false;
+export class EditorsPage extends ResponsiveComponent implements OnInit, OnDestroy {
+    protected statuses = signal<LinkableResult<Status> | undefined>(undefined);
+    protected users = signal<LinkableResult<User> | undefined>(undefined);
 
-    tab = 'statuses';
-    selectedTab = 'statuses';
+    protected isReady = signal(false);
+    protected tab = model('statuses');
+    protected selectedTab = signal('statuses');
 
-    showStatusesButton = false;
-    showUsersButton = false;
+    protected showStatusesButton = signal(false);
+    protected showUsersButton = signal(false);
 
-    routeParamsSubscription?: Subscription;
+    private routeParamsSubscription?: Subscription;
 
     constructor(
         private timelineService: TimelineService,
@@ -42,7 +41,6 @@ export class EditorsPage extends ResponsiveComponent implements OnInit, OnDestro
         private authorizationService: AuthorizationService,
         private router: Router,
         private activatedRoute: ActivatedRoute,
-        private changeDetectorRef: ChangeDetectorRef,
         breakpointObserver: BreakpointObserver
     ) {
         super(breakpointObserver);
@@ -70,10 +68,10 @@ export class EditorsPage extends ResponsiveComponent implements OnInit, OnDestro
                     break;
             }
 
-            this.tab  = internalTab;
-            this.selectedTab = internalTab;
+            this.tab.set(internalTab);
+            this.selectedTab.set(internalTab);
 
-            this.isReady = true;
+            this.isReady.set(true);
             this.loadingService.hideLoader();
         });
     }
@@ -84,32 +82,25 @@ export class EditorsPage extends ResponsiveComponent implements OnInit, OnDestro
         this.routeParamsSubscription?.unsubscribe();
     }
 
-    onDetach(): void {
-        this.isDetached = true;
-        this.changeDetectorRef.detectChanges();
-    }
-
-    onAttach(): void {
-        this.isDetached = false;
-        this.changeDetectorRef.detectChanges();
-    }
-
-    private async loadStatuses(): Promise<void> {
-        this.statuses = await this.timelineService.featuredStatuses(undefined, undefined, undefined, undefined);
-        this.statuses.context = ContextTimeline.editors;
-    }
-
-    private async loadUsers(): Promise<void> {
-        this.users = await this.timelineService.featuredUsers(undefined, undefined, undefined, undefined);
-    }
-
-    onSelectionChange(): void {
+    protected onSelectionChange(): void {
         const navigationExtras: NavigationExtras = {
-            queryParams: { tab: this.tab },
+            queryParams: { tab: this.tab() },
             queryParamsHandling: 'merge'
         };
 
         this.router.navigate([], navigationExtras);
+    }
+
+    private async loadStatuses(): Promise<void> {
+        const downloadedStatuses = await this.timelineService.featuredStatuses(undefined, undefined, undefined, undefined);
+        downloadedStatuses.context = ContextTimeline.editors;
+
+        this.statuses.set(downloadedStatuses);
+    }
+
+    private async loadUsers(): Promise<void> {
+        const downloadUsers = await this.timelineService.featuredUsers(undefined, undefined, undefined, undefined);
+        this.users.set(downloadUsers);
     }
 
     private hasAccessToEditorsChoice(): boolean {
@@ -126,15 +117,15 @@ export class EditorsPage extends ResponsiveComponent implements OnInit, OnDestro
 
     private calculateButtonVisibility(): void {
         if (this.authorizationService.getUser()) {
-            this.showUsersButton = true;
-            this.showStatusesButton = true;
+            this.showUsersButton.set(true);
+            this.showStatusesButton.set(true);
         } else {
             if (this.settingsService.publicSettings?.showEditorsUsersChoiceForAnonymous) {
-                this.showUsersButton = true;
+                this.showUsersButton.set(true);
             }
 
             if (this.settingsService.publicSettings?.showEditorsChoiceForAnonymous) {
-                this.showStatusesButton = true;
+                this.showStatusesButton.set(true);
             }
         }
     }

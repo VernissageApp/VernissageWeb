@@ -10,7 +10,7 @@ import { HammerModule } from "@angular/platform-browser";
 
 import { RouteReuseStrategy } from '@angular/router';
 import { AppComponent } from './app.component';
-import { PersistanceBrowserService, PersistanceServerService, PersistanceService } from './services/persistance/persistance.service';
+import { PersistenceBrowserService, PersistenceServerService, PersistenceService } from './services/persistance/persistance.service';
 import { AuthorizationService } from './services/authorization/authorization.service';
 import { PagesModule } from './pages/pages.module';
 import { APIInterceptor } from './interceptors/api.interceptor';
@@ -58,19 +58,19 @@ const httpInterceptor = (platformId: object, authorizationService: Authorization
             multi: true
         },
         {
-            provide: PersistanceService,
+            provide: PersistenceService,
             useFactory: (platformId: object) => {
                 if (isPlatformBrowser(platformId)) {
-                    return new PersistanceBrowserService();
+                    return new PersistenceBrowserService();
                 }
                 else {
-                    return new PersistanceServerService();
+                    return new PersistenceServerService();
                 }
             },
             deps: [PLATFORM_ID]
         },
         {
-            provide: ErrorHandler, useClass: GlobalErrorHandler, deps: [PLATFORM_ID, Injector, NgZone, AuthorizationService, PersistanceService, LoadingService, ErrorItemsService, RandomGeneratorService]
+            provide: ErrorHandler, useClass: GlobalErrorHandler, deps: [PLATFORM_ID, Injector, NgZone, AuthorizationService, PersistenceService, LoadingService, ErrorItemsService, RandomGeneratorService]
         },
         provideHttpClient(withFetch(), withInterceptorsFromDi()),
         provideClientHydration(withEventReplay())

@@ -1,119 +1,123 @@
-<div *ngIf="isReady && errorItems" @fadeIn [ngClass]="{ 'padding-30': !isHandset, 'padding-10': isHandset }">
-    <div class="flex-row flex-space-around padding-left-10 padding-right-10">
-        <div class="width-100">
-            <section class="flex-row flex-space-between flex-align-center margin-bottom-20" [ngClass]="{ 'flex-row': !isHandset, 'flex-column': isHandset }">
-                <h1>
-                    <div>Errors</div>
-                    <div *ngIf="!isHandset" class="fs-60 text-muted">List of errors thrown in the system.</div>
-                </h1>
-            </section>
+@if (isReady()) {
+    @if (errorItems(); as errorItemsArray) {
+        <div @fadeIn [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
+            <div class="flex-row flex-space-around padding-left-10 padding-right-10">
+                <div class="width-100">
+                    <section class="flex-row flex-space-between flex-align-center margin-bottom-20" [ngClass]="{ 'flex-row': !isHandset(), 'flex-column': isHandset() }">
+                        <h1>
+                            <div>Errors</div>
+                            <div *ngIf="!isHandset()" class="fs-60 text-muted">List of errors thrown in the system.</div>
+                        </h1>
+                    </section>
 
-            <div class="search width-100">
-                <mat-card class="margin-bottom-20" appearance="outlined">
-                    <mat-card-content>
-                        <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
-                            <div class="flex-row flex-align-center gap-16">
-                                <mat-form-field appearance="outline" class="width-100">
-                                    <input #queryInput matInput name="query" [(ngModel)]="search" cdkFocusInitial aria-label="Query" />
-                                </mat-form-field>
-                                <button mat-flat-button color="primary">Search</button>
-                            </div>
-                        </form>
-                    </mat-card-content>
-                </mat-card>
+                    <div class="search width-100">
+                        <mat-card class="margin-bottom-20" appearance="outlined">
+                            <mat-card-content>
+                                <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+                                    <div class="flex-row flex-align-center gap-16">
+                                        <mat-form-field appearance="outline" class="width-100">
+                                            <input #queryInput matInput name="query" [(ngModel)]="search" cdkFocusInitial aria-label="Query" />
+                                        </mat-form-field>
+                                        <button mat-flat-button color="primary">Search</button>
+                                    </div>
+                                </form>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+
+                    <table mat-table [dataSource]="errorItemsArray.data" class="mat-elevation-z1">
+
+                        <!-- Source Column -->
+                        <ng-container matColumnDef="source">
+                            <th mat-header-cell *matHeaderCellDef></th>
+                            <td mat-cell *matCellDef="let element">
+                                <div class="icons">
+                                    @if (element.source === errorItemSource.Client) {
+                                        <mat-icon class="outline-symbol" [matTooltip]="element.userAgent ?? 'Client'" matTooltipPosition="right">language</mat-icon>
+                                    } @else {
+                                        <mat-icon class="outline-symbol" matTooltip="Server" matTooltipPosition="right">host</mat-icon>
+                                    }
+
+                                    @if (element.exception) {
+                                        <mat-icon class="outline-symbol margin-left-10" [matTooltip]="element.exception" matTooltipPosition="right">pest_control</mat-icon>
+                                    }
+                                </div>
+                            </td>
+                        </ng-container>
+
+                        <!-- Code Column -->
+                        <ng-container matColumnDef="code">
+                            <th mat-header-cell *matHeaderCellDef> Code </th>
+                            <td mat-cell *matCellDef="let element">
+                                <div class="code">
+                                    {{ element.code }}
+                                </div>
+                            </td>
+                        </ng-container>
+
+                        <!-- Message Column -->
+                        <ng-container matColumnDef="message">
+                            <th mat-header-cell *matHeaderCellDef> Message </th>
+                            <td mat-cell *matCellDef="let element">
+                                {{ element.message }}
+                            </td>
+                        </ng-container>
+
+                        <!-- Client version Column -->
+                        <ng-container matColumnDef="clientVersion">
+                            <th mat-header-cell *matHeaderCellDef> Client version </th>
+                            <td mat-cell *matCellDef="let element">
+                                <div class="clientVersion">{{ element.clientVersion }}</div>
+                            </td>
+                        </ng-container>
+
+                        <!-- Server version Column -->
+                        <ng-container matColumnDef="serverVersion">
+                            <th mat-header-cell *matHeaderCellDef> Server version </th>
+                            <td mat-cell *matCellDef="let element">
+                                <div class="serverVersion">{{ element.serverVersion }}</div>
+                            </td>
+                        </ng-container>
+
+                        <!-- Created Date Column -->
+                        <ng-container matColumnDef="createdAt">
+                            <th mat-header-cell *matHeaderCellDef> Created date </th>
+                            <td mat-cell *matCellDef="let element">
+                                <span *ngIf="element.createdAt">
+                                    <div class="createdAt">{{ element.createdAt | date: 'short' }}</div>
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <!-- Actions Column -->
+                        <ng-container matColumnDef="actions">
+                            <th mat-header-cell *matHeaderCellDef></th>
+                            <td mat-cell *matCellDef="let element" class="text-right">
+                                <button class="more-button" mat-stroked-button [matMenuTriggerFor]="dropdownMenuOne2" color="primary" aria-label="More options">
+                                    <span class="material-symbols-outlined">more_vert</span>
+                                </button>
+                                <mat-menu #dropdownMenuOne2="matMenu" xPosition="before">
+                                    <button (click)="onDelete(element)" mat-menu-item>
+                                        <mat-icon class="outline-symbol">delete</mat-icon>
+                                        <span>Delete</span>
+                                    </button>
+                                </mat-menu>
+                            </td>
+                        </ng-container>
+                    
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns()"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns();"></tr>
+                    </table>
+                    <mat-paginator
+                        (page)="handlePageEvent($event)"
+                        [length]="errorItemsArray.total"
+                        [pageIndex]="pageIndex()"
+                        [pageSize]="10"
+                        [pageSizeOptions]="[10, 25, 100]"
+                        aria-label="Select page">
+                    </mat-paginator>
+                </div>
             </div>
-
-            <table mat-table [dataSource]="errorItems.data" class="mat-elevation-z1">
-
-                <!-- Source Column -->
-                <ng-container matColumnDef="source">
-                    <th mat-header-cell *matHeaderCellDef></th>
-                    <td mat-cell *matCellDef="let element">
-                        <div class="icons">
-                            @if (element.source === errorItemSource.Client) {
-                                <mat-icon class="outline-symbol" [matTooltip]="element.userAgent ?? 'Client'" matTooltipPosition="right">language</mat-icon>
-                            } @else {
-                                <mat-icon class="outline-symbol" matTooltip="Server" matTooltipPosition="right">host</mat-icon>
-                            }
-
-                            @if (element.exception) {
-                                <mat-icon class="outline-symbol margin-left-10" [matTooltip]="element.exception" matTooltipPosition="right">pest_control</mat-icon>
-                            }
-                        </div>
-                    </td>
-                </ng-container>
-
-                <!-- Code Column -->
-                <ng-container matColumnDef="code">
-                    <th mat-header-cell *matHeaderCellDef> Code </th>
-                    <td mat-cell *matCellDef="let element">
-                        <div class="code">
-                            {{ element.code }}
-                        </div>
-                    </td>
-                </ng-container>
-
-                <!-- Message Column -->
-                <ng-container matColumnDef="message">
-                    <th mat-header-cell *matHeaderCellDef> Message </th>
-                    <td mat-cell *matCellDef="let element">
-                        {{ element.message }}
-                    </td>
-                </ng-container>
-
-                <!-- Client version Column -->
-                <ng-container matColumnDef="clientVersion">
-                    <th mat-header-cell *matHeaderCellDef> Client version </th>
-                    <td mat-cell *matCellDef="let element">
-                        <div class="clientVersion">{{ element.clientVersion }}</div>
-                    </td>
-                </ng-container>
-
-                <!-- Server version Column -->
-                <ng-container matColumnDef="serverVersion">
-                    <th mat-header-cell *matHeaderCellDef> Server version </th>
-                    <td mat-cell *matCellDef="let element">
-                        <div class="serverVersion">{{ element.serverVersion }}</div>
-                    </td>
-                </ng-container>
-
-                <!-- Created Date Column -->
-                <ng-container matColumnDef="createdAt">
-                    <th mat-header-cell *matHeaderCellDef> Created date </th>
-                    <td mat-cell *matCellDef="let element">
-                        <span *ngIf="element.createdAt">
-                            <div class="createdAt">{{ element.createdAt | date: 'short' }}</div>
-                        </span>
-                    </td>
-                </ng-container>
-
-                <!-- Actions Column -->
-                <ng-container matColumnDef="actions">
-                    <th mat-header-cell *matHeaderCellDef></th>
-                    <td mat-cell *matCellDef="let element" class="text-right">
-                        <button class="more-button" mat-stroked-button [matMenuTriggerFor]="dropdownMenuOne2" color="primary" aria-label="More options">
-                            <span class="material-symbols-outlined">more_vert</span>
-                        </button>
-                        <mat-menu #dropdownMenuOne2="matMenu" xPosition="before">
-                            <button (click)="onDelete(element)" mat-menu-item>
-                                <mat-icon class="outline-symbol">delete</mat-icon>
-                                <span>Delete</span>
-                            </button>
-                        </mat-menu>
-                    </td>
-                </ng-container>
-              
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table>
-            <mat-paginator
-                (page)="handlePageEvent($event)"
-                [length]="errorItems.total"
-                [pageIndex]="pageIndex"
-                [pageSize]="10"
-                [pageSizeOptions]="[10, 25, 100]"
-                aria-label="Select page">
-            </mat-paginator>
         </div>
-    </div>
-</div>
+    }
+}

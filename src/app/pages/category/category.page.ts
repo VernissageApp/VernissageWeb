@@ -1,5 +1,5 @@
 import { BreakpointObserver } from "@angular/cdk/layout";
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, signal, ChangeDetectionStrategy } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs/internal/Subscription";
 import { fadeInAnimation } from "src/app/animations/fade-in.animation";
@@ -15,14 +15,15 @@ import { TimelineService } from "src/app/services/http/timeline.service";
     templateUrl: './category.page.html',
     styleUrls: ['./category.page.scss'],
     animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
 export class CategoryPage extends ResponsiveComponent implements OnInit, OnDestroy {
-    statuses?: LinkableResult<Status>;
-    isReady = false;
+    protected statuses = signal<LinkableResult<Status> | undefined>(undefined);
+    protected isReady = signal(false);
+    protected category = signal('');
 
-    routeParamsSubscription?: Subscription;
-    category?: string;
+    private routeParamsSubscription?: Subscription;
 
     constructor(
         private timelineService: TimelineService,
@@ -38,13 +39,15 @@ export class CategoryPage extends ResponsiveComponent implements OnInit, OnDestr
 
         this.routeParamsSubscription = this.activatedRoute.params.subscribe(async (params) => {
             this.loadingService.showLoader();
-            this.category = params['category'] as string;
+            this.category.set(params['category'] as string);
 
-            this.statuses = await this.timelineService.category(this.category, undefined, undefined, undefined, undefined);
-            this.statuses.context = ContextTimeline.category;
-            this.statuses.hashtag = this.category;
+            const downloadedStatuses = await this.timelineService.category(this.category(), undefined, undefined, undefined, undefined);
+            downloadedStatuses.context = ContextTimeline.category;
+            downloadedStatuses.hashtag = this.category();
 
-            this.isReady = true;
+            this.statuses.set(downloadedStatuses);
+
+            this.isReady.set(true);
             this.loadingService.hideLoader();
         });
     }
