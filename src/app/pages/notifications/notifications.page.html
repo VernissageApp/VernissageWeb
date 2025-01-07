@@ -44,7 +44,14 @@
                                             </div>
                                         </div>
 
-                                        @if (notification.status && getAttachmentUrl(notification.status)) {
+                                        @if (notification.mainStatus && getAttachmentUrl(notification.mainStatus)) {
+                                            <div class="status">
+                                                <a [routerLink]="['/statuses', notification.mainStatus.id]">
+                                                    <img [src]="getAttachmentUrl(notification.mainStatus)" class="" alt="Status image" />
+                                                </a>
+                                            </div>
+                                        }
+                                        @else if (notification.status && getAttachmentUrl(notification.status)) {
                                             <div class="status">
                                                 <a [routerLink]="['/statuses', notification.status.id]">
                                                     <img [src]="getAttachmentUrl(notification.status)" class="" alt="Status image" />

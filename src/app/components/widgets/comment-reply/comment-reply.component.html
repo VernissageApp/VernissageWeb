@@ -6,14 +6,26 @@
         <div class="flex-grow-1">
             <mat-form-field appearance="outline" class="width-100">
                 <mat-label>Comment</mat-label>
-                <input
-                    matInput [name]="'comment' + status().id"
+                <textarea
+                    matInput
+                    [name]="'comment' + status().id"
+                    cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="10"
+                    placeholder="Comment"
                     #commentInput="ngModel"
                     [(ngModel)]="comment"
-                    placeholder="Comment"
                     aria-label="Comment"
-                    required=""
-                    appMaxLength="200" />
+                    required
+                    [appMaxLength]="maxStatusLength().toString()">
+                </textarea>
+
+                @if (showCancel()) {
+                    <mat-hint class="text-muted" align="start">
+                        <a href="javascript:void(0)" (click)="onCancel()">Cancel</a>
+                    </mat-hint>
+                }
+
+                <mat-hint class="text-muted" align="end">{{ comment()?.length ?? "0" }}/{{ maxStatusLength() }}</mat-hint>
+
                 <mat-error *ngIf="commentInput.touched && commentInput.invalid && commentInput.errors?.appMaxLength">
                     Too long comment.
                 </mat-error>
@@ -21,10 +33,6 @@
                     Comment required.
                 </mat-error>
             </mat-form-field>
-
-            @if (showCancel()) {
-                <a href="javascript:void(0)" (click)="onCancel()">Cancel</a>
-            }
 
         </div>
         <button type="submit" mat-flat-button color="primary" [disabled]="isSendDisabled()">Send</button>

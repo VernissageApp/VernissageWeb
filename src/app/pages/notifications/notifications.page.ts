@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, signal, WritableSignal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { Notification } from '../../models/notification';
 import { NotificationsService } from 'src/app/services/http/notifications.service';
@@ -29,7 +29,7 @@ export class NotificationsPage extends ResponsiveComponent implements OnInit {
     protected showLoadMore = signal(true);
     protected showEnableNotificationButton = signal(false);
 
-    protected notifications: WritableSignal<Notification[]> = signal([]);
+    protected notifications = signal<Notification[]>([]);
     protected minId = signal<string | undefined>(undefined);
     protected maxId = signal<string | undefined>(undefined);
     
@@ -103,17 +103,21 @@ export class NotificationsPage extends ResponsiveComponent implements OnInit {
             case NotificationType.Mention:
                 return 'mentioned you';
             case NotificationType.Status:
-                return 'published status';
+                return 'published photo';
             case NotificationType.Reblog:
-                return 'boost your status';
+                return 'boost your photo';
             case NotificationType.Follow:
                 return 'followed you';
             case NotificationType.FollowRequest:
                 return 'want to follow you';
             case NotificationType.Favourite:
-                return 'favourited your status';
+                if (!notification.mainStatus) {
+                    return 'favourited your photo';
+                } else {
+                    return 'favourited your comment';
+                }
             case NotificationType.Update:
-                return 'edited status';
+                return 'edited photo';
             case NotificationType.AdminSignUp:
                 return 'is a new user';
             case NotificationType.AdminReport:

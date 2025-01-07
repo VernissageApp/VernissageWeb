@@ -318,8 +318,8 @@
 
                             @if ((comments()?.length ?? 0) > 0) {
                                 @for (comment of comments(); track comment.status.id) {
-                                    <div>
-                                        <div class="flex-row gap-8 padding-top-5 comments" [ngClass]="{ 'replies': !comment.showDivider, 'padding-top-15': comment.showDivider }">
+                                    <div class="padding-top-10 comments">
+                                        <div class="flex-row gap-8" [ngClass]="{ 'replies': !comment.showDivider, 'padding-top-15': comment.showDivider }">
                                             <div>
                                                 <app-avatar [user]="comment.status.user" [size]="avatarSize.medium"></app-avatar>
                                             </div>
@@ -334,8 +334,11 @@
                                             </div>
 
                                             @if (signedInUser()) {
-                                                <div class="flex-grow-1 text-right">
-                                                    <mat-icon class="favourited fill-symbol" *ngIf="comment.status.favourited">star</mat-icon>
+                                                <div class="comment-actions flex-grow-1 text-right">
+                                                    @if (comment.status.favourited) {
+                                                        <mat-icon class="favourited fill-symbol">star</mat-icon>
+                                                    }
+
                                                     <button mat-icon-button [matMenuTriggerFor]="menu" class="margin-right-10" color="primary" aria-label="More options">
                                                         <mat-icon>more_vert</mat-icon>
                                                     </button>
@@ -365,6 +368,12 @@
                                                 </div>
                                             }
                                         </div>
+
+                                        @if (comment.status.favouritesCount > 0) {
+                                            <div class="text-muted fs-80 margin-left-40" [ngClass]="{ 'replies': !comment.showDivider }">
+                                                Comment liked by {{ comment.status.favouritesCount }} {{ comment.status.favouritesCount === 1 ? 'person' : 'people'}}.
+                                            </div>
+                                        }
 
                                         @if (replyStatus()?.id === comment.status.id) {
                                             @if (signedInUser(); as signedInUserInternal) {

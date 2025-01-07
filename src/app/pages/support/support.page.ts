@@ -1,5 +1,5 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { ChangeDetectionStrategy, Component, OnInit, signal, WritableSignal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { Instance } from 'src/app/models/instance';
@@ -21,10 +21,10 @@ import { environment } from 'src/environments/environment';
 export class SupportPage extends ResponsiveComponent implements OnInit {
     protected readonly clientVersion = environment.version;
 
-    protected instance: WritableSignal<Instance | undefined> = signal(undefined);
-    protected health: WritableSignal<Health | undefined> = signal(undefined);
-    protected patreonUrl: WritableSignal<string | undefined> = signal(undefined);
-    protected mastodonUrl: WritableSignal<string | undefined> = signal(undefined);
+    protected instance = signal<Instance | undefined>(undefined);
+    protected health = signal<Health | undefined>(undefined);
+    protected patreonUrl = signal<string | undefined>(undefined);
+    protected mastodonUrl = signal<string | undefined>(undefined);
 
     protected isReady = signal(false);
     protected totalCost = signal(0);
