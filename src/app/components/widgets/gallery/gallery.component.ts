@@ -32,9 +32,9 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
     protected alwaysShowNSFW = signal(false);
     protected avatarVisible = signal(true);
     protected isBrowser = signal(false);
-    protected statusesExists = computed(() => (this.internalStatuses()?.data.length ?? 0) > 0);
+    protected statusesExists = computed(() => (this.internalStatuses().data.length ?? 0) > 0);
 
-    private internalStatuses = signal<LinkableResult<Status> | undefined>(undefined);
+    private internalStatuses = signal<LinkableResult<Status>>(new LinkableResult<Status>());
     private isReady = false;
     private columns = 3;
     private isDuringLoadingMode = false;
@@ -125,7 +125,7 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
                 return;
             }
 
-            if (!this.internalStatuses()?.data.length) {
+            if (!this.internalStatuses().data.length) {
                 this.isDuringLoadingMode = false;
                 return;
             }
@@ -193,17 +193,7 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
         }
 
         // Update internal list of statuses (used to rebuild when size of screen is changed).
-        this.internalStatuses.update((value) => {
-            const newList = new LinkableResult<Status>();
-            newList.data = value?.data.concat(statusesArray.data) ?? [];
-            newList.maxId = value?.maxId;
-            newList.minId = value?.minId;
-            newList.hashtag = value?.hashtag;
-            newList.category = value?.category;
-            newList.user = value?.user;
-
-            return newList;
-        });
+        this.internalStatuses.update((value) => LinkableResult.copy(value));
 
         // Update in one step columns signal (to reduce DOM manipulations).
         this.galleryColumns.update(columns => {

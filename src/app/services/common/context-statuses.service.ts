@@ -33,7 +33,7 @@ export class ContextStatusesService {
     }
 
     public setContextStatuses(statuses: LinkableResult<Status> | undefined): void {
-        this.statuses = statuses;
+        this.statuses = statuses ? LinkableResult.copy(statuses) : undefined;
         this.allOlderStatusesDownloaded = false;
         this.allNewerStatusesDownloaded = false;
 
