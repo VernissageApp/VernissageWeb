@@ -66,6 +66,7 @@
                                         cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4" cdkAutosizeMaxRows="10" 
                                         #statusInput="ngModel"
                                         [(ngModel)]="statusText"
+                                        (ngModelChange)="onStatusTextChange()"
                                         required
                                         aria-label="Status"
                                         [appMaxLength]="maxStatusLength().toString()">

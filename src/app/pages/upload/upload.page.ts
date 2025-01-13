@@ -142,6 +142,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
             if (attachmentHashtags.hashtags && attachmentHashtags.hashtags.length > 0) {
                 const hashtags = attachmentHashtags.hashtags.map(tag => '#' + tag);
                 this.statusText.update((value) => value + '\n\n' + hashtags.join(' '));
+                this.setCategoryBasedOnHashtags();
             }
         } catch (error) {
             console.error(error);
@@ -239,6 +240,28 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
         } catch (error) {
             console.error(error);
             this.messageService.showServerError(error);
+        }
+    }
+
+    protected onStatusTextChange(): void {
+        this.setCategoryBasedOnHashtags();
+    }
+
+    private setCategoryBasedOnHashtags(): void {
+        if (this.categoryId()) {
+            return;
+        }
+
+        const statusTextNormalized = this.statusText().toUpperCase();
+        for (const category of this.categories()) {
+            if (category.hashtags) {
+                for (const hashtag of category.hashtags.filter(x => x.hashtagNormalized !== '')) {
+                    if (statusTextNormalized.includes('#' + hashtag.hashtagNormalized)) {
+                        this.categoryId.set(category.id);
+                        return;
+                    }
+                }
+            }
         }
     }
 
