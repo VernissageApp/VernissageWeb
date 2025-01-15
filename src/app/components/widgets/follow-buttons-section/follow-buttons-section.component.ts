@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, input, OnInit, output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, input, OnInit, output, signal } from '@angular/core';
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
 import { MatDialog } from '@angular/material/dialog';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
@@ -54,7 +54,15 @@ export class FollowButtonsSectionComponent implements OnInit {
         private followRequestsService: FollowRequestsService,
         private reportsService: ReportsService,
         private windowService: WindowService,
-        private dialog: MatDialog) {
+        private dialog: MatDialog
+    ) {
+        effect(() => {
+            // After changing relationship from parent we have to rebuild the components.
+            const newRelationships = this.relationship();
+            this.relationshipAfterAction.set(newRelationships);
+
+            this.recalculateRelationship();
+        });
     }
 
     ngOnInit(): void {
@@ -82,7 +90,7 @@ export class FollowButtonsSectionComponent implements OnInit {
 
                     if (internalUser.userName) {
                         const downloadedRelationship = await this.usersService.mute(internalUser.userName, result);
-                        this.relationshipAfterAction.set(downloadedRelationship)
+                        this.relationshipAfterAction.set(downloadedRelationship);
                         this.recalculateRelationship();
 
                         this.relationChanged.emit(this.updatedRelationship());
