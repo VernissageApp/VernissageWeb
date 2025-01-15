@@ -330,7 +330,9 @@
                                                 <div>
                                                     <span class="fw-400 fs-90 text-muted">&#64;{{ comment.status.user?.userName }}</span>
                                                 </div>
-                                                <div [innerHTML]="comment.status.noteHtml"></div>
+                                                <div class="comment-text">
+                                                    <div [innerHTML]="comment.status.noteHtml"></div>
+                                                </div>
                                             </div>
 
                                             @if (signedInUser()) {

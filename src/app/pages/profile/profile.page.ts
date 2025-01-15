@@ -249,13 +249,17 @@ export class ProfilePage extends ResponsiveComponent implements OnInit, OnDestro
         if (this.following()) {
             if (internalFollowing.data.length > 0) {
                 this.following.update((value) => {
+                    const result = new LinkableResult<User>();
+                    result.minId = internalFollowing.minId;
+                    result.maxId = internalFollowing.maxId;
+                    
                     if (value) {
-                        value.data.push(...internalFollowing.data);
-                        value.minId = internalFollowing.minId;
-                        value.maxId = internalFollowing.maxId;
+                        result.data = [...value.data, ...internalFollowing.data];
+                    } else {
+                        result.data = [...internalFollowing.data];
                     }
 
-                    return value;
+                    return result;
                 });
 
 
@@ -285,13 +289,17 @@ export class ProfilePage extends ResponsiveComponent implements OnInit, OnDestro
         if (this.followers()) {
             if (internalFollowers.data.length > 0) {
                 this.followers.update((value) => {
+                    const result = new LinkableResult<User>();
+                    result.minId = internalFollowers.minId;
+                    result.maxId = internalFollowers.maxId;
+                    
                     if (value) {
-                        value.data.push(...internalFollowers.data);
-                        value.minId = internalFollowers.minId;
-                        value.maxId = internalFollowers.maxId;
+                        result.data = [...value.data, ...internalFollowers.data];
+                    } else {
+                        result.data = [...internalFollowers.data];
                     }
 
-                    return value;
+                    return result;
                 });
 
             } else {

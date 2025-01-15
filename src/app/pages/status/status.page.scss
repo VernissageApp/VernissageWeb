@@ -101,6 +101,14 @@
     display:table;
 }
 
+.note {
+    word-break: break-word;
+
+    a {
+        word-break: break-all;
+    }
+}
+
 .category {
     mat-icon {
         transform: scale(1.6);
@@ -189,6 +197,14 @@
 
         .favourited {
             transform: scale(0.6);
+        }
+    }
+
+    .comment-text {
+        word-break: break-word;
+
+        a {
+            word-break: break-all;
         }
     }
 }
