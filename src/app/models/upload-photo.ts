@@ -5,6 +5,7 @@ export class UploadPhoto {
     
     public photoSrc = signal<string | undefined>(undefined);
     public isUploaded = signal(false);
+    public isDeleting = signal(false);
 
     public blurhash?: string;
     public photoFile: Blob;

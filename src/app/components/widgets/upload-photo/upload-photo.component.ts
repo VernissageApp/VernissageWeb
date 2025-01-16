@@ -15,6 +15,7 @@ import { AttachmentsService } from 'src/app/services/http/attachments.service';
 import { CountriesService } from 'src/app/services/http/countries.service';
 import { LocationsService } from 'src/app/services/http/locations.service';
 import { SettingsService } from 'src/app/services/http/settings.service';
+import { PersistenceService } from 'src/app/services/persistance/persistance.service';
 
 @Component({
     selector: 'app-upload-photo',
@@ -35,11 +36,16 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
     protected countriesControl = new FormControl<string | Country>('');    
     protected isOpenAIEnabled = signal(false);
     protected describeInProgress = signal(false);
+    protected currentCountry = signal<Country | undefined>(undefined);
+    protected currentCity = signal<Location | undefined>(undefined);
 
     private readonly defaultMaxHdrFileSize = 4194304;
+    private readonly defaultCountryCacheKey = 'default-country';
+    private readonly defaultLocationCacheKey = 'default-location';
+    private readonly defaultLicenseCacheKey = 'default-license';
+
     private allCountries: Country[] = [];
-    private currentCity?: Location;
-    private currentCountry?: Country;
+    private initialized = false;
 
     constructor(
         private countriesService: CountriesService,
@@ -47,6 +53,7 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
         private attachmentsService: AttachmentsService,
         private messageService: MessagesService,
         private settingsService: SettingsService,
+        private persistenceService: PersistenceService,
         breakpointObserver: BreakpointObserver
     ) {
         super(breakpointObserver);
@@ -63,8 +70,14 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
             map(value => {
                 const name = typeof value === 'string' ? value : value?.name;
 
-                this.citiesControl.setValue('');
-                this.currentCity = undefined;
+                // During first initialization (restoring country from cache we have to restore also city).
+                if (this.initialized) {
+                    this.citiesControl.setValue('');
+                    this.currentCity.set(undefined);
+                } else {
+                    this.restoreCityFromCache();
+                    this.initialized = true;
+                }
 
                 return name ? this.filterCountry(name as string) : this.allCountries.slice();
             }),
@@ -75,9 +88,13 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
             debounceTime(1000),
             switchMap(value => {
                 const query = typeof value === 'string' ? value : value?.name;
-                return this.locationService.search(this.currentCountry?.code ?? "GB", query)
+                return this.locationService.search(this.currentCountry()?.code ?? "GB", query)
             })
         );
+
+        this.restoreCountryFromCache();
+        this.restoreCityFromCache();
+        this.restoreLicenseFromCache();
     }
 
     protected displayCountryFn(country: Country): string {
@@ -89,15 +106,41 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
     }
 
     protected selectedCountry(country?: Country): void {
-        this.currentCountry = country;
+        this.currentCountry.set(country);
+        this.storeCountryInCache(country);
+    }
+
+    protected onCountryClear(): void {
+        this.countriesControl.setValue('');
+        this.currentCountry.set(undefined);
+        this.storeCountryInCache(undefined);
+
+        this.onCityClear();
     }
 
     protected selectedCity(location?: Location): void {
-        this.currentCity = location;
+        this.currentCity.set(location);
+        this.storeCityInCache(location);
+
         this.photo.update((photo) => {
-            photo.locationId = this.currentCity?.id;
+            photo.locationId = this.currentCity()?.id;
             return photo;
         });
+    }
+
+    protected onCityClear(): void {
+        this.citiesControl.setValue('');
+        this.currentCity.set(undefined);
+        this.storeCityInCache(undefined);
+
+        this.photo.update((photo) => {
+            photo.locationId = this.currentCity()?.id;
+            return photo;
+        });
+    }
+
+    protected onLicenseChange(): void {
+        this.storeLicenseInCache(this.photo().licenseId);
     }
 
     protected async onGenerateDescription(): Promise<void> {
@@ -193,5 +236,64 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
         }
 
         reader.readAsDataURL(photoHdrFile);
+    }
+
+    private storeCountryInCache(country?: Country): void {
+        if (country) {
+            this.persistenceService.setJson(this.defaultCountryCacheKey, country);
+        } else {
+            this.persistenceService.remove(this.defaultCountryCacheKey);
+        }
+    }
+
+    private storeCityInCache(location?: Location): void {
+        if (location) {
+            this.persistenceService.setJson(this.defaultLocationCacheKey, location);
+        } else {
+            this.persistenceService.remove(this.defaultLocationCacheKey);
+        }
+    }
+
+    private storeLicenseInCache(licenseId?: string): void {
+        if (licenseId) {
+            this.persistenceService.set(this.defaultLicenseCacheKey, licenseId);
+        } else {
+            this.persistenceService.remove(this.defaultLicenseCacheKey);
+        }
+    }
+
+    private restoreCountryFromCache(): void {
+        const persistedCountry = this.persistenceService.getJson(this.defaultCountryCacheKey) as Country;
+        if (persistedCountry) {
+            const foundedCountry = this.allCountries.find(x => x.id === persistedCountry.id);
+            if (foundedCountry) {
+                this.currentCountry.set(foundedCountry);
+                this.countriesControl.setValue(foundedCountry);
+            }
+        }
+    }
+
+    private restoreCityFromCache(): void {
+        const persistedLocation = this.persistenceService.getJson(this.defaultLocationCacheKey) as Location;
+        if (persistedLocation) {
+            this.currentCity.set(persistedLocation);
+            this.citiesControl.setValue(persistedLocation);
+
+            this.photo.update((photo) => {
+                photo.locationId = this.currentCity()?.id;
+                return photo;
+            });
+        }
+    }
+
+    private restoreLicenseFromCache(): void {
+        const persistedLicense = this.persistenceService.get(this.defaultLicenseCacheKey);
+        if (persistedLicense) {
+
+            this.photo.update((photo) => {
+                photo.licenseId = persistedLicense;
+                return photo;
+            });
+        }
     }
 }

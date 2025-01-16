@@ -44,6 +44,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
     protected contentWarning = model('');
     protected maxFileSizeString = model('');
     protected selectedIndex = model(0);
+    protected isCanceling = signal(false);
 
     protected maxStatusLength = signal(0);
     protected isOpenAIEnabled = signal(false);
@@ -125,8 +126,39 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
         this.selectedIndex.set(index);
     }
 
-    protected onPhotoDelete(photo: UploadPhoto): void {
-        this.photos.update(photos => photos.filter(x => x !== photo));
+    protected async onCancel(): Promise<void> {
+        try {
+            this.isCanceling.set(true);
+
+            for (const photo of this.photos()) {
+                if (photo.isUploaded()) {
+                    await this.attachmentsService.deleteAttachment(photo.id);
+                }
+            }
+    
+            this.isCanceling.set(false);
+            await this.router.navigate(['/']);
+        } catch (error) {
+            console.error(error);
+            this.messageService.showServerError(error);
+        } finally {
+            this.hashtagsInProgress.set(false);
+        }
+    }
+
+    protected async onPhotoDelete(photo: UploadPhoto): Promise<void> {
+        try {
+            photo.isDeleting.set(true);
+            await this.attachmentsService.deleteAttachment(photo.id);
+            photo.isDeleting.set(false);
+
+            this.photos.update(photos => photos.filter(x => x !== photo));
+        } catch (error) {
+            console.error(error);
+            this.messageService.showServerError(error);
+        } finally {
+            this.hashtagsInProgress.set(false);
+        }
     }
 
     protected async onGenerateHashtags(): Promise<void> {

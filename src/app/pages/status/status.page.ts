@@ -116,7 +116,9 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
+
         this.isReady.set(false);
+        this.loadingService.showLoader();
 
         this.urlToGallery = this.routingStateService.getPreviousUrl();
         this.showAlternativeText.set(this.preferencesService.showAlternativeText);
