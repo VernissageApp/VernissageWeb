@@ -424,6 +424,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   vertical-align: bottom;
 }
 
+.vertical-align-middle {
+  vertical-align: middle;
+}
+
 .overflow-ellipsis {
   overflow: hidden;
   text-overflow: ellipsis;

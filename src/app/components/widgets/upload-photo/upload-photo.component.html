@@ -40,7 +40,8 @@
 
     <mat-form-field appearance="outline">
         <mat-label>License</mat-label>
-        <mat-select [(value)]="photo().licenseId">
+        <mat-select [(value)]="photo().licenseId" (selectionChange)="onLicenseChange()">
+            <mat-option [value]="null"><span class="text-muted">Without a license</span></mat-option>
             @for (license of licenses(); track license.id) {
                 <mat-option [value]="license.id">
                     {{ license.name }} <ng-container *ngIf="license.code">({{ license.code }})</ng-container>
@@ -63,6 +64,12 @@
                 {{ option.name }} <small class="text-muted">({{ option.code }})</small>
             </mat-option>
         </mat-autocomplete>
+
+        @if (currentCountry()) {
+            <button matSuffix mat-icon-button aria-label="Clear" (click)="onCountryClear()">
+                <mat-icon>close</mat-icon>
+            </button>
+        }
     </mat-form-field>
 
     <mat-form-field appearance="outline">
@@ -78,6 +85,12 @@
                 {{ option.name }}
             </mat-option>
         </mat-autocomplete>
+
+        @if (currentCity()) {
+            <button matSuffix mat-icon-button aria-label="Clear" (click)="onCityClear()">
+                <mat-icon>close</mat-icon>
+            </button>
+        }
     </mat-form-field>
 
     <div class="margin-bottom-10 margin-top-20">

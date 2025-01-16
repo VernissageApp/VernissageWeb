@@ -20,6 +20,6 @@ export class ContentWarningDialog {
     }
 
     protected async onSubmit(): Promise<void> {
-        this.dialogRef.close({ contentWarning: this.contentWarning, statusId: this.data });
+        this.dialogRef.close({ contentWarning: this.contentWarning(), statusId: this.data });
     }
 }

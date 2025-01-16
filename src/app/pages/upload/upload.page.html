@@ -42,7 +42,10 @@
                                     <button mat-flat-button color="primary" matStepperNext>Next</button>
                                 </div>
                                 <div>
-                                    <button mat-flat-button color="warn" (click)="onPhotoDelete(photo)">Delete</button>
+                                    @if (photo.isDeleting()) {
+                                        <mat-spinner class="display-inline-block vertical-align-middle margin-right-10" [diameter]="18"></mat-spinner>
+                                    }
+                                    <button mat-flat-button color="warn" (click)="onPhotoDelete(photo)" [disabled]="!photo.isUploaded() || photo.isDeleting()">Delete</button>
                                 </div>
                             </div>
                         </mat-step>
@@ -113,9 +116,17 @@
                                     <input [disabled]="!isSensitive()" matInput name="status" [(ngModel)]="contentWarning" type="text" aria-label="Content warning" />
                                 </mat-form-field>
                             </div>
-                            <div>
-                                <button class="margin-right-10" mat-stroked-button matStepperPrevious>Back</button>
-                                <button mat-flat-button color="primary" [disabled]="!allPhotosUploaded()" matStepperNext>Upload</button>
+                            <div class="flex-row flex-space-between">
+                                <div>
+                                    <button class="margin-right-10" mat-stroked-button matStepperPrevious>Back</button>
+                                    <button mat-flat-button color="primary" [disabled]="!allPhotosUploaded()" matStepperNext>Upload</button>
+                                </div>
+                                <div>
+                                    @if (isCanceling()) {
+                                        <mat-spinner class="display-inline-block vertical-align-middle margin-right-10" [diameter]="18"></mat-spinner>
+                                    }
+                                    <button type="button" mat-stroked-button (click)="onCancel()" [disabled]="isCanceling()">Cancel</button>
+                                </div>
                             </div>
                         </form>
                     </mat-step>
