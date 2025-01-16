@@ -42,6 +42,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
     protected commentsDisabled = model(false);
     protected isSensitive = model(false);
     protected contentWarning = model('');
+    protected maxFileSizeString = model('');
     protected selectedIndex = model(0);
 
     protected maxStatusLength = signal(0);
@@ -71,9 +72,11 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
         this.maxFileSize = this.instanceService.instance?.configuration?.attachments?.imageSizeLimit ?? this.defaultMaxFileSize;
+        this.maxFileSizeString.set(this.getHumanFileSize(this.maxFileSize, 0));
+
         this.maxStatusLength.set(this.instanceService.instance?.configuration?.statuses?.maxCharacters ?? 500);
         this.isOpenAIEnabled.set(this.settingsService.publicSettings?.isOpenAIEnabled ?? false);
-
+        
         const [internalCategories, internalLicenses] = await Promise.all([
             this.categoriesService.all(),
             this.licensesService.all()
@@ -174,8 +177,8 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
                     temporaryAttachment.lens = photo.lens;
                 }
 
-                if (photo.showCreateDate) {
-                    temporaryAttachment.createDate = photo.createDate?.toISOString();
+                if (photo.showCreateDate && photo.createDate) {
+                    temporaryAttachment.createDate = this.getDateTime(photo.createDate);
                 }
 
                 if (photo.showFocalLenIn35mmFilm) {
@@ -245,6 +248,19 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
 
     protected onStatusTextChange(): void {
         this.setCategoryBasedOnHashtags();
+    }
+
+    private getDateTime(date: any): string | undefined {
+        if (typeof date.toISOString === 'function') {
+            return date.toISOString();
+        }
+
+        const dateObject = new Date(date);
+        if (dateObject.toString() !== 'Invalid Date') {
+            return dateObject.toISOString();
+        }
+
+        return undefined;
     }
 
     private setCategoryBasedOnHashtags(): void {
@@ -390,5 +406,25 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
         } else {
             return '';
         }
+    }
+
+    private getHumanFileSize(bytes: number, places: number) {
+        const thresh = 1024;
+        const units = ['kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'] 
+      
+        if (Math.abs(bytes) < thresh) {
+            return bytes + ' B';
+        }
+      
+        let u = -1;
+        const r = 10**places;
+      
+        do {
+            bytes /= thresh;
+            ++u;
+        } while (Math.round(Math.abs(bytes) * r) / r >= thresh && u < units.length - 1);
+      
+      
+        return bytes.toFixed(places) + ' ' + units[u];
     }
 }

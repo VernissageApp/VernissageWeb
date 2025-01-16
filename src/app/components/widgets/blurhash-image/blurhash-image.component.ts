@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Inject, PLATFORM_ID, OnInit, OnDestroy, input, computed, viewChild, signal, ChangeDetectionStrategy } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Inject, PLATFORM_ID, OnInit, OnDestroy, input, computed, viewChild, signal, ChangeDetectionStrategy, effect } from '@angular/core';
 import { decode } from 'blurhash';
 import { AvatarSize } from '../avatar/avatar-size';
 import { User } from 'src/app/models/user';
@@ -58,8 +58,13 @@ export class BlurhashImageComponent implements AfterViewInit, OnInit, OnDestroy 
         private messageService: MessagesService,
         private relationshipsService: RelationshipsService,
         private router: Router,
-        private authorizationService: AuthorizationService) {
-            this.isBrowser = isPlatformBrowser(platformId);
+        private authorizationService: AuthorizationService
+    ) {
+        this.isBrowser = isPlatformBrowser(platformId);
+
+        effect(() => {
+            this.showAvatar.set(this.preferencesService.showAvatars && this.avatarVisible());
+        });
     }
 
     ngOnInit(): void {
