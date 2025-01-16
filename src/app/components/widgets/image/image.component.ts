@@ -74,6 +74,10 @@ export class ImageComponent implements OnInit, OnDestroy, AfterViewInit {
                     this.internalPriority.set(newPriorityValue);
                 }
             });
+
+            effect(() => {
+                this.showAvatar.set(this.preferencesService.showAvatars && this.avatarVisible());
+            });
     }
 
     ngOnInit(): void {

@@ -75,7 +75,7 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
         this.galleryBreakpointSubscription = this.galleryBreakpointObserver.observe([Breakpoints.XSmall]).subscribe(result => {
             if (result.matches) {
                 this.columns = this.squareImages() ? 3 : 1;
-                this.avatarVisible.set(!this.squareImages);
+                this.avatarVisible.set(!this.squareImages());
                 this.buildGallery(this.internalStatuses());
             } else {
                 this.columns = 3;

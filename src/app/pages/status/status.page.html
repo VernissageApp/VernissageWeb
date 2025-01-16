@@ -290,6 +290,13 @@
                                             <span class="exif-label">{{ exifInternal.scanner }}</span>
                                         </div>
                                     }
+
+                                    @if (exifInternal.createDate) {
+                                        <div class="margin-bottom-10">
+                                            <mat-icon class="margin-right-20" inline="true" matTooltip="Photo created date">event</mat-icon>
+                                            <span class="exif-label">{{ exifInternal.createDate | date: 'short' }}</span>
+                                        </div>
+                                    }
                                 </div>
                             }
 
