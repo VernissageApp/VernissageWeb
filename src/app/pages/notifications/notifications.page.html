@@ -30,7 +30,8 @@
                                                 <app-avatar [user]="notification.byUser" [size]="avatarSize.huge"></app-avatar>
                                             </div>
                                             <div class="overflow-ellipsis">
-                                                <div class="overflow-ellipsis margin-top-5 fullname flex-row flex-responsive">
+                                                <span class="text-muted fs-80">{{ notification.createdAt | ago }}</span>
+                                                <div class="overflow-ellipsis fullname flex-row flex-responsive">
                                                     <div class="overflow-ellipsis">
                                                         <a [routerLink]="[ '/@' + notification.byUser?.userName ]" class="margin-right-5 fw-600">{{ notification.byUser?.name }}</a>
                                                     </div>

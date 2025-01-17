@@ -378,11 +378,16 @@
                                             }
                                         </div>
 
-                                        @if (comment.status.favouritesCount > 0) {
-                                            <div class="text-muted fs-80 margin-left-40" [ngClass]="{ 'replies': !comment.showDivider }">
-                                                Comment liked by {{ comment.status.favouritesCount }} {{ comment.status.favouritesCount === 1 ? 'person' : 'people'}}.
+                                        <div class="flex-row flex-responsive gap-horizontal-16 margin-left-40" [ngClass]="{ 'replies': !comment.showDivider }">                                            
+                                            <div class="text-muted fs-80">{{ comment.status.createdAt | ago }}</div>
+                                            <div class="text-muted fs-80" >
+                                                @if (comment.status.favouritesCount > 0) {
+                                                    <span>
+                                                        Comment liked by {{ comment.status.favouritesCount }} {{ comment.status.favouritesCount === 1 ? 'person' : 'people'}}.
+                                                    </span>
+                                                }
                                             </div>
-                                        }
+                                        </div>
 
                                         @if (replyStatus()?.id === comment.status.id) {
                                             @if (signedInUser(); as signedInUserInternal) {
