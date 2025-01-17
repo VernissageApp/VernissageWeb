@@ -1,15 +1,18 @@
 import { NgModule } from '@angular/core';
-import { SanitizeHtmlPipe } from './sanitize-html-pipe';
+import { SanitizeHtmlPipe } from './sanitize-html.pipe';
+import { AgoPipe } from './ago.pipe';
 
 @NgModule({
     declarations: [
-        SanitizeHtmlPipe
+        SanitizeHtmlPipe,
+        AgoPipe
     ],
     imports: [
 
     ],
     exports: [
-        SanitizeHtmlPipe
+        SanitizeHtmlPipe,
+        AgoPipe
     ]
 })
 export class PipesModule { }

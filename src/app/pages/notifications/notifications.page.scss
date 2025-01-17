@@ -18,10 +18,14 @@
             flex: 1 1 auto;
             overflow: hidden;
 
-            .icon {
-                position: relative;
-                top: -10px;
-                margin-right: 4px;
+            .user {
+                margin-top: 8px;
+
+                .icon {
+                    position: relative;
+                    top: -10px;
+                    margin-right: 4px;
+                }
             }
 
             .fullname {
