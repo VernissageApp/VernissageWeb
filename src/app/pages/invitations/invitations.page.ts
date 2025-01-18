@@ -11,6 +11,8 @@ import { ResponsiveComponent } from 'src/app/common/responsive';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { SettingsService } from 'src/app/services/http/settings.service';
 import { PublicSettings } from 'src/app/models/public-settings';
+import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
+import { Role } from 'src/app/models/role';
 
 @Component({
     selector: 'app-invitations',
@@ -25,7 +27,7 @@ export class InvitationsPage extends ResponsiveComponent implements OnInit {
     protected invitations = signal<Invitation[] | undefined>(undefined);
     protected publicSettings = signal<PublicSettings | undefined>(undefined);
     protected displayedColumns = signal<string[]>([]);
-    protected canGenerateNewInvitations = computed(() => (this.invitations?.length ?? 0) < (this.publicSettings()?.maximumNumberOfInvitations ?? 0));
+    protected canGenerateNewInvitations = computed(() => (this.authorizationService.hasRole(Role.Administrator) || (this.invitations()?.length ?? 0) < (this.publicSettings()?.maximumNumberOfInvitations ?? 0)));
 
     private readonly displayedColumnsHandsetPortrait: string[] = ['code', 'actions'];
     private readonly displayedColumnsHandsetLandscape: string[] = ['code', 'actions'];
@@ -38,6 +40,7 @@ export class InvitationsPage extends ResponsiveComponent implements OnInit {
         private messageService: MessagesService,
         private loadingService: LoadingService,
         private settingsService: SettingsService,
+        private authorizationService: AuthorizationService,
         private clipboard: Clipboard,
         breakpointObserver: BreakpointObserver
     ) {
