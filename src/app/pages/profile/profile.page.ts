@@ -367,7 +367,7 @@ export class ProfilePage extends ResponsiveComponent implements OnInit, OnDestro
     }
 
     private setCardMetatags(): void {
-        const profileTitle = (this.user?.name ?? '') + ` (@${this.user()?.userName ?? ''})`;
+        const profileTitle = (this.user()?.name ?? '') + ` (@${this.user()?.userName ?? ''})`;
         const profileDescription = this.htmlToText(this.user()?.bio ?? '');
 
         // <title>John Doe (@john@vernissage.xxx)</title>
