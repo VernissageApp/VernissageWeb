@@ -15,4 +15,10 @@ export class PublicSettings {
     public showEditorsUsersChoiceForAnonymous = false;
     public showHashtagsForAnonymous = false;
     public showCategoriesForAnonymous = false;
+
+    // Privacy and Terms of Service.
+    public privacyPolicyUpdatedAt = ''
+    public privacyPolicyContent = ''
+    public termsOfServiceUpdatedAt = ''
+    public termsOfServiceContent = ''
 }

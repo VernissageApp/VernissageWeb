@@ -99,16 +99,17 @@
         </mat-form-field>
     </div>
 
-    <div class="mastodon-url">
+    <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>Mastodon url</mat-label>
             <input matInput name="mastodonUrl" #mastodonUrl="ngModel" [(ngModel)]="settings().mastodonUrl"
                 placeholder="Mastodon url" aria-label="Mastodon url" />
-            <mat-hint align="start"><span class="text-muted">If the instance has its official account on Mastodon, you can define its address here.
-                If the Vernissage instance address is also provided on Mastodon, there will be information
-                indicating that the account has been verified by Mastodon.</span>
-            </mat-hint>
         </mat-form-field>
+        <div class="text-muted fs-90 margin-left-10 margin-top-5">
+            If the instance has its official account on Mastodon, you can define its address here.
+            If the Vernissage instance address is also provided on Mastodon, there will be information
+            indicating that the account has been verified by Mastodon.
+        </div>
     </div>
 
     <mat-divider></mat-divider>
@@ -302,7 +303,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>WebPush service endpoint</mat-label>
-            <input matInput name="webPushEndpoint" #openAPIKey="ngModel" [(ngModel)]="settings().webPushEndpoint"
+            <input matInput name="webPushEndpoint" #webPushEndpoint="ngModel" [(ngModel)]="settings().webPushEndpoint"
                 placeholder="WebPush service endpoint" aria-label="WebPush service endpoint" />
         </mat-form-field>
     </div>
@@ -310,7 +311,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>WebPush service secret key</mat-label>
-            <input matInput name="webPushSecretKey" #openAPIKey="ngModel" [(ngModel)]="settings().webPushSecretKey"
+            <input matInput name="webPushSecretKey" #webPushSecretKey="ngModel" [(ngModel)]="settings().webPushSecretKey"
                 placeholder="WebPush service secret key" aria-label="WebPush service secret key" />
         </mat-form-field>
     </div>
@@ -318,7 +319,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>WebPush Vapid subject</mat-label>
-            <input matInput name="webPushVapidSubject" #openAPIKey="ngModel" [(ngModel)]="settings().webPushVapidSubject"
+            <input matInput name="webPushVapidSubject" #webPushVapidSubject="ngModel" [(ngModel)]="settings().webPushVapidSubject"
                 placeholder="WebPush Vapid subject" aria-label="WebPush Vapid subject" />
         </mat-form-field>
     </div>
@@ -326,7 +327,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>WebPush Vapid public key</mat-label>
-            <input matInput name="webPushVapidPublicKey" #openAPIKey="ngModel" [(ngModel)]="settings().webPushVapidPublicKey"
+            <input matInput name="webPushVapidPublicKey" #webPushVapidPublicKey="ngModel" [(ngModel)]="settings().webPushVapidPublicKey"
                 placeholder="WebPush Vapid public key" aria-label="WebPush Vapid public key" />
         </mat-form-field>
     </div>
@@ -334,9 +335,55 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>WebPush Vapid private key</mat-label>
-            <input matInput name="webPushVapidPrivateKey" #openAPIKey="ngModel" [(ngModel)]="settings().webPushVapidPrivateKey"
+            <input matInput name="webPushVapidPrivateKey" #webPushVapidPrivateKey="ngModel" [(ngModel)]="settings().webPushVapidPrivateKey"
                 placeholder="WebPush Vapid priavte key" aria-label="WebPush Vapid priavte key" />
         </mat-form-field>
+    </div>
+
+    <mat-divider></mat-divider>
+    <h3>Privacy policy</h3>
+
+    <div class="margin-bottom-20">
+        <mat-form-field appearance="outline">
+            <mat-label>Privacy policy update date</mat-label>
+            <input matInput name="privacyPolicyUpdatedAt" #privacyPolicyUpdatedAt="ngModel" [(ngModel)]="settings().privacyPolicyUpdatedAt"
+                placeholder="Privacy policy update date" aria-label="Privacy policy update date" />
+        </mat-form-field>
+    </div>
+
+    <div class="margin-bottom-20">
+        <mat-form-field appearance="outline">
+            <mat-label>Privacy policy content</mat-label>
+            <textarea matInput name="privacyPolicyContent" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4"
+                cdkAutosizeMaxRows="20" placeholder="Privacy policy content" #privacyPolicyContent="ngModel" [(ngModel)]="settings().privacyPolicyContent"
+                aria-label="Privacy policy content"></textarea>
+        </mat-form-field>
+        <div class="text-muted fs-90 margin-left-10 margin-top-5">
+            Markdown syntax is supported, and you can use three macros that will be replaced on the page: {{'{{email}}, {{hostname}}, {{rules}}'}}.
+        </div>
+    </div>
+
+    <mat-divider></mat-divider>
+    <h3>Terms of Service</h3>
+
+    <div class="margin-bottom-20">
+        <mat-form-field appearance="outline">
+            <mat-label>Terms of Service update date</mat-label>
+            <input matInput name="termsOfServiceUpdatedAt" #termsOfServiceUpdatedAt="ngModel" [(ngModel)]="settings().termsOfServiceUpdatedAt"
+                placeholder="Terms of Service update date" aria-label="Terms of Service update date" />
+        </mat-form-field>
+    </div>
+
+    <div class="margin-bottom-20">
+        <mat-form-field appearance="outline">
+            <mat-label>Terms of Service content</mat-label>
+            <textarea matInput name="termsOfServiceContent" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4"
+                cdkAutosizeMaxRows="20" placeholder="Terms of Service content" #termsOfServiceContent="ngModel" [(ngModel)]="settings().termsOfServiceContent"
+                aria-label="Terms of Service content"></textarea>
+        </mat-form-field>
+        <div class="text-muted fs-90 margin-left-10 margin-top-5">
+            Markdown syntax is supported, and you can use three macros that will be replaced on the page: {{'{{email}}, {{hostname}}, {{rules}}'}}.
+        </div>
     </div>
 
     <mat-divider></mat-divider>

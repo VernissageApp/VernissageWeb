@@ -1,10 +1,12 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
+import { SafeHtml } from '@angular/platform-browser';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { Rule } from 'src/app/models/rule';
 import { WindowService } from 'src/app/services/common/window.service';
 import { InstanceService } from 'src/app/services/http/instance.service';
+import { SettingsService } from 'src/app/services/http/settings.service';
 
 @Component({
     selector: 'app-terms',
@@ -16,11 +18,15 @@ import { InstanceService } from 'src/app/services/http/instance.service';
 })
 export class TermsPage extends ResponsiveComponent implements OnInit {
     protected isReady = signal(false);
-    protected rules = signal<Rule[]>([]);
-    protected apiService = signal('');
-    protected email = signal('');
+    protected termsOfServiceContent = signal<SafeHtml>('');
+    protected termsOfServiceUpdatedAt = signal('');
+
+    private apiService = '';
+    private rules: Rule[] = [];
+    private email = '';
 
     constructor(
+        private settingsService: SettingsService,
         private instanceService: InstanceService,
         private windowService: WindowService,
         breakpointObserver: BreakpointObserver
@@ -31,10 +37,27 @@ export class TermsPage extends ResponsiveComponent implements OnInit {
     override ngOnInit(): void {
         super.ngOnInit();
 
-        this.rules.set(this.instanceService.instance?.rules ?? []);
-        this.apiService.set(this.windowService.apiService());
-        this.email.set(this.instanceService.instance?.email ?? '');
+        this.apiService = this.windowService.apiService();
+        this.rules = this.instanceService.instance?.rules ?? [];
+        this.email = this.instanceService.instance?.email ?? '';
+        const rulesHtml = this.generateRulesHtml();
+
+        const publicSettings = this.settingsService.publicSettings;
+        if (publicSettings) {
+            const termsOfServiceContent = publicSettings.termsOfServiceContent
+                .replaceAll('{{hostname}}', this.apiService)
+                .replaceAll('{{email}}', this.email)
+                .replaceAll('{{rules}}', rulesHtml);
+
+            this.termsOfServiceUpdatedAt.set(publicSettings.termsOfServiceUpdatedAt);
+            this.termsOfServiceContent.set(termsOfServiceContent);
+        }
 
         this.isReady.set(true);
+    }
+
+    private generateRulesHtml(): string {
+        const rulesList = this.rules.map(rule => `<li>${rule.text}</li>`).join('');
+        return `<ul>${rulesList}</ul>`;
     }
 }
