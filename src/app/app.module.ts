@@ -3,6 +3,7 @@ import { NgModule, ErrorHandler, Injector, NgZone, isDevMode, PLATFORM_ID, injec
 import { HTTP_INTERCEPTORS, provideHttpClient, withFetch, withInterceptorsFromDi } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MAT_CHECKBOX_DEFAULT_OPTIONS, MatCheckboxDefaultOptions } from '@angular/material/checkbox';
+import { MAT_TOOLTIP_DEFAULT_OPTIONS, MatTooltipDefaultOptions } from '@angular/material/tooltip';
 import { GlobalErrorHandler } from 'src/app/handlers/global-error-handler';
 import { InstanceService } from 'src/app/services/http/instance.service';
 import { appInitialization } from './app-initialization';
@@ -27,6 +28,14 @@ import { RandomGeneratorService } from './services/common/random-generator.servi
 const httpInterceptor = (platformId: object, authorizationService: AuthorizationService) => 
     new APIInterceptor(platformId, authorizationService);
 
+/** Custom options the configure the tooltip's default show/hide delays. */
+export const customTooltipDefaults: MatTooltipDefaultOptions = {
+    showDelay: 1000,
+    hideDelay: 250,
+    touchendHideDelay: 2000,
+    touchGestures: 'off'
+};
+
 @NgModule({
     declarations: [
         AppComponent
@@ -47,6 +56,7 @@ const httpInterceptor = (platformId: object, authorizationService: Authorization
     providers: [
         { provide: RouteReuseStrategy, useClass: CustomReuseStrategy },
         { provide: MAT_CHECKBOX_DEFAULT_OPTIONS, useValue: { clickAction: 'check' } as MatCheckboxDefaultOptions },
+        { provide: MAT_TOOLTIP_DEFAULT_OPTIONS, useValue: customTooltipDefaults },
         provideAppInitializer(() => {
             const initializerFn = (appInitialization)(inject(AuthorizationService), inject(InstanceService), inject(SettingsService));
             return initializerFn();
