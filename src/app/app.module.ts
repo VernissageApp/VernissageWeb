@@ -30,9 +30,9 @@ const httpInterceptor = (platformId: object, authorizationService: Authorization
 
 /** Custom options the configure the tooltip's default show/hide delays. */
 export const customTooltipDefaults: MatTooltipDefaultOptions = {
-    showDelay: 1000,
+    showDelay: 750,
     hideDelay: 250,
-    touchendHideDelay: 2000,
+    touchendHideDelay: 1000,
     touchGestures: 'off'
 };
 
