@@ -248,7 +248,7 @@ $vernissage-dark-toolbar-theme: mat.m2-define-light-theme((
 @include mat.toolbar-color($vernissage-light-toolbar-theme);
 
 // Set custom Vernissage components themes.
-@include material-app-theme($vernissage-light-theme, $vernissage-gray);
+@include material-app-theme($vernissage-light-theme, $vernissage-gray, $vernissage-white, '/assets/camera-light.svg', '/assets/face-light.svg');
 
 // Set messages theme.
 @include messages-theme($vernissage-light-theme);
@@ -271,7 +271,7 @@ $vernissage-dark-toolbar-theme: mat.m2-define-light-theme((
   @include mat.toolbar-color($vernissage-dark-toolbar-theme);
 
   // Set custom Vernissage components themes.
-  @include material-app-theme($vernissage-dark-theme, $vernissage-white);
+  @include material-app-theme($vernissage-dark-theme, $vernissage-white, $vernissage-gray, '/assets/camera-dark.svg', '/assets/face-dark.svg');
 
   // Set messages theme.
   @include messages-theme($vernissage-dark-theme);

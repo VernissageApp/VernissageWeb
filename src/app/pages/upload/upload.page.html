@@ -57,13 +57,16 @@
                             <div class="flex-col gap-0 margin-top-5">
 
                                 @if (isOpenAIEnabled()) {
-                                    <div class="flex-row flex-end margin-bottom-10">
+                                    <div class="flex-row flex-end">
                                         @if (hashtagsInProgress()) {
                                             <mat-spinner class="margin-top-10 margin-right-10" [diameter]="18"></mat-spinner>
                                         }
                                         <button mat-stroked-button color="primary" (click)="onGenerateHashtags()" [disabled]="!allPhotosUploaded() || photos().length === 0 || hashtagsInProgress()">
                                             <mat-icon>smart_toy</mat-icon> Hashtags
                                         </button>
+                                    </div>
+                                    <div class="text-right text-muted fs-80 margin-bottom-10">
+                                        Feature powered by OpenAI.
                                     </div>
                                 }
 
