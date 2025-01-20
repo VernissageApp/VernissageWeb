@@ -1,15 +1,25 @@
 @use '@angular/material' as mat;
 
 // Styles for the docs app that are based on the current theme.
-@mixin material-app-theme($theme, $background) {
+@mixin material-app-theme($theme, $contrast, $background, $cameraIcon, $faceIcon) {
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
-    $foreground: map-get($theme, foreground);
 
     $error: mat.m2-define-palette(mat.$m2-red-palette);
     $warning: mat.m2-define-palette(mat.$m2-orange-palette);
     $grey: mat.m2-define-palette(mat.$m2-grey-palette);
     $green: mat.m2-define-palette(mat.$m2-green-palette);
+
+    $background-color: mat.m2-get-color-from-palette($background);
+    $transparent-background-color: rgba($background-color, 0.7);
+
+    .cdk-overlay-pane {
+        .mat-mdc-menu-panel {
+            background-color: $transparent-background-color;
+            -webkit-backdrop-filter: blur(16px);
+            backdrop-filter: blur(16px);
+        }
+    }
 
     a {
         &:link {
@@ -104,7 +114,7 @@
         width: 223px;
         height: 148px;
         margin-top: 4px;
-        background-color: mat.m2-get-color-from-palette($foreground);
+        background-color: mat.m2-get-color-from-palette($background);
         opacity: 0.6;
         border-width: 1px;
         border-style: dashed;
@@ -145,7 +155,7 @@
             cursor: default;
 
             &:hover {
-                background-color: mat.m2-get-color-from-palette($foreground);
+                background-color: mat.m2-get-color-from-palette($background);
 
                 path {
                     fill: mat.m2-get-color-from-palette($primary);
@@ -178,11 +188,11 @@
     a:link.logo {
         font-style: normal;
         text-decoration: none;
-        color: mat.m2-get-color-from-palette($background);
+        color: mat.m2-get-color-from-palette($contrast);
     }
 
     a.mdc-button {
-        color: mat.m2-get-color-from-palette($background);
+        color: mat.m2-get-color-from-palette($contrast);
     }
 
     .empty-page {
@@ -192,7 +202,7 @@
             width: 128px;
             height: 128px;
             background-size: 128px 128px;
-            background-image: url('/assets/camera-light.svg');
+            background-image: url($cameraIcon);
         }
 
         .face {
@@ -201,19 +211,7 @@
             width: 64px;
             height: 64px;
             background-size: 64px 64px;
-            background-image: url('/assets/face-light.svg');
-        }
-    }
-
-    .dark-theme {
-        .empty-page {
-            .camera {
-                background-image: url('/assets/camera-dark.svg') !important;
-            }
-
-            .face {
-                background-image: url('/assets/face-dark.svg') !important;
-            }
+            background-image: url($faceIcon);
         }
     }
 

@@ -51,7 +51,7 @@ const routes: Routes = [
     { path: 'unexpected-error', component: UnexpectedErrorPage, title: 'Vernissage - Unexpected error' },
     { path: 'connection-lost', component: ConnectionLostPage, title: 'Vernissage - Connection lost' },
     { path: 'page-not-found', component: PageNotFoundPage, title: 'Vernissage - Page not found' },
-    { path: 'upload', component: UploadPage, canActivate: [ authorizationGuard ], title: 'Vernissage - Uplad images' },
+    { path: 'upload', component: UploadPage, canActivate: [ authorizationGuard ], title: 'Vernissage - Upload images' },
     { path: 'search', component: SearchPage, canActivate: [ authorizationGuard ], title: 'Vernissage - Search' },
     { path: 'notifications', component: NotificationsPage, canActivate: [ authorizationGuard ], title: 'Vernissage - Notifications' },
     { path: 'invitations', component: InvitationsPage, canActivate: [ authorizationGuard ], title: 'Vernissage - Invitations' },

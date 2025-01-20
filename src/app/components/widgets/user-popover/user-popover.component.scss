@@ -1,4 +1,12 @@
 .user-popover {
     max-width: 640px;
     margin-top: 6px;
+
+    background-color: rgb(255, 255, 255, 0.95);
+}
+
+:host-context(.dark-theme) {
+    .user-popover {
+        background-color: rgb(40, 40, 40, 0.95);
+    }
 }
