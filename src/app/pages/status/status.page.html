@@ -33,9 +33,9 @@
                                         <canvas [@showOrHide]="!showSensitiveImage() ? 'true' : 'false'" class="blurhash" #canvas [width]="imageWidth()" [height]="imageHeight()"></canvas>
                                     }
 
-                                    <img class="link" [@show]="showSensitiveImage() ? 'true' : 'false'" [src]="imagesInternally[0].data?.src" (click)="openInFullScreen()" (keydown.enter)="openInFullScreen()" tabindex="0" (load)="onImageLoaded()" alt="Status image" />
+                                    <img class="link" [@show]="showSensitiveImage() ? 'true' : 'false'" [src]="imagesInternally[0].data?.src" (click)="openInFullScreen()" (keydown.enter)="openInFullScreen()" tabindex="0" (load)="onImageLoaded()" [alt]="altStatus() ?? 'Status image'" />
                                 } @else {
-                                    <img class="link" [@show]="imageIsLoaded() ? 'true' : 'false'" [src]="imagesInternally[0].data?.src" (click)="openInFullScreen()" (keydown.enter)="openInFullScreen()" tabindex="0" (load)="onImageLoaded()" alt="Status image" />
+                                    <img class="link" [@show]="imageIsLoaded() ? 'true' : 'false'" [src]="imagesInternally[0].data?.src" (click)="openInFullScreen()" (keydown.enter)="openInFullScreen()" tabindex="0" (load)="onImageLoaded()" [alt]="altStatus() ?? 'Status image'" />
                                 }
                             </div>
                         }

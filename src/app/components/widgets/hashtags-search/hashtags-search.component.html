@@ -9,7 +9,7 @@
             @for (status of statuses()?.data; track status.id) {
                 @if (getImageSrc(status)) {
                     <div class="image-container">
-                        <img class="image-item" [ngSrc]="getImageSrc(status)!" width="100" height="100" alt="Status image" priority />
+                        <img class="image-item" [ngSrc]="getImageSrc(status)!" width="100" height="100" [alt]="getImageAlt(status) ?? 'Status image'" priority />
                     </div>
                 }
             }
