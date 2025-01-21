@@ -92,6 +92,14 @@ export class NotificationsPage extends ResponsiveComponent implements OnInit {
         return undefined
     }
 
+    protected getAttachmentAlt(status: Status): string | undefined {
+        if (status.attachments && status.attachments.length > 0) {
+            return status.attachments[0].description;
+        }
+
+        return undefined
+    }
+
     protected openNotificationsSettings(): void {
         this.dialog.open(NotificationSettingsDialog, {
             width: '500px'

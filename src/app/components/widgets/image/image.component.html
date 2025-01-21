@@ -7,7 +7,7 @@
                     <canvas class="blurhash display-none" #canvas width="32" height="32"></canvas>
                 }
 
-                <img class="image-item img-horizontal" [src]="imageSrcString" (load)="onImageLoaded()" alt="Status image" />
+                <img class="image-item img-horizontal" [src]="imageSrcString" (load)="onImageLoaded()" [alt]="alt() ?? 'Status image'" />
             } @else {
                 <canvas class="blurhash display-none" #canvas width="32" height="32"></canvas>
                 <img
@@ -18,7 +18,7 @@
                     [placeholder]="dataUrl()" [placeholderConfig]="{ blur: false }"
                     [priority]="internalPriority()"
                     (load)="onImageLoaded()"
-                    alt="Status image" />
+                    [alt]="alt() ?? 'Status image'" />
             }
         }
     }

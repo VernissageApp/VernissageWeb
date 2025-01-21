@@ -47,6 +47,15 @@ export class HashtagsSearchComponent extends ResponsiveComponent {
         return undefined;
     }
 
+    protected getImageAlt(status: Status): string | undefined {
+        const attachments = this.getMainStatus(status).attachments;
+        if (attachments && attachments.length > 0) {
+            return attachments[0].description;
+        }
+
+        return undefined;
+    }
+
     private getMainStatus(status: Status): Status {
         return status.reblog ?? status;
     }
