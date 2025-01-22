@@ -11,7 +11,17 @@
                     </section>
 
                     <table mat-table [dataSource]="reportsArray.data" class="mat-elevation-z1">
-                    
+
+                        <!-- Type Column -->
+                        <ng-container matColumnDef="type">
+                            <th mat-header-cell *matHeaderCellDef> </th>
+                            <td mat-cell *matCellDef="let element">
+                                <mat-chip-set *ngIf="!isHandset()" aria-label="Type">
+                                    <mat-chip-option [disableRipple]="true" disabled><span class="fs-90">{{ getReportType(element) }}</span></mat-chip-option>
+                                </mat-chip-set>
+                            </td>
+                        </ng-container>
+
                         <!-- User Column -->
                         <ng-container matColumnDef="user">
                             <th mat-header-cell *matHeaderCellDef> User </th>
@@ -46,7 +56,7 @@
                         <ng-container matColumnDef="status">
                             <th mat-header-cell *matHeaderCellDef> Status </th>
                             <td mat-cell *matCellDef="let element">
-                                <span><a *ngIf=" element.status?.id" [routerLink]="['/statuses', element.status?.id ]">Link</a></span>
+                                <span><a *ngIf="element.status?.id || element.mainStatusId" [routerLink]="['/statuses', element.mainStatusId ?? element.status?.id ]">Link</a></span>
                             </td>
                         </ng-container>
 

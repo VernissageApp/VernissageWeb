@@ -38,8 +38,8 @@ export class ReportsPage extends ResponsiveComponent implements OnInit, OnDestro
     private routeParamsSubscription?: Subscription;
     private readonly displayedColumnsHandsetPortrait: string[] = ['reportedUser', 'status'];
     private readonly displayedColumnsHandsetLandscape: string[] = ['reportedUser', 'status', 'actions'];
-    private readonly displayedColumnsTablet: string[] = ['user', 'reportedUser', 'category', 'status', 'actions'];
-    private readonly displayedColumnsBrowser: string[] = ['user', 'reportedUser', 'status', 'category', 'considerationUser', 'considerationDate', 'actions'];
+    private readonly displayedColumnsTablet: string[] = ['type', 'user', 'reportedUser', 'category', 'status', 'actions'];
+    private readonly displayedColumnsBrowser: string[] = ['type', 'user', 'reportedUser', 'status', 'category', 'considerationUser', 'considerationDate', 'actions'];
     
     constructor(
         private authorizationService: AuthorizationService,
@@ -110,6 +110,18 @@ export class ReportsPage extends ResponsiveComponent implements OnInit, OnDestro
 
     protected override onBrowser(): void {
         this.displayedColumns?.set(this.displayedColumnsBrowser);
+    }
+
+    protected getReportType(report: Report): string {
+        if (report.status) {
+            if (report.status.replyToStatusId) {
+                return 'Comment';
+            }
+
+            return 'Status';
+        }
+
+        return 'Profile';
     }
 
     protected onOpen(report: Report): void {
