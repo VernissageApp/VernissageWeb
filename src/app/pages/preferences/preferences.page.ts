@@ -24,6 +24,7 @@ export class PreferencesPage extends ResponsiveComponent implements OnInit {
     protected showAlternativeText = model(false);
     protected showAvatars = model(false);
     protected showFavourites = model(false);
+    protected showReblog = model(false);
     protected showAltIcon = model(false);
     protected alwaysShowSdrPhoto = model(false);
 
@@ -46,6 +47,7 @@ export class PreferencesPage extends ResponsiveComponent implements OnInit {
         this.showAlternativeText.set(this.preferencesService.showAlternativeText);
         this.showAvatars.set(this.preferencesService.showAvatars);
         this.showFavourites.set(this.preferencesService.showFavourites);
+        this.showReblog.set(this.preferencesService.showReblog);
         this.showAltIcon.set(this.preferencesService.showAltIcon);
         this.alwaysShowSdrPhoto.set(this.preferencesService.alwaysShowSdrPhoto);
 
@@ -82,6 +84,11 @@ export class PreferencesPage extends ResponsiveComponent implements OnInit {
     protected onShowFavouritesChange(): void {
         this.clearReuseStrategyState();
         this.preferencesService.showFavourites = this.showFavourites();
+    }
+
+    protected onShowReblogChange(): void {
+        this.clearReuseStrategyState();
+        this.preferencesService.showReblog = this.showReblog();
     }
 
     protected onShowAltIconChange(): void {

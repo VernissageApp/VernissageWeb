@@ -40,9 +40,11 @@ export class BlurhashImageComponent implements AfterViewInit, OnInit, OnDestroy 
     protected signedInUser = signal<User | undefined>(undefined);
     protected showAltIcon = signal(false);
     protected showFavourites = signal(false);
+    protected showReblog = signal(false);
     protected showAvatar = signal(false);
     protected canvasIsLoaded = signal(false);
     protected isFavourited = signal(false);
+    protected isReblogged = signal(false);
 
     private popover = viewChild<SatPopoverComponent | undefined>('popover');
     private canvas = viewChild<ElementRef<HTMLCanvasElement> | undefined>('canvas');
@@ -72,11 +74,13 @@ export class BlurhashImageComponent implements AfterViewInit, OnInit, OnDestroy 
         this.alt.set(this.getMainAttachmentAlt());
         this.user.set(this.mainStatus().user);
         this.isFavourited.set(this.mainStatus().favourited);
+        this.isReblogged.set(this.mainStatus().reblogged);
         this.contentWarning.set(this.mainStatus().contentWarning);
         this.signedInUser.set(this.authorizationService.getUser());
 
         this.showAltIcon.set(this.preferencesService.showAltIcon);
         this.showFavourites.set(this.preferencesService.showFavourites);
+        this.showReblog.set(this.preferencesService.showReblog);
         this.showAvatar.set(this.preferencesService.showAvatars && this.avatarVisible());
 
         this.blurhash = this.getMainAttachmentBlurhash();
@@ -125,6 +129,23 @@ export class BlurhashImageComponent implements AfterViewInit, OnInit, OnDestroy 
                 await this.statusesService.favourite(this.mainStatus().id);
                 this.isFavourited.set(true);
                 this.messageService.showSuccess('Status favourited.');
+            }
+        } catch (error) {
+            console.error(error);
+            this.messageService.showServerError(error);
+        }
+    }
+
+    protected async reblogToggle(): Promise<void> {
+        try {
+            if (this.isFavourited()) {
+                await this.statusesService.unreblog(this.mainStatus().id);
+                this.isReblogged.set(false);
+                this.messageService.showSuccess('Your boost has been undone.');
+            } else {
+                await this.statusesService.reblog(this.mainStatus().id);
+                this.isReblogged.set(true);
+                this.messageService.showSuccess('Status boosted.');
             }
         } catch (error) {
             console.error(error);

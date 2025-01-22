@@ -42,13 +42,28 @@
             <div class="alt" [matTooltip]="alt()" matTooltipPosition="above">ALT</div>
         }
 
-        @if (signedInUser() && showFavourites()) {
-            <div class="favourite" (click)="favouriteToggle(); $event.preventDefault(); $event.stopPropagation();" (keydown.enter)="favouriteToggle(); $event.preventDefault(); $event.stopPropagation();" tabindex="0">
-                @if (isFavourited()) {
-                    <mat-icon class="fill-symbol">grade</mat-icon>
+        @if (signedInUser() ) {
+            <div class="actions-container flex-row gap-4">
+                @if (showReblog()) {
+                    <div class="reblog" (click)="reblogToggle(); $event.preventDefault(); $event.stopPropagation();" (keydown.enter)="favouriteToggle(); $event.preventDefault(); $event.stopPropagation();" tabindex="0">
+                        @if (isReblogged()) {
+                            <mat-icon class="fill-symbol">rocket_launch</mat-icon>
+                        }
+                        @else {
+                            <mat-icon class="outline-symbol">rocket_launch</mat-icon>
+                        }
+                    </div>
                 }
-                @else {
-                    <mat-icon class="outline-symbol">grade</mat-icon>
+
+                @if (showFavourites()) {
+                    <div class="favourite" (click)="favouriteToggle(); $event.preventDefault(); $event.stopPropagation();" (keydown.enter)="favouriteToggle(); $event.preventDefault(); $event.stopPropagation();" tabindex="0">
+                        @if (isFavourited()) {
+                            <mat-icon class="fill-symbol">grade</mat-icon>
+                        }
+                        @else {
+                            <mat-icon class="outline-symbol">grade</mat-icon>
+                        }
+                    </div>
                 }
             </div>
         }

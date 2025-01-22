@@ -75,6 +75,14 @@ export class PreferencesService {
         this.cookieService.set('showFavourites', showFavourites ? 'true' : 'false', { expires: this.longFuture });
     }
 
+    public get showReblog(): boolean {
+        return (this.cookieService.get('showReblog') ?? 'false') === 'true';
+    }
+
+    public set showReblog(showReblog: boolean) {
+        this.cookieService.set('showReblog', showReblog ? 'true' : 'false', { expires: this.longFuture });
+    }
+
     public get showAltIcon(): boolean {
         return (this.cookieService.get('showAltIcon') ?? 'false') === 'true';
     }

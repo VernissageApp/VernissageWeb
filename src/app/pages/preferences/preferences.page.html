@@ -85,6 +85,12 @@
                         </div>
 
                         <div class="margin-bottom-20">
+                            <mat-slide-toggle color="warn" name="showReblog" [(ngModel)]="showReblog" (ngModelChange)="onShowReblogChange()">
+                                Show boost <div class="text-muted fs-90">Boost icon will be displayed on timelines.</div>
+                            </mat-slide-toggle>
+                        </div>
+
+                        <div class="margin-bottom-20">
                             <mat-slide-toggle color="warn" name="showAltIcon" [(ngModel)]="showAltIcon" (ngModelChange)="onShowAltIconChange()">
                                 Show ALT icon <div class="text-muted fs-90">ALT icon will be displayed on timelines.</div>
                             </mat-slide-toggle>
