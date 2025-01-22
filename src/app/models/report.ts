@@ -6,6 +6,7 @@ export class Report {
     public user?: User;
     public reportedUser?: User;
     public status?: Status;
+    public mainStatusId?: string;
     public comment?: string;
     public forward = false;
     public category?: string;
