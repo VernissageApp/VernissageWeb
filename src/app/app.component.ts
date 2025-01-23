@@ -6,12 +6,14 @@ import { RoutingStateService } from './services/common/routing-state.service';
 import { DOCUMENT } from '@angular/common';
 import { SsrCookieService } from './services/common/ssr-cookie.service';
 import { SettingsService } from './services/http/settings.service';
+import { fadeInAnimation } from './animations/fade-in.animation';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    animations: [fadeInAnimation],
     standalone: false
 })
 export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
@@ -34,6 +36,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
             const body = this.documentRef.getElementById('body');
             body?.classList.add('dark-theme');
             this.documentRef.querySelector("meta[name='theme-color']")?.setAttribute("content", "#303030");
+            this.documentRef.querySelector('html')?.setAttribute("class", "mat-dark");
         }
 
         const internalMastodonUrl = this.settingsService.publicSettings?.mastodonUrl ?? '';

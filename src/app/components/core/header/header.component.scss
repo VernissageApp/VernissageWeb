@@ -1,7 +1,15 @@
 nav {
-    position: sticky;
+    position: fixed;
     top: 0;
+    left: 0;
+    right: 0;
     z-index: 110;
+
+    ::view-transition-group(disabled),
+    ::view-transition-old(disabled),
+    ::view-transition-new(disabled) {
+        animation-duration: 0s !important;
+    }
 
     mat-toolbar {
         border: 1px solid rgba(0, 0, 0, 0.12);
