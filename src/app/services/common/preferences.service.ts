@@ -110,9 +110,11 @@ export class PreferencesService {
         if (this.isLightTheme) {
             renderer.removeClass(this.document.body, 'dark-theme');
             this.windowService.nativeWindow.document.querySelector('meta[name="theme-color"]')?.setAttribute("content", "#fafafa");
+            this.windowService.nativeWindow.document.querySelector('html')?.removeAttribute('class');
         } else {
             renderer.addClass(this.document.body, 'dark-theme');
             this.windowService.nativeWindow.document.querySelector('meta[name="theme-color"]')?.setAttribute("content", "#303030");
+            this.windowService.nativeWindow.document.querySelector('html')?.setAttribute("class", "mat-dark");
         }
     }
 }

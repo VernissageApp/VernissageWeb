@@ -54,7 +54,6 @@ export class HomeSigninComponent extends ResponsiveComponent implements OnInit, 
                 const navigationEndEvent = event as NavigationEnd;
                 
                 if (navigationEndEvent.urlAfterRedirects.startsWith('/home')) {
-                    this.contextStatusesService.setContextStatuses(this.statuses());
                     this.isPageVisible = true;
                 } else {
                     this.isPageVisible = false;

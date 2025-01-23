@@ -1,8 +1,7 @@
+<app-header></app-header>
 <main class="content mat-app-background">
-    <app-header></app-header>
-
     @if (showLoader()) {
-        <div class="loading-shade">
+        <div @fadeIn class="loading-shade">
             <mat-spinner [diameter]="36"></mat-spinner>
         </div>
     }
