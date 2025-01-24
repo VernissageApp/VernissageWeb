@@ -14,7 +14,7 @@ import { FavouritesService } from '../http/favourites.service';
     providedIn: 'root'
 })
 export class ContextStatusesService {
-    private statuses?: LinkableResult<Status>;
+    public statuses?: LinkableResult<Status>;
     public allOlderStatusesDownloaded = false;
     public allNewerStatusesDownloaded = false;
 

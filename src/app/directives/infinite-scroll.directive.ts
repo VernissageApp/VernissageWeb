@@ -2,7 +2,6 @@ import { Directive, ElementRef, input, OnDestroy, OnInit, output } from "@angula
 import { WindowService } from "../services/common/window.service";
 import { fromEvent, Subscription, tap, throttleTime } from "rxjs";
 import { RandomGeneratorService } from "../services/common/random-generator.service";
-import { LazyLoaderService } from "../services/common/lazy-loader.service";
 
 @Directive({
     selector: '[appInfiniteScroll]',
@@ -22,13 +21,10 @@ export class InfiniteScrollDirective implements OnInit, OnDestroy {
     constructor(
         private el: ElementRef,
         private windowService: WindowService,
-        private random: RandomGeneratorService,
-        private lazyLoaderService: LazyLoaderService
+        private random: RandomGeneratorService
     ) { }
   
     ngOnInit(): void {
-        this.controlId = this.random.generateString(10);
-        this.lazyLoaderService.loaderId.set(this.controlId);
 
         // Save window object for type safety.
         this.window = this.windowService.nativeWindow;
@@ -45,10 +41,6 @@ export class InfiniteScrollDirective implements OnInit, OnDestroy {
   
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     windowScrollEvent(_event: Event) {
-        if (this.controlId !== this.lazyLoaderService.loaderId()) {
-            return;
-        }
-
         if (this.infiniteScrollDisabled()) {
             return;
         }

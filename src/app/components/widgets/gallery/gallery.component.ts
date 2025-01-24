@@ -1,6 +1,6 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { ChangeDetectionStrategy, Component, computed, effect, Inject, input, OnDestroy, OnInit, PLATFORM_ID, signal } from '@angular/core';
-import { Subscription, filter } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { LinkableResult } from 'src/app/models/linkable-result';
 import { Status } from 'src/app/models/status';
@@ -8,7 +8,7 @@ import { ContextStatusesService } from 'src/app/services/common/context-statuses
 import { Attachment } from 'src/app/models/attachment';
 import { LoadingService } from 'src/app/services/common/loading.service';
 import { ResponsiveComponent } from 'src/app/common/responsive';
-import { NavigationStart, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { WindowService } from 'src/app/services/common/window.service';
 import { isPlatformBrowser } from '@angular/common';
 import { GalleryStatus } from 'src/app/models/gallery-status';
@@ -25,6 +25,7 @@ import { GalleryColumn } from 'src/app/models/gallery-column';
 })
 export class GalleryComponent extends ResponsiveComponent implements OnInit, OnDestroy {
     public statuses = input.required<LinkableResult<Status>>();
+    public isVisible = input.required<boolean>();
     public squareImages = input(false);
     public hideAvatars = input(false);
 
@@ -44,8 +45,8 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
     private readonly amountOfPriorityImages = 8;
     private readonly minimalFileSize = 1;
     private isReadyTimeout?: NodeJS.Timeout;
-    private startUrl?: URL;
-    private currentUrl?: URL;
+
+    private routeNavigationEndSubscription?: Subscription;
 
     constructor(
         @Inject(PLATFORM_ID) platformId: object,
@@ -61,15 +62,15 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
 
         effect(() => {
             const inputStatuses = this.statuses();
+            const copyStatuses = LinkableResult.copy(inputStatuses);
 
-            this.internalStatuses.set(inputStatuses);
+            this.internalStatuses.set(copyStatuses);
             this.contextStatusesService.setContextStatuses(inputStatuses);
             this.buildGallery(inputStatuses);
         });
     }
 
     override ngOnInit(): void {
-        this.startUrl = new URL(this.router.routerState.snapshot.url, this.windowService.getApplicationUrl());
         this.alwaysShowNSFW.set(this.preferencesService.alwaysShowNSFW);
 
         this.galleryBreakpointSubscription = this.galleryBreakpointObserver.observe([Breakpoints.XSmall]).subscribe(result => {
@@ -83,13 +84,6 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
                 this.buildGallery(this.internalStatuses());
             }
         });
-
-        this.routeNavigationStartSubscription = this.router.events
-            .pipe(filter(event => event instanceof NavigationStart))  
-            .subscribe(async (event) => {
-                const navigationStarEvent = event as NavigationStart;
-                this.currentUrl = new URL(navigationStarEvent.url, this.windowService.getApplicationUrl());
-            });
 
         this.isReadyTimeout = setTimeout(() => {
             this.isReady = true;
@@ -105,6 +99,7 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
 
         this.galleryBreakpointSubscription?.unsubscribe();
         this.routeNavigationStartSubscription?.unsubscribe();
+        this.routeNavigationEndSubscription?.unsubscribe();
     }
 
     protected async onNearEndScroll(): Promise<void> {
@@ -115,7 +110,7 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
         if (!this.isDuringLoadingMode) {
             this.isDuringLoadingMode = true;
 
-            if (this.currentUrl && this.startUrl?.pathname !== this.currentUrl.pathname) {
+            if (!this.isVisible()) {
                 this.isDuringLoadingMode = false;
                 return;
             }

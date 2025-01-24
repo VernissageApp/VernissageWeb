@@ -3,10 +3,8 @@ import { Component, OnInit, OnDestroy, signal, ChangeDetectionStrategy } from "@
 import { ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs/internal/Subscription";
 import { fadeInAnimation } from "src/app/animations/fade-in.animation";
-import { ResponsiveComponent } from "src/app/common/responsive";
+import { ReusableGalleryPageComponent } from "src/app/common/reusable-gallery-page";
 import { ContextTimeline } from "src/app/models/context-timeline";
-import { LinkableResult } from "src/app/models/linkable-result";
-import { Status } from "src/app/models/status";
 import { LoadingService } from "src/app/services/common/loading.service";
 import { TimelineService } from "src/app/services/http/timeline.service";
 
@@ -18,8 +16,7 @@ import { TimelineService } from "src/app/services/http/timeline.service";
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
-export class HashtagPage extends ResponsiveComponent implements OnInit, OnDestroy {
-    protected statuses = signal<LinkableResult<Status> | undefined>(undefined);
+export class HashtagPage extends ReusableGalleryPageComponent implements OnInit, OnDestroy {
     protected isReady = signal(false);
     protected hashtag = signal('');
 

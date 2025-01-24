@@ -2,7 +2,7 @@
     <div></div>
 }
 @else if (statusesExists()) {
-    <div class="gallery-container" appInfiniteScroll [infiniteScrollDistance]="400" [infiniteScrollThrottle]="250" (scrolled)="onNearEndScroll()">
+    <div class="gallery-container" appInfiniteScroll [infiniteScrollDistance]="500" [infiniteScrollThrottle]="200" (scrolled)="onNearEndScroll()">
         <div [ngClass]="{ 'image-gallery': !isHandsetPortrait() || squareImages(), 'square': squareImages() }">
             @for (column of galleryColumns(); track column.columnId) {
                 <div class="column">

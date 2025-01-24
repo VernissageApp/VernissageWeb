@@ -102,7 +102,7 @@
 
         @if (showEditorsChoice()) {
             @if (statuses(); as statusesArray) {
-                <app-gallery [statuses]="statusesArray"></app-gallery>
+                <app-gallery [statuses]="statusesArray" [isVisible]="isPageVisible()"></app-gallery>
             }
         }
     </div>

@@ -1,16 +1,13 @@
 import { Component, OnInit, OnDestroy, HostListener, signal, ChangeDetectionStrategy } from '@angular/core';
-import { Status } from 'src/app/models/status';
 import { TimelineService } from 'src/app/services/http/timeline.service';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { Subscription, filter } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { LoadingService } from 'src/app/services/common/loading.service';
-import { ResponsiveComponent } from 'src/app/common/responsive';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { LinkableResult } from 'src/app/models/linkable-result';
 import { ContextTimeline } from 'src/app/models/context-timeline';
-import { ContextStatusesService } from 'src/app/services/common/context-statuses.service';
 import { SettingsService } from 'src/app/services/http/settings.service';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
+import { ReusableGalleryPageComponent } from 'src/app/common/reusable-gallery-page';
 
 @Component({
     selector: 'app-home-signout',
@@ -20,23 +17,18 @@ import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
-export class HomeSignoutComponent extends ResponsiveComponent implements OnInit, OnDestroy {
-    protected statuses = signal<LinkableResult<Status> | undefined>(undefined);
+export class HomeSignoutComponent extends ReusableGalleryPageComponent implements OnInit, OnDestroy {
     protected isReady = signal(false);
     protected showEditorsChoice = signal(false);
     protected mastodonUrl = signal<string | undefined>(undefined);
     
-    private isPageVisible = true;
     private lastRefreshTime = new Date();
     private routeParamsSubscription?: Subscription;
-    private routeNavigationEndSubscription?: Subscription;
 
     constructor(
-        private contextStatusesService: ContextStatusesService,
         private timelineService: TimelineService,
         private loadingService: LoadingService,
         private settingsService: SettingsService,
-        private router: Router,
         private activatedRoute: ActivatedRoute,
         breakpointObserver: BreakpointObserver
     ) {
@@ -51,18 +43,6 @@ export class HomeSignoutComponent extends ResponsiveComponent implements OnInit,
             this.mastodonUrl.set(internalMastodonUrl);
         }
 
-        this.routeNavigationEndSubscription = this.router.events
-            .pipe(filter(event => event instanceof NavigationEnd))  
-            .subscribe(async (event) => {
-                const navigationEndEvent = event as NavigationEnd;
-                
-                if (navigationEndEvent.urlAfterRedirects.startsWith('/home')) {
-                    this.isPageVisible = true;
-                } else {
-                    this.isPageVisible = false;
-                }
-            });
-
         this.routeParamsSubscription = this.activatedRoute.queryParams.subscribe(async () => {
             this.loadingService.showLoader();
             await this.loadData();
@@ -74,14 +54,12 @@ export class HomeSignoutComponent extends ResponsiveComponent implements OnInit,
 
     override ngOnDestroy(): void {
         super.ngOnDestroy();
-
         this.routeParamsSubscription?.unsubscribe();
-        this.routeNavigationEndSubscription?.unsubscribe();
     }
 
     @HostListener('document:visibilitychange', ['$event'])
     async visibilityChange(event: any): Promise<void> {
-        if (!event.target.hidden && this.isPageVisible) {
+        if (!event.target.hidden && this.isPageVisible()) {
             const twoHours = 60000 * 120;
             const lastRefreshTimePlusTwoHours = new Date(this.lastRefreshTime.getTime() + twoHours);
             const currentTime = new Date();

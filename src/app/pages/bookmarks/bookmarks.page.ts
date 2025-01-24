@@ -1,17 +1,15 @@
 import { Component, OnInit, OnDestroy, signal, ChangeDetectionStrategy } from '@angular/core';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
-import { Status } from 'src/app/models/status';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { LoadingService } from 'src/app/services/common/loading.service';
-import { ResponsiveComponent } from 'src/app/common/responsive';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { LinkableResult } from 'src/app/models/linkable-result';
 import { ContextTimeline } from 'src/app/models/context-timeline';
 import { BookmarksService } from 'src/app/services/http/bookmarks.service';
 import { User } from 'src/app/models/user';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 import { UserDisplayService } from 'src/app/services/common/user-display.service';
+import { ReusableGalleryPageComponent } from 'src/app/common/reusable-gallery-page';
 
 @Component({
     selector: 'app-bookmarks',
@@ -21,15 +19,13 @@ import { UserDisplayService } from 'src/app/services/common/user-display.service
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
-export class BookmarksPage extends ResponsiveComponent implements OnInit, OnDestroy {
-    protected statuses = signal<LinkableResult<Status> | undefined>(undefined);
+export class BookmarksPage extends ReusableGalleryPageComponent implements OnInit, OnDestroy {
     protected isReady = signal(false);
 
     protected user = signal<User | undefined>(undefined);
     protected fullName = signal('');
 
     private routeParamsSubscription?: Subscription;
-    private routeNavigationEndSubscription?: Subscription;
 
     constructor(
         private bookmarksService: BookmarksService,
@@ -64,8 +60,6 @@ export class BookmarksPage extends ResponsiveComponent implements OnInit, OnDest
 
     override ngOnDestroy(): void {
         super.ngOnDestroy();
-
         this.routeParamsSubscription?.unsubscribe();
-        this.routeNavigationEndSubscription?.unsubscribe();
     }
 }
