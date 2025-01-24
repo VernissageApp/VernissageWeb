@@ -1,12 +1,11 @@
 import { BreakpointObserver } from "@angular/cdk/layout";
 import { Component, OnInit, OnDestroy, signal, model, ChangeDetectionStrategy } from "@angular/core";
-import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
+import { ActivatedRoute, NavigationExtras } from "@angular/router";
 import { Subscription } from "rxjs/internal/Subscription";
 import { fadeInAnimation } from "src/app/animations/fade-in.animation";
-import { ResponsiveComponent } from "src/app/common/responsive";
+import { ReusableGalleryPageComponent } from "src/app/common/reusable-gallery-page";
 import { ContextTimeline } from "src/app/models/context-timeline";
 import { LinkableResult } from "src/app/models/linkable-result";
-import { Status } from "src/app/models/status";
 import { User } from "src/app/models/user";
 import { AuthorizationService } from "src/app/services/authorization/authorization.service";
 import { LoadingService } from "src/app/services/common/loading.service";
@@ -21,8 +20,7 @@ import { TimelineService } from "src/app/services/http/timeline.service";
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
-export class EditorsPage extends ResponsiveComponent implements OnInit, OnDestroy {
-    protected statuses = signal<LinkableResult<Status> | undefined>(undefined);
+export class EditorsPage extends ReusableGalleryPageComponent implements OnInit, OnDestroy {
     protected users = signal<LinkableResult<User> | undefined>(undefined);
 
     protected isReady = signal(false);
@@ -39,7 +37,6 @@ export class EditorsPage extends ResponsiveComponent implements OnInit, OnDestro
         private loadingService: LoadingService,
         private settingsService: SettingsService,
         private authorizationService: AuthorizationService,
-        private router: Router,
         private activatedRoute: ActivatedRoute,
         breakpointObserver: BreakpointObserver
     ) {

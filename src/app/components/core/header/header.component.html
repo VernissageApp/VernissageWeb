@@ -7,21 +7,21 @@
                 </button>
                 <mat-menu #discover="matMenu">
                     @if (showTrending()) {
-                        <button mat-menu-item [routerLink]="['/trending']" (click)="clearReuseRoute()" aria-label="Trending">
+                        <button mat-menu-item [routerLink]="['/trending']" (click)="markClearReuseStrategy()" aria-label="Trending">
                             <mat-icon>timeline</mat-icon>
                             <span>Trending</span>
                         </button>
                     }
 
                     @if (showEditorsChoice()) {
-                        <button mat-menu-item [routerLink]="['/editors']" (click)="clearReuseRoute()" aria-label="Editor's choice">
+                        <button mat-menu-item [routerLink]="['/editors']" (click)="markClearReuseStrategy()" aria-label="Editor's choice">
                             <mat-icon>stars</mat-icon>
                             <span>Editor's choice</span>
                         </button>
                     }
 
                     @if (showCategories()) {
-                        <button mat-menu-item [routerLink]="['/categories']" (click)="clearReuseRoute()" aria-label="Categories">
+                        <button mat-menu-item [routerLink]="['/categories']" (click)="markClearReuseStrategy()" aria-label="Categories">
                             <mat-icon>loyalty</mat-icon>
                             <span>Categories</span>
                         </button>
@@ -43,7 +43,7 @@
             }
         }
 
-        <a class="logo link" [routerLink]="['/']" (click)="clearReuseRoute()" tabindex="0" aria-label="Application logo">
+        <a class="logo link" [routerLink]="['/']" (click)="markClearReuseStrategy()" tabindex="0" aria-label="Application logo">
             <div class="image"></div>
             <div class="beta"></div>
         </a>
@@ -51,19 +51,19 @@
         @if (deviceResolution() === resolution.handsetLandscape || deviceResolution() === resolution.tablet || deviceResolution() === resolution.browser) {
             @if (deviceResolution() === resolution.handsetLandscape) {
                 @if (showTrending()) {
-                    <button mat-icon-button color="primary" [routerLink]="['/trending']" (click)="clearReuseRoute()" aria-label="Trending">
+                    <button mat-icon-button color="primary" [routerLink]="['/trending']" (click)="markClearReuseStrategy()" aria-label="Trending">
                         <mat-icon>trending_up</mat-icon>
                     </button>
                 }
                 
                 @if (showEditorsChoice()) {
-                    <button mat-icon-button color="primary" [routerLink]="['/editors']"(click)="clearReuseRoute()" aria-label="Editor's choice">
+                    <button mat-icon-button color="primary" [routerLink]="['/editors']"(click)="markClearReuseStrategy()" aria-label="Editor's choice">
                         <mat-icon>stars</mat-icon>
                     </button>
                 }
 
                 @if (showCategories()) {
-                    <button mat-icon-button color="primary" [routerLink]="['/categories']" (click)="clearReuseRoute()" aria-label="Categories">
+                    <button mat-icon-button color="primary" [routerLink]="['/categories']" (click)="markClearReuseStrategy()" aria-label="Categories">
                         <mat-icon>loyalty</mat-icon>
                     </button>
                 }
@@ -71,19 +71,19 @@
 
             @if (deviceResolution() === resolution.tablet || deviceResolution() === resolution.browser) {
                 @if(showTrending()) {
-                    <button mat-button color="primary" [routerLink]="['/trending']" (click)="clearReuseRoute()" aria-label="Trending" class="margin-right-5">
+                    <button mat-button color="primary" [routerLink]="['/trending']" (click)="markClearReuseStrategy()" aria-label="Trending" class="margin-right-5">
                         <mat-icon>trending_up</mat-icon> Trending
                     </button>
                 }
 
                 @if (showEditorsChoice()) {
-                    <button mat-button color="primary" [routerLink]="['/editors']" (click)="clearReuseRoute()" aria-label="Editor's choice" class="margin-right-5">
+                    <button mat-button color="primary" [routerLink]="['/editors']" (click)="markClearReuseStrategy()" aria-label="Editor's choice" class="margin-right-5">
                         <mat-icon>stars</mat-icon> Editor's choice
                     </button>
                 }
 
                 @if (showCategories()) {
-                    <button mat-button color="primary" [routerLink]="['/categories']" (click)="clearReuseRoute()" aria-label="Categories" class="margin-right-5">
+                    <button mat-button color="primary" [routerLink]="['/categories']" (click)="markClearReuseStrategy()" aria-label="Categories" class="margin-right-5">
                         <mat-icon>loyalty</mat-icon> Categories
                     </button>
                 }
@@ -144,12 +144,12 @@
                         <img class="avatar" [ngSrc]="avatarUrl()" width="600" height="600" alt="Avatar" priority />
                     </button>
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item [routerLink]="['/@' + userObject.userName]" aria-label="Signed in as">
+                        <button mat-menu-item [routerLink]="['/@' + userObject.userName]" (click)="markClearReuseStrategy()" aria-label="Signed in as">
                             <mat-icon>face</mat-icon>
                             <span>{{ fullName() }}</span>
                         </button>
                         <mat-divider></mat-divider>
-                        <button mat-menu-item [routerLink]="['/']" aria-label="Home">
+                        <button mat-menu-item [routerLink]="['/']" (click)="markClearReuseStrategy()" aria-label="Home">
                             <mat-icon>home</mat-icon>
                             <span>Home</span>
                         </button>

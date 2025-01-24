@@ -1,13 +1,12 @@
 import { BreakpointObserver } from "@angular/cdk/layout";
 import { Component, OnInit, OnDestroy, signal, model, ChangeDetectionStrategy } from "@angular/core";
-import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
+import { ActivatedRoute, NavigationExtras } from "@angular/router";
 import { Subscription } from "rxjs";
 import { fadeInAnimation } from "src/app/animations/fade-in.animation";
-import { ResponsiveComponent } from "src/app/common/responsive";
+import { ReusableGalleryPageComponent } from "src/app/common/reusable-gallery-page";
 import { ContextTimeline } from "src/app/models/context-timeline";
 import { Hashtag } from "src/app/models/hashtag";
 import { LinkableResult } from "src/app/models/linkable-result";
-import { Status } from "src/app/models/status";
 import { TrendingPeriod } from "src/app/models/trending-period";
 import { User } from "src/app/models/user";
 import { AuthorizationService } from "src/app/services/authorization/authorization.service";
@@ -23,10 +22,9 @@ import { TrendingService } from "src/app/services/http/trending.service";
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
-export class TrendingPage extends ResponsiveComponent implements OnInit, OnDestroy {
+export class TrendingPage extends ReusableGalleryPageComponent implements OnInit, OnDestroy {
     protected readonly trendingPeriod = TrendingPeriod;
 
-    protected statuses = signal<LinkableResult<Status> | undefined>(undefined);
     protected users = signal<LinkableResult<User> | undefined>(undefined);
     protected hashtags = signal<LinkableResult<Hashtag> | undefined>(undefined);
 
@@ -44,7 +42,6 @@ export class TrendingPage extends ResponsiveComponent implements OnInit, OnDestr
         private loadingService: LoadingService,
         private settingsService: SettingsService,
         private authorizationService: AuthorizationService,
-        private router: Router,
         private activatedRoute: ActivatedRoute,
         breakpointObserver: BreakpointObserver
     ) {

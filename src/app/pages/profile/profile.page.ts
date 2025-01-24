@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit, signal } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from '@angular/router';
-import { Subscription, filter } from 'rxjs';
-import { Status } from 'src/app/models/status';
+import { ActivatedRoute, NavigationEnd, NavigationStart } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { User } from 'src/app/models/user';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 import { UsersService } from 'src/app/services/http/users.service';
@@ -11,7 +10,6 @@ import { RelationshipsService } from 'src/app/services/http/relationships.servic
 import { ProfilePageTab } from 'src/app/models/profile-page-tab';
 import { LoadingService } from 'src/app/services/common/loading.service';
 import { LinkableResult } from 'src/app/models/linkable-result';
-import { ResponsiveComponent } from 'src/app/common/responsive';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { DOCUMENT } from '@angular/common';
 import { Meta, Title } from '@angular/platform-browser';
@@ -22,6 +20,7 @@ import { PreferencesService } from 'src/app/services/common/preferences.service'
 import { UserDisplayService } from 'src/app/services/common/user-display.service';
 import { ContextTimeline } from 'src/app/models/context-timeline';
 import { MessagesService } from 'src/app/services/common/messages.service';
+import { ReusableGalleryPageComponent } from 'src/app/common/reusable-gallery-page';
 
 @Component({
     selector: 'app-profile',
@@ -31,7 +30,7 @@ import { MessagesService } from 'src/app/services/common/messages.service';
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
-export class ProfilePage extends ResponsiveComponent implements OnInit, OnDestroy {
+export class ProfilePage extends ReusableGalleryPageComponent implements OnInit, OnDestroy {
     protected readonly profilePageTab = ProfilePageTab;
     protected isReady = signal(false);
 
@@ -51,12 +50,8 @@ export class ProfilePage extends ResponsiveComponent implements OnInit, OnDestro
     protected followers = signal<LinkableResult<User> | undefined>(undefined);
 
     protected latestFollowers = signal<LinkableResult<User> | undefined>(undefined);
-    protected statuses = signal<LinkableResult<Status> | undefined>(undefined);
 
     private routeParamsSubscription?: Subscription;
-    private routeNavigationEndSubscription?: Subscription;
-    private routeNavigationStartSubscription?: Subscription;
-
     private userName!: string;
     private loadingDifferentProfile = false;
     private relationshipRefreshInterval: NodeJS.Timeout | undefined;
@@ -72,7 +67,6 @@ export class ProfilePage extends ResponsiveComponent implements OnInit, OnDestro
         private relationshipsService: RelationshipsService,
         private loadingService: LoadingService,
         private messagesService: MessagesService,
-        private router: Router,
         private activatedRoute: ActivatedRoute,
         private titleService: Title,
         private metaService: Meta,
@@ -85,46 +79,38 @@ export class ProfilePage extends ResponsiveComponent implements OnInit, OnDestro
         super(breakpointObserver);
     }
 
+    override onRouteNavigationStart(navigationStarEvent: NavigationStart): void {
+        if (navigationStarEvent.url.includes(this.userName.substring(1))) {
+            this.loadingDifferentProfile = false;
+        } else {
+            this.loadingDifferentProfile = true;
+        }
+    }
+
+    override async onRouteNavigationEnd(navigationEndEvent: NavigationEnd): Promise<void> {
+        if (!this.loadingDifferentProfile) {
+            if (navigationEndEvent.url.includes('/following')) {
+                this.selectedProfilePageTab.set(ProfilePageTab.Following);
+                if (!this.following()) {
+                    await this.onLoadMoreFollowing();
+                }
+            } else if (navigationEndEvent.url.includes('/followers')) {
+                this.selectedProfilePageTab.set(ProfilePageTab.Followers);
+                if (!this.followers()) {
+                    await this.onLoadMoreFollowers();
+                }
+            } else {
+                this.selectedProfilePageTab.set(ProfilePageTab.Statuses);
+                if (!this.statuses()) {
+                    const downloadedStatuses = await this.usersService.statuses(this.userName);
+                    this.statuses.set(downloadedStatuses);
+                }
+            }
+        }
+    }
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
         this.squareImages.set(this.preferencesService.isSquareImages);
-
-        this.routeNavigationStartSubscription = this.router.events
-            .pipe(filter(event => event instanceof NavigationStart))  
-            .subscribe(async (event) => {
-                const navigationStarEvent = event as NavigationStart;
-                if (navigationStarEvent.url.includes(this.userName.substring(1))) {
-                    this.loadingDifferentProfile = false;
-                } else {
-                    this.loadingDifferentProfile = true;
-                }
-            });
-
-        this.routeNavigationEndSubscription = this.router.events
-            .pipe(filter(event => event instanceof NavigationEnd))  
-            .subscribe(async (event) => {
-                if (!this.loadingDifferentProfile) {
-                    const navigationEndEvent  = event as NavigationEnd;
-        
-                    if (navigationEndEvent.url.includes('/following')) {
-                        this.selectedProfilePageTab.set(ProfilePageTab.Following);
-                        if (!this.following()) {
-                            await this.onLoadMoreFollowing();
-                        }
-                    } else if (navigationEndEvent.url.includes('/followers')) {
-                        this.selectedProfilePageTab.set(ProfilePageTab.Followers);
-                        if (!this.followers()) {
-                            await this.onLoadMoreFollowers();
-                        }
-                    } else {
-                        this.selectedProfilePageTab.set(ProfilePageTab.Statuses);
-                        if (!this.statuses()) {
-                            const downloadedStatuses = await this.usersService.statuses(this.userName);
-                            this.statuses.set(downloadedStatuses);
-                        }
-                    }
-                }
-            });
 
         this.routeParamsSubscription = this.activatedRoute.params.subscribe(async params => {
             this.isReady.set(false);
@@ -174,8 +160,6 @@ export class ProfilePage extends ResponsiveComponent implements OnInit, OnDestro
         super.ngOnDestroy();
 
         this.routeParamsSubscription?.unsubscribe();
-        this.routeNavigationEndSubscription?.unsubscribe();
-        this.routeNavigationStartSubscription?.unsubscribe()
 
         if (this.relationshipRefreshInterval) {
             clearInterval(this.relationshipRefreshInterval);

@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, Renderer2, signal, computed, ChangeDetectionStrategy } from '@angular/core';
-import { RouteReuseStrategy, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { NavigationEnd, RouteReuseStrategy, Router } from '@angular/router';
+import { filter, Subscription } from 'rxjs';
 
 import { User } from 'src/app/models/user';
 import { InstanceService } from 'src/app/services/http/instance.service';
@@ -34,9 +34,11 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
     protected showCategories = signal(false);
     protected isLightTheme = signal(false);
 
+    private clearReuseStrategyAfterNavigationEnds = false;
     private userChangeSubscription?: Subscription;
     private notificationChangeSubscription?: Subscription;
     private messagesSubscription?: Subscription;
+    private routeNavigationEndSubscription?: Subscription;
 
     constructor(
         private authorizationService: AuthorizationService,
@@ -82,6 +84,15 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
             this.clearReuseStrategyState();
         });
 
+        this.routeNavigationEndSubscription = this.router.events
+            .pipe(filter(event => event instanceof NavigationEnd))  
+            .subscribe(async () => {
+                if (this.clearReuseStrategyAfterNavigationEnds) {
+                    this.clearReuseStrategyState();
+                    this.clearReuseStrategyAfterNavigationEnds = false;
+                }
+            });
+
         this.notificationChangeSubscription = this.notificationsService.changes.subscribe(async (count) => {
             this.notificationCounter.set(count);
             this.notificationsService.setApplicationBadge(count);
@@ -94,6 +105,7 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
         this.userChangeSubscription?.unsubscribe();
         this.notificationChangeSubscription?.unsubscribe();
         this.messagesSubscription?.unsubscribe();
+        this.routeNavigationEndSubscription?.unsubscribe();
     }
 
     protected async signOut(): Promise<void> {
@@ -102,8 +114,8 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
         await this.router.navigate(['/login']);
     }
 
-    protected clearReuseRoute(): void {
-        this.clearReuseStrategyState();
+    protected markClearReuseStrategy(): void {
+        this.clearReuseStrategyAfterNavigationEnds = true;
     }
 
     protected isRegistrationEnabled(): boolean {
