@@ -9,7 +9,6 @@ import { Attachment } from 'src/app/models/attachment';
 import { LoadingService } from 'src/app/services/common/loading.service';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { NavigationEnd, Router } from '@angular/router';
-import { WindowService } from 'src/app/services/common/window.service';
 import { isPlatformBrowser } from '@angular/common';
 import { GalleryStatus } from 'src/app/models/gallery-status';
 import { PreferencesService } from 'src/app/services/common/preferences.service';
@@ -55,8 +54,7 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
         private preferencesService: PreferencesService,
         private router: Router,
         private contextStatusesService: ContextStatusesService,
-        private galleryBreakpointObserver: BreakpointObserver,
-        private windowService: WindowService
+        private galleryBreakpointObserver: BreakpointObserver
     ) {
         super(galleryBreakpointObserver);
         this.isBrowser.set(isPlatformBrowser(platformId));
@@ -66,8 +64,8 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
             const copyStatuses = LinkableResult.copy(inputStatuses);
 
             this.internalStatuses.set(copyStatuses);
-            this.contextStatusesService.setContextStatuses(inputStatuses);
-            this.buildGallery(inputStatuses);
+            this.contextStatusesService.setContextStatuses(copyStatuses);
+            this.buildGallery(copyStatuses);
         });
     }
 

@@ -38,11 +38,8 @@ export class CategoryPage extends ReusableGalleryPageComponent implements OnInit
             this.loadingService.showLoader();
             this.category.set(params['category'] as string);
 
-            const downloadedStatuses = await this.timelineService.category(this.category(), undefined, undefined, undefined, undefined);
-            downloadedStatuses.context = ContextTimeline.category;
-            downloadedStatuses.hashtag = this.category();
-
-            this.statuses.set(downloadedStatuses);
+            this.statuses.set(undefined);
+            await this.loadFirstStatusesSet();
 
             this.isReady.set(true);
             this.loadingService.hideLoader();
@@ -53,5 +50,13 @@ export class CategoryPage extends ReusableGalleryPageComponent implements OnInit
         super.ngOnDestroy();
 
         this.routeParamsSubscription?.unsubscribe();
+    }
+
+    private async loadFirstStatusesSet(): Promise<void> {
+        const downloadedStatuses = await this.timelineService.category(this.category(), undefined, undefined, undefined, undefined);
+        downloadedStatuses.context = ContextTimeline.category;
+        downloadedStatuses.category = this.category();
+
+        this.statuses.set(downloadedStatuses);
     }
 }

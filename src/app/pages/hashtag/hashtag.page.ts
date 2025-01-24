@@ -38,11 +38,8 @@ export class HashtagPage extends ReusableGalleryPageComponent implements OnInit,
             this.loadingService.showLoader();
             this.hashtag.set(params['tag'] as string);
 
-            const downloadStatuses = await this.timelineService.hashtag(this.hashtag(), undefined, undefined, undefined, undefined);
-            downloadStatuses.context = ContextTimeline.hashtag;
-            downloadStatuses.hashtag = this.hashtag();
-
-            this.statuses.set(downloadStatuses);
+            this.statuses.set(undefined);
+            await this.loadFirstStatusesSet();
 
             this.isReady.set(true);
             this.loadingService.hideLoader();
@@ -53,5 +50,13 @@ export class HashtagPage extends ReusableGalleryPageComponent implements OnInit,
         super.ngOnDestroy();
 
         this.routeParamsSubscription?.unsubscribe();
+    }
+
+    private async loadFirstStatusesSet(): Promise<void> {
+        const downloadStatuses = await this.timelineService.hashtag(this.hashtag(), undefined, undefined, undefined, undefined);
+        downloadStatuses.context = ContextTimeline.hashtag;
+        downloadStatuses.hashtag = this.hashtag();
+
+        this.statuses.set(downloadStatuses);
     }
 }

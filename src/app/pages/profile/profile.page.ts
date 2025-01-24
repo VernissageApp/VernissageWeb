@@ -102,12 +102,12 @@ export class ProfilePage extends ReusableGalleryPageComponent implements OnInit,
             } else {
                 this.selectedProfilePageTab.set(ProfilePageTab.Statuses);
                 if (!this.statuses()) {
-                    const downloadedStatuses = await this.usersService.statuses(this.userName);
-                    this.statuses.set(downloadedStatuses);
+                    await this.loadFirstStatusesSet();
                 }
             }
         }
     }
+
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
         this.squareImages.set(this.preferencesService.isSquareImages);
@@ -333,13 +333,16 @@ export class ProfilePage extends ReusableGalleryPageComponent implements OnInit,
             await this.onLoadMoreFollowers();
         } else {
             this.selectedProfilePageTab.set(ProfilePageTab.Statuses);
-
-            const statuses = await this.usersService.statuses(this.userName);
-            statuses.context = ContextTimeline.user;
-            statuses.user = this.user()?.userName;
-
-            this.statuses.set(statuses);
+            await this.loadFirstStatusesSet();
         }
+    }
+
+    private async loadFirstStatusesSet(): Promise<void> {
+        const statuses = await this.usersService.statuses(this.userName);
+        statuses.context = ContextTimeline.user;
+        statuses.user = this.user()?.userName;
+
+        this.statuses.set(statuses);
     }
 
     private createLink(url: string): void {
