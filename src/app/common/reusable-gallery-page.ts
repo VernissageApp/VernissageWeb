@@ -14,7 +14,7 @@ import { Status } from "../models/status";
 })
 export class ReusableGalleryPageComponent extends ResponsiveComponent implements OnInit, OnDestroy {
     protected statuses = signal<LinkableResult<Status> | undefined>(undefined);
-    protected isPageVisible = signal(true);
+    protected isPageVisible = true;
     protected pageUrl = '';
 
     protected router = inject(Router);
@@ -34,7 +34,7 @@ export class ReusableGalleryPageComponent extends ResponsiveComponent implements
                 
                 if (navigationEndEvent.urlAfterRedirects.startsWith(this.pageUrl)) {
                     this.contextStatusesService.setContextStatuses(this.statuses());
-                    this.isPageVisible.set(true);
+                    this.isPageVisible = true;
                 }
 
                 this.onRouteNavigationEnd(navigationEndEvent);
@@ -44,9 +44,9 @@ export class ReusableGalleryPageComponent extends ResponsiveComponent implements
             .pipe(filter(event => event instanceof NavigationStart))  
             .subscribe(async (event) => {
                 const navigationStarEvent = event as NavigationStart;
-                if (!navigationStarEvent.url.startsWith(this.pageUrl) && this.isPageVisible()) {
+                if (!navigationStarEvent.url.startsWith(this.pageUrl) && this.isPageVisible) {
                     this.statuses.set(this.contextStatusesService.statuses);
-                    this.isPageVisible.set(false);
+                    this.isPageVisible = false;
                 }
 
                 this.onRouteNavigationStart(navigationStarEvent);

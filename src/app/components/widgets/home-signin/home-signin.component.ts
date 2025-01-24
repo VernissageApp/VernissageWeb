@@ -63,7 +63,7 @@ export class HomeSigninComponent extends ReusableGalleryPageComponent implements
 
     @HostListener('document:visibilitychange', ['$event'])
     async visibilityChange(event: any): Promise<void> {
-        if (!event.target.hidden && this.isPageVisible()) {
+        if (!event.target.hidden && this.isPageVisible) {
             const twoHours = 60000 * 120;
             const lastRefreshTimePlusTwoHours = new Date(this.lastRefreshTime.getTime() + twoHours);
             const currentTime = new Date();

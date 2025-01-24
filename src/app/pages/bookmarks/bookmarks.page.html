@@ -9,7 +9,7 @@
         </section>
 
         @if (statuses(); as statusesArray) {
-            <app-gallery [statuses]="statusesArray" [isVisible]="isPageVisible()"></app-gallery>
+            <app-gallery [statuses]="statusesArray" [startUrl]="pageUrl"></app-gallery>
         }
     </div>
 }
