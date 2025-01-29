@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input, model, OnInit, output, signal, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, model, OnInit, output, signal, viewChild } from '@angular/core';
 import { Status } from 'src/app/models/status';
 import { StatusRequest } from 'src/app/models/status-request';
 import { User } from 'src/app/models/user';
@@ -24,7 +24,8 @@ export class CommentReplyComponent implements OnInit {
 
     protected maxStatusLength = signal(0);
     protected comment = model<string | undefined>('');
-    protected isSendDisabled = signal(false);
+    protected isDuringSave = signal(false);
+    protected commentEntered = computed(() => (this.comment()?.length ?? 0) > 0);
     protected readonly avatarSize = AvatarSize;
 
     private commentForm = viewChild<NgForm>('commentForm');
@@ -37,12 +38,13 @@ export class CommentReplyComponent implements OnInit {
 
     ngOnInit(): void {
         this.maxStatusLength.set(this.instanceService.instance?.configuration?.statuses?.maxCharacters ?? 500);
+        this.fillUserName();
     }
 
     protected async onSubmitComment(): Promise<void> {
         try {
             if (this.status != null) {
-                this.isSendDisabled.set(true);
+                this.isDuringSave.set(true);
 
                 const newStatusRequest = new StatusRequest();
                 newStatusRequest.note = this.comment() ?? '';
@@ -50,8 +52,9 @@ export class CommentReplyComponent implements OnInit {
 
                 await this.statusesService.create(newStatusRequest);
 
-                this.comment.set('');
                 this.commentForm()?.resetForm();
+                this.fillUserName();
+
                 this.messageService.showSuccess('Comment has been added.');
                 this.added.emit();
             }
@@ -59,11 +62,18 @@ export class CommentReplyComponent implements OnInit {
             console.error(error);
             this.messageService.showServerError(error);
         } finally {
-            this.isSendDisabled.set(false);
+            this.isDuringSave.set(false);
         }
     }
 
     protected onCancel(): void {
         this.clickCancel.emit();
+    }
+
+    private fillUserName(): void {
+        const userName = this.status().user?.userName;
+        if (userName) {
+            this.comment.set(`@${userName} `);
+        }
     }
 }
