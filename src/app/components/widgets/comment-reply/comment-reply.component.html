@@ -9,12 +9,11 @@
                 <textarea
                     matInput
                     [name]="'comment' + status().id"
-                    cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="10"
-                    placeholder="Comment"
+                    cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="3" cdkAutosizeMaxRows="10"
+                    placeholder="Leave a comment"
                     #commentInput="ngModel"
                     [(ngModel)]="comment"
-                    aria-label="Comment"
-                    required
+                    aria-label="Leave a comment"
                     [appMaxLength]="maxStatusLength().toString()">
                 </textarea>
 
@@ -35,6 +34,6 @@
             </mat-form-field>
 
         </div>
-        <button type="submit" mat-flat-button color="primary" [disabled]="isSendDisabled()">Send</button>
+        <button type="submit" mat-flat-button color="primary" [disabled]="isDuringSave() || !commentEntered()">Send</button>
     </div>
 </form>
