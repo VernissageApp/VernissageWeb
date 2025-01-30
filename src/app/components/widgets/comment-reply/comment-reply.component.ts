@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, input, model, OnInit, output, signal, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, input, model, OnInit, output, signal, viewChild } from '@angular/core';
 import { Status } from 'src/app/models/status';
 import { StatusRequest } from 'src/app/models/status-request';
 import { User } from 'src/app/models/user';
@@ -33,12 +33,14 @@ export class CommentReplyComponent implements OnInit {
     constructor(
         private statusesService: StatusesService,
         private instanceService: InstanceService,
-        private messageService: MessagesService) {
+        private messageService: MessagesService
+    ) {
+        effect(() => this.fillUserName(this.status()));
     }
 
     ngOnInit(): void {
         this.maxStatusLength.set(this.instanceService.instance?.configuration?.statuses?.maxCharacters ?? 500);
-        this.fillUserName();
+        this.fillUserName(this.status());
     }
 
     protected async onSubmitComment(): Promise<void> {
@@ -53,7 +55,7 @@ export class CommentReplyComponent implements OnInit {
                 await this.statusesService.create(newStatusRequest);
 
                 this.commentForm()?.resetForm();
-                this.fillUserName();
+                this.fillUserName(this.status());
 
                 this.messageService.showSuccess('Comment has been added.');
                 this.added.emit();
@@ -70,8 +72,8 @@ export class CommentReplyComponent implements OnInit {
         this.clickCancel.emit();
     }
 
-    private fillUserName(): void {
-        const userName = this.status().user?.userName;
+    private fillUserName(status: Status): void {
+        const userName = status.user?.userName;
         if (userName) {
             this.comment.set(`@${userName} `);
         }
