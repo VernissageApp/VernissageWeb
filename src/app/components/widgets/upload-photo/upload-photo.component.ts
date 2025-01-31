@@ -28,7 +28,6 @@ import { PersistenceService } from 'src/app/services/persistance/persistance.ser
 export class UploadPhotoComponent extends ResponsiveComponent implements OnInit {
     public photo = model.required<UploadPhoto>();
     public licenses = input.required<License[]>();
-    public index = input.required<number>();
 
     protected cities$?: Observable<Location[]>;
     protected citiesControl = new FormControl<string | Location>('');

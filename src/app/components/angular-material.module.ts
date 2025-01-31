@@ -31,6 +31,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatProgressBar } from '@angular/material/progress-bar';
 import { MatTabsModule } from '@angular/material/tabs';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { GalleryModule } from 'ng-gallery';
 import { SatPopoverModule } from '@ncstate/sat-popover';
 import { FileSaverModule } from 'ngx-filesaver';
@@ -75,7 +76,8 @@ import { QRCodeComponent } from 'angularx-qrcode';
         GalleryModule,
         SatPopoverModule,
         FileSaverModule,
-        QRCodeComponent
+        QRCodeComponent,
+        DragDropModule
     ],
     exports: [
         MatToolbarModule,
@@ -114,7 +116,8 @@ import { QRCodeComponent } from 'angularx-qrcode';
         GalleryModule,
         SatPopoverModule,
         FileSaverModule,
-        QRCodeComponent
+        QRCodeComponent,
+        DragDropModule
     ]
 })
 export class AngularMaterialModule { }

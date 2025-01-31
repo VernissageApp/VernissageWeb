@@ -10,9 +10,13 @@
     <div class="flex-row flex-responsive flex-stretch">
         <div class="padding-bottom-10">
             <div class="flex-row flex-wrap gap-10">
-                @for (photo of photos(); track photo.id; let i = $index) {
-                    <img (click)="onImageClick(i)" (keydown.enter)="onImageClick(i)" tabindex="0" [src]="photo.photoSrc()" alt="Uploaded photo" [ngClass]="{ 'selected': selectedIndex() === i, 'small': isHandset() }" class="photo-thumbnail" />
-                }                
+                <div cdkDropList class="example-list" cdkDropListOrientation="mixed" (cdkDropListDropped)="drop($event)">
+                    @for (photo of photos(); track photo.uuid; let i = $index) {
+                        <div class="display-inline-block" cdkDrag>
+                            <img (click)="onImageClick(i)" (keydown.enter)="onImageClick(i)" tabindex="0" [src]="photo.photoSrc()" alt="Uploaded photo" [ngClass]="{ 'selected': selectedIndex() === i, 'small': isHandset() }" class="photo-thumbnail" />
+                        </div>
+                    }
+                </div>
 
                 <div class="dropzone active" [ngClass]="{ 'small': isHandset() }" (click)="photoFileUpload.click()" (keydown.enter)="photoFileUpload.click()" tabindex="0">
                     <div class="plus">
@@ -32,10 +36,10 @@
 
             <mat-card-content>
                 <mat-stepper orientation="vertical" [(selectedIndex)]="selectedIndex" #stepper>
-                    @for (photo of photos(); track photo.uuid; let i = $index) {
+                    @for (photo of photos(); track $index; let i = $index) {
                         <mat-step>
                             <ng-template matStepLabel>Image data #{{ i + 1 }}</ng-template>
-                            <app-upload-photo [photo]="photo" [index]="i" [licenses]="licenses()"></app-upload-photo>
+                            <app-upload-photo [photo]="photo" [licenses]="licenses()"></app-upload-photo>
                             <div class="margin-top-15 flex-row flex-space-between">
                                 <div>
                                     <button *ngIf="i > 0" class="margin-right-10" mat-stroked-button matStepperPrevious>Back</button>

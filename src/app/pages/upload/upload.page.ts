@@ -20,6 +20,8 @@ import { LicensesService } from 'src/app/services/http/liceses.service';
 import { InstanceService } from 'src/app/services/http/instance.service';
 import { SettingsService } from 'src/app/services/http/settings.service';
 import { RandomGeneratorService } from 'src/app/services/common/random-generator.service';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { WindowService } from 'src/app/services/common/window.service';
 
 @Component({
     selector: 'app-upload',
@@ -65,6 +67,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
         private router: Router,
         private settingsService: SettingsService,
         private randomGeneratorService: RandomGeneratorService,
+        private windowService: WindowService,
         breakpointObserver: BreakpointObserver
     ) {
         super(breakpointObserver);
@@ -280,6 +283,17 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
 
     protected onStatusTextChange(): void {
         this.setCategoryBasedOnHashtags();
+    }
+
+    protected drop(event: CdkDragDrop<string[]>) {
+        // We have to move item in the list.
+        const internalPhotos = this.photos();
+        moveItemInArray(internalPhotos, event.previousIndex, event.currentIndex);
+        this.photos.update(() => [...internalPhotos]);
+
+        // When moved items we have to select first one.
+        this.selectedIndex.set(0);
+        this.windowService.scrollToTop();
     }
 
     private getDateTime(date: any): string | undefined {
