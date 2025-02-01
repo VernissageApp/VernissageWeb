@@ -87,6 +87,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     private popupGalleryId = 'popupGalleryId';
     private mainGalleryId = 'mainGalleryId';
     private blurhash = 'LEHV6nWB2yk8pyo0adR*.7kCMdnj';
+    private isCommentFieldInFocus = false;
 
     constructor(
         @Inject(DOCUMENT) private document: Document,
@@ -181,11 +182,15 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
 
     @HostListener('window:keydown', ['$event'])
     handleKeyDown(event: KeyboardEvent) {
-      if (event.key === 'ArrowRight') {
-        this.onNextClick();
-      } else if (event.key === 'ArrowLeft') {
-        this.onPrevClick();
-      }
+        if (this.isCommentFieldInFocus) {
+            return;
+        }
+
+        if (event.key === 'ArrowRight') {
+            this.onNextClick();
+        } else if (event.key === 'ArrowLeft') {
+            this.onPrevClick();
+        }
     }
 
     protected async onPrevClick(): Promise<void> {
@@ -514,6 +519,10 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
 
     protected onReply(status?: Status): void {
         this.replyStatus.set(status);
+    }
+
+    protected onCommentFieldFocus(isFocused: boolean): void {
+        this.isCommentFieldInFocus = isFocused;
     }
 
     protected async onCommentAdded(): Promise<void> {
