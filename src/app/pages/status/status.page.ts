@@ -181,7 +181,6 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
 
     @HostListener('window:keydown', ['$event'])
     handleKeyDown(event: KeyboardEvent) {
-      console.log('Key pressed:', event.key);
       if (event.key === 'ArrowRight') {
         this.onNextClick();
       } else if (event.key === 'ArrowLeft') {
