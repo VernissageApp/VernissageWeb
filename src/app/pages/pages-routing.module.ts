@@ -58,7 +58,7 @@ const routes: Routes = [
     { path: 'settings', component: SettingsPage, canActivate: [ authorizationGuard ], title: 'Vernissage - Settings' },
     { path: 'trending', component: TrendingPage, data: { reuse: true }, title: 'Vernissage - Trending' },
     { path: 'editors', component: EditorsPage, data: { reuse: true }, title: 'Vernissage - Editor\'s choice' },
-    { path: 'categories', component: CategoriesPage, title: 'Vernissage - Categories' },
+    { path: 'categories', component: CategoriesPage, data: { reuse: true }, title: 'Vernissage - Categories' },
     { path: 'preferences', component: PreferencesPage, canActivate: [ authorizationGuard ], title: 'Vernissage - Preferences' },
     { path: 'reports', component: ReportsPage, canActivate: [ authorizationGuard ], title: 'Vernissage - Reports' },
     { path: 'tags/:tag', component: HashtagPage, data: { reuse: true }, title: 'Vernissage - Tags' },

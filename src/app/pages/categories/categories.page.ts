@@ -1,9 +1,9 @@
 import { BreakpointObserver } from "@angular/cdk/layout";
 import { Component, OnInit, OnDestroy, signal, ChangeDetectionStrategy } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs";
 import { fadeInAnimation } from "src/app/animations/fade-in.animation";
-import { ResponsiveComponent } from "src/app/common/responsive";
+import { ReusableGalleryPageComponent } from "src/app/common/reusable-gallery-page";
 import { Category } from "src/app/models/category";
 import { AuthorizationService } from "src/app/services/authorization/authorization.service";
 import { LoadingService } from "src/app/services/common/loading.service";
@@ -18,7 +18,7 @@ import { SettingsService } from "src/app/services/http/settings.service";
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
-export class CategoriesPage extends ResponsiveComponent implements OnInit, OnDestroy {
+export class CategoriesPage extends ReusableGalleryPageComponent implements OnInit, OnDestroy {
     protected isReady = signal(false);
     protected categories = signal<Category[]>([]);
 
@@ -29,7 +29,6 @@ export class CategoriesPage extends ResponsiveComponent implements OnInit, OnDes
         private loadingService: LoadingService,
         private settingsService: SettingsService,
         private authorizationService: AuthorizationService,
-        private router: Router,
         private activatedRoute: ActivatedRoute,
         breakpointObserver: BreakpointObserver
     ) {
