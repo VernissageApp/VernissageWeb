@@ -1,4 +1,4 @@
-import { Component, ElementRef, Inject, OnInit, OnDestroy, PLATFORM_ID, signal, viewChild, computed, ChangeDetectionStrategy } from '@angular/core';
+import { Component, HostListener, ElementRef, Inject, OnInit, OnDestroy, PLATFORM_ID, signal, viewChild, computed, ChangeDetectionStrategy } from '@angular/core';
 import { fadeInAnimation } from "src/app/animations/fade-in.animation";
 import { showOrHideAnimation } from 'src/app/animations/show-or-hide.animation';
 import { decode } from 'blurhash';
@@ -87,6 +87,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     private popupGalleryId = 'popupGalleryId';
     private mainGalleryId = 'mainGalleryId';
     private blurhash = 'LEHV6nWB2yk8pyo0adR*.7kCMdnj';
+    private isCommentFieldInFocus = false;
 
     constructor(
         @Inject(DOCUMENT) private document: Document,
@@ -130,11 +131,11 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
 
             const signedInUserInternal = this.authorizationService.getUser()
             const isLoggedInInternal = await  this.authorizationService.isLoggedIn();
-            
+
             this.signedInUser.set(signedInUserInternal);
             this.isLoggedIn.set(isLoggedInInternal);
             this.currentIndex.set(0);
-            
+
             // Load status information.
             await this.loadPageData(statusId);
 
@@ -179,6 +180,19 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         history.back();
     }
 
+    @HostListener('window:keydown', ['$event'])
+    handleKeyDown(event: KeyboardEvent) {
+        if (this.isCommentFieldInFocus) {
+            return;
+        }
+
+        if (event.key === 'ArrowRight') {
+            this.onNextClick();
+        } else if (event.key === 'ArrowLeft') {
+            this.onPrevClick();
+        }
+    }
+
     protected async onPrevClick(): Promise<void> {
         const internalStatus = this.status();
 
@@ -219,7 +233,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
 
     protected onShowSensitiveImageClick(): void {
         this.showSensitiveImage.set(true);
-        
+
         setTimeout(() => {
             this.showSensitiveCanvas.set(false);
         }, this.oneSecond);
@@ -507,6 +521,10 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         this.replyStatus.set(status);
     }
 
+    protected onCommentFieldFocus(isFocused: boolean): void {
+        this.isCommentFieldInFocus = isFocused;
+    }
+
     protected async onCommentAdded(): Promise<void> {
         const internalMainStatus = this.mainStatus();
         if (internalMainStatus) {
@@ -522,7 +540,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
             return attachment.description;
         }
 
-        return undefined;        
+        return undefined;
     }
 
     private getExif(index: number): Exif | undefined {
@@ -557,14 +575,14 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         if (locationInternal) {
             const latitude = this.getGpsLatitude(index) ?? locationInternal.latitude?.replace(',', '.');
             const longitude = this.getGpsLongitude(index) ?? locationInternal.longitude?.replace(',', '.');
-            
+
             return `https://www.openstreetmap.org/?mlat=${latitude}&mlon=${longitude}#map=10/${latitude}/${longitude}`;
         }
 
         if (this.hasGpsCoordinations()) {
             const latitude = this.getGpsLatitude(index);
             const longitude = this.getGpsLongitude(index);
-            
+
             return `https://www.openstreetmap.org/?mlat=${latitude}&mlon=${longitude}#map=10/${latitude}/${longitude}`;
         }
 
@@ -649,7 +667,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     private async loadPageData(statusId: string): Promise<void> {
         const downloadedStatus = await this.statusesService.get(statusId);
         this.status.set(downloadedStatus);
-        
+
         if (downloadedStatus.reblog) {
             this.mainStatus.set(downloadedStatus.reblog);
         } else {

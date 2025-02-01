@@ -320,7 +320,7 @@
                         </mat-card-header>
                         <mat-card-content>
                             @if (signedInUser(); as signedInUserInternal) {
-                                <app-comment-reply [signedInUser]="signedInUserInternal" [status]="mainStatusInternal" (added)="onCommentAdded()"></app-comment-reply>
+                                <app-comment-reply [signedInUser]="signedInUserInternal" [status]="mainStatusInternal" (added)="onCommentAdded()" (focused)="onCommentFieldFocus($event)"></app-comment-reply>
                             }
 
                             @if ((comments()?.length ?? 0) > 0) {
@@ -392,7 +392,7 @@
                                         @if (replyStatus()?.id === comment.status.id) {
                                             @if (signedInUser(); as signedInUserInternal) {
                                                 <div class="text-right padding-top-5">
-                                                    <app-comment-reply [signedInUser]="signedInUserInternal" [status]="comment.status" [showCancel]="true" (clickCancel)="onReply(undefined)" (added)="onCommentAdded()"></app-comment-reply>
+                                                    <app-comment-reply [signedInUser]="signedInUserInternal" [status]="comment.status" [showCancel]="true" (clickCancel)="onReply(undefined)" (added)="onCommentAdded()" (focused)="onCommentFieldFocus($event)"></app-comment-reply>
                                                 </div>
                                             }
                                         }

@@ -14,6 +14,8 @@
                     #commentInput="ngModel"
                     [(ngModel)]="comment"
                     aria-label="Leave a comment"
+                    (focus)="onFocus(true)"
+                    (blur)="onFocus(false)"
                     [appMaxLength]="maxStatusLength().toString()">
                 </textarea>
 

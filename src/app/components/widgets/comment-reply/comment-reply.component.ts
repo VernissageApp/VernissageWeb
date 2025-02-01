@@ -20,6 +20,7 @@ export class CommentReplyComponent implements OnInit {
     public status = input.required<Status>();
     public showCancel = input(false);
     public clickCancel = output();
+    public focused = output<boolean>();
     public added = output();
 
     protected maxStatusLength = signal(0);
@@ -70,6 +71,10 @@ export class CommentReplyComponent implements OnInit {
 
     protected onCancel(): void {
         this.clickCancel.emit();
+    }
+
+    protected onFocus(isFocused: boolean): void {
+        this.focused.emit(isFocused);
     }
 
     private fillUserName(status: Status): void {
