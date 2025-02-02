@@ -19,13 +19,21 @@
             }
         }
 
-        @if (showOpenOriginalProfileButton() || showMuteButton() || showUnmuteButton() || showFeatureButton() || showUnfeatureButton() || showReportButton()) {
+        @if (showOpenOriginalProfileButton() || showCopyProfileUrlButton() || showMuteButton() || showUnmuteButton() || showFeatureButton() || showUnfeatureButton() || showReportButton()) {
             <button class="more-button" mat-flat-button [matMenuTriggerFor]="dropdownMenuOne2" color="primary" aria-label="More options">
                 <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #dropdownMenuOne2="matMenu" xPosition="before">
                 @if (showOpenOriginalProfileButton()) {
                     <button (click)="onOriginalProfile()" mat-menu-item><mat-icon>public</mat-icon> Open original profile</button>
+                }
+
+                @if (showCopyProfileUrlButton()) {
+                    <button (click)="onCopyLinkToPost()" mat-menu-item><mat-icon>file_copy</mat-icon> Copy link to profile</button>
+                }
+
+                @if (showOpenOriginalProfileButton() || showCopyProfileUrlButton()) {
+                    <mat-divider></mat-divider>
                 }
 
                 @if (showMuteButton()) {

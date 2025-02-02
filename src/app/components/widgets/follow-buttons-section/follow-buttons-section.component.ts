@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, effect, input, OnInit, output, signal } from '@angular/core';
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
+import { Clipboard } from '@angular/cdk/clipboard';
 import { MatDialog } from '@angular/material/dialog';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { MuteAccountDialog } from 'src/app/dialogs/mute-account-dialog/mute-account.dialog';
@@ -37,6 +38,7 @@ export class FollowButtonsSectionComponent implements OnInit {
     protected showUnfollowButton = signal(false);
     protected showApproveFollowButton = signal(false);
     protected showOpenOriginalProfileButton = signal(false);
+    protected showCopyProfileUrlButton = signal(false);
     protected showMuteButton = signal(false);
     protected showUnmuteButton = signal(false);
     protected showFeatureButton = signal(false);
@@ -54,7 +56,8 @@ export class FollowButtonsSectionComponent implements OnInit {
         private followRequestsService: FollowRequestsService,
         private reportsService: ReportsService,
         private windowService: WindowService,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        private clipboard: Clipboard
     ) {
         effect(() => {
             // After changing relationship from parent we have to rebuild the components.
@@ -76,6 +79,10 @@ export class FollowButtonsSectionComponent implements OnInit {
         if (internalUser.activityPubProfile) {
             this.windowService.openPage(internalUser.url ?? internalUser.activityPubProfile);
         }
+    }
+
+    protected onCopyLinkToPost(): void {
+        this.clipboard.copy(this.updatedUser().url ?? '');
     }
 
     protected openMuteAccountDialog(): void {
@@ -334,6 +341,10 @@ export class FollowButtonsSectionComponent implements OnInit {
         return true;
     }
 
+    private shouldShowCopyProfileUrlButton(): boolean {
+        return true;
+    }
+
     private shouldShowMuteButton(): boolean {
         if (!this.signedInUser) {
             return false;
@@ -409,6 +420,7 @@ export class FollowButtonsSectionComponent implements OnInit {
         this.showUnfollowButton.set(this.shouldShowUnfollowButton());
         this.showApproveFollowButton.set(this.shouldShowApproveFollowButton());
         this.showOpenOriginalProfileButton.set(this.shouldShowOpenOriginalProfileButton());
+        this.showCopyProfileUrlButton.set(this.shouldShowCopyProfileUrlButton());
         this.showMuteButton.set(this.shouldShowMuteButton());
         this.showUnmuteButton.set(this.shouldShowUnmuteButton());
         this.showFeatureButton.set(this.shouldShowFeatureButton());
