@@ -151,9 +151,14 @@
                                             <mat-icon class="fill-symbol">grade</mat-icon>
                                             <span>Favourited by</span>
                                         </button>
+                                        <mat-divider></mat-divider>
                                         <button *ngIf="!mainStatusInternal.isLocal" mat-menu-item (click)="onOpenOriginalPage()">
                                             <mat-icon class="fill-symbol">export_notes</mat-icon>
                                             <span>Open original page</span>
+                                        </button>
+                                        <button mat-menu-item (click)="onCopyLinkToPost()">
+                                            <mat-icon class="fill-symbol">file_copy</mat-icon>
+                                            <span>Copy link to post</span>
                                         </button>
                                         <mat-divider></mat-divider>
                                         <button mat-menu-item (click)="onReportDialog(mainStatusInternal)">

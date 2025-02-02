@@ -1,4 +1,5 @@
 import { Component, HostListener, ElementRef, Inject, OnInit, OnDestroy, PLATFORM_ID, signal, viewChild, computed, ChangeDetectionStrategy } from '@angular/core';
+import { Clipboard } from '@angular/cdk/clipboard';
 import { fadeInAnimation } from "src/app/animations/fade-in.animation";
 import { showOrHideAnimation } from 'src/app/animations/show-or-hide.animation';
 import { decode } from 'blurhash';
@@ -109,6 +110,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         private loadingService: LoadingService,
         private metaService: Meta,
         private deviceDetectorService: DeviceDetectorService,
+        private clipboard: Clipboard,
         breakpointObserver: BreakpointObserver
     ) {
         super(breakpointObserver);
@@ -355,6 +357,10 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         }
 
         this.windowService.openPage(internalMainStatus.activityPubUrl);
+    }
+
+    protected onCopyLinkToPost(): void {
+        this.clipboard.copy(this.mainStatus()?.activityPubUrl ?? '');
     }
 
     protected showBackArrow(): boolean {
