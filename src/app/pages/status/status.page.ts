@@ -76,14 +76,14 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     protected gpsLongitudeToDisplay = computed(() => this.getGpsLongitude(this.currentIndex())?.slice(0, 10) ?? '');
     protected hasGpsCoordinations = computed<boolean>(() => !!this.getGpsLatitude(this.currentIndex()) && !!this.getGpsLongitude(this.currentIndex()));
     protected hasHdrVersion = computed<boolean>(() => this.showHdrIcon(this.currentIndex()));
+    protected isBrowser = signal(false);
 
     private canvas = viewChild<ElementRef<HTMLCanvasElement> | undefined>('canvas');
     private routeParamsSubscription?: Subscription;
     private routeNavigationEndSubscription?: Subscription;
     private readonly oneSecond = 1000;
     private firstCanvasInitialization = false;
-    private urlToGallery?: string;
-    private isBrowser = false;
+    private urlToGallery?: string; 
     private popupGalleryId = 'popupGalleryId';
     private mainGalleryId = 'mainGalleryId';
     private blurhash = 'LEHV6nWB2yk8pyo0adR*.7kCMdnj';
@@ -112,7 +112,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         breakpointObserver: BreakpointObserver
     ) {
         super(breakpointObserver);
-        this.isBrowser = isPlatformBrowser(platformId);
+        this.isBrowser.set(isPlatformBrowser(platformId));
     }
 
     override async ngOnInit(): Promise<void> {
