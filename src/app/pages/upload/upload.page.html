@@ -1,6 +1,6 @@
 <div @fadeIn [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
     <h1>
-        <div>Upload a photos</div>
+        <div>Upload photos</div>
         @if (!isHandset()) {
             <div class="fs-60 text-muted">
                 Currently supported file formats are JPEG and PNG. The maximum file size is {{ maxFileSizeString() }}.</div>
