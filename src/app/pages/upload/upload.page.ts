@@ -90,39 +90,39 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
         this.licenses.set(internalLicenses);
     }
 
-    protected async onPhotoSelected(event: any): Promise<void> {
-        try {
-            const file = event.target.files[0];
-            if (file.size > this.maxFileSize) {
-                this.messageService.showError('Uploaded file is too large. Maximum size is 10mb.');
-                return;
-            }
-
-            const photoUuid = this.randomGeneratorService.generateString(16);
-            const uploadPhoto = new UploadPhoto(photoUuid, event.target.files[0]);
-
-            this.setPhotoData(uploadPhoto);
-            this.setExifMetadata(uploadPhoto);
-
-            this.photos.update(photos => [...photos, uploadPhoto]);
-
-            const formData = new FormData();
-            formData.append('file', uploadPhoto.photoFile);
-            const temporaryAttachment = await this.attachmentsService.uploadAttachment(formData);
-
-            this.photos.update(photosArray => {
-                const photo = photosArray.find(item => item.uuid === uploadPhoto.uuid);
-                if (photo) {
-                    photo.id = temporaryAttachment.id;
-                    photo.isUploaded.set(true);
-                }
-
-                return [...photosArray];
-            });
-        } catch (error) {
-            console.error(error);
-            this.messageService.showServerError(error);
+    protected async onPhotoSelected(event: any): Promise<void> {        
+        const file = event.target.files[0];
+        if (file.size > this.maxFileSize) {
+            this.messageService.showError('Uploaded file is too large. Maximum size is 10mb.');
+            return;
         }
+
+        const photoUuid = this.randomGeneratorService.generateString(16);
+        const uploadPhoto = new UploadPhoto(photoUuid, event.target.files[0]);
+
+        this.setPhotoData(uploadPhoto);
+        this.setExifMetadata(uploadPhoto, async () => {
+            try {
+                this.photos.update(photos => [...photos, uploadPhoto]);
+
+                const formData = new FormData();
+                formData.append('file', uploadPhoto.photoFile);
+                const temporaryAttachment = await this.attachmentsService.uploadAttachment(formData);
+    
+                this.photos.update(photosArray => {
+                    const photo = photosArray.find(item => item.uuid === uploadPhoto.uuid);
+                    if (photo) {
+                        photo.id = temporaryAttachment.id;
+                        photo.isUploaded.set(true);
+                    }
+    
+                    return [...photosArray];
+                });
+            } catch (error) {
+                console.error(error);
+                this.messageService.showServerError(error);
+            }
+        });
     }
 
     protected onImageClick(index: number): void {
@@ -341,11 +341,16 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
         reader.readAsDataURL(uploadPhoto.photoFile);
     }
 
-    private setExifMetadata(uploadPhoto: UploadPhoto): void {
+    private setExifMetadata(uploadPhoto: UploadPhoto, listener: () => void): void {
         const bufferReader = new FileReader();
 
         bufferReader.addEventListener('load', () => {
             const tags = ExifReader.load(bufferReader.result as ArrayBuffer);
+
+            const caption = tags['Caption/Abstract']?.description.toString();
+            if (caption) {
+                uploadPhoto.description = caption.trim();
+            }
 
             const make = tags['Make']?.description.toString();
             if (make) {
@@ -420,6 +425,8 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
                 uploadPhoto.longitude = gpsLongitude;
                 uploadPhoto.showGpsCoordination = false;
             }
+
+            listener();
         });
 
         bufferReader.readAsArrayBuffer(uploadPhoto.photoFile);
