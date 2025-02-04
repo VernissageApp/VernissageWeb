@@ -138,7 +138,7 @@ export class BlurhashImageComponent implements AfterViewInit, OnInit, OnDestroy 
 
     protected async reblogToggle(): Promise<void> {
         try {
-            if (this.isFavourited()) {
+            if (this.isReblogged()) {
                 await this.statusesService.unreblog(this.mainStatus().id);
                 this.isReblogged.set(false);
                 this.messageService.showSuccess('Your boost has been undone.');
