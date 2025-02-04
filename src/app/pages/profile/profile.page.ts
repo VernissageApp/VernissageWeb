@@ -300,7 +300,7 @@ export class ProfilePage extends ReusableGalleryPageComponent implements OnInit,
 
     protected onAvatarClick(): void {
         this.dialog.open(ProfileCodeDialog, {
-            data: this.user()?.userName
+            data: this.user()?.url
         });
     }
 
