@@ -24,6 +24,8 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { isPlatformBrowser } from '@angular/common';
 import { ErrorItemsService } from './services/http/error-items.service';
 import { RandomGeneratorService } from './services/common/random-generator.service';
+import { CustomScriptsService } from './services/common/custom-scripts.service';
+import { CustomStylesService } from './services/common/custom-styles.service';
 
 const httpInterceptor = (platformId: object, authorizationService: AuthorizationService) => 
     new APIInterceptor(platformId, authorizationService);
@@ -58,7 +60,7 @@ export const customTooltipDefaults: MatTooltipDefaultOptions = {
         { provide: MAT_CHECKBOX_DEFAULT_OPTIONS, useValue: { clickAction: 'check' } as MatCheckboxDefaultOptions },
         { provide: MAT_TOOLTIP_DEFAULT_OPTIONS, useValue: customTooltipDefaults },
         provideAppInitializer(() => {
-            const initializerFn = (appInitialization)(inject(AuthorizationService), inject(InstanceService), inject(SettingsService));
+            const initializerFn = (appInitialization)(inject(AuthorizationService), inject(InstanceService), inject(SettingsService), inject(CustomScriptsService), inject(CustomStylesService));
             return initializerFn();
         }),
         {

@@ -57,8 +57,14 @@ export class Settings {
     public showCategoriesForAnonymous = false;
 
     // Privacy and Terms of Service.
-    public privacyPolicyUpdatedAt = ''
-    public privacyPolicyContent = ''
-    public termsOfServiceUpdatedAt = ''
-    public termsOfServiceContent = ''
+    public privacyPolicyUpdatedAt = '';
+    public privacyPolicyContent = '';
+    public termsOfServiceUpdatedAt = '';
+    public termsOfServiceContent = '';
+
+    // Custom style and script.
+    public customInlineScript = '';
+    public customInlineStyle = '';
+    public customFileScript = '';
+    public customFileStyle = '';
 }

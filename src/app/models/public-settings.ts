@@ -21,4 +21,10 @@ export class PublicSettings {
     public privacyPolicyContent = ''
     public termsOfServiceUpdatedAt = ''
     public termsOfServiceContent = ''
+
+    // Custom script and style content.
+    public customInlineScript?: string;
+    public customInlineStyle?: string;
+    public customFileScript?: string;
+    public customFileStyle?: string;
 }

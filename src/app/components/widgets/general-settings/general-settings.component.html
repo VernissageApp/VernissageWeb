@@ -387,6 +387,56 @@
     </div>
 
     <mat-divider></mat-divider>
+    <h3>Custom styles</h3>
+
+    <div class="margin-bottom-20">
+        <mat-form-field appearance="outline">
+            <mat-label>HTTP path to custom CSS file</mat-label>
+            <input matInput name="customFileStyle" #customFileStyle="ngModel" [(ngModel)]="settings().customFileStyle"
+                placeholder="HTTP path to custom CSS file" aria-label="HTTP path to custom CSS file" />
+        </mat-form-field>
+        <div class="text-muted fs-90 margin-left-10 margin-top-5">
+            The file should be located on the same domain as the hosted application; otherwise,
+            it may be blocked due to CORS security restrictions.
+        </div>
+    </div>
+
+    <div class="margin-bottom-20">
+        <mat-form-field appearance="outline">
+            <mat-label>Inline custom CSS styles</mat-label>
+            <textarea matInput name="customInlineStyle" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4"
+                cdkAutosizeMaxRows="20" placeholder="Inline custom CSS styles" #customInlineStyle="ngModel" [(ngModel)]="settings().customInlineStyle"
+                aria-label="Inline custom CSS styles"></textarea>
+        </mat-form-field>
+    </div>
+
+    <mat-divider></mat-divider>
+    <h3>Custom JavaScript</h3>
+
+    <div class="margin-bottom-20">
+        <mat-form-field appearance="outline">
+            <mat-label>HTTP path to custom JavaScript file</mat-label>
+            <input matInput name="customFileScript" #customFileScript="ngModel" [(ngModel)]="settings().customFileScript"
+                placeholder="HTTP path to custom JavaScript file" aria-label="HTTP path to custom JavaScript file" />
+        </mat-form-field>
+        <div class="text-muted fs-90 margin-left-10 margin-top-5">
+            The file should be located on the same domain as the hosted application; otherwise,
+            it may be blocked due to CORS security restrictions.
+        </div>
+    </div>
+
+    <div class="margin-bottom-20">
+        <mat-form-field appearance="outline">
+            <mat-label>Inline custom JavaScript</mat-label>
+            <textarea matInput name="customInlineScript" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4"
+                cdkAutosizeMaxRows="20" placeholder="Inline custom JavaScript" #customInlineScript="ngModel" [(ngModel)]="settings().customInlineScript"
+                aria-label="Inline custom JavaScript"></textarea>
+        </mat-form-field>
+    </div>
+
+
+    <mat-divider></mat-divider>
+    <h3>Database logged events</h3>
 
     <div class="margin-bottom-20 margin-top-20">
         <mat-form-field>
@@ -397,6 +447,10 @@
                 }
             </mat-select>
         </mat-form-field>
+        <div class="text-muted fs-90 margin-left-10 margin-top-5">
+            Selected events will be stored in the database. They should only be enabled when debugging an issue,
+            as they impact both application performance and database size, given that their volume can be significant.
+        </div>
     </div>
 
     <button type="submit" mat-raised-button color="primary" aria-label="Save">Save</button>

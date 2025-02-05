@@ -21,7 +21,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     private loadingStateChangesSubscription?: Subscription;
 
     constructor(
-        @Inject(DOCUMENT) private documentRef: Document,
+        @Inject(DOCUMENT) private document: Document,
         private loadingService: LoadingService,
         private cookieService: SsrCookieService,
         private settingsService: SettingsService,
@@ -33,10 +33,10 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 
         const isLightTheme = (this.cookieService.get('isLightTheme') ?? 'true') === 'true';
         if (!isLightTheme) {
-            const body = this.documentRef.getElementById('body');
+            const body = this.document.getElementById('body');
             body?.classList.add('dark-theme');
-            this.documentRef.querySelector("meta[name='theme-color']")?.setAttribute("content", "#303030");
-            this.documentRef.querySelector('html')?.setAttribute("class", "mat-dark");
+            this.document.querySelector("meta[name='theme-color']")?.setAttribute("content", "#303030");
+            this.document.querySelector('html')?.setAttribute("class", "mat-dark");
         }
 
         const internalMastodonUrl = this.settingsService.publicSettings?.mastodonUrl ?? '';
@@ -62,19 +62,19 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 
     // e.g. <link href="https://mastodon.social/@account" rel="me">
     private createMastodonLink(url: string): void {
-        const link: HTMLLinkElement = this.documentRef.createElement('link');
+        const link: HTMLLinkElement = this.document.createElement('link');
         link.setAttribute('href', url);
         link.setAttribute('rel', 'me');
 
-        this.documentRef.head.appendChild(link);
+        this.document.head.appendChild(link);
     }
 
     // e.g. <link rel="preconnect" href="https://s3.eu-central-1.amazonaws.com">
     private createPreloadLink(url: string): void {
-        const link: HTMLLinkElement = this.documentRef.createElement('link');
+        const link: HTMLLinkElement = this.document.createElement('link');
         link.setAttribute('href', url);
         link.setAttribute('rel', 'preconnect');
 
-        this.documentRef.head.appendChild(link);
+        this.document.head.appendChild(link);
     }
 }

@@ -8,7 +8,11 @@
                         <mat-form-field appearance="outline">
                             <input #queryInput matInput name="query" [(ngModel)]="search" cdkFocusInitial aria-label="Query" />
                             <button matSuffix mat-flat-button type="submit" color="primary" class="margin-right-10" aria-label="Search">Search</button>
+                            <mat-hint class="text-muted"></mat-hint>
                         </mat-form-field>
+                        <div class="text-muted fs-90 margin-left-10 margin-top-5">
+                            Search for a <strong>user</strong>, <strong>status</strong>, or <strong>hashtag</strong>, or paste a <strong>URL</strong> to a status or user profile.
+                        </div>
                     </mat-card-content>
                 </mat-card>
 
