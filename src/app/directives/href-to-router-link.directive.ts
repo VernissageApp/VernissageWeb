@@ -33,7 +33,16 @@ import { WindowService } from "../services/common/window.service";
         event.stopPropagation();
   
         // Feed the router.
-        this.router.navigateByUrl(href);
+        if (href.startsWith('/')) {
+            this.router.navigateByUrl(href);
+        } else {
+            let link = href.replace(this.windowService.getApplicationBaseUrl(), '');
+            if (!link.startsWith('/')) {
+                link = `/${link}`;
+            }
+
+            this.router.navigateByUrl(link);
+        }
     }
 
     private findHtmlAnchorElement(target: any): HTMLAnchorElement | null {
