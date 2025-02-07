@@ -2,7 +2,22 @@
     <div @fadeIn>
 
         <div class="flex-row flex-align-center flex-space-between margin-bottom-10" [ngClass]="{ 'padding-left-30 padding-right-30 padding-top-30': !isHandset(), 'padding-left-10 padding-right-10 padding-top-10': isHandset() }">
-            <h1>Trending</h1>
+            <h1>
+                <div>Trending</div>
+                @if (!isHandset()) {
+                    @switch (selectedTrending()) {
+                        @case ('statuses') { 
+                            <div class="fs-60 text-muted">A collection of photos that received the most likes within a specified time frame.</div>
+                        }
+                        @case ('users') { 
+                            <div class="fs-60 text-muted">A collection of artists who received the most likes on their photos within a specified time frame.</div>
+                        }
+                        @case ('hashtags') { 
+                            <div class="fs-60 text-muted">A collection of hashtags assigned to photos that received the most likes within a specified time frame.</div>
+                        }
+                    }
+                }
+            </h1>
 
             <section class="small-button-toggle">
                 <mat-button-toggle-group [(ngModel)]="trending" (ngModelChange)="onSelectionChange()" [hideSingleSelectionIndicator]="true" aria-label="Trending type">

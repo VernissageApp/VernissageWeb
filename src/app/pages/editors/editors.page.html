@@ -2,7 +2,19 @@
     <div @fadeIn>
 
         <div class="flex-row flex-align-center flex-space-between margin-bottom-20" [ngClass]="{ 'padding-left-30 padding-right-30 padding-top-30': !isHandset(), 'padding-left-10 padding-right-10 padding-top-10': isHandset() }">
-            <h1>Editor's choice</h1>
+            <h1>
+                <div>Editor's choice</div>
+                @if (!isHandset()) {
+                    @switch (selectedTab()) {
+                        @case ('statuses') { 
+                            <div class="fs-60 text-muted">A collection of photos that have been featured by curators on this server.</div>
+                        }
+                        @case ('users') { 
+                            <div class="fs-60 text-muted">A collection of artists who have been featured by curators on this server.</div>
+                        }
+                    }
+                }
+            </h1>
 
             <section class="small-button-toggle">
                 <mat-button-toggle-group [(ngModel)]="tab" (ngModelChange)="onSelectionChange()" [hideSingleSelectionIndicator]="true" aria-label="Trending type">

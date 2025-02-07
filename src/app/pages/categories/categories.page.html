@@ -1,7 +1,10 @@
 @if (isReady()) {
     <div @fadeIn [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
         <section>
-            <h1>Categories</h1>
+            <h1>
+                Categories
+                <div class="fs-60 text-muted">A list of categories on the server along with the photos assigned to them.</div>
+            </h1>
         </section>
         <app-category-gallery [categories]="categories()"></app-category-gallery>
     </div>
