@@ -1,7 +1,22 @@
 @if (isReady()) {
     <div @fadeIn>
         <div class="flex-row flex-align-center flex-space-between margin-bottom-10" [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
-            <h1>Timeline</h1>
+            <h1>
+                <div>Timeline</div>
+                @if (!isHandset()) {
+                    @switch (timeline()) {
+                        @case ('private') { 
+                            <div class="fs-60 text-muted">Your personal collection of photos, created based on posts from users you follow.</div>
+                        }
+                        @case ('local') { 
+                            <div class="fs-60 text-muted">A collection of photos created from all posts made by users publishing on this server.</div>
+                        }
+                        @case ('global') { 
+                            <div class="fs-60 text-muted">A collection of photos created from all user-uploaded images that have reached this server.</div>
+                        }
+                    }
+                }
+            </h1>
 
             <section class="small-button-toggle">
                 <mat-button-toggle-group [(ngModel)]="timeline" (ngModelChange)="onTimelineChange()" [hideSingleSelectionIndicator]="true" aria-label="Timeline type">
