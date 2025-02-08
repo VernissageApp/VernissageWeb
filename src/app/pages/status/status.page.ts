@@ -84,7 +84,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     private routeNavigationEndSubscription?: Subscription;
     private readonly oneSecond = 1000;
     private firstCanvasInitialization = false;
-    private urlToGallery?: string; 
+    private urlToGallery?: string;
     private popupGalleryId = 'popupGalleryId';
     private mainGalleryId = 'mainGalleryId';
     private blurhash = 'LEHV6nWB2yk8pyo0adR*.7kCMdnj';
@@ -181,6 +181,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     protected onBackClick(): void {
         history.back();
     }
+    private keysPressed: Record<string, boolean> = {};
 
     @HostListener('window:keydown', ['$event'])
     handleKeyDown(event: KeyboardEvent) {
@@ -188,11 +189,27 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
             return;
         }
 
-        if (event.key === 'ArrowRight') {
-            this.onNextClick();
-        } else if (event.key === 'ArrowLeft') {
-            this.onPrevClick();
+        if (!this.keysPressed[event.key]) {
+            this.keysPressed[event.key] = true;
+
+            if (event.key === 'ArrowRight') {
+                this.onNextClick();
+            } else if (event.key === 'ArrowLeft') {
+                this.onPrevClick();
+            } else if (event.key === 'l') {
+              this.toggleFavourite()
+            } else if (event.key === 'b') {
+                this.toggleReblog()
+            } else if (event.key === 's') {
+              this.toggleBookmark();
+            }
         }
+    }
+
+    // this is to prevent re-triggering the same event when the key is held down
+    @HostListener('window:keyup', ['$event'])
+    handleKeyUp(event: KeyboardEvent) {
+        this.keysPressed[event.key] = false;
     }
 
     protected async onPrevClick(): Promise<void> {
@@ -387,6 +404,21 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         return comment.user?.id === this.signedInUser()?.id;
     }
 
+    protected async toggleReblog(): Promise<void> {
+      try {
+          const internalMainStatus = this.mainStatus();
+          if (internalMainStatus) {
+              if (internalMainStatus.reblogged) {
+                  await this.unreblog();
+              } else {
+                  await this.reblog();
+              }
+          }
+      } catch (error) {
+          console.error(error);
+          this.messageService.showServerError(error);
+      }
+    }
     protected async reblog(): Promise<void> {
         try {
             const internalMainStatus = this.mainStatus();
@@ -413,6 +445,22 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
             console.error(error);
             this.messageService.showServerError(error);
         }
+    }
+
+    protected async toggleFavourite(): Promise<void> {
+      try {
+          const internalMainStatus = this.mainStatus();
+          if (internalMainStatus) {
+              if (internalMainStatus.favourited) {
+                  await this.unfavourite();
+              } else {
+                  await this.favourite();
+              }
+          }
+      } catch (error) {
+          console.error(error);
+          this.messageService.showServerError(error);
+      }
     }
 
     protected async favourite(): Promise<void> {
@@ -442,6 +490,22 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
             this.messageService.showServerError(error);
         }
     }
+
+    protected async toggleBookmark(): Promise<void> {
+      try {
+          const internalMainStatus = this.mainStatus();
+          if (internalMainStatus) {
+              if (internalMainStatus.bookmarked) {
+                  await this.unbookmark();
+              } else {
+                  await this.bookmark();
+              }
+          }
+      } catch (error) {
+          console.error(error);
+          this.messageService.showServerError(error);
+      }
+   }
 
     protected async bookmark(): Promise<void> {
         try {
