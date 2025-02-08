@@ -206,12 +206,11 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         }
     }
 
+    // this is to prevent re-triggering the same event when the key is held down
     @HostListener('window:keyup', ['$event'])
     handleKeyUp(event: KeyboardEvent) {
         this.keysPressed[event.key] = false;
     }
-
-
 
     protected async onPrevClick(): Promise<void> {
         const internalStatus = this.status();
@@ -419,7 +418,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
           console.error(error);
           this.messageService.showServerError(error);
       }
-  }
+    }
     protected async reblog(): Promise<void> {
         try {
             const internalMainStatus = this.mainStatus();
@@ -492,7 +491,6 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         }
     }
 
-
     protected async toggleBookmark(): Promise<void> {
       try {
           const internalMainStatus = this.mainStatus();
@@ -507,8 +505,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
           console.error(error);
           this.messageService.showServerError(error);
       }
-  }
-
+   }
 
     protected async bookmark(): Promise<void> {
         try {
