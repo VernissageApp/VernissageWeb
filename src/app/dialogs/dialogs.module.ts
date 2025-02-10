@@ -25,6 +25,7 @@ import { NotificationSettingsDialog } from './notification-settings-dialog/notif
 import { InstanceRuleDialog } from './instance-rule-dialog/instance-rule.dialog';
 import { ConfirmationDialog } from './confirmation-dialog/confirmation.dialog';
 import { CreateAliasDialog } from './create-alias-dialog/create-alias.dialog';
+import { StatusTextDialog } from './status-text-template-dialog/status-text-template.dialog';
 
 @NgModule({
     declarations: [
@@ -45,7 +46,8 @@ import { CreateAliasDialog } from './create-alias-dialog/create-alias.dialog';
         NotificationSettingsDialog,
         InstanceRuleDialog,
         ConfirmationDialog,
-        CreateAliasDialog
+        CreateAliasDialog,
+        StatusTextDialog
     ],
     exports: [
         ChangePasswordDialog,
@@ -65,7 +67,8 @@ import { CreateAliasDialog } from './create-alias-dialog/create-alias.dialog';
         NotificationSettingsDialog,
         InstanceRuleDialog,
         ConfirmationDialog,
-        CreateAliasDialog
+        CreateAliasDialog,
+        StatusTextDialog
     ], 
     imports: [
         BrowserModule,

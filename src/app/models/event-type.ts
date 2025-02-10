@@ -157,5 +157,10 @@ export enum EventType {
     HealthRead = 'healthRead',
 
     ArchivesList = 'archivesList',
-    ArchivesCreate = 'archivesCreate'
+    ArchivesCreate = 'archivesCreate',
+
+    UserSettingsList = 'userSettingsList',
+    UserSettingsRead = 'userSettingsRead',
+    UserSettingsSet = 'userSettingsSet',
+    UserSettingsDelete =  'userSettingsDelete'
 }
