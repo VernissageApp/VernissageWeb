@@ -22,6 +22,10 @@ import { SettingsService } from 'src/app/services/http/settings.service';
 import { RandomGeneratorService } from 'src/app/services/common/random-generator.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { WindowService } from 'src/app/services/common/window.service';
+import { StatusTextDialog } from 'src/app/dialogs/status-text-template-dialog/status-text-template.dialog';
+import { MatDialog } from '@angular/material/dialog';
+import { UserSettingsService } from 'src/app/services/http/user-settings.service';
+import { UserSettingKey } from 'src/app/models/user-setting';
 
 @Component({
     selector: 'app-upload',
@@ -48,6 +52,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
     protected selectedIndex = model(0);
     protected isCanceling = signal(false);
 
+    protected statusTextTemplate = signal<string | undefined>(undefined);
     protected maxStatusLength = signal(0);
     protected isOpenAIEnabled = signal(false);
     protected hashtagsInProgress = signal(false);
@@ -68,6 +73,8 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
         private settingsService: SettingsService,
         private randomGeneratorService: RandomGeneratorService,
         private windowService: WindowService,
+        private dialog: MatDialog,
+        private userSettingsService: UserSettingsService,
         breakpointObserver: BreakpointObserver
     ) {
         super(breakpointObserver);
@@ -81,13 +88,15 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
         this.maxStatusLength.set(this.instanceService.instance?.configuration?.statuses?.maxCharacters ?? 500);
         this.isOpenAIEnabled.set(this.settingsService.publicSettings?.isOpenAIEnabled ?? false);
         
-        const [internalCategories, internalLicenses] = await Promise.all([
+        const [internalCategories, internalLicenses, internalStatusTextTemplate] = await Promise.all([
             this.categoriesService.all(),
-            this.licensesService.all()
+            this.licensesService.all(),
+            this.userSettingsService.read(UserSettingKey.statusTextTemplate)
         ]);
 
         this.categories.set(internalCategories);
         this.licenses.set(internalLicenses);
+        this.statusTextTemplate.set(internalStatusTextTemplate?.value);
     }
 
     protected async onPhotoSelected(event: any): Promise<void> {        
@@ -162,6 +171,23 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
         } finally {
             this.hashtagsInProgress.set(false);
         }
+    }
+
+    protected onInsertTemplate(): void {
+        this.statusText.update((value) => value + this.statusTextTemplate());
+    }
+
+    protected onEditTemplate(): void {
+        const dialogRef = this.dialog.open(StatusTextDialog, {
+            width: '500px',
+            data: this.statusTextTemplate()
+        });
+
+        dialogRef.afterClosed().subscribe(async (result) => {
+            if (result) {
+                this.statusTextTemplate.set(result?.value);
+            }
+        });
     }
 
     protected async onGenerateHashtags(): Promise<void> {
