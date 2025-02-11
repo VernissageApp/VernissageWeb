@@ -11,6 +11,8 @@ export class Exif {
     public film?: string;
     public chemistry?: string;
     public scanner?: string;
-    public latitude?: string
-    public longitude?: string
+    public latitude?: string;
+    public longitude?: string;
+    public flash?: string;
+    public focalLength?: string;
 }

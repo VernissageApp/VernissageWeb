@@ -32,6 +32,7 @@ export class UploadPhoto {
     public showChemistry = false;
     public showScanner = false;
     public showGpsCoordination = false;
+    public showFlash = false;
 
     public make?: string;
     public model?: string;
