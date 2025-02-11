@@ -244,6 +244,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
 
                 if (photo.showFocalLenIn35mmFilm) {
                     temporaryAttachment.focalLenIn35mmFilm = photo.focalLenIn35mmFilm;
+                    temporaryAttachment.focalLength = photo.focalLength;
                 }
 
                 if (photo.showFNumber && photo.fNumber) {
@@ -277,6 +278,10 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
                 if (photo.showGpsCoordination) {
                     temporaryAttachment.latitude = photo.latitude;
                     temporaryAttachment.longitude = photo.longitude;
+                }
+
+                if (photo.showFlash) {
+                    temporaryAttachment.flash = photo.flash
                 }
 
                 temporaryAttachment.locationId = photo.locationId;
@@ -401,6 +406,12 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
                 uploadPhoto.showLens = true;
             }
 
+            const focalLength = tags['FocalLength']?.description.toString();
+            if (focalLength) {
+                uploadPhoto.focalLength = focalLength.replace('mm', '').trim();
+                uploadPhoto.showFocalLenIn35mmFilm = true;
+            }
+
             const focalLenIn35mmFilm = tags['FocalLengthIn35mmFilm']?.description.toString();
             if (focalLenIn35mmFilm) {
                 uploadPhoto.focalLenIn35mmFilm = focalLenIn35mmFilm;
@@ -435,6 +446,12 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
             if (software) {
                 uploadPhoto.software = software;
                 uploadPhoto.showSoftware = true;
+            }
+
+            const flash = tags['Flash']?.description.toString();
+            if (flash) {
+                uploadPhoto.flash = flash;
+                uploadPhoto.showFlash = true;
             }
 
             let gpsLatitude = tags['GPSLatitude']?.description?.toString();
@@ -494,7 +511,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
 
     private getHumanFileSize(bytes: number, places: number) {
         const thresh = 1024;
-        const units = ['kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+        const units = ['kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
 
         if (Math.abs(bytes) < thresh) {
             return bytes + ' B';

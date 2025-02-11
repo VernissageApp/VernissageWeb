@@ -262,10 +262,24 @@
                                     @if (exifInternal.focalLenIn35mmFilm || exifInternal.fNumber || exifInternal.exposureTime || exifInternal.photographicSensitivity) {
                                         <div class="margin-bottom-10">
                                             <mat-icon class="margin-right-20" inline="true" matTooltip="Exposure">brightness_7</mat-icon>
-                                            <span *ngIf="exifInternal.focalLenIn35mmFilm" class="margin-right-15 exif-label">{{ exifInternal.focalLenIn35mmFilm }}mm</span>
+                                            @if (exifInternal.focalLenIn35mmFilm && exifInternal.focalLength) {
+                                                <span class="margin-right-15 exif-label" matTooltipPosition="right" [matTooltip]="'Equivalent of ' + exifInternal.focalLenIn35mmFilm  + 'mm full frame lens.'">{{ exifInternal.focalLength }}mm</span>
+                                            } @else if (exifInternal.focalLenIn35mmFilm && !exifInternal.focalLength) {
+                                                <span class="margin-right-15 exif-label">{{ exifInternal.focalLenIn35mmFilm }}mm</span>
+                                            } @else if (!exifInternal.focalLenIn35mmFilm && exifInternal.focalLength) {
+                                                <span class="margin-right-15 exif-label">{{ exifInternal.focalLength }}mm</span>
+                                            }
+
                                             <span *ngIf="exifInternal.fNumber" class="margin-right-15 exif-label">{{ exifInternal.fNumber | slice:0:7 }}</span>
                                             <span *ngIf="exifInternal.exposureTime" class="margin-right-15 exif-label">{{ exifInternal.exposureTime }}s</span>
                                             <span *ngIf="exifInternal.photographicSensitivity" class="margin-right-15 exif-label">ISO {{ exifInternal.photographicSensitivity }}</span>
+                                        </div>
+                                    }
+
+                                    @if (exifInternal.flash) {
+                                        <div class="margin-bottom-10">
+                                            <mat-icon class="margin-right-20" inline="true" matTooltip="Flash">flash_on</mat-icon>
+                                            <span class="exif-label">{{ exifInternal.flash }}</span>
                                         </div>
                                     }
 

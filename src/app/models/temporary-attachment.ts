@@ -8,6 +8,7 @@ export class TemporaryAttachment {
     public model?: string;
     public lens?: string;
     public createDate?: string;
+    public focalLength?: string;
     public focalLenIn35mmFilm?: string;
     public fNumber?: string;
     public exposureTime?: string;
@@ -20,4 +21,5 @@ export class TemporaryAttachment {
     public licenseId?: string;
     public latitude?: string;
     public longitude?: string;
+    public flash?: string;
 }

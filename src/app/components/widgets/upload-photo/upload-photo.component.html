@@ -153,10 +153,20 @@
             <mat-checkbox class="exif-label" [name]="'focalLenIn35mmFilm' + internalIndex" color="primary" [disableRipple]="true" [(ngModel)]="photo().showFocalLenIn35mmFilm">
                 <span class="text-muted">Focal length:</span>
             </mat-checkbox>
-            <mat-form-field appearance="outline" class="flex-grow-2">
-                <input matInput [name]="'inputFocalLenIn35mmFilm' + internalIndex" [(ngModel)]="photo().focalLenIn35mmFilm" [disabled]="!photo().showFocalLenIn35mmFilm" aria-label="Focal length" />
-                <span class="text-muted" matSuffix>mm&nbsp;&nbsp;</span>
-            </mat-form-field>
+            <div class="flex-grow-2">
+                <div class="flex-row flex-stretch gap-4 small-text-input margin-bottom-10 double-field">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Lens focal length</mat-label>
+                        <input matInput [name]="'inputFocalLength' + internalIndex" [(ngModel)]="photo().focalLength" [disabled]="!photo().showFocalLenIn35mmFilm" aria-label="Focal length" />
+                        <span class="text-muted" matSuffix>mm&nbsp;&nbsp;</span>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>35mm film equivalent</mat-label>
+                        <input matInput [name]="'inputFocalLenIn35mmFilm' + internalIndex" [(ngModel)]="photo().focalLenIn35mmFilm" [disabled]="!photo().showFocalLenIn35mmFilm" aria-label="Focal length in 35mm film equivalent" />
+                        <span class="text-muted" matSuffix>mm&nbsp;&nbsp;</span>
+                    </mat-form-field>
+                </div>
+            </div>
         </div>
 
         <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
@@ -185,6 +195,15 @@
             </mat-checkbox>
             <mat-form-field appearance="outline" class="flex-grow-2">
                 <input matInput [name]="'inputPhotographicSensitivity' + internalIndex" [(ngModel)]="photo().photographicSensitivity" [disabled]="!photo().showPhotographicSensitivity" aria-label="ISO" />
+            </mat-form-field>
+        </div>
+
+        <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
+            <mat-checkbox class="exif-label" [name]="'flash' + internalIndex" color="primary" [disableRipple]="true" [(ngModel)]="photo().showFlash">
+                <span class="text-muted">Flash:</span>
+            </mat-checkbox>
+            <mat-form-field appearance="outline" class="flex-grow-2">
+                <input matInput [name]="'inputFlash' + internalIndex" [(ngModel)]="photo().flash" [disabled]="!photo().showFlash" aria-label="Flash" />
             </mat-form-field>
         </div>
 

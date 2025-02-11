@@ -2,7 +2,7 @@ import { signal } from "@angular/core";
 
 export class UploadPhoto {
     public uuid = '';
-    
+
     public photoSrc = signal<string | undefined>(undefined);
     public isUploaded = signal(false);
     public isDeleting = signal(false);
@@ -15,7 +15,7 @@ export class UploadPhoto {
 
     public id = '';
     public description?: string;
-    
+
     public locationId?: string;
     public licenseId?: string;
 
@@ -32,14 +32,17 @@ export class UploadPhoto {
     public showChemistry = false;
     public showScanner = false;
     public showGpsCoordination = false;
+    public showFlash = false;
 
     public make?: string;
     public model?: string;
     public lens?: string;
     public createDate?: Date;
+    public focalLength?: string;
     public focalLenIn35mmFilm?: string;
     public fNumber?: string;
     public exposureTime?: string;
+    public flash?: string;
     public photographicSensitivity?: string;
     public software?: string;
     public film?: string;
