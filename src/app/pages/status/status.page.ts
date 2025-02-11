@@ -784,20 +784,23 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     private async getAllReplies(statusId: string): Promise<StatusComment[]> {
         const replies: StatusComment[] = [];
 
+        // Download all status descendants.
         const context = await this.statusesService.context(statusId);
-        for (const item of context.descendants) {
+
+        // Build a tree of replies.
+        for (const item of context.descendants.filter(x => x.replyToStatusId === statusId)) {
             replies.push(new StatusComment(item, true));
-            await this.getReplies(item.id, replies);
+            this.getReplies(context.descendants, item.id, replies);
         }
 
         return replies;
     }
 
-    private async getReplies(statusId: string, replies: StatusComment[]): Promise<void> {
-        const context = await this.statusesService.context(statusId);
-        for (const item of context.descendants) {
+    private getReplies(allStatuses: Status[], statusId: string, replies: StatusComment[]): void {
+        const descendants = allStatuses.filter(x => x.replyToStatusId === statusId);
+        for (const item of descendants) {
             replies.push(new StatusComment(item, false));
-            await this.getReplies(item.id, replies);
+            this.getReplies(allStatuses, item.id, replies);
         }
     }
 
