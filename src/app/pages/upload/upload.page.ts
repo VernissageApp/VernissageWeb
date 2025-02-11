@@ -244,6 +244,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
 
                 if (photo.showFocalLenIn35mmFilm) {
                     temporaryAttachment.focalLenIn35mmFilm = photo.focalLenIn35mmFilm;
+                    temporaryAttachment.focalLength = photo.focalLength;
                 }
 
                 if (photo.showFNumber && photo.fNumber) {
@@ -401,7 +402,13 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
                 uploadPhoto.showLens = true;
             }
 
-            const focalLenIn35mmFilm = tags['FocalLength']?.description.toString();
+            const focalLength = tags['FocalLength']?.description.toString();
+            if (focalLength) {
+                uploadPhoto.focalLength = focalLength;
+                uploadPhoto.showFocalLenIn35mmFilm = true;
+            }
+
+            const focalLenIn35mmFilm = tags['focalLenIn35mmFilm']?.description.toString();
             if (focalLenIn35mmFilm) {
                 uploadPhoto.focalLenIn35mmFilm = focalLenIn35mmFilm;
                 uploadPhoto.showFocalLenIn35mmFilm = true;
