@@ -56,7 +56,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
     protected maxStatusLength = signal(0);
     protected isOpenAIEnabled = signal(false);
     protected hashtagsInProgress = signal(false);
-    
+
     protected allPhotosUploaded = computed(() => !this.photos().some(x => !x.isUploaded() || (x.photoHdrFile && !x.isHdrUploaded)));
 
     private maxFileSize = 0;
@@ -87,7 +87,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
 
         this.maxStatusLength.set(this.instanceService.instance?.configuration?.statuses?.maxCharacters ?? 500);
         this.isOpenAIEnabled.set(this.settingsService.publicSettings?.isOpenAIEnabled ?? false);
-        
+
         const [internalCategories, internalLicenses, internalStatusTextTemplate] = await Promise.all([
             this.categoriesService.all(),
             this.licensesService.all(),
@@ -99,7 +99,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
         this.statusTextTemplate.set(internalStatusTextTemplate?.value);
     }
 
-    protected async onPhotoSelected(event: any): Promise<void> {        
+    protected async onPhotoSelected(event: any): Promise<void> {
         const file = event.target.files[0];
         if (file.size > this.maxFileSize) {
             this.messageService.showError('Uploaded file is too large. Maximum size is 10mb.');
@@ -117,14 +117,14 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
                 const formData = new FormData();
                 formData.append('file', uploadPhoto.photoFile);
                 const temporaryAttachment = await this.attachmentsService.uploadAttachment(formData);
-    
+
                 this.photos.update(photosArray => {
                     const photo = photosArray.find(item => item.uuid === uploadPhoto.uuid);
                     if (photo) {
                         photo.id = temporaryAttachment.id;
                         photo.isUploaded.set(true);
                     }
-    
+
                     return [...photosArray];
                 });
             } catch (error) {
@@ -147,7 +147,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
                     await this.attachmentsService.deleteAttachment(photo.id);
                 }
             }
-    
+
             this.isCanceling.set(false);
             await this.router.navigate(['/']);
         } catch (error) {
@@ -245,7 +245,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
                 if (photo.showFocalLenIn35mmFilm) {
                     temporaryAttachment.focalLenIn35mmFilm = photo.focalLenIn35mmFilm;
                 }
-                
+
                 if (photo.showFNumber && photo.fNumber) {
                     temporaryAttachment.fNumber = `f/${photo.fNumber}`;
                 }
@@ -386,7 +386,12 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
 
             const model = tags['Model']?.description.toString();
             if (model) {
+              if (make) {
+                const strippedModel = this.stripModel(model, make);
+                uploadPhoto.model = strippedModel;
+              } else {
                 uploadPhoto.model = model;
+              }
                 uploadPhoto.showModel = true;
             }
 
@@ -489,21 +494,30 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
 
     private getHumanFileSize(bytes: number, places: number) {
         const thresh = 1024;
-        const units = ['kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'] 
-      
+        const units = ['kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+
         if (Math.abs(bytes) < thresh) {
             return bytes + ' B';
         }
-      
+
         let u = -1;
         const r = 10**places;
-      
+
         do {
             bytes /= thresh;
             ++u;
         } while (Math.round(Math.abs(bytes) * r) / r >= thresh && u < units.length - 1);
-      
-      
+
+
         return bytes.toFixed(places) + ' ' + units[u];
     }
+
+    private stripModel(model: string, manufacturer: string): string {
+
+      if (manufacturer && model.startsWith(manufacturer)) {
+          model = model.replace(manufacturer, '').trim();
+      }
+      return model;
+    }
+
 }
