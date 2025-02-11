@@ -21,4 +21,5 @@ export class TemporaryAttachment {
     public licenseId?: string;
     public latitude?: string;
     public longitude?: string;
+    public flash?: string;
 }

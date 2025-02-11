@@ -23,3 +23,9 @@
     position: relative;
     top: -3px;
 }
+
+.double-field {
+    mat-form-field {
+        width: 64px;
+    }
+}
