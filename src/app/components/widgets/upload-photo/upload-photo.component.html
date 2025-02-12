@@ -156,12 +156,11 @@
             <div class="flex-grow-2">
                 <div class="flex-row flex-stretch gap-4 small-text-input margin-bottom-10 double-field">
                     <mat-form-field appearance="outline">
-                        <mat-label>Lens focal length</mat-label>
                         <input matInput [name]="'inputFocalLength' + internalIndex" [(ngModel)]="photo().focalLength" [disabled]="!photo().showFocalLenIn35mmFilm" aria-label="Focal length" />
                         <span class="text-muted" matSuffix>mm&nbsp;&nbsp;</span>
                     </mat-form-field>
-                    <mat-form-field appearance="outline">
-                        <mat-label>35mm film equivalent</mat-label>
+                    <mat-form-field appearance="outline" floatLabel="always">
+                        <mat-label>Full frame equivalent</mat-label>
                         <input matInput [name]="'inputFocalLenIn35mmFilm' + internalIndex" [(ngModel)]="photo().focalLenIn35mmFilm" [disabled]="!photo().showFocalLenIn35mmFilm" aria-label="Focal length in 35mm film equivalent" />
                         <span class="text-muted" matSuffix>mm&nbsp;&nbsp;</span>
                     </mat-form-field>
