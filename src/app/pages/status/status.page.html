@@ -263,7 +263,11 @@
                                         <div class="margin-bottom-10">
                                             <mat-icon class="margin-right-20" inline="true" matTooltip="Exposure">brightness_7</mat-icon>
                                             @if (exifInternal.focalLenIn35mmFilm && exifInternal.focalLength) {
-                                                <span class="margin-right-15 exif-label" matTooltipPosition="right" [matTooltip]="'Equivalent of ' + exifInternal.focalLenIn35mmFilm  + 'mm full frame lens.'">{{ exifInternal.focalLength }}mm</span>
+                                                @if (exifInternal.focalLenIn35mmFilm === exifInternal.focalLength) {
+                                                    <span class="margin-right-15 exif-label" matTooltipPosition="right" [matTooltip]="'Full frame lens.'">{{ exifInternal.focalLength }}mm</span>
+                                                } @else {
+                                                    <span class="margin-right-15 exif-label" matTooltipPosition="right" [matTooltip]="'Equivalent of ' + exifInternal.focalLenIn35mmFilm  + 'mm full frame lens.'">{{ exifInternal.focalLength }}mm</span>
+                                                }
                                             } @else if (exifInternal.focalLenIn35mmFilm && !exifInternal.focalLength) {
                                                 <span class="margin-right-15 exif-label">{{ exifInternal.focalLenIn35mmFilm }}mm</span>
                                             } @else if (!exifInternal.focalLenIn35mmFilm && exifInternal.focalLength) {
