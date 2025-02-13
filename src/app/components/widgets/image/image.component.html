@@ -7,18 +7,32 @@
                     <canvas class="blurhash display-none" #canvas width="32" height="32"></canvas>
                 }
 
-                <img class="image-item img-horizontal" [src]="imageSrcString" (load)="onImageLoaded()" [alt]="alt() ?? 'Status image'" />
+                <img class="image-item img-horizontal" [src]="imageSrcString" loading="lazy" (load)="onImageLoaded()" [alt]="alt() ?? 'Status image'" />
             } @else {
                 <canvas class="blurhash display-none" #canvas width="32" height="32"></canvas>
-                <img
-                    class="image-item img-vertical"
-                    [ngSrc]="imageSrcString"
-                    [width]="width()"
-                    [height]="height()"
-                    [placeholder]="dataUrl()" [placeholderConfig]="{ blur: false }"
-                    [priority]="internalPriority()"
-                    (load)="onImageLoaded()"
-                    [alt]="alt() ?? 'Status image'" />
+
+                @if (internalPriority()) {
+                    <img
+                        class="image-item img-vertical"
+                        [ngSrc]="imageSrcString"
+                        [width]="width()"
+                        [height]="height()"
+                        [placeholder]="dataUrl()" [placeholderConfig]="{ blur: false }"
+                        priority="true"
+                        (load)="onImageLoaded()"
+                        [alt]="alt() ?? 'Status image'" />
+                } @else {
+                    <img
+                        class="image-item img-vertical"
+                        [ngSrc]="imageSrcString"
+                        [width]="width()"
+                        [height]="height()"
+                        [placeholder]="dataUrl()" [placeholderConfig]="{ blur: false }"
+                        loading="lazy"
+                        (load)="onImageLoaded()"
+                        [alt]="alt() ?? 'Status image'" />
+                }
+
             }
         }
     }
