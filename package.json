@@ -54,6 +54,7 @@
     "angular-eslint": "^19.0.2",
     "browser-sync": "^3.0.3",
     "eslint": "^9.19.0",
+    "jasmine": "^5.6.0",
     "jasmine-core": "~5.5.0",
     "karma": "~6.4.4",
     "karma-chrome-launcher": "~3.2.0",

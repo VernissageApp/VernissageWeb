@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - '**'
+  pull_request:
+    branches:
+      - develop
 
 jobs:
   build:
@@ -31,6 +34,9 @@ jobs:
       - name: npm run lint
         run: |
           npm run lint
+      - name: npm run test
+        run: |
+          npm test -- --watch=false --browsers=ChromeHeadless
       - name: npm run build
         run: |
           npm run build
