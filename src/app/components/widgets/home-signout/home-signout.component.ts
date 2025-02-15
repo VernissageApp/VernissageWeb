@@ -1,0 +1,86 @@
+import { Component, OnInit, OnDestroy, HostListener, signal, ChangeDetectionStrategy } from '@angular/core';
+import { TimelineService } from 'src/app/services/http/timeline.service';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { LoadingService } from 'src/app/services/common/loading.service';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { ContextTimeline } from 'src/app/models/context-timeline';
+import { SettingsService } from 'src/app/services/http/settings.service';
+import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
+import { ReusableGalleryPageComponent } from 'src/app/common/reusable-gallery-page';
+
+@Component({
+    selector: 'app-home-signout',
+    templateUrl: './home-signout.component.html',
+    styleUrls: ['./home-signout.component.scss'],
+    animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
+})
+export class HomeSignoutComponent extends ReusableGalleryPageComponent implements OnInit, OnDestroy {
+    protected isReady = signal(false);
+    protected showEditorsChoice = signal(false);
+    protected mastodonUrl = signal<string | undefined>(undefined);
+    
+    private lastRefreshTime = new Date();
+    private routeParamsSubscription?: Subscription;
+
+    constructor(
+        private timelineService: TimelineService,
+        private loadingService: LoadingService,
+        private settingsService: SettingsService,
+        private activatedRoute: ActivatedRoute,
+        breakpointObserver: BreakpointObserver
+    ) {
+        super(breakpointObserver);
+    }
+
+    override async ngOnInit(): Promise<void> {
+        super.ngOnInit();
+
+        const internalMastodonUrl = this.settingsService.publicSettings?.mastodonUrl ?? '';
+        if (internalMastodonUrl.length > 0) {
+            this.mastodonUrl.set(internalMastodonUrl);
+        }
+
+        this.routeParamsSubscription = this.activatedRoute.queryParams.subscribe(async () => {
+            this.loadingService.showLoader();
+            await this.loadData();
+
+            this.isReady.set(true);
+            this.loadingService.hideLoader();
+        });
+    }
+
+    override ngOnDestroy(): void {
+        super.ngOnDestroy();
+        this.routeParamsSubscription?.unsubscribe();
+    }
+
+    @HostListener('document:visibilitychange', ['$event'])
+    async visibilityChange(event: any): Promise<void> {
+        if (!event.target.hidden && this.isPageVisible) {
+            const twoHours = 60000 * 120;
+            const lastRefreshTimePlusTwoHours = new Date(this.lastRefreshTime.getTime() + twoHours);
+            const currentTime = new Date();
+
+            if (lastRefreshTimePlusTwoHours < currentTime) {
+                this.loadingService.showLoader();
+                await this.loadData();
+                this.loadingService.hideLoader();
+            }
+        }
+    }
+
+    private async loadData(): Promise<void> {
+        this.showEditorsChoice.set(this.settingsService.publicSettings?.showEditorsChoiceForAnonymous ?? false);
+        
+        if (this.showEditorsChoice()) {
+            this.lastRefreshTime = new Date();
+            const statuses = await this.timelineService.featuredStatuses(undefined, undefined, undefined, undefined);
+            statuses.context = ContextTimeline.editors;
+
+            this.statuses.set(statuses);
+        }
+    }
+}

@@ -36,6 +36,7 @@ import { TermsPage } from './terms/terms.page';
 import { PrivacyPage } from './privacy/privacy.page';
 import { BookmarksPage } from './bookmarks/bookmarks.page';
 import { FavouritesPage } from './favourites/favourites.page';
+import { ErrorItemsPage } from './error-items/error-items.page';
 
 const routes: Routes = [
     { path: 'login', component: LoginPage, canActivate: [ loggedOutGuard ], title: 'Vernissage - Login' },
@@ -43,37 +44,38 @@ const routes: Routes = [
     { path: 'login-callback', component: LoginCallbackPage, canActivate: [ loggedOutGuard ] },
     { path: 'reset-password', component: ResetPasswordPage, canActivate: [ loggedOutGuard ], title: 'Vernissage - Reset password' },
     { path: 'register', component: RegisterPage, canActivate: [ loggedOutGuard ], title: 'Vernissage - Register' },
-    { path: 'confirm-email', component: ConfirmEmailPage, canActivate: [ loggedOutGuard ], title: 'Vernissage - Confirm email' },
+    { path: 'confirm-email', component: ConfirmEmailPage, title: 'Vernissage - Confirm email' },
     { path: 'account', component: AccountPage, canActivate: [ authorizationGuard ], title: 'Vernissage - Account' },
     { path: 'home', component: HomePage, data: { reuse: true }, title: 'Vernissage - Home timeline' },
     { path: 'access-forbidden', component: AccessForbiddenPage, title: 'Vernissage - Access forbidden' },
     { path: 'unexpected-error', component: UnexpectedErrorPage, title: 'Vernissage - Unexpected error' },
     { path: 'connection-lost', component: ConnectionLostPage, title: 'Vernissage - Connection lost' },
     { path: 'page-not-found', component: PageNotFoundPage, title: 'Vernissage - Page not found' },
-    { path: 'upload', component: UploadPage, canActivate: [ authorizationGuard ], title: 'Vernissage - Uplad images' },
+    { path: 'upload', component: UploadPage, canActivate: [ authorizationGuard ], title: 'Vernissage - Upload images' },
     { path: 'search', component: SearchPage, canActivate: [ authorizationGuard ], title: 'Vernissage - Search' },
     { path: 'notifications', component: NotificationsPage, canActivate: [ authorizationGuard ], title: 'Vernissage - Notifications' },
     { path: 'invitations', component: InvitationsPage, canActivate: [ authorizationGuard ], title: 'Vernissage - Invitations' },
     { path: 'settings', component: SettingsPage, canActivate: [ authorizationGuard ], title: 'Vernissage - Settings' },
-    { path: 'trending', component: TrendingPage, canActivate: [ authorizationGuard ], title: 'Vernissage - Trending' },
-    { path: 'editors', component: EditorsPage, canActivate: [ authorizationGuard ], title: 'Vernissage - Editor\'s choice' },
-    { path: 'categories', component: CategoriesPage, canActivate: [ authorizationGuard ], title: 'Vernissage - Categories' },
+    { path: 'trending', component: TrendingPage, data: { reuse: true }, title: 'Vernissage - Trending' },
+    { path: 'editors', component: EditorsPage, data: { reuse: true }, title: 'Vernissage - Editor\'s choice' },
+    { path: 'categories', component: CategoriesPage, data: { reuse: true }, title: 'Vernissage - Categories' },
     { path: 'preferences', component: PreferencesPage, canActivate: [ authorizationGuard ], title: 'Vernissage - Preferences' },
     { path: 'reports', component: ReportsPage, canActivate: [ authorizationGuard ], title: 'Vernissage - Reports' },
-    { path: 'tags/:tag', component: HashtagPage, title: 'Vernissage - Tags' },
-    { path: 'categories/:category', component: CategoryPage, title: 'Vernissage - Categories' },
+    { path: 'tags/:tag', component: HashtagPage, data: { reuse: true }, title: 'Vernissage - Tags' },
+    { path: 'categories/:category', component: CategoryPage, data: { reuse: true }, title: 'Vernissage - Categories' },
     { path: 'support', component: SupportPage, title: 'Vernissage - Support' },
     { path: 'terms', component: TermsPage, title: 'Vernissage - Terms' },
     { path: 'privacy', component: PrivacyPage, title: 'Vernissage - Privacy' },
     { path: 'bookmarks', component: BookmarksPage, data: { reuse: true }, title: 'Vernissage - Bookmarks' },
     { path: 'favourites', component: FavouritesPage, data: { reuse: true }, title: 'Vernissage - Favourites' },
     { path: 'users', component: UsersPage, canActivate: [ authorizationGuard ], title: 'Vernissage - Users' },
-    { path: 'actors/:userName', component: ProfilePage, children: [
+    { path: 'error-items', component: ErrorItemsPage, canActivate: [ authorizationGuard ], title: 'Vernissage - Errors' },
+    { path: 'actors/:userName', component: ProfilePage, data: { reuse: true }, children: [
         { path: 'posts', component: ProfilePage },
         { path: 'following', component: ProfilePage },
         { path: 'followers', component: ProfilePage }
     ]},
-    { path: ':userName', component: ProfilePage, children: [
+    { path: ':userName', component: ProfilePage, data: { reuse: true }, children: [
         { path: 'posts', component: ProfilePage },
         { path: 'following', component: ProfilePage },
         { path: 'followers', component: ProfilePage }
@@ -85,7 +87,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
+    imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled', enableViewTransitions: true })],
     exports: [RouterModule]
 })
 export class PagesRoutingModule { }

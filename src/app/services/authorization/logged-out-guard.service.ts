@@ -2,11 +2,13 @@ import { inject } from '@angular/core';
 import { Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { AuthorizationService } from './authorization.service';
 
-export const loggedOutGuard = (_: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const loggedOutGuard = async (_: ActivatedRouteSnapshot, _state: RouterStateSnapshot) => {
     const authorizationService = inject(AuthorizationService);
     const router = inject(Router);
 
-    if (authorizationService.isLoggedIn()) {
+    const isLoggedIn = await authorizationService.isLoggedIn();
+    if (isLoggedIn) {
         router.navigate(['/home']);
 
         return false;

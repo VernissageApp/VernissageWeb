@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, OnInit, signal } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { LinkableResult } from 'src/app/models/linkable-result';
 import { Relationship } from 'src/app/models/relationship';
@@ -7,15 +7,19 @@ import { StatusesService } from 'src/app/services/http/statuses.service';
 import { UsersDialogContext, UsersListType } from './users-dialog-context';
 
 @Component({
-    selector: 'users',
-    templateUrl: 'users.dialog.html'
+    selector: 'app-users-dialog',
+    templateUrl: 'users.dialog.html',
+    styleUrls: ['./users.dialog.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class UsersDialog implements OnInit {
-    users?: LinkableResult<User>
-    allUsersDisplayed = false;
-    title = '';
-    statusId = '';
-    followingRelationships?: Relationship[] = [];
+    protected users = signal<LinkableResult<User> | undefined>(undefined);
+    protected allUsersDisplayed = signal(false);
+    protected title = signal('');
+    protected followingRelationships = signal<Relationship[]>([]);
+
+    private statusId = '';
 
     constructor(
         private statusesService: StatusesService,
@@ -29,41 +33,49 @@ export class UsersDialog implements OnInit {
             return;
         }
 
-        this.title = usersDialogConext.title;
+        this.title.set(usersDialogConext.title);
         this.statusId = usersDialogConext.statusId;
-        this.users = await this.getUsers();
+
+        const downloadedUsers = await this.getUsers();
+        this.users.set(downloadedUsers);
     }
 
-    async onLoadMoreFollowing(): Promise<void> {
+    protected async onLoadMoreFollowing(): Promise<void> {
         const internalUsers = await this.getUsers();
 
-        if (this.users) {
+        if (this.users()) {
             if (internalUsers.data.length > 0) {
-                this.users.data.push(...internalUsers.data);
-                this.users.minId = internalUsers.minId;
-                this.users.maxId = internalUsers.maxId;
+                this.users.update((usersArray) => {
+                    if (usersArray) {
+                        usersArray.data.push(...internalUsers.data);
+                        usersArray.minId = internalUsers.minId;
+                        usersArray.maxId = internalUsers.maxId;
+                    }
+
+                    return usersArray;
+                });
             } else {
-                this.allUsersDisplayed = true;
+                this.allUsersDisplayed.set(true);
             }
         } else {
-            this.users = internalUsers;
+            this.users.set(internalUsers);
 
-            if (this.users.data.length === 0) {
-                this.allUsersDisplayed = true;
+            if (this.users()?.data.length === 0) {
+                this.allUsersDisplayed.set(true);
             }
         }
     }
     
-    onNoClick(): void {
+    protected onNoClick(): void {
         this.dialogRef.close();
     }
 
     private async getUsers(): Promise<LinkableResult<User>> {
         switch (this.data?.usersListType) {
             case UsersListType.favourited:
-                return this.statusesService.favourited(this.statusId, undefined, this.users?.maxId, undefined, undefined);
+                return this.statusesService.favourited(this.statusId, undefined, this.users()?.maxId, undefined, undefined);
             default:
-                return this.statusesService.reblgged(this.statusId, undefined, this.users?.maxId, undefined, undefined);
+                return this.statusesService.reblgged(this.statusId, undefined, this.users()?.maxId, undefined, undefined);
         }
     }
 }

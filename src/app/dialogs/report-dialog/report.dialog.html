@@ -14,20 +14,26 @@
             <mat-form-field appearance="outline">
                 <mat-label>Category</mat-label>
                 <mat-select [(value)]="category">
-                    <mat-option *ngFor="let item of categories" [value]="item">{{ item }}</mat-option>
+                    @for (item of categories(); track item) {
+                        <mat-option [value]="item">{{ item }}</mat-option>
+                    }
                 </mat-select>
             </mat-form-field>
 
             <mat-form-field appearance="outline">
                 <mat-label>Server rules</mat-label>
                 <mat-select multiple [(value)]="ruleIds">
-                    <mat-option *ngFor="let rule of rules" [value]="rule.id">{{ rule.text }}</mat-option>
+                    @for (rule of rules(); track rule.id) {
+                        <mat-option [value]="rule.id">{{ rule.text }}</mat-option>
+                    }
                 </mat-select>
             </mat-form-field>
 
-            <mat-checkbox *ngIf="data?.user?.isLocal === false" name="forward" color="primary" [disableRipple]="true" [(ngModel)]="forward">
-                Should the report be forwarded to the remote admin?
-            </mat-checkbox>
+            <!-- @if (!isLocal()) {
+                <mat-checkbox name="forward" color="primary" [disableRipple]="true" [(ngModel)]="forward">
+                    Should the report be forwarded to the remote admin?
+                </mat-checkbox>
+            } -->
         </div>
     </div>
     <div mat-dialog-actions>

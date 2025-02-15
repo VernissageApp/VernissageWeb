@@ -1,15 +1,15 @@
 <div>
     <div mat-dialog-content>
-        @if (isLigthTheme) {
+        @if (isLightTheme()) {
             <qrcode
-                [qrdata]="profileUrl"
+                [qrdata]="profileUrl()"
                 [margin]="0"
                 [width]="200"
                 [errorCorrectionLevel]="'M'">
             </qrcode>
         } @else {
             <qrcode
-                [qrdata]="profileUrl"
+                [qrdata]="profileUrl()"
                 [margin]="0"
                 [width]="200"
                 [colorDark]="'#ffffff'"
@@ -18,6 +18,6 @@
             </qrcode>
         }
 
-        <div class="profileUrl">{{profileUrl}}</div>
+        <div class="profileUrl">{{ profileUrl() }}</div>
     </div>
 </div>

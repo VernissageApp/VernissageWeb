@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { WindowService } from '../common/window.service';
-import { PaginableResult } from 'src/app/models/paginable-result';
+import { PagedResult } from 'src/app/models/paged-result';
 import { PushSubscription as PushSubscriptionDto } from 'src/app/models/push-subscription';
 import { SettingsService } from './settings.service';
 import { SwPush } from '@angular/service-worker';
@@ -19,8 +19,8 @@ export class PushSubscriptionsService {
         private swPushService: SwPush) {
     }
 
-    public async get(page: number, size: number): Promise<PaginableResult<PushSubscriptionDto>> {
-        const event$ = this.httpClient.get<PaginableResult<PushSubscriptionDto>>(this.windowService.apiUrl() + `/api/v1/push-subscriptions?page=${page}&size=${size}`);
+    public async get(page: number, size: number): Promise<PagedResult<PushSubscriptionDto>> {
+        const event$ = this.httpClient.get<PagedResult<PushSubscriptionDto>>(this.windowService.apiUrl() + `/api/v1/push-subscriptions?page=${page}&size=${size}`);
         return await firstValueFrom(event$);
     }
 

@@ -1,15 +1,25 @@
 @use '@angular/material' as mat;
 
 // Styles for the docs app that are based on the current theme.
-@mixin material-app-theme($theme, $background) {
+@mixin material-app-theme($theme, $contrast, $background, $cameraIcon, $faceIcon) {
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
-    $foreground: map-get($theme, foreground);
 
     $error: mat.m2-define-palette(mat.$m2-red-palette);
     $warning: mat.m2-define-palette(mat.$m2-orange-palette);
     $grey: mat.m2-define-palette(mat.$m2-grey-palette);
     $green: mat.m2-define-palette(mat.$m2-green-palette);
+
+    $background-color: mat.m2-get-color-from-palette($background);
+    $transparent-background-color: rgba($background-color, 0.7);
+
+    .cdk-overlay-pane {
+        .mat-mdc-menu-panel {
+            background-color: $transparent-background-color;
+            -webkit-backdrop-filter: blur(16px);
+            backdrop-filter: blur(16px);
+        }
+    }
 
     a {
         &:link {
@@ -30,6 +40,30 @@
         &:active {
             color: mat.m2-get-color-from-palette($primary);
             text-decoration: none;
+        }
+    }
+
+    .green-link {
+        a {
+            &:link {
+                color: mat.m2-get-color-from-palette($green, 800);
+                text-decoration: none;
+            }
+
+            &:visited {
+                color: mat.m2-get-color-from-palette($green, 800);
+                text-decoration: none;
+            }
+
+            &:hover {
+                color: mat.m2-get-color-from-palette($green, 800);
+                text-decoration: none;
+            }
+
+            &:active {
+                color: mat.m2-get-color-from-palette($green, 800);
+                text-decoration: none;
+            }
         }
     }
 
@@ -80,9 +114,8 @@
         width: 223px;
         height: 148px;
         margin-top: 4px;
-        background-color: mat.m2-get-color-from-palette($foreground);
+        background-color: mat.m2-get-color-from-palette($background);
         opacity: 0.6;
-        cursor: pointer;
         border-width: 1px;
         border-style: dashed;
         border-color: mat.m2-get-color-from-palette($grey);
@@ -97,13 +130,6 @@
             font-size: 64px;
         }
 
-        &:hover {
-            background-color: mat.m2-get-color-from-palette($primary);
-            path {
-                fill: white;
-            }
-        }
-
         &.small {
             width: 80px;
             height: 50px;
@@ -112,15 +138,39 @@
                 padding-top: 6px;
             }
         }
+
+        &.active {
+            cursor: pointer;
+
+            &:hover {
+                background-color: mat.m2-get-color-from-palette($primary);
+
+                path {
+                    fill: white;
+                }
+            }
+        }
+
+        &.inactive {
+            cursor: default;
+
+            &:hover {
+                background-color: mat.m2-get-color-from-palette($background);
+
+                path {
+                    fill: mat.m2-get-color-from-palette($primary);
+                }
+            }
+        }
     }
 
     .photo-thumbnail {
         object-fit: cover;
         border: 4px solid transparent;
-        margin-bottom: 15px;
         width: 225px;
         height: 150px;
         cursor: pointer;
+        vertical-align: middle;
 
         &.selected {
             border: 4px solid mat.m2-get-color-from-palette($primary, 300);
@@ -138,6 +188,34 @@
     a:link.logo {
         font-style: normal;
         text-decoration: none;
-        color: mat.m2-get-color-from-palette($background);
+        color: mat.m2-get-color-from-palette($contrast);
+    }
+
+    a.mdc-button {
+        color: mat.m2-get-color-from-palette($contrast);
+    }
+
+    .empty-page {
+        .camera {
+            margin-left: auto;
+            margin-right: auto;
+            width: 128px;
+            height: 128px;
+            background-size: 128px 128px;
+            background-image: url($cameraIcon);
+        }
+
+        .face {
+            margin-left: auto;
+            margin-right: auto;
+            width: 64px;
+            height: 64px;
+            background-size: 64px 64px;
+            background-image: url($faceIcon);
+        }
+    }
+
+    gallery {
+        background-color: #202020 !important;
     }
 }

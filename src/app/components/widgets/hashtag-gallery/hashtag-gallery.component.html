@@ -1,35 +1,16 @@
-<div [ngClass]="{ 'padding-left-30 padding-right-30': !isHandset, 'padding-left-10 padding-right-10': isHandset }">
-    @if (visibleHashtags.length) {
-        <div appScrollNearEnd (nearEnd)="onNearEndScroll()">
-            <div *ngFor="let hashtag of visibleHashtags; trackBy:trackByHashtagFn">
-                <div class="hashtag-header">
-                    <a [routerLink]="['/tags', hashtag.name]">
-                        <mat-icon>tag</mat-icon> {{ hashtag.name }}
-                    </a>
-                </div>
-                <div class="images-container">
-                    <div class="flex-row">
-                        <ng-container *ngFor="let status of getStatuses(hashtag.name); trackBy:trackByFn">
-                            <a [routerLink]="['/statuses', status.id]" [ariaLabel]="'Status added by: ' + getMainStatus(status).user?.userName" (click)="onStatusClick(hashtag.name)">
-                                @if (getMainStatus(status).sensitive) {
-                                    <div class="blurhash">
-                                        <app-blurhash-image [horizontal]="true" [status]="status"></app-blurhash-image>
-                                    </div>
-                                } @else {
-                                    <div class="image">
-                                        <app-image [horizontal]="true" [status]="status"></app-image>
-                                    </div>
-                                }
-                            </a>
-                        </ng-container>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div [ngClass]="{ 'padding-left-30 padding-right-30': !isHandset(), 'padding-left-10 padding-right-10': isHandset() }">
+    @if (!isBrowser()) {
+        <div></div>
+    }
+    @else if (hashtags()?.data?.length) {
+        @for (hashtag of hashtags()?.data; track hashtag.name) {
+            <app-hashtag-gallery-item [hashtag]="hashtag"></app-hashtag-gallery-item>
+        }
     } @else {
         <div class="text-muted padding-top-30 width-100 text-center">
-            <h2>
-                Unfortunatelly, there is nothing to see here yet.
+            <h2 class="empty-page">
+                <div class="camera"></div>
+                <div>Sadly, there's nothing to see here just yet.</div>
             </h2>
         </div>
     }

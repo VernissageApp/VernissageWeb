@@ -2,14 +2,14 @@ import { Inject, Injectable, Optional, PLATFORM_ID } from '@angular/core';
 import { Location, isPlatformServer } from '@angular/common';
 import { getWindow } from 'ssr-window';
 import { Request } from "express";
-import { REQUEST } from '@nguniversal/express-engine/tokens';
+import { REQUEST } from 'express.tokens';
 
 @Injectable({
     providedIn: 'root'
 })
 export class WindowService {
     constructor(
-        @Inject(PLATFORM_ID) private platformId: Object,
+        @Inject(PLATFORM_ID) private platformId: object,
         @Optional() @Inject(REQUEST) protected request: Request | null,
         private location: Location) {
     }
@@ -82,5 +82,13 @@ export class WindowService {
 
     openPage(url: string): void {
         this.nativeWindow.open(url, "_blank");
+    }
+
+    scrollToTop(): void {
+        this.nativeWindow.scroll({ 
+            top: 0, 
+            left: 0, 
+            behavior: 'smooth' 
+        });
     }
 }

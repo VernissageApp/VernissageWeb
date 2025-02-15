@@ -1,0 +1,24 @@
+<div class="flex-row properties text-muted">
+    <div class="margin-right-15" matTooltip="Published date" aria-label="Published date">{{ status().createdAt | date: 'short' }}</div>
+    @switch (status().visibility) {
+        @case (statusVisibility.Public) {
+            <mat-icon class="margin-right-15" matTooltip="Public">public</mat-icon>
+        }
+        @case (statusVisibility.Followers) {
+            <mat-icon class="margin-right-15" matTooltip="Followers">people</mat-icon>
+        }
+        @case (statusVisibility.Mentioned) {
+            <mat-icon class="margin-right-15" matTooltip="Mentioned">person</mat-icon>
+        }
+    }
+
+    @if (status().application) {
+        <mat-icon class="margin-right-15" [matTooltip]="status().application" aria-label="Application">settings_applications</mat-icon>
+    }
+    
+    <mat-icon matTooltip="Number of boosts" aria-label="Number of boosts">rocket</mat-icon>
+    <div  class="margin-right-15">{{ status().reblogsCount }}</div>
+    
+    <mat-icon matTooltip="Number of likes" aria-label="Number of likes">star</mat-icon>
+    <div>{{ status().favouritesCount }}</div>
+</div>

@@ -1,4 +1,4 @@
-<form name="form" (ngSubmit)="f.form.valid && this.data.email === email && onSubmit()" #f="ngForm" novalidate>
+<form name="form" (ngSubmit)="f.form.valid && this.data.email === email() && onSubmit()" #f="ngForm" novalidate>
     <div mat-dialog-title>Delete account</div>
     <div mat-dialog-content>
 

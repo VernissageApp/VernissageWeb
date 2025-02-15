@@ -1,16 +1,19 @@
-<div mat-dialog-title>{{ title }}</div>
+<div mat-dialog-title>{{ title() }}</div>
 <div mat-dialog-content>
 
     <div class="flex-col gap-0 margin-top-5">
-        @if ((users?.data?.length ?? 0) > 0) {
+        @if ((users()?.data?.length ?? 0) > 0) {
             <app-users-card
-                [showLoadMore]="!allUsersDisplayed"
-                [users]="users?.data"
-                [relationships]="followingRelationships"
+                [showLoadMore]="!allUsersDisplayed()"
+                [users]="users()?.data"
+                [relationships]="followingRelationships()"
                 (loadMore)="onLoadMoreFollowing()">
             </app-users-card>
         } @else {
-            <p>Unfortunatelly, there is nothing to see here yet.</p>
+            <h2 class="empty-page text-center">
+                <div class="face"></div>
+                <div>Sadly, there are no users to display just yet.</div>
+            </h2>
         }
     </div>
 </div>

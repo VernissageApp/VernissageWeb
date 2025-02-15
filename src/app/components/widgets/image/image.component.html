@@ -1,30 +1,85 @@
 <div class="image-container">
-    @if (!imageIsLoaded) {
-        <canvas class="blurhash" #canvas width="32" height="32"></canvas>
+
+    @if (imageSrc(); as imageSrcString) {
+        @if (imageSrcString.length > 0) {
+            @if (horizontal()) {
+                @if (!imageIsLoaded()) {
+                    <canvas class="blurhash display-none" #canvas width="32" height="32"></canvas>
+                }
+
+                <img class="image-item img-horizontal" [src]="imageSrcString" loading="lazy" (load)="onImageLoaded()" [alt]="alt() ?? 'Status image'" />
+            } @else {
+                <canvas class="blurhash display-none" #canvas width="32" height="32"></canvas>
+
+                @if (internalPriority()) {
+                    <img
+                        class="image-item img-vertical"
+                        [ngSrc]="imageSrcString"
+                        [width]="width()"
+                        [height]="height()"
+                        [placeholder]="dataUrl()" [placeholderConfig]="{ blur: false }"
+                        priority="true"
+                        (load)="onImageLoaded()"
+                        [alt]="alt() ?? 'Status image'" />
+                } @else {
+                    <img
+                        class="image-item img-vertical"
+                        [ngSrc]="imageSrcString"
+                        [width]="width()"
+                        [height]="height()"
+                        [placeholder]="dataUrl()" [placeholderConfig]="{ blur: false }"
+                        loading="lazy"
+                        (load)="onImageLoaded()"
+                        [alt]="alt() ?? 'Status image'" />
+                }
+
+            }
+        }
     }
 
-    @if (horizontal) {
-        <img class="image-item" [ngClass]="{ 'img-vertical': !horizontal, 'img-horizontal': horizontal }" [src]="imageSrc" (load)="onImageLoaded()" />
-    } @else {
-        <img class="image-item" [ngClass]="{ 'img-vertical': !horizontal, 'img-horizontal': horizontal }" [src]="imageSrc" [width]="width" [height]="height" (load)="onImageLoaded()" />
-    }
+    @if (imageIsLoaded()) {
+        @if(showAvatar()) {
+            @if (user(); as userObject) {
+                <div class="avatar" [satPopoverAnchor]="popover" (mouseenter)="mouseenter.next()" (mouseleave)="mouseleave.next()">
+                    <app-mini-user-card [user]="userObject" [showUserName]="false" [whiteLink]="true" [size]="avatarSize.verysmall"></app-mini-user-card>
+                </div>
 
-    @if (imageIsLoaded) {
-        @if(showAvatar && user) {
-            <div class="avatar">
-                <app-mini-user-card [user]="user" [showUserName]="false" [whiteLink]="true" [size]="avatarSize.verysmall"></app-mini-user-card>
-            </div>
+                <sat-popover #popover [autoFocus]="false" verticalAlign="below">
+                    <div class="popover" (mouseenter)="mouseenter.next()" (mouseleave)="mouseleave.next()">
+                        <app-user-popover [user]="userObject" [relationship]="relationship()"></app-user-popover>
+                    </div>
+                </sat-popover>
+            }
         }
 
-        @if (signedInUser && showFavourites) {
-            <div class="favourite" (click)="favouriteToogle(); $event.preventDefault(); $event.stopPropagation();">
-                <mat-icon *ngIf="!getMainStatus()?.favourited" class="outline-symbol">grade</mat-icon>
-                <mat-icon *ngIf="getMainStatus()?.favourited" class="fill-symbol">grade</mat-icon>
-            </div>
+        @if(showAltIcon() && alt()) {
+            <div class="alt" [matTooltip]="alt()" matTooltipPosition="above">ALT</div>
         }
 
-        @if(showAltIcon && alt) {
-            <div class="alt" [matTooltip]="alt" matTooltipPosition="above">ALT</div>
+        @if (signedInUser() ) {
+            <div class="actions-container flex-row gap-4">
+                @if (showReblog()) {
+                    <div class="reblog" (click)="reblogToggle(); $event.preventDefault(); $event.stopPropagation();" (keydown.enter)="favouriteToggle(); $event.preventDefault(); $event.stopPropagation();" tabindex="0">
+                        @if (isReblogged()) {
+                            <mat-icon class="fill-symbol">rocket_launch</mat-icon>
+                        }
+                        @else {
+                            <mat-icon class="outline-symbol">rocket_launch</mat-icon>
+                        }
+                    </div>
+                }
+
+                @if (showFavourites()) {
+                    <div class="favourite" (click)="favouriteToggle(); $event.preventDefault(); $event.stopPropagation();" (keydown.enter)="favouriteToggle(); $event.preventDefault(); $event.stopPropagation();" tabindex="0">
+                        @if (isFavourited()) {
+                            <mat-icon class="fill-symbol">grade</mat-icon>
+                        }
+                        @else {
+                            <mat-icon class="outline-symbol">grade</mat-icon>
+                        }
+                    </div>
+                }
+            </div>
         }
     }
 </div>

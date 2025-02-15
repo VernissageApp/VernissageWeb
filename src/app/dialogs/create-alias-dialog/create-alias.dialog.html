@@ -1,0 +1,23 @@
+<form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+    <div mat-dialog-title>Create account alias</div>
+    <div mat-dialog-content>
+
+        <small class="text-muted text-right">
+            Specify the username&commat;domain of the account you want to move from.
+        </small>
+
+        <div class="margin-bottom-20 padding-top-5">
+            <mat-form-field class="width-100" appearance="outline">
+                <mat-label>Account alias</mat-label>
+                <input matInput name="text" [(ngModel)]="alias" #aliasInput="ngModel" type="text" aria-label="Alias" required appMaxLength="100" />
+                <mat-error *ngIf="aliasInput.invalid && aliasInput.errors?.appMaxLength">Account alias is too long.</mat-error>
+                <mat-error *ngIf="aliasInput.invalid && aliasInput.errors?.required">Enter account alias.</mat-error>
+            </mat-form-field>
+        </div>
+
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button type="button" (click)="onNoClick()">Cancel</button>
+        <button mat-raised-button type="submit" color="accent" cdkFocusInitial>Save</button>
+    </div>
+</form>

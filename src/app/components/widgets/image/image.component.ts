@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Inject, Input, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, computed, effect, ElementRef, Inject, input, OnDestroy, OnInit, PLATFORM_ID, signal, viewChild } from '@angular/core';
 import { decode } from 'blurhash';
 import { AvatarSize } from '../avatar/avatar-size';
 import { User } from 'src/app/models/user';
@@ -9,86 +9,167 @@ import { AuthorizationService } from 'src/app/services/authorization/authorizati
 import { StatusesService } from 'src/app/services/http/statuses.service';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { isPlatformBrowser } from '@angular/common';
+import { delay, filter, of, Subject, Subscription, switchMap, takeUntil } from 'rxjs';
+import { SatPopoverComponent } from '@ncstate/sat-popover';
+import { NavigationStart, Router } from '@angular/router';
+import { Relationship } from 'src/app/models/relationship';
+import { RelationshipsService } from 'src/app/services/http/relationships.service';
 
 @Component({
     selector: 'app-image',
     templateUrl: './image.component.html',
-    styleUrls: ['./image.component.scss']
+    styleUrls: ['./image.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
-export class ImageComponent implements OnInit, AfterViewInit {
-    readonly avatarSize = AvatarSize;
+export class ImageComponent implements OnInit, OnDestroy, AfterViewInit {
+    public avatarVisible = input(true);
+    public horizontal = input(true);
+    public priority =  input(false);
+    public status = input.required<Status>();
 
-    @Input() horizontal = true;
-    @Input() status?: Status;
-    @Input() avatarVisible = true;
+    protected readonly avatarSize = AvatarSize;
+    protected mainStatus = computed(() => { return this.status()?.reblog ?? this.status(); });
+    protected mouseenter = new Subject<void>();
+    protected mouseleave = new Subject<void>();
 
-    imageSrc = '';
-    alt?: string;
-    blurhash?: string;
-    user?: User;
-    signedInUser?: User;
-    width = 0;
-    height = 0;
-    isBrowser = false;
+    protected imageSrc = signal('');
+    protected alt = signal<string | undefined>(undefined);
+    protected user = signal<User | undefined>(undefined);
+    protected relationship = signal<Relationship | undefined>(undefined);
+    protected signedInUser = signal<User | undefined>(undefined);
+    protected showAltIcon = signal(false);
+    protected showFavourites = signal(false);
+    protected showReblog = signal(false);
+    protected showAvatar = signal(false);
+    protected width = signal(0);
+    protected height = signal(0);
+    protected internalPriority = signal<boolean | undefined>(undefined);
+    protected dataUrl = signal('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAABV1JREFUWEeFl+uSFUUQhKt65uwzLyheUFh/Di4LIiAIangJRV5vZ6bbyMyq7jlAhITtHJY9k19lVVdX+9Uv75uZWTGzyc2mYja72amYndxsxrM0/mzyFsvMvZkbvtr4XzWzimcz25rZXt22prXyc+HnPVd82z8CSNGAmEsLEIgLomAZAPCnCaM1iktAz/8FaGb+8O37hhcV10KkXCEMJ2Zv/Hu6AABEnwDAqAFQzW2vcGEAZPT6WSEcYPEGAigFGeFIAYTTfkJECtIBGsD49X85cB59ih7FCWBa/uDNvwKAvawDRXrKJyMfC+IT2I81kPnnU3keDiD3xTYb0e9W+HsQ9m9/fvdJAEZvEhYMHKqqAdOygGiqQxYiawBpiKKTeEDAfosUZBHef/2OLKwBM5tDFM8Unq0OAIpXFmLugtgLih7iCZDCFJ0Icg7g5l+/+odFiJfBWlQ6BQFAGHzWogMJwDQgZkUvB4Y4hCQo4a1NEo+F32URfvXT3zQQ0cNWOsA1hE8Nwlg7IehAl1URAqU5AFJEghsB+M146tsd4IuXf8mBhiKEC9XmlgC7QXzG1wmB17CEgj8c8HSgWPUA8BSdbfcBsTu+DZVw4N7zP/s2LE1pmCHaIL7LiQaAzSY8yY8s6xVsRARwigtgoujus21OfH7Onw8P3fyzH/8IB6IGQpwQdbe5becATSbnTu4AIU4AiBHgFJ8HSA1nmquX+t1nvzdvqugJDsBqRA7xBKiAgAObFQA07Gq1EhYhHHA4MFktE597SfGTXIhV+cyN7OZ3nv42HKB4tYnCANhirTbVAKisaSutmnEXoB8AoBzEZ6sEONkWzyMAQVHGDoAnv6orZ/Q1ALr4ZlNdba6CKG2lC9pwB4CC/MOBmdET4AMI/ptzQ7NWmILLm7fdAUSF6OkAAHY4sNq0JwDEsTZzQHQH3BoAYH+J6MuFAPBELURKlIKJjmHz++XjN81atFdEj0rfBwCj32/pAlcHUB3wSEQKCADxIwAgAqRDIHp0mkjB5fXrhh7AdtwBlPspHBgAAlERKg0DQAXYwvpK4QvbPgKYlaqYKPzO96/OaqBkCs7sv2UahgNrrwGciigm6ynI/Gf0SIFcwG7oKYh+6ncfvWQjQhGOGggHWAcQvo0iVA0gDVmEADCPGoC1vQjDgS6uXYH8ywHUARrRoxecqZBPAWCh8o9bEEWY9q/s6ijCgiJMABQV8o8oz4rvwjZsx0NTYj/NXfD58lyHEZpR7wPa8+oDsp5PNqO1n3NsRlmEBMCLkQJUuqp/iEdDwsnC8yB2wb3l2dk2pAvRhASxRheU9YSIM08AkQIARB9QnqMRWULMtulYUxriSPMvlx/OawDZQSECItrv3AICByracR66Hg5gD6EOMr8JYDgDThQeK8/UnAeWp2MbZh3QBfF2iHjFGCswFeE8UB+waCw6bKL3H4RXfo5jOUYzdsL7y5MoQjUj1ieP3XCBr0vzcrRQAbKZajbXToCtUeGBz0koxVeOZRPnxZwq/JvlZtRAjFs5/Wgqkijd4EQUMwEAOBeGA2plkdsUCnFCTILpgyl+18wfLDdxRdBIlvMKJyOIeohzHhwAeUPSUHJwgANozIKImKJDHCC6PQXAw+WxijBGbV1QcgiNiQgQAcBnRJ8pUBZyRgoAjuUpXgiB6LH67QjfuiKArKQDMfkSIhedkPCHABjn8w/942guCABsVaIEiM95SeXN6Gq5jrEct6NIQVxCdB+oNpch3gEIqyJMB1pcuZiCiFSiB/HDTZk18N1yPVIQtx5dz85FB0jckBJA6Y8bsltj/nFBTbtDnH/HVX1c0+HAfzYw+Bz5bvwbAAAAAElFTkSuQmCC');
+    protected imageIsLoaded = signal(false);
+    protected isFavourited = signal(false);
+    protected isReblogged = signal(false);
 
-    @ViewChild('canvas', { static: false }) readonly canvas?: ElementRef<HTMLCanvasElement>;
+    private popover = viewChild<SatPopoverComponent | undefined>('popover');
+    private canvas = viewChild<ElementRef<HTMLCanvasElement> | undefined>('canvas');
 
-    showAltIcon = false;
-    showFavourites = false;
-    imageIsLoaded = false;
-
-    get showAvatar() { return this.preferencesService.showAvatars && this.avatarVisible; }
+    private routeNavigationStartSubscription?: Subscription;
+    private isBrowser = false;
+    private blurhash = '';
 
     constructor(
-        @Inject(PLATFORM_ID) platformId: Object,
+        @Inject(PLATFORM_ID) platformId: object,
         private preferencesService: PreferencesService,
         private statusesService: StatusesService,
+        private relationshipsService: RelationshipsService,
+        private router: Router,
         private messageService: MessagesService,
         private authorizationService: AuthorizationService) {
             this.isBrowser = isPlatformBrowser(platformId);
+
+            // Because <app-image> components are reused by Angular when we have trackBy directive,
+            // we cannot change priority from false to true (Angular is throwing an exception then).
+            effect(() => {
+
+                const newPriorityValue = this.priority();
+                if (this.internalPriority() === undefined) {
+                    this.internalPriority.set(newPriorityValue);
+                }
+            });
+
+            effect(() => {
+                this.showAvatar.set(this.preferencesService.showAvatars && this.avatarVisible());
+            });
     }
 
     ngOnInit(): void {
-        this.imageSrc = this.getMainAttachmentSrc();
-        this.alt = this.getMainAttachmentAlt();
-        this.user = this.getMainStatus()?.user;
+        this.imageSrc.set(this.getMainAttachmentSrc());
+        this.alt.set(this.getMainAttachmentAlt());
+        this.width.set(this.getMainAttachmentWidth());
+        this.height.set(this.getMainAttachmentHeight());
+        this.user.set(this.mainStatus().user);
+        this.isFavourited.set(this.mainStatus().favourited);
+        this.isReblogged.set(this.mainStatus().reblogged);
+        this.signedInUser.set(this.authorizationService.getUser());
+
+        this.showAltIcon.set(this.preferencesService.showAltIcon);
+        this.showFavourites.set(this.preferencesService.showFavourites);
+        this.showReblog.set(this.preferencesService.showReblog);
+        this.showAvatar.set(this.preferencesService.showAvatars && this.avatarVisible());
+
         this.blurhash = this.getMainAttachmentBlurhash();
-        this.width = this.getMainAttachmentWidth();
-        this.height = this.getMainAttachmentHeight();
 
-        this.showAltIcon = this.preferencesService.showAltIcon;
-        this.showFavourites = this.preferencesService.showFavourites;
+        this.routeNavigationStartSubscription = this.router.events
+            .pipe(filter(event => event instanceof NavigationStart))  
+            .subscribe(() => {
+                this.popover()?.close();
+                this.mouseleave.next();
+            });
+    }
 
-        this.signedInUser = this.authorizationService.getUser();
+    ngOnDestroy(): void {
+        this.popover()?.close();
+        this.routeNavigationStartSubscription?.unsubscribe();
     }
 
     ngAfterViewInit(): void {
         this.drawCanvas();
+
+        this.mouseenter
+            .pipe(switchMap(() => of(null).pipe(delay(500), takeUntil(this.mouseleave))))
+            .subscribe(async () => {
+                this.popover()?.open();
+
+                const userInternal = this.user();
+                if (userInternal && userInternal.id && this.signedInUser()?.id !== userInternal.id) {
+                    const downloadedRelationship = await this.relationshipsService.get(userInternal.id);
+                    this.relationship.set(downloadedRelationship);
+                }
+            });
+  
+        this.mouseleave
+            .pipe(switchMap(() => of(null).pipe(delay(500), takeUntil(this.mouseenter))))
+            .subscribe(() => {
+                this.popover()?.close();
+            });
     }
 
-    async favouriteToogle(): Promise<void> {
-        const mainStatus = this.getMainStatus();
-
-        if (mainStatus) {
-            try {
-                if (mainStatus.favourited) {
-                    await this.statusesService.unfavourite(mainStatus.id);
-                    mainStatus.favourited = false;
-                    this.messageService.showSuccess('Status unfavourited.');
-                } else {
-                    await this.statusesService.favourite(mainStatus.id);
-                    mainStatus.favourited = true;
-                    this.messageService.showSuccess('Status favourited.');
-                }
-            } catch (error) {
-                console.error(error);
-                this.messageService.showServerError(error);
+    protected async favouriteToggle(): Promise<void> {
+        try {
+            if (this.isFavourited()) {
+                await this.statusesService.unfavourite(this.mainStatus().id);
+                this.isFavourited.set(false);
+                this.messageService.showSuccess('Your like has been undone.');
+            } else {
+                await this.statusesService.favourite(this.mainStatus().id);
+                this.isFavourited.set(true);
+                this.messageService.showSuccess('Status favourited.');
             }
+        } catch (error) {
+            console.error(error);
+            this.messageService.showServerError(error);
         }
     }
 
-    onImageLoaded(): void {
-        this.imageIsLoaded = true;
+    protected async reblogToggle(): Promise<void> {
+        try {
+            if (this.isReblogged()) {
+                await this.statusesService.unreblog(this.mainStatus().id);
+                this.isReblogged.set(false);
+                this.messageService.showSuccess('Your boost has been undone.');
+            } else {
+                await this.statusesService.reblog(this.mainStatus().id);
+                this.isReblogged.set(true);
+                this.messageService.showSuccess('Status boosted.');
+            }
+        } catch (error) {
+            console.error(error);
+            this.messageService.showServerError(error);
+        }
+    }
+
+    protected onImageLoaded(): void {
+        this.imageIsLoaded.set(true);
     }
 
     private drawCanvas(): void {
@@ -100,12 +181,13 @@ export class ImageComponent implements OnInit, AfterViewInit {
             return;
         }
 
-        if (!this.canvas) {
+        const internalCanvas = this.canvas();
+        if (!internalCanvas) {
             return;
         }
 
         const pixels = decode(this.blurhash, 32, 32);
-        const ctx = this.canvas.nativeElement.getContext('2d');
+        const ctx = internalCanvas.nativeElement.getContext('2d');
 
         if (!ctx) {
             return;
@@ -118,68 +200,49 @@ export class ImageComponent implements OnInit, AfterViewInit {
 
         imageData.data.set(pixels);
         ctx.putImageData(imageData!, 0, 0);
-    }
 
-    protected getMainStatus(): Status | undefined {
-        return this.status?.reblog ?? this.status;
+        const blurhashDataUrl = internalCanvas.nativeElement.toDataURL();
+        if (blurhashDataUrl) {
+            this.dataUrl.set(blurhashDataUrl);
+        }
     }
 
     private getMainAttachmentSrc(): string {
-        if (this.status) {
-            const mainAttachment = this.getMainAttachment(this.status);
-            return mainAttachment?.smallFile?.url ?? '';
-        }
-
-        return '';
+        const mainAttachment = this.getMainAttachment();
+        return mainAttachment?.smallFile?.url ?? '';
     }
 
     private getMainAttachmentAlt(): string | undefined {
-        if (this.status) {
-            const mainAttachment = this.getMainAttachment(this.status);
-            return mainAttachment?.description;
-        }
-
-        return undefined;
+        const mainAttachment = this.getMainAttachment();
+        return mainAttachment?.description;
     }
 
-    private getMainAttachment(status: Status): Attachment | null {
-        const mainStatus = status.reblog ?? status;
+    private getMainAttachmentBlurhash(): string {
+        const mainAttachment = this.getMainAttachment();
+        return mainAttachment?.blurhash ?? 'LEHV6nWB2yk8pyo0adR*.7kCMdnj';
+    }
 
-        if (!mainStatus.attachments) {
+    private getMainAttachmentWidth(): number {
+        const mainAttachment = this.getMainAttachment();
+        return mainAttachment?.smallFile?.width ?? 0;
+    }
+
+    private getMainAttachmentHeight(): number {
+        const mainAttachment = this.getMainAttachment();
+        return mainAttachment?.smallFile?.height ?? 0;
+    }
+
+    private getMainAttachment(): Attachment | null {
+        const internalMainStatus = this.mainStatus();
+
+        if (!internalMainStatus.attachments) {
             return null;
         }
     
-        if (mainStatus.attachments?.length === 0) {
+        if (internalMainStatus.attachments?.length === 0) {
             return null;
         }
-    
-        return mainStatus.attachments[0]
-    }
 
-    getMainAttachmentBlurhash(): string {
-        if (this.status) {
-            const mainAttachment = this.getMainAttachment(this.status);
-            return mainAttachment?.blurhash ?? 'LEHV6nWB2yk8pyo0adR*.7kCMdnj';
-        }
-
-        return 'LEHV6nWB2yk8pyo0adR*.7kCMdnj';
-    }
-
-    getMainAttachmentWidth(): number {
-        if (this.status) {
-            const mainAttachment = this.getMainAttachment(this.status);
-            return mainAttachment?.smallFile?.width ?? 0;
-        }
-
-        return 0;
-    }
-
-    getMainAttachmentHeight(): number {
-        if (this.status) {
-            const mainAttachment = this.getMainAttachment(this.status);
-            return mainAttachment?.smallFile?.height ?? 0;
-        }
-
-        return 0;
+        return internalMainStatus.attachments[0];
     }
 }

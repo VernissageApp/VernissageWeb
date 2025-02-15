@@ -1,34 +1,86 @@
-<div *ngIf="!singleButton" class="multiple-buttons flex-row flex-center gap-8">
-    <button @fadeIn *ngIf="isDuringRelationshipAction" type="button" mat-flat-button aria-label="Processing" disabled="disabled">Processing...</button>
-    <button @fadeIn *ngIf="showFollowButton && !isDuringRelationshipAction" type="button" (click)="onFollow()" mat-flat-button color="primary" aria-label="Follow">{{ relationship?.followedBy ? "Follow back" : "Follow" }}</button>
-    <button @fadeIn *ngIf="showUnfollowButton && !isDuringRelationshipAction" type="button" (click)="onUnfollow()" mat-flat-button color="accent" aria-label="Unfollow">{{ relationship?.following ? "Unfollow" : "Cancel request" }}</button>
-    <button @fadeIn *ngIf="showApproveFollowButton && !isDuringRelationshipAction" type="button" (click)="onApproveFollow()" mat-flat-button aria-label="Approve follow">Approve follow</button>
-    <button @fadeIn *ngIf="showApproveFollowButton && !isDuringRelationshipAction" type="button" (click)="onRejectFollow()" mat-flat-button aria-label="Approve follow">Reject follow</button>
+@if (!singleButton()) {
+    <div class="multiple-buttons flex-row flex-center gap-8">
+        @if (isDuringRelationshipAction()) {
+            <button @fadeIn type="button" mat-flat-button aria-label="Processing" disabled="disabled">Processing...</button>
+        }
 
-    <ng-container *ngIf="showOpenOriginalProfileButton || showMuteButton || showUnmuteButton || showReportButton">
-        <button class="more-button" mat-flat-button [matMenuTriggerFor]="dropdownMenuOne2" color="primary" aria-label="More options">
-            <mat-icon>more_vert</mat-icon>
-        </button>
-        <mat-menu #dropdownMenuOne2="matMenu" xPosition="before">
-            <button *ngIf="showOpenOriginalProfileButton" (click)="onOriginalProfile()" mat-menu-item><mat-icon>public</mat-icon> Open original profile</button>
-            <button *ngIf="showMuteButton" (click)="openMuteAccountDialog()" mat-menu-item><mat-icon>voice_over_off</mat-icon> Mute</button>
-            <button *ngIf="showUnmuteButton" (click)="unmuteAccount()" mat-menu-item><mat-icon>record_voice_over</mat-icon> Unmute</button>
-            <button *ngIf="showReportButton" (click)="onReportDialog()" mat-menu-item><mat-icon>report</mat-icon> Report</button>
-        </mat-menu>
-    </ng-container>
-</div>
+        @if (!isDuringRelationshipAction()) {
+            @if (showFollowButton()) {
+                <button @fadeIn type="button" (click)="onFollow()" mat-flat-button color="primary" aria-label="Follow">{{ updatedRelationship().followedBy ? "Follow back" : "Follow" }}</button>
+            }
+            
+            @if (showUnfollowButton()) {
+                <button @fadeIn type="button" (click)="onUnfollow()" mat-flat-button color="accent" aria-label="Unfollow">{{ updatedRelationship().following ? "Unfollow" : "Cancel request" }}</button>
+            }
+            
+            @if (showApproveFollowButton()) {
+                <button @fadeIn type="button" (click)="onApproveFollow()" mat-flat-button aria-label="Approve follow">Approve follow</button>
+                <button @fadeIn type="button" (click)="onRejectFollow()" mat-flat-button aria-label="Approve follow">Reject follow</button>
+            }
+        }
 
-<ng-container *ngIf="singleButton && (showFollowButton || showUnfollowButton || showApproveFollowButton || showApproveFollowButton)">
+        @if (showOpenOriginalProfileButton() || showCopyProfileUrlButton() || showMuteButton() || showUnmuteButton() || showFeatureButton() || showUnfeatureButton() || showReportButton()) {
+            <button class="more-button" mat-flat-button [matMenuTriggerFor]="dropdownMenuOne2" color="primary" aria-label="More options">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #dropdownMenuOne2="matMenu" xPosition="before">
+                @if (showOpenOriginalProfileButton()) {
+                    <button (click)="onOriginalProfile()" mat-menu-item><mat-icon>public</mat-icon> Open original profile</button>
+                }
+
+                @if (showCopyProfileUrlButton()) {
+                    <button (click)="onCopyLinkToPost()" mat-menu-item><mat-icon>file_copy</mat-icon> Copy link to profile</button>
+                }
+
+                @if (showOpenOriginalProfileButton() || showCopyProfileUrlButton()) {
+                    <mat-divider></mat-divider>
+                }
+
+                @if (showMuteButton()) {
+                    <button (click)="openMuteAccountDialog()" mat-menu-item><mat-icon>voice_over_off</mat-icon> Mute</button>
+                }
+                
+                @if (showUnmuteButton()) {
+                    <button (click)="unmuteAccount()" mat-menu-item><mat-icon>record_voice_over</mat-icon> Unmute</button>
+                }
+                
+                @if (showFeatureButton()) {
+                    <button (click)="onFeature()" mat-menu-item><mat-icon class="outline-symbol">stars</mat-icon> Feature</button>
+                }
+                
+                @if (showUnfeatureButton()) {
+                    <button (click)="onUnfeature()" mat-menu-item><mat-icon class="fill-symbol">stars</mat-icon> Undo feature</button>
+                }
+                
+                @if (showReportButton()) {
+                    <button  (click)="onReportDialog()" mat-menu-item><mat-icon>report</mat-icon> Report</button>
+                }
+            </mat-menu>
+        }
+    </div>
+}
+
+@if (singleButton() && (showFollowButton() || showUnfollowButton() || showApproveFollowButton())) {
     <mat-button-toggle-group [hideSingleSelectionIndicator]="true" (change)="toggleChange($event)">
-        <mat-button-toggle *ngIf="showFollowButton" (click)="onFollow()">{{ relationship?.followedBy ? "Follow back" : "Follow" }}</mat-button-toggle>
-        <mat-button-toggle *ngIf="showUnfollowButton" (click)="onUnfollow()">{{ relationship?.following ? "Unfollow" : "Cancel request" }}</mat-button-toggle>
-        <mat-button-toggle *ngIf="showApproveFollowButton || showApproveFollowButton" [matMenuTriggerFor]="dropdownMenuOne">
-            <mat-icon>arrow_drop_down</mat-icon>
-        </mat-button-toggle>
+        @if (showFollowButton()) {
+            <mat-button-toggle (click)="onFollow()">{{ updatedRelationship().followedBy ? "Follow back" : "Follow" }}</mat-button-toggle>
+        }
+        
+        @if (showUnfollowButton()) {
+            <mat-button-toggle (click)="onUnfollow()">{{ updatedRelationship().following ? "Unfollow" : "Cancel request" }}</mat-button-toggle>
+        }
+
+        @if (showApproveFollowButton()) {
+            <mat-button-toggle [matMenuTriggerFor]="dropdownMenuOne">
+                <mat-icon>arrow_drop_down</mat-icon>
+            </mat-button-toggle>
+        }
     </mat-button-toggle-group>
     
     <mat-menu #dropdownMenuOne="matMenu" xPosition="before">
-        <button *ngIf="showApproveFollowButton" (click)="onApproveFollow()" mat-menu-item>Approve follow</button>
-        <button *ngIf="showApproveFollowButton" (click)="onRejectFollow()" mat-menu-item>Reject follow</button>
+        @if (showApproveFollowButton()) {
+            <button (click)="onApproveFollow()" mat-menu-item>Approve follow</button>
+            <button (click)="onRejectFollow()" mat-menu-item>Reject follow</button>
+        }
     </mat-menu>
-</ng-container>
+}

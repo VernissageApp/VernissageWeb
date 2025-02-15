@@ -7,4 +7,6 @@ export class Notification {
     public notificationType?: NotificationType;
     public byUser?: User;
     public status?: Status;
+    public mainStatus?: Status;
+    public createdAt = '';
 }

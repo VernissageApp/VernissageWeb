@@ -1,7 +1,7 @@
 <div class="padding-top-30" @fadeIn>
     <div class="flex-row flex-center">
         <div class="register-container margin-left-10 margin-right-10">
-            <form name="form" (ngSubmit)="f.form.valid && passwordIsValid && onSubmit()" #f="ngForm" novalidate>
+            <form name="form" (ngSubmit)="f.form.valid && passwordIsValid() && onSubmit()" #f="ngForm" novalidate>
                 <mat-card appearance="outlined">
                     <mat-card-header>
                         <mat-card-title>Create new account</mat-card-title>
@@ -11,24 +11,24 @@
                         <div class="margin-bottom-20">
                             <mat-form-field appearance="outline">
                                 <mat-label>Username</mat-label>
-                                <input matInput name="userName" [(ngModel)]="user.userName" #userName="ngModel" type="text"
+                                <input matInput name="userName" [(ngModel)]="userName" #userNameInput="ngModel" type="text"
                                     aria-label="Username" required pattern="^[a-zA-Z0-9]*$" appUniqueUserName appMaxLength="50" />
-                                <mat-error *ngIf="userName.invalid && userName.errors?.required">Enter username.</mat-error>
-                                <mat-error *ngIf="userName.invalid && userName.errors?.pattern">Only alphanumeric characters are allowed in user name.</mat-error>
-                                <mat-error *ngIf="userName.invalid && userName.errors?.appUniqueUserName">Choose a different user name, this one is already taken.</mat-error>
-                                <mat-error *ngIf="userName.invalid && userName.errors?.appMaxLength">Choose a different user name, this one is too long.</mat-error>
+                                <mat-error *ngIf="userNameInput.invalid && userNameInput.errors?.required">Enter username.</mat-error>
+                                <mat-error *ngIf="userNameInput.invalid && userNameInput.errors?.pattern">Only alphanumeric characters are allowed in user name.</mat-error>
+                                <mat-error *ngIf="userNameInput.invalid && userNameInput.errors?.appUniqueUserName">Choose a different user name, this one is already taken.</mat-error>
+                                <mat-error *ngIf="userNameInput.invalid && userNameInput.errors?.appMaxLength">Choose a different user name, this one is too long.</mat-error>
                             </mat-form-field>
                         </div>
 
                         <div class="margin-bottom-20">
                             <mat-form-field appearance="outline">
                                 <mat-label>Email</mat-label>
-                                <input matInput name="email" [(ngModel)]="user.email" #email="ngModel" type="email"
+                                <input matInput name="email" [(ngModel)]="email" #emailInput="ngModel" type="email"
                                 pattern="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
                                 aria-label="Email" appUniqueEmail required />
-                                <mat-error *ngIf="email.invalid && email.errors?.required">Enter email.</mat-error>
-                                <mat-error *ngIf="email.invalid && email.errors?.pattern">Verify that you've entered proper email.</mat-error>
-                                <mat-error *ngIf="email.invalid && email.errors?.appUniqueEmail">Choose other email, this one is already connected to different account.</mat-error>
+                                <mat-error *ngIf="emailInput.invalid && emailInput.errors?.required">Enter email.</mat-error>
+                                <mat-error *ngIf="emailInput.invalid && emailInput.errors?.pattern">Verify that you've entered proper email.</mat-error>
+                                <mat-error *ngIf="emailInput.invalid && emailInput.errors?.appUniqueEmail">Choose other email, this one is already connected to different account.</mat-error>
                             </mat-form-field>
 
                             <small class="text-muted text-right">
@@ -39,7 +39,7 @@
                         <div class="margin-bottom-20">
                             <mat-form-field appearance="outline">
                                 <mat-label>Display name</mat-label>
-                                <input matInput name="name" [(ngModel)]="user.name" #name="ngModel" type="text" aria-label="Name" required appMaxLength="50" />
+                                <input matInput name="name" [(ngModel)]="fullName" #name="ngModel" type="text" aria-label="Name" required appMaxLength="50" />
                                 <mat-error *ngIf="name.invalid && name.errors?.required">Enter name.</mat-error>
                                 <mat-error *ngIf="name.invalid && name.errors?.appMaxLength">Name is too long.</mat-error>
                             </mat-form-field>
@@ -48,7 +48,7 @@
                         <div class="margin-bottom-20">
                             <mat-form-field appearance="outline">
                                 <mat-label>Language</mat-label>
-                                <mat-select [(value)]="user.locale">
+                                <mat-select [(value)]="locale">
                                     <mat-option value="en_US">English (English)</mat-option>
                                     <mat-option value="pl_PL">Polish (polski)</mat-option>
                                 </mat-select>
@@ -56,7 +56,7 @@
                         </div>
 
                         <div class="margin-bottom-20">
-                            <app-password [(passwordText)]="user.password" (passwordValid)="passwordValid($event)" [form]="f"></app-password>
+                            <app-password [(passwordText)]="password" (passwordValid)="onPasswordValid($event)" [form]="f"></app-password>
                         </div>
 
                         <mat-divider class="padding-bottom-20"></mat-divider>
@@ -64,43 +64,58 @@
                         <div>
                             <h4>Server rules</h4>
                             <ul>
-                                <li *ngFor="let rule of serverRules()">
-                                    {{ rule.text }}
-                                </li>
+                                @for(rule of serverRules(); track rule.id) {
+                                    <li>{{ rule.text }}</li>
+                                }
                             </ul>
                         </div>
 
                         <div class="margin-bottom-20">
-                            <mat-checkbox name="agreement" [disableRipple]="true" [(ngModel)]="user.agreement">
+                            <mat-checkbox name="agreement" [disableRipple]="true" [(ngModel)]="agreement">
                                 I accept all server rules.
                             </mat-checkbox>
                         </div>
 
-                        <mat-divider *ngIf="isRegistrationByInvitationsOpened() || isRegistrationByApprovalOpened()" class="padding-bottom-20"></mat-divider>
+                        @if (isRegistrationByInvitationsOpened() || isRegistrationByApprovalOpened()) {
+                            <mat-divider class="padding-bottom-20"></mat-divider>
+                        }
 
-                        <div *ngIf="isRegistrationByInvitationsOpened()">
-                            <mat-form-field appearance="outline">
-                                <mat-label>Invitation code</mat-label>
-                                <input matInput name="inviteToken" [(ngModel)]="user.inviteToken" #inviteToken="ngModel" type="text" aria-label="Invitation token" />
-                            </mat-form-field>
-                        </div>
+                        @if (isRegistrationByInvitationsOpened()) {
+                            <div>
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Invitation code</mat-label>
+                                    <input matInput name="inviteToken" [(ngModel)]="inviteToken" #inviteTokenInput="ngModel" type="text" aria-label="Invitation token" appMaxLength="11" [required]="!isRegistrationByApprovalOpened()" />
+                                    <mat-error *ngIf="inviteTokenInput.invalid && inviteTokenInput.errors?.required">Enter invitation code.</mat-error>
+                                    <mat-error *ngIf="inviteTokenInput.invalid && inviteTokenInput.errors?.appMaxLength">Invitation code is too long.</mat-error>
+                                </mat-form-field>
+                            </div>
+                        }
 
-                        <div *ngIf="isRegistrationByApprovalOpened()">
-                            <mat-form-field appearance="outline">
-                                <mat-label>Reason</mat-label>
-                                <textarea matInput name="reason" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2"
-                                          cdkAutosizeMaxRows="6"  #reasonInput="ngModel" [(ngModel)]="user.reason"
-                                          aria-label="Reason" appMaxLength="500"></textarea>
-                                <mat-error *ngIf="reasonInput.invalid && reasonInput.errors?.appMaxLength">Reason is too long.</mat-error>
-                            </mat-form-field>
-                        </div>
+                        @if (isRegistrationByApprovalOpened()) {
+                            <div>
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Reason</mat-label>
+                                    <textarea matInput name="reason" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2"
+                                            cdkAutosizeMaxRows="6"  #reasonInput="ngModel" [(ngModel)]="reason"
+                                            aria-label="Reason" appMaxLength="500" [required]="!isRegistrationByInvitationsOpened()"></textarea>
+                                    <mat-error *ngIf="reasonInput.invalid && reasonInput.errors?.required">Enter reason.</mat-error>
+                                    <mat-error *ngIf="reasonInput.invalid && reasonInput.errors?.appMaxLength">Reason is too long.</mat-error>
+                                </mat-form-field>
+                            </div>
+                        }
                     </mat-card-content>
 
                     <mat-card-actions>
                         <div class="flex-row register-actions">
-                            <button type="submit" mat-flat-button (click)="registerMode = RegisterMode.Register" [disabled]="isSubmittingMode()" color="primary" aria-label="Register">Register</button>
-                            <mat-spinner *ngIf="isSubmittingMode()" [diameter]="18" class="margin-left-10 margin-top-5"></mat-spinner>
-                            <div *ngIf="isErrorMode()" class="mat-small text-error margin-left-10">{{ errorMessage }}</div>
+                            <button type="submit" mat-flat-button (click)="onRegisterClick()" [disabled]="isSubmittingMode()" color="primary" aria-label="Register">Register</button>
+                            
+                            @if (isSubmittingMode()) {
+                                <mat-spinner [diameter]="18" class="margin-left-10 margin-top-5"></mat-spinner>
+                            }
+
+                            @if (isErrorMode()) {
+                                <div class="mat-small text-error margin-left-10 margin-top-10">{{ errorMessage() }}</div>
+                            }
                         </div>
                     </mat-card-actions>
                 </mat-card>

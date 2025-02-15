@@ -1,5 +1,7 @@
-import {ChangeDetectorRef, Component, ElementRef, Inject, ViewChild } from '@angular/core';
-import { fadeInAnimation } from "../../animations/fade-in.animation";
+import { Component, HostListener, ElementRef, Inject, OnInit, OnDestroy, PLATFORM_ID, signal, viewChild, computed, ChangeDetectionStrategy } from '@angular/core';
+import { Clipboard } from '@angular/cdk/clipboard';
+import { fadeInAnimation } from "src/app/animations/fade-in.animation";
+import { showOrHideAnimation } from 'src/app/animations/show-or-hide.animation';
 import { decode } from 'blurhash';
 import { Subscription } from 'rxjs';
 import { StatusesService } from 'src/app/services/http/statuses.service';
@@ -7,10 +9,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Status } from 'src/app/models/status';
 import { Exif } from 'src/app/models/exif';
 import { Location } from 'src/app/models/location';
-import { StatusVisibility } from 'src/app/models/status-visibility';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
-import { Responsive } from 'src/app/common/responsive';
+import { ResponsiveComponent } from 'src/app/common/responsive';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { User } from 'src/app/models/user';
 import { StatusComment } from 'src/app/models/status-comment';
@@ -30,47 +31,68 @@ import { UsersDialogContext, UsersListType } from 'src/app/dialogs/users-dialog/
 import { License } from 'src/app/models/license';
 import { WindowService } from 'src/app/services/common/window.service';
 import { RoutingStateService } from 'src/app/services/common/routing-state.service';
-import { DOCUMENT } from '@angular/common';
-import { Meta, Title } from '@angular/platform-browser';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { Meta, SafeHtml, Title } from '@angular/platform-browser';
+import { LoadingService } from 'src/app/services/common/loading.service';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
     selector: 'app-status',
     templateUrl: './status.page.html',
     styleUrls: ['./status.page.scss'],
-    animations: fadeInAnimation
+    animations: [fadeInAnimation, showOrHideAnimation],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
-export class StatusPage extends Responsive {
-    readonly statusVisibility = StatusVisibility;
-    readonly avatarSize = AvatarSize;
+export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy {
+    protected readonly avatarSize = AvatarSize;
+    protected isReady = signal(false);
+    protected status = signal<Status | undefined>(undefined);
+    protected mainStatus = signal<Status | undefined>(undefined);
+    protected comments = signal<StatusComment[] | undefined>(undefined);
+    protected signedInUser = signal<User | undefined>(undefined);
+    protected replyStatus =  signal<Status | undefined>(undefined);
+    protected images = signal<GalleryItem[] | undefined>(undefined);
+    protected imageIsLoaded = signal(false);
+    protected showSensitiveImage = signal(false);
+    protected showSensitiveCanvas = signal(false);
+    protected galleryAutoheight = signal(false);
+    protected currentIndex = signal(0);
+    protected hideLeftArrow = signal(false);
+    protected hideRightArrow = signal(false);
+    protected showAlternativeText = signal(false);
+    protected alwaysShowNSFW = signal(false);
+    protected imageWidth = signal(32);
+    protected imageHeight = signal(32);
+    protected isLoggedIn = signal(false);
+    protected rendered = signal<SafeHtml>('');
+    protected hasHdrSupport = signal(false);
 
-    @ViewChild('canvas', { static: false }) readonly canvas?: ElementRef<HTMLCanvasElement>;
+    protected altStatus = computed(() => this.getAltStatus(this.currentIndex()));
+    protected location = computed(() => this.getLocation(this.currentIndex()));
+    protected license = computed(() => this.getLicense(this.currentIndex()));
+    protected exif = computed(() => this.getExif(this.currentIndex()));
+    protected mapsUrl = computed(() => this.getMapsUrl(this.currentIndex()));
+    protected gpsLatitudeToDisplay = computed(() => this.getGpsLatitude(this.currentIndex())?.slice(0, 10) ?? '');
+    protected gpsLongitudeToDisplay = computed(() => this.getGpsLongitude(this.currentIndex())?.slice(0, 10) ?? '');
+    protected hasGpsCoordinations = computed<boolean>(() => !!this.getGpsLatitude(this.currentIndex()) && !!this.getGpsLongitude(this.currentIndex()));
+    protected hasHdrVersion = computed<boolean>(() => this.showHdrIcon(this.currentIndex()));
+    protected isBrowser = signal(false);
 
-    isReady = false;
-    status?: Status;
-    comments?: StatusComment[];
-    mainStatus?: Status;
-    routeParamsSubscription?: Subscription;
-    routeNavigationEndSubscription?: Subscription;
-    signedInUser?: User;
-    replyStatus?: Status;
-    images?: GalleryItem[];
-    imageIsLoaded = false;
-    firstCanvasInitialization = false;
-    urlToGallery?: string;
-
-    isBrowser = false;
-    galleryAutoheight = false;
-    currentIndex = 0;
-    hideLeftArrow = false;
-    hideRightArrow = false;
-    showAlternativeText = false;
-    galleryId = 'statusPageLightbox';
-    imageWidth = 32;
-    imageHeight = 32;
-    blurhash = 'LEHV6nWB2yk8pyo0adR*.7kCMdnj';
+    private canvas = viewChild<ElementRef<HTMLCanvasElement> | undefined>('canvas');
+    private routeParamsSubscription?: Subscription;
+    private routeNavigationEndSubscription?: Subscription;
+    private readonly oneSecond = 1000;
+    private firstCanvasInitialization = false;
+    private urlToGallery?: string;
+    private popupGalleryId = 'popupGalleryId';
+    private mainGalleryId = 'mainGalleryId';
+    private blurhash = 'LEHV6nWB2yk8pyo0adR*.7kCMdnj';
+    private isCommentFieldInFocus = false;
 
     constructor(
         @Inject(DOCUMENT) private document: Document,
+        @Inject(PLATFORM_ID) platformId: object,
         private statusesService: StatusesService,
         private messageService: MessagesService,
         private authorizationService: AuthorizationService,
@@ -83,36 +105,58 @@ export class StatusPage extends Responsive {
         private dialog: MatDialog,
         private gallery: Gallery,
         private lightbox: Lightbox,
-        private changeDetectorRef: ChangeDetectorRef,
         private windowService: WindowService,
         private titleService: Title,
+        private loadingService: LoadingService,
         private metaService: Meta,
+        private deviceDetectorService: DeviceDetectorService,
+        private clipboard: Clipboard,
         breakpointObserver: BreakpointObserver
     ) {
         super(breakpointObserver);
+        this.isBrowser.set(isPlatformBrowser(platformId));
     }
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
-        this.isReady = false;
+
+        this.isReady.set(false);
+        this.loadingService.showLoader();
 
         this.urlToGallery = this.routingStateService.getPreviousUrl();
-        this.showAlternativeText = this.preferencesService.showAlternativeText;
+        this.showAlternativeText.set(this.preferencesService.showAlternativeText);
+        this.alwaysShowNSFW.set(this.preferencesService.alwaysShowNSFW);
+        this.hasHdrSupport.set(this.isHdrRendered());
 
         this.routeParamsSubscription = this.activatedRoute.params.subscribe(async params => {
             const statusId = params['id'] as string;
 
-            this.signedInUser = this.authorizationService.getUser();
+            const signedInUserInternal = this.authorizationService.getUser()
+            const isLoggedInInternal = await  this.authorizationService.isLoggedIn();
+
+            this.signedInUser.set(signedInUserInternal);
+            this.isLoggedIn.set(isLoggedInInternal);
+            this.currentIndex.set(0);
+
+            // Load status information.
             await this.loadPageData(statusId);
 
-            const galleryRef = this.gallery.ref(this.galleryId);
-            galleryRef.load(this.images ?? []);
+            // Load images to gallery (and reset gallery state).
+            const mainGallery = this.gallery.ref(this.mainGalleryId);
+            mainGallery.load(this.images() ?? []);
+            mainGallery.set(0);
 
-            this.isReady = true;
+            // Load images to popup gallery.
+            const popupGallery = this.gallery.ref(this.popupGalleryId);
+            popupGallery.load(this.images() ?? []);
+
+            this.loadingService.hideLoader();
+            this.isReady.set(true);
 
             if (!this.firstCanvasInitialization) {
-                this.changeDetectorRef.detectChanges();
-                this.drawCanvas();
+                setTimeout(() => {
+                    this.drawCanvas();
+                });
             }
         });
     }
@@ -124,71 +168,117 @@ export class StatusPage extends Responsive {
         this.routeNavigationEndSubscription?.unsubscribe();
     }
 
-    onImageLoaded(): void {
-        this.imageIsLoaded = true;
+    protected onImageLoaded(): void {
+        this.imageIsLoaded.set(true);
     }
 
-    trackByCommentFn(_: number, item: StatusComment): string | undefined{
-        return item.status.id;
-    }
-
-    openInFullScreen() {
-        this.lightbox.open(this.currentIndex, this.galleryId, {
+    protected openInFullScreen() {
+        this.lightbox.open(this.currentIndex(), this.popupGalleryId, {
             panelClass: 'fullscreen'
         });
     }
 
-    onBackClick(): void {
-        if (this.urlToGallery) {
-            this.router.navigateByUrl(this.urlToGallery);
+    protected onBackClick(): void {
+        history.back();
+    }
+    private keysPressed: Record<string, boolean> = {};
+
+    @HostListener('window:keydown', ['$event'])
+    handleKeyDown(event: KeyboardEvent) {
+        if (this.isCommentFieldInFocus) {
+            return;
+        }
+
+        if (!this.keysPressed[event.key]) {
+            this.keysPressed[event.key] = true;
+
+            if (event.key === 'ArrowRight') {
+                this.onNextClick();
+            } else if (event.key === 'ArrowLeft') {
+                this.onPrevClick();
+            } else if (event.key === 'l') {
+              this.toggleFavourite()
+            } else if (event.key === 'b') {
+                this.toggleReblog()
+            } else if (event.key === 's') {
+              this.toggleBookmark();
+            }
         }
     }
 
-    async onPrevClick(): Promise<void> {
-        if (this.status?.id) {
-            const previousStatus = await this.contextStatusesService.getPrevious(this.status?.id);
+    // this is to prevent re-triggering the same event when the key is held down
+    @HostListener('window:keyup', ['$event'])
+    handleKeyUp(event: KeyboardEvent) {
+        this.keysPressed[event.key] = false;
+    }
+
+    protected async onPrevClick(): Promise<void> {
+        const internalStatus = this.status();
+
+        if (internalStatus?.id) {
+            const previousStatus = await this.contextStatusesService.getPrevious(internalStatus.id);
             if (previousStatus) {
-                await this.router.navigate(['/statuses', previousStatus.id]);
-                this.hideRightArrow = false;
+                if (this.isHandset()) {
+                    this.loadingService.showLoader();
+                }
+
+                await this.router.navigate(['/statuses', previousStatus.id], { replaceUrl: true });
+                this.hideRightArrow.set(false);
+                this.windowService.scrollToTop();
             } else {
-                this.hideLeftArrow = true;
+                this.hideLeftArrow.set(true);
             }
         }
     }
 
-    async onNextClick(): Promise<void> {
-        if (this.status?.id) {
-            const nextStatus = await this.contextStatusesService.getNext(this.status?.id);
+    protected async onNextClick(): Promise<void> {
+        const internalStatus = this.status();
+
+        if (internalStatus?.id) {
+            const nextStatus = await this.contextStatusesService.getNext(internalStatus.id);
             if (nextStatus) {
-                await this.router.navigate(['/statuses', nextStatus.id]);
-                this.hideLeftArrow = false;
+                if (this.isHandset()) {
+                    this.loadingService.showLoader();
+                }
+
+                await this.router.navigate(['/statuses', nextStatus.id], { replaceUrl: true });
+                this.hideLeftArrow.set(false);
+                this.windowService.scrollToTop();
             } else {
-                this.hideRightArrow = true;
+                this.hideRightArrow.set(true);
             }
         }
+    }
+
+    protected onShowSensitiveImageClick(): void {
+        this.showSensitiveImage.set(true);
+
+        setTimeout(() => {
+            this.showSensitiveCanvas.set(false);
+        }, this.oneSecond);
     }
 
     protected override onHandsetPortrait(): void {
-        this.galleryAutoheight = true;
+        this.galleryAutoheight?.set(true);
     }
 
     protected override onHandsetLandscape(): void {
-        this.galleryAutoheight = true;
+        this.galleryAutoheight?.set(true);
     }
 
     protected override onTablet(): void {
-        this.galleryAutoheight = false;
+        this.galleryAutoheight?.set(false);
     }
 
     protected override onBrowser(): void {
-        this.galleryAutoheight = false;
+        this.galleryAutoheight?.set(false);
     }
 
-    onImageIndexChange(event: any): void {
-        this.currentIndex = event.currIndex;
+    protected onImageIndexChange(event: any): void {
+        this.currentIndex.set(event.currIndex);
     }
 
-    async onReportDialog(reportedStatus: Status): Promise<void> {
+    protected async onReportDialog(reportedStatus: Status): Promise<void> {
         const dialogRef = this.dialog.open(ReportDialog, {
             width: '500px',
             data: new ReportData(reportedStatus?.user, reportedStatus)
@@ -207,15 +297,17 @@ export class StatusPage extends Responsive {
         });
     }
 
-    async onDeleteStatus(): Promise<void> {
+    protected async onDeleteStatus(): Promise<void> {
         const dialogRef = this.dialog.open(DeleteStatusDialog, {
             width: '500px'
         });
 
         dialogRef.afterClosed().subscribe(async (result) => {
-            if (result && this.status?.id) {
+            const internalStatus = this.status();
+
+            if (result && internalStatus?.id) {
                 try {
-                    await this.statusesService.delete(this.status?.id);
+                    await this.statusesService.delete(internalStatus.id);
 
                     this.messageService.showSuccess('Status has been deleted.');
                     await this.router.navigate(['/']);
@@ -227,7 +319,7 @@ export class StatusPage extends Responsive {
         });
     }
 
-    async onDeleteComment(comment: Status): Promise<void> {
+    protected async onDeleteComment(comment: Status): Promise<void> {
         const dialogRef = this.dialog.open(DeleteStatusDialog, {
             width: '500px'
         });
@@ -238,8 +330,10 @@ export class StatusPage extends Responsive {
                     await this.statusesService.delete(comment?.id);
                     this.messageService.showSuccess('Status has been deleted.');
 
-                    if (this.mainStatus) {
-                        this.comments = await this.getAllReplies(this.mainStatus.id);
+                    const internalMainStatus = this.mainStatus();
+                    if (internalMainStatus) {
+                        const downloadedComments = await this.getAllReplies(internalMainStatus.id);
+                        this.comments.set(downloadedComments);
                     }
                 } catch (error) {
                     console.error(error);
@@ -249,124 +343,88 @@ export class StatusPage extends Responsive {
         });
     }
 
-    async onBoostedByDialog(): Promise<void> {
-        if (!this.mainStatus?.id) {
+    protected async onBoostedByDialog(): Promise<void> {
+        const internalMainStatus = this.mainStatus();
+        if (!internalMainStatus?.id) {
             return;
         }
 
-        const dialogRef = this.dialog.open(UsersDialog, {
+        this.dialog.open(UsersDialog, {
             width: '500px',
-            data: new UsersDialogContext(this.mainStatus.id, UsersListType.reblogged, 'Boosted by')
+            data: new UsersDialogContext(internalMainStatus.id, UsersListType.reblogged, 'Boosted by')
         });
     }
 
-    async onFavouritedByDialog(): Promise<void> {
-        if (!this.mainStatus?.id) {
+    protected async onFavouritedByDialog(): Promise<void> {
+        const internalMainStatus = this.mainStatus();
+        if (!internalMainStatus?.id) {
             return;
         }
 
-        const dialogRef = this.dialog.open(UsersDialog, {
+        this.dialog.open(UsersDialog, {
             width: '500px',
-            data: new UsersDialogContext(this.mainStatus.id, UsersListType.favourited, 'Favourited by')
+            data: new UsersDialogContext(internalMainStatus.id, UsersListType.favourited, 'Favourited by')
         });
     }
 
-    onOpenOrginalPage(): void {
-        if (!this.mainStatus?.activityPubUrl) {
+    protected onOpenOriginalPage(): void {
+        const internalMainStatus = this.mainStatus();
+        if (!internalMainStatus?.activityPubUrl) {
             return;
         }
 
-        this.windowService.openPage(this.mainStatus.activityPubUrl);
+        this.windowService.openPage(internalMainStatus.activityPubUrl);
     }
 
-    isLoggedIn(): Boolean {
-        return this.authorizationService.isLoggedIn();
+    protected onCopyLinkToPost(): void {
+        this.clipboard.copy(this.mainStatus()?.activityPubUrl ?? '');
     }
 
-    showBackArrow(): boolean {
-        return !this.isHandset && !!this.urlToGallery;
+    protected showBackArrow(): boolean {
+        return !this.isHandset() && !!this.urlToGallery;
     }
 
-    showContextArrows(): boolean {
-        return this.contextStatusesService.hasContextStatuses() && !this.isHandset;
+    protected showContextArrows(): boolean {
+        return this.contextStatusesService.hasContextStatuses() && !this.isHandset();
     }
 
-    shoudDisplayDeleteButton(): boolean {
+    protected showBottomContextArrow(): boolean {
+        return this.contextStatusesService.hasContextStatuses() && this.isHandset();
+    }
+
+    protected shouldDisplayDeleteButton(): boolean {
         return this.isStatusOwner() || this.authorizationService.hasRole(Role.Administrator) || this.authorizationService.hasRole(Role.Moderator);
     }
 
-    shoudDisplayFeatureButton(): boolean {
+    protected shouldDisplayFeatureButton(): boolean {
         return this.authorizationService.hasRole(Role.Administrator) || this.authorizationService.hasRole(Role.Moderator);
     }
 
-    shoudDisplayDeleteCommentButton(comment: Status): boolean {
-        return comment.user?.id === this.signedInUser?.id;
+    protected shouldDisplayDeleteCommentButton(comment: Status): boolean {
+        return comment.user?.id === this.signedInUser()?.id;
     }
 
-    isStatusOwner(): boolean {
-        return this.mainStatus?.user?.id === this.signedInUser?.id;
+    protected async toggleReblog(): Promise<void> {
+      try {
+          const internalMainStatus = this.mainStatus();
+          if (internalMainStatus) {
+              if (internalMainStatus.reblogged) {
+                  await this.unreblog();
+              } else {
+                  await this.reblog();
+              }
+          }
+      } catch (error) {
+          console.error(error);
+          this.messageService.showServerError(error);
+      }
     }
-
-    getAltStatus(index: number): String | undefined {
-        const attachment = this.mainStatus?.attachments?.at(index);
-        if (attachment) {
-            return attachment.description;
-        }
-
-        return undefined;        
-    }
-
-    getExif(index: number): Exif | undefined {
-        const attachment = this.mainStatus?.attachments?.at(index);
-        if (attachment) {
-            return attachment.metadata?.exif;
-        }
-
-        return undefined;
-    }
-
-    getLocation(index: number): Location | undefined {
-        const attachment = this.mainStatus?.attachments?.at(index);
-        if (attachment) {
-            return attachment.location;
-        }
-
-        return undefined;
-    }
-
-    getLicense(index: number): License | undefined {
-        const attachment = this.mainStatus?.attachments?.at(index);
-        if (attachment) {
-            return attachment.license;
-        }
-
-        return undefined;
-    }
-
-    getMapsUrl(index: number): String | undefined {
-        const location = this.getLocation(index);
-        if (location) {
-            const latitude = location.latitude?.replace(',', '.');
-            const longitude  = location.longitude?.replace(',', '.');
-            
-            return `https://www.openstreetmap.org/?mlat=${latitude}&mlon=${longitude}#map=10/${latitude}/${longitude}`;
-        }
-
-        return undefined;
-    }
-
-    getCreatedAt(): Date | undefined {
-        if (this.mainStatus?.createdAt) {
-            return new Date(this.mainStatus.createdAt);
-        }
-
-        return undefined;
-    }
-
-    async reblog(): Promise<void> {
+    protected async reblog(): Promise<void> {
         try {
-            if (this.mainStatus) {
-                this.mainStatus = await this.statusesService.reblog(this.mainStatus.id);
+            const internalMainStatus = this.mainStatus();
+            if (internalMainStatus) {
+                const downloadedMainStatus = await this.statusesService.reblog(internalMainStatus.id);
+                this.mainStatus.set(downloadedMainStatus);
                 this.messageService.showSuccess('Status boosted.');
             }
         } catch (error) {
@@ -375,10 +433,12 @@ export class StatusPage extends Responsive {
         }
     }
 
-    async unreblog(): Promise<void> {
+    protected async unreblog(): Promise<void> {
         try {
-            if (this.mainStatus) {
-                this.mainStatus = await this.statusesService.unreblog(this.mainStatus.id);
+            const internalMainStatus = this.mainStatus();
+            if (internalMainStatus) {
+                const downloadedMainStatus = await this.statusesService.unreblog(internalMainStatus.id);
+                this.mainStatus.set(downloadedMainStatus);
                 this.messageService.showSuccess('Status unboosted.');
             }
         } catch (error) {
@@ -387,10 +447,28 @@ export class StatusPage extends Responsive {
         }
     }
 
-    async favourite(): Promise<void> {
+    protected async toggleFavourite(): Promise<void> {
+      try {
+          const internalMainStatus = this.mainStatus();
+          if (internalMainStatus) {
+              if (internalMainStatus.favourited) {
+                  await this.unfavourite();
+              } else {
+                  await this.favourite();
+              }
+          }
+      } catch (error) {
+          console.error(error);
+          this.messageService.showServerError(error);
+      }
+    }
+
+    protected async favourite(): Promise<void> {
         try {
-            if (this.mainStatus) {
-                this.mainStatus = await this.statusesService.favourite(this.mainStatus.id);
+            const internalMainStatus = this.mainStatus();
+            if (internalMainStatus) {
+                const downloadedMainStatus = await this.statusesService.favourite(internalMainStatus.id);
+                this.mainStatus.set(downloadedMainStatus);
                 this.messageService.showSuccess('Status favourited.');
             }
         } catch (error) {
@@ -399,11 +477,13 @@ export class StatusPage extends Responsive {
         }
     }
 
-    async unfavourite(): Promise<void> {
+    protected async unfavourite(): Promise<void> {
         try {
-            if (this.mainStatus) {
-                this.mainStatus = await this.statusesService.unfavourite(this.mainStatus.id);
-                this.messageService.showSuccess('Status unfavorited.');
+            const internalMainStatus = this.mainStatus();
+            if (internalMainStatus) {
+                const downloadMainStatus = await this.statusesService.unfavourite(internalMainStatus.id);
+                this.mainStatus.set(downloadMainStatus);
+                this.messageService.showSuccess('Your like has been undone.');
             }
         } catch (error) {
             console.error(error);
@@ -411,10 +491,28 @@ export class StatusPage extends Responsive {
         }
     }
 
-    async bookmark(): Promise<void> {
+    protected async toggleBookmark(): Promise<void> {
+      try {
+          const internalMainStatus = this.mainStatus();
+          if (internalMainStatus) {
+              if (internalMainStatus.bookmarked) {
+                  await this.unbookmark();
+              } else {
+                  await this.bookmark();
+              }
+          }
+      } catch (error) {
+          console.error(error);
+          this.messageService.showServerError(error);
+      }
+   }
+
+    protected async bookmark(): Promise<void> {
         try {
-            if (this.mainStatus) {
-                this.mainStatus = await this.statusesService.bookmark(this.mainStatus.id);
+            const internalMainStatus = this.mainStatus();
+            if (internalMainStatus) {
+                const downloadedMainStatus = await this.statusesService.bookmark(internalMainStatus.id);
+                this.mainStatus.set(downloadedMainStatus);
                 this.messageService.showSuccess('Status bookmarked.');
             }
         } catch (error) {
@@ -423,10 +521,12 @@ export class StatusPage extends Responsive {
         }
     }
 
-    async unbookmark(): Promise<void> {
+    protected async unbookmark(): Promise<void> {
         try {
-            if (this.mainStatus) {
-                this.mainStatus = await this.statusesService.unbookmark(this.mainStatus.id);
+            const internalMainStatus = this.mainStatus();
+            if (internalMainStatus) {
+                const downloadedMainStatus = await this.statusesService.unbookmark(internalMainStatus.id);
+                this.mainStatus.set(downloadedMainStatus);
                 this.messageService.showSuccess('Status unbookmarked.');
             }
         } catch (error) {
@@ -435,10 +535,12 @@ export class StatusPage extends Responsive {
         }
     }
 
-    async feature(): Promise<void> {
+    protected async feature(): Promise<void> {
         try {
-            if (this.mainStatus) {
-                this.mainStatus = await this.statusesService.feature(this.mainStatus.id);
+            const internalMainStatus = this.mainStatus();
+            if (internalMainStatus) {
+                const downloadedMainStatus = await this.statusesService.feature(internalMainStatus.id);
+                this.mainStatus.set(downloadedMainStatus);
                 this.messageService.showSuccess('Status featured.');
             }
         } catch (error) {
@@ -447,10 +549,12 @@ export class StatusPage extends Responsive {
         }
     }
 
-    async unfeature(): Promise<void> {
+    protected async unfeature(): Promise<void> {
         try {
-            if (this.mainStatus) {
-                this.mainStatus = await this.statusesService.unfeature(this.mainStatus.id);
+            const internalMainStatus = this.mainStatus();
+            if (internalMainStatus) {
+                const downloadMainStatus = await this.statusesService.unfeature(internalMainStatus.id);
+                this.mainStatus.set(downloadMainStatus);
                 this.messageService.showSuccess('Status unfeatured.');
             }
         } catch (error) {
@@ -459,7 +563,7 @@ export class StatusPage extends Responsive {
         }
     }
 
-    async favouriteComment(status: Status): Promise<void> {
+    protected async favouriteComment(status: Status): Promise<void> {
         try {
             await this.statusesService.favourite(status.id);
             status.favourited = true;
@@ -471,7 +575,7 @@ export class StatusPage extends Responsive {
         }
     }
 
-    async unfavouriteComment(status: Status): Promise<void> {
+    protected async unfavouriteComment(status: Status): Promise<void> {
         try {
             await this.statusesService.unfavourite(status.id);
             status.favourited = false;
@@ -483,92 +587,261 @@ export class StatusPage extends Responsive {
         }
     }
 
-    onReply(status?: Status): void {
-        this.replyStatus = status;
+    protected onReply(status?: Status): void {
+        this.replyStatus.set(status);
     }
 
-    async onCommentAdded(): Promise<void> {
-        if (this.mainStatus) {
+    protected onCommentFieldFocus(isFocused: boolean): void {
+        this.isCommentFieldInFocus = isFocused;
+    }
+
+    protected async onCommentAdded(): Promise<void> {
+        const internalMainStatus = this.mainStatus();
+        if (internalMainStatus) {
             this.onReply(undefined);
-            this.comments = await this.getAllReplies(this.mainStatus.id);
+            const downloadedComments = await this.getAllReplies(internalMainStatus.id);
+            this.comments.set(downloadedComments);
         }
     }
 
-    private async loadPageData(statusId: string): Promise<void> {
-        this.status = await this.statusesService.get(statusId);
+    private getAltStatus(index: number): string | undefined {
+        const attachment = this.mainStatus()?.attachments?.at(index);
+        if (attachment) {
+            return attachment.description;
+        }
 
-        if (this.status.reblog) {
-            this.mainStatus = this.status.reblog;
+        return undefined;
+    }
+
+    private getExif(index: number): Exif | undefined {
+        const attachment = this.mainStatus()?.attachments?.at(index);
+        if (attachment) {
+            return attachment.metadata?.exif;
+        }
+
+        return undefined;
+    }
+
+    private getLocation(index: number): Location | undefined {
+        const attachment = this.mainStatus()?.attachments?.at(index);
+        if (attachment) {
+            return attachment.location;
+        }
+
+        return undefined;
+    }
+
+    private getLicense(index: number): License | undefined {
+        const attachment = this.mainStatus()?.attachments?.at(index);
+        if (attachment) {
+            return attachment.license;
+        }
+
+        return undefined;
+    }
+
+    private getMapsUrl(index: number): string | undefined {
+        const locationInternal = this.getLocation(index);
+        if (locationInternal) {
+            const latitude = this.getGpsLatitude(index) ?? locationInternal.latitude?.replace(',', '.');
+            const longitude = this.getGpsLongitude(index) ?? locationInternal.longitude?.replace(',', '.');
+
+            return `https://www.openstreetmap.org/?mlat=${latitude}&mlon=${longitude}#map=10/${latitude}/${longitude}`;
+        }
+
+        if (this.hasGpsCoordinations()) {
+            const latitude = this.getGpsLatitude(index);
+            const longitude = this.getGpsLongitude(index);
+
+            return `https://www.openstreetmap.org/?mlat=${latitude}&mlon=${longitude}#map=10/${latitude}/${longitude}`;
+        }
+
+        return undefined;
+    }
+
+    private showHdrIcon(index: number): boolean {
+        const attachment = this.mainStatus()?.attachments?.at(index);
+        if (attachment) {
+            return !!attachment.originalHdrFile;
+        }
+
+        return false;
+    }
+
+    private isHdrRendered(): boolean {
+        if (this.preferencesService.alwaysShowSdrPhoto) {
+            return false;
+        }
+
+        if (this.browserSupportsHdr()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private getGpsLatitude(index: number): string | undefined {
+        const exif = this.getExif(index);
+        if (!exif) {
+            return undefined;
+        }
+
+        if (exif.latitude) {
+            let latitude = exif.latitude?.replace(',', '.').toUpperCase();
+
+            if (latitude.endsWith('S')) {
+                latitude = latitude.replace('S', '');
+
+                if (!latitude.startsWith('-')) {
+                    latitude = '-' + latitude;
+                }
+            }
+
+            if (latitude.endsWith('N')) {
+                latitude = latitude.replace('N', '');
+            }
+
+            return latitude;
+        }
+
+        return undefined;
+    }
+
+    private getGpsLongitude(index: number): string | undefined {
+        const exif = this.getExif(index);
+        if (!exif) {
+            return undefined;
+        }
+
+        if (exif.longitude) {
+            let longitude = exif.longitude?.replace(',', '.').toUpperCase();
+
+            if (longitude.endsWith('W')) {
+                longitude = longitude.replace('W', '');
+
+                if (!longitude.startsWith('-')) {
+                    longitude = '-' + longitude;
+                }
+            }
+
+            if (longitude.endsWith('E')) {
+                longitude = longitude.replace('E', '');
+            }
+
+            return longitude;
+        }
+
+        return undefined;
+    }
+
+    private async loadPageData(statusId: string): Promise<void> {
+        const downloadedStatus = await this.statusesService.get(statusId);
+        this.status.set(downloadedStatus);
+
+        if (downloadedStatus.reblog) {
+            this.mainStatus.set(downloadedStatus.reblog);
         } else {
-            this.mainStatus = this.status;
+            this.mainStatus.set(downloadedStatus);
         }
 
         this.setBlurhash();
         this.setImageWidth();
         this.setImageHeight();
         this.setCardMetatags();
-        this.imageIsLoaded = false;
 
-        this.images = this.mainStatus.attachments?.map(attachment => {
-            return new ImageItem({ src: attachment.originalFile?.url, thumb: attachment.smallFile?.url })
-        }); 
+        this.imageIsLoaded.set(false);
 
-        this.comments = await this.getAllReplies(this.mainStatus.id);
+        if (this.mainStatus()?.sensitive) {
+            this.showSensitiveImage.set(false);
+            this.showSensitiveCanvas.set(true);
+        } else {
+            this.showSensitiveImage.set(true);
+            this.showSensitiveCanvas.set(false);
+        }
+
+        const internalImages = this.mainStatus()?.attachments?.map(attachment => {
+            if (this.preferencesService.alwaysShowSdrPhoto) {
+                return new ImageItem({ src: attachment.originalFile?.url, thumb: attachment.smallFile?.url });
+            }
+
+            if (attachment.originalHdrFile?.url && this.browserSupportsHdr()) {
+                return new ImageItem({ src: attachment.originalHdrFile?.url, thumb: attachment.smallFile?.url });
+            }
+
+            return new ImageItem({ src: attachment.originalFile?.url, thumb: attachment.smallFile?.url });
+        });
+
+        this.images.set(internalImages);
+        this.rendered.set(this.mainStatus()?.noteHtml ?? '');
+
+        const mainStatusId = this.mainStatus()?.id;
+        if (mainStatusId) {
+            const downloadedComments = await this.getAllReplies(mainStatusId);
+            this.comments.set(downloadedComments);
+        }
     }
 
     private async getAllReplies(statusId: string): Promise<StatusComment[]> {
         const replies: StatusComment[] = [];
 
+        // Download all status descendants.
         const context = await this.statusesService.context(statusId);
-        for(let item of context.descendants) {
+
+        // Build a tree of replies.
+        for (const item of context.descendants.filter(x => x.replyToStatusId === statusId)) {
             replies.push(new StatusComment(item, true));
-            await this.getReplies(item.id, replies);
+            this.getReplies(context.descendants, item.id, replies);
         }
 
         return replies;
     }
 
-    private async getReplies(statusId: string, replies: StatusComment[]): Promise<void> {
-        const context = await this.statusesService.context(statusId);
-        for(let item of context.descendants) {
+    private getReplies(allStatuses: Status[], statusId: string, replies: StatusComment[]): void {
+        const descendants = allStatuses.filter(x => x.replyToStatusId === statusId);
+        for (const item of descendants) {
             replies.push(new StatusComment(item, false));
-            await this.getReplies(item.id, replies);
+            this.getReplies(allStatuses, item.id, replies);
         }
     }
 
     private setBlurhash(): void {
-        if (!this.mainStatus?.attachments || this.mainStatus?.attachments?.length === 0) {
+        const internalMainStatus = this.mainStatus();
+        if (!internalMainStatus?.attachments || internalMainStatus?.attachments?.length === 0) {
             return;
         }
 
-        this.blurhash =  this.mainStatus.attachments[0].blurhash ?? 'LEHV6nWB2yk8pyo0adR*.7kCMdnj';
-        this.drawCanvas();
+        this.blurhash = internalMainStatus.attachments[0].blurhash ?? 'LEHV6nWB2yk8pyo0adR*.7kCMdnj';
+        setTimeout(() => {
+            this.drawCanvas();
+        });
     }
 
     private setImageWidth(): void {
-        if (!this.mainStatus?.attachments || this.mainStatus?.attachments?.length === 0) {
+        const internalMainStatus = this.mainStatus();
+        if (!internalMainStatus?.attachments || internalMainStatus?.attachments?.length === 0) {
             return;
         }
 
-        const width = this.mainStatus.attachments[0].smallFile?.width;
+        const width = internalMainStatus.attachments[0].smallFile?.width;
         if (!width) {
             return;
         }
 
-        this.imageWidth = width;
+        this.imageWidth.set(width);
     }
 
     private setImageHeight(): void {
-        if (!this.mainStatus?.attachments || this.mainStatus?.attachments?.length === 0) {
+        const internalMainStatus = this.mainStatus();
+        if (!internalMainStatus?.attachments || internalMainStatus?.attachments?.length === 0) {
             return;
         }
 
-        const height = this.mainStatus.attachments[0].smallFile?.height;
+        const height = internalMainStatus.attachments[0].smallFile?.height;
         if (!height) {
             return;
         }
 
-        this.imageHeight = height;
+        this.imageHeight.set(height);
     }
 
     private drawCanvas(): void {
@@ -580,19 +853,18 @@ export class StatusPage extends Responsive {
             return;
         }
 
-        const pixels = decode(this.blurhash, this.imageWidth, this.imageHeight);
-        const ctx = this.canvas.nativeElement.getContext('2d');
-
+        const ctx = this.canvas()?.nativeElement.getContext('2d');
         if (!ctx) {
             return;
         }
 
-        ctx.clearRect(0, 0, this.imageWidth, this.imageHeight);
-        const imageData = ctx.createImageData(this.imageWidth, this.imageHeight);
+        ctx.clearRect(0, 0, this.imageWidth(), this.imageHeight());
+        const imageData = ctx.createImageData(this.imageWidth(), this.imageHeight());
         if (!imageData) {
             return;
         }
 
+        const pixels = decode(this.blurhash, this.imageWidth(), this.imageHeight());
         imageData.data.set(pixels);
         ctx.putImageData(imageData!, 0, 0);
 
@@ -600,8 +872,11 @@ export class StatusPage extends Responsive {
     }
 
     private setCardMetatags(): void {
-        const statusTitle = (this.mainStatus?.user?.name ?? '') + ` (@${this.mainStatus?.user?.userName ?? ''})`;
-        const statusDescription = this.htmlToText(this.mainStatus?.note ?? '');
+        const internalStatus = this.status();
+        const internalMainStatus = this.mainStatus();
+
+        const statusTitle = (internalMainStatus?.user?.name ?? '') + ` (@${internalMainStatus?.user?.userName ?? ''})`;
+        const statusDescription = this.htmlToText(internalMainStatus?.note ?? '');
 
         // <title>John Doe (@john@vernissage.xxx)</title>
         this.titleService.setTitle(statusTitle);
@@ -624,8 +899,8 @@ export class StatusPage extends Responsive {
         // <meta property="og:logo" content="https://vernissage.xxx/assets/icons/icon-128x128.png" />
         this.metaService.updateTag({ property: 'og:logo', content: `https://${this.windowService.getApplicationBaseUrl()}/assets/icons/icon-128x128.png` });
 
-        if (this.status?.attachments && this.status?.attachments.length > 0) {
-            const firstImage = this.status?.attachments[0];
+        if (internalStatus?.attachments && internalStatus?.attachments.length > 0) {
+            const firstImage = internalStatus?.attachments[0];
 
             // <meta property="og:image" content="https://files.vernissage.xxx/media_attachments/files/112348.png">
             this.metaService.updateTag({ property: 'og:image', content: firstImage.smallFile?.url ?? '' });
@@ -641,9 +916,17 @@ export class StatusPage extends Responsive {
         this.metaService.updateTag({ property: 'twitter:card', content: 'summary_large_image' });
     }
 
-    htmlToText(value: string): string {
+    private browserSupportsHdr(): boolean {
+        return this.deviceDetectorService.browser === "Chrome" && this.deviceDetectorService.isDesktop();
+    }
+
+    private htmlToText(value: string): string {
         const temp = this.document.createElement('div');
         temp.innerHTML = value;
         return temp.textContent || temp.innerText || '';
+    }
+
+    private isStatusOwner(): boolean {
+        return this.mainStatus()?.user?.id === this.signedInUser()?.id;
     }
 }

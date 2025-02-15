@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, signal, computed, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -12,14 +12,22 @@ import { fadeInAnimation } from "../../animations/fade-in.animation";
     selector: 'app-reset-password',
     templateUrl: './reset-password.page.html',
     styleUrls: ['./reset-password.page.scss'],
-    animations: fadeInAnimation
+    animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class ResetPasswordPage implements OnInit, OnDestroy {
+    protected password = signal('');
+    protected passwordIsValid = signal(false);
+    protected resetPasswordMode = signal(ResetPasswordMode.ResetPassword);
 
-    resetPassword = new ResetPassword();
-    resetPasswordMode = ResetPasswordMode.ResetPassword;
-    queryParamsSubscription?: Subscription;
-    passwordIsValid = false;
+    protected isResetPasswordMode = computed(() => this.resetPasswordMode() === ResetPasswordMode.ResetPassword);
+    protected isMissingTokenMode = computed(() => this.resetPasswordMode() === ResetPasswordMode.MissingToken);
+    protected isSubmittingMode = computed(() => this.resetPasswordMode() === ResetPasswordMode.Submitting);
+    protected isSuccessMode = computed(() => this.resetPasswordMode() === ResetPasswordMode.Success);
+
+    private queryParamsSubscription?: Subscription;
+    private forgotPasswordGuid = '';
 
     constructor(
         private route: ActivatedRoute,
@@ -29,10 +37,10 @@ export class ResetPasswordPage implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.queryParamsSubscription = this.route.queryParams.subscribe(params => {
-            this.resetPassword.forgotPasswordGuid = params.token;
+            this.forgotPasswordGuid = params.token;
 
-            if (!this.resetPassword.forgotPasswordGuid || this.resetPassword.forgotPasswordGuid.length === 0) {
-                this.resetPasswordMode = ResetPasswordMode.MissingToken;
+            if (!this.forgotPasswordGuid || this.forgotPasswordGuid.length === 0) {
+                this.resetPasswordMode.set(ResetPasswordMode.MissingToken);
             }
         });
     }
@@ -41,34 +49,24 @@ export class ResetPasswordPage implements OnInit, OnDestroy {
         this.queryParamsSubscription?.unsubscribe();
     }
 
-    async onSubmit(): Promise<void> {
+    protected async onSubmit(): Promise<void> {
         try {
-            this.resetPasswordMode = ResetPasswordMode.Submitting;
-            await this.forgotPasswordService.confirm(this.resetPassword);
-            this.resetPasswordMode = ResetPasswordMode.Success;
+            this.resetPasswordMode.set(ResetPasswordMode.Submitting);
+
+            const resetPassword = new ResetPassword();
+            resetPassword.forgotPasswordGuid = this.forgotPasswordGuid;
+            resetPassword.password = this.password();
+
+            await this.forgotPasswordService.confirm(resetPassword);
+
+            this.resetPasswordMode.set(ResetPasswordMode.Success);
         } catch {
-            this.resetPasswordMode = ResetPasswordMode.ResetPassword;
+            this.resetPasswordMode.set(ResetPasswordMode.ResetPassword);
             this.messagesService.showError('Unexpected error during resetting your password. Please try again.');
         }
     }
 
-    isResetPasswordMode(): boolean {
-        return this.resetPasswordMode === ResetPasswordMode.ResetPassword;
-    }
-
-    isMissingTokenMode(): boolean {
-        return this.resetPasswordMode === ResetPasswordMode.MissingToken;
-    }
-
-    isSubmittingMode(): boolean {
-        return this.resetPasswordMode === ResetPasswordMode.Submitting;
-    }
-
-    isSuccessMode(): boolean {
-        return this.resetPasswordMode === ResetPasswordMode.Success;
-    }
-
-    passwordValid(valid: boolean): void {
-        this.passwordIsValid = valid;
+    protected onPasswordValid(valid: boolean): void {
+        this.passwordIsValid.set(valid);
     }
 }

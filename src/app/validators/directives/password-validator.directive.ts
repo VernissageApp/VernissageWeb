@@ -7,7 +7,8 @@ import { PasswordErrors } from '../models/password-errors';
     selector: '[appPassword]',
     providers: [
         { provide: NG_VALIDATORS, useExisting: PasswordValidatorDirective, multi: true }
-    ]
+    ],
+    standalone: false
 })
 export class PasswordValidatorDirective implements Validator {
 

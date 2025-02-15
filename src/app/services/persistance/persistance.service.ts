@@ -1,6 +1,4 @@
-/* tslint:disable:no-any */
-
-export abstract class  PersistanceService {
+export abstract class  PersistenceService {
     abstract set(key: string, value: string): void;
     abstract setJson(key: string, data: any): void;
     abstract get(key: string): string | null;
@@ -8,8 +6,7 @@ export abstract class  PersistanceService {
     abstract remove(key: string): void;
 }
 
-
-export class PersistanceBrowserService implements PersistanceService {
+export class PersistenceBrowserService implements PersistenceService {
 
     set(key: string, value: string): void {
         localStorage.setItem(key, value);
@@ -51,21 +48,26 @@ export class PersistanceBrowserService implements PersistanceService {
     }
 }
 
-export class PersistanceServerService implements PersistanceService {
-    set(_key: string, _value: string): void {
+export class PersistenceServerService implements PersistenceService {
+    dictionary:any = {};
+
+    set(key: string, value: string): void {
+        this.dictionary[key] = value;
     }
 
-    setJson(_valuekey: string, _data: any): void {
+    setJson(key: string, data: any): void {
+        this.dictionary[key] = data;
     }
 
-    get(_key: string): string | null {
-        return null;
+    get(key: string): string | null {
+        return this.dictionary[key];
     }
 
-    getJson(_key: string): any {
-        return null;
+    getJson(key: string): any {
+        return this.dictionary[key];
     }
 
-    remove(_key: string): void {
+    remove(key: string): void {
+        this.dictionary[key] = null;
     }
 }

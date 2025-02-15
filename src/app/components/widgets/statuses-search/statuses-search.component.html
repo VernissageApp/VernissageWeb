@@ -1,0 +1,23 @@
+<div @fadeIn>
+    <!-- Image -->
+    <a [routerLink]="['/statuses', status().id]" [ariaLabel]="'Status added by: ' + mainStatus().user?.userName">
+        @if (mainStatus().sensitive && !alwaysShowNSFW) {
+            <app-blurhash-image [horizontal]="false" [avatarVisible]="false" [status]="status()"></app-blurhash-image>
+        } @else {
+            <app-image [horizontal]="false" [avatarVisible]="false" [status]="status()"></app-image>
+        }
+    </a>
+
+    <!-- User card -->
+    <app-user-card [user]="mainStatus().user"></app-user-card>
+
+    <!-- Note -->
+    <div appHrefToRouterLink>
+        <div id="note" class="note margin-top-10 margin-bottom-20" appNoteProcessor [innerHTML]="rendered()"></div>
+    </div>
+
+    <!-- Status properties -->
+    <app-status-properties [status]="mainStatus()"></app-status-properties>
+
+    <hr class="margin-bottom-30 margin-top-20" />
+</div>

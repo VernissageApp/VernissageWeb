@@ -1,28 +1,28 @@
-import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { User } from 'src/app/models/user';
+import { ChangeDetectionStrategy, Component, model } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 import { UserMuteRequest } from 'src/app/models/user-mute-request';
-import { UsersService } from 'src/app/services/http/users.service';
 
 @Component({
-    selector: 'mute-account',
-    templateUrl: 'mute-account.dialog.html'
+    selector: 'app-mute-account-dialog',
+    templateUrl: 'mute-account.dialog.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class MuteAccountDialog {
-    muteStatuses = false;
-    muteReblogs = false;
-    muteNotifications = false;
-    muteEnd?: Date;
+    protected muteStatuses = model(false);
+    protected muteReblogs = model(false);
+    protected muteNotifications = model(false);
+    protected muteEnd = model<Date>();
 
     constructor(public dialogRef: MatDialogRef<MuteAccountDialog>) {
     }
 
-    onNoClick(): void {
+    protected onNoClick(): void {
         this.dialogRef.close();
     }
 
-    async onSubmit(): Promise<void> {
-        const userMuteRequest = new UserMuteRequest(this.muteStatuses, this.muteReblogs, this.muteNotifications, this.muteEnd);
+    protected async onSubmit(): Promise<void> {
+        const userMuteRequest = new UserMuteRequest(this.muteStatuses(), this.muteReblogs(), this.muteNotifications(), this.muteEnd());
         this.dialogRef.close(userMuteRequest);
     }
 }

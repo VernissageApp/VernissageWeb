@@ -1,25 +1,52 @@
 <div class="blurhash-container">
-    @if (showBlurhash) {
-        <div class="text">{{ text }}</div>
-        <canvas class="blurhash" #canvas width="32" height="32"></canvas>
-    }
 
-    <img class="image-item" [ngClass]="{ 'img-vertical': !horizontal, 'img-horizontal': horizontal }" [src]="imageSrc" />
+    <div class="content-warning">{{ contentWarning() }}</div>
+    <canvas class="blurhash" #canvas width="32" height="32"></canvas>
+    <img class="image-item" [ngClass]="{ 'img-vertical': !horizontal(), 'img-horizontal': horizontal() }" [src]="imageSrc()" [alt]="alt() ?? 'Status image'" />
 
-    @if(showAvatar && user) {
-        <div class="avatar">
-            <app-mini-user-card [user]="user" [showUserName]="false" [whiteLink]="true" [size]="avatarSize.verysmall"></app-mini-user-card>
-        </div>
-    }
+    @if (canvasIsLoaded()) {
+        @if (showAvatar()) {
+            @if (user(); as userObject) {
+                <div class="avatar" [satPopoverAnchor]="popover" (mouseenter)="mouseenter.next()" (mouseleave)="mouseleave.next()">
+                    <app-mini-user-card [user]="userObject" [showUserName]="false" [whiteLink]="true" [size]="avatarSize.verysmall"></app-mini-user-card>
+                </div>
 
-    @if (signedInUser && showFavourites) {
-        <div class="favourite" (click)="favouriteToogle(); $event.preventDefault(); $event.stopPropagation();">
-            <mat-icon *ngIf="!getMainStatus()?.favourited" class="outline-symbol">grade</mat-icon>
-            <mat-icon *ngIf="getMainStatus()?.favourited" class="fill-symbol">grade</mat-icon>
-        </div>
-    }
+                <sat-popover #popover [autoFocus]="false" verticalAlign="below">
+                    <div class="popover" (mouseenter)="mouseenter.next()" (mouseleave)="mouseleave.next()">
+                        <app-user-popover [user]="userObject" [relationship]="relationship()"></app-user-popover>
+                    </div>
+                </sat-popover>
+            }
+        }
 
-    @if(showAltIcon && alt) {
-        <div class="alt" [matTooltip]="alt" matTooltipPosition="above">ALT</div>
+        @if(showAltIcon() && alt()) {
+            <div class="alt" [matTooltip]="alt()" matTooltipPosition="above">ALT</div>
+        }
+
+        @if (signedInUser() ) {
+            <div class="actions-container flex-row gap-4">
+                @if (showReblog()) {
+                    <div class="reblog" (click)="reblogToggle(); $event.preventDefault(); $event.stopPropagation();" (keydown.enter)="favouriteToggle(); $event.preventDefault(); $event.stopPropagation();" tabindex="0">
+                        @if (isReblogged()) {
+                            <mat-icon class="fill-symbol">rocket_launch</mat-icon>
+                        }
+                        @else {
+                            <mat-icon class="outline-symbol">rocket_launch</mat-icon>
+                        }
+                    </div>
+                }
+
+                @if (showFavourites()) {
+                    <div class="favourite" (click)="favouriteToggle(); $event.preventDefault(); $event.stopPropagation();" (keydown.enter)="favouriteToggle(); $event.preventDefault(); $event.stopPropagation();" tabindex="0">
+                        @if (isFavourited()) {
+                            <mat-icon class="fill-symbol">grade</mat-icon>
+                        }
+                        @else {
+                            <mat-icon class="outline-symbol">grade</mat-icon>
+                        }
+                    </div>
+                }
+            </div>
+        }
     }
 </div>

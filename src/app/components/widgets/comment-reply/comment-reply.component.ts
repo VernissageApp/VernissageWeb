@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, input, model, OnInit, output, signal, viewChild } from '@angular/core';
 import { Status } from 'src/app/models/status';
 import { StatusRequest } from 'src/app/models/status-request';
 import { User } from 'src/app/models/user';
@@ -6,42 +6,58 @@ import { MessagesService } from 'src/app/services/common/messages.service';
 import { StatusesService } from 'src/app/services/http/statuses.service';
 import { AvatarSize } from '../avatar/avatar-size';
 import { NgForm } from '@angular/forms';
+import { InstanceService } from 'src/app/services/http/instance.service';
 
 @Component({
     selector: 'app-comment-reply',
     templateUrl: './comment-reply.component.html',
-    styleUrls: ['./comment-reply.component.scss']
+    styleUrls: ['./comment-reply.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
-export class CommentReplyComponent {
-    readonly avatarSize = AvatarSize;
+export class CommentReplyComponent implements OnInit {
+    public signedInUser = input.required<User>();
+    public status = input.required<Status>();
+    public showCancel = input(false);
+    public clickCancel = output();
+    public focused = output<boolean>();
+    public added = output();
 
-    @Input() signedInUser?: User;
-    @Input() status?: Status;
-    @Input() showCancel = false;
-    @Output() cancel = new EventEmitter();
-    @Output() added = new EventEmitter();
+    protected maxStatusLength = signal(0);
+    protected comment = model<string | undefined>('');
+    protected isDuringSave = signal(false);
+    protected commentEntered = computed(() => (this.comment()?.length ?? 0) > 0);
+    protected readonly avatarSize = AvatarSize;
 
-    @ViewChild('commentForm') commentForm?: NgForm;
+    private commentForm = viewChild<NgForm>('commentForm');
 
-    comment = '';
-    isSendDisabled = false;
-
-    constructor(private statusesService: StatusesService, private messageService: MessagesService) {
+    constructor(
+        private statusesService: StatusesService,
+        private instanceService: InstanceService,
+        private messageService: MessagesService
+    ) {
+        effect(() => this.fillUserName(this.status()));
     }
 
-    async onSubmitComment(): Promise<void> {
+    ngOnInit(): void {
+        this.maxStatusLength.set(this.instanceService.instance?.configuration?.statuses?.maxCharacters ?? 500);
+        this.fillUserName(this.status());
+    }
+
+    protected async onSubmitComment(): Promise<void> {
         try {
             if (this.status != null) {
-                this.isSendDisabled = true;
+                this.isDuringSave.set(true);
 
                 const newStatusRequest = new StatusRequest();
-                newStatusRequest.note = this.comment;
-                newStatusRequest.replyToStatusId = this.status.id;
+                newStatusRequest.note = this.comment() ?? '';
+                newStatusRequest.replyToStatusId = this.status().id;
 
                 await this.statusesService.create(newStatusRequest);
 
-                this.comment = ''
-                this.commentForm?.resetForm();
+                this.commentForm()?.resetForm();
+                this.fillUserName(this.status());
+
                 this.messageService.showSuccess('Comment has been added.');
                 this.added.emit();
             }
@@ -49,11 +65,22 @@ export class CommentReplyComponent {
             console.error(error);
             this.messageService.showServerError(error);
         } finally {
-            this.isSendDisabled = false;
+            this.isDuringSave.set(false);
         }
     }
 
-    onCancel(): void {
-        this.cancel.emit();
+    protected onCancel(): void {
+        this.clickCancel.emit();
+    }
+
+    protected onFocus(isFocused: boolean): void {
+        this.focused.emit(isFocused);
+    }
+
+    private fillUserName(status: Status): void {
+        const userName = status.user?.userName;
+        if (userName) {
+            this.comment.set(`@${userName} `);
+        }
     }
 }

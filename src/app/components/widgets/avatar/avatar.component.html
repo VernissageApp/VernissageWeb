@@ -1,1 +1,6 @@
-<img [src]="user?.avatarUrl ?? '/assets/avatar.svg'" [ngClass]="{ 'circle': isCircle, 'rectangle': !isCircle, 'huge': size === avatarSize.huge, 'big': size === avatarSize.big, 'medium': size === avatarSize.medium, 'small': size === avatarSize.small, 'verysmall': size === avatarSize.verysmall}" />
+<img
+    [ngSrc]="user()?.avatarUrl ?? 'assets/avatar.svg'"
+    width="600"
+    height="600"
+    [ngClass]="{ 'circle': isCircle(), 'rectangle': !isCircle(), 'huge': size() === avatarSize.huge, 'big': size() === avatarSize.big, 'medium': size() === avatarSize.medium, 'small': size() === avatarSize.small, 'verysmall': size() === avatarSize.verysmall}"
+    alt="Avatar" />

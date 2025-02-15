@@ -26,7 +26,7 @@ export class MessagesService {
     }
 
     showServerError(error: any): void {
-        const reason = error.error.reason ?? 'Unknown error.';
+        const reason = error?.error?.reason ?? 'Unknown error.';
         this.matSnackBar.open(reason, 'Dismiss', {
             duration: 5000,
             verticalPosition: 'top',

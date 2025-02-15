@@ -1,40 +1,56 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { RouteReuseStrategy, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Component, OnInit, OnDestroy, Renderer2, signal, computed, ChangeDetectionStrategy } from '@angular/core';
+import { NavigationEnd, RouteReuseStrategy, Router } from '@angular/router';
+import { filter, Subscription } from 'rxjs';
 
 import { User } from 'src/app/models/user';
 import { InstanceService } from 'src/app/services/http/instance.service';
 import { AuthorizationService } from '../../../services/authorization/authorization.service';
 import { Role } from 'src/app/models/role';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Resolution, Responsive } from 'src/app/common/responsive';
+import { Resolution, ResponsiveComponent } from 'src/app/common/responsive';
 import { NotificationsService } from 'src/app/services/http/notifications.service';
 import { CustomReuseStrategy } from 'src/app/common/custom-reuse-strategy';
 import { SwPush } from '@angular/service-worker';
+import { UserDisplayService } from 'src/app/services/common/user-display.service';
+import { SettingsService } from 'src/app/services/http/settings.service';
+import { PreferencesService } from 'src/app/services/common/preferences.service';
 
 @Component({
     selector: 'app-header',
     templateUrl: './header.component.html',
-    styleUrls: ['./header.component.scss']
+    styleUrls: ['./header.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
-export class HeaderComponent extends Responsive {
-    readonly resolution = Resolution;
+export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDestroy {
+    protected readonly resolution = Resolution;
+    protected notificationCounter = signal(0);
+    protected user = signal<User | undefined>(undefined);
+    protected avatarUrl = computed(() => this.user()?.avatarUrl ?? 'assets/avatar.svg');
+    protected fullName = computed(() => this.userDisplayService.displayName(this.user()));
+    protected isLoggedIn = signal(false);
+    protected showTrending = signal(false);
+    protected showEditorsChoice = signal(false);
+    protected showCategories = signal(false);
+    protected isLightTheme = signal(false);
 
-    public notificationCounter = 0;
-    public user?: User | null;
-    public avatarUrl = "assets/avatar.svg";
-    public fullName = '';
+    private clearReuseStrategyAfterNavigationEnds = false;
     private userChangeSubscription?: Subscription;
     private notificationChangeSubscription?: Subscription;
-    private meesagesSubscription?: Subscription;
+    private messagesSubscription?: Subscription;
+    private routeNavigationEndSubscription?: Subscription;
 
     constructor(
         private authorizationService: AuthorizationService,
         private instanceService: InstanceService,
         private notificationsService: NotificationsService,
+        private settingsService: SettingsService,
+        private userDisplayService: UserDisplayService,
         private routeReuseStrategy: RouteReuseStrategy,
         private router: Router,
         private swPushService: SwPush,
+        private preferencesService: PreferencesService,
+        private renderer: Renderer2,
         breakpointObserver: BreakpointObserver
     ) {
         super(breakpointObserver)
@@ -43,19 +59,24 @@ export class HeaderComponent extends Responsive {
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
 
-        this.user = this.authorizationService.getUser();
-        this.avatarUrl = this.user?.avatarUrl ?? 'assets/avatar.svg';
+        const isLoggedInInternal = await this.authorizationService.isLoggedIn();
+        const userInternal = this.authorizationService.getUser();
+
+        this.isLightTheme.set(this.preferencesService.isLightTheme);
+        this.user.set(userInternal);
+        this.isLoggedIn.set(isLoggedInInternal);
 
         this.userChangeSubscription = this.authorizationService.changes.subscribe(async (user) => {
-            this.user = user;
-            this.avatarUrl = this.user?.avatarUrl ?? 'assets/avatar.svg';
+            this.user.set(user);
 
-            this.fullName = this.user?.userName ?? '';
-            if (this.user?.name && this.user.name.length > 0) {
-                this.fullName = this.user.name
-            }
+            const isLoggedInInternal = await this.authorizationService.isLoggedIn();
+            this.isLoggedIn.set(isLoggedInInternal);
 
-            this.meesagesSubscription = this.swPushService.messages.subscribe(async (a) => {
+            this.showTrending.set(isLoggedInInternal || (this.settingsService.publicSettings?.showTrendingForAnonymous ?? false));
+            this.showEditorsChoice.set(isLoggedInInternal || ((this.settingsService.publicSettings?.showEditorsChoiceForAnonymous ?? false) || (this.settingsService.publicSettings?.showEditorsUsersChoiceForAnonymous ?? false)));
+            this.showCategories.set(isLoggedInInternal || (this.settingsService.publicSettings?.showCategoriesForAnonymous ?? false));
+
+            this.messagesSubscription = this.swPushService.messages.subscribe(async () => {
                 await this.loadNotificationCount();
             });
 
@@ -63,8 +84,17 @@ export class HeaderComponent extends Responsive {
             this.clearReuseStrategyState();
         });
 
+        this.routeNavigationEndSubscription = this.router.events
+            .pipe(filter(event => event instanceof NavigationEnd))  
+            .subscribe(async () => {
+                if (this.clearReuseStrategyAfterNavigationEnds) {
+                    this.clearReuseStrategyState();
+                    this.clearReuseStrategyAfterNavigationEnds = false;
+                }
+            });
+
         this.notificationChangeSubscription = this.notificationsService.changes.subscribe(async (count) => {
-            this.notificationCounter = count;
+            this.notificationCounter.set(count);
             this.notificationsService.setApplicationBadge(count);
         });
     }
@@ -74,36 +104,46 @@ export class HeaderComponent extends Responsive {
 
         this.userChangeSubscription?.unsubscribe();
         this.notificationChangeSubscription?.unsubscribe();
-        this.meesagesSubscription?.unsubscribe();
+        this.messagesSubscription?.unsubscribe();
+        this.routeNavigationEndSubscription?.unsubscribe();
     }
 
-    async signOut(): Promise<void> {
+    protected async signOut(): Promise<void> {
         this.clearReuseStrategyState();
         await this.authorizationService.signOut();
         await this.router.navigate(['/login']);
     }
 
-    isRegistrationEnabled(): boolean {
+    protected markClearReuseStrategy(): void {
+        this.clearReuseStrategyAfterNavigationEnds = true;
+    }
+
+    protected isRegistrationEnabled(): boolean {
         return this.instanceService.isRegistrationEnabled();
     }
 
-    isAdministrator(): boolean {
+    protected isAdministrator(): boolean {
         return this.authorizationService.hasRole(Role.Administrator);
     }
 
-    isModerator(): boolean {
+    protected isModerator(): boolean {
         return this.authorizationService.hasRole(Role.Moderator);
     }
 
-    isRegistrationByInvitationsOpened(): boolean {
+    protected isRegistrationByInvitationsOpened(): boolean {
         return this.instanceService.instance?.registrationOpened === false && this.instanceService.instance?.registrationByInvitationsOpened === true;
+    }
+
+    protected onThemeToggle(): void {
+        this.preferencesService.toggleTheme(this.renderer);
+        this.isLightTheme.set(this.preferencesService.isLightTheme);
     }
 
     private async loadNotificationCount(): Promise<void> {
         try {
-            if (this.user) {
+            if (this.user()) {
                 const notificationCount = await this.notificationsService.count();
-                this.notificationCounter = notificationCount.amount;
+                this.notificationCounter.set(notificationCount.amount);
             }
         } catch(error) {
             console.error(error);

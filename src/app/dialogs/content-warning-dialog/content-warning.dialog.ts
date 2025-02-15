@@ -1,21 +1,25 @@
-import { Component, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, model } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
-    selector: 'content-warning',
-    templateUrl: 'content-warning.dialog.html'
+    selector: 'app-content-warning-dialog',
+    templateUrl: 'content-warning.dialog.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class ContentWarningDialog {
-    contentWarning = '';
+    protected contentWarning = model('');
 
-    constructor(public dialogRef: MatDialogRef<ContentWarningDialog>, @Inject(MAT_DIALOG_DATA) public data?: string) {
+    constructor(
+        public dialogRef: MatDialogRef<ContentWarningDialog>,
+        @Inject(MAT_DIALOG_DATA) public data?: string) {
     }
 
-    onNoClick(): void {
+    protected onNoClick(): void {
         this.dialogRef.close();
     }
 
-    async onSubmit(): Promise<void> {
-        this.dialogRef.close({ contentWarning: this.contentWarning, statusId: this.data });
+    protected async onSubmit(): Promise<void> {
+        this.dialogRef.close({ contentWarning: this.contentWarning(), statusId: this.data });
     }
 }

@@ -1,28 +1,30 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
-import { Responsive } from 'src/app/common/responsive';
+import { ResponsiveComponent } from 'src/app/common/responsive';
 import { ConfirmationDialog } from 'src/app/dialogs/confirmation-dialog/confirmation.dialog';
 import { InstanceBlockedDomainDialog } from 'src/app/dialogs/instance-blocked-domain-dialog/instance-blocked-domain.dialog';
 import { InstanceBlockedDomain } from 'src/app/models/instance-blocked-domain';
-import { PaginableResult } from 'src/app/models/paginable-result';
+import { PagedResult } from 'src/app/models/paged-result';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { InstanceBlockedDomainsService } from 'src/app/services/http/instance-blocked-domains.service';
 
 @Component({
     selector: 'app-domain-blocks',
     templateUrl: './domain-blocks.component.html',
-    styleUrls: ['./domain-blocks.component.scss']
+    styleUrls: ['./domain-blocks.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
-export class DomainBlocksComponent extends Responsive {
-    domains?: PaginableResult<InstanceBlockedDomain>;
-    displayedColumns: string[] = [];
-    pageIndex = 0;
-    pageSize = 10;
+export class DomainBlocksComponent extends ResponsiveComponent implements OnInit {
+    protected domains = signal<PagedResult<InstanceBlockedDomain> | undefined>(undefined);
+    protected displayedColumns = signal<string[]>([]);
+    protected pageIndex = signal(0);
 
+    private pageSize = 10;
     private readonly displayedColumnsHandsetPortrait: string[] = ['domain', 'actions'];
-    private readonly displayedColumnsHandserLandscape: string[] = ['domain', 'actions'];
+    private readonly displayedColumnsHandsetLandscape: string[] = ['domain', 'actions'];
     private readonly displayedColumnsTablet: string[] = ['domain', 'actions'];
     private readonly displayedColumnsBrowser: string[] = ['domain', 'actions'];
 
@@ -38,17 +40,19 @@ export class DomainBlocksComponent extends Responsive {
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
 
-        this.domains = await this.instanceBlockedDomainsService.get(this.pageIndex + 1, this.pageSize);
+        const domainsInternal = await this.instanceBlockedDomainsService.get(this.pageIndex() + 1, this.pageSize);
+        this.domains.set(domainsInternal);
     }
 
-    async handlePageEvent(pageEvent: PageEvent): Promise<void> {
-        this.pageIndex = pageEvent.pageIndex;
+    protected async handlePageEvent(pageEvent: PageEvent): Promise<void> {
+        this.pageIndex.set(pageEvent.pageIndex);
         this.pageSize = pageEvent.pageSize;
 
-        this.domains = await this.instanceBlockedDomainsService.get(this.pageIndex + 1, this.pageSize);
+        const domainsInternal = await this.instanceBlockedDomainsService.get(this.pageIndex() + 1, this.pageSize);
+        this.domains.set(domainsInternal);
     }
 
-    async onDelete(instanceBlockedDomain: InstanceBlockedDomain): Promise<void> {
+    protected async onDelete(instanceBlockedDomain: InstanceBlockedDomain): Promise<void> {
         const dialogRef = this.dialog.open(ConfirmationDialog, {
             width: '500px',
             data: 'Do you want to delete instance blocked domain?'
@@ -59,7 +63,9 @@ export class DomainBlocksComponent extends Responsive {
                 try {
                     await this.instanceBlockedDomainsService.delete(instanceBlockedDomain.id);
                     this.messageService.showSuccess('Domain has been deleted.');
-                    this.domains = await this.instanceBlockedDomainsService.get(this.pageIndex + 1, this.pageSize);
+
+                    const domainsInternal = await this.instanceBlockedDomainsService.get(this.pageIndex() + 1, this.pageSize);
+                    this.domains.set(domainsInternal);
                 } catch (error) {
                     console.error(error);
                     this.messageService.showServerError(error);
@@ -68,7 +74,7 @@ export class DomainBlocksComponent extends Responsive {
         });
     }
 
-    openInstanceBlockedDomainDialog(instanceBlockedDomain: InstanceBlockedDomain | undefined): void {
+    protected openInstanceBlockedDomainDialog(instanceBlockedDomain: InstanceBlockedDomain | undefined): void {
         const dialogRef = this.dialog.open(InstanceBlockedDomainDialog, {
             width: '500px',
             data: (instanceBlockedDomain ?? new InstanceBlockedDomain())
@@ -76,25 +82,26 @@ export class DomainBlocksComponent extends Responsive {
 
         dialogRef.afterClosed().subscribe(async (result) => {
             if (result?.confirmed) {
-                this.domains = await this.instanceBlockedDomainsService.get(this.pageIndex + 1, this.pageSize);
+                const domainsInternal = await this.instanceBlockedDomainsService.get(this.pageIndex() + 1, this.pageSize);
+                this.domains.set(domainsInternal);
             }
         });
     }
 
     protected override onHandsetPortrait(): void {
-        this.displayedColumns = this.displayedColumnsHandsetPortrait;
+        this.displayedColumns?.set(this.displayedColumnsHandsetPortrait);
     }
 
     protected override onHandsetLandscape(): void {
-        this.displayedColumns = this.displayedColumnsHandserLandscape;
+        this.displayedColumns?.set(this.displayedColumnsHandsetLandscape);
     }
 
     protected override onTablet(): void {
-        this.displayedColumns = this.displayedColumnsTablet;
+        this.displayedColumns?.set(this.displayedColumnsTablet);
     }
 
     protected override onBrowser(): void {
-        this.displayedColumns = this.displayedColumnsBrowser;
+        this.displayedColumns?.set(this.displayedColumnsBrowser);
     }
 }
 

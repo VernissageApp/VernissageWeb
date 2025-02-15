@@ -1,6 +1,30 @@
 export class PublicSettings {
-    public webSentryDsn?: string;
     public maximumNumberOfInvitations = 0;
     public isOpenAIEnabled = false;
     public webPushVapidPublicKey?: string;
+    public s3Address?: string;
+
+    public patreonUrl?: string;
+    public mastodonUrl?: string;
+    public totalCost = 0;
+    public usersSupport = 0;
+
+    public showLocalTimelineForAnonymous = false;
+    public showTrendingForAnonymous = false;
+    public showEditorsChoiceForAnonymous = false;
+    public showEditorsUsersChoiceForAnonymous = false;
+    public showHashtagsForAnonymous = false;
+    public showCategoriesForAnonymous = false;
+
+    // Privacy and Terms of Service.
+    public privacyPolicyUpdatedAt = ''
+    public privacyPolicyContent = ''
+    public termsOfServiceUpdatedAt = ''
+    public termsOfServiceContent = ''
+
+    // Custom script and style content.
+    public customInlineScript?: string;
+    public customInlineStyle?: string;
+    public customFileScript?: string;
+    public customFileStyle?: string;
 }

@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - '**'
+  pull_request:
+    branches:
+      - develop
 
 jobs:
   build:
@@ -15,7 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Cache node modules
-        uses: actions/cache@v1
+        uses: actions/cache@v4
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -28,6 +31,12 @@ jobs:
       - name: npm install
         run: |
           npm install --force
+      - name: npm run lint
+        run: |
+          npm run lint
+      - name: npm run test
+        run: |
+          npm test -- --watch=false --browsers=ChromeHeadless
       - name: npm run build
         run: |
           npm run build

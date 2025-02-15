@@ -1,31 +1,18 @@
-<div [ngClass]="{ 'padding-left-30 padding-right-30': !isHandset, 'padding-left-10 padding-right-10': isHandset }">
-    @if (visibleUsers.length) {
-        <div appScrollNearEnd (nearEnd)="onNearEndScroll()">
-            <div *ngFor="let user of visibleUsers; trackBy:trackByUserFn">
-                <app-user-card [user]="user"></app-user-card>
-                <div class="images-container">
-                    <div class="flex-row">
-                        <ng-container *ngFor="let status of getStatuses(user.userName); trackBy:trackByFn">
-                            <a [routerLink]="['/statuses', status.id]" [ariaLabel]="'Status added by: ' + getMainStatus(status).user?.userName" (click)="onStatusClick(user.userName)">
-                                @if (getMainStatus(status).sensitive) {
-                                    <div class="blurhash">
-                                        <app-blurhash-image [horizontal]="true" [status]="status"></app-blurhash-image>
-                                    </div>
-                                } @else {
-                                    <div class="image">
-                                        <app-image [horizontal]="true" [status]="status"></app-image>
-                                    </div>
-                                }
-                            </a>
-                        </ng-container>
-                    </div>
-                </div>
+<div [ngClass]="{ 'padding-left-30 padding-right-30': !isHandset(), 'padding-left-10 padding-right-10': isHandset() }">
+    @if (!isBrowser()) {
+        <div></div>
+    }
+    @else if (users()?.data?.length) {
+        @for (user of users()?.data; track user.userName) {
+            <div>
+                <app-users-gallery-item [user]="user"></app-users-gallery-item>
             </div>
-        </div>
+        }
     } @else {
         <div class="text-muted padding-top-30 width-100 text-center">
-            <h2>
-                Unfortunatelly, there is nothing to see here yet.
+            <h2 class="empty-page">
+                <div class="camera"></div>
+                <div>Sadly, there's nothing to see here just yet.</div>
             </h2>
         </div>
     }

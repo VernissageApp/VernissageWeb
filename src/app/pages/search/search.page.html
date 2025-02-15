@@ -1,32 +1,73 @@
-<div @fadeIn [ngClass]="{ 'padding-30': !isHandset, 'padding-10': isHandset }">
+<div @fadeIn [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
     <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
 
-        <div class="flex-row flex-space-around padding-left-10 padding-right-10">
+        <div class="flex-row flex-space-around">
             <div class="search width-100">
                 <mat-card class="margin-bottom-20" appearance="outlined">
                     <mat-card-content>
-                        <div class="flex-row flex-responsive flex-align-center gap-16">
-                            <mat-form-field appearance="outline">
-                                <input #queryInput matInput name="query" [(ngModel)]="search" cdkFocusInitial aria-label="Query" />
-                            </mat-form-field>
-                            <button mat-flat-button color="primary">Search</button>
+                        <mat-form-field appearance="outline">
+                            <input #queryInput matInput name="query" [(ngModel)]="search" cdkFocusInitial aria-label="Query" />
+                            <button matSuffix mat-flat-button type="submit" color="primary" class="margin-right-10" aria-label="Search">Search</button>
+                            <mat-hint class="text-muted"></mat-hint>
+                        </mat-form-field>
+                        <div class="text-muted fs-90 margin-left-10 margin-top-5">
+                            Search for a <strong>user</strong>, <strong>status</strong>, or <strong>hashtag</strong>, or paste a <strong>URL</strong> to a status or user profile.
                         </div>
                     </mat-card-content>
                 </mat-card>
 
-
-                @if (users.length > 0) {
-                    <mat-card class="users-card" appearance="outlined">
+                @if (searchExecuted(); as wasSearchExecuted) {
+                    <mat-card appearance="outlined">
                         <mat-card-content>
-                            <app-users-card [users]="users" [relationships]="usersRelationships" [showBio]="true"></app-users-card>
+                            
+                            <mat-tab-group mat-stretch-tabs animationDuration="0ms" [selectedIndex]="selectedIndex()" (selectedTabChange)="onSelectedTabChange($event)">
+                                <mat-tab label="Users">
+                                    @if (users().length > 0) {
+                                        <div class="margin-top-20 margin-bottom-20">
+                                            <app-users-card [users]="users()" [relationships]="usersRelationships()" [showBio]="true"></app-users-card>
+                                        </div>
+                                    }
+
+                                    @if (wasSearchExecuted && users().length === 0) {
+                                        <div class="text-center text-muted margin-top-20 margin-bottom-20">
+                                            No users found.
+                                        </div>
+                                    }
+                                </mat-tab>
+                                <mat-tab label="Hashtags">
+                                    @if (hashtags().length > 0) {
+                                        <div class="margin-top-20 margin-bottom-20">
+                                            @for (hashtag of hashtags(); track hashtag.name) {
+                                                <app-hashtags-search [hashtag]="hashtag"></app-hashtags-search>
+                                            }
+                                        </div>
+                                    }
+
+                                    @if (wasSearchExecuted && hashtags().length === 0) {
+                                        <div class="text-center text-muted margin-top-20 margin-bottom-20">
+                                            No hashtags found.
+                                        </div>
+                                    }
+                                </mat-tab>
+                                <mat-tab label="Statuses">
+                                    @if (statuses().length > 0) {
+                                        <div class="margin-top-20 margin-bottom-20">
+                                            @for (status of statuses(); track status.id) {
+                                                <app-statuses-search [status]="status"></app-statuses-search>
+                                            }
+                                        </div>
+                                    }
+
+                                    @if (wasSearchExecuted && statuses().length === 0) {
+                                        <div class="text-center text-muted margin-top-20 margin-bottom-20">
+                                            No statuses found.
+                                        </div>
+                                    }
+                                </mat-tab>
+                            </mat-tab-group>
+
                         </mat-card-content>
                     </mat-card>
-                }
-
-                @if (searchExecuted && users.length === 0) {
-                    <div>
-                        No results found.
-                    </div>
                 }
             </div>
         </div>

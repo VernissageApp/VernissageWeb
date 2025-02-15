@@ -1,7 +1,36 @@
-mat-toolbar {
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  min-height: 64px !important;
-  height: 64px !important;
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 110;
+
+    ::view-transition-group(disabled),
+    ::view-transition-old(disabled),
+    ::view-transition-new(disabled) {
+        animation-duration: 0s !important;
+    }
+
+    mat-toolbar {
+        border: 1px solid rgba(0, 0, 0, 0.12);
+        min-height: 64px !important;
+        height: 64px !important;
+
+        background-color: rgb(255, 255, 255, 0.8);
+        -webkit-backdrop-filter: blur(16px);
+        backdrop-filter: blur(16px);
+    }
+
+    :host-context(.dark-theme) {
+        mat-toolbar {
+            background-color: rgb(43, 43, 43, 0.9);
+        }
+    }
+}
+
+.hamburger-menu {
+    margin-left: -12px;
+    margin-right: 4px;
 }
 
 .menu-divider {
@@ -15,15 +44,38 @@ mat-toolbar {
 }
 
 a.logo {
-    font-family: 'Fleur De Leah', cursive;
-    font-size:32px;
-    margin-right: 20px;
-
-    img {
+    .image {
         position: relative;
+        display: inline-block;
+        top: 6px;
+        width: 116px;
+        height: 44px;    
+        background-image: url('/assets/logo-light.svg');
+        background-size: 116px 44px;
+        background-repeat: no-repeat;
+    }
+
+    .beta {
+        position: relative;
+        display: inline-block;
         width: 30px;
         height: 15px;
         left: -18px;
-        top: -12px;
+        top: -22px;
+        background-image: url('/assets/beta-light.png');
+        background-size: 30px 15px;
+        background-repeat: no-repeat;
+    }
+}
+
+:host-context(.dark-theme) {
+    a.logo {
+        .image {
+            background-image: url('/assets/logo-dark.svg');
+        }
+
+        .beta {
+            background-image: url('/assets/beta-dark.png');
+        }
     }
 }

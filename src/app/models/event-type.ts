@@ -47,6 +47,8 @@ export enum EventType {
     UserRolesDisconnect = 'userRolesDisconnect',
     UserApprove = 'userApprove',
     UserReject = 'userReject',
+    UserFeature = 'userFeature',
+    UserUnfeature = 'userUnfeature',
     UsersStatuses = 'usersStatuses',
     
     AvatarUpdate = 'avatarUpdate',
@@ -106,7 +108,8 @@ export enum EventType {
     TimelinesPublic = 'timelinesPublic',
     TimelinesCategories = 'timelinesCategories',
     TimelinesHashtags = 'timelinesHashtags',
-    TimelinesFeatured = 'timelinesFeatured',
+    TimelinesFeatured = 'timelinesFeaturedStatuses',
+    TimelinesFeaturedUsers = 'timelinesFeaturedUsers',
     TimelinesHome = 'timelinesHome',
     
     FollowRequestList = 'followRequestList',
@@ -144,5 +147,20 @@ export enum EventType {
     PushSubscriptionsList = 'pushSubscriptionsList',
     PushSubscriptionsCreate = 'pushSubscriptionsCreate',
     PushSubscriptionsUpdate = 'pushSubscriptionsUpdate',
-    PushSubscriptionsDelete = 'pushSubscriptionsDelete'
+    PushSubscriptionsDelete = 'pushSubscriptionsDelete',
+
+    UserAliasesList = 'userAliasesList',
+    UserAliasesCreate = 'userAliasesCreate',
+    UserAliasesDelete = 'userAliasesDelete',
+
+    ActorRead = 'actorRead',
+    HealthRead = 'healthRead',
+
+    ArchivesList = 'archivesList',
+    ArchivesCreate = 'archivesCreate',
+
+    UserSettingsList = 'userSettingsList',
+    UserSettingsRead = 'userSettingsRead',
+    UserSettingsSet = 'userSettingsSet',
+    UserSettingsDelete =  'userSettingsDelete'
 }

@@ -1,116 +1,151 @@
-<div *ngIf="user && isReady" @fadeIn>
-    <img class="header-image" alt="header" [src]="this.user.headerUrl ?? '/assets/header.jpg'" />
-    <img class="avatar-image" alt="header" [src]="this.user.avatarUrl ?? '/assets/avatar.svg'" (click)="onAvatarClick()" />
+@if (isReady()) {
+    @if (user(); as userInternal) {
+        <div>
+            <img class="header-image" alt="header profile" [ngSrc]="userInternal.headerUrl ?? 'assets/header.jpg'" width="1500" height="500" priority />
+            <img class="avatar-image" alt="avatar profile" [ngSrc]="userInternal.avatarUrl ?? 'assets/avatar.svg'" width="600" height="600" priority (click)="onAvatarClick()" (keydown.enter)="onAvatarClick()" tabindex="0" />
 
-    <div class="flex-row flex-space-around padding-left-10 padding-right-10">
-        <div class="profile">
-            <div class="text-center">
-                <div class="mat-h1">{{ user.name }}</div>
-                <div class="mat-h4">&#64;{{ user.userName }}</div>
-                <div class="bio" [innerHTML]="user.bioHtml"></div>
-            </div>
+            <div class="flex-row flex-space-around padding-left-10 padding-right-10">
+                <div class="profile">
+                    <div class="text-center">
+                        <div class="mat-h1">{{ userDisplayService.displayName(userInternal) }}</div>
+                        <div class="mat-h4">&#64;{{ userInternal.userName }}</div>
+                        <div class="bio" [innerHTML]="userInternal.bioHtml"></div>
+                    </div>
 
-            <div class="padding-top-10">
-                <app-follow-buttons-section [user]="user" [relationship]="relationship" (relationChanged)="onMainRelationChanged()"></app-follow-buttons-section>
-            </div>
+                    @if (userInternal.isLocal && createdAt()) {
+                        <div class="text-center text-muted padding-top-10">
+                            Joined {{ createdAt() | date:'longDate' }}
+                        </div>
+                    }
 
-            @if (signedInUser?.id === user.id) {
-                <div class="flex-row flex-center gap-8">
-                    <button type="button" [routerLink]="['/favourites']" mat-flat-button aria-label="Favourites"><mat-icon class="fill-symbol">grade</mat-icon> Favourites</button>
-                    <button type="button" [routerLink]="['/bookmarks']" mat-flat-button aria-label="Bookmarks"><mat-icon class="fill-symbol">bookmark</mat-icon> Bookmarks</button>
-                </div>
-            }
+                    @if (relationship(); as relationshipInternal) {
+                        <div class="padding-top-10">
+                            <app-follow-buttons-section [user]="userInternal" [relationship]="relationshipInternal" (relationChanged)="onMainRelationChanged($event)"></app-follow-buttons-section>
+                        </div>
+                    }
 
-            <div *ngIf="(latestFollowers?.data?.length ?? 0) > 0" class="text-center padding-top-10 padding-bottom-10">
-                <div class="text-muted padding-bottom-5">LATEST FOLLOWERS</div>
-                <ng-container *ngFor="let item of latestFollowers?.data">
-                    <img class="follower-image" [src]="item.avatarUrl ?? '/assets/avatar.svg'" [matTooltip]="item.name ?? item.userName ?? ''" />
-                </ng-container>
-            </div>
+                    @if (signedInUser()?.id === userInternal.id) {
+                        <div class="flex-row flex-center gap-8">
+                            <button type="button" [routerLink]="['/favourites']" mat-flat-button aria-label="Favourites"><mat-icon class="fill-symbol">grade</mat-icon> Favourites</button>
+                            <button type="button" [routerLink]="['/bookmarks']" mat-flat-button aria-label="Bookmarks"><mat-icon class="fill-symbol">bookmark</mat-icon> Bookmarks</button>
+                        </div>
+                    }
 
-            <div class="margin-auto fields-container">
-                <mat-card *ngIf="(user.fields?.length ?? 0) > 0" appearance="outlined">
-                    <mat-card-content>
-                        <ng-container *ngFor="let item of user.fields; let i = index">
-                            <div class="flex-row flex-align-center flex-space-between margin-bottom-10">
-                                <div>
-                                    <div class="field-key text-muted">{{ item.key }}</div>
-                                    <div class="field-value" [innerHTML]="item.valueHtml"></div>
-                                </div>
-                                <div class="margin-left-10">
-                                    <mat-icon *ngIf="item.isVerified" class="text-success margin-top-5" matTooltip="Verified">check_circle</mat-icon>
-                                </div>
+                    @if (latestFollowers(); as latestFollowersArray) {
+                        @if (latestFollowersArray.data.length > 0) {
+                            <div class="text-center padding-top-10">
+                                <div class="text-muted padding-bottom-5">LATEST FOLLOWERS</div>
+                                @for (item of latestFollowersArray.data; track item.id) {
+                                    <img class="follower-image" [ngSrc]="item.avatarUrl ?? 'assets/avatar.svg'" width="600" height="600" [matTooltip]="item.name ?? item.userName ?? ''" alt="Avatar" />
+                                }
                             </div>
-                            <mat-divider *ngIf="(i + 1) < (user.fields?.length ?? 0)" class="padding-bottom-5"></mat-divider>
-                        </ng-container>
-                    </mat-card-content>
-                </mat-card>
-            </div>
+                        }
+                    }
 
-            <div class="flex-row flex-center padding-top-20">
-                <div class="margin-left-20 margin-right-20"><span class="fw-500">{{ user.statusesCount }}</span><span class="fw-200 margin-left-5" [ngClass]="{ 'dashed': profilePageTab === ProfilePageTab.Statuses}"><a [routerLink]="['posts']">Posts</a></span></div>
-                <div class="margin-left-20 margin-right-20"><span class="fw-500">{{ user.followingCount }}</span><span class="fw-200 margin-left-5" [ngClass]="{ 'dashed': profilePageTab === ProfilePageTab.Following}"><a [routerLink]="['following']">Following</a></span></div>
-                <div class="margin-left-20 margin-right-20"><span class="fw-500">{{ user.followersCount }}</span><span class="fw-200 margin-left-5" [ngClass]="{ 'dashed': profilePageTab === ProfilePageTab.Followers}"><a [routerLink]="['followers']">Followers</a></span></div>
-            </div>
-            
-            <div *ngIf="profilePageTab === ProfilePageTab.Following">
-                <div class="padding-bottom-20 padding-top-20">
-                    <mat-card class="users-card" appearance="outlined">
-                        <mat-card-content>
-                            @if ((following?.data?.length ?? 0) > 0) {
-                                <app-users-card
-                                    [showLoadMore]="!allFollowingDisplayed"
-                                    [users]="following?.data"
-                                    [relationships]="followingRelationships"
-                                    (relationChanged)="onRelationChanged($event)"
-                                    (loadMore)="onLoadMoreFollowing()">
-                                </app-users-card>
-                            } @else {
-                                @if (user.isLocal) {
-                                    <div>There is nothing to read here yet.</div>
-                                } @else {
-                                    <div class="text-center">
-                                        <p>We do not have this information in the system.</p>
-                                        <p>Check on the user's original <a [href]="user.activityPubProfile" target="_blank">profile page</a>.</p>
+                    <div class="margin-auto fields-container padding-top-10">
+                        <mat-card *ngIf="(userInternal.fields?.length ?? 0) > 0" appearance="outlined">
+                            <mat-card-content>
+                                @for (item of userInternal.fields; track item.id; let i = $index) {
+                                    <div class="flex-row flex-align-center flex-space-between margin-bottom-10">
+                                        <div>
+                                            <div class="field-key text-muted">{{ item.key }}</div>
+                                            <div class="field-value" [innerHTML]="item.valueHtml"></div>
+                                        </div>
+                                        <div class="margin-left-10">
+                                            @if (item.isVerified) {
+                                                <mat-icon class="text-success fill-symbol margin-top-5" matTooltip="Verified">check_circle</mat-icon>
+                                            }
+                                        </div>
                                     </div>
+                                    <mat-divider *ngIf="(i + 1) < (userInternal.fields?.length ?? 0)" class="padding-bottom-5"></mat-divider>
                                 }
-                            }
-                        </mat-card-content>
-                    </mat-card>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+
+                    <div class="flex-row flex-center padding-top-20">
+                        <div class="margin-left-20 margin-right-20"><span class="fw-500">{{ userInternal.statusesCount }}</span><span class="fw-200 margin-left-5" [ngClass]="{ 'dashed': selectedProfilePageTab() === profilePageTab.Statuses}"><a [routerLink]="['posts']">Posts</a></span></div>
+                        <div class="margin-left-20 margin-right-20"><span class="fw-500">{{ userInternal.followingCount }}</span><span class="fw-200 margin-left-5" [ngClass]="{ 'dashed': selectedProfilePageTab() === profilePageTab.Following}"><a [routerLink]="['following']">Following</a></span></div>
+                        <div class="margin-left-20 margin-right-20"><span class="fw-500">{{ userInternal.followersCount }}</span><span class="fw-200 margin-left-5" [ngClass]="{ 'dashed': selectedProfilePageTab() === profilePageTab.Followers}"><a [routerLink]="['followers']">Followers</a></span></div>
+                    </div>
+                    
+                    <div *ngIf="selectedProfilePageTab() === profilePageTab.Following">
+                        <div @fadeIn class="padding-bottom-20 padding-top-20">
+                            <mat-card class="users-card" appearance="outlined">
+                                <mat-card-content>
+                                    @if ((following()?.data?.length ?? 0) > 0) {
+                                        <app-users-card
+                                            [showLoadMore]="!allFollowingDisplayed()"
+                                            [users]="following()?.data"
+                                            [relationships]="followingRelationships()"
+                                            (relationChanged)="onRelationChanged($event)"
+                                            (loadMore)="onLoadMoreFollowing()">
+                                        </app-users-card>
+                                    } @else {
+                                        @if (userInternal.isLocal) {
+                                            <div>There is nothing to read here yet.</div>
+                                        } @else {
+                                            <div class="text-center">
+                                                <p>We do not have this information in the system.</p>
+                                                <p class="margin-bottom-0">Check on the user's original <a [href]="userInternal.activityPubProfile" target="_blank">profile page</a>.</p>
+                                            </div>
+                                        }
+                                    }
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                    </div>
+
+                    <div *ngIf="selectedProfilePageTab() === profilePageTab.Followers">
+                        <div @fadeIn class="padding-bottom-20 padding-top-20">
+                            <mat-card class="users-card" appearance="outlined">
+                                <mat-card-content>
+                                    @if ((followers()?.data?.length ?? 0) > 0) {
+                                        <app-users-card
+                                            [showLoadMore]="!allFollowersDisplayed()"
+                                            [users]="followers()?.data"
+                                            [relationships]="followersRelationships()"
+                                            (relationChanged)="onRelationChanged($event)"
+                                            (loadMore)="onLoadMoreFollowers()">
+                                        </app-users-card>
+                                    } @else {
+                                        @if (userInternal.isLocal) {
+                                            <div>There is nothing to read here yet.</div>
+                                        } @else {
+                                            <div class="text-center">
+                                                <p>We do not have this information in the system.</p>
+                                                <p class="margin-bottom-0">Check on the user's original <a [href]="userInternal.activityPubProfile" target="_blank">profile page</a>.</p>
+                                            </div>
+                                        }
+                                    }
+
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div *ngIf="profilePageTab === ProfilePageTab.Followers">
-                <div class="padding-bottom-20 padding-top-20">
-                    <mat-card class="users-card" appearance="outlined">
-                        <mat-card-content>
-                            @if ((followers?.data?.length ?? 0) > 0) {
-                                <app-users-card
-                                    [showLoadMore]="!allFollowersDisplayed"
-                                    [users]="followers?.data"
-                                    [relationships]="followersRelationships"
-                                    (relationChanged)="onRelationChanged($event)"
-                                    (loadMore)="onLoadMoreFollowers()">
-                                </app-users-card>
-                            } @else {
-                                @if (user.isLocal) {
-                                    <div>There is nothing to read here yet.</div>
-                                } @else {
+            <div *ngIf="selectedProfilePageTab() === profilePageTab.Statuses">
+                @if (!userInternal.isLocal) {
+                    <div class="remote-gallery-container">
+                        <div class="remote-gallery margin-auto">
+                            <mat-card appearance="outlined">
+                                <mat-card-content>
                                     <div class="text-center">
-                                        <p>We do not have this information in the system.</p>
-                                        <p>Check on the user's original <a [href]="user.activityPubProfile" target="_blank">profile page</a>.</p>
+                                        <p>Some posts from this profile may be missing.</p>
+                                        <p class="margin-bottom-0">See more posts on user's original <a [href]="userInternal.activityPubProfile" target="_blank">profile page</a>.</p>
                                     </div>
-                                }
-                            }
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                    </div>
+                }
 
-                        </mat-card-content>
-                    </mat-card>
-                </div>
+                @if (statuses(); as statusesArray) {
+                    <app-gallery [statuses]="statusesArray" [startUrl]="pageUrl" [squareImages]="squareImages()" [hideAvatars]="true"></app-gallery>
+                }
             </div>
         </div>
-    </div>
-
-    <div *ngIf="profilePageTab === ProfilePageTab.Statuses">
-        <app-gallery [statuses]="statuses" [squareImages]="squareImages" [hideAvatars]="true"></app-gallery>
-    </div>
-</div>
+    }
+}

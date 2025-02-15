@@ -1,0 +1,41 @@
+@if (user(); as userObject) {
+    <mat-card class="user-popover" appearance="outlined">
+        <mat-card-content>
+            <div class="flex-row flex-space-between gap-16">
+                <div class="flex-row gap-8">
+                    <div>
+                        <app-avatar [user]="userObject" [size]="avatarSize.huge"></app-avatar>
+                    </div>
+                    <div>
+                        <div [ngClass]="{ 'flex-row': !isHandset(), 'flex-column': isHandset() }">
+                            <div><a [routerLink]="[ '/@' + userObject.userName ]" class="margin-right-5 fw-600">{{ userDisplayService.displayName(userObject) }}</a></div>
+                            <div class="fw-400 fs-90 text-muted">&#64;{{ userObject.userName }}</div>
+
+                            @if (userDisplayService.verifiedUrl(userObject)) {
+                                <div class="verification-badge text-success">
+                                    <mat-icon [inline]="true" class="fill-symbol verification-icon">check</mat-icon>
+                                    <span [innerHTML]="userDisplayService.verifiedUrl(userObject)" class="green-link"></span>
+                                </div>
+                            }
+                        </div>
+
+                        <div class="bio" [innerHTML]="userObject.bioHtml"></div>
+                        <div class="fw-300 fs-90">
+                            <span class="margin-right-15"><span class="fw-500">{{ userObject.statusesCount }}</span> Posts</span>
+                            <span class="margin-right-15"><span class="fw-500">{{ userObject.followersCount }}</span> Followers</span>
+                            <span><span class="fw-500">{{ userObject.followingCount }}</span> Following</span>
+                        </div>
+                    </div>
+                </div>
+
+                @if (relationship(); as relationshipObject) {
+                    <app-follow-buttons-section
+                        [user]="userObject"
+                        [relationship]="relationshipObject"
+                        [singleButton]="true">
+                    </app-follow-buttons-section>
+                }
+            </div>
+        </mat-card-content>
+    </mat-card>
+}

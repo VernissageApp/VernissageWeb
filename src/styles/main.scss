@@ -8,9 +8,11 @@
 @import './flex-layout';
 @import './app-theme';
 @import './messages-theme';
+@import './notification-icons';
 @import './general';
 
-@include mat.core();
+@include mat.elevation-classes();
+@include mat.app-background();
 
 // =======================================================================
 // Enable typography with hierarchy.
@@ -43,10 +45,10 @@ $md-white: (
     300 : #000000,
     400 : #000000,
     500 : #000000,
-    600 : #000000,
-    700 : #000000,
-    800 : #000000,
-    900 : #000000,
+    600 : #303030,
+    700 : #303030,
+    800 : #303030,
+    900 : #303030,
     A100 : #000000,
     A200 : #000000,
     A400 : #000000,
@@ -189,6 +191,32 @@ $vernissage-light-toolbar-theme: mat.m2-define-light-theme((
   color: (primary: $vernissage-white, accent: $vernissage-light-accent),
 ));
 
+// Define colors for notifications.
+$md-notifications-palette: (
+	50: #f86874,
+	100: #f59d21,
+	200: #f8be2b,
+	300: #6bc95e,
+	400: #a871ad,
+	500: #45a8f4,
+	600: #ef5b72,
+	700: #8ace3e,
+	800: #f87392,
+	900: #5f90ec
+);
+
+$md-notifications-dark-palette: (
+	50: #FF9AA2,
+	100: #FFB347,
+	200: #FFDA79,
+	300: #A2D39C,
+	400: #B39EB5,
+	500: #80C9FF,
+	600: #f7a7b3,
+	700: #B3DE81,
+	800: #e1a8b5,
+	900: #AFCBFF
+);
 
 // =======================================================================
 // Define a dark theme (constructed from Angular Material palettes).
@@ -198,7 +226,8 @@ $vernissage-dark-theme: mat.m2-define-dark-theme((
     primary: mat.m2-define-palette(mat.$m2-blue-palette),
     accent: mat.m2-define-palette(mat.$m2-lime-palette),
     warn: $vernissage-light-warn
-  )
+  ),
+  typography: $my-typography
 ));
 
 $vernissage-dark-toolbar-theme: mat.m2-define-light-theme((
@@ -206,10 +235,11 @@ $vernissage-dark-toolbar-theme: mat.m2-define-light-theme((
 ));
 
 // =======================================================================
-// Enable ligth and dark themes.
+// Enable light and dark themes.
 
 // Set core theme.
-@include mat.core-theme($vernissage-light-theme);
+@include mat.elevation-classes();
+@include mat.app-background();
 
 // Use theme for all components.
 @include mat.all-component-themes($vernissage-light-theme);
@@ -218,17 +248,21 @@ $vernissage-dark-toolbar-theme: mat.m2-define-light-theme((
 @include mat.toolbar-color($vernissage-light-toolbar-theme);
 
 // Set custom Vernissage components themes.
-@include material-app-theme($vernissage-light-theme, $vernissage-gray);
+@include material-app-theme($vernissage-light-theme, $vernissage-gray, $vernissage-white, '/assets/camera-light.svg', '/assets/face-light.svg');
 
 // Set messages theme.
 @include messages-theme($vernissage-light-theme);
+
+// Set notification icons theme.
+@include notification-icons($md-notifications-palette);
 
 .dark-theme {
   // Use different colors for dark theme.
   // https://github.com/angular/components/blob/main/guides/duplicate-theming-styles.md
 
   // Set dark core colors.
-  @include mat.core-color($vernissage-dark-theme);
+  @include mat.elevation-classes();
+  @include mat.app-background();
 
   // Use dark colors for all components.
   @include mat.all-component-colors($vernissage-dark-theme);
@@ -237,12 +271,14 @@ $vernissage-dark-toolbar-theme: mat.m2-define-light-theme((
   @include mat.toolbar-color($vernissage-dark-toolbar-theme);
 
   // Set custom Vernissage components themes.
-  @include material-app-theme($vernissage-dark-theme, $vernissage-white);
+  @include material-app-theme($vernissage-dark-theme, $vernissage-white, $vernissage-gray, '/assets/camera-dark.svg', '/assets/face-dark.svg');
 
   // Set messages theme.
   @include messages-theme($vernissage-dark-theme);
-}
 
+  // Set notification icons theme.
+  @include notification-icons($md-notifications-dark-palette);
+}
 
 // =======================================================================
 // Custom fields density.
@@ -253,4 +289,19 @@ $vernissage-dark-toolbar-theme: mat.m2-define-light-theme((
 
 .small-text-input {
   @include mat.form-field-density(-3);
+}
+
+.small-button {
+  @include mat.button-density(-3);
+}
+
+// =======================================================================
+// Custom route animation.
+
+html {
+  background-color: #FFFFFF;
+}
+
+.mat-dark {
+  background-color: #424242
 }

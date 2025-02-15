@@ -1,56 +1,60 @@
-<div *ngIf="isReady && settings" @fadeIn [ngClass]="{ 'padding-30': !isHandset, 'padding-10': isHandset }">
-    <div class="flex-row flex-space-around">
-        <div class="settings-container width-100">
-            <section>
-                <h1>Settings</h1>
-            </section>
+@if (isReady()) {
+    @if (settings(); as settingsObject) {
+        <div @fadeIn [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
+            <div class="flex-row flex-space-around">
+                <div class="settings-container width-100">
+                    <section>
+                        <h1>Settings</h1>
+                    </section>
 
-            <mat-accordion class="settings-headers-align">
+                    <mat-accordion class="settings-headers-align">
 
-                <!-- General settings panel. -->
-                <mat-expansion-panel [expanded]="true">
-                    <mat-expansion-panel-header>
-                        <mat-panel-title>
-                            General settings
-                        </mat-panel-title>
-                        <mat-panel-description *ngIf="!isHandset">
-                            Here you can set up general application settings.
-                            <mat-icon>dns</mat-icon>
-                        </mat-panel-description>
-                    </mat-expansion-panel-header>
-                    <app-general-settings [settings]="settings"></app-general-settings>
-                </mat-expansion-panel>
+                        <!-- General settings panel. -->
+                        <mat-expansion-panel [expanded]="true">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    General settings
+                                </mat-panel-title>
+                                <mat-panel-description *ngIf="!isHandset()">
+                                    Here you can set up general application settings.
+                                    <mat-icon>dns</mat-icon>
+                                </mat-panel-description>
+                            </mat-expansion-panel-header>
+                            <app-general-settings [settings]="settingsObject" [webContactUser]="webContactUser()" [systemDefaultUser]="systemDefaultUser()"></app-general-settings>
+                        </mat-expansion-panel>
 
-                <!-- Instance rules. -->
-                <mat-expansion-panel>
-                    <mat-expansion-panel-header>
-                        <mat-panel-title>
-                            Instance rules
-                        </mat-panel-title>
-                        <mat-panel-description *ngIf="!isHandset">
-                            Here you can manage instance rules.
-                            <mat-icon>local_police</mat-icon>
-                        </mat-panel-description>
-                    </mat-expansion-panel-header>
-                    <app-instance-rules></app-instance-rules>
-                </mat-expansion-panel>
+                        <!-- Instance rules. -->
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Instance rules
+                                </mat-panel-title>
+                                <mat-panel-description *ngIf="!isHandset()">
+                                    Here you can manage instance rules.
+                                    <mat-icon>local_police</mat-icon>
+                                </mat-panel-description>
+                            </mat-expansion-panel-header>
+                            <app-instance-rules></app-instance-rules>
+                        </mat-expansion-panel>
 
-                <!-- Domain blocks panel. -->
-                <mat-expansion-panel>
-                    <mat-expansion-panel-header>
-                        <mat-panel-title>
-                            Instance domain blocks
-                        </mat-panel-title>
-                        <mat-panel-description *ngIf="!isHandset">
-                            Here you can manage domains blocked by instance.
-                            <mat-icon>public_off</mat-icon>
-                        </mat-panel-description>
-                    </mat-expansion-panel-header>
-                    <app-domain-blocks></app-domain-blocks>
-                </mat-expansion-panel>
+                        <!-- Domain blocks panel. -->
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Instance domain blocks
+                                </mat-panel-title>
+                                <mat-panel-description *ngIf="!isHandset()">
+                                    Here you can manage domains blocked by instance.
+                                    <mat-icon>public_off</mat-icon>
+                                </mat-panel-description>
+                            </mat-expansion-panel-header>
+                            <app-domain-blocks></app-domain-blocks>
+                        </mat-expansion-panel>
 
-            </mat-accordion>
+                    </mat-accordion>
 
+                </div>
+            </div>
         </div>
-    </div>
-</div>
+    }
+}

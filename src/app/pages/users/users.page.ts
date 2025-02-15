@@ -1,13 +1,13 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, model, OnDestroy, OnInit, signal } from '@angular/core';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { ForbiddenError } from 'src/app/errors/forbidden-error';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { LoadingService } from 'src/app/services/common/loading.service';
-import { Responsive } from 'src/app/common/responsive';
+import { ResponsiveComponent } from 'src/app/common/responsive';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 import { Role } from 'src/app/models/role';
-import { PaginableResult } from 'src/app/models/paginable-result';
+import { PagedResult } from 'src/app/models/paged-result';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -17,27 +17,32 @@ import { User } from 'src/app/models/user';
 import { AvatarSize } from 'src/app/components/widgets/avatar/avatar-size';
 import { UserRolesDialog } from 'src/app/dialogs/user-roles-dialog/user-roles.dialog';
 import { RandomGeneratorService } from 'src/app/services/common/random-generator.service';
+import { ConfirmationDialog } from 'src/app/dialogs/confirmation-dialog/confirmation.dialog';
 
 @Component({
     selector: 'app-users',
     templateUrl: './users.page.html',
     styleUrls: ['./users.page.scss'],
-    animations: fadeInAnimation
+    animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
-export class UsersPage extends Responsive {
-    readonly avatarSize = AvatarSize
-    readonly role = Role;
+export class UsersPage extends ResponsiveComponent implements OnInit, OnDestroy {
+    protected readonly avatarSize = AvatarSize
+    protected readonly role = Role;
 
-    isReady = false;
-    pageIndex = 0;
-    users?: PaginableResult<User>;
-    displayedColumns: string[] = [];
-    routeParamsSubscription?: Subscription;
+    protected search = model('');
+    protected onlyLocal = model(false);
+    protected isReady = signal(false);
+    protected users = signal<PagedResult<User> | undefined>(undefined);
+    protected pageIndex = signal(0);
+    protected displayedColumns = signal<string[]>([]);
 
+    private routeParamsSubscription?: Subscription;
     private readonly displayedColumnsHandsetPortrait: string[] = ['avatar', 'userName', 'actions'];
-    private readonly displayedColumnsHandserLandscape: string[] = ['avatar', 'userName', 'createdAt', 'actions'];
-    private readonly displayedColumnsTablet: string[] = ['avatar', 'userName', 'userFullName', 'email', 'isApproved', 'createdAt', 'actions'];
-    private readonly displayedColumnsBrowser: string[] = ['avatar', 'userName', 'userFullName', 'email', 'isLocal', 'isApproved', 'statuses', 'createdAt', 'actions'];
+    private readonly displayedColumnsHandsetLandscape: string[] = ['avatar', 'userName', 'createdAt', 'actions'];
+    private readonly displayedColumnsTablet: string[] = ['avatar', 'userName', 'email', 'isApproved', 'lastLoginDate', 'createdAt', 'actions'];
+    private readonly displayedColumnsBrowser: string[] = ['avatar', 'userName', 'email', 'isLocal', 'isApproved', 'statuses', 'lastLoginDate', 'createdAt', 'actions'];
     
     constructor(
         private authorizationService: AuthorizationService,
@@ -65,26 +70,55 @@ export class UsersPage extends Responsive {
 
             const pageString = params['page'] as string;
             const sizeString = params['size'] as string;
+            const query = params['query'] as string;
+            const local = params['onlyLocal'] as string;
 
-            let page = pageString ? +pageString : 0;
-            let size = sizeString ? +sizeString : 10;
+            const page = pageString ? +pageString : 0;
+            const size = sizeString ? +sizeString : 10;
 
-            this.pageIndex = page;
-            this.users = await this.usersService.get(page + 1, size);
+            this.pageIndex.set(page);
+            this.search.set(query);
+            this.onlyLocal.set(local === 'true');
 
-            this.isReady = true;
+            const downloadedUsers = await this.usersService.get(page + 1, size, query, this.onlyLocal());
+            this.users.set(downloadedUsers);
+
+            this.isReady.set(true);
             this.loadingService.hideLoader();
         });
     }
 
-    onSetRoles(user: User): void {
+    override ngOnDestroy(): void {
+        super.ngOnDestroy();
+        this.routeParamsSubscription?.unsubscribe();
+    }
+
+    protected async onSubmit(): Promise<void> {
+        const navigationExtras: NavigationExtras = {
+            queryParams: { query: this.search(), onlyLocal: this.onlyLocal() },
+            queryParamsHandling: 'merge'
+        };
+
+        this.router.navigate([], navigationExtras);
+    }
+
+    protected onSetRoles(user: User): void {
         const dialogRef = this.dialog.open(UserRolesDialog, {
             width: '500px',
             data: user
         });
+     
+        dialogRef.afterClosed().subscribe(async () => {
+            const navigationExtras: NavigationExtras = {
+                queryParams: { t: this.randomGeneratorService.generateString(8) },
+                queryParamsHandling: 'merge'
+            };
+    
+            await this.router.navigate([], navigationExtras);
+        });
     }
 
-    async onSetEnable(user: User): Promise<void> {
+    protected async onSetEnable(user: User): Promise<void> {
         try {
             if (user.userName) {
                 await this.usersService.enable(user.userName);
@@ -98,7 +132,7 @@ export class UsersPage extends Responsive {
         }
     }
 
-    async onSetDisable(user: User): Promise<void> {
+    protected async onSetDisable(user: User): Promise<void> {
         try {
             if (user.userName) {
                 await this.usersService.disable(user.userName);
@@ -112,7 +146,7 @@ export class UsersPage extends Responsive {
         }
     }
 
-    async onApprove(user: User): Promise<void> {
+    protected async onApprove(user: User): Promise<void> {
         try {
             if (user.userName) {
                 await this.usersService.approve(user.userName);
@@ -126,7 +160,7 @@ export class UsersPage extends Responsive {
         }
     }
 
-    async onReject(user: User): Promise<void> {
+    protected async onReject(user: User): Promise<void> {
         try {
             if (user.userName) {
                 await this.usersService.reject(user.userName);
@@ -145,7 +179,54 @@ export class UsersPage extends Responsive {
         }
     }
 
-    async handlePageEvent(pageEvent: PageEvent): Promise<void> {
+    protected async onUserRefresh(user: User): Promise<void> {
+        try {
+            if (user.userName) {
+                await this.usersService.refresh(user.userName);
+                this.messageService.showSuccess('Account has been refreshed.');
+
+                const navigationExtras: NavigationExtras = {
+                    queryParams: { t: this.randomGeneratorService.generateString(8) },
+                    queryParamsHandling: 'merge'
+                };
+        
+                await this.router.navigate([], navigationExtras);
+            }
+        } catch (error) {
+            console.error(error);
+            this.messageService.showServerError(error);
+        }
+    }
+
+    protected async onDelete(user: User): Promise<void> {
+        const dialogRef = this.dialog.open(ConfirmationDialog, {
+            width: '500px',
+            data: 'Do you want to delete user account?'
+        });
+
+        dialogRef.afterClosed().subscribe(async (result) => {
+            if (result?.confirmed) {
+                try {
+                    if (user.userName) {
+                        await this.usersService.delete(user.userName);
+                        this.messageService.showSuccess('Account has been deleted.');
+        
+                        const navigationExtras: NavigationExtras = {
+                            queryParams: { t: this.randomGeneratorService.generateString(8) },
+                            queryParamsHandling: 'merge'
+                        };
+                
+                        await this.router.navigate([], navigationExtras);
+                    }
+                } catch (error) {
+                    console.error(error);
+                    this.messageService.showServerError(error);
+                }
+            }
+        });
+    }
+
+    protected async handlePageEvent(pageEvent: PageEvent): Promise<void> {
         const navigationExtras: NavigationExtras = {
             queryParams: { page: pageEvent.pageIndex, size: pageEvent.pageSize },
             queryParamsHandling: 'merge'
@@ -155,26 +236,26 @@ export class UsersPage extends Responsive {
     }
 
     protected override onHandsetPortrait(): void {
-        this.displayedColumns = this.displayedColumnsHandsetPortrait;
+        this.displayedColumns?.set(this.displayedColumnsHandsetPortrait);
     }
 
     protected override onHandsetLandscape(): void {
-        this.displayedColumns = this.displayedColumnsHandserLandscape;
+        this.displayedColumns?.set(this.displayedColumnsHandsetLandscape);
     }
 
     protected override onTablet(): void {
-        this.displayedColumns = this.displayedColumnsTablet;
+        this.displayedColumns?.set(this.displayedColumnsTablet);
     }
 
     protected override onBrowser(): void {
-        this.displayedColumns = this.displayedColumnsBrowser;
+        this.displayedColumns?.set(this.displayedColumnsBrowser);
     }
 
-    isAdministrator(): boolean {
+    private isAdministrator(): boolean {
         return this.authorizationService.hasRole(Role.Administrator);
     }
 
-    isModerator(): boolean {
+    private isModerator(): boolean {
         return this.authorizationService.hasRole(Role.Moderator);
     }
 }

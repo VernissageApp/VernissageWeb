@@ -26,11 +26,14 @@ export class Settings {
     public eventsToStore: EventType[] = [];
     public webTitle = '';
     public webDescription = '';
+    public webLongDescription = '';
     public webEmail = '';
     public webThumbnail = '';
     public webLanguages = '';
     public webContactUserId = '';
     public systemDefaultUserId = '';
+    public patreonUrl = '';
+    public mastodonUrl = '';
 
     public isOpenAIEnabled = false;
     public openAIKey = '';
@@ -42,4 +45,26 @@ export class Settings {
     public webPushVapidPublicKey = '';
     public webPushVapidPrivateKey = '';
     public webPushVapidSubject = '';
+
+    public totalCost = 0;
+    public usersSupport = 0;
+
+    public showLocalTimelineForAnonymous = false;
+    public showTrendingForAnonymous = false;
+    public showEditorsChoiceForAnonymous = false;
+    public showEditorsUsersChoiceForAnonymous = false;
+    public showHashtagsForAnonymous = false;
+    public showCategoriesForAnonymous = false;
+
+    // Privacy and Terms of Service.
+    public privacyPolicyUpdatedAt = '';
+    public privacyPolicyContent = '';
+    public termsOfServiceUpdatedAt = '';
+    public termsOfServiceContent = '';
+
+    // Custom style and script.
+    public customInlineScript = '';
+    public customInlineStyle = '';
+    public customFileScript = '';
+    public customFileStyle = '';
 }

@@ -1,4 +1,4 @@
-import { Inject, Injectable, NgZone, PLATFORM_ID, isDevMode } from '@angular/core';
+import { Inject, Injectable, NgZone, PLATFORM_ID } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { User } from 'src/app/models/user';
 import { AccountService } from '../http/account.service';
@@ -6,6 +6,7 @@ import { UserPayloadToken } from '../../models/user-payload-token';
 import { Role } from 'src/app/models/role';
 import { ServerRefreshTokenNotExistsError } from 'src/app/errors/server-refresh-token-not-exists-error';
 import { isPlatformBrowser } from '@angular/common';
+import { PersistenceService } from '../persistance/persistance.service';
 
 @Injectable({
     providedIn: 'root'
@@ -17,15 +18,17 @@ export class AuthorizationService {
     private oneSecond = 1000;
     private userPayloadToken?: UserPayloadToken;
     private isBrowser = false;
+    private readonly xsrfTokenName = 'xsrf-token';
 
     constructor(
-        @Inject(PLATFORM_ID) platformId: Object,
+        @Inject(PLATFORM_ID) platformId: object,
         private accountService: AccountService,
+        private persistenceService: PersistenceService,
         private zone: NgZone) {
             this.isBrowser = isPlatformBrowser(platformId);
     }
 
-    isLoggedIn(): boolean {
+    async isLoggedIn(): Promise<boolean> {
         if (!this.userPayloadToken) {
             return false;
         }
@@ -37,7 +40,8 @@ export class AuthorizationService {
 
         const now = new Date();
         if (tokenExpirationTime < now) {
-            return false;
+            const resultRefreshAccessToken = await this.refreshAccessToken();
+            return resultRefreshAccessToken;
         }
 
         return true;
@@ -51,6 +55,11 @@ export class AuthorizationService {
         return this.userPayloadToken.userPayload;
     }
 
+    getXsrfToken(): string {
+        const xsrfTokenFromStorage = this.persistenceService.get(this.xsrfTokenName);
+        return xsrfTokenFromStorage ?? 'unknown';
+    }
+
     hasRole(role: Role): boolean {
         if (!this.userPayloadToken || !this.userPayloadToken.userPayload || !this.userPayloadToken.userPayload.roles) {
             return false;
@@ -59,26 +68,26 @@ export class AuthorizationService {
         return this.userPayloadToken.userPayload.roles.includes(role);    
     }
 
-    async signIn(userPayloadToken: UserPayloadToken): Promise<void> {
+    async signIn(userPayloadToken: UserPayloadToken): Promise<boolean> {
         if (!userPayloadToken) {
             await this.signOut();
-            return;
+            return false;
         }
 
         const tokenExpirationTime = new Date(userPayloadToken.expirationDate);
         if (!tokenExpirationTime) {
             await this.signOut();
-            return;
+            return false;
         }
 
         const now = new Date();
         if (tokenExpirationTime < now) {
             await this.signOut();
-            return;
+            return false;
         }
 
         this.userPayloadToken = userPayloadToken;
-        this.changes.next(this.userPayloadToken.userPayload);
+        this.persistenceService.set(this.xsrfTokenName, userPayloadToken.xsrfToken);
 
         const expirationTime = tokenExpirationTime.getTime();
         const tokenExpirationSeconds = Math.round(expirationTime / this.oneSecond);
@@ -86,14 +95,22 @@ export class AuthorizationService {
 
         const sessionTimeout = (tokenExpirationSeconds - nowSeconds) - this.tokenProcessingTime;
         this.initSessionTimeout(sessionTimeout);
+
+        this.changes.next(this.userPayloadToken.userPayload);
+        return true;
     }
 
     async signOut(): Promise<void> {
         this.cancelSessionTimeout();
-        this.userPayloadToken = undefined;
+        
+        if (this.isBrowser && this.userPayloadToken)  {
+            this.userPayloadToken = undefined;
+            this.persistenceService.remove(this.xsrfTokenName);
 
-        if (this.isBrowser) {
             await this.accountService.logout();
+        } else {
+            this.userPayloadToken = undefined;
+            this.persistenceService.remove(this.xsrfTokenName);
         }
 
         this.changes.next(undefined);
@@ -101,10 +118,10 @@ export class AuthorizationService {
 
     async refreshAccessToken(): Promise<boolean> {
         try {
-            const refresheUserPayloadToken = await this.accountService.refreshToken();
-            if (refresheUserPayloadToken) {
-                await this.signIn(refresheUserPayloadToken);
-                return true;
+            const refreshUserPayloadToken = await this.accountService.refreshToken();
+            if (refreshUserPayloadToken) {
+                const signInResult = await this.signIn(refreshUserPayloadToken);
+                return signInResult;
             } else {
                 await this.signOut();
                 return false;

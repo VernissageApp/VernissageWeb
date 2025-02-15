@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
 import { IdentityService } from 'src/app/services/http/identity.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IdentityToken } from 'src/app/models/identity-token';
@@ -7,10 +7,12 @@ import { AuthorizationService } from 'src/app/services/authorization/authorizati
 @Component({
     selector: 'app-login-callback',
     templateUrl: './login-callback.page.html',
-    styleUrls: ['./login-callback.page.scss']
+    styleUrls: ['./login-callback.page.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class LoginCallbackPage implements OnInit {
-    public errorMessage?: string;
+    protected errorMessage = signal<string | undefined>(undefined);
 
     constructor(
         private identityService: IdentityService,
@@ -24,18 +26,18 @@ export class LoginCallbackPage implements OnInit {
 
         try {
             const accessToken = await this.identityService.login(new IdentityToken(authenticateToken));
-            this.authorizationService.signIn(accessToken);
+            await this.authorizationService.signIn(accessToken);
             await this.router.navigate(['/home']);
         } catch (error: any) {
 
             if (error.error.code === 'invalidLoginCredentials') {
-                this.errorMessage = 'Invalid credentials.';
+                this.errorMessage.set('Invalid credentials.');
             } else if (error.error.code === 'emailNotConfirmed') {
-                this.errorMessage = 'Your email is not confirmed. Check your inbox or reset your password.';
+                this.errorMessage.set('Your email is not confirmed. Check your inbox or reset your password.');
             } else if (error.error.code === 'userAccountIsBlocked') {
-                this.errorMessage = 'Your account is blocked. Contact with our support.';
+                this.errorMessage.set('Your account is blocked. Contact with our support.');
             } else {
-                this.errorMessage = 'Unknown login error. Try again later.';
+                this.errorMessage.set('Unknown login error. Try again later.');
             }
         }
     }

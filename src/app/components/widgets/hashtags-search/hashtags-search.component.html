@@ -1,0 +1,18 @@
+<div appLazyLoad (lazyLoad)="lazyLoadData()">
+    <div class="hashtag-header">
+        <a [routerLink]="['/tags', hashtag().name]">
+            <mat-icon>tag</mat-icon>{{ hashtag().name }}
+        </a>
+    </div>
+    <div class="images-container margin-bottom-10">
+        <div class="flex-row flex-wrap gap-8">
+            @for (status of statuses()?.data; track status.id) {
+                @if (getImageSrc(status)) {
+                    <div class="image-container">
+                        <img class="image-item" [ngSrc]="getImageSrc(status)!" width="100" height="100" [alt]="getImageAlt(status) ?? 'Status image'" priority />
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>

@@ -7,7 +7,7 @@ import { Status } from 'src/app/models/status';
 import { WindowService } from '../common/window.service';
 import { LinkableResult } from 'src/app/models/linkable-result';
 import { UserMuteRequest } from 'src/app/models/user-mute-request';
-import { PaginableResult } from 'src/app/models/paginable-result';
+import { PagedResult } from 'src/app/models/paged-result';
 
 @Injectable({
     providedIn: 'root'
@@ -16,13 +16,13 @@ export class UsersService {
     constructor(private httpClient: HttpClient, private windowService: WindowService) {
     }
 
-    public async get(page: number, size: number): Promise<PaginableResult<User>> {
-        const event$ = this.httpClient.get<PaginableResult<User>>(this.windowService.apiUrl() + `/api/v1/users?page=${page}&size=${size}`);
+    public async get(page: number, size: number, query: string, onlyLocal = false): Promise<PagedResult<User>> {
+        const event$ = this.httpClient.get<PagedResult<User>>(this.windowService.apiUrl() + `/api/v1/users?page=${page}&size=${size}&query=${query ?? ''}&onlyLocal=${onlyLocal}`);
         return await firstValueFrom(event$);
     }
 
-    public async profile(userName: string): Promise<User> {
-        const event$ = this.httpClient.get<User>(this.windowService.apiUrl() +  '/api/v1/users/' + userName);
+    public async profile(userNameOrId: string): Promise<User> {
+        const event$ = this.httpClient.get<User>(this.windowService.apiUrl() +  '/api/v1/users/' + userNameOrId);
         return await firstValueFrom(event$);
     }
 
@@ -66,6 +66,16 @@ export class UsersService {
         return await firstValueFrom(event$);
     }
 
+    public async feature(userName: string): Promise<User> {
+        const event$ = this.httpClient.post<User>(this.windowService.apiUrl() + '/api/v1/users/@' + userName + '/feature', null);
+        return await firstValueFrom(event$);
+    }
+
+    public async unfeature(userName: string): Promise<User> {
+        const event$ = this.httpClient.post<User>(this.windowService.apiUrl() + '/api/v1/users/@' + userName + '/unfeature', null);
+        return await firstValueFrom(event$);
+    }
+
     public async enable(userName: string): Promise<void> {
         const event$ = this.httpClient.post(this.windowService.apiUrl() + '/api/v1/users/@' + userName + '/enable', null);
         await firstValueFrom(event$);
@@ -93,6 +103,11 @@ export class UsersService {
 
     public async reject(userName: string): Promise<void> {
         const event$ = this.httpClient.post(this.windowService.apiUrl() + '/api/v1/users/@' + userName + '/reject', null);
+        await firstValueFrom(event$);
+    }
+
+    public async refresh(userName: string): Promise<void> {
+        const event$ = this.httpClient.post(this.windowService.apiUrl() + '/api/v1/users/@' + userName + '/refresh', null);
         await firstValueFrom(event$);
     }
 

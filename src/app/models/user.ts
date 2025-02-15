@@ -3,6 +3,7 @@ import { Role } from "./role";
 
 export class User {
     public id?: string;
+    public url?: string;
     public isLocal?: boolean;
     public isBlocked?: boolean;
     public isApproved?: boolean;
@@ -27,4 +28,9 @@ export class User {
     public followersCount = 0;
     public followingCount = 0;
     public twoFactorEnabled = false;
+    public manuallyApprovesFollowers = false;
+    public featured = false;
+    public lastLoginDate = '';
+    public createdAt = '';
+    public updatedAt = '';
 }

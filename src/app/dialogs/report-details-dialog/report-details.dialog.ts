@@ -1,20 +1,25 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, model, OnInit, signal } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Rule } from 'src/app/models/rule';
 import { Report } from 'src/app/models/report';
 import { InstanceService } from 'src/app/services/http/instance.service';
 
 @Component({
-    selector: 'report-details',
-    templateUrl: 'report-details.dialog.html'
+    selector: 'app-report-details-dialog',
+    templateUrl: 'report-details.dialog.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class ReportDetailsDialog implements OnInit {
-    comment = '';
-    forward = false;
-    category = '';
-    ruleIds: number[] = [];
+    protected comment = model('');
+    protected forward = model(false);
+    protected category = model('');
+    protected ruleIds = model<number[]>([]);
+    
+    protected isLocal = signal(false);
+    protected rules = signal<Rule[]>([]);
 
-    categories = [
+    protected categories = signal([
         "Abusive",
         "Copyright",
         "Impersonation",
@@ -24,9 +29,7 @@ export class ReportDetailsDialog implements OnInit {
         "Terrorism",
         "Underage",
         "Violence"
-    ];
-
-    rules: Rule[] = []
+    ]);
 
     constructor(
         private instanceService: InstanceService,
@@ -35,14 +38,15 @@ export class ReportDetailsDialog implements OnInit {
     }
 
     ngOnInit(): void {
-        this.rules = this.instanceService.instance?.rules ?? [];
-        this.comment = this.data?.comment ?? '';
-        this.forward = this.data?.forward ?? false;
-        this.category = this.data?.category ?? '';
-        this.ruleIds = this.data?.ruleIds?.map(x => +x) ?? [];
+        this.rules.set(this.instanceService.instance?.rules ?? []);
+        this.comment.set(this.data?.comment ?? '');
+        this.forward.set(this.data?.forward ?? false);
+        this.category.set(this.data?.category ?? '');
+        this.ruleIds.set(this.data?.ruleIds?.map(x => +x) ?? []);
+        this.isLocal.set(this.data?.reportedUser?.isLocal ?? false);
     }
 
-    onNoClick(): void {
+    protected onNoClick(): void {
         this.dialogRef.close();
     }
 }

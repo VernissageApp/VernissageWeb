@@ -1,30 +1,42 @@
-import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
-import { NgModule, APP_INITIALIZER, ErrorHandler, Injector, NgZone, isDevMode, PLATFORM_ID } from '@angular/core';
+import { BrowserModule, provideClientHydration, withEventReplay } from '@angular/platform-browser';
+import { NgModule, ErrorHandler, Injector, NgZone, isDevMode, PLATFORM_ID, inject, provideAppInitializer } from '@angular/core';
 import { HTTP_INTERCEPTORS, provideHttpClient, withFetch, withInterceptorsFromDi } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MAT_CHECKBOX_DEFAULT_OPTIONS, MatCheckboxDefaultOptions } from '@angular/material/checkbox';
+import { MAT_TOOLTIP_DEFAULT_OPTIONS, MatTooltipDefaultOptions } from '@angular/material/tooltip';
 import { GlobalErrorHandler } from 'src/app/handlers/global-error-handler';
 import { InstanceService } from 'src/app/services/http/instance.service';
 import { appInitialization } from './app-initialization';
+import { HammerModule } from "@angular/platform-browser";
 
 import { RouteReuseStrategy } from '@angular/router';
 import { AppComponent } from './app.component';
-import { PersistanceBrowserService, PersistanceServerService, PersistanceService } from './services/persistance/persistance.service';
+import { PersistenceBrowserService, PersistenceServerService, PersistenceService } from './services/persistance/persistance.service';
 import { AuthorizationService } from './services/authorization/authorization.service';
 import { PagesModule } from './pages/pages.module';
 import { APIInterceptor } from './interceptors/api.interceptor';
 import { LoadingService } from './services/common/loading.service';
 import { CustomReuseStrategy } from './common/custom-reuse-strategy';
-import { HammerModule } from "../../node_modules/@angular/platform-browser";
+
 import { MatIconRegistry } from '@angular/material/icon';
 import { SettingsService } from './services/http/settings.service';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { isPlatformBrowser } from '@angular/common';
-import { CookieModule } from 'ngx-cookie';
-// import { NgxCaptchaModule } from 'ngx-captcha';
+import { ErrorItemsService } from './services/http/error-items.service';
+import { RandomGeneratorService } from './services/common/random-generator.service';
+import { CustomScriptsService } from './services/common/custom-scripts.service';
+import { CustomStylesService } from './services/common/custom-styles.service';
 
-const httpInterceptor = (platformId: Object, authorizationService: AuthorizationService) => 
+const httpInterceptor = (platformId: object, authorizationService: AuthorizationService) => 
     new APIInterceptor(platformId, authorizationService);
+
+/** Custom options the configure the tooltip's default show/hide delays. */
+export const customTooltipDefaults: MatTooltipDefaultOptions = {
+    showDelay: 750,
+    hideDelay: 250,
+    touchendHideDelay: 1000,
+    touchGestures: 'off'
+};
 
 @NgModule({
     declarations: [
@@ -34,10 +46,8 @@ const httpInterceptor = (platformId: Object, authorizationService: Authorization
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
-        // NgxCaptchaModule,
         HammerModule,
         PagesModule,
-        CookieModule.withOptions(),
         ServiceWorkerModule.register('service-worker.js', {
             enabled: !isDevMode(),
             // Register the ServiceWorker as soon as the application is stable
@@ -48,12 +58,11 @@ const httpInterceptor = (platformId: Object, authorizationService: Authorization
     providers: [
         { provide: RouteReuseStrategy, useClass: CustomReuseStrategy },
         { provide: MAT_CHECKBOX_DEFAULT_OPTIONS, useValue: { clickAction: 'check' } as MatCheckboxDefaultOptions },
-        {
-            provide: APP_INITIALIZER,
-            useFactory: appInitialization,
-            deps: [AuthorizationService, InstanceService, SettingsService],
-            multi: true
-        },
+        { provide: MAT_TOOLTIP_DEFAULT_OPTIONS, useValue: customTooltipDefaults },
+        provideAppInitializer(() => {
+            const initializerFn = (appInitialization)(inject(AuthorizationService), inject(InstanceService), inject(SettingsService), inject(CustomScriptsService), inject(CustomStylesService));
+            return initializerFn();
+        }),
         {
             provide: HTTP_INTERCEPTORS,
             useFactory: httpInterceptor,
@@ -61,22 +70,22 @@ const httpInterceptor = (platformId: Object, authorizationService: Authorization
             multi: true
         },
         {
-            provide: PersistanceService,
-            useFactory: (platformId: Object) => {
+            provide: PersistenceService,
+            useFactory: (platformId: object) => {
                 if (isPlatformBrowser(platformId)) {
-                    return new PersistanceBrowserService();
+                    return new PersistenceBrowserService();
                 }
                 else {
-                    return new PersistanceServerService();
+                    return new PersistenceServerService();
                 }
             },
             deps: [PLATFORM_ID]
         },
         {
-            provide: ErrorHandler, useClass: GlobalErrorHandler, deps: [PLATFORM_ID, Injector, NgZone, AuthorizationService, LoadingService]
+            provide: ErrorHandler, useClass: GlobalErrorHandler, deps: [PLATFORM_ID, Injector, NgZone, AuthorizationService, PersistenceService, LoadingService, ErrorItemsService, RandomGeneratorService]
         },
         provideHttpClient(withFetch(), withInterceptorsFromDi()),
-        provideClientHydration()
+        provideClientHydration(withEventReplay())
     ]
 })
 export class AppModule {

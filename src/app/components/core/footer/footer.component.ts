@@ -1,22 +1,21 @@
 import { BreakpointObserver } from "@angular/cdk/layout";
-import { Component, OnInit } from "@angular/core";
-import { Responsive } from "src/app/common/responsive";
+import { ChangeDetectionStrategy, Component, OnInit, signal } from "@angular/core";
+import { ResponsiveComponent } from "src/app/common/responsive";
 import { WindowService } from "src/app/services/common/window.service";
-import { InstanceService } from "src/app/services/http/instance.service";
 
 @Component({
     selector: 'app-footer',
     templateUrl: './footer.component.html',
-    styleUrls: ['./footer.component.scss']
+    styleUrls: ['./footer.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
-export class FooterComponent extends Responsive implements OnInit {
-    currentDate = new Date();
-    apiService = '';
-    version = '';
+export class FooterComponent extends ResponsiveComponent implements OnInit {
+    protected currentYear = signal('');
+    protected apiService = signal('');
 
     constructor(
         private windowService: WindowService,
-        private instanceService: InstanceService,
         breakpointObserver: BreakpointObserver
     ) {
         super(breakpointObserver);
@@ -24,7 +23,8 @@ export class FooterComponent extends Responsive implements OnInit {
 
     override ngOnInit(): void {
         super.ngOnInit();
-        this.apiService = this.windowService.apiService();
-        this.version = this.instanceService.instance?.version ?? '';
+
+        this.currentYear.set(new Date().getFullYear().toString());
+        this.apiService.set(this.windowService.apiService());
     }
 }

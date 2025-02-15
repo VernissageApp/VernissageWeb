@@ -40,6 +40,16 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
 
     // Clear detached route handle.
     clear(): void {
+        for (const handle of this.storedRouteHandles.values()) {
+            if (handle) {
+                const anyComponent = (handle as any);
+                const componentRef = anyComponent.componentRef;
+                if (componentRef && typeof componentRef['destroy'] == "function") {
+                    componentRef['destroy']();
+                }
+            }
+        }
+
         this.storedRouteHandles.clear();
     }
 }

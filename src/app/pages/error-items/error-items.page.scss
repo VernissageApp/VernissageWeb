@@ -1,0 +1,35 @@
+h1 {
+    margin: 0;
+}
+
+.icons {
+    min-width: 80px;
+}
+
+.code {
+    min-width: 100px;
+}
+
+.clientVersion {
+    min-width: 110px;
+}
+
+.serverVersion {
+    min-width: 110px;
+}
+
+.createdAt {
+    min-width: 140px;
+}
+
+.more-button {
+    padding: 0;
+  
+    .material-symbols-outlined {
+      margin-top: 4px;
+    }
+}
+
+::ng-deep .mat-mdc-form-field-subscript-wrapper {
+    height: 0;
+}

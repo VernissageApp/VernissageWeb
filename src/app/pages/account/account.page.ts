@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, model, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -17,30 +17,50 @@ import { WindowService } from 'src/app/services/common/window.service';
 import { FlexiField } from 'src/app/models/flexi-field';
 import { ResendEmailConfirmation } from 'src/app/models/resend-email-confirmation';
 import { ChangePasswordDialog } from 'src/app/dialogs/change-password-dialog/change-password.dialog';
-import { Responsive } from 'src/app/common/responsive';
+import { ResponsiveComponent } from 'src/app/common/responsive';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { TwoFactorToken } from 'src/app/models/two-factor-token';
+import { Clipboard } from '@angular/cdk/clipboard';
 import { EnableTwoFactorTokenDialog } from 'src/app/dialogs/enable-two-factor-token/enable-two-factor-token.dialog';
 import { DisableTwoFactorTokenDialog } from 'src/app/dialogs/disable-two-factor-token/disable-two-factor-token.dialog';
+import { CreateAliasDialog } from 'src/app/dialogs/create-alias-dialog/create-alias.dialog';
+import { UserAlias } from 'src/app/models/user-alias';
+import { UserAliasesService } from 'src/app/services/http/user-aliases.service';
+import { ConfirmationDialog } from 'src/app/dialogs/confirmation-dialog/confirmation.dialog';
+import { ArchivesService } from 'src/app/services/http/archives.service';
+import { Archive } from 'src/app/models/archive';
+import { ArchiveStatus } from 'src/app/models/archive-status';
+import { ExportsService } from 'src/app/services/http/exports.service';
+import { FileSaverService } from 'ngx-filesaver';
 
 @Component({
     selector: 'app-account',
     templateUrl: './account.page.html',
     styleUrls: ['./account.page.scss'],
-    animations: fadeInAnimation
+    animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
-export class AccountPage extends Responsive {
+export class AccountPage extends ResponsiveComponent implements OnInit {
+    protected readonly archiveStatus = ArchiveStatus;
+    protected verification = signal('');
+    protected user = model<User>(new User());
+    protected isReady = signal(false);
 
-    userName = '';
-    user: User = new User();
-    isReady = false;
-    twoFactorTokenEnabled = false;
+    protected aliasDisplayedColumns = signal<string[]>(['alias', 'actions']);
+    protected archivesDisplayedColumns = signal<string[]>([]);
 
-    selectedAvatarFile: any = null;
-    avatarSrc?: string;
+    protected userAliases = signal<UserAlias[]>([]);
+    protected archives = signal<Archive[]>([]);
 
-    selectedHeaderFile: any = null;
-    headerSrc?: string
+    protected avatarSrc = signal('assets/avatar-placeholder.svg');
+    protected headerSrc = signal('assets/header-placeholder.svg');
+
+    private selectedAvatarFile: any = null;
+    private selectedHeaderFile: any = null;
+    
+    private userName = '';
+    private readonly archivesDisplayedColumnsFull: string[] = ['requestDate', 'startDate', 'endDate', 'status', 'download'];
+    private readonly archivesDisplayedColumnsMinimum: string[] = ['requestDate', 'download'];
 
     constructor(
         private usersService: UsersService,
@@ -48,10 +68,15 @@ export class AccountPage extends Responsive {
         private headersService: HeadersService,
         private accountService: AccountService,
         private authorizationService: AuthorizationService,
+        private userAliasesService: UserAliasesService,
         private messageService: MessagesService,
         private windowService: WindowService,
+        private archivesService: ArchivesService,
+        private exportsService: ExportsService,
+        private fileSaverService: FileSaverService,
         private router: Router,
         public dialog: MatDialog,
+        private clipboard: Clipboard,
         private loadingService: LoadingService,
         breakpointObserver: BreakpointObserver
     ) {
@@ -67,23 +92,46 @@ export class AccountPage extends Responsive {
             const userFromToken = this.authorizationService.getUser();
             if (userFromToken?.userName) {
                 this.userName = userFromToken?.userName;
-                await this.loadUserData()
+                await this.loadUserData();
+                await this.loadUserAliases();
+                await this.loadArchives();
             } else {
                 this.messageService.showError('Cannot download user settings.');
             }
+
+            const applicationBaseUrl = this.windowService.getApplicationBaseUrl()
+            this.verification.set(`<a rel="me" href="${applicationBaseUrl}/@${this.user().userName}">Vernissage</a>`);
         } catch {
             this.messageService.showError('Error during downloading user settings.');
             await this.router.navigate(['/home']);
         } finally {
-            this.isReady = true;
+            this.isReady.set(true);
             this.loadingService.hideLoader();
         }
     }
 
-    async onSubmit(): Promise<void> {
+    protected override onHandsetPortrait(): void {
+        this.archivesDisplayedColumns?.set(this.archivesDisplayedColumnsMinimum);
+    }
+
+    protected override onHandsetLandscape(): void {
+        this.archivesDisplayedColumns?.set(this.archivesDisplayedColumnsMinimum);
+    }
+
+    protected override onTablet(): void {
+        this.archivesDisplayedColumns?.set(this.archivesDisplayedColumnsMinimum);
+    }
+
+    protected override onBrowser(): void {
+        this.archivesDisplayedColumns?.set(this.archivesDisplayedColumnsFull);
+    }
+
+    protected async onSubmit(): Promise<void> {
         try {
-            if (this.user.userName != null) {
-                await this.usersService.update(this.user.userName, this.user);
+            const userInternal = this.user();
+
+            if (userInternal.userName != null) {
+                await this.usersService.update(userInternal.userName, userInternal);
                 await this.authorizationService.refreshAccessToken();
 
                 this.messageService.showSuccess('Settings was saved.');
@@ -94,14 +142,14 @@ export class AccountPage extends Responsive {
         }
     }
 
-    async onAvatarFormSubmit(): Promise<void> {
+    protected async onAvatarFormSubmit(): Promise<void> {
         try {
             if (this.selectedAvatarFile) {
                 const formData = new FormData();
                 formData.append('file', this.selectedAvatarFile);
 
                 await this.avatarsService.uploadAvatar(this.userName, formData);
-                await this.loadUserData()
+                await this.loadUserData();
                 this.messageService.showSuccess('Avatar has ben saved.');
             }
         } catch (error) {
@@ -110,9 +158,11 @@ export class AccountPage extends Responsive {
         }
     }
 
-    async onRemoveAvatar(): Promise<void> {
+    protected async onRemoveAvatar(): Promise<void> {
         try {
-            if (this.user.avatarUrl) {
+            const userInternal = this.user();
+
+            if (userInternal.avatarUrl) {
                 await this.avatarsService.deleteAvatar(this.userName);
                 await this.loadUserData()
                 this.messageService.showSuccess('Avatar has ben deleted.');
@@ -123,14 +173,14 @@ export class AccountPage extends Responsive {
         }
     }
 
-    async onHeaderFormSubmit(): Promise<void> {
+    protected async onHeaderFormSubmit(): Promise<void> {
         try {
             if (this.selectedHeaderFile) {
                 const formData = new FormData();
                 formData.append('file', this.selectedHeaderFile);
 
                 await this.headersService.uploadHeader(this.userName, formData);
-                await this.loadUserData()
+                await this.loadUserData();
                 this.messageService.showSuccess('Header has ben saved.');
             }
         } catch (error) {
@@ -139,11 +189,13 @@ export class AccountPage extends Responsive {
         }
     }
 
-    async onRemoveHeader(): Promise<void> {
+    protected async onRemoveHeader(): Promise<void> {
         try {
-            if (this.user.headerUrl) {
+            const userInternal = this.user();
+
+            if (userInternal.headerUrl) {
                 await this.headersService.deleteHeader(this.userName);
-                await this.loadUserData()
+                await this.loadUserData();
                 this.messageService.showSuccess('Header has ben deleted.');
             }
         } catch (error) {
@@ -152,97 +204,202 @@ export class AccountPage extends Responsive {
         }
     }
 
-    onAddField(): void {
-        this.user.fields?.push(new FlexiField())
+    protected onAddField(): void {
+        this.user().fields?.push(new FlexiField())
     }
 
-    onDeleteField(flexiField: FlexiField): void {
-        const index = this.user.fields?.indexOf(flexiField);
-        if (index != undefined) {
-            this.user.fields?.splice(index, 1);
-        }
+    protected onDeleteField(flexiField: FlexiField): void {
+        this.user.update((userInternal) => {
+            const index = userInternal.fields?.indexOf(flexiField);
+            if (index != undefined) {
+                userInternal.fields?.splice(index, 1);
+            }
+
+            return userInternal;
+        });
     }
 
-    onAvatarSelected(event: any): void {
+    protected onAvatarSelected(event: any): void {
         this.selectedAvatarFile = event.target.files[0] ?? null;
 
         if (this.selectedAvatarFile) {
             const reader = new FileReader();
-            reader.onload = () => this.avatarSrc = reader.result as string;
+            reader.onload = () => this.avatarSrc.set(reader.result as string);
             reader.readAsDataURL(this.selectedAvatarFile);
         }
     }
 
-    onHeaderSelected(event: any): void {
+    protected onHeaderSelected(event: any): void {
         this.selectedHeaderFile = event.target.files[0] ?? null;
 
         if (this.selectedHeaderFile) {
             const reader = new FileReader();
-            reader.onload = () => this.headerSrc = reader.result as string;
+            reader.onload = () => this.headerSrc.set(reader.result as string);
             reader.readAsDataURL(this.selectedHeaderFile);
         }
     }
 
-    async resentConfirmationEmail(): Promise<void> {
+    protected onCopyVerification(): void {
+        this.clipboard.copy(this.verification());
+        this.messageService.showSuccess('Verification code has been copied into clipboard.');
+    }
+
+    protected async resentConfirmationEmail(): Promise<void> {
         try {
             const resendEmailConfirmation = new ResendEmailConfirmation();
             resendEmailConfirmation.redirectBaseUrl = this.windowService.getApplicationUrl();
 
             await this.accountService.resend(resendEmailConfirmation);
+            this.messageService.showSuccess('The email has been sent and should arrive in your inbox shortly.');
         } catch (error) {
             console.error(error);
             this.messageService.showServerError(error);
         }
     }
 
-    openChangePasswordDialog(): void {
+    protected openChangePasswordDialog(): void {
         this.dialog.open(ChangePasswordDialog);
     }
 
-    openChangeEmailDialog(): void {
+    protected openChangeEmailDialog(): void {
         const dialogRef = this.dialog.open(ChangeEmailDialog);
         dialogRef.afterClosed().subscribe(async () => {
-            await this.loadUserData()
+            await this.loadUserData();
         });
     }
 
-    openDeleteAccountDialog(): void {
+    protected openDeleteAccountDialog(): void {
         const dialogRef = this.dialog.open(DeleteAccountDialog, {
             data: this.user
         });
 
         dialogRef.afterClosed().subscribe(async (result) => {
-            if (result?.confirmed && this.user.userName) {
-                await this.usersService.delete(this.user.userName);
-                await this.authorizationService.signOut()
+            const userInternal = this.user();
+
+            if (result?.confirmed && userInternal.userName) {
+                await this.usersService.delete(userInternal.userName);
+                await this.authorizationService.signOut();
                 await this.router.navigate(['/']);
             }
         });
     }
 
-    openEnableTwoFactorTokenDialog(): void {
+    protected openEnableTwoFactorTokenDialog(): void {
         const dialogRef = this.dialog.open(EnableTwoFactorTokenDialog, {
             data: this.user
         });
 
         dialogRef.afterClosed().subscribe(async () => {
-            await this.loadUserData()
+            await this.loadUserData();
         });
     }
 
-    openDisableTwoFactorTokenDialog(): void {
+    protected openDisableTwoFactorTokenDialog(): void {
         const dialogRef = this.dialog.open(DisableTwoFactorTokenDialog, {
             data: this.user
         });
 
         dialogRef.afterClosed().subscribe(async () => {
-            await this.loadUserData()
+            await this.loadUserData();
         });
     }
 
+    protected openCreateAccountDialog(): void {
+        const dialogRef = this.dialog.open(CreateAliasDialog, {
+            data: this.user
+        });
+
+        dialogRef.afterClosed().subscribe(async () => {
+            await this.loadUserAliases();
+        });
+    }
+
+    protected onUserAliasDelete(userAlias: UserAlias): void {
+        const dialogRef = this.dialog.open(ConfirmationDialog, {
+            width: '500px',
+            data: 'Do you want to delete user account alias?'
+        });
+
+        dialogRef.afterClosed().subscribe(async (result) => {
+            if (result?.confirmed) {
+                try {
+                    await this.userAliasesService.delete(userAlias.id);
+                    await this.loadUserAliases();
+
+                    this.messageService.showSuccess('Account alias has been deleted.');
+                } catch (error) {
+                    console.error(error);
+                    this.messageService.showServerError(error);
+                }
+            }
+        });
+    }
+
+    protected async onRequestArchive(): Promise<void> {
+        try {
+            await this.archivesService.create();
+            await this.loadArchives();
+
+            this.messageService.showSuccess('Archive has been requested.');
+        } catch (error) {
+            console.error(error);
+            this.messageService.showServerError(error);
+        }
+    }
+
+    protected async onDownloadFollowing(): Promise<void> {
+        const blob = await this.exportsService.following();
+        this.fileSaverService.save(blob, 'following.csv');
+    }
+
+    protected async onDownloadBookmarks(): Promise<void> {
+        const blob = await this.exportsService.bookmarks();
+        this.fileSaverService.save(blob, 'bookmarks.csv');
+    }
+
+    protected showRequestArchiveButton(): boolean {
+        const archivesInternal = this.archives();
+
+        if (archivesInternal.length === 0) {
+            return true;
+        }
+
+        if (archivesInternal.some(x => x.status === ArchiveStatus.New || x.status === ArchiveStatus.Processing)) {
+            return false;
+        }
+
+        const readyArchives = archivesInternal.filter(x => x.status === ArchiveStatus.Ready);
+        if (readyArchives?.length > 0) {
+            const readyArchive = readyArchives[0];
+            if (readyArchive && readyArchive.requestDate) {
+                const requestDate = new Date(readyArchive.requestDate);
+                requestDate.setMonth(requestDate.getMonth() + 1);
+
+                const currentDate = new Date();
+                if (requestDate > currentDate) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
     private async loadUserData(): Promise<void> {
-        this.user = await this.usersService.profile(this.userName);
-        this.avatarSrc = this.user.avatarUrl ?? 'assets/avatar-placeholder.svg';
-        this.headerSrc = this.user.headerUrl ?? 'assets/header-placeholder.svg';
+        const downloadedUser = await this.usersService.profile(this.userName);
+
+        this.user.set(downloadedUser);
+        this.avatarSrc.set(this.user().avatarUrl ?? 'assets/avatar-placeholder.svg');
+        this.headerSrc.set(this.user().headerUrl ?? 'assets/header-placeholder.svg');
+    }
+
+    private async loadUserAliases(): Promise<void> {
+        const downloadedAliases = await this.userAliasesService.get();
+        this.userAliases.set(downloadedAliases);
+    }
+
+    private async loadArchives(): Promise<void> {
+        const downloadedArchives = await this.archivesService.get();
+        this.archives.set(downloadedArchives);
     }
 }

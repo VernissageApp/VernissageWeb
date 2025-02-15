@@ -1,143 +1,213 @@
 <nav>
     <mat-toolbar color="primary">
-        <a class="logo" [routerLink]="['/']">Vernissage <img src="assets/beta.png"></a>
-        <ng-container *ngIf="!user">
-            <div class="flex-spacer"></div>
-            <button *ngIf="isRegistrationEnabled()" mat-stroked-button color="primary" [routerLink]="['/register']" class="margin-right-5">Sign up</button>
-            <button mat-button [routerLink]="['/login']">Log in</button>
-        </ng-container>
-        <ng-container *ngIf="user">
-            <ng-container *ngIf="deviceResolution === resolution.handsetLandscape || deviceResolution === resolution.tablet || deviceResolution === resolution.browser">
-                <ng-container *ngIf="deviceResolution === resolution.handsetLandscape">
-                    <button mat-icon-button color="primary" [routerLink]="['/trending']" aria-label="Trending">
-                        <mat-icon>trending_up</mat-icon>
-                    </button>
-                    <button mat-icon-button color="primary" [routerLink]="['/editors']" aria-label="Editor's choice">
-                        <mat-icon>stars</mat-icon>
-                    </button>
-                    <button mat-icon-button color="primary" [routerLink]="['/categories']" aria-label="Categories">
-                        <mat-icon>loyalty</mat-icon>
-                    </button>
-                </ng-container>
-
-
-                <ng-container *ngIf="deviceResolution === resolution.tablet || deviceResolution === resolution.browser">
-                    <button mat-button color="primary" [routerLink]="['/trending']" aria-label="Trending" class="margin-right-5">
-                        <mat-icon>trending_up</mat-icon> Trending
-                    </button>
-                    <button mat-button color="primary" [routerLink]="['/editors']" aria-label="Editor's choice" class="margin-right-5">
-                        <mat-icon>stars</mat-icon> Editor's choice
-                    </button>
-                    <button mat-button color="primary" [routerLink]="['/categories']" aria-label="Categories" class="margin-right-5">
-                        <mat-icon>loyalty</mat-icon> Categories
-                    </button>
-                </ng-container>
-            </ng-container>
-
-            <div class="flex-spacer"></div>
-
-            <ng-container *ngIf="deviceResolution === resolution.handsetLandscape || deviceResolution === resolution.tablet || deviceResolution === resolution.browser">
-                <button *ngIf="deviceResolution === resolution.handsetLandscape" mat-icon-button color="primary" [routerLink]="['/upload']" aria-label="Upload">
-                    <mat-icon>arrow_upward</mat-icon>
-                </button>
-                <button *ngIf="deviceResolution === resolution.tablet || deviceResolution === resolution.browser" mat-stroked-button color="primary" class="margin-right-10" [routerLink]="['/upload']">
-                    <mat-icon>arrow_upward</mat-icon> Upload
-                </button>
-            </ng-container>
-
-            <ng-container *ngIf="deviceResolution === resolution.handsetPortrait">
-                <button mat-icon-button [matMenuTriggerFor]="discover" color="primary" aria-label="More options">
+        @if (deviceResolution() === resolution.handsetPortrait) {
+            @if (showTrending() || showEditorsChoice() || showCategories()) {
+                <button mat-icon-button [matMenuTriggerFor]="discover" color="primary" class="hamburger-menu" aria-label="More options">
                     <mat-icon>menu</mat-icon>
                 </button>
                 <mat-menu #discover="matMenu">
-                    <button mat-menu-item [routerLink]="['/trending']" aria-label="Trending">
-                        <mat-icon>timeline</mat-icon>
-                        <span>Trending</span>
+                    @if (showTrending()) {
+                        <button mat-menu-item [routerLink]="['/trending']" (click)="markClearReuseStrategy()" aria-label="Trending">
+                            <mat-icon>timeline</mat-icon>
+                            <span>Trending</span>
+                        </button>
+                    }
+
+                    @if (showEditorsChoice()) {
+                        <button mat-menu-item [routerLink]="['/editors']" (click)="markClearReuseStrategy()" aria-label="Editor's choice">
+                            <mat-icon>stars</mat-icon>
+                            <span>Editor's choice</span>
+                        </button>
+                    }
+
+                    @if (showCategories()) {
+                        <button mat-menu-item [routerLink]="['/categories']" (click)="markClearReuseStrategy()" aria-label="Categories">
+                            <mat-icon>loyalty</mat-icon>
+                            <span>Categories</span>
+                        </button>
+                    }
+
+                    @if (user() && isLoggedIn()) {
+                        <mat-divider></mat-divider>
+
+                        <button mat-menu-item [routerLink]="['/upload']" aria-label="Upload">
+                            <mat-icon>arrow_upward</mat-icon>
+                            <span>Upload</span>
+                        </button>
+                        <button mat-menu-item [routerLink]="['/search']" aria-label="Search">
+                            <mat-icon>search</mat-icon>
+                            <span>Search</span>
+                        </button>
+                    }
+                </mat-menu>
+            }
+        }
+
+        <a class="logo link" [routerLink]="['/']" (click)="markClearReuseStrategy()" tabindex="0" aria-label="Application logo">
+            <div class="image"></div>
+            <div class="beta"></div>
+        </a>
+
+        @if (deviceResolution() === resolution.handsetLandscape || deviceResolution() === resolution.tablet || deviceResolution() === resolution.browser) {
+            @if (deviceResolution() === resolution.handsetLandscape) {
+                @if (showTrending()) {
+                    <button mat-icon-button color="primary" [routerLink]="['/trending']" (click)="markClearReuseStrategy()" aria-label="Trending">
+                        <mat-icon>trending_up</mat-icon>
                     </button>
-                    <button mat-menu-item [routerLink]="['/editors']" aria-label="Editor's choice">
+                }
+                
+                @if (showEditorsChoice()) {
+                    <button mat-icon-button color="primary" [routerLink]="['/editors']"(click)="markClearReuseStrategy()" aria-label="Editor's choice">
                         <mat-icon>stars</mat-icon>
-                        <span>Editor's choice</span>
                     </button>
-                    <button mat-menu-item [routerLink]="['/categories']" aria-label="Categories">
+                }
+
+                @if (showCategories()) {
+                    <button mat-icon-button color="primary" [routerLink]="['/categories']" (click)="markClearReuseStrategy()" aria-label="Categories">
                         <mat-icon>loyalty</mat-icon>
-                        <span>Categories</span>
                     </button>
+                }
+            }
 
-                    <mat-divider></mat-divider>
+            @if (deviceResolution() === resolution.tablet || deviceResolution() === resolution.browser) {
+                @if(showTrending()) {
+                    <button mat-button color="primary" [routerLink]="['/trending']" (click)="markClearReuseStrategy()" aria-label="Trending" class="margin-right-5">
+                        <mat-icon>trending_up</mat-icon> Trending
+                    </button>
+                }
 
-                    <button mat-menu-item [routerLink]="['/upload']" aria-label="Upload">
+                @if (showEditorsChoice()) {
+                    <button mat-button color="primary" [routerLink]="['/editors']" (click)="markClearReuseStrategy()" aria-label="Editor's choice" class="margin-right-5">
+                        <mat-icon>stars</mat-icon> Editor's choice
+                    </button>
+                }
+
+                @if (showCategories()) {
+                    <button mat-button color="primary" [routerLink]="['/categories']" (click)="markClearReuseStrategy()" aria-label="Categories" class="margin-right-5">
+                        <mat-icon>loyalty</mat-icon> Categories
+                    </button>
+                }
+            }
+        }
+
+        <div class="flex-spacer"></div>
+
+        @if (user() && isLoggedIn()) {
+            @if (deviceResolution() === resolution.handsetLandscape || deviceResolution() === resolution.tablet || deviceResolution() === resolution.browser) {
+                @if (deviceResolution() === resolution.handsetLandscape) {
+                    <button mat-icon-button color="primary" [routerLink]="['/upload']" aria-label="Upload">
                         <mat-icon>arrow_upward</mat-icon>
-                        <span>Upload</span>
                     </button>
-                    <button mat-menu-item [routerLink]="['/search']" aria-label="Search">
-                        <mat-icon>search</mat-icon>
-                        <span>Search</span>
+                }
+                @if (deviceResolution() === resolution.tablet || deviceResolution() === resolution.browser) {
+                    <button mat-stroked-button color="primary" class="margin-right-10" [routerLink]="['/upload']">
+                        <mat-icon>arrow_upward</mat-icon> Upload
                     </button>
-                </mat-menu>
-            </ng-container>
+                }
+            }
+        }
 
-            <mat-divider class="menu-divider" [vertical]="true"></mat-divider>
-
-            <button *ngIf="deviceResolution !== resolution.handsetPortrait" mat-icon-button color="primary" [routerLink]="['/search']" aria-label="Search">
-                <mat-icon>search</mat-icon>
-            </button>
-
-            <button mat-icon-button color="primary" [routerLink]="['/notifications']" aria-label="Notifications">
-                <mat-icon *ngIf="notificationCounter" [matBadge]="notificationCounter" matBadgeColor="warn" matBadgeSize="small">notifications_none</mat-icon>
-                <mat-icon *ngIf="!notificationCounter">notifications_none</mat-icon>
-            </button>
-
-            <div>
-                <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu with actions">
-                    <img class="avatar" [src]="avatarUrl" alt="Avatar">
+        @if(!user() || !isLoggedIn()) {
+            @if (!isHandsetPortrait()) {
+                <button mat-icon-button color="primary" class="margin-right-5" (click)="onThemeToggle()" aria-label="Switch theme">
+                    <mat-icon>{{ isLightTheme() ? 'dark_mode' : 'light_mode' }}</mat-icon>
                 </button>
-                <mat-menu #menu="matMenu">
-                    <button mat-menu-item [routerLink]="['/@' + user.userName]" aria-label="Signed in as">
-                        <mat-icon>face</mat-icon>
-                        <span>{{ fullName }}</span>
+            }
+
+            @if (isRegistrationEnabled()) {
+                <button mat-stroked-button color="primary" [routerLink]="['/register']" class="margin-right-5">Sign up</button>
+            }
+
+            <button mat-button [routerLink]="['/login']">Log in</button>
+        }
+
+        @if (user(); as userObject) {
+            @if (isLoggedIn()) {
+                @if (deviceResolution() !== resolution.handsetPortrait) {
+                    <mat-divider class="menu-divider" [vertical]="true"></mat-divider>
+
+                    <button mat-icon-button color="primary" [routerLink]="['/search']" aria-label="Search">
+                        <mat-icon>search</mat-icon>
                     </button>
-                    <mat-divider></mat-divider>
-                    <button mat-menu-item [routerLink]="['/']" aria-label="Home">
-                        <mat-icon>home</mat-icon>
-                        <span>Home</span>
+                }
+
+                <button mat-icon-button color="primary" [routerLink]="['/notifications']" aria-label="Notifications">
+                    @if (notificationCounter(); as notificationCounterNumber) {
+                        <mat-icon [matBadge]="notificationCounterNumber" matBadgeColor="warn" matBadgeSize="small" aria-hidden="false">notifications_none</mat-icon>
+                    } @else {
+                        <mat-icon>notifications_none</mat-icon>
+                    }
+                </button>
+
+                <div>
+                    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu with actions">
+                        <img class="avatar" [ngSrc]="avatarUrl()" width="600" height="600" alt="Avatar" priority />
                     </button>
-                    <button *ngIf="isRegistrationByInvitationsOpened()" mat-menu-item [routerLink]="['/invitations']" aria-label="Invite">
-                        <mat-icon>person_add</mat-icon>
-                        <span>Invite</span>
-                    </button>
-                    <mat-divider></mat-divider>
-                    <button mat-menu-item [routerLink]="['/account']" aria-label="Account">
-                        <mat-icon>account_circle</mat-icon>
-                        <span>Account</span>
-                    </button>
-                    <button mat-menu-item [routerLink]="['/preferences']" aria-label="Preferences">
-                        <mat-icon>build</mat-icon>
-                        <span>Preferences</span>
-                    </button>
-                    <button mat-menu-item [routerLink]="['/support']" aria-label="Support">
-                        <mat-icon>info</mat-icon>
-                        <span>Support</span>
-                    </button>
-                    <mat-divider *ngIf="isAdministrator() || isModerator()"></mat-divider>
-                    <button *ngIf="isAdministrator() || isModerator()" mat-menu-item [routerLink]="['/users']" aria-label="Users">
-                        <mat-icon>people</mat-icon>
-                        <span>Users</span>
-                    </button>
-                    <button *ngIf="isAdministrator() || isModerator()" mat-menu-item [routerLink]="['/reports']" aria-label="Reports">
-                        <mat-icon>feedback</mat-icon>
-                        <span>Reports</span>
-                    </button>
-                    <button *ngIf="isAdministrator()" mat-menu-item [routerLink]="['/settings']" aria-label="Settings">
-                        <mat-icon>settings</mat-icon>
-                        <span>Settings</span>
-                    </button>
-                    <mat-divider></mat-divider>
-                    <button mat-menu-item (click)="signOut()" aria-label="Sign out">
-                        <mat-icon>exit_to_app</mat-icon>
-                        <span>Sign out</span>
-                    </button>
-                </mat-menu>
-            </div>
-        </ng-container>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item [routerLink]="['/@' + userObject.userName]" (click)="markClearReuseStrategy()" aria-label="Signed in as">
+                            <mat-icon>face</mat-icon>
+                            <span>{{ fullName() }}</span>
+                        </button>
+                        <mat-divider></mat-divider>
+                        <button mat-menu-item [routerLink]="['/']" (click)="markClearReuseStrategy()" aria-label="Home">
+                            <mat-icon>home</mat-icon>
+                            <span>Home</span>
+                        </button>
+
+                        @if (isRegistrationByInvitationsOpened()) {
+                            <button mat-menu-item [routerLink]="['/invitations']" aria-label="Invite">
+                                <mat-icon>person_add</mat-icon>
+                                <span>Invite</span>
+                            </button>
+                        }
+
+                        <mat-divider></mat-divider>
+                        <button mat-menu-item [routerLink]="['/account']" aria-label="Account">
+                            <mat-icon>account_circle</mat-icon>
+                            <span>Account</span>
+                        </button>
+                        <button mat-menu-item [routerLink]="['/preferences']" aria-label="Preferences">
+                            <mat-icon>build</mat-icon>
+                            <span>Preferences</span>
+                        </button>
+                        <button mat-menu-item [routerLink]="['/support']" aria-label="Support">
+                            <mat-icon>info</mat-icon>
+                            <span>Support</span>
+                        </button>
+
+                        @if (isAdministrator() || isModerator()) {
+                            <mat-divider></mat-divider>
+
+                            <button mat-menu-item [routerLink]="['/users']" aria-label="Users">
+                                <mat-icon>people</mat-icon>
+                                <span>Users</span>
+                            </button>
+                            <button mat-menu-item [routerLink]="['/reports']" aria-label="Reports">
+                                <mat-icon>feedback</mat-icon>
+                                <span>Reports</span>
+                            </button>
+                            <button mat-menu-item [routerLink]="['/error-items']" aria-label="Errors">
+                                <mat-icon>release_alert</mat-icon>
+                                <span>Errors</span>
+                            </button>
+                        }
+
+                        @if (isAdministrator()) {
+                            <button mat-menu-item [routerLink]="['/settings']" aria-label="Settings">
+                                <mat-icon>settings</mat-icon>
+                                <span>Settings</span>
+                            </button>
+                        }
+
+                        <mat-divider></mat-divider>
+                        <button mat-menu-item (click)="signOut()" aria-label="Sign out">
+                            <mat-icon>exit_to_app</mat-icon>
+                            <span>Sign out</span>
+                        </button>
+
+                    </mat-menu>
+                </div>
+            }
+        }
     </mat-toolbar>
 </nav>

@@ -1,13 +1,12 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { Notification } from '../../models/notification';
 import { NotificationsService } from 'src/app/services/http/notifications.service';
 import { Status } from 'src/app/models/status';
 import { NotificationType } from 'src/app/models/notification-type';
 import { LoadingService } from 'src/app/services/common/loading.service';
-import { Responsive } from 'src/app/common/responsive';
+import { ResponsiveComponent } from 'src/app/common/responsive';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { LinkableResult } from 'src/app/models/linkable-result';
 import { AvatarSize } from 'src/app/components/widgets/avatar/avatar-size';
 import { SwPush } from '@angular/service-worker';
 import { SettingsService } from 'src/app/services/http/settings.service';
@@ -18,17 +17,22 @@ import { MatDialog } from '@angular/material/dialog';
     selector: 'app-notifications',
     templateUrl: './notifications.page.html',
     styleUrls: ['./notifications.page.scss'],
-    animations: fadeInAnimation
+    animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
-export class NotificationsPage extends Responsive {
-    readonly notificationType = NotificationType;
-    readonly avatarSize = AvatarSize;
+export class NotificationsPage extends ResponsiveComponent implements OnInit {
+    protected readonly notificationType = NotificationType;
+    protected readonly avatarSize = AvatarSize;
 
-    isReady = false;
-    showLoadMore = true;
-    showEnableNotificationButton = false;
-    notifications?: LinkableResult<Notification>;
+    protected isReady = signal(false);
+    protected showLoadMore = signal(true);
+    protected showEnableNotificationButton = signal(false);
 
+    protected notifications = signal<Notification[]>([]);
+    protected minId = signal<string | undefined>(undefined);
+    protected maxId = signal<string | undefined>(undefined);
+    
     constructor(
         private notificationsService: NotificationsService,
         private loadingService: LoadingService,
@@ -45,39 +49,42 @@ export class NotificationsPage extends Responsive {
 
         this.loadingService.showLoader();
         await this.onLoadMore();
-
-        if (this.notifications?.data.length) {
-            await this.notificationsService.marker(this.notifications.data[0].id);
+        
+        const linkedNotifications = this.notifications();
+        if (linkedNotifications?.length) {
+            await this.notificationsService.marker(linkedNotifications[0].id);
             this.notificationsService.changes.next(0);
         }
+        const isPushApiEnabled = this.notificationsService.isPushApiSupported() && this.swPushService.isEnabled && !!this.settingsService.publicSettings?.webPushVapidPublicKey;
+        this.showEnableNotificationButton.set(isPushApiEnabled);
 
-        this.showEnableNotificationButton = this.notificationsService.isPushApiSupported() && this.swPushService.isEnabled && !!this.settingsService.publicSettings?.webPushVapidPublicKey;
-
-        this.isReady = true;
+        this.isReady.set(true);
         this.loadingService.hideLoader();
     }
 
-    async onLoadMore(): Promise<void> {
-        const internalNotifications = await this.notificationsService.get(undefined, this.notifications?.maxId, undefined);
+    protected async onLoadMore(): Promise<void> {
+        const internalNotifications = await this.notificationsService.get(undefined, this.maxId(), undefined);
 
-        if (this.notifications) {
+        if (this.notifications()) {
             if (internalNotifications.data.length > 0) {
-                this.notifications.data.push(...internalNotifications.data);
-                this.notifications.minId = internalNotifications.minId;
-                this.notifications.maxId = internalNotifications.maxId;
+                this.notifications.update(x => [...x, ...internalNotifications.data]);
+                this.minId.set(internalNotifications.minId);
+                this.maxId.set(internalNotifications.maxId);
             } else {
-                this.showLoadMore = false;
+                this.showLoadMore.set(false);
             }
         } else {
-            this.notifications = internalNotifications;
+            this.notifications.set(internalNotifications.data);
+            this.minId.set(internalNotifications.minId);
+            this.maxId.set(internalNotifications.maxId);
 
-            if (this.notifications.data.length === 0) {
-                this.showLoadMore = false;
+            if (this.notifications().length === 0) {
+                this.showLoadMore.set(false);
             }
         }
     }
 
-    getAttachemntUrl(status: Status): string | undefined {
+    protected getAttachmentUrl(status: Status): string | undefined {
         if (status.attachments && status.attachments.length > 0) {
             return status.attachments[0].smallFile?.url;
         }
@@ -85,32 +92,40 @@ export class NotificationsPage extends Responsive {
         return undefined
     }
 
-    trackByFn(_: number, notification: Notification): string | undefined {
-        return notification.id;
+    protected getAttachmentAlt(status: Status): string | undefined {
+        if (status.attachments && status.attachments.length > 0) {
+            return status.attachments[0].description;
+        }
+
+        return undefined
     }
 
-    openNotificationsSettings(): void {
+    protected openNotificationsSettings(): void {
         this.dialog.open(NotificationSettingsDialog, {
             width: '500px'
         });
     }
 
-    getNotificationText(notification: Notification): string {
+    protected getNotificationText(notification: Notification): string {
         switch (notification.notificationType) {
             case NotificationType.Mention:
                 return 'mentioned you';
             case NotificationType.Status:
-                return 'published status';
+                return 'published photo';
             case NotificationType.Reblog:
-                return 'boost your status';
+                return 'boost your photo';
             case NotificationType.Follow:
                 return 'followed you';
             case NotificationType.FollowRequest:
                 return 'want to follow you';
             case NotificationType.Favourite:
-                return 'favourited your status';
+                if (!notification.mainStatus) {
+                    return 'favourited your photo';
+                } else {
+                    return 'favourited your comment';
+                }
             case NotificationType.Update:
-                return 'edited status';
+                return 'edited photo';
             case NotificationType.AdminSignUp:
                 return 'is a new user';
             case NotificationType.AdminReport:
@@ -122,7 +137,7 @@ export class NotificationsPage extends Responsive {
         }
     }
 
-    getNotificationIcon(notification: Notification): string {
+    protected getNotificationIcon(notification: Notification): string {
         switch (notification.notificationType) {
             case NotificationType.Mention:
                 return 'alternate_email';
@@ -144,6 +159,33 @@ export class NotificationsPage extends Responsive {
                 return 'report_problem';
             case NotificationType.NewComment:
                 return 'chat_bubble';
+            default:
+                return '';
+        }
+    }
+
+    protected getNotificationIconClass(notification: Notification): string {
+        switch (notification.notificationType) {
+            case NotificationType.Mention:
+                return 'mention';
+            case NotificationType.Status:
+                return 'status';
+            case NotificationType.Reblog:
+                return 'reblog';
+            case NotificationType.Follow:
+                return 'follow';
+            case NotificationType.FollowRequest:
+                return 'follow-request';
+            case NotificationType.Favourite:
+                return 'favourite';
+            case NotificationType.Update:
+                return 'update';
+            case NotificationType.AdminSignUp:
+                return 'admin-sign-up';
+            case NotificationType.AdminReport:
+                return 'admin-report';
+            case NotificationType.NewComment:
+                return 'new-comments';
             default:
                 return '';
         }

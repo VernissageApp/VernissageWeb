@@ -1,7 +1,6 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from '@angular/router';
-import { Subscription, filter } from 'rxjs';
-import { Status } from 'src/app/models/status';
+import { ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, NavigationStart } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { User } from 'src/app/models/user';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 import { UsersService } from 'src/app/services/http/users.service';
@@ -11,7 +10,6 @@ import { RelationshipsService } from 'src/app/services/http/relationships.servic
 import { ProfilePageTab } from 'src/app/models/profile-page-tab';
 import { LoadingService } from 'src/app/services/common/loading.service';
 import { LinkableResult } from 'src/app/models/linkable-result';
-import { Responsive } from 'src/app/common/responsive';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { DOCUMENT } from '@angular/common';
 import { Meta, Title } from '@angular/platform-browser';
@@ -19,39 +17,48 @@ import { WindowService } from 'src/app/services/common/window.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ProfileCodeDialog } from 'src/app/dialogs/profile-code-dialog/profile-code.dialog';
 import { PreferencesService } from 'src/app/services/common/preferences.service';
+import { UserDisplayService } from 'src/app/services/common/user-display.service';
+import { ContextTimeline } from 'src/app/models/context-timeline';
+import { MessagesService } from 'src/app/services/common/messages.service';
+import { ReusableGalleryPageComponent } from 'src/app/common/reusable-gallery-page';
 
 @Component({
     selector: 'app-profile',
     templateUrl: './profile.page.html',
     styleUrls: ['./profile.page.scss'],
-    animations: fadeInAnimation
+    animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
-export class ProfilePage extends Responsive implements OnInit, OnDestroy {
-    readonly ProfilePageTab = ProfilePageTab;
+export class ProfilePage extends ReusableGalleryPageComponent implements OnInit, OnDestroy {
+    protected readonly profilePageTab = ProfilePageTab;
+    protected isReady = signal(false);
 
-    isReady = false;
-    allFollowingDisplayed = false;
-    allFollowersDisplayed = false;
-    loadingDifferentProfile = false;
-    squareImages = false;
-    profilePageTab = ProfilePageTab.Statuses;
-    userName!: string;
+    protected allFollowingDisplayed = signal(false);
+    protected allFollowersDisplayed = signal(false);
+    protected squareImages = signal(false);
+    protected selectedProfilePageTab = signal(ProfilePageTab.Statuses);
+    protected createdAt = signal<Date | undefined>(undefined);
+    protected signedInUser = signal<User | undefined>(undefined);
+    protected user = signal<User | undefined>(undefined);
+    protected relationship = signal<Relationship | undefined>(undefined);
 
-    signedInUser?: User;
-    user?: User;
-
-    relationship?: Relationship;
-    followersRelationships?: Relationship[] = [];
-    followingRelationships?: Relationship[] = [];
+    protected followersRelationships = signal<Relationship[]>([]);
+    protected followingRelationships = signal<Relationship[]>([]);
     
-    following?: LinkableResult<User>;
-    followers?: LinkableResult<User>;
-    latestFollowers?: LinkableResult<User>;
-    statuses?: LinkableResult<Status>;
+    protected following = signal<LinkableResult<User> | undefined>(undefined);
+    protected followers = signal<LinkableResult<User> | undefined>(undefined);
 
-    routeParamsSubscription?: Subscription;
-    routeNavigationEndSubscription?: Subscription;
-    routeNavigationStartSubscription?: Subscription;
+    protected latestFollowers = signal<LinkableResult<User> | undefined>(undefined);
+
+    private routeParamsSubscription?: Subscription;
+    private userName!: string;
+    private loadingDifferentProfile = false;
+    private relationshipRefreshInterval: NodeJS.Timeout | undefined;
+    private relationshipRefreshCounter = 0;
+
+    private readonly relationshipRefreshTime = 2500;
+    private readonly relationshipRefreshMaxCounter = 10;
 
     constructor(
         @Inject(DOCUMENT) private document: Document,
@@ -59,60 +66,54 @@ export class ProfilePage extends Responsive implements OnInit, OnDestroy {
         private usersService: UsersService,
         private relationshipsService: RelationshipsService,
         private loadingService: LoadingService,
-        private router: Router,
+        private messagesService: MessagesService,
         private activatedRoute: ActivatedRoute,
         private titleService: Title,
         private metaService: Meta,
         private windowService: WindowService,
         private preferencesService: PreferencesService,
+        protected userDisplayService: UserDisplayService,
         public dialog: MatDialog,
         breakpointObserver: BreakpointObserver
     ) {
         super(breakpointObserver);
     }
 
+    override onRouteNavigationStart(navigationStarEvent: NavigationStart): void {
+        if (navigationStarEvent.url.includes(this.userName.substring(1))) {
+            this.loadingDifferentProfile = false;
+        } else {
+            this.loadingDifferentProfile = true;
+        }
+    }
+
+    override async onRouteNavigationEnd(navigationEndEvent: NavigationEnd): Promise<void> {
+        if (!this.loadingDifferentProfile) {
+            if (navigationEndEvent.url.includes('/following')) {
+                this.selectedProfilePageTab.set(ProfilePageTab.Following);
+                if (!this.following()) {
+                    await this.onLoadMoreFollowing();
+                }
+            } else if (navigationEndEvent.url.includes('/followers')) {
+                this.selectedProfilePageTab.set(ProfilePageTab.Followers);
+                if (!this.followers()) {
+                    await this.onLoadMoreFollowers();
+                }
+            } else {
+                this.selectedProfilePageTab.set(ProfilePageTab.Statuses);
+                if (!this.statuses()) {
+                    await this.loadFirstStatusesSet();
+                }
+            }
+        }
+    }
+
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
-        this.squareImages = this.preferencesService.isSquareImages;
-
-        this.routeNavigationStartSubscription = this.router.events
-            .pipe(filter(event => event instanceof NavigationStart))  
-            .subscribe(async (event) => {
-                const navigationStarEvent = event as NavigationStart;
-                if (navigationStarEvent.url.includes(this.userName.substring(1))) {
-                    this.loadingDifferentProfile = false;
-                } else {
-                    this.loadingDifferentProfile = true;
-                }
-            });
-
-        this.routeNavigationEndSubscription = this.router.events
-            .pipe(filter(event => event instanceof NavigationEnd))  
-            .subscribe(async (event) => {
-                if (!this.loadingDifferentProfile) {
-                    const navigationEndEvent  = event as NavigationEnd;
-        
-                    if (navigationEndEvent.url.includes('/following')) {
-                        this.profilePageTab = ProfilePageTab.Following;
-                        if (!this.following) {
-                            await this.onLoadMoreFollowing();
-                        }
-                    } else if (navigationEndEvent.url.includes('/followers')) {
-                        this.profilePageTab = ProfilePageTab.Followers;
-                        if (!this.followers) {
-                            await this.onLoadMoreFollowers();
-                        }
-                    } else {
-                        this.profilePageTab = ProfilePageTab.Statuses;
-                        if (!this.statuses) {
-                            this.statuses = await this.usersService.statuses(this.userName);
-                        }
-                    }
-                }
-            });
+        this.squareImages.set(this.preferencesService.isSquareImages);
 
         this.routeParamsSubscription = this.activatedRoute.params.subscribe(async params => {
-            this.isReady = false;
+            this.isReady.set(false);
             this.loadingService.showLoader();
 
             let userNameFromParams = params['userName'] as string;
@@ -121,16 +122,21 @@ export class ProfilePage extends Responsive implements OnInit, OnDestroy {
             }
 
             this.userName = userNameFromParams;
-            this.followers = undefined;
-            this.following = undefined;
-            this.statuses = undefined;
+            this.followers.set(undefined);
+            this.following.set(undefined);
+            this.statuses.set(undefined);
 
-            this.signedInUser = this.authorizationService.getUser();
+            this.signedInUser.set(this.authorizationService.getUser());
 
-            this.user = await this.usersService.profile(this.userName);
-            this.latestFollowers = await this.usersService.followers(this.userName, undefined, undefined, undefined, 10)
+            const downloadUser = await this.usersService.profile(this.userName);
+            this.user.set(downloadUser);
 
-            this.user.fields?.forEach(field => {
+            this.createdAt.set(new Date(downloadUser.createdAt));
+
+            const downloadedLatestFollowers = await this.usersService.followers(this.userName, undefined, undefined, undefined, 10);
+            this.latestFollowers.set(downloadedLatestFollowers);
+
+            downloadUser.fields?.forEach(field => {
                 if (field.value) {
                     const loweCasedValue = field.value.toLowerCase();
                     if (loweCasedValue.startsWith('https://')) {
@@ -139,11 +145,13 @@ export class ProfilePage extends Responsive implements OnInit, OnDestroy {
                 }
             });
 
-            this.relationship = await this.downloadRelationship();
+            const downloadedRelationships = await this.downloadRelationship();
+            this.relationship.set(downloadedRelationships);
+
             await this.loadPageData();
             this.setCardMetatags();
 
-            this.isReady = true;
+            this.isReady.set(true);
             this.loadingService.hideLoader();
         });
     }
@@ -152,30 +160,148 @@ export class ProfilePage extends Responsive implements OnInit, OnDestroy {
         super.ngOnDestroy();
 
         this.routeParamsSubscription?.unsubscribe();
-        this.routeNavigationEndSubscription?.unsubscribe();
-        this.routeNavigationStartSubscription?.unsubscribe()
+
+        if (this.relationshipRefreshInterval) {
+            clearInterval(this.relationshipRefreshInterval);
+        }
     }
 
-    async onMainRelationChanged(): Promise<void> {
-        this.user = await this.usersService.profile(this.userName);
-        if (this.profilePageTab === ProfilePageTab.Followers) {
+    protected async onMainRelationChanged(relationship: Relationship): Promise<void> {
+        const downloadUser = await this.usersService.profile(this.userName);
+        this.user.set(downloadUser);
+
+        if (this.selectedProfilePageTab() === ProfilePageTab.Followers) {
             const internalFollowers = await this.usersService.followers(this.userName);
 
             if ((internalFollowers.data?.length ?? 0) !== 0) {
-                this.followersRelationships = await this.relationshipsService.getAll(internalFollowers.data.map(x => x.id ?? ''))
+                const downloadedRelationships = await this.relationshipsService.getAll(internalFollowers.data.map(x => x.id ?? ''));
+                this.followersRelationships.set(downloadedRelationships);
             }
 
-            this.followers = internalFollowers;
+            this.followers.set(internalFollowers);
+        }
+
+        // When we send follow request, we can refresh the relationship object automatically.
+        if (relationship.following === false && relationship.requested === true) {
+            if (this.relationshipRefreshInterval) {
+                clearInterval(this.relationshipRefreshInterval);
+            }
+
+            this.relationshipRefreshInterval = setInterval(async () => {
+                const downloadedRelationships = await this.downloadRelationship();
+                this.relationship.set(downloadedRelationships);
+                this.relationshipRefreshCounter = this.relationshipRefreshCounter  + 1;
+
+                if (this.relationship()?.following === true) {
+                    this.messagesService.showSuccess('Your follow request has been accepted.');
+                }
+
+                // When we try 10 times or request is approved we should cancel.
+                if (this.relationship()?.following === true || this.relationshipRefreshCounter >= this.relationshipRefreshMaxCounter) {
+                    if (this.relationshipRefreshInterval) {
+                        clearInterval(this.relationshipRefreshInterval);
+                    }
+                }
+            }, this.relationshipRefreshTime);
         }
     }
 
-    async onRelationChanged(relationship: Relationship): Promise<void> {
-        this.user = await this.usersService.profile(this.userName);
+    protected async onRelationChanged(relationship: Relationship): Promise<void> {
+        const downloadUser = await this.usersService.profile(this.userName);
+        this.user.set(downloadUser);
 
-        const index = this.following?.data.findIndex(x => x.id === relationship.userId) ?? -1;
+        const index = this.following()?.data.findIndex(x => x.id === relationship.userId) ?? -1;
         if (index > -1) {
-            this.following?.data.splice(index, 1);
+            this.following.update((value) => {
+                value?.data.splice(index, 1);
+                return value;
+            });
         }
+    }
+
+    protected async onLoadMoreFollowing(): Promise<void> {
+        const internalFollowing = await this.usersService.following(this.userName, undefined, this.following()?.maxId, undefined, undefined);
+
+        if (this.signedInUser() && (internalFollowing.data?.length ?? 0) !== 0) {
+            const internalFollowingRelationships = await this.relationshipsService.getAll(internalFollowing.data.map(x => x.id ?? ''));
+            this.followingRelationships.update((relationships) => {
+                relationships.push(...internalFollowingRelationships);
+                return relationships;
+            });
+        }
+
+        if (this.following()) {
+            if (internalFollowing.data.length > 0) {
+                this.following.update((value) => {
+                    const result = new LinkableResult<User>();
+                    result.minId = internalFollowing.minId;
+                    result.maxId = internalFollowing.maxId;
+                    
+                    if (value) {
+                        result.data = [...value.data, ...internalFollowing.data];
+                    } else {
+                        result.data = [...internalFollowing.data];
+                    }
+
+                    return result;
+                });
+
+
+            } else {
+                this.allFollowingDisplayed.set(true);
+            }
+        } else {
+            this.following.set(internalFollowing);
+
+            if (this.following()?.data.length === 0) {
+                this.allFollowingDisplayed.set(true);
+            }
+        }
+    }
+
+    protected async onLoadMoreFollowers(): Promise<void> {
+        const internalFollowers = await this.usersService.followers(this.userName, undefined, this.followers()?.maxId, undefined, undefined);
+
+        if (this.signedInUser() && (internalFollowers.data?.length ?? 0) !== 0) {
+            const internalFollowersRelationships = await this.relationshipsService.getAll(internalFollowers.data.map(x => x.id ?? ''));
+            this.followersRelationships.update((relationships) => {
+                relationships?.push(...internalFollowersRelationships);
+                return relationships;
+            });
+        }
+
+        if (this.followers()) {
+            if (internalFollowers.data.length > 0) {
+                this.followers.update((value) => {
+                    const result = new LinkableResult<User>();
+                    result.minId = internalFollowers.minId;
+                    result.maxId = internalFollowers.maxId;
+                    
+                    if (value) {
+                        result.data = [...value.data, ...internalFollowers.data];
+                    } else {
+                        result.data = [...internalFollowers.data];
+                    }
+
+                    return result;
+                });
+
+            } else {
+                this.allFollowersDisplayed.set(true);
+            }
+        } else {
+            this.followers.set(internalFollowers);
+
+            if (this.followers()?.data.length === 0) {
+                this.allFollowersDisplayed.set(true);
+            }
+        }
+    }
+
+    protected onAvatarClick(): void {
+        this.dialog.open(ProfileCodeDialog, {
+            data: this.user()?.url
+        });
     }
 
     private async downloadRelationship(): Promise<Relationship | undefined> {
@@ -184,90 +310,43 @@ export class ProfilePage extends Responsive implements OnInit, OnDestroy {
             return undefined;
         }
 
-        if (signedInUser.id === this.user?.id) {
+        const internalUser = this.user();
+        if (signedInUser.id === internalUser?.id) {
             return undefined;
         }
 
-        if (!this.user || !this.user.id) {
+        if (!internalUser || !internalUser.id) {
             return undefined;
         }
 
-        return await this.relationshipsService.get(this.user.id);
-    }
-
-    async onLoadMoreFollowing(): Promise<void> {
-        const internalFollowing = await this.usersService.following(this.userName, undefined, this.following?.maxId, undefined, undefined);
-
-        if (this.signedInUser && (internalFollowing.data?.length ?? 0) !== 0) {
-            const internalFollowingRelationships = await this.relationshipsService.getAll(internalFollowing.data.map(x => x.id ?? ''));
-            this.followingRelationships?.push(...internalFollowingRelationships);
-        }
-
-        if (this.following) {
-            if (internalFollowing.data.length > 0) {
-                this.following.data.push(...internalFollowing.data);
-                this.following.minId = internalFollowing.minId;
-                this.following.maxId = internalFollowing.maxId;
-            } else {
-                this.allFollowingDisplayed = true;
-            }
-        } else {
-            this.following = internalFollowing;
-
-            if (this.following.data.length === 0) {
-                this.allFollowingDisplayed = true;
-            }
-        }
-    }
-
-    async onLoadMoreFollowers(): Promise<void> {
-        const internalFollowers = await this.usersService.followers(this.userName, undefined, this.followers?.maxId, undefined, undefined);
-
-        if (this.signedInUser && (internalFollowers.data?.length ?? 0) !== 0) {
-            const internalFollowersRelationships = await this.relationshipsService.getAll(internalFollowers.data.map(x => x.id ?? ''));
-            this.followersRelationships?.push(...internalFollowersRelationships);
-        }
-
-        if (this.followers) {
-            if (internalFollowers.data.length > 0) {
-                this.followers.data.push(...internalFollowers.data);
-                this.followers.minId = internalFollowers.minId;
-                this.followers.maxId = internalFollowers.maxId;
-            } else {
-                this.allFollowersDisplayed = true;
-            }
-        } else {
-            this.followers = internalFollowers;
-
-            if (this.followers.data.length === 0) {
-                this.allFollowersDisplayed = true;
-            }
-        }
-    }
-
-    onAvatarClick(): void {
-        this.dialog.open(ProfileCodeDialog, {
-            data: this.user?.userName
-        });
+        return await this.relationshipsService.get(internalUser.id);
     }
 
     private async loadPageData(): Promise<void> {
         const currentUrl = this.router.routerState.snapshot.url;
         
         if (currentUrl.includes('/following')) {
-            this.profilePageTab = ProfilePageTab.Following;
+            this.selectedProfilePageTab.set(ProfilePageTab.Following);
             await this.onLoadMoreFollowing();
         } else if (currentUrl.includes('/followers')) {
-            this.profilePageTab = ProfilePageTab.Followers;
+            this.selectedProfilePageTab.set(ProfilePageTab.Followers);
             await this.onLoadMoreFollowers();
         } else {
-            this.profilePageTab = ProfilePageTab.Statuses;
-            this.statuses = await this.usersService.statuses(this.userName);
+            this.selectedProfilePageTab.set(ProfilePageTab.Statuses);
+            await this.loadFirstStatusesSet();
         }
     }
 
+    private async loadFirstStatusesSet(): Promise<void> {
+        const statuses = await this.usersService.statuses(this.userName);
+        statuses.context = ContextTimeline.user;
+        statuses.user = this.user()?.userName;
+
+        this.statuses.set(statuses);
+    }
+
     private createLink(url: string): void {
-        let link: HTMLLinkElement = this.document.createElement('link');
+        const link: HTMLLinkElement = this.document.createElement('link');
         link.setAttribute('href', url);
         link.setAttribute('rel', 'me');
 
@@ -275,8 +354,8 @@ export class ProfilePage extends Responsive implements OnInit, OnDestroy {
     }
 
     private setCardMetatags(): void {
-        const profileTitle = (this.user?.name ?? '') + ` (@${this.user?.userName ?? ''})`;
-        const profileDescription = this.htmlToText(this.user?.bio ?? '');
+        const profileTitle = (this.user()?.name ?? '') + ` (@${this.user()?.userName ?? ''})`;
+        const profileDescription = this.htmlToText(this.user()?.bio ?? '');
 
         // <title>John Doe (@john@vernissage.xxx)</title>
         this.titleService.setTitle(profileTitle);
@@ -299,10 +378,8 @@ export class ProfilePage extends Responsive implements OnInit, OnDestroy {
         // <meta property="og:logo" content="https://vernissage.xxx/assets/icons/icon-128x128.png" />
         this.metaService.updateTag({ property: 'og:logo', content: `https://${this.windowService.getApplicationBaseUrl()}/assets/icons/icon-128x128.png` });
 
-        const avatarImage = this.user?.avatarUrl;
+        const avatarImage = this.user()?.avatarUrl;
         if (avatarImage) {
-            const firstImage = this.user?.avatarUrl;
-
             // <meta property="og:image" content="https://files.vernissage.xxx/media_attachments/files/112348.png">
             this.metaService.updateTag({ property: 'og:image', content: avatarImage });
 
@@ -317,7 +394,7 @@ export class ProfilePage extends Responsive implements OnInit, OnDestroy {
         this.metaService.updateTag({ property: 'twitter:card', content: 'summary_large_image' });
     }
 
-    htmlToText(value: string): string {
+    private htmlToText(value: string): string {
         const temp = this.document.createElement('div');
         temp.innerHTML = value;
         return temp.textContent || temp.innerText || '';

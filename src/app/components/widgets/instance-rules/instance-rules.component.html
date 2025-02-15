@@ -1,5 +1,5 @@
-@if (rules) {
-    <table mat-table [dataSource]="rules.data">
+@if (rules(); as rulesArray) {
+    <table mat-table [dataSource]="rulesArray.data">
 
         <!-- Order Name Column -->
         <ng-container matColumnDef="order">
@@ -21,7 +21,7 @@
         <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let element" class="text-right actions">
-                @if (!isHandsetPortrait) {
+                @if (!isHandsetPortrait()) {
                     <button mat-stroked-button color="primary" class="margin-right-10" (click)="openRuleDialog(element)">Update</button>
                     <button mat-stroked-button color="warn" (click)="onDelete(element)">Delete</button>
                 } @else {
@@ -36,12 +36,12 @@
             </td>
         </ng-container>
     
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns()"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns();"></tr>
     </table>
     <mat-paginator
         (page)="handlePageEvent($event)"
-        [length]="rules.total"
+        [length]="rulesArray.total"
         [pageIndex]="pageIndex"
         [pageSize]="10"
         [pageSizeOptions]="[10, 25, 100]"

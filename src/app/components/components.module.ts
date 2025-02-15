@@ -28,6 +28,16 @@ import { FooterComponent } from './core/footer/footer.component';
 import { GeneralSettingsComponent } from './widgets/general-settings/general-settings.component';
 import { DomainBlocksComponent } from './widgets/domain-blocks/domain-blocks.component';
 import { InstanceRulesComponent } from './widgets/instance-rules/instance-rules.component';
+import { CategoryGalleryItemComponent } from './widgets/category-gallery-item/category-gallery-item.component';
+import { HashtagGalleryItemComponent } from './widgets/hashtag-gallery-item/hashtag-gallery-item.component';
+import { UsersGalleryItemComponent } from './widgets/users-gallery-item/users-gallery-item.component';
+import { UserPopoverComponent } from './widgets/user-popover/user-popover.component';
+import { HashtagsSearchComponent } from './widgets/hashtags-search/hashtags-search.component';
+import { StatusesSearchComponent } from './widgets/statuses-search/statuses-search.component';
+import { StatusPropertiesComponent } from './widgets/status-properties/status-properties.component';
+import { UserSelectorComponent } from './widgets/user-selector/user-selector.component';
+import { HomeSigninComponent } from './widgets/home-signin/home-signin.component';
+import { HomeSignoutComponent } from './widgets/home-signout/home-signout.component';
 
 @NgModule({
     declarations: [
@@ -36,6 +46,8 @@ import { InstanceRulesComponent } from './widgets/instance-rules/instance-rules.
         PasswordComponent,
         UploadPhotoComponent,
         UserCardComponent,
+        UserPopoverComponent,
+        UserSelectorComponent,
         UsersCardComponent,
         FollowButtonsSectionComponent,
         GalleryComponent,
@@ -43,13 +55,21 @@ import { InstanceRulesComponent } from './widgets/instance-rules/instance-rules.
         CommentReplyComponent,
         AvatarComponent,
         UsersGalleryComponent,
+        UsersGalleryItemComponent,
         HashtagGalleryComponent,
+        HashtagGalleryItemComponent,
         CategoryGalleryComponent,
+        CategoryGalleryItemComponent,
         BlurhashImageComponent,
         ImageComponent,
         GeneralSettingsComponent,
         DomainBlocksComponent,
-        InstanceRulesComponent
+        InstanceRulesComponent,
+        HashtagsSearchComponent,
+        StatusesSearchComponent,
+        StatusPropertiesComponent,
+        HomeSigninComponent,
+        HomeSignoutComponent
     ],
     exports: [
         BrowserModule,
@@ -66,6 +86,7 @@ import { InstanceRulesComponent } from './widgets/instance-rules/instance-rules.
         UploadPhotoComponent,
         UsersCardComponent,
         UserCardComponent,
+        UserSelectorComponent,
         FollowButtonsSectionComponent,
         GalleryComponent,
         MiniUserCardComponent,
@@ -73,12 +94,18 @@ import { InstanceRulesComponent } from './widgets/instance-rules/instance-rules.
         AvatarComponent,
         UsersGalleryComponent,
         HashtagGalleryComponent,
+        HashtagGalleryItemComponent,
         CategoryGalleryComponent,
         BlurhashImageComponent,
         ImageComponent,
         GeneralSettingsComponent,
         DomainBlocksComponent,
         InstanceRulesComponent,
+        HashtagsSearchComponent,
+        StatusesSearchComponent,
+        StatusPropertiesComponent,
+        HomeSigninComponent,
+        HomeSignoutComponent,
         DirectivesModule
     ],
     imports: [

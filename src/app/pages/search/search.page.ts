@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, OnDestroy, model, signal, viewChild, ChangeDetectionStrategy } from '@angular/core';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { User } from 'src/app/models/user';
 import { Relationship } from 'src/app/models/relationship';
@@ -7,23 +7,32 @@ import { RelationshipsService } from 'src/app/services/http/relationships.servic
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { LoadingService } from 'src/app/services/common/loading.service';
-import { Responsive } from 'src/app/common/responsive';
+import { ResponsiveComponent } from 'src/app/common/responsive';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { Hashtag } from 'src/app/models/hashtag';
+import { Status } from 'src/app/models/status';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 
 @Component({
     selector: 'app-search',
     templateUrl: './search.page.html',
     styleUrls: ['./search.page.scss'],
-    animations: fadeInAnimation
+    animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
-export class SearchPage extends Responsive implements AfterViewInit {
-    search = '';
-    users: User[] = [];
-    usersRelationships: Relationship[] = [];
-    routeParamsSubscription?: Subscription;
-    searchExecuted = false;
+export class SearchPage extends ResponsiveComponent implements AfterViewInit, OnInit, OnDestroy {
+    private routeParamsSubscription?: Subscription;
+    private queryInput = viewChild<ElementRef<HTMLInputElement>>('queryInput');
 
-    @ViewChild('queryInput') queryInput?: ElementRef;
+    protected search = model('');
+    protected selectedIndex = signal(0);
+    protected searchExecuted = signal(false);
+
+    protected users = signal<User[]>([]);
+    protected hashtags = signal<Hashtag[]>([]);
+    protected statuses = signal<Status[]>([]);
+    protected usersRelationships = signal<Relationship[]>([]);
 
     constructor(
         private searchService: SearchService,
@@ -42,35 +51,53 @@ export class SearchPage extends Responsive implements AfterViewInit {
         this.routeParamsSubscription = this.activatedRoute.queryParams.subscribe(async params => {
             this.loadingService.showLoader();
 
-            const query = params['query'];
-            this.search = query;
+            const type = params['type'];
+            this.search.set(params['query']);
 
-            if (!query) {
-                this.searchExecuted = false;
+            if (!this.search) {
+                this.searchExecuted.set(false);
             }
 
-            if ((this.search?.trim().length ?? 0) === 0) {
-                this.usersRelationships = [];
-                this.users = [];
-                this.loadingService.hideLoader();
+            if ((this.search()?.trim().length ?? 0) === 0) {
+                this.usersRelationships.set([]);
+                this.users.set([]);
+                this.hashtags.set([]);
+                this.statuses.set([]);
 
+                this.loadingService.hideLoader();
                 return;
             }
 
-            const searchResults = await this.searchService.search(this.search);
+            switch (type) {
+                case 'users':
+                    this.selectedIndex.set(0);
+                    break;
+                case 'hashtags':
+                    this.selectedIndex.set(1);
+                    break;
+                case 'statuses':
+                    this.selectedIndex.set(2);
+                    break;
+            }
+
+            const searchResults = await this.searchService.search(this.search(), type);
+
             if (searchResults.users && searchResults.users.length !== 0) {                
-                this.usersRelationships = await this.relationshipsService.getAll(searchResults.users?.map(x => x.id ?? ''))
+                const relationships = await this.relationshipsService.getAll(searchResults.users?.map(x => x.id ?? ''));
+                this.usersRelationships.set(relationships);
             }
     
-            this.users = searchResults.users ?? [];
+            this.users.set(searchResults.users ?? []);
+            this.hashtags.set(searchResults.hashtags ?? []);
+            this.statuses.set(searchResults.statuses ?? []);
 
-            this.searchExecuted = true;
+            this.searchExecuted.set(true);
             this.loadingService.hideLoader();
         });
     }
 
     ngAfterViewInit(): void {
-        this.queryInput?.nativeElement.focus();
+        this.queryInput()?.nativeElement.focus();
     }
 
     override ngOnDestroy(): void {
@@ -79,7 +106,37 @@ export class SearchPage extends Responsive implements AfterViewInit {
         this.routeParamsSubscription?.unsubscribe();
     }
 
-    async onSubmit(): Promise<void> {
-        this.router.navigate([], { relativeTo: this.activatedRoute, queryParams: { query: this.search }, queryParamsHandling: 'merge' });
+    protected onSelectedTabChange(event: MatTabChangeEvent): void {
+        let selectedType = '';
+        switch (event.index) {
+            case 0: 
+                selectedType = 'users';
+                break;
+            case 1:
+                selectedType = 'hashtags';
+                break;
+            case 2:
+                selectedType = 'statuses';
+                break;
+        }
+
+        this.router.navigate([], { relativeTo: this.activatedRoute, queryParams: { query: this.search(), type: selectedType }, queryParamsHandling: 'merge' });
+    }
+
+    protected async onSubmit(): Promise<void> {
+        const type = this.getSearchType();
+        this.router.navigate([], { relativeTo: this.activatedRoute, queryParams: { query: this.search(), type: type }, queryParamsHandling: 'merge' });
+    }
+
+    private getSearchType(): string {
+        if (this.search()?.startsWith('#')) {
+            return 'hashtags';
+        }
+
+        if (this.search()?.includes('@')) {
+            return 'users';
+        }
+
+        return 'statuses';
     }
 }

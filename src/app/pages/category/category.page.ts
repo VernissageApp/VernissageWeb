@@ -1,12 +1,10 @@
 import { BreakpointObserver } from "@angular/cdk/layout";
-import { Component } from "@angular/core";
+import { Component, OnInit, OnDestroy, signal, ChangeDetectionStrategy } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs/internal/Subscription";
 import { fadeInAnimation } from "src/app/animations/fade-in.animation";
-import { Responsive } from "src/app/common/responsive";
+import { ReusableGalleryPageComponent } from "src/app/common/reusable-gallery-page";
 import { ContextTimeline } from "src/app/models/context-timeline";
-import { LinkableResult } from "src/app/models/linkable-result";
-import { Status } from "src/app/models/status";
 import { LoadingService } from "src/app/services/common/loading.service";
 import { TimelineService } from "src/app/services/http/timeline.service";
 
@@ -14,14 +12,15 @@ import { TimelineService } from "src/app/services/http/timeline.service";
     selector: 'app-category',
     templateUrl: './category.page.html',
     styleUrls: ['./category.page.scss'],
-    animations: fadeInAnimation
+    animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
-export class CategoryPage extends Responsive {
-    statuses?: LinkableResult<Status>;
-    isReady = false;
+export class CategoryPage extends ReusableGalleryPageComponent implements OnInit, OnDestroy {
+    protected isReady = signal(false);
+    protected category = signal('');
 
-    routeParamsSubscription?: Subscription;
-    category?: string;
+    private routeParamsSubscription?: Subscription;
 
     constructor(
         private timelineService: TimelineService,
@@ -37,13 +36,12 @@ export class CategoryPage extends Responsive {
 
         this.routeParamsSubscription = this.activatedRoute.params.subscribe(async (params) => {
             this.loadingService.showLoader();
-            this.category = params['category'] as string;
+            this.category.set(params['category'] as string);
 
-            this.statuses = await this.timelineService.category(this.category, undefined, undefined, undefined, undefined);
-            this.statuses.context = ContextTimeline.category;
-            this.statuses.hashtag = this.category;
+            this.statuses.set(undefined);
+            await this.loadFirstStatusesSet();
 
-            this.isReady = true;
+            this.isReady.set(true);
             this.loadingService.hideLoader();
         });
     }
@@ -52,5 +50,13 @@ export class CategoryPage extends Responsive {
         super.ngOnDestroy();
 
         this.routeParamsSubscription?.unsubscribe();
+    }
+
+    private async loadFirstStatusesSet(): Promise<void> {
+        const downloadedStatuses = await this.timelineService.category(this.category(), undefined, undefined, undefined, undefined);
+        downloadedStatuses.context = ContextTimeline.category;
+        downloadedStatuses.category = this.category();
+
+        this.statuses.set(downloadedStatuses);
     }
 }

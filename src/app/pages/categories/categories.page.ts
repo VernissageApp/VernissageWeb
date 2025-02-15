@@ -1,36 +1,34 @@
 import { BreakpointObserver } from "@angular/cdk/layout";
-import { Component } from "@angular/core";
+import { Component, OnInit, OnDestroy, signal, ChangeDetectionStrategy } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs";
 import { fadeInAnimation } from "src/app/animations/fade-in.animation";
-import { Responsive } from "src/app/common/responsive";
+import { ReusableGalleryPageComponent } from "src/app/common/reusable-gallery-page";
 import { Category } from "src/app/models/category";
-import { ContextTimeline } from "src/app/models/context-timeline";
-import { LinkableResult } from "src/app/models/linkable-result";
-import { Status } from "src/app/models/status";
+import { AuthorizationService } from "src/app/services/authorization/authorization.service";
 import { LoadingService } from "src/app/services/common/loading.service";
 import { CategoriesService } from "src/app/services/http/categories.service";
-import { TimelineService } from "src/app/services/http/timeline.service";
+import { SettingsService } from "src/app/services/http/settings.service";
 
 @Component({
     selector: 'app-categories',
     templateUrl: './categories.page.html',
     styleUrls: ['./categories.page.scss'],
-    animations: fadeInAnimation
+    animations: fadeInAnimation,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
-export class CategoriesPage extends Responsive {
-    private readonly numberOfVisibleStatuses = 10;
+export class CategoriesPage extends ReusableGalleryPageComponent implements OnInit, OnDestroy {
+    protected isReady = signal(false);
+    protected categories = signal<Category[]>([]);
 
-    isReady = false;
-    categories: Category[] = [];
-    categoryStatuses = new Map<string, LinkableResult<Status>>();
-
-    routeParamsSubscription?: Subscription;
+    private routeParamsSubscription?: Subscription;
 
     constructor(
-        private timelineService: TimelineService,
         private categoriesService: CategoriesService,
         private loadingService: LoadingService,
+        private settingsService: SettingsService,
+        private authorizationService: AuthorizationService,
         private activatedRoute: ActivatedRoute,
         breakpointObserver: BreakpointObserver
     ) {
@@ -40,25 +38,37 @@ export class CategoriesPage extends Responsive {
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
 
-        this.routeParamsSubscription = this.activatedRoute.queryParams.subscribe(async (params) => {
+        this.routeParamsSubscription = this.activatedRoute.queryParams.subscribe(async () => {
+            if (!this.hasAccessToCategories()) {
+                await this.router.navigate(['/login']);
+                return;
+            }
+
             this.loadingService.showLoader();
 
-            const categories = await this.categoriesService.all();
-            await Promise.all(categories.map(x => this.loadStatuses(x)));
+            const downloadedCategories = await this.categoriesService.all(true);
+            this.categories.set(downloadedCategories);
 
-            this.isReady = true;
+            this.isReady.set(true);
             this.loadingService.hideLoader();
         });
     }
 
-    private async loadStatuses(category: Category): Promise<void> {
-        const statuses = await this.timelineService.category(category.name, undefined, undefined, undefined, this.numberOfVisibleStatuses, undefined);
-        statuses.context = ContextTimeline.category;
-        statuses.category = category.name;
+    override ngOnDestroy(): void {
+        super.ngOnDestroy();
 
-        if (statuses.data.length) {
-            this.categoryStatuses.set(category.name, statuses);
-            this.categories.push(category);
+        this.routeParamsSubscription?.unsubscribe();
+    }
+
+    private hasAccessToCategories(): boolean {
+        if (this.authorizationService.getUser()) {
+            return true;
         }
+
+        if (this.settingsService.publicSettings?.showCategoriesForAnonymous) {
+            return true;
+        }
+
+        return false;
     }
 }

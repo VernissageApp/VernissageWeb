@@ -9,6 +9,20 @@
 }
 
 #headerImage {
-  width: 100%;
-  max-width: 600px;
+    width: 100%;
+    max-width: 600px;
+}
+
+.checkbox-hint {
+    margin-left: 44px;
+}
+
+.download-data {
+    max-width: 200px;
+
+    mat-icon {
+        font-size: 20px;
+        height: 16px;
+        width: 16px;
+    }
 }

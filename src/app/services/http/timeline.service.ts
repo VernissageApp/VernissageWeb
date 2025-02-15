@@ -4,6 +4,7 @@ import { firstValueFrom } from 'rxjs';
 import { Status } from 'src/app/models/status';
 import { WindowService } from '../common/window.service';
 import { LinkableResult } from 'src/app/models/linkable-result';
+import { User } from 'src/app/models/user';
 
 @Injectable({
     providedIn: 'root'
@@ -17,8 +18,13 @@ export class TimelineService {
         return await firstValueFrom(event$);
     }
 
-    public async featured(minId?: string, maxId?: string, sinceId?: string, limit?: number): Promise<LinkableResult<Status>> {
-        const event$ = this.httpClient.get<LinkableResult<Status>>(this.windowService.apiUrl() +  `/api/v1/timelines/featured?minId=${minId ?? ''}&maxId=${maxId ?? ''}&sinceId=${sinceId ?? ''}&limit=${limit ?? ''}`);
+    public async featuredStatuses(minId?: string, maxId?: string, sinceId?: string, limit?: number): Promise<LinkableResult<Status>> {
+        const event$ = this.httpClient.get<LinkableResult<Status>>(this.windowService.apiUrl() +  `/api/v1/timelines/featured-statuses?minId=${minId ?? ''}&maxId=${maxId ?? ''}&sinceId=${sinceId ?? ''}&limit=${limit ?? ''}`);
+        return await firstValueFrom(event$);
+    }
+
+    public async featuredUsers(minId?: string, maxId?: string, sinceId?: string, limit?: number): Promise<LinkableResult<User>> {
+        const event$ = this.httpClient.get<LinkableResult<User>>(this.windowService.apiUrl() +  `/api/v1/timelines/featured-users?minId=${minId ?? ''}&maxId=${maxId ?? ''}&sinceId=${sinceId ?? ''}&limit=${limit ?? ''}`);
         return await firstValueFrom(event$);
     }
 

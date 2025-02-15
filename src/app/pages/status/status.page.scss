@@ -29,6 +29,7 @@
 .photo-container {
     width: 100%;
     background-color: #202020;
+    position: relative;
 
     .icon {
         color: white;
@@ -48,21 +49,64 @@
         width: calc(100vw - 80px);
     }
 
-    .photo-image-container-fixed {
-        height: 600px;
+    .content-warning {
+        position: absolute;
+        top:40%;
+        width: 100%;
+        text-align: center;
+        z-index: 101;
+
+        .text {
+            color: rgb(209, 209, 209);
+            background-color: transparent;
+            font-size: 1.2em;
+            text-shadow: #777777 1px 0 4px;
+            margin-bottom: 8px;
+        }
     }
 
-    img, canvas {
+    .blurhash {
+        position: absolute;
         display: block;
         height: 100%;
         width: 100%;
         max-height: 600px;
         object-fit: contain;
+        z-index: 100;
+    }
+
+    img {
+        display: block;
+        height: 100%;
+        width: 100%;
+        max-height: 600px;
+        object-fit: contain;
+        z-index: 99;
+    }
+
+    .photo-image-container-fixed {
+        height: 600px;
+
+        .content-warning {
+            width: calc(100vw - 80px);
+        }
+
+        .blurhash {
+            width: calc(100vw - 80px);
+        }
     }
 }
 
 .photo-container-table {
     display:table;
+}
+
+.note {
+    word-break: break-word;
+
+    a {
+        word-break: break-all;
+    }
 }
 
 .category {
@@ -110,6 +154,17 @@
     }
 }
 
+.hdr {
+    mat-icon {
+        transform: scale(1.6);
+        opacity: 0.8;
+    }
+
+    .hdr-label {
+        vertical-align: top;
+    }
+}
+
 .alt {
     mat-icon {
         transform: scale(1.6);
@@ -133,11 +188,47 @@
 }
 
 .comments {
-    .favourited {
-        transform: scale(0.8);
+    ::ng-deep p {
+        margin: 0;
+    }
+
+    .comment-actions {
+        min-width: 86px;
+
+        .favourited {
+            transform: scale(0.6);
+        }
+    }
+
+    .comment-text {
+        word-break: break-word;
+
+        a {
+            word-break: break-all;
+        }
     }
 }
 
 .replies {
     padding-left: 40px;
+}
+
+.small-button {
+    min-width: 36px;
+    padding-left: 2px;
+    padding-right: 2px;
+
+    &.context-left {
+        mat-icon {
+            margin-left: 6px;
+            margin-right: 0;
+        }
+    }
+
+    &.context-right {
+        mat-icon {
+            margin-right: 0;
+            margin-left: 4px;
+        }
+    }
 }
