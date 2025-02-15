@@ -5,13 +5,13 @@
             @if (statuses(); as statusesArray) {
                 @if (statusesArray.data) {
                     @for (status of statusesArray.data; track status.id) {
-                        <a [routerLink]="['/statuses', status.id]" [ariaLabel]="'Status added by: ' + getMainStatus(status).user?.userName" (click)="onStatusClick()">
+                        <a @slowFadeIn [routerLink]="['/statuses', status.id]" [ariaLabel]="'Status added by: ' + getMainStatus(status).user?.userName" (click)="onStatusClick()">
                             @if (getMainStatus(status).sensitive && !alwaysShowNSFW()) {
-                                <div @fadeIn class="blurhash">
+                                <div class="blurhash">
                                     <app-blurhash-image [horizontal]="true" [status]="status" [avatarVisible]="false"></app-blurhash-image>
                                 </div>
                             } @else {
-                                <div @fadeIn class="image">
+                                <div class="image">
                                     <app-image [horizontal]="true" [status]="status" [avatarVisible]="false"></app-image>
                                 </div>
                             }
