@@ -751,7 +751,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
 
         this.imageIsLoaded.set(false);
 
-        if (this.mainStatus()?.sensitive) {
+        if (this.mainStatus()?.sensitive && !this.alwaysShowNSFW()) {
             this.showSensitiveImage.set(false);
             this.showSensitiveCanvas.set(true);
         } else {
