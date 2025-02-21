@@ -22,7 +22,7 @@
         <mat-divider></mat-divider>
         <h3>Hashtags</h3>
 
-        @for (hashtag of data?.hashtags; track $index; let i = $index) {
+        @for (hashtag of hashtags(); track $index; let i = $index) {
             <app-category-hashtag-item [hashtag]="hashtag" [index]="i" (delete)="onHashtagDelete($event)"></app-category-hashtag-item>
         }
 

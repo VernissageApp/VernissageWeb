@@ -20,7 +20,6 @@ export class CategoryHashtagItemComponent {
     }
 
     protected onDelete(): void {
-        console.log('onDelete()');
         this.delete.emit(this.hashtag());
     }
 }
