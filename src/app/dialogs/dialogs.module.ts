@@ -26,6 +26,8 @@ import { InstanceRuleDialog } from './instance-rule-dialog/instance-rule.dialog'
 import { ConfirmationDialog } from './confirmation-dialog/confirmation.dialog';
 import { CreateAliasDialog } from './create-alias-dialog/create-alias.dialog';
 import { StatusTextDialog } from './status-text-template-dialog/status-text-template.dialog';
+import { CategoryDialog } from './category-dialog/category.dialog';
+import { CategoryHashtagItemComponent } from './category-dialog/category-hashtag-item.component';
 
 @NgModule({
     declarations: [
@@ -47,7 +49,9 @@ import { StatusTextDialog } from './status-text-template-dialog/status-text-temp
         InstanceRuleDialog,
         ConfirmationDialog,
         CreateAliasDialog,
-        StatusTextDialog
+        StatusTextDialog,
+        CategoryDialog,
+        CategoryHashtagItemComponent
     ],
     exports: [
         ChangePasswordDialog,
@@ -68,7 +72,8 @@ import { StatusTextDialog } from './status-text-template-dialog/status-text-temp
         InstanceRuleDialog,
         ConfirmationDialog,
         CreateAliasDialog,
-        StatusTextDialog
+        StatusTextDialog,
+        CategoryDialog
     ], 
     imports: [
         BrowserModule,

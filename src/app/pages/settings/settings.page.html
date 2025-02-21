@@ -51,6 +51,20 @@
                             <app-domain-blocks></app-domain-blocks>
                         </mat-expansion-panel>
 
+                        <!-- Categories. -->
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Categories
+                                </mat-panel-title>
+                                <mat-panel-description *ngIf="!isHandset()">
+                                    Here you can manage categories and hashtags.
+                                    <mat-icon>public_off</mat-icon>
+                                </mat-panel-description>
+                            </mat-expansion-panel-header>
+                            <app-category-list></app-category-list>
+                        </mat-expansion-panel>
+
                     </mat-accordion>
 
                 </div>

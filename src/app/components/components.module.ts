@@ -38,6 +38,7 @@ import { StatusPropertiesComponent } from './widgets/status-properties/status-pr
 import { UserSelectorComponent } from './widgets/user-selector/user-selector.component';
 import { HomeSigninComponent } from './widgets/home-signin/home-signin.component';
 import { HomeSignoutComponent } from './widgets/home-signout/home-signout.component';
+import { CategoryListComponent } from './widgets/category-list/category-list.component';
 
 @NgModule({
     declarations: [
@@ -69,7 +70,8 @@ import { HomeSignoutComponent } from './widgets/home-signout/home-signout.compon
         StatusesSearchComponent,
         StatusPropertiesComponent,
         HomeSigninComponent,
-        HomeSignoutComponent
+        HomeSignoutComponent,
+        CategoryListComponent
     ],
     exports: [
         BrowserModule,
@@ -106,6 +108,7 @@ import { HomeSignoutComponent } from './widgets/home-signout/home-signout.compon
         StatusPropertiesComponent,
         HomeSigninComponent,
         HomeSignoutComponent,
+        CategoryListComponent,
         DirectivesModule
     ],
     imports: [
