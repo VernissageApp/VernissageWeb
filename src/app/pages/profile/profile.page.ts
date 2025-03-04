@@ -149,7 +149,8 @@ export class ProfilePage extends ReusableGalleryPageComponent implements OnInit,
             this.relationship.set(downloadedRelationships);
 
             await this.loadPageData();
-            this.setCardMetatags();
+            this.setCardMetaTags();
+            this.setFeedLinks();
 
             this.isReady.set(true);
             this.loadingService.hideLoader();
@@ -158,6 +159,10 @@ export class ProfilePage extends ReusableGalleryPageComponent implements OnInit,
 
     override ngOnDestroy(): void {
         super.ngOnDestroy();
+
+        this.clearCardMetaTags();
+        this.removeUserLink();
+        this.removeFeedLinks();
 
         this.routeParamsSubscription?.unsubscribe();
 
@@ -346,14 +351,28 @@ export class ProfilePage extends ReusableGalleryPageComponent implements OnInit,
     }
 
     private createLink(url: string): void {
-        const link: HTMLLinkElement = this.document.createElement('link');
-        link.setAttribute('href', url);
-        link.setAttribute('rel', 'me');
+        const userLinkMe = this.document.querySelector('link[id="userLinkMe"]');
 
-        this.document.head.appendChild(link);
+        if (userLinkMe) {
+            userLinkMe.setAttribute('href', url);
+        } else {
+            const link: HTMLLinkElement = this.document.createElement('link');
+            link.setAttribute('href', url);
+            link.setAttribute('rel', 'me');
+            link.setAttribute('id', 'userLinkMe');
+
+            this.document.head.appendChild(link);
+        }
     }
 
-    private setCardMetatags(): void {
+    private removeUserLink(): void {
+        const userLinkMe = this.document.querySelector('link[id="userLinkMe"]');
+        if (userLinkMe) {
+            this.document.head.removeChild(userLinkMe);
+        }
+    }
+
+    private setCardMetaTags(): void {
         const profileTitle = (this.user()?.name ?? '') + ` (@${this.user()?.userName ?? ''})`;
         const profileDescription = this.htmlToText(this.user()?.bio ?? '');
 
@@ -388,10 +407,72 @@ export class ProfilePage extends ReusableGalleryPageComponent implements OnInit,
 
             // <meta property="og:image:height"" content="1416">
             this.metaService.updateTag({ property: 'og:image:height', content: '600' });
+        } else {
+            this.metaService.updateTag({ property: 'og:image', content: '' });
+            this.metaService.updateTag({ property: 'og:image:width', content: '' });
+            this.metaService.updateTag({ property: 'og:image:height', content: '' });
         }
 
         // <meta name="twitter:card" content="summary_large_image">
         this.metaService.updateTag({ property: 'twitter:card', content: 'summary_large_image' });
+    }
+
+    private clearCardMetaTags(): void {
+        this.titleService.setTitle('');
+        this.metaService.updateTag({ name: 'description', content: '' });
+        this.metaService.updateTag({ property: 'og:url', content: '' });
+        this.metaService.updateTag({ property: 'og:type', content: '' });
+        this.metaService.updateTag({ property: 'og:title', content: '' });
+        this.metaService.updateTag({ property: 'og:description', content: '' });
+        this.metaService.updateTag({ property: 'og:logo', content: '' });
+        this.metaService.updateTag({ property: 'og:image', content: '' });
+        this.metaService.updateTag({ property: 'og:image:width', content: '' });
+        this.metaService.updateTag({ property: 'og:image:height', content: '' });
+        this.metaService.updateTag({ property: 'twitter:card', content: '' });
+    }
+
+    private setFeedLinks(): void {
+        const linkUserName = this.userDisplayService.displayName(this.user());
+
+        const existingRssLink = this.document.querySelector('link[id="rssUserLink"]');
+        if (existingRssLink) {
+            existingRssLink.setAttribute('title', linkUserName + ' feed (RSS)');
+            existingRssLink.setAttribute('href', '/rss/users/@' + (this.user()?.userName ?? ''));
+        } else {
+            const newRssFeed: HTMLLinkElement = this.document.createElement('link');
+            newRssFeed.setAttribute('rel', 'alternate');
+            newRssFeed.setAttribute('id', 'rssUserLink');
+            newRssFeed.setAttribute('type', 'application/rss+xml');
+            newRssFeed.setAttribute('title', linkUserName + ' feed (RSS)');
+            newRssFeed.setAttribute('href', '/rss/users/@' + (this.user()?.userName ?? ''));
+            this.document.head.appendChild(newRssFeed);
+        }
+
+        const existingAtomLink = this.document.querySelector('link[id="atomUserLink"]');
+        if (existingAtomLink) {
+            existingAtomLink.setAttribute('title', linkUserName + ' feed (Atom)');
+            existingAtomLink.setAttribute('href', '/atom/users/@' + (this.user()?.userName ?? ''));
+        } else {
+            const newAtomFeed: HTMLLinkElement = this.document.createElement('link');
+            newAtomFeed.setAttribute('rel', 'alternate');
+            newAtomFeed.setAttribute('id', 'atomUserLink');
+            newAtomFeed.setAttribute('type', 'application/atom+xml');
+            newAtomFeed.setAttribute('title', linkUserName + ' feed (Atom)');
+            newAtomFeed.setAttribute( 'href', '/atom/users/@' + (this.user()?.userName ?? ''));
+            this.document.head.appendChild(newAtomFeed);
+        }
+    }
+
+    private removeFeedLinks(): void {
+        const existingRssLink = this.document.querySelector('link[id="rssUserLink"]');
+        if (existingRssLink) {
+            this.document.head.removeChild(existingRssLink);
+        }
+
+        const existingAtomLink = this.document.querySelector('link[id="atomUserLink"]');
+        if (existingAtomLink) {
+            this.document.head.removeChild(existingAtomLink);
+        }
     }
 
     private htmlToText(value: string): string {
