@@ -21,7 +21,7 @@
 
                         <div class="bio" [innerHTML]="userObject.bioHtml"></div>
                         <div class="fw-300 fs-90">
-                            <span class="margin-right-15"><span class="fw-500">{{ userObject.statusesCount }}</span> Posts</span>
+                            <span class="margin-right-15"><span class="fw-500">{{ userObject.photosCount }}</span> {{ userObject.photosCount === 1 ? 'Photo' : 'Photos' }}</span>
                             <span class="margin-right-15"><span class="fw-500">{{ userObject.followersCount }}</span> Followers</span>
                             <span><span class="fw-500">{{ userObject.followingCount }}</span> Following</span>
                         </div>

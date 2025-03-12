@@ -10,7 +10,7 @@
                     <div class="fw-400 fs-90 text-muted">&#64;{{ userInternal.userName }}</div>
                 </div>
                 <div class="fw-300 fs-90">
-                    <span class="margin-right-15"><span class="fw-500">{{ userInternal.statusesCount }}</span> Posts</span>
+                    <span class="margin-right-15"><span class="fw-500">{{ userInternal.photosCount }}</span> {{ userInternal.photosCount === 1 ? 'Photo' : 'Photos' }}</span>
                     <span class="margin-right-15"><span class="fw-500">{{ userInternal.followersCount }}</span> Followers</span>
                     <span><span class="fw-500">{{ userInternal.followingCount }}</span> Following</span>
                 </div>
