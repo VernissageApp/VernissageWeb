@@ -25,7 +25,7 @@
                 }
                 
                 <div class="fw-300 fs-90 flex-row flex-wrap">
-                    <div class="user-statuses-tag margin-right-15"><span class="fw-500">{{ user.statusesCount }}</span> Posts</div>
+                    <div class="user-statuses-tag margin-right-15"><span class="fw-500">{{ user.photosCount }}</span> {{ user.photosCount === 1 ? 'Photo' : 'Photos' }}</div>
                     <div class="margin-right-15"><span class="fw-500">{{ user.followersCount }}</span> Followers</div>
                     <div class="user-following-tag "><span class="fw-500">{{ user.followingCount }}</span> Following</div>
                 </div>
