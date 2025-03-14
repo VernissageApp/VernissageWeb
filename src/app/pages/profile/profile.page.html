@@ -20,7 +20,7 @@
 
                     @if (relationship(); as relationshipInternal) {
                         <div class="padding-top-10">
-                            <app-follow-buttons-section [user]="userInternal" [relationship]="relationshipInternal" (relationChanged)="onMainRelationChanged($event)"></app-follow-buttons-section>
+                            <app-follow-buttons-section [user]="userInternal" [relationship]="relationshipInternal" (relationChanged)="onMainRelationChanged()"></app-follow-buttons-section>
                         </div>
                     }
 
