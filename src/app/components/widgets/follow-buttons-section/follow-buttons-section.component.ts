@@ -35,7 +35,7 @@ export class FollowButtonsSectionComponent implements OnInit {
 
     protected isDuringRelationshipAction = signal(false);
     protected showFollowButton = signal(false);
-    protected showUnfollowButton = signal(false);
+    protected showChangeRelationshipButton = signal(false);
     protected showApproveFollowButton = signal(false);
     protected showOpenOriginalProfileButton = signal(false);
     protected showCopyProfileUrlButton = signal(false);
@@ -61,7 +61,7 @@ export class FollowButtonsSectionComponent implements OnInit {
     ) {
         effect(() => {
             // After changing relationship from parent we have to rebuild the components.
-            const newRelationships = this.relationship();
+            const newRelationships = this.updatedRelationship();
             this.relationshipAfterAction.set(newRelationships);
 
             this.recalculateRelationship();
@@ -277,36 +277,24 @@ export class FollowButtonsSectionComponent implements OnInit {
         }
     }
 
-    private shouldShowFollowButton(): boolean {
+    private shouldShowChangeRelationshipButton(): boolean {
         if (!this.signedInUser) {
             return false;
         }
 
         if (this.signedInUser.id === this.updatedUser().id) {
-            return false;
-        }
-
-        if (this.updatedRelationship().following === true) {
-            return false;
-        }
-
-        if (this.updatedRelationship().requested === true) {
             return false;
         }
 
         return true;
     }
 
-    private shouldShowUnfollowButton(): boolean {
-        if (!this.signedInUser) {
+    private shouldShowFollowButton(): boolean {
+        if (this.updatedRelationship().following === true) {
             return false;
         }
 
-        if (this.signedInUser.id === this.updatedUser().id) {
-            return false;
-        }
-
-        if ((this.updatedRelationship().following ?? false) === false && (this.updatedRelationship().requested ?? false) == false) {
+        if (this.updatedRelationship().requested === true) {
             return false;
         }
 
@@ -416,8 +404,8 @@ export class FollowButtonsSectionComponent implements OnInit {
     }
 
     private recalculateRelationship(): void {
+        this.showChangeRelationshipButton.set(this.shouldShowChangeRelationshipButton());
         this.showFollowButton.set(this.shouldShowFollowButton());
-        this.showUnfollowButton.set(this.shouldShowUnfollowButton());
         this.showApproveFollowButton.set(this.shouldShowApproveFollowButton());
         this.showOpenOriginalProfileButton.set(this.shouldShowOpenOriginalProfileButton());
         this.showCopyProfileUrlButton.set(this.shouldShowCopyProfileUrlButton());
