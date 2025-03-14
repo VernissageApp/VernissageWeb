@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, effect, input, OnInit, output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, input, OnDestroy, OnInit, output, signal } from '@angular/core';
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { MatDialog } from '@angular/material/dialog';
@@ -15,6 +15,7 @@ import { WindowService } from 'src/app/services/common/window.service';
 import { FollowRequestsService } from 'src/app/services/http/follow-requests.service';
 import { ReportsService } from 'src/app/services/http/reports.service';
 import { UsersService } from 'src/app/services/http/users.service';
+import { RelationshipsService } from 'src/app/services/http/relationships.service';
 
 @Component({
     selector: 'app-follow-buttons-section',
@@ -24,7 +25,7 @@ import { UsersService } from 'src/app/services/http/users.service';
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
-export class FollowButtonsSectionComponent implements OnInit {
+export class FollowButtonsSectionComponent implements OnInit, OnDestroy {
     public user = input.required<User>();
     public relationship = input.required<Relationship>();
     public singleButton = input(false);
@@ -49,6 +50,11 @@ export class FollowButtonsSectionComponent implements OnInit {
     private relationshipAfterAction = signal<Relationship | undefined>(undefined);
     private userAfterAction = signal<User | undefined>(undefined);
 
+    private relationshipRefreshInterval: NodeJS.Timeout | undefined;
+    private relationshipRefreshCounter = 0;
+    private readonly relationshipRefreshTime = 2500;
+    private readonly relationshipRefreshMaxCounter = 10;
+
     constructor(
         private usersService: UsersService,
         private messageService: MessagesService,
@@ -56,6 +62,8 @@ export class FollowButtonsSectionComponent implements OnInit {
         private followRequestsService: FollowRequestsService,
         private reportsService: ReportsService,
         private windowService: WindowService,
+        private messagesService: MessagesService,
+        private relationshipsService: RelationshipsService,
         private dialog: MatDialog,
         private clipboard: Clipboard
     ) {
@@ -71,6 +79,12 @@ export class FollowButtonsSectionComponent implements OnInit {
     ngOnInit(): void {
         this.signedInUser = this.authorizationService.getUser();
         this.recalculateRelationship();
+    }
+
+    ngOnDestroy(): void {
+        if (this.relationshipRefreshInterval) {
+            clearInterval(this.relationshipRefreshInterval);
+        }
     }
 
     onOriginalProfile(): void {
@@ -100,7 +114,7 @@ export class FollowButtonsSectionComponent implements OnInit {
                         this.relationshipAfterAction.set(downloadedRelationship);
                         this.recalculateRelationship();
 
-                        this.relationChanged.emit(this.updatedRelationship());
+                        this.emitRelationChange();
                         this.messageService.showSuccess('Mute has been saved.');
                     }
                 } catch (error) {
@@ -124,7 +138,7 @@ export class FollowButtonsSectionComponent implements OnInit {
                 this.relationshipAfterAction.set(downloadedRelationship);
                 this.recalculateRelationship();
 
-                this.relationChanged.emit(this.updatedRelationship());
+                this.emitRelationChange();
                 this.messageService.showSuccess('Mute has been canceled.');
             }
         } catch (error) {
@@ -162,7 +176,7 @@ export class FollowButtonsSectionComponent implements OnInit {
                 this.relationshipAfterAction.set(downloadedRelationship);
 
                 this.recalculateRelationship();
-                this.relationChanged.emit(this.updatedRelationship());
+                this.emitRelationChange();
                 
                 if (this.updatedRelationship().following) {
                     this.messageService.showSuccess('You are following the user.');
@@ -188,7 +202,7 @@ export class FollowButtonsSectionComponent implements OnInit {
                 this.relationshipAfterAction.set(downloadedRelationship);
                 this.recalculateRelationship();
 
-                this.relationChanged.emit(this.updatedRelationship());
+                this.emitRelationChange();
                 this.messageService.showSuccess('You have unfollowed the user.');
             } catch (error) {
                 console.error(error);
@@ -209,7 +223,7 @@ export class FollowButtonsSectionComponent implements OnInit {
                 this.relationshipAfterAction.set(downloadedRelationship);
                 this.recalculateRelationship();
 
-                this.relationChanged.emit(this.updatedRelationship());
+                this.emitRelationChange();
                 this.messageService.showSuccess('You have accepted the user\'s follow request.');
             } catch (error) {
                 console.error(error);
@@ -230,7 +244,7 @@ export class FollowButtonsSectionComponent implements OnInit {
                 this.relationshipAfterAction.set(downloadedRelationship);
                 this.recalculateRelationship();
 
-                this.relationChanged.emit(this.updatedRelationship());
+                this.emitRelationChange();
                 this.messageService.showSuccess('You have declined the user\'s follow request');
             } catch (error) {
                 console.error(error);
@@ -250,7 +264,7 @@ export class FollowButtonsSectionComponent implements OnInit {
                 this.userAfterAction.set(downloadedUser);
                 this.recalculateRelationship();
 
-                this.relationChanged.emit(this.updatedRelationship());
+                this.emitRelationChange();
                 this.messageService.showSuccess('You have featured the user.');
             } catch (error) {
                 console.error(error);
@@ -268,7 +282,7 @@ export class FollowButtonsSectionComponent implements OnInit {
                 this.userAfterAction.set(downloadedUser);
                 this.recalculateRelationship();
 
-                this.relationChanged.emit(this.updatedRelationship());
+                this.emitRelationChange();
                 this.messageService.showSuccess('You have removed the user from featured.');
             } catch (error) {
                 console.error(error);
@@ -414,5 +428,51 @@ export class FollowButtonsSectionComponent implements OnInit {
         this.showFeatureButton.set(this.shouldShowFeatureButton());
         this.showUnfeatureButton.set(this.shouldShowUnfeatureButton());
         this.showReportButton.set(this.shouldShowReportButton());
+    }
+
+    private emitRelationChange(): void {
+        this.relationChanged.emit(this.updatedRelationship());
+
+        // When we send follow request, we can refresh the relationship object automatically.
+        if (this.updatedRelationship().following === false && this.updatedRelationship().requested === true) {
+            if (this.relationshipRefreshInterval) {
+                clearInterval(this.relationshipRefreshInterval);
+            }
+
+            this.relationshipRefreshInterval = setInterval(async () => {
+                const downloadedRelationships = await this.downloadRelationship();
+                this.relationshipAfterAction.set(downloadedRelationships);
+                this.relationshipRefreshCounter = this.relationshipRefreshCounter  + 1;
+
+                if (this.relationship()?.following === true) {
+                    this.messagesService.showSuccess('Your follow request has been accepted.');
+                }
+
+                // When we try 10 times or request is approved we should cancel.
+                if (this.relationship()?.following === true || this.relationshipRefreshCounter >= this.relationshipRefreshMaxCounter) {
+                    if (this.relationshipRefreshInterval) {
+                        clearInterval(this.relationshipRefreshInterval);
+                    }
+                }
+            }, this.relationshipRefreshTime);
+        }
+    }
+
+    private async downloadRelationship(): Promise<Relationship | undefined> {
+        const signedInUser = this.authorizationService.getUser();
+        if (!signedInUser) {
+            return undefined;
+        }
+
+        const internalUser = this.user();
+        if (signedInUser.id === internalUser?.id) {
+            return undefined;
+        }
+
+        if (!internalUser || !internalUser.id) {
+            return undefined;
+        }
+
+        return await this.relationshipsService.get(internalUser.id);
     }
 }

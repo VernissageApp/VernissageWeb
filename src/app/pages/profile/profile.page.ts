@@ -19,7 +19,6 @@ import { ProfileCodeDialog } from 'src/app/dialogs/profile-code-dialog/profile-c
 import { PreferencesService } from 'src/app/services/common/preferences.service';
 import { UserDisplayService } from 'src/app/services/common/user-display.service';
 import { ContextTimeline } from 'src/app/models/context-timeline';
-import { MessagesService } from 'src/app/services/common/messages.service';
 import { ReusableGalleryPageComponent } from 'src/app/common/reusable-gallery-page';
 
 @Component({
@@ -54,11 +53,6 @@ export class ProfilePage extends ReusableGalleryPageComponent implements OnInit,
     private routeParamsSubscription?: Subscription;
     private userName!: string;
     private loadingDifferentProfile = false;
-    private relationshipRefreshInterval: NodeJS.Timeout | undefined;
-    private relationshipRefreshCounter = 0;
-
-    private readonly relationshipRefreshTime = 2500;
-    private readonly relationshipRefreshMaxCounter = 10;
 
     constructor(
         @Inject(DOCUMENT) private document: Document,
@@ -66,7 +60,6 @@ export class ProfilePage extends ReusableGalleryPageComponent implements OnInit,
         private usersService: UsersService,
         private relationshipsService: RelationshipsService,
         private loadingService: LoadingService,
-        private messagesService: MessagesService,
         private activatedRoute: ActivatedRoute,
         private titleService: Title,
         private metaService: Meta,
@@ -165,13 +158,9 @@ export class ProfilePage extends ReusableGalleryPageComponent implements OnInit,
         this.removeFeedLinks();
 
         this.routeParamsSubscription?.unsubscribe();
-
-        if (this.relationshipRefreshInterval) {
-            clearInterval(this.relationshipRefreshInterval);
-        }
     }
 
-    protected async onMainRelationChanged(relationship: Relationship): Promise<void> {
+    protected async onMainRelationChanged(): Promise<void> {
         const downloadUser = await this.usersService.profile(this.userName);
         this.user.set(downloadUser);
 
@@ -184,30 +173,6 @@ export class ProfilePage extends ReusableGalleryPageComponent implements OnInit,
             }
 
             this.followers.set(internalFollowers);
-        }
-
-        // When we send follow request, we can refresh the relationship object automatically.
-        if (relationship.following === false && relationship.requested === true) {
-            if (this.relationshipRefreshInterval) {
-                clearInterval(this.relationshipRefreshInterval);
-            }
-
-            this.relationshipRefreshInterval = setInterval(async () => {
-                const downloadedRelationships = await this.downloadRelationship();
-                this.relationship.set(downloadedRelationships);
-                this.relationshipRefreshCounter = this.relationshipRefreshCounter  + 1;
-
-                if (this.relationship()?.following === true) {
-                    this.messagesService.showSuccess('Your follow request has been accepted.');
-                }
-
-                // When we try 10 times or request is approved we should cancel.
-                if (this.relationship()?.following === true || this.relationshipRefreshCounter >= this.relationshipRefreshMaxCounter) {
-                    if (this.relationshipRefreshInterval) {
-                        clearInterval(this.relationshipRefreshInterval);
-                    }
-                }
-            }, this.relationshipRefreshTime);
         }
     }
 
