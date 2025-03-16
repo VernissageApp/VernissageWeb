@@ -49,11 +49,10 @@ jobs:
         with:
           context: .
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ env.REGISTRY_IMAGE }}
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/${{ matrix.platform }}
-          outputs: type=image,push-by-digest=true,name-canonical=true,push=true
           load: true
+          outputs: type=image,name=${{ env.REGISTRY_IMAGE }},push-by-digest=true,name-canonical=true,push=true
       - name: Export digest
         run: |
           mkdir -p ${{ runner.temp }}/digests
