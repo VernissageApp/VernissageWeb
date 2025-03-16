@@ -24,6 +24,7 @@ export class User {
     public roles?: Role[];
     public bioHtml?: string;
     public activityPubProfile?: string;
+    public photosCount = 0;
     public statusesCount = 0;
     public followersCount = 0;
     public followingCount = 0;

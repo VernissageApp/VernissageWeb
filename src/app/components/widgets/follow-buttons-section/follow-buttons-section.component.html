@@ -5,12 +5,12 @@
         }
 
         @if (!isDuringRelationshipAction()) {
-            @if (showFollowButton()) {
-                <button @fadeIn type="button" (click)="onFollow()" mat-flat-button color="primary" aria-label="Follow">{{ updatedRelationship().followedBy ? "Follow back" : "Follow" }}</button>
-            }
-            
-            @if (showUnfollowButton()) {
-                <button @fadeIn type="button" (click)="onUnfollow()" mat-flat-button color="accent" aria-label="Unfollow">{{ updatedRelationship().following ? "Unfollow" : "Cancel request" }}</button>
+            @if (showChangeRelationshipButton()) {
+                @if (showFollowButton()) {
+                    <button @fadeIn type="button" (click)="onFollow()" mat-flat-button color="primary" aria-label="Follow">{{ updatedRelationship().followedBy ? "Follow back" : "Follow" }}</button>
+                } @else {
+                    <button @fadeIn type="button" (click)="onUnfollow()" mat-flat-button color="accent" aria-label="Unfollow">{{ updatedRelationship().following ? "Unfollow" : "Cancel request" }}</button>
+                }
             }
             
             @if (showApproveFollowButton()) {
@@ -60,14 +60,14 @@
     </div>
 }
 
-@if (singleButton() && (showFollowButton() || showUnfollowButton() || showApproveFollowButton())) {
+@if (singleButton() && (showChangeRelationshipButton() || showApproveFollowButton())) {
     <mat-button-toggle-group [hideSingleSelectionIndicator]="true" (change)="toggleChange($event)">
-        @if (showFollowButton()) {
-            <mat-button-toggle (click)="onFollow()">{{ updatedRelationship().followedBy ? "Follow back" : "Follow" }}</mat-button-toggle>
-        }
-        
-        @if (showUnfollowButton()) {
-            <mat-button-toggle (click)="onUnfollow()">{{ updatedRelationship().following ? "Unfollow" : "Cancel request" }}</mat-button-toggle>
+        @if (showChangeRelationshipButton()) {
+            @if (showFollowButton()) {
+                <mat-button-toggle (click)="onFollow()">{{ updatedRelationship().followedBy ? "Follow back" : "Follow" }}</mat-button-toggle>
+            } @else {
+                <mat-button-toggle (click)="onUnfollow()">{{ updatedRelationship().following ? "Unfollow" : "Cancel request" }}</mat-button-toggle>
+            }
         }
 
         @if (showApproveFollowButton()) {
