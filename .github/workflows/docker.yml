@@ -53,6 +53,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/${{ matrix.platform }}
           outputs: type=image,push-by-digest=true,name-canonical=true,push=true
+          load: true
       - name: Export digest
         run: |
           mkdir -p ${{ runner.temp }}/digests
