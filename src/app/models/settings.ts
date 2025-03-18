@@ -34,6 +34,7 @@ export class Settings {
     public systemDefaultUserId = '';
     public patreonUrl = '';
     public mastodonUrl = '';
+    public statusPurgeAfterDays = 180;
 
     public isOpenAIEnabled = false;
     public openAIKey = '';

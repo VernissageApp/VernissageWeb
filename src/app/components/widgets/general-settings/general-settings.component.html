@@ -93,6 +93,14 @@
 
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
+            <mat-label>Delete statuses older than (days)</mat-label>
+            <input matInput type="number" name="statusPurgeAfterDays" #statusPurgeAfterDays="ngModel" [(ngModel)]="settings().statusPurgeAfterDays"
+                placeholder="Delete statuses older than (days)" aria-label="Delete statuses older than (days)" />
+        </mat-form-field>
+    </div>
+
+    <div class="margin-bottom-20">
+        <mat-form-field appearance="outline">
             <mat-label>Patreon url</mat-label>
             <input matInput name="patreonUrl" #patreonUrl="ngModel" [(ngModel)]="settings().patreonUrl"
                 placeholder="Patreon url" aria-label="Patreon url" />
