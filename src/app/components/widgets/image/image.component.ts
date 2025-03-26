@@ -49,7 +49,9 @@ export class ImageComponent implements OnInit, OnDestroy, AfterViewInit {
     protected imageIsLoaded = signal(false);
     protected isFavourited = signal(false);
     protected isReblogged = signal(false);
+    protected imageCutHackLoaded = signal(false);
 
+    private readonly imageCutHackTimeout = 100;
     private popover = viewChild<SatPopoverComponent | undefined>('popover');
     private canvas = viewChild<ElementRef<HTMLCanvasElement> | undefined>('canvas');
 
@@ -170,6 +172,10 @@ export class ImageComponent implements OnInit, OnDestroy, AfterViewInit {
 
     protected onImageLoaded(): void {
         this.imageIsLoaded.set(true);
+
+        setTimeout(() => {
+            this.imageCutHackLoaded.set(true);
+        }, this.imageCutHackTimeout);
     }
 
     private drawCanvas(): void {

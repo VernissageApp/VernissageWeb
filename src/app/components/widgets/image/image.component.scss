@@ -8,6 +8,20 @@
         z-index: 100;
     }
 
+    .img-blur {
+        filter: blur(3px);
+    }
+        
+    .img-show {
+        filter: blur(0);
+        transition: 800ms all linear;
+        -webkit-transition: 800ms all linear;
+    }
+
+    .img-transform-hack {
+        transform: translateZ(0);
+    }
+
     .img-horizontal {
         height: 300px;
         object-fit: cover;
