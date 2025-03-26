@@ -1,19 +1,16 @@
-<div class="image-container">
 
+<div class="image-container">
+    <canvas class="blurhash display-none" #canvas width="32" height="32"></canvas>
+    
     @if (imageSrc(); as imageSrcString) {
         @if (imageSrcString.length > 0) {
             @if (horizontal()) {
-                @if (!imageIsLoaded()) {
-                    <canvas class="blurhash display-none" #canvas width="32" height="32"></canvas>
-                }
-
                 <img class="image-item img-horizontal" [src]="imageSrcString" loading="lazy" (load)="onImageLoaded()" [alt]="alt() ?? 'Status image'" />
             } @else {
-                <canvas class="blurhash display-none" #canvas width="32" height="32"></canvas>
-
                 @if (internalPriority()) {
                     <img
                         class="image-item img-vertical"
+                        [ngClass]="{ 'img-transform-hack': imageCutHackLoaded(), 'img-show': imageIsLoaded(), 'img-blur': !imageIsLoaded() }"
                         [ngSrc]="imageSrcString"
                         [width]="width()"
                         [height]="height()"
@@ -24,6 +21,7 @@
                 } @else {
                     <img
                         class="image-item img-vertical"
+                        [ngClass]="{ 'img-transform-hack': imageCutHackLoaded(), 'img-show': imageIsLoaded(), 'img-blur': !imageIsLoaded() }"
                         [ngSrc]="imageSrcString"
                         [width]="width()"
                         [height]="height()"
@@ -32,7 +30,6 @@
                         (load)="onImageLoaded()"
                         [alt]="alt() ?? 'Status image'" />
                 }
-
             }
         }
     }
