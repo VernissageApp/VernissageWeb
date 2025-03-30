@@ -10,6 +10,10 @@
         gap: 10px;
         flex: 1 1 auto;
         overflow: hidden;
+
+        .user-avatar {
+            margin-top: 4px;
+        }
     }
 
     .user-name {
