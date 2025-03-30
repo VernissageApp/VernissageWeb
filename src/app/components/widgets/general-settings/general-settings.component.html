@@ -120,6 +120,18 @@
         </div>
     </div>
 
+    <div class="margin-bottom-20">
+        <mat-form-field appearance="outline">
+            <mat-label>Images url</mat-label>
+            <input matInput name="imagesUrl" #mastodonUrl="ngModel" [(ngModel)]="settings().imagesUrl"
+                placeholder="Images url" aria-label="Images url" />
+        </mat-form-field>
+        <div class="text-muted fs-90 margin-left-10 margin-top-5">
+            If you have a CDN configured, you can override the default image URL generated
+            based on the S3 bucket name and address.
+        </div>
+    </div>
+
     <mat-divider></mat-divider>
     <h3>Default accounts</h3>
 
