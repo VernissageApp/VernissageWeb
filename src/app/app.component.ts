@@ -44,9 +44,9 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
             this.createMastodonLink(internalMastodonUrl);
         }
 
-        const s3Address = this.settingsService.publicSettings?.s3Address ?? '';
-        if (s3Address.length > 0) {
-            this.createPreloadLink(s3Address);
+        const imagesUrl = this.settingsService.publicSettings?.imagesUrl ?? '';
+        if (imagesUrl.length > 0) {
+            this.createPreloadLink(imagesUrl);
         }
     }
 
