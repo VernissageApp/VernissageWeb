@@ -28,6 +28,7 @@ import { CreateAliasDialog } from './create-alias-dialog/create-alias.dialog';
 import { StatusTextDialog } from './status-text-template-dialog/status-text-template.dialog';
 import { CategoryDialog } from './category-dialog/category.dialog';
 import { CategoryHashtagItemComponent } from './category-dialog/category-hashtag-item.component';
+import { FollowingImportAccountsDialog } from './following-import-accounts-dialog/following-import-accounts.dialog';
 
 @NgModule({
     declarations: [
@@ -51,6 +52,7 @@ import { CategoryHashtagItemComponent } from './category-dialog/category-hashtag
         CreateAliasDialog,
         StatusTextDialog,
         CategoryDialog,
+        FollowingImportAccountsDialog,
         CategoryHashtagItemComponent
     ],
     exports: [
@@ -73,7 +75,8 @@ import { CategoryHashtagItemComponent } from './category-dialog/category-hashtag
         ConfirmationDialog,
         CreateAliasDialog,
         StatusTextDialog,
-        CategoryDialog
+        CategoryDialog,
+        FollowingImportAccountsDialog
     ], 
     imports: [
         BrowserModule,
