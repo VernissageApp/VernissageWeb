@@ -31,6 +31,12 @@ import { Archive } from 'src/app/models/archive';
 import { ArchiveStatus } from 'src/app/models/archive-status';
 import { ExportsService } from 'src/app/services/http/exports.service';
 import { FileSaverService } from 'ngx-filesaver';
+import { FollowingImportsService } from 'src/app/services/http/following-imports.service';
+import { PagedResult } from 'src/app/models/paged-result';
+import { FollowingImport } from 'src/app/models/following-import';
+import { PageEvent } from '@angular/material/paginator';
+import { FollowingImportStatus } from 'src/app/models/following-import-status';
+import { FollowingImportAccountsDialog } from 'src/app/dialogs/following-import-accounts-dialog/following-import-accounts.dialog';
 
 @Component({
     selector: 'app-account',
@@ -42,15 +48,21 @@ import { FileSaverService } from 'ngx-filesaver';
 })
 export class AccountPage extends ResponsiveComponent implements OnInit {
     protected readonly archiveStatus = ArchiveStatus;
+    protected readonly followingImportStatus = FollowingImportStatus;
+
     protected verification = signal('');
     protected user = model<User>(new User());
     protected isReady = signal(false);
 
     protected aliasDisplayedColumns = signal<string[]>(['alias', 'actions']);
     protected archivesDisplayedColumns = signal<string[]>([]);
+    protected followingImportsDisplayedColumns = signal<string[]>([]);
 
     protected userAliases = signal<UserAlias[]>([]);
     protected archives = signal<Archive[]>([]);
+    protected followingImports = signal<PagedResult<FollowingImport> | undefined>(undefined);
+    protected followingImportsPageIndex = signal(0);
+    protected followingImportsPageSize = signal(10);
 
     protected avatarSrc = signal('assets/avatar-placeholder.svg');
     protected headerSrc = signal('assets/header-placeholder.svg');
@@ -58,9 +70,12 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
     private selectedAvatarFile: any = null;
     private selectedHeaderFile: any = null;
     
+    private readonly defaultMaxFileSize = 10485760;
     private userName = '';
     private readonly archivesDisplayedColumnsFull: string[] = ['requestDate', 'startDate', 'endDate', 'status', 'download'];
     private readonly archivesDisplayedColumnsMinimum: string[] = ['requestDate', 'download'];
+    private readonly followingImportsDisplayedColumnsFull: string[] = ['createdAt', 'startedAt', 'endedAt', 'status', 'action'];
+    private readonly followingImportsDisplayedColumnsMinimum: string[] = ['createdAt', 'status', 'action'];
 
     constructor(
         private usersService: UsersService,
@@ -74,6 +89,7 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
         private archivesService: ArchivesService,
         private exportsService: ExportsService,
         private fileSaverService: FileSaverService,
+        private followingImportsService: FollowingImportsService,
         private router: Router,
         public dialog: MatDialog,
         private clipboard: Clipboard,
@@ -95,6 +111,7 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
                 await this.loadUserData();
                 await this.loadUserAliases();
                 await this.loadArchives();
+                await this.loadFollowingImports();
             } else {
                 this.messageService.showError('Cannot download user settings.');
             }
@@ -112,18 +129,22 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
 
     protected override onHandsetPortrait(): void {
         this.archivesDisplayedColumns?.set(this.archivesDisplayedColumnsMinimum);
+        this.followingImportsDisplayedColumns?.set(this.followingImportsDisplayedColumnsMinimum);
     }
 
     protected override onHandsetLandscape(): void {
         this.archivesDisplayedColumns?.set(this.archivesDisplayedColumnsMinimum);
+        this.followingImportsDisplayedColumns?.set(this.followingImportsDisplayedColumnsMinimum);
     }
 
     protected override onTablet(): void {
         this.archivesDisplayedColumns?.set(this.archivesDisplayedColumnsMinimum);
+        this.followingImportsDisplayedColumns?.set(this.followingImportsDisplayedColumnsMinimum);
     }
 
     protected override onBrowser(): void {
         this.archivesDisplayedColumns?.set(this.archivesDisplayedColumnsFull);
+        this.followingImportsDisplayedColumns?.set(this.followingImportsDisplayedColumnsFull);
     }
 
     protected async onSubmit(): Promise<void> {
@@ -385,6 +406,50 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
         return true;
     }
 
+    protected async handleFollowingImportsPageEvent(pageEvent: PageEvent): Promise<void> {
+        console.log('handleFollowingImportsPageEvent');
+
+        this.followingImportsPageIndex.set(pageEvent.pageIndex);
+        this.followingImportsPageSize.set(pageEvent.pageSize);
+
+        this.loadFollowingImports();
+    }
+
+    protected async onFileSelected(event: any): Promise<void> {
+        const input = event.target as HTMLInputElement;
+        if (!input.files) {
+            return;
+        }
+
+        const file = input.files[0];
+        if (file.size > this.defaultMaxFileSize) {
+            this.messageService.showError('Uploaded file is too large. Maximum size is 10mb.');
+            return;
+        }
+
+        try {
+            this.loadingService.showLoader();
+
+            const formData = new FormData();
+            formData.append('file', file);
+            await this.followingImportsService.upload(formData);
+            await this.loadFollowingImports();
+        } catch (error) {
+            console.error(error);
+            this.messageService.showServerError(error);
+        } finally {
+            this.loadingService.hideLoader();
+            input.value = '';
+        }
+    }
+
+    protected openShowAccountsDialog(followingImport: FollowingImport): void {
+        this.dialog.open(FollowingImportAccountsDialog, {
+            width: '900px',
+            data: followingImport
+        });
+    }
+
     private async loadUserData(): Promise<void> {
         const downloadedUser = await this.usersService.profile(this.userName);
 
@@ -401,5 +466,10 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
     private async loadArchives(): Promise<void> {
         const downloadedArchives = await this.archivesService.get();
         this.archives.set(downloadedArchives);
+    }
+
+    private async loadFollowingImports(): Promise<void> {
+        const downloadedFollowingImports = await this.followingImportsService.get(this.followingImportsPageIndex() + 1, this.followingImportsPageSize());
+        this.followingImports.set(downloadedFollowingImports);
     }
 }
