@@ -150,6 +150,8 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
             const popupGallery = this.gallery.ref(this.popupGalleryId);
             popupGallery.load(this.images() ?? []);
 
+            this.setNoIndexMeta();
+
             this.loadingService.hideLoader();
             this.isReady.set(true);
 
@@ -164,6 +166,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     override ngOnDestroy(): void {
         super.ngOnDestroy();
 
+        this.clearNoIndexMeta();
         this.routeParamsSubscription?.unsubscribe();
         this.routeNavigationEndSubscription?.unsubscribe();
     }
@@ -928,5 +931,13 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
 
     private isStatusOwner(): boolean {
         return this.mainStatus()?.user?.id === this.signedInUser()?.id;
+    }
+
+    private setNoIndexMeta(): void {
+        this.metaService.updateTag({ name: 'robots', content: 'noindex, noarchive' });
+    }
+
+    private clearNoIndexMeta(): void {
+        this.metaService.removeTag('name="robots"');
     }
 }

@@ -144,6 +144,7 @@ export class ProfilePage extends ReusableGalleryPageComponent implements OnInit,
             await this.loadPageData();
             this.setCardMetaTags();
             this.setFeedLinks();
+            this.setNoIndexMeta();
 
             this.isReady.set(true);
             this.loadingService.hideLoader();
@@ -156,6 +157,7 @@ export class ProfilePage extends ReusableGalleryPageComponent implements OnInit,
         this.clearCardMetaTags();
         this.removeUserLink();
         this.removeFeedLinks();
+        this.clearNoIndexMeta();
 
         this.routeParamsSubscription?.unsubscribe();
     }
@@ -438,6 +440,14 @@ export class ProfilePage extends ReusableGalleryPageComponent implements OnInit,
         if (existingAtomLink) {
             this.document.head.removeChild(existingAtomLink);
         }
+    }
+
+    private setNoIndexMeta(): void {
+        this.metaService.updateTag({ name: 'robots', content: 'noindex, noarchive' });
+    }
+
+    private clearNoIndexMeta(): void {
+        this.metaService.removeTag('name="robots"');
     }
 
     private htmlToText(value: string): string {

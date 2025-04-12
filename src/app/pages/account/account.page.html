@@ -423,6 +423,101 @@
     <mat-card class="margin-bottom-20" appearance="outlined">
         <mat-card-header>
             <mat-card-title>
+                Import
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
+                <div>
+                    You can import data previously exported from another server, such as a list of accounts you are following.
+                    Imported accounts will be merged with the ones you are already following.
+                </div>
+                <div class="text-right">
+                    <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file">
+                    <button type="button" mat-raised-button color="primary" aria-label="Request archive" (click)="fileInput.click()">Import</button>
+                </div>
+            </div>
+
+            @if (followingImports(); as followingImportsArray) {
+                @if (followingImportsArray.data.length > 0) {
+                    <table mat-table [dataSource]="followingImportsArray.data" @fadeIn>
+
+                        <!-- RequestDate Column -->
+                        <ng-container matColumnDef="createdAt">
+                            <th mat-header-cell *matHeaderCellDef> Created date </th>
+                            <td mat-cell *matCellDef="let element">
+                                {{ element.createdAt | date: 'short' }}
+                            </td>
+                        </ng-container>
+
+                        <!-- Request StartDate Column -->
+                        <ng-container matColumnDef="startedAt">
+                            <th mat-header-cell *matHeaderCellDef> Start processing date </th>
+                            <td mat-cell *matCellDef="let element">
+                                @if (element.startedAt) {
+                                    {{ element.startedAt | date: 'short' }}
+                                }
+                            </td>
+                        </ng-container>
+
+                        <!-- Request EndDate Column -->
+                        <ng-container matColumnDef="endedAt">
+                            <th mat-header-cell *matHeaderCellDef> End processing date </th>
+                            <td mat-cell *matCellDef="let element">
+                                @if (element.endedAt) {
+                                    {{ element.endedAt | date: 'short' }}
+                                }
+                            </td>
+                        </ng-container>
+
+                        <!-- Status Column -->
+                        <ng-container matColumnDef="status">
+                            <th mat-header-cell *matHeaderCellDef> Status </th>
+                            <td mat-cell *matCellDef="let element">
+                                <mat-chip-set aria-label="Status">
+                                    @switch (element.status) {
+                                        @case (followingImportStatus.New) {
+                                            <mat-chip [disableRipple]="true">New</mat-chip>
+                                        }
+                                        @case (followingImportStatus.Processing) {
+                                            <mat-chip [disableRipple]="true">Processing...</mat-chip>
+                                        }
+                                        @case (followingImportStatus.Finished) {
+                                            <mat-chip [disableRipple]="true">Finished</mat-chip>
+                                        }
+                                    }
+                                </mat-chip-set>
+                            </td>
+                        </ng-container>
+
+                        <!-- Action Column -->
+                        <ng-container matColumnDef="action">
+                            <th mat-header-cell *matHeaderCellDef></th>
+                            <td mat-cell *matCellDef="let element">
+                                <a [routerLink]="[]" (click)="openShowAccountsDialog(element)" aria-label="Show accounts">Show accounts</a>
+                            </td>
+                        </ng-container>
+                                        
+                        <tr mat-header-row *matHeaderRowDef="followingImportsDisplayedColumns()"></tr>
+                        <tr mat-row *matRowDef="let row; columns: followingImportsDisplayedColumns();"></tr>
+                    </table>
+                    <mat-paginator
+                        (page)="handleFollowingImportsPageEvent($event)"
+                        [length]="followingImportsArray.total"
+                        [pageIndex]="followingImportsPageIndex()"
+                        [pageSize]="followingImportsPageSize()"
+                        [pageSizeOptions]="[10, 25, 100]"
+                        aria-label="Select page">
+                    </mat-paginator>
+                }
+            }
+
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card class="margin-bottom-20" appearance="outlined">
+        <mat-card-header>
+            <mat-card-title>
                 Delete account
             </mat-card-title>
         </mat-card-header>
