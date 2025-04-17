@@ -1,5 +1,14 @@
 @if (isReady()) {
     <div @fadeIn>
+
+        @if (articles().length > 0) {
+            <div [ngClass]="{ 'padding-top-30': !isHandset(), 'padding-left-30': !isHandset(), 'padding-right-30': !isHandset(), 'padding-10': isHandset() }">
+                @for (article of articles(); track article) {
+                    <app-article-inline [article]="article"></app-article-inline>
+                }
+            </div>
+        }
+
         <div style="max-width: 960px; margin-left: auto; margin-right: auto;">
             <div class="header">Rediscover the beauty of photography</div>
             <div class="subheader text-muted">

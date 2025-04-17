@@ -37,6 +37,9 @@ import { PrivacyPage } from './privacy/privacy.page';
 import { BookmarksPage } from './bookmarks/bookmarks.page';
 import { FavouritesPage } from './favourites/favourites.page';
 import { ErrorItemsPage } from './error-items/error-items.page';
+import { ArticlesPage } from './articles/articles.page';
+import { ArticlePage } from './article/article.page';
+import { NewsPage } from './news/news.page';
 
 const routes: Routes = [
     { path: 'login', component: LoginPage, canActivate: [ loggedOutGuard ], title: 'Vernissage - Login' },
@@ -69,6 +72,10 @@ const routes: Routes = [
     { path: 'bookmarks', component: BookmarksPage, data: { reuse: true }, title: 'Vernissage - Bookmarks' },
     { path: 'favourites', component: FavouritesPage, data: { reuse: true }, title: 'Vernissage - Favourites' },
     { path: 'users', component: UsersPage, canActivate: [ authorizationGuard ], title: 'Vernissage - Users' },
+    { path: 'articles', component: ArticlesPage, canActivate: [ authorizationGuard ], title: 'Vernissage - Articles' },
+    { path: 'articles/create', component: ArticlePage, canActivate: [ authorizationGuard ], title: 'Vernissage - Create article' },
+    { path: 'articles/:id', component: ArticlePage, canActivate: [ authorizationGuard ], title: 'Vernissage - Edit article' },
+    { path: 'news', component: NewsPage, canActivate: [ authorizationGuard ], title: 'Vernissage - News' },
     { path: 'error-items', component: ErrorItemsPage, canActivate: [ authorizationGuard ], title: 'Vernissage - Errors' },
     { path: 'actors/:userName', component: ProfilePage, data: { reuse: true }, children: [
         { path: 'posts', component: ProfilePage },

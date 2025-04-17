@@ -8,6 +8,9 @@ import { ContextTimeline } from 'src/app/models/context-timeline';
 import { SettingsService } from 'src/app/services/http/settings.service';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { ReusableGalleryPageComponent } from 'src/app/common/reusable-gallery-page';
+import { ArticleVisibility } from 'src/app/models/article-visibility';
+import { ArticlesService } from 'src/app/services/http/articles.service';
+import { Article } from 'src/app/models/article';
 
 @Component({
     selector: 'app-home-signout',
@@ -21,6 +24,7 @@ export class HomeSignoutComponent extends ReusableGalleryPageComponent implement
     protected isReady = signal(false);
     protected showEditorsChoice = signal(false);
     protected mastodonUrl = signal<string | undefined>(undefined);
+    protected articles = signal<Article[]>([]);
     
     private lastRefreshTime = new Date();
     private routeParamsSubscription?: Subscription;
@@ -30,6 +34,7 @@ export class HomeSignoutComponent extends ReusableGalleryPageComponent implement
         private loadingService: LoadingService,
         private settingsService: SettingsService,
         private activatedRoute: ActivatedRoute,
+        private articlesService: ArticlesService,
         breakpointObserver: BreakpointObserver
     ) {
         super(breakpointObserver);
@@ -45,7 +50,10 @@ export class HomeSignoutComponent extends ReusableGalleryPageComponent implement
 
         this.routeParamsSubscription = this.activatedRoute.queryParams.subscribe(async () => {
             this.loadingService.showLoader();
-            await this.loadData();
+            await Promise.all([
+                this.loadData(),
+                this.loadArticles()
+            ]);
 
             this.isReady.set(true);
             this.loadingService.hideLoader();
@@ -66,7 +74,12 @@ export class HomeSignoutComponent extends ReusableGalleryPageComponent implement
 
             if (lastRefreshTimePlusTwoHours < currentTime) {
                 this.loadingService.showLoader();
-                await this.loadData();
+
+                await Promise.all([
+                    this.loadData(),
+                    this.loadArticles()
+                ]);
+
                 this.loadingService.hideLoader();
             }
         }
@@ -82,5 +95,13 @@ export class HomeSignoutComponent extends ReusableGalleryPageComponent implement
 
             this.statuses.set(statuses);
         }
+    }
+
+    private async loadArticles(): Promise<void> {
+        const articlesPage = 1;
+        const articlesSize = 10;
+
+        const internalArticles = await this.articlesService.all(articlesPage, articlesSize, ArticleVisibility.SignOutHome, false);
+        this.articles.set(internalArticles.data);
     }
 }
