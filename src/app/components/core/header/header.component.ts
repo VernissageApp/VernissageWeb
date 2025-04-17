@@ -32,6 +32,7 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
     protected showTrending = signal(false);
     protected showEditorsChoice = signal(false);
     protected showCategories = signal(false);
+    protected showNews = signal(false);
     protected isLightTheme = signal(false);
 
     private clearReuseStrategyAfterNavigationEnds = false;
@@ -75,6 +76,7 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
             this.showTrending.set(isLoggedInInternal || (this.settingsService.publicSettings?.showTrendingForAnonymous ?? false));
             this.showEditorsChoice.set(isLoggedInInternal || ((this.settingsService.publicSettings?.showEditorsChoiceForAnonymous ?? false) || (this.settingsService.publicSettings?.showEditorsUsersChoiceForAnonymous ?? false)));
             this.showCategories.set(isLoggedInInternal || (this.settingsService.publicSettings?.showCategoriesForAnonymous ?? false));
+            this.showNews.set(this.settingsService.publicSettings?.showNews ?? false);
 
             this.messagesSubscription = this.swPushService.messages.subscribe(async () => {
                 await this.loadNotificationCount();

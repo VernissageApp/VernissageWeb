@@ -9,6 +9,10 @@ import { ContextTimeline } from 'src/app/models/context-timeline';
 import { SettingsService } from 'src/app/services/http/settings.service';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { ReusableGalleryPageComponent } from 'src/app/common/reusable-gallery-page';
+import { ArticlesService } from 'src/app/services/http/articles.service';
+import { ArticleVisibility } from 'src/app/models/article-visibility';
+import { Article } from 'src/app/models/article';
+import { MessagesService } from 'src/app/services/common/messages.service';
 
 @Component({
     selector: 'app-home-signin',
@@ -22,6 +26,7 @@ export class HomeSigninComponent extends ReusableGalleryPageComponent implements
     protected timeline = model('private');
     protected isReady = signal(false);
     protected isLoggedIn = signal(false);
+    protected articles = signal<Article[]>([]);
     
     private lastRefreshTime = new Date();
     private routeParamsSubscription?: Subscription;
@@ -32,6 +37,8 @@ export class HomeSigninComponent extends ReusableGalleryPageComponent implements
         private loadingService: LoadingService,
         private settingsService: SettingsService,
         private activatedRoute: ActivatedRoute,
+        private articlesService: ArticlesService,
+        private messagesService: MessagesService,
         breakpointObserver: BreakpointObserver
     ) {
         super(breakpointObserver);
@@ -49,7 +56,10 @@ export class HomeSigninComponent extends ReusableGalleryPageComponent implements
             this.loadingService.showLoader();
 
             const pageType = params['t'] as string;
-            await this.loadData(pageType);
+            await Promise.all([
+                this.loadData(pageType),
+                this.loadArticles()
+            ]);
 
             this.isReady.set(true);
             this.loadingService.hideLoader();
@@ -70,7 +80,12 @@ export class HomeSigninComponent extends ReusableGalleryPageComponent implements
 
             if (lastRefreshTimePlusTwoHours < currentTime) {
                 this.loadingService.showLoader();
-                await this.loadData(this.timeline());
+
+                await Promise.all([
+                    this.loadData(this.timeline()),
+                    this.loadArticles()
+                ]);
+
                 this.loadingService.hideLoader();
             }
         }
@@ -85,6 +100,18 @@ export class HomeSigninComponent extends ReusableGalleryPageComponent implements
         };
 
         this.router.navigate([], navigationExtras);
+    }
+
+    protected async onDismissArticle(article: Article): Promise<void> {
+        try {
+            if (article.id) {
+                await this.articlesService.dismiss(article.id);
+                await this.loadArticles();
+            }
+        } catch (error) {
+            console.error(error);
+            this.messagesService.showServerError(error);
+        }
     }
 
     private async loadData(pageType: string): Promise<void> {
@@ -126,6 +153,14 @@ export class HomeSigninComponent extends ReusableGalleryPageComponent implements
                 }
                 break;
         }
+    }
+
+    private async loadArticles(): Promise<void> {
+        const articlesPage = 1;
+        const articlesSize = 10;
+
+        const internalArticles = await this.articlesService.all(articlesPage, articlesSize, ArticleVisibility.SignInHome, false);
+        this.articles.set(internalArticles.data);
     }
 
     private hasAccessToLocalTimeline(): boolean {
