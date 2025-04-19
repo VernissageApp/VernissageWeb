@@ -38,6 +38,9 @@ import { PrivacyPage } from './privacy/privacy.page';
 import { BookmarksPage } from './bookmarks/bookmarks.page';
 import { FavouritesPage } from './favourites/favourites.page';
 import { ErrorItemsPage } from './error-items/error-items.page';
+import { ArticlesPage } from './articles/articles.page';
+import { ArticlePage } from './article/article.page';
+import { NewsPage } from './news/news.page';
 
 @NgModule({
     imports: [
@@ -79,7 +82,10 @@ import { ErrorItemsPage } from './error-items/error-items.page';
         PrivacyPage,
         BookmarksPage,
         FavouritesPage,
-        ErrorItemsPage
+        ErrorItemsPage,
+        ArticlesPage,
+        ArticlePage,
+        NewsPage
     ],
     exports: [
         ComponentsModule,
@@ -116,7 +122,10 @@ import { ErrorItemsPage } from './error-items/error-items.page';
         PrivacyPage,
         BookmarksPage,
         FavouritesPage,
-        ErrorItemsPage
+        ErrorItemsPage,
+        ArticlesPage,
+        ArticlePage,
+        NewsPage
     ]
 })
 export class PagesModule { }

@@ -165,5 +165,12 @@ export enum EventType {
     UserSettingsDelete =  'userSettingsDelete',
 
     FollowImportsList = 'followImportsList',
-    FollowImportsUpload = 'followImportsUpload'
+    FollowImportsUpload = 'followImportsUpload',
+
+    ArticlesList = 'articlesList',
+    ArticlesRead = 'articlesRead',
+    ArticlesCreate = 'articlesCreate',
+    ArticlesUpdate = 'articlesUpdate',
+    ArticlesDelete = 'articlesDelete',
+    ArticlesDismiss = 'articlesDismiss'
 }

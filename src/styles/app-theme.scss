@@ -1,7 +1,7 @@
 @use '@angular/material' as mat;
 
 // Styles for the docs app that are based on the current theme.
-@mixin material-app-theme($theme, $contrast, $background, $cameraIcon, $faceIcon) {
+@mixin material-app-theme($theme, $contrast, $background, $cameraIcon, $faceIcon, $newsIcon) {
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
 
@@ -212,6 +212,15 @@
             height: 64px;
             background-size: 64px 64px;
             background-image: url($faceIcon);
+        }
+
+        .news {
+            margin-left: auto;
+            margin-right: auto;
+            width: 128px;
+            height: 128px;
+            background-size: 128px 128px;
+            background-image: url($newsIcon);
         }
     }
 

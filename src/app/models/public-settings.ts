@@ -3,6 +3,7 @@ export class PublicSettings {
     public isOpenAIEnabled = false;
     public webPushVapidPublicKey?: string;
     public imagesUrl?: string;
+    public showNews = false;
 
     public patreonUrl?: string;
     public mastodonUrl?: string;

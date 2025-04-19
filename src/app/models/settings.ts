@@ -36,6 +36,7 @@ export class Settings {
     public mastodonUrl = '';
     public statusPurgeAfterDays = 180;
     public imagesUrl = '';
+    public showNews = false;
 
     public isOpenAIEnabled = false;
     public openAIKey = '';

@@ -27,6 +27,13 @@
                         </button>
                     }
 
+                    @if (showNews()) {
+                        <button mat-menu-item [routerLink]="['/news']" (click)="markClearReuseStrategy()" aria-label="News">
+                            <mat-icon>news</mat-icon>
+                            <span>News</span>
+                        </button>
+                    }
+
                     @if (user() && isLoggedIn()) {
                         <mat-divider></mat-divider>
 
@@ -67,6 +74,12 @@
                         <mat-icon>loyalty</mat-icon>
                     </button>
                 }
+
+                @if (showNews()) {
+                    <button mat-icon-button color="primary" [routerLink]="['/news']" (click)="markClearReuseStrategy()" aria-label="News">
+                        <mat-icon>news</mat-icon>
+                    </button>
+                }
             }
 
             @if (deviceResolution() === resolution.tablet || deviceResolution() === resolution.browser) {
@@ -85,6 +98,12 @@
                 @if (showCategories()) {
                     <button mat-button color="primary" [routerLink]="['/categories']" (click)="markClearReuseStrategy()" aria-label="Categories" class="margin-right-5">
                         <mat-icon>loyalty</mat-icon> Categories
+                    </button>
+                }
+
+                @if (showNews()) {
+                    <button mat-button color="primary" [routerLink]="['/news']" (click)="markClearReuseStrategy()" aria-label="News" class="margin-right-5">
+                        <mat-icon>news</mat-icon> News
                     </button>
                 }
             }
@@ -181,6 +200,10 @@
                             <button mat-menu-item [routerLink]="['/users']" aria-label="Users">
                                 <mat-icon>people</mat-icon>
                                 <span>Users</span>
+                            </button>
+                            <button mat-menu-item [routerLink]="['/articles']" aria-label="Articles">
+                                <mat-icon>article</mat-icon>
+                                <span>Articles</span>
                             </button>
                             <button mat-menu-item [routerLink]="['/reports']" aria-label="Reports">
                                 <mat-icon>feedback</mat-icon>

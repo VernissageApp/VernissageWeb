@@ -48,7 +48,7 @@ export class GlobalErrorHandler implements ErrorHandler {
             }
 
             if (this.isForbiddenError(error)) {
-                await this.router.navigate(['/forbidden']);
+                await this.router.navigate(['/access-forbidden']);
                 return;
             }
 

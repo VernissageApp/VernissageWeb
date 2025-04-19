@@ -1,0 +1,17 @@
+<mat-card class="margin-bottom-10" [ngStyle]="{ 'background-color': article().color }" appearance="outlined">
+    @if (article().title; as inlineTitle) {
+        <mat-card-header>
+            <mat-card-title>{{ inlineTitle }}</mat-card-title>
+        </mat-card-header>
+    }
+    <mat-card-content>
+        @if (showDismissButton()) {
+            <div style="position: absolute; top: 4px; right: 4px">
+                <button mat-icon-button aria-label="Clear" (click)="onDismissClick()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+        }
+        <div class="margin-right-40" [innerHTML]="article().bodyHtml"></div>
+    </mat-card-content>
+</mat-card>

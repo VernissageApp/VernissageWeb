@@ -1,5 +1,14 @@
 @if (isReady()) {
     <div @fadeIn>
+
+        @if (articles().length > 0) {
+            <div [ngClass]="{ 'padding-top-30': !isHandset(), 'padding-left-30': !isHandset(), 'padding-right-30': !isHandset(), 'padding-10': isHandset() }">
+                @for (article of articles(); track article) {
+                    <app-article-inline [article]="article" (dismiss)="onDismissArticle($event)"></app-article-inline>
+                }
+            </div>
+        }
+
         <div class="flex-row flex-align-center flex-space-between margin-bottom-10" [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
             <h1>
                 <div>Timeline</div>
