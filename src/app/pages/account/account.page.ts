@@ -37,6 +37,7 @@ import { FollowingImport } from 'src/app/models/following-import';
 import { PageEvent } from '@angular/material/paginator';
 import { FollowingImportStatus } from 'src/app/models/following-import-status';
 import { FollowingImportAccountsDialog } from 'src/app/dialogs/following-import-accounts-dialog/following-import-accounts.dialog';
+import { FileSizeService } from 'src/app/services/common/file-size.service';
 
 @Component({
     selector: 'app-account',
@@ -63,6 +64,8 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
     protected followingImports = signal<PagedResult<FollowingImport> | undefined>(undefined);
     protected followingImportsPageIndex = signal(0);
     protected followingImportsPageSize = signal(10);
+    protected maxPictureFileSizeString = signal('');
+    protected maxImportFileSizeString = signal('');
 
     protected avatarSrc = signal('assets/avatar-placeholder.svg');
     protected headerSrc = signal('assets/header-placeholder.svg');
@@ -70,7 +73,8 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
     private selectedAvatarFile: any = null;
     private selectedHeaderFile: any = null;
     
-    private readonly defaultMaxFileSize = 10485760;
+    private readonly defaultPictureMaxFileSize = 2097152;
+    private readonly defaultImportMaxFileSize = 10485760;
     private userName = '';
     private readonly archivesDisplayedColumnsFull: string[] = ['requestDate', 'startDate', 'endDate', 'status', 'download'];
     private readonly archivesDisplayedColumnsMinimum: string[] = ['requestDate', 'download'];
@@ -90,6 +94,7 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
         private exportsService: ExportsService,
         private fileSaverService: FileSaverService,
         private followingImportsService: FollowingImportsService,
+        private fileSizeService: FileSizeService,
         private router: Router,
         public dialog: MatDialog,
         private clipboard: Clipboard,
@@ -101,6 +106,9 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
+
+        this.maxPictureFileSizeString.set(this.fileSizeService.getHumanFileSize(this.defaultPictureMaxFileSize, 0));
+        this.maxImportFileSizeString.set(this.fileSizeService.getHumanFileSize(this.defaultImportMaxFileSize, 0));
 
         try {
             this.loadingService.showLoader();
@@ -422,7 +430,7 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
         }
 
         const file = input.files[0];
-        if (file.size > this.defaultMaxFileSize) {
+        if (file.size > this.defaultImportMaxFileSize) {
             this.messageService.showError('Uploaded file is too large. Maximum size is 10mb.');
             return;
         }

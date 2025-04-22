@@ -49,7 +49,7 @@
                 <dd>{{ instanceObject.configuration?.statuses?.maxMediaAttachments ?? 0 }}</dd>
 
                 <dt>Image size limit:</dt>
-                <dd>{{ (instanceObject.configuration?.attachments?.imageSizeLimit ?? 0) / 1024 / 1024 }} MB</dd>
+                <dd>{{ getFileSizeString(instanceObject.configuration?.attachments?.imageSizeLimit ?? 0) }}</dd>
 
                 @if (instanceObject.email) {
                     <dt>Email:</dt>
