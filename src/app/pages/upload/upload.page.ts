@@ -26,6 +26,7 @@ import { StatusTextDialog } from 'src/app/dialogs/status-text-template-dialog/st
 import { MatDialog } from '@angular/material/dialog';
 import { UserSettingsService } from 'src/app/services/http/user-settings.service';
 import { UserSettingKey } from 'src/app/models/user-setting';
+import { FileSizeService } from 'src/app/services/common/file-size.service';
 
 @Component({
     selector: 'app-upload',
@@ -75,6 +76,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
         private windowService: WindowService,
         private dialog: MatDialog,
         private userSettingsService: UserSettingsService,
+        private fileSizeService: FileSizeService,
         breakpointObserver: BreakpointObserver
     ) {
         super(breakpointObserver);
@@ -83,7 +85,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
         this.maxFileSize = this.instanceService.instance?.configuration?.attachments?.imageSizeLimit ?? this.defaultMaxFileSize;
-        this.maxFileSizeString.set(this.getHumanFileSize(this.maxFileSize, 0));
+        this.maxFileSizeString.set(this.fileSizeService.getHumanFileSize(this.maxFileSize, 0));
 
         this.maxStatusLength.set(this.instanceService.instance?.configuration?.statuses?.maxCharacters ?? 500);
         this.isOpenAIEnabled.set(this.settingsService.publicSettings?.isOpenAIEnabled ?? false);
@@ -102,7 +104,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
     protected async onPhotoSelected(event: any): Promise<void> {
         const file = event.target.files[0];
         if (file.size > this.maxFileSize) {
-            this.messageService.showError('Uploaded file is too large. Maximum size is 10mb.');
+            this.messageService.showError(`Uploaded file is too large. Maximum size is ${this.maxFileSizeString()}.`);
             return;
         }
 
@@ -507,26 +509,6 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
         } else {
             return '';
         }
-    }
-
-    private getHumanFileSize(bytes: number, places: number) {
-        const thresh = 1024;
-        const units = ['kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-
-        if (Math.abs(bytes) < thresh) {
-            return bytes + ' B';
-        }
-
-        let u = -1;
-        const r = 10**places;
-
-        do {
-            bytes /= thresh;
-            ++u;
-        } while (Math.round(Math.abs(bytes) * r) / r >= thresh && u < units.length - 1);
-
-
-        return bytes.toFixed(places) + ' ' + units[u];
     }
 
     private stripModel(model: string, manufacturer: string): string {
