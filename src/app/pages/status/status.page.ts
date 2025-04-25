@@ -875,7 +875,6 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     }
 
     private setCardMetatags(): void {
-        const internalStatus = this.status();
         const internalMainStatus = this.mainStatus();
 
         const statusTitle = (internalMainStatus?.user?.name ?? '') + ` (@${internalMainStatus?.user?.userName ?? ''})`;
@@ -888,7 +887,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         this.metaService.updateTag({ name: 'description', content: statusDescription });
 
         // <meta property="og:url" content="https://vernissage.xxx/@user/112348668082695358">
-        this.metaService.updateTag({ property: 'og:url', content: this.windowService.getApplicationUrl() });
+        this.metaService.updateTag({ property: 'og:url', content: `${this.windowService.getApplicationBaseUrl()}/@${internalMainStatus?.user?.userName ?? ''}/${internalMainStatus?.id ?? ''}` });
 
         // <meta property="og:type" content="website">
         this.metaService.updateTag({ property: 'og:type', content: 'website' });
@@ -900,10 +899,10 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         this.metaService.updateTag({ property: 'og:description', content: statusDescription });
 
         // <meta property="og:logo" content="https://vernissage.xxx/assets/icons/icon-128x128.png" />
-        this.metaService.updateTag({ property: 'og:logo', content: `https://${this.windowService.getApplicationBaseUrl()}/assets/icons/icon-128x128.png` });
+        this.metaService.updateTag({ property: 'og:logo', content: `${this.windowService.getApplicationBaseUrl()}/assets/icons/icon-128x128.png` });
 
-        if (internalStatus?.attachments && internalStatus?.attachments.length > 0) {
-            const firstImage = internalStatus?.attachments[0];
+        if (internalMainStatus?.attachments && internalMainStatus?.attachments.length > 0) {
+            const firstImage = internalMainStatus?.attachments[0];
 
             // <meta property="og:image" content="https://files.vernissage.xxx/media_attachments/files/112348.png">
             this.metaService.updateTag({ property: 'og:image', content: firstImage.smallFile?.url ?? '' });

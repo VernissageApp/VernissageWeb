@@ -349,8 +349,8 @@ export class ProfilePage extends ReusableGalleryPageComponent implements OnInit,
         // <meta name="description" content="My suite of cool apps is coming together nicely. What would you like to see me build next?">
         this.metaService.updateTag({ name: 'description', content: profileDescription });
 
-        // <meta property="og:url" content="https://vernissage.xxx/@user/112348668082695358">
-        this.metaService.updateTag({ property: 'og:url', content: this.windowService.getApplicationUrl() });
+        // <meta property="og:url" content="https://vernissage.xxx/@user">
+        this.metaService.updateTag({ property: 'og:url', content: `${this.windowService.getApplicationBaseUrl()}/@${this.user()?.userName ?? ''}` });
 
         // <meta property="og:type" content="website">
         this.metaService.updateTag({ property: 'og:type', content: 'website' });
@@ -362,7 +362,7 @@ export class ProfilePage extends ReusableGalleryPageComponent implements OnInit,
         this.metaService.updateTag({ property: 'og:description', content: profileDescription });
 
         // <meta property="og:logo" content="https://vernissage.xxx/assets/icons/icon-128x128.png" />
-        this.metaService.updateTag({ property: 'og:logo', content: `https://${this.windowService.getApplicationBaseUrl()}/assets/icons/icon-128x128.png` });
+        this.metaService.updateTag({ property: 'og:logo', content: `${this.windowService.getApplicationBaseUrl()}/assets/icons/icon-128x128.png` });
 
         const avatarImage = this.user()?.avatarUrl;
         if (avatarImage) {
