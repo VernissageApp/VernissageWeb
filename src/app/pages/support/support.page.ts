@@ -9,6 +9,7 @@ import { HealthService } from 'src/app/services/http/health.service';
 import { Health } from 'src/app/models/health';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { environment } from 'src/environments/environment';
+import { FileSizeService } from 'src/app/services/common/file-size.service';
 
 @Component({
     selector: 'app-support',
@@ -35,6 +36,7 @@ export class SupportPage extends ResponsiveComponent implements OnInit {
         private settingsService: SettingsService,
         private healthService: HealthService,
         private messageService: MessagesService,
+        private fileSizeService: FileSizeService,
         breakpointObserver: BreakpointObserver
     ) {
         super(breakpointObserver);
@@ -60,6 +62,10 @@ export class SupportPage extends ResponsiveComponent implements OnInit {
         this.loadHealthStatus();
 
         this.isReady.set(true);
+    }
+
+    protected getFileSizeString(bytes: number): string {
+        return this.fileSizeService.getHumanFileSize(bytes, 0);
     }
 
     private async loadHealthStatus(): Promise<void> {

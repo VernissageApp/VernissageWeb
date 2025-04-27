@@ -10,6 +10,7 @@ import { Country } from 'src/app/models/country';
 import { License } from 'src/app/models/license';
 import { Location } from 'src/app/models/location';
 import { UploadPhoto } from 'src/app/models/upload-photo';
+import { FileSizeService } from 'src/app/services/common/file-size.service';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { AttachmentsService } from 'src/app/services/http/attachments.service';
 import { CountriesService } from 'src/app/services/http/countries.service';
@@ -37,6 +38,7 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
     protected describeInProgress = signal(false);
     protected currentCountry = signal<Country | undefined>(undefined);
     protected currentCity = signal<Location | undefined>(undefined);
+    protected hdrFileSizeString = signal<string>('');
 
     private readonly defaultMaxHdrFileSize = 4194304;
     private readonly defaultCountryCacheKey = 'default-country';
@@ -53,6 +55,7 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
         private messageService: MessagesService,
         private settingsService: SettingsService,
         private persistenceService: PersistenceService,
+        private fileSizeService: FileSizeService,
         breakpointObserver: BreakpointObserver
     ) {
         super(breakpointObserver);
@@ -63,6 +66,7 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
 
         this.isOpenAIEnabled.set(this.settingsService.publicSettings?.isOpenAIEnabled ?? false);
         this.allCountries = await this.countriesService.all();
+        this.hdrFileSizeString.set(this.fileSizeService.getHumanFileSize(this.defaultMaxHdrFileSize, 0));
 
         this.filteredCountries$ = this.countriesControl.valueChanges.pipe(
             startWith(''),
@@ -164,7 +168,7 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
         try {
             const file = event.target.files[0];
             if (file.size > this.defaultMaxHdrFileSize) {
-                this.messageService.showError('Uploaded file is too large. Maximum size is 4MB.');
+                this.messageService.showError(`Uploaded file is too large. Maximum size is ${this.hdrFileSizeString()}.`);
                 return;
             }
 

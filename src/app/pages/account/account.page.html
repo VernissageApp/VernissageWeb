@@ -141,7 +141,7 @@
         <mat-card class="margin-bottom-20" appearance="outlined">
             <mat-card-header>
                 <mat-card-title>Avatar</mat-card-title>
-                <mat-card-subtitle>PNG, GIF or JPG. At most 2 MB. Will be downscaled to 600x600px</mat-card-subtitle>
+                <mat-card-subtitle>PNG, GIF or JPG. At most {{ maxPictureFileSizeString() }}. Will be downscaled to 600x600px</mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>
                 <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
@@ -169,7 +169,7 @@
         <mat-card class="margin-bottom-20" appearance="outlined">
             <mat-card-header>
                 <mat-card-title>Header</mat-card-title>
-                <mat-card-subtitle>PNG, GIF or JPG. At most 2 MB. Will be downscaled to 1500x500px</mat-card-subtitle>
+                <mat-card-subtitle>PNG, GIF or JPG. At most {{ maxPictureFileSizeString() }}. Will be downscaled to 1500x500px</mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>
                 <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
@@ -430,7 +430,7 @@
             <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
                 <div>
                     You can import data previously exported from another server, such as a list of accounts you are following.
-                    Imported accounts will be merged with the ones you are already following.
+                    Imported accounts will be merged with the ones you are already following. Max file size is {{ maxImportFileSizeString() }}.
                 </div>
                 <div class="text-right">
                     <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file">
