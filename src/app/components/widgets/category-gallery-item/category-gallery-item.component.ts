@@ -1,5 +1,4 @@
-import { BreakpointObserver } from '@angular/cdk/layout';
-import { ChangeDetectionStrategy, Component, input, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, OnInit, signal } from '@angular/core';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { Category } from 'src/app/models/category';
@@ -25,14 +24,9 @@ export class CategoryGalleryItemComponent extends ResponsiveComponent implements
 
     private readonly numberOfVisibleStatuses = 10;
 
-    constructor(
-        private timelineService: TimelineService,
-        private preferencesService: PreferencesService,
-        private contextStatusesService: ContextStatusesService,
-        breakpointObserver: BreakpointObserver
-    ) {
-        super(breakpointObserver);
-    }
+    private timelineService = inject(TimelineService);
+    private preferencesService = inject(PreferencesService);
+    private contextStatusesService = inject(ContextStatusesService);
 
     override ngOnInit(): void {
         super.ngOnInit();

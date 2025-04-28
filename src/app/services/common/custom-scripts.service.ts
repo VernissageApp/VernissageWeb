@@ -1,4 +1,4 @@
-import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import { Injectable, PLATFORM_ID, inject } from '@angular/core';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { SettingsService } from '../http/settings.service';
 
@@ -8,15 +8,15 @@ import { SettingsService } from '../http/settings.service';
 export class CustomScriptsService {
     private isBrowser = false;
 
-    constructor(
-        @Inject(DOCUMENT) private document: Document,
-        @Inject(PLATFORM_ID) private platformId: object,
-        private settingsService: SettingsService
-    ) {
+    private document = inject(DOCUMENT);
+    private platformId = inject(PLATFORM_ID);
+    private settingsService = inject(SettingsService);
+
+    constructor() {
         this.isBrowser = isPlatformBrowser(this.platformId);
     }
 
-    public inject(): void {
+    public injectScripts(): void {
         if (!this.isBrowser) {
             return;
         }

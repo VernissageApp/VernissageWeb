@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, Inject, OnInit, signal } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { PreferencesService } from 'src/app/services/common/preferences.service';
 
 @Component({
@@ -13,11 +13,8 @@ export class ProfileCodeDialog implements OnInit {
     protected profileUrl = signal('');
     protected isLightTheme = signal(false);
 
-    constructor(
-        public dialogRef: MatDialogRef<ProfileCodeDialog>,
-        public preferencesService: PreferencesService,
-        @Inject(MAT_DIALOG_DATA) public data?: string) {
-    }
+    private preferencesService = inject(PreferencesService);
+    private data?: string = inject(MAT_DIALOG_DATA);
 
     ngOnInit(): void {
         if (this.data) {

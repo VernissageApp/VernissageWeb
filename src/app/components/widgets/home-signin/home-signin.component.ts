@@ -1,10 +1,9 @@
-import { Component, OnInit, OnDestroy, HostListener, signal, model, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, signal, model, ChangeDetectionStrategy, inject } from '@angular/core';
 import { TimelineService } from 'src/app/services/http/timeline.service';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 import { ActivatedRoute, NavigationExtras } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { LoadingService } from 'src/app/services/common/loading.service';
-import { BreakpointObserver } from '@angular/cdk/layout';
 import { ContextTimeline } from 'src/app/models/context-timeline';
 import { SettingsService } from 'src/app/services/http/settings.service';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
@@ -31,18 +30,13 @@ export class HomeSigninComponent extends ReusableGalleryPageComponent implements
     private lastRefreshTime = new Date();
     private routeParamsSubscription?: Subscription;
 
-    constructor(
-        private authorizationService: AuthorizationService,
-        private timelineService: TimelineService,
-        private loadingService: LoadingService,
-        private settingsService: SettingsService,
-        private activatedRoute: ActivatedRoute,
-        private articlesService: ArticlesService,
-        private messagesService: MessagesService,
-        breakpointObserver: BreakpointObserver
-    ) {
-        super(breakpointObserver);
-    }
+    private authorizationService = inject(AuthorizationService);
+    private timelineService = inject(TimelineService);
+    private loadingService = inject(LoadingService);
+    private settingsService = inject(SettingsService);
+    private activatedRoute = inject(ActivatedRoute);
+    private articlesService = inject(ArticlesService);
+    private messagesService = inject(MessagesService);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();

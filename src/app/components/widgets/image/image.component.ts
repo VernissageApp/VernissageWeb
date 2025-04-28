@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, computed, effect, ElementRef, Inject, input, OnDestroy, OnInit, PLATFORM_ID, signal, viewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, computed, effect, ElementRef, inject, input, OnDestroy, OnInit, PLATFORM_ID, signal, viewChild } from '@angular/core';
 import { decode } from 'blurhash';
 import { AvatarSize } from '../avatar/avatar-size';
 import { User } from 'src/app/models/user';
@@ -59,15 +59,16 @@ export class ImageComponent implements OnInit, OnDestroy, AfterViewInit {
     private isBrowser = false;
     private blurhash = '';
 
-    constructor(
-        @Inject(PLATFORM_ID) platformId: object,
-        private preferencesService: PreferencesService,
-        private statusesService: StatusesService,
-        private relationshipsService: RelationshipsService,
-        private router: Router,
-        private messageService: MessagesService,
-        private authorizationService: AuthorizationService) {
-            this.isBrowser = isPlatformBrowser(platformId);
+    private platformId = inject(PLATFORM_ID);
+    private preferencesService = inject(PreferencesService);
+    private statusesService = inject(StatusesService);
+    private relationshipsService = inject(RelationshipsService);
+    private router = inject(Router);
+    private messageService = inject(MessagesService);
+    private authorizationService = inject(AuthorizationService);
+
+    constructor() {
+            this.isBrowser = isPlatformBrowser(this.platformId);
 
             // Because <app-image> components are reused by Angular when we have trackBy directive,
             // we cannot change priority from false to true (Angular is throwing an exception then).

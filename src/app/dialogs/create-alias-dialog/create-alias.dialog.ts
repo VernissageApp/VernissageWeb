@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, model } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, model } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { UserAlias } from 'src/app/models/user-alias';
 import { MessagesService } from 'src/app/services/common/messages.service';
@@ -14,11 +14,9 @@ import { UserAliasesService } from 'src/app/services/http/user-aliases.service';
 export class CreateAliasDialog {
     protected alias = model('');
 
-    constructor(
-        private messageService: MessagesService,
-        private userAliasesService: UserAliasesService,
-        public dialogRef: MatDialogRef<CreateAliasDialog>) {
-    }
+    private messageService = inject(MessagesService);
+    private userAliasesService = inject(UserAliasesService);
+    private dialogRef = inject(MatDialogRef<CreateAliasDialog>);
 
     protected onNoClick(): void {
         this.dialogRef.close();

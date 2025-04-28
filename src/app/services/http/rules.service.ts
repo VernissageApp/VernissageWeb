@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { WindowService } from '../common/window.service';
 import { PagedResult } from 'src/app/models/paged-result';
@@ -9,9 +9,8 @@ import { Rule } from 'src/app/models/rule';
     providedIn: 'root'
 })
 export class RulesService {
-
-    constructor(private httpClient: HttpClient, private windowService: WindowService) {
-    }
+    private httpClient = inject(HttpClient);
+    private windowService = inject(WindowService);
 
     public async get(page: number, size: number): Promise<PagedResult<Rule>> {
         const event$ = this.httpClient.get<PagedResult<Rule>>(this.windowService.apiUrl() + `/api/v1/rules?page=${page}&size=${size}`);

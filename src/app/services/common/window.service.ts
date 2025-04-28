@@ -1,4 +1,4 @@
-import { Inject, Injectable, Optional, PLATFORM_ID } from '@angular/core';
+import { inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Location, isPlatformServer } from '@angular/common';
 import { getWindow } from 'ssr-window';
 import { Request } from "express";
@@ -8,11 +8,9 @@ import { REQUEST } from 'express.tokens';
     providedIn: 'root'
 })
 export class WindowService {
-    constructor(
-        @Inject(PLATFORM_ID) private platformId: object,
-        @Optional() @Inject(REQUEST) protected request: Request | null,
-        private location: Location) {
-    }
+    private platformId = inject(PLATFORM_ID);
+    private request: Request | null = inject(REQUEST, { optional: true });
+    private location = inject(Location);
 
     get nativeWindow(): Window {
         return getWindow();

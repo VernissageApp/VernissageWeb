@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject, model } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, model } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { User } from 'src/app/models/user';
 
@@ -11,10 +11,8 @@ import { User } from 'src/app/models/user';
 export class DeleteAccountDialog {
     protected email = model('');
 
-    constructor(
-        public dialogRef: MatDialogRef<DeleteAccountDialog>,
-        @Inject(MAT_DIALOG_DATA) public data: User
-    ) { }
+    public dialogRef = inject(MatDialogRef<DeleteAccountDialog>)
+    public data: User = inject(MAT_DIALOG_DATA);
 
     protected onNoClick(): void {
         this.dialogRef.close();

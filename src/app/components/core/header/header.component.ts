@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Renderer2, signal, computed, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Renderer2, signal, computed, ChangeDetectionStrategy, inject } from '@angular/core';
 import { NavigationEnd, RouteReuseStrategy, Router } from '@angular/router';
 import { filter, Subscription } from 'rxjs';
 
@@ -6,7 +6,6 @@ import { User } from 'src/app/models/user';
 import { InstanceService } from 'src/app/services/http/instance.service';
 import { AuthorizationService } from '../../../services/authorization/authorization.service';
 import { Role } from 'src/app/models/role';
-import { BreakpointObserver } from '@angular/cdk/layout';
 import { Resolution, ResponsiveComponent } from 'src/app/common/responsive';
 import { NotificationsService } from 'src/app/services/http/notifications.service';
 import { CustomReuseStrategy } from 'src/app/common/custom-reuse-strategy';
@@ -33,6 +32,7 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
     protected showEditorsChoice = signal(false);
     protected showCategories = signal(false);
     protected showNews = signal(false);
+    protected showSharedBusinessCards = signal(false);
     protected isLightTheme = signal(false);
 
     private clearReuseStrategyAfterNavigationEnds = false;
@@ -41,21 +41,16 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
     private messagesSubscription?: Subscription;
     private routeNavigationEndSubscription?: Subscription;
 
-    constructor(
-        private authorizationService: AuthorizationService,
-        private instanceService: InstanceService,
-        private notificationsService: NotificationsService,
-        private settingsService: SettingsService,
-        private userDisplayService: UserDisplayService,
-        private routeReuseStrategy: RouteReuseStrategy,
-        private router: Router,
-        private swPushService: SwPush,
-        private preferencesService: PreferencesService,
-        private renderer: Renderer2,
-        breakpointObserver: BreakpointObserver
-    ) {
-        super(breakpointObserver)
-    }
+    private authorizationService = inject(AuthorizationService);
+    private instanceService = inject(InstanceService);
+    private notificationsService = inject(NotificationsService);
+    private settingsService = inject(SettingsService);
+    private userDisplayService = inject(UserDisplayService);
+    private routeReuseStrategy = inject(RouteReuseStrategy);
+    private router = inject(Router);
+    private swPushService = inject(SwPush);
+    private preferencesService = inject(PreferencesService);
+    private renderer = inject(Renderer2);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
@@ -77,6 +72,7 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
             this.showEditorsChoice.set(isLoggedInInternal || ((this.settingsService.publicSettings?.showEditorsChoiceForAnonymous ?? false) || (this.settingsService.publicSettings?.showEditorsUsersChoiceForAnonymous ?? false)));
             this.showCategories.set(isLoggedInInternal || (this.settingsService.publicSettings?.showCategoriesForAnonymous ?? false));
             this.showNews.set(isLoggedInInternal && (this.settingsService.publicSettings?.showNews ?? false));
+            this.showSharedBusinessCards.set(this.settingsService.publicSettings?.showSharedBusinessCards ?? false);
 
             this.messagesSubscription = this.swPushService.messages.subscribe(async () => {
                 await this.loadNotificationCount();

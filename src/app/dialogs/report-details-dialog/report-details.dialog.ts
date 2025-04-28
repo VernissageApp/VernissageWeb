@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject, model, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, model, OnInit, signal } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Rule } from 'src/app/models/rule';
 import { Report } from 'src/app/models/report';
@@ -31,11 +31,9 @@ export class ReportDetailsDialog implements OnInit {
         "Violence"
     ]);
 
-    constructor(
-        private instanceService: InstanceService,
-        public dialogRef: MatDialogRef<ReportDetailsDialog>,
-        @Inject(MAT_DIALOG_DATA) public data?: Report) {
-    }
+    private instanceService = inject(InstanceService);
+    private dialogRef = inject(MatDialogRef<ReportDetailsDialog>);
+    private data?: Report = inject(MAT_DIALOG_DATA);
 
     ngOnInit(): void {
         this.rules.set(this.instanceService.instance?.rules ?? []);

@@ -40,6 +40,7 @@ import { HomeSigninComponent } from './widgets/home-signin/home-signin.component
 import { HomeSignoutComponent } from './widgets/home-signout/home-signout.component';
 import { CategoryListComponent } from './widgets/category-list/category-list.component';
 import { ArticleInlineComponent } from './widgets/article-inline/article-inline.component';
+import { BusinessCardComponent } from './widgets/business-card/business-card.component';
 
 @NgModule({
     declarations: [
@@ -73,7 +74,8 @@ import { ArticleInlineComponent } from './widgets/article-inline/article-inline.
         HomeSigninComponent,
         HomeSignoutComponent,
         CategoryListComponent,
-        ArticleInlineComponent
+        ArticleInlineComponent,
+        BusinessCardComponent
     ],
     exports: [
         BrowserModule,
@@ -112,6 +114,7 @@ import { ArticleInlineComponent } from './widgets/article-inline/article-inline.
         HomeSignoutComponent,
         CategoryListComponent,
         ArticleInlineComponent,
+        BusinessCardComponent,
         DirectivesModule
     ],
     imports: [

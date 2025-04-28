@@ -1,4 +1,4 @@
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { ChangeEmail } from 'src/app/models/change-email';
@@ -19,12 +19,13 @@ import { SsrCookieService } from '../common/ssr-cookie.service';
 export class AccountService {
     private isBrowser = false;
 
-    constructor(
-        @Inject(PLATFORM_ID) platformId: object,
-        private httpClient: HttpClient,
-        private windowService: WindowService,
-        private cookieService: SsrCookieService) {
-            this.isBrowser = isPlatformBrowser(platformId);
+    private platformId = inject(PLATFORM_ID);
+    private cookieService = inject(SsrCookieService);
+    private httpClient = inject(HttpClient);
+    private windowService = inject(WindowService);
+
+    constructor() {
+        this.isBrowser = isPlatformBrowser(this.platformId);
     }
 
     public async refreshToken(): Promise<UserPayloadToken | null> {

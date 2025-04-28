@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, model, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, model, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { encode } from 'blurhash';
 import * as ExifReader from 'exifreader';
@@ -14,7 +14,6 @@ import { fadeInAnimation } from '../../animations/fade-in.animation';
 import { CategoriesService } from 'src/app/services/http/categories.service';
 import { Category } from 'src/app/models/category';
 import { ResponsiveComponent } from 'src/app/common/responsive';
-import { BreakpointObserver } from '@angular/cdk/layout';
 import { License } from 'src/app/models/license';
 import { LicensesService } from 'src/app/services/http/liceses.service';
 import { InstanceService } from 'src/app/services/http/instance.service';
@@ -63,24 +62,19 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
     private maxFileSize = 0;
     private readonly defaultMaxFileSize = 10485760;
 
-    constructor(
-        private messageService: MessagesService,
-        private attachmentsService: AttachmentsService,
-        private categoriesService: CategoriesService,
-        private licensesService: LicensesService,
-        private statusesService: StatusesService,
-        private instanceService: InstanceService,
-        private router: Router,
-        private settingsService: SettingsService,
-        private randomGeneratorService: RandomGeneratorService,
-        private windowService: WindowService,
-        private dialog: MatDialog,
-        private userSettingsService: UserSettingsService,
-        private fileSizeService: FileSizeService,
-        breakpointObserver: BreakpointObserver
-    ) {
-        super(breakpointObserver);
-    }
+    private messageService = inject(MessagesService);
+    private attachmentsService = inject(AttachmentsService);
+    private categoriesService = inject(CategoriesService);
+    private licensesService = inject(LicensesService);
+    private statusesService = inject(StatusesService);
+    private instanceService = inject(InstanceService);
+    private router = inject(Router);
+    private settingsService = inject(SettingsService);
+    private randomGeneratorService = inject(RandomGeneratorService);
+    private windowService = inject(WindowService);
+    private dialog = inject(MatDialog);
+    private userSettingsService = inject(UserSettingsService);
+    private fileSizeService = inject(FileSizeService);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();

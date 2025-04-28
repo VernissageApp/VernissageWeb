@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { WindowService } from '../common/window.service';
@@ -12,8 +12,8 @@ export class ErrorItemsService {
     private lastErrorDate?: Date;
     private readonly offset = 5000;
 
-    constructor(private httpClient: HttpClient, private windowService: WindowService) {
-    }
+    private httpClient = inject(HttpClient);
+    private windowService = inject(WindowService);
 
     public async get(page: number, size: number, query: string): Promise<PagedResult<ErrorItem>> {
         const event$ = this.httpClient.get<PagedResult<ErrorItem>>(this.windowService.apiUrl() + `/api/v1/error-items?page=${page}&size=${size}&query=${query ?? ''}`);

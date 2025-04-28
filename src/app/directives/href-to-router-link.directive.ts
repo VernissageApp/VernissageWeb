@@ -1,4 +1,4 @@
-import { Directive, HostListener } from "@angular/core";
+import { Directive, HostListener, inject } from "@angular/core";
 import { Router } from "@angular/router";
 import { WindowService } from "../services/common/window.service";
 
@@ -7,8 +7,8 @@ import { WindowService } from "../services/common/window.service";
     standalone: false
 })
   export class HrefToRouterLinkDirective {
-    constructor(private router: Router, private windowService: WindowService) {
-    }
+    private router = inject(Router);
+    private windowService = inject(WindowService);
     
     @HostListener('click', ['$event'])
     onClick(event: Event) {

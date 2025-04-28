@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { UserPayloadToken } from 'src/app/models/user-payload-token';
 import { IdentityToken } from 'src/app/models/identity-token';
@@ -9,8 +9,8 @@ import { WindowService } from '../common/window.service';
     providedIn: 'root'
 })
 export class IdentityService {
-    constructor(private httpClient: HttpClient, private windowService: WindowService) {
-    }
+    private httpClient = inject(HttpClient);
+    private windowService = inject(WindowService);
 
     public async login(identityToken: IdentityToken): Promise<UserPayloadToken> {
         const event$ = this.httpClient.post<UserPayloadToken>(this.windowService.apiUrl() + '/api/v1/identity/login', identityToken);

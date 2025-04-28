@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, NavigationStart } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/models/user';
@@ -10,7 +10,6 @@ import { RelationshipsService } from 'src/app/services/http/relationships.servic
 import { ProfilePageTab } from 'src/app/models/profile-page-tab';
 import { LoadingService } from 'src/app/services/common/loading.service';
 import { LinkableResult } from 'src/app/models/linkable-result';
-import { BreakpointObserver } from '@angular/cdk/layout';
 import { DOCUMENT } from '@angular/common';
 import { Meta, Title } from '@angular/platform-browser';
 import { WindowService } from 'src/app/services/common/window.service';
@@ -20,6 +19,11 @@ import { PreferencesService } from 'src/app/services/common/preferences.service'
 import { UserDisplayService } from 'src/app/services/common/user-display.service';
 import { ContextTimeline } from 'src/app/models/context-timeline';
 import { ReusableGalleryPageComponent } from 'src/app/common/reusable-gallery-page';
+import { ShareBusinessCardDialog } from 'src/app/dialogs/share-business-card-dialog/share-business-card.dialog';
+import { SharedBusinessCardsService } from 'src/app/services/http/shared-business-cards.service';
+import { MessagesService } from 'src/app/services/common/messages.service';
+import { BusinessCardsService } from 'src/app/services/http/business-cards.service';
+import { SettingsService } from 'src/app/services/http/settings.service';
 
 @Component({
     selector: 'app-profile',
@@ -33,6 +37,7 @@ export class ProfilePage extends ReusableGalleryPageComponent implements OnInit,
     protected readonly profilePageTab = ProfilePageTab;
     protected isReady = signal(false);
 
+    protected showSharedBusinessCards = signal(false);
     protected allFollowingDisplayed = signal(false);
     protected allFollowersDisplayed = signal(false);
     protected squareImages = signal(false);
@@ -54,23 +59,22 @@ export class ProfilePage extends ReusableGalleryPageComponent implements OnInit,
     private userName!: string;
     private loadingDifferentProfile = false;
 
-    constructor(
-        @Inject(DOCUMENT) private document: Document,
-        private authorizationService: AuthorizationService,
-        private usersService: UsersService,
-        private relationshipsService: RelationshipsService,
-        private loadingService: LoadingService,
-        private activatedRoute: ActivatedRoute,
-        private titleService: Title,
-        private metaService: Meta,
-        private windowService: WindowService,
-        private preferencesService: PreferencesService,
-        protected userDisplayService: UserDisplayService,
-        public dialog: MatDialog,
-        breakpointObserver: BreakpointObserver
-    ) {
-        super(breakpointObserver);
-    }
+    private document = inject(DOCUMENT);
+    private authorizationService = inject(AuthorizationService);
+    private usersService = inject(UsersService);
+    private relationshipsService = inject(RelationshipsService);
+    private loadingService = inject(LoadingService);
+    private activatedRoute = inject(ActivatedRoute);
+    private titleService = inject(Title);
+    private metaService = inject(Meta);
+    private windowService = inject(WindowService);
+    private preferencesService = inject(PreferencesService);
+    private dialog = inject(MatDialog);
+    private sharedBusinessCardsService = inject(SharedBusinessCardsService);
+    private messageService = inject(MessagesService);
+    private businessCardsService = inject(BusinessCardsService);
+    private settingsService = inject(SettingsService);
+    protected userDisplayService = inject(UserDisplayService);
 
     override onRouteNavigationStart(navigationStarEvent: NavigationStart): void {
         if (navigationStarEvent.url.includes(this.userName.substring(1))) {
@@ -104,6 +108,7 @@ export class ProfilePage extends ReusableGalleryPageComponent implements OnInit,
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
         this.squareImages.set(this.preferencesService.isSquareImages);
+        this.showSharedBusinessCards.set(this.settingsService.publicSettings?.showSharedBusinessCards ?? false);
 
         this.routeParamsSubscription = this.activatedRoute.params.subscribe(async params => {
             this.isReady.set(false);
@@ -270,7 +275,31 @@ export class ProfilePage extends ReusableGalleryPageComponent implements OnInit,
         }
     }
 
-    protected onAvatarClick(): void {
+    protected async onShareBusinessCard(): Promise<void> {
+        const businessCardExists = await this.businessCardsService.businessCardExists();
+        if (!businessCardExists) {
+            this.messageService.showError('You need to create business card first.');
+            return;
+        }
+
+        const dialogRef = this.dialog.open(ShareBusinessCardDialog, { width: '500px' });
+
+        dialogRef.afterClosed().subscribe(async (result) => {
+            if (result) {
+                try {
+                    const sharedBusinessCard = await this.sharedBusinessCardsService.create(result);
+                    this.messageService.showSuccess('Business card has been shared.');
+
+                    this.router.navigate(['/shared-cards', sharedBusinessCard.id], { queryParams: { 'qr': true } });
+                } catch (error) {
+                    console.error(error);
+                    this.messageService.showServerError(error);
+                }
+            }
+        });
+    }
+
+    protected onQRCodeClick(): void {
         this.dialog.open(ProfileCodeDialog, {
             data: this.user()?.url
         });

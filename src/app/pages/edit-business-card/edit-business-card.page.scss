@@ -1,0 +1,35 @@
+.input-color-container {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background-color: white;
+    border: 1px solid #D4D9E2;
+
+    .input-color {
+        appearance: none;
+        background: transparent;
+        border: none;
+        height: 36px;
+        width: 36px;
+        cursor: pointer;
+    }
+    
+    .input-color::-webkit-color-swatch {
+        border-radius: 6px;
+        border: none;
+    }
+}
+
+::ng-deep .business-card-container {
+    width: 380px;
+    min-height: 800px;
+    border: 1px solid #e0e0e0;
+    border-radius: 16px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 2px;
+
+    .top {
+        border-radius: 14px 14px 0 0;
+    }
+}

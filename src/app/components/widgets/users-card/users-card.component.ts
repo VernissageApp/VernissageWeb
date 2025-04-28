@@ -1,5 +1,4 @@
-import { BreakpointObserver } from '@angular/cdk/layout';
-import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, output } from '@angular/core';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { Relationship } from 'src/app/models/relationship';
 import { User } from 'src/app/models/user';
@@ -23,10 +22,7 @@ export class UsersCardComponent extends ResponsiveComponent {
     public loadMore = output();
 
     protected readonly avatarSize = AvatarSize;
-
-    constructor(protected userDisplayService: UserDisplayService, breakpointObserver: BreakpointObserver) {
-        super(breakpointObserver);
-    }
+    protected userDisplayService = inject(UserDisplayService);
 
     protected getRelationship(user: User): Relationship | undefined {
         return this.relationships()?.find(x => x.userId === user.id);

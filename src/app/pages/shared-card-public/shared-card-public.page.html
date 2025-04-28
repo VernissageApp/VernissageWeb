@@ -1,0 +1,68 @@
+@if (isReady()) {
+
+    <app-business-card
+        [title]="title()"
+        [fields]="fields()"
+        [subtitle]="subtitle()"
+        [body]="body()"
+        [website]="website()"
+        [telephone]="telephone()"
+        [email]="email()"
+        [color1]="color1()"
+        [color2]="color2()"
+        [color3]="color3()"
+        [avatarUrl]="avatarUrl()"
+        [sharedBusinessCardCode]="sharedBusinessCardCode()"
+        [userName]="userName()">
+    </app-business-card>
+
+    <div @fadeIn [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
+        <div class="business-card-messages">
+            <mat-divider></mat-divider>
+            <div class="margin-bottom-20"></div>
+
+            @if (cardClientUser(); as internalUser) {
+                <div class="flex-row flex-align-center gap-8 margin-bottom-10">
+                    <div>
+                        <app-avatar [user]="internalUser" [size]="avatarSize.verysmall"></app-avatar>
+                    </div>
+                    <div class="flex-row flex-responsive username">
+                        <div class="fullname">
+                            <div class="margin-right-5 fw-400">{{ cardClientName() }}</div>
+                        </div>
+                        @if (cardClientEmail()) {
+                            <div class="fw-400 fs-90 text-muted account">{{ cardClientEmail() }}</div>
+                        }
+                    </div>
+                    <div class="flex-grow-2">
+                        <button type="button" (click)="openUpdateSharedBusinessCardDialog()" class="icon-only pull-right" mat-stroked-button aria-label="Favourites"><mat-icon class="fill-symbol">edit</mat-icon></button>
+                    </div>
+                </div>
+            }
+
+            @for(message of cardMessages(); track message) {
+                @if (isAuthor(message)) {
+                    <div class="flex-row flex-end business-card-message-author">
+                        <div class="margin-top-5">
+                            <div class="business-card-message-text">{{ message.message }}</div>
+                        </div>
+                    </div>
+                } @else {
+                    <div>
+                        <div class="text-muted fs-80">{{ title() }}</div>
+                        <div class="business-card-message-text">{{ message.message }}</div>
+                    </div>
+                }
+            }
+
+            <div class="margin-bottom-20 margin-top-20">
+                <form>
+                    <mat-form-field appearance="outline">
+                        <input matInput type="text" name="totalCost" #totalCost="ngModel" [(ngModel)]="message" placeholder="Send message..." aria-label="Message" />
+                        <button matSuffix mat-flat-button type="submit" color="primary" class="margin-right-10" (click)="sendMessage()" aria-label="Send">Send</button>
+                    </mat-form-field>
+                </form>
+            </div>
+        </div>
+    </div>
+}

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { WindowService } from '../common/window.service';
@@ -10,8 +10,8 @@ import { ArticleVisibility } from 'src/app/models/article-visibility';
     providedIn: 'root'
 })
 export class ArticlesService {
-    constructor(private httpClient: HttpClient, private windowService: WindowService) {
-    }
+    private httpClient = inject(HttpClient);
+    private windowService = inject(WindowService);
 
     public async all(page: number, size: number, visibility: ArticleVisibility, dismissed: boolean): Promise<PagedResult<Article>> {
         const event$ = this.httpClient.get<PagedResult<Article>>(this.windowService.apiUrl() +  `/api/v1/articles?page=${page}&size=${size}&visibility=${visibility}&dismissed=${dismissed ? 'true' : 'false'}`);

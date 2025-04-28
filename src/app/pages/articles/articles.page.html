@@ -1,5 +1,5 @@
 @if (isReady()) {
-    @if (articles(); as usersArray) {
+    @if (articles(); as articlesArray) {
         <div @fadeIn [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
             <div class="flex-row flex-space-around padding-left-10 padding-right-10">
                 <div class="width-100">
@@ -11,7 +11,7 @@
                         <button type="button" mat-raised-button color="primary" aria-label="Create article" (click)="onCreateArticle()">Create article</button>
                     </section>
 
-                    <table mat-table [dataSource]="usersArray.data" class="mat-elevation-z1">
+                    <table mat-table [dataSource]="articlesArray.data" class="mat-elevation-z1">
 
                         <!-- Title Column -->
                         <ng-container matColumnDef="title">
@@ -81,7 +81,7 @@
                     </table>
                     <mat-paginator
                         (page)="handlePageEvent($event)"
-                        [length]="usersArray.total"
+                        [length]="articlesArray.total"
                         [pageIndex]="pageIndex()"
                         [pageSize]="10"
                         [pageSizeOptions]="[10, 25, 100]"

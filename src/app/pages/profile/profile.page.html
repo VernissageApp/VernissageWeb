@@ -2,7 +2,8 @@
     @if (user(); as userInternal) {
         <div>
             <img class="header-image" alt="header profile" [ngSrc]="userInternal.headerUrl ?? 'assets/header.jpg'" width="1500" height="500" priority />
-            <img class="avatar-image" alt="avatar profile" [ngSrc]="userInternal.avatarUrl ?? 'assets/avatar.svg'" width="600" height="600" priority (click)="onAvatarClick()" (keydown.enter)="onAvatarClick()" tabindex="0" />
+            <img class="avatar-image" alt="avatar profile" [ngSrc]="userInternal.avatarUrl ?? 'assets/avatar.svg'" width="600" height="600" priority />
+
 
             <div class="flex-row flex-space-around padding-left-10 padding-right-10">
                 <div class="profile">
@@ -25,9 +26,20 @@
                     }
 
                     @if (signedInUser()?.id === userInternal.id) {
-                        <div class="flex-row flex-center gap-8">
-                            <button type="button" [routerLink]="['/favourites']" mat-flat-button aria-label="Favourites"><mat-icon class="fill-symbol">grade</mat-icon> Favourites</button>
-                            <button type="button" [routerLink]="['/bookmarks']" mat-flat-button aria-label="Bookmarks"><mat-icon class="fill-symbol">bookmark</mat-icon> Bookmarks</button>
+                        <div class="flex-row flex-center gap-8 padding-top-10">
+                            @if (!isHandsetPortrait()) {
+                                <button type="button" [routerLink]="['/favourites']" mat-flat-button aria-label="Favourites"><mat-icon class="fill-symbol">grade</mat-icon> Favourites</button>
+                                <button type="button" [routerLink]="['/bookmarks']" mat-flat-button aria-label="Bookmarks"><mat-icon class="fill-symbol">bookmark</mat-icon> Bookmarks</button>
+                            } @else {
+                                <button type="button" [routerLink]="['/favourites']" class="icon-only" mat-flat-button aria-label="Favourites"><mat-icon class="fill-symbol">grade</mat-icon></button>
+                                <button type="button" [routerLink]="['/bookmarks']" class="icon-only" mat-flat-button aria-label="Bookmarks"><mat-icon class="fill-symbol">bookmark</mat-icon></button>
+                            }
+
+                            <button type="button" (click)="onQRCodeClick()" class="icon-only" mat-flat-button aria-label="Favourites"><mat-icon class="fill-symbol">qr_code_2</mat-icon></button>
+
+                            @if (showSharedBusinessCards()) {
+                                <button type="button" (click)="onShareBusinessCard()" class="icon-only" mat-flat-button aria-label="Favourites"><mat-icon class="fill-symbol">share</mat-icon></button>
+                            }
                         </div>
                     }
 

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject, model, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, model, OnInit, signal } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Category } from 'src/app/models/category';
 import { CategoryHashtag } from 'src/app/models/category-hashtag';
@@ -12,24 +12,25 @@ import { CategoriesService } from 'src/app/services/http/categories.service';
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
-export class CategoryDialog {
+export class CategoryDialog implements OnInit {
     protected name = model('');
     protected priority = model('');
     protected hashtags = signal<CategoryHashtag[]>([]);
 
-    constructor(
-        private messageService: MessagesService,
-        private categoriesService: CategoriesService,
-        public dialogRef: MatDialogRef<CategoryDialog>,
-        @Inject(MAT_DIALOG_DATA) public data?: Category) {
-            if (this.data) {
-                this.name.set(this.data.name);
-                this.priority.set(this.data.priority.toString());
+    private messageService = inject(MessagesService);
+    private categoriesService = inject(CategoriesService);
+    private dialogRef = inject(MatDialogRef<CategoryDialog>);
+    private data?: Category = inject(MAT_DIALOG_DATA);
 
-                this.hashtags.update((value) => {
-                    return [...value, ...this.data?.hashtags ?? []];
-                });
-            }
+    public ngOnInit(): void {
+        if (this.data) {
+            this.name.set(this.data.name);
+            this.priority.set(this.data.priority.toString());
+
+            this.hashtags.update((value) => {
+                return [...value, ...this.data?.hashtags ?? []];
+            });
+        }
     }
 
     protected onNoClick(): void {

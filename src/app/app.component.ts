@@ -1,4 +1,4 @@
-import { Component, OnDestroy, AfterViewInit, OnInit, Inject, signal, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnDestroy, AfterViewInit, OnInit, signal, ChangeDetectionStrategy, inject } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { LoadingService } from './services/common/loading.service';
@@ -20,13 +20,11 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     protected showLoader = signal(false);
     private loadingStateChangesSubscription?: Subscription;
 
-    constructor(
-        @Inject(DOCUMENT) private document: Document,
-        private loadingService: LoadingService,
-        private cookieService: SsrCookieService,
-        private settingsService: SettingsService,
-        private routingStateService: RoutingStateService) {
-    }
+    private document = inject(DOCUMENT);
+    private loadingService = inject(LoadingService);
+    private cookieService = inject(SsrCookieService);
+    private settingsService = inject(SettingsService);
+    private routingStateService = inject(RoutingStateService);
 
     ngOnInit(): void {
         this.routingStateService.startRoutingListener();

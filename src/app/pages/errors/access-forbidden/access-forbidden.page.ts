@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 
@@ -14,8 +14,7 @@ export class AccessForbiddenPage implements OnInit, OnDestroy {
     protected value = signal(100);
     private interval: NodeJS.Timeout | undefined;
 
-    constructor(private router: Router) {
-    }
+    private router = inject(Router);
 
     async ngOnInit(): Promise<void> {
         this.interval = setInterval(async ()=> {

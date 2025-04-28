@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, signal, computed, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, OnDestroy, signal, computed, ChangeDetectionStrategy, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -29,11 +29,9 @@ export class ResetPasswordPage implements OnInit, OnDestroy {
     private queryParamsSubscription?: Subscription;
     private forgotPasswordGuid = '';
 
-    constructor(
-        private route: ActivatedRoute,
-        private forgotPasswordService: ForgotPasswordService,
-        private messagesService: MessagesService
-    ) { }
+    private route = inject(ActivatedRoute);
+    private forgotPasswordService = inject(ForgotPasswordService);
+    private messagesService = inject(MessagesService);
 
     ngOnInit(): void {
         this.queryParamsSubscription = this.route.queryParams.subscribe(params => {

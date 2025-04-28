@@ -172,5 +172,21 @@ export enum EventType {
     ArticlesCreate = 'articlesCreate',
     ArticlesUpdate = 'articlesUpdate',
     ArticlesDelete = 'articlesDelete',
-    ArticlesDismiss = 'articlesDismiss'
+    ArticlesDismiss = 'articlesDismiss',
+
+    BusinessCardsRead = 'businessCardsRead',
+    BusinessCardsCreate = 'businessCardsCreate',
+    BusinessCardsUpdate = 'businessCardsUpdate',
+    
+    SharedBusinessCardList = 'sharedBusinessCardList',
+    SharedBusinessCardRead = 'sharedBusinessCardRead',
+    SharedBusinessCardCreate = 'sharedBusinessCardCreate',
+    SharedBusinessCardUpdate = 'sharedBusinessCardUpdate',
+    SharedBusinessCardDelete = 'sharedBusinessCardDelete',
+    SharedBusinessCardMessage = 'sharedBusinessCardMessage',
+    SharedBusinessCardRevoke = 'sharedBusinessCardRevoke',
+    SharedBusinessCardUnrevoke = 'sharedBusinessCardUnrevoke',
+    SharedBusinessCardReadByThirdParty = 'sharedBusinessCardReadByThirdParty',
+    SharedBusinessCardUpdateByThirdParty = 'sharedBusinessCardUpdateByThirdParty',
+    SharedBusinessCardMessageByThirdParty = 'sharedBusinessCardMessageByThirdParty'
 }

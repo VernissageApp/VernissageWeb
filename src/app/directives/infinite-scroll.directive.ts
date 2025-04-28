@@ -1,7 +1,6 @@
-import { Directive, ElementRef, input, OnDestroy, OnInit, output } from "@angular/core";
+import { Directive, ElementRef, inject, input, OnDestroy, OnInit, output } from "@angular/core";
 import { WindowService } from "../services/common/window.service";
 import { fromEvent, Subscription, tap, throttleTime } from "rxjs";
-import { RandomGeneratorService } from "../services/common/random-generator.service";
 
 @Directive({
     selector: '[appInfiniteScroll]',
@@ -15,14 +14,10 @@ export class InfiniteScrollDirective implements OnInit, OnDestroy {
     public infiniteScrollDisabled = input(false);
   
     private window!: Window;
-    private controlId!: string;
     private eventSub?: Subscription;
   
-    constructor(
-        private el: ElementRef,
-        private windowService: WindowService,
-        private random: RandomGeneratorService
-    ) { }
+    private el = inject(ElementRef);
+    private windowService = inject(WindowService);
   
     ngOnInit(): void {
 

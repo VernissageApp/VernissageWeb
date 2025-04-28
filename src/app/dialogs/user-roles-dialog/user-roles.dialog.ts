@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject, model, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, model, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Role } from 'src/app/models/role';
 import { User } from 'src/app/models/user';
@@ -16,12 +16,10 @@ export class UserRolesDialog implements OnInit {
     protected isModerator = model(false);
     protected isMember = model(true);
 
-    constructor(
-        private usersService: UsersService,
-        private messageService: MessagesService,
-        public dialogRef: MatDialogRef<UserRolesDialog>,
-        @Inject(MAT_DIALOG_DATA) public data?: User) {
-    }
+    private usersService = inject(UsersService);
+    private messageService = inject(MessagesService);
+    private dialogRef = inject(MatDialogRef<UserRolesDialog>);
+    private data?: User = inject(MAT_DIALOG_DATA);
 
     ngOnInit(): void {
         this.isAdministrator.set(this.data?.roles?.includes(Role.Administrator) ?? false);

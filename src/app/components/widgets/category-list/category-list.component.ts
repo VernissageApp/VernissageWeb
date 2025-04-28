@@ -1,5 +1,4 @@
-import { BreakpointObserver } from '@angular/cdk/layout';
-import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { ResponsiveComponent } from 'src/app/common/responsive';
@@ -28,14 +27,9 @@ export class CategoryListComponent extends ResponsiveComponent implements OnInit
     private readonly displayedColumnsTablet: string[] = ['categoryName', 'categoryEnabled', 'actions'];
     private readonly displayedColumnsBrowser: string[] = ['categoryName', 'categoryEnabled', 'actions'];
 
-    constructor(
-        private categoriesService: CategoriesService,
-        private messageService: MessagesService,
-        public dialog: MatDialog,
-        breakpointObserver: BreakpointObserver
-    ) {
-        super(breakpointObserver);
-    }
+    private categoriesService = inject(CategoriesService);
+    private messageService = inject(MessagesService);
+    private dialog = inject(MatDialog);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();

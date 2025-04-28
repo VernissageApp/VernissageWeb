@@ -1,5 +1,4 @@
-import { BreakpointObserver } from "@angular/cdk/layout";
-import { Component, OnInit, OnDestroy, signal, model, ChangeDetectionStrategy } from "@angular/core";
+import { Component, OnInit, OnDestroy, signal, model, ChangeDetectionStrategy, inject } from "@angular/core";
 import { ActivatedRoute, NavigationExtras } from "@angular/router";
 import { Subscription } from "rxjs";
 import { fadeInAnimation } from "src/app/animations/fade-in.animation";
@@ -37,16 +36,11 @@ export class TrendingPage extends ReusableGalleryPageComponent implements OnInit
 
     private routeParamsSubscription?: Subscription;
 
-    constructor(
-        private trendingService: TrendingService,
-        private loadingService: LoadingService,
-        private settingsService: SettingsService,
-        private authorizationService: AuthorizationService,
-        private activatedRoute: ActivatedRoute,
-        breakpointObserver: BreakpointObserver
-    ) {
-        super(breakpointObserver);
-    }
+    private trendingService = inject(TrendingService);
+    private loadingService = inject(LoadingService);
+    private settingsService = inject(SettingsService);
+    private authorizationService = inject(AuthorizationService);
+    private activatedRoute = inject(ActivatedRoute);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();

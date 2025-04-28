@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { Invitation } from 'src/app/models/invitation';
@@ -8,8 +8,8 @@ import { WindowService } from '../common/window.service';
     providedIn: 'root'
 })
 export class InvitationsService {
-    constructor(private httpClient: HttpClient, private windowService: WindowService) {
-    }
+    private httpClient = inject(HttpClient);
+    private windowService = inject(WindowService);
 
     public async get(): Promise<Invitation[]> {
         const event$ = this.httpClient.get<Invitation[]>(this.windowService.apiUrl() + '/api/v1/invitations');

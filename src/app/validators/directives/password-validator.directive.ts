@@ -11,15 +11,11 @@ import { PasswordErrors } from '../models/password-errors';
     standalone: false
 })
 export class PasswordValidatorDirective implements Validator {
+    private passwordErrors = new PasswordErrors();
 
-    private passwordErrors: PasswordErrors;
     private lowercaseRegexp = new RegExp('[a-z]');
     private uppercaseRegexp = new RegExp('[A-Z]');
     private symbolRegexp = new RegExp('[\\W|_|0-9]');
-
-    constructor() {
-        this.passwordErrors = new PasswordErrors();
-    }
 
     validate(control: AbstractControl): ValidationErrors | null {
 

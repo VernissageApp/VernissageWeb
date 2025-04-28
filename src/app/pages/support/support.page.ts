@@ -1,5 +1,4 @@
-import { BreakpointObserver } from '@angular/cdk/layout';
-import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { Instance } from 'src/app/models/instance';
@@ -31,16 +30,11 @@ export class SupportPage extends ResponsiveComponent implements OnInit {
     protected totalCost = signal(0);
     protected usersSupport = signal(0);
 
-    constructor(
-        private instanceService: InstanceService,
-        private settingsService: SettingsService,
-        private healthService: HealthService,
-        private messageService: MessagesService,
-        private fileSizeService: FileSizeService,
-        breakpointObserver: BreakpointObserver
-    ) {
-        super(breakpointObserver);
-    }
+    private instanceService = inject(InstanceService);
+    private settingsService = inject(SettingsService);
+    private healthService = inject(HealthService);
+    private messageService = inject(MessagesService);
+    private fileSizeService = inject(FileSizeService);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
