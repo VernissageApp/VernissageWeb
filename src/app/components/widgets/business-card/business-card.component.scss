@@ -1,0 +1,61 @@
+.business-card-container {
+
+    .top {
+        padding-top: 80px;
+        padding-bottom: 32px;
+
+        .mat-h1 { 
+            margin: 10px 0 0 0;;
+            opacity: 0.8;
+        }
+
+        .mat-h4 {
+            opacity: 0.8;
+        }
+
+        .avatar-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid white;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+
+    .bottom {
+        padding-top: 24px;
+        padding-bottom: 8px;
+        padding-left: 8px;
+        padding-right: 8px;
+
+        .bio {
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 24px;
+            text-align: center;
+            opacity: 0.8;
+    
+            ::ng-deep p {
+                margin: 0;
+            }
+        }
+
+        .flexi-item {
+            .flexi-key {
+                text-transform: uppercase;
+                font-size: 0.8em;
+                opacity: 0.8;
+            }
+
+            .flexi-value {
+                opacity: 0.8;
+            }
+        }
+
+        ::ng-deep .mat-mdc-card-content {
+            padding: 4;
+        }
+    }    
+}

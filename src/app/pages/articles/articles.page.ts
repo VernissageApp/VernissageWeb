@@ -1,9 +1,8 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { ForbiddenError } from 'src/app/errors/forbidden-error';
 import { LoadingService } from 'src/app/services/common/loading.service';
 import { ResponsiveComponent } from 'src/app/common/responsive';
-import { BreakpointObserver } from '@angular/cdk/layout';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 import { Role } from 'src/app/models/role';
 import { PagedResult } from 'src/app/models/paged-result';
@@ -39,20 +38,15 @@ export class ArticlesPage extends ResponsiveComponent implements OnInit, OnDestr
     private readonly displayedColumnsHandsetLandscape: string[] = ['title', 'createdAt', 'actions'];
     private readonly displayedColumnsTablet: string[] = ['title', 'visibility', 'createdAt', 'actions'];
     private readonly displayedColumnsBrowser: string[] = ['title', 'visibility', 'createdAt', 'actions'];
-    
-    constructor(
-        private authorizationService: AuthorizationService,
-        private articlesService: ArticlesService,
-        private loadingService: LoadingService,
-        private messageService: MessagesService,
-        private activatedRoute: ActivatedRoute,
-        private randomGeneratorService: RandomGeneratorService,
-        private dialog: MatDialog,
-        private router: Router,
-        breakpointObserver: BreakpointObserver
-    ) {
-        super(breakpointObserver);
-    }
+
+    private authorizationService = inject(AuthorizationService);
+    private articlesService = inject(ArticlesService);
+    private loadingService = inject(LoadingService);
+    private messageService = inject(MessagesService);
+    private activatedRoute = inject(ActivatedRoute);
+    private randomGeneratorService = inject(RandomGeneratorService);
+    private dialog = inject(MatDialog);
+    private router = inject(Router);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();

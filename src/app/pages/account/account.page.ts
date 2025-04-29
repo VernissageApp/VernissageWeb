@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, model, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, model, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -18,7 +18,6 @@ import { FlexiField } from 'src/app/models/flexi-field';
 import { ResendEmailConfirmation } from 'src/app/models/resend-email-confirmation';
 import { ChangePasswordDialog } from 'src/app/dialogs/change-password-dialog/change-password.dialog';
 import { ResponsiveComponent } from 'src/app/common/responsive';
-import { BreakpointObserver } from '@angular/cdk/layout';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { EnableTwoFactorTokenDialog } from 'src/app/dialogs/enable-two-factor-token/enable-two-factor-token.dialog';
 import { DisableTwoFactorTokenDialog } from 'src/app/dialogs/disable-two-factor-token/disable-two-factor-token.dialog';
@@ -81,28 +80,23 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
     private readonly followingImportsDisplayedColumnsFull: string[] = ['createdAt', 'startedAt', 'endedAt', 'status', 'action'];
     private readonly followingImportsDisplayedColumnsMinimum: string[] = ['createdAt', 'status', 'action'];
 
-    constructor(
-        private usersService: UsersService,
-        private avatarsService: AvatarsService,
-        private headersService: HeadersService,
-        private accountService: AccountService,
-        private authorizationService: AuthorizationService,
-        private userAliasesService: UserAliasesService,
-        private messageService: MessagesService,
-        private windowService: WindowService,
-        private archivesService: ArchivesService,
-        private exportsService: ExportsService,
-        private fileSaverService: FileSaverService,
-        private followingImportsService: FollowingImportsService,
-        private fileSizeService: FileSizeService,
-        private router: Router,
-        public dialog: MatDialog,
-        private clipboard: Clipboard,
-        private loadingService: LoadingService,
-        breakpointObserver: BreakpointObserver
-    ) {
-        super(breakpointObserver);
-    }
+    private usersService = inject(UsersService);
+    private avatarsService = inject(AvatarsService);
+    private headersService = inject(HeadersService);
+    private accountService = inject(AccountService);
+    private authorizationService = inject(AuthorizationService);
+    private userAliasesService = inject(UserAliasesService);
+    private messageService = inject(MessagesService);
+    private windowService = inject(WindowService);
+    private archivesService = inject(ArchivesService);
+    private exportsService = inject(ExportsService);
+    private fileSaverService = inject(FileSaverService);
+    private followingImportsService = inject(FollowingImportsService);
+    private fileSizeService = inject(FileSizeService);
+    private router = inject(Router);
+    private dialog = inject(MatDialog);
+    private clipboard = inject(Clipboard);
+    private loadingService = inject(LoadingService);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
@@ -314,9 +308,7 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
     }
 
     protected openEnableTwoFactorTokenDialog(): void {
-        const dialogRef = this.dialog.open(EnableTwoFactorTokenDialog, {
-            data: this.user
-        });
+        const dialogRef = this.dialog.open(EnableTwoFactorTokenDialog);
 
         dialogRef.afterClosed().subscribe(async () => {
             await this.loadUserData();
@@ -324,9 +316,7 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
     }
 
     protected openDisableTwoFactorTokenDialog(): void {
-        const dialogRef = this.dialog.open(DisableTwoFactorTokenDialog, {
-            data: this.user
-        });
+        const dialogRef = this.dialog.open(DisableTwoFactorTokenDialog);
 
         dialogRef.afterClosed().subscribe(async () => {
             await this.loadUserData();
@@ -431,7 +421,7 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
 
         const file = input.files[0];
         if (file.size > this.defaultImportMaxFileSize) {
-            this.messageService.showError('Uploaded file is too large. Maximum size is 10mb.');
+            this.messageService.showError(`Uploaded file is too large. Maximum size is ${this.maxImportFileSizeString()}.`);
             return;
         }
 

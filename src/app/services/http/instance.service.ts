@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { Instance } from 'src/app/models/instance';
 import { WindowService } from '../common/window.service';
@@ -10,11 +10,11 @@ import { WindowService } from '../common/window.service';
 export class InstanceService {
     private _instance?: Instance;
 
+    private httpClient = inject(HttpClient);
+    private windowService = inject(WindowService);
+
     public get instance(): Instance | undefined {
         return this._instance;
-    }
-
-    constructor(private httpClient: HttpClient, private windowService: WindowService) {
     }
 
     public async load(): Promise<void> {

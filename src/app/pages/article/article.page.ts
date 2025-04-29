@@ -1,5 +1,4 @@
-import { BreakpointObserver } from '@angular/cdk/layout';
-import { ChangeDetectionStrategy, Component, model, OnDestroy, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, model, OnDestroy, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
@@ -30,16 +29,11 @@ export class ArticlePage extends ResponsiveComponent implements OnInit, OnDestro
 
     private routeParamsSubscription?: Subscription;
 
-    constructor(
-        private messageService: MessagesService,
-        private articlesService: ArticlesService,
-        private activatedRoute: ActivatedRoute,
-        private loadingService: LoadingService,
-        private router: Router,
-        breakpointObserver: BreakpointObserver
-    ) {
-        super(breakpointObserver);
-    }
+    private messageService = inject(MessagesService);
+    private articlesService = inject(ArticlesService);
+    private activatedRoute = inject(ActivatedRoute);
+    private loadingService = inject(LoadingService);
+    private router = inject(Router);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();

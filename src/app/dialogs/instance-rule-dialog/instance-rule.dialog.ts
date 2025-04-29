@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject, model } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, model, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Rule } from 'src/app/models/rule';
 import { MessagesService } from 'src/app/services/common/messages.service';
@@ -11,19 +11,20 @@ import { RulesService } from 'src/app/services/http/rules.service';
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
-export class InstanceRuleDialog {
+export class InstanceRuleDialog implements OnInit {
     protected order = model(0);
     protected text = model('');
 
-    constructor(
-        private messageService: MessagesService,
-        private rulesService: RulesService,
-        public dialogRef: MatDialogRef<InstanceRuleDialog>,
-        @Inject(MAT_DIALOG_DATA) public data?: Rule) {
-            if (this.data) {
-                this.order.set(this.data.order);
-                this.text.set(this.data.text ?? '');
-            }
+    private messageService = inject(MessagesService);
+    private rulesService = inject(RulesService);
+    private dialogRef = inject(MatDialogRef<InstanceRuleDialog>);
+    private data?: Rule = inject(MAT_DIALOG_DATA);
+
+    ngOnInit(): void {
+        if (this.data) {
+            this.order.set(this.data.order);
+            this.text.set(this.data.text ?? '');
+        }
     }
 
     protected onNoClick(): void {

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, model } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, model } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { UserMuteRequest } from 'src/app/models/user-mute-request';
 
@@ -14,8 +14,7 @@ export class MuteAccountDialog {
     protected muteNotifications = model(false);
     protected muteEnd = model<Date>();
 
-    constructor(public dialogRef: MatDialogRef<MuteAccountDialog>) {
-    }
+    public dialogRef = inject(MatDialogRef<MuteAccountDialog>);
 
     protected onNoClick(): void {
         this.dialogRef.close();

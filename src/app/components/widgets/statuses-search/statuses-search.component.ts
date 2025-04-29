@@ -1,5 +1,4 @@
-import { BreakpointObserver } from '@angular/cdk/layout';
-import { ChangeDetectionStrategy, Component, computed, Inject, input, OnInit, PLATFORM_ID, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, OnInit, signal } from '@angular/core';
 import { SafeHtml } from '@angular/platform-browser';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { ResponsiveComponent } from 'src/app/common/responsive';
@@ -21,13 +20,7 @@ export class StatusesSearchComponent extends ResponsiveComponent implements OnIn
     protected mainStatus = computed(() => this.status().reblog ?? this.status());
     protected rendered = computed<SafeHtml>(() => this.mainStatus()?.noteHtml ?? '');
 
-    constructor(
-        @Inject(PLATFORM_ID) platformId: object,
-        private preferencesService: PreferencesService,
-        breakpointObserver: BreakpointObserver
-    ) {
-        super(breakpointObserver);
-    }
+    private preferencesService = inject(PreferencesService);
 
     override ngOnInit(): void {
         super.ngOnInit();

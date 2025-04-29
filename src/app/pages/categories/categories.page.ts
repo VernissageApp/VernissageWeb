@@ -1,5 +1,4 @@
-import { BreakpointObserver } from "@angular/cdk/layout";
-import { Component, OnInit, OnDestroy, signal, ChangeDetectionStrategy } from "@angular/core";
+import { Component, OnInit, OnDestroy, signal, ChangeDetectionStrategy, inject } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs";
 import { fadeInAnimation } from "src/app/animations/fade-in.animation";
@@ -24,16 +23,11 @@ export class CategoriesPage extends ReusableGalleryPageComponent implements OnIn
 
     private routeParamsSubscription?: Subscription;
 
-    constructor(
-        private categoriesService: CategoriesService,
-        private loadingService: LoadingService,
-        private settingsService: SettingsService,
-        private authorizationService: AuthorizationService,
-        private activatedRoute: ActivatedRoute,
-        breakpointObserver: BreakpointObserver
-    ) {
-        super(breakpointObserver);
-    }
+    private categoriesService = inject(CategoriesService);
+    private loadingService = inject(LoadingService);
+    private settingsService = inject(SettingsService);
+    private authorizationService = inject(AuthorizationService);
+    private activatedRoute = inject(ActivatedRoute);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();

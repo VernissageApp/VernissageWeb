@@ -1,4 +1,4 @@
-import { Inject, Injectable, Renderer2 } from '@angular/core';
+import { inject, Injectable, Renderer2 } from '@angular/core';
 import { SsrCookieService } from './ssr-cookie.service';
 import { WindowService } from './window.service';
 import { DOCUMENT } from '@angular/common';
@@ -13,11 +13,9 @@ import { DOCUMENT } from '@angular/common';
 export class PreferencesService {
     private readonly longFuture = new Date('Sat, 01 Jan 2050 00:00:00 GMT');
 
-    constructor(
-        @Inject(DOCUMENT) private document: Document,
-        private cookieService: SsrCookieService,
-        private windowService: WindowService) {
-    }
+    private document = inject(DOCUMENT);
+    private cookieService = inject(SsrCookieService);
+    private windowService = inject(WindowService);
 
     public get isLightTheme(): boolean {
         return (this.cookieService.get('isLightTheme') ?? 'true') === 'true';

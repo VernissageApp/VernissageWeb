@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { User } from 'src/app/models/user';
@@ -13,8 +13,8 @@ import { PagedResult } from 'src/app/models/paged-result';
     providedIn: 'root'
 })
 export class UsersService {
-    constructor(private httpClient: HttpClient, private windowService: WindowService) {
-    }
+    private httpClient = inject(HttpClient);
+    private windowService = inject(WindowService);
 
     public async get(page: number, size: number, query: string, onlyLocal = false): Promise<PagedResult<User>> {
         const event$ = this.httpClient.get<PagedResult<User>>(this.windowService.apiUrl() + `/api/v1/users?page=${page}&size=${size}&query=${query ?? ''}&onlyLocal=${onlyLocal}`);

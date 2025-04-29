@@ -1,6 +1,5 @@
-import { BreakpointObserver } from "@angular/cdk/layout";
 import { DOCUMENT } from "@angular/common";
-import { Component, OnInit, OnDestroy, signal, ChangeDetectionStrategy, Inject } from "@angular/core";
+import { Component, OnInit, OnDestroy, signal, ChangeDetectionStrategy, inject } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs/internal/Subscription";
 import { fadeInAnimation } from "src/app/animations/fade-in.animation";
@@ -23,15 +22,10 @@ export class HashtagPage extends ReusableGalleryPageComponent implements OnInit,
 
     private routeParamsSubscription?: Subscription;
 
-    constructor(
-        @Inject(DOCUMENT) private document: Document,
-        private timelineService: TimelineService,
-        private loadingService: LoadingService,
-        private activatedRoute: ActivatedRoute,
-        breakpointObserver: BreakpointObserver
-    ) {
-        super(breakpointObserver);
-    }
+    private document = inject(DOCUMENT);
+    private timelineService = inject(TimelineService);
+    private loadingService = inject(LoadingService);
+    private activatedRoute = inject(ActivatedRoute);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();

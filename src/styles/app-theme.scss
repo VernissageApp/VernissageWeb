@@ -224,6 +224,19 @@
         }
     }
 
+    .business-card-messages {    
+        .business-card-message-text {
+            background-color: mat.m2-get-color-from-palette($grey);
+            color: mat.m2-get-color-from-palette($background);
+        }
+    
+        .business-card-message-author {
+            .business-card-message-text {
+                background-color: mat.m2-get-color-from-palette($primary)
+            }    
+        }
+    }
+
     gallery {
         background-color: #202020 !important;
     }

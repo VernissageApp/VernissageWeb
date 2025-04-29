@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
 
@@ -7,9 +7,7 @@ import { filter } from 'rxjs';
 })
 export class RoutingStateService {
     private history: string[] = [];
-
-    constructor(private router: Router) {
-    }
+    private router = inject(Router);
 
     public startRoutingListener(): void {
         this.router.events

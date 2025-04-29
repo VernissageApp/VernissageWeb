@@ -1,7 +1,6 @@
-import { ChangeDetectionStrategy, Component, model, OnInit, Renderer2, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, model, OnInit, Renderer2, signal } from '@angular/core';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { ResponsiveComponent } from 'src/app/common/responsive';
-import { BreakpointObserver } from '@angular/cdk/layout';
 import { PreferencesService } from 'src/app/services/common/preferences.service';
 import { RouteReuseStrategy } from '@angular/router';
 import { CustomReuseStrategy } from 'src/app/common/custom-reuse-strategy';
@@ -28,14 +27,9 @@ export class PreferencesPage extends ResponsiveComponent implements OnInit {
     protected showAltIcon = model(false);
     protected alwaysShowSdrPhoto = model(false);
 
-    constructor(
-        private preferencesService: PreferencesService,
-        private routeReuseStrategy: RouteReuseStrategy,
-        private renderer: Renderer2,
-        breakpointObserver: BreakpointObserver
-    ) {
-        super(breakpointObserver);
-    }
+    private preferencesService = inject(PreferencesService);
+    private routeReuseStrategy = inject(RouteReuseStrategy);
+    private renderer = inject(Renderer2);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();

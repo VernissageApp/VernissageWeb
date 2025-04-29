@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, Inject, OnInit, PLATFORM_ID, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, OnInit, PLATFORM_ID, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { ConfirmEmail } from 'src/app/models/confirm-email';
@@ -26,12 +26,13 @@ export class ConfirmEmailPage implements OnInit {
     private confirmEmailMode = signal(ConfirmEmailMode.Validating);
     private isBrowser = false;
 
-    constructor(
-        @Inject(PLATFORM_ID) platformId: object,
-        private authorizationService: AuthorizationService,
-        private route: ActivatedRoute,
-        private registerService: RegisterService) {
-            this.isBrowser = isPlatformBrowser(platformId);
+    private platformId = inject(PLATFORM_ID);
+    private authorizationService = inject(AuthorizationService);
+    private route = inject(ActivatedRoute);
+    private registerService = inject(RegisterService);
+
+    constructor() {
+        this.isBrowser = isPlatformBrowser(this.platformId);
     }
 
     async ngOnInit(): Promise<void> {

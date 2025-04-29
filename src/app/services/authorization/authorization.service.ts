@@ -1,4 +1,4 @@
-import { Inject, Injectable, NgZone, PLATFORM_ID } from '@angular/core';
+import { inject, Injectable, NgZone, PLATFORM_ID } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { User } from 'src/app/models/user';
 import { AccountService } from '../http/account.service';
@@ -20,12 +20,13 @@ export class AuthorizationService {
     private isBrowser = false;
     private readonly xsrfTokenName = 'xsrf-token';
 
-    constructor(
-        @Inject(PLATFORM_ID) platformId: object,
-        private accountService: AccountService,
-        private persistenceService: PersistenceService,
-        private zone: NgZone) {
-            this.isBrowser = isPlatformBrowser(platformId);
+    private platformId = inject(PLATFORM_ID);
+    private accountService = inject(AccountService);
+    private persistenceService = inject(PersistenceService);
+    private zone = inject(NgZone);
+
+    constructor() {
+        this.isBrowser = isPlatformBrowser(this.platformId);
     }
 
     async isLoggedIn(): Promise<boolean> {

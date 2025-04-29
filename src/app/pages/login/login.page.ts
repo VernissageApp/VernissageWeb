@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, model, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, model, OnInit, signal } from '@angular/core';
 import { Router, ActivatedRoute, RouteReuseStrategy } from '@angular/router';
 
 import { Login } from 'src/app/models/login';
@@ -43,17 +43,15 @@ export class LoginPage implements OnInit {
 
     private returnUrl?: string;
 
-    constructor(
-        private accountService: AccountService,
-        private router: Router,
-        private authorizationService: AuthorizationService,
-        private instanceService: InstanceService,
-        private route: ActivatedRoute,
-        private routeReuseStrategy: RouteReuseStrategy,
-        private windowService: WindowService,
-        private pushSubscriptionsService: PushSubscriptionsService,
-        private authClientsService: AuthClientsService) {
-    }
+    private accountService = inject(AccountService);
+    private router = inject(Router);
+    private authorizationService = inject(AuthorizationService);
+    private instanceService = inject(InstanceService);
+    private route = inject(ActivatedRoute);
+    private routeReuseStrategy = inject(RouteReuseStrategy);
+    private windowService = inject(WindowService);
+    private pushSubscriptionsService = inject(PushSubscriptionsService);
+    private authClientsService = inject(AuthClientsService);
 
     async ngOnInit(): Promise<void> {
         this.route.queryParams.subscribe(async (params) => {

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, model, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, model, signal } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ChangePassword } from 'src/app/models/change-password';
 import { MessagesService } from 'src/app/services/common/messages.service';
@@ -15,11 +15,9 @@ export class ChangePasswordDialog {
     protected password = model('');
     protected passwordIsValid = signal(true);
 
-    constructor(
-        private accountService: AccountService,
-        private messagesService: MessagesService,
-        public dialogRef: MatDialogRef<ChangePasswordDialog>
-    ) { }
+    private accountService = inject(AccountService);
+    private messagesService = inject(MessagesService);
+    public dialogRef = inject(MatDialogRef<ChangePasswordDialog>);
 
     protected onPasswordValid(valid: boolean): void {
         this.passwordIsValid.set(valid);

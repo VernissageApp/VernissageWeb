@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { LinkableResult } from 'src/app/models/linkable-result';
 import { Relationship } from 'src/app/models/relationship';
@@ -21,11 +21,9 @@ export class UsersDialog implements OnInit {
 
     private statusId = '';
 
-    constructor(
-        private statusesService: StatusesService,
-        public dialogRef: MatDialogRef<UsersDialog>,
-        @Inject(MAT_DIALOG_DATA) public data?: UsersDialogContext) {
-    }
+    private statusesService = inject(StatusesService);
+    private dialogRef = inject(MatDialogRef<UsersDialog>);
+    private data?: UsersDialogContext = inject(MAT_DIALOG_DATA);
 
     async ngOnInit(): Promise<void> {
         const usersDialogConext = this.data;

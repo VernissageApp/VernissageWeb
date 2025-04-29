@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, effect, input, OnDestroy, OnInit, output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, inject, input, OnDestroy, OnInit, output, signal } from '@angular/core';
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { MatDialog } from '@angular/material/dialog';
@@ -55,18 +55,18 @@ export class FollowButtonsSectionComponent implements OnInit, OnDestroy {
     private readonly relationshipRefreshTime = 2500;
     private readonly relationshipRefreshMaxCounter = 10;
 
-    constructor(
-        private usersService: UsersService,
-        private messageService: MessagesService,
-        private authorizationService: AuthorizationService,
-        private followRequestsService: FollowRequestsService,
-        private reportsService: ReportsService,
-        private windowService: WindowService,
-        private messagesService: MessagesService,
-        private relationshipsService: RelationshipsService,
-        private dialog: MatDialog,
-        private clipboard: Clipboard
-    ) {
+    private usersService = inject(UsersService);
+    private messageService = inject(MessagesService);
+    private authorizationService = inject(AuthorizationService);
+    private followRequestsService = inject(FollowRequestsService);
+    private reportsService = inject(ReportsService);
+    private windowService = inject(WindowService);
+    private messagesService = inject(MessagesService);
+    private relationshipsService = inject(RelationshipsService);
+    private dialog = inject(MatDialog);
+    private clipboard = inject(Clipboard);
+
+    constructor() {
         effect(() => {
             // After changing relationship from parent we have to rebuild the components.
             const newRelationships = this.updatedRelationship();

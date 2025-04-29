@@ -1,8 +1,7 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { LoadingService } from 'src/app/services/common/loading.service';
 import { ResponsiveComponent } from 'src/app/common/responsive';
-import { BreakpointObserver } from '@angular/cdk/layout';
 import { PagedResult } from 'src/app/models/paged-result';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
@@ -30,16 +29,11 @@ export class NewsPage extends ResponsiveComponent implements OnInit, OnDestroy {
 
     private routeParamsSubscription?: Subscription;
     
-    constructor(
-        private articlesService: ArticlesService,
-        private loadingService: LoadingService,
-        private activatedRoute: ActivatedRoute,
-        private router: Router,
-        private settingsService: SettingsService,
-        breakpointObserver: BreakpointObserver
-    ) {
-        super(breakpointObserver);
-    }
+    private articlesService = inject(ArticlesService);
+    private loadingService = inject(LoadingService);
+    private activatedRoute = inject(ActivatedRoute);
+    private router = inject(Router);
+    private settingsService = inject(SettingsService);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();

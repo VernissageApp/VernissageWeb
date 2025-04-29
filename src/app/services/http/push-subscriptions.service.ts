@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { WindowService } from '../common/window.service';
 import { PagedResult } from 'src/app/models/paged-result';
@@ -11,13 +11,10 @@ import { SwPush } from '@angular/service-worker';
     providedIn: 'root'
 })
 export class PushSubscriptionsService {
-
-    constructor(
-        private httpClient: HttpClient,
-        private windowService: WindowService,
-        private settingsService: SettingsService,
-        private swPushService: SwPush) {
-    }
+    private httpClient = inject(HttpClient);
+    private windowService = inject(WindowService);
+    private settingsService = inject(SettingsService);
+    private swPushService = inject(SwPush);
 
     public async get(page: number, size: number): Promise<PagedResult<PushSubscriptionDto>> {
         const event$ = this.httpClient.get<PagedResult<PushSubscriptionDto>>(this.windowService.apiUrl() + `/api/v1/push-subscriptions?page=${page}&size=${size}`);

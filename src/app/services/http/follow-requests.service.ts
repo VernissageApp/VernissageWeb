@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { Relationship } from 'src/app/models/relationship';
@@ -8,8 +8,8 @@ import { WindowService } from '../common/window.service';
     providedIn: 'root'
 })
 export class FollowRequestsService {
-    constructor(private httpClient: HttpClient, private windowService: WindowService) {
-    }
+    private httpClient = inject(HttpClient);
+    private windowService = inject(WindowService);
 
     public async get(page: number, size: number): Promise<Relationship[]> {
         const event$ = this.httpClient.get<Relationship[]>(this.windowService.apiUrl() + `/api/v1/follow-requests?page=${page ?? ''}&size=${size ?? ''}`);

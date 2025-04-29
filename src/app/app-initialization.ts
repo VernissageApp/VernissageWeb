@@ -20,8 +20,8 @@ export function appInitialization(
                 settingsService.load()
             ]);
 
-            customScriptsService.inject();
-            customStylesService.inject();
+            customScriptsService.injectScripts();
+            customStylesService.injectStyles();
         } catch (error) {
             console.error(error);
             // Suppress error to let global handler navigate to exception page.

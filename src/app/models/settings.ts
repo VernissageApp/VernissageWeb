@@ -37,6 +37,7 @@ export class Settings {
     public statusPurgeAfterDays = 180;
     public imagesUrl = '';
     public showNews = false;
+    public showSharedBusinessCards = false;
 
     public isOpenAIEnabled = false;
     public openAIKey = '';

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FollowingImport } from 'src/app/models/following-import';
 import { FollowingImportItemStatus } from 'src/app/models/following-import-item-status';
@@ -13,11 +13,9 @@ export class FollowingImportAccountsDialog {
     protected readonly followingImportItemStatus = FollowingImportItemStatus;
     protected readonly followingImportsDisplayedColumns: string[] = ['account', 'startedAt', 'endedAt', 'status'];
 
-    constructor(
-        public dialogRef: MatDialogRef<FollowingImportAccountsDialog>,
-        @Inject(MAT_DIALOG_DATA) public data?: FollowingImport) {
-    }
-
+    protected data?: FollowingImport = inject(MAT_DIALOG_DATA);
+    private dialogRef = inject(MatDialogRef<FollowingImportAccountsDialog>)
+    
     protected onNoClick(): void {
         this.dialogRef.close();
     }

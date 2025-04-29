@@ -1,5 +1,4 @@
-import { BreakpointObserver } from '@angular/cdk/layout';
-import { ChangeDetectionStrategy, Component, input, model, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, model, OnInit, signal } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, startWith } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
@@ -48,18 +47,13 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
     private allCountries: Country[] = [];
     private initialized = false;
 
-    constructor(
-        private countriesService: CountriesService,
-        private locationService: LocationsService,
-        private attachmentsService: AttachmentsService,
-        private messageService: MessagesService,
-        private settingsService: SettingsService,
-        private persistenceService: PersistenceService,
-        private fileSizeService: FileSizeService,
-        breakpointObserver: BreakpointObserver
-    ) {
-        super(breakpointObserver);
-    }
+    private countriesService = inject(CountriesService);
+    private locationService = inject(LocationsService);
+    private attachmentsService = inject(AttachmentsService);
+    private messageService = inject(MessagesService);
+    private settingsService = inject(SettingsService);
+    private persistenceService = inject(PersistenceService);
+    private fileSizeService = inject(FileSizeService);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();

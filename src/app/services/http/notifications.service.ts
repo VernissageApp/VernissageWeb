@@ -1,4 +1,4 @@
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, firstValueFrom } from 'rxjs';
 import { Notification } from 'src/app/models/notification';
@@ -14,11 +14,12 @@ export class NotificationsService {
     public changes = new BehaviorSubject<number>(0);
     private isBrowser = false;
 
-    constructor(
-        @Inject(PLATFORM_ID) platformId: object,
-        private httpClient: HttpClient,
-        private windowService: WindowService) {
-            this.isBrowser = isPlatformBrowser(platformId);
+    private platformId = inject(PLATFORM_ID);
+    private httpClient = inject(HttpClient);
+    private windowService = inject(WindowService);
+
+    constructor() {
+        this.isBrowser = isPlatformBrowser(this.platformId);
     }
 
     public async get(minId?: string, maxId?: string, sinceId?: string, limit?: number): Promise<LinkableResult<Notification>> {

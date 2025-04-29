@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, model, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, model, signal } from '@angular/core';
 
 import { ForgotPassword } from 'src/app/models/forgot-password';
 import { ForgotPasswordMode } from 'src/app/models/forgot-password-mode';
@@ -24,11 +24,9 @@ export class ForgotPasswordPage {
     protected isUserNotExistsMode = computed(() => this.forgotPasswordMode() === ForgotPasswordMode.UserNotExists);
     protected isSuccessMode = computed(() => this.forgotPasswordMode() === ForgotPasswordMode.Success);
 
-    constructor(
-        private forgotPasswordService: ForgotPasswordService,
-        private messagesService: MessagesService,
-        private windowService: WindowService) {
-    }
+    private forgotPasswordService = inject(ForgotPasswordService);
+    private messagesService = inject(MessagesService);
+    private windowService = inject(WindowService);
 
     async onSubmit(): Promise<void> {
         try {

@@ -29,6 +29,8 @@ import { StatusTextDialog } from './status-text-template-dialog/status-text-temp
 import { CategoryDialog } from './category-dialog/category.dialog';
 import { CategoryHashtagItemComponent } from './category-dialog/category-hashtag-item.component';
 import { FollowingImportAccountsDialog } from './following-import-accounts-dialog/following-import-accounts.dialog';
+import { ShareBusinessCardDialog } from './share-business-card-dialog/share-business-card.dialog';
+import { UpdateSharedBusinessCardDialog } from './update-shared-business-card/update-shared-business-card.dialog';
 
 @NgModule({
     declarations: [
@@ -53,6 +55,8 @@ import { FollowingImportAccountsDialog } from './following-import-accounts-dialo
         StatusTextDialog,
         CategoryDialog,
         FollowingImportAccountsDialog,
+        ShareBusinessCardDialog,
+        UpdateSharedBusinessCardDialog,
         CategoryHashtagItemComponent
     ],
     exports: [
@@ -76,6 +80,8 @@ import { FollowingImportAccountsDialog } from './following-import-accounts-dialo
         CreateAliasDialog,
         StatusTextDialog,
         CategoryDialog,
+        ShareBusinessCardDialog,
+        UpdateSharedBusinessCardDialog,
         FollowingImportAccountsDialog
     ], 
     imports: [

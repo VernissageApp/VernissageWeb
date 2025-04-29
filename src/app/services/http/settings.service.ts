@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { Settings } from 'src/app/models/settings';
@@ -11,11 +11,11 @@ import { PublicSettings } from 'src/app/models/public-settings';
 export class SettingsService {
     private _publicSettings?: PublicSettings;
 
+    private httpClient = inject(HttpClient);
+    private windowService = inject(WindowService);
+
     public get publicSettings(): PublicSettings | undefined {
         return this._publicSettings;
-    }
-
-    constructor(private httpClient: HttpClient, private windowService: WindowService) {
     }
 
     public async load(): Promise<void> {

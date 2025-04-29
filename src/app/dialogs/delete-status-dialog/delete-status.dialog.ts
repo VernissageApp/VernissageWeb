@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
@@ -8,8 +8,7 @@ import { MatDialogRef } from '@angular/material/dialog';
     standalone: false
 })
 export class DeleteStatusDialog {
-    constructor(public dialogRef: MatDialogRef<DeleteStatusDialog>) {
-    }
+    private dialogRef = inject(MatDialogRef<DeleteStatusDialog>);
 
     protected onNoClick(): void {
         this.dialogRef.close();

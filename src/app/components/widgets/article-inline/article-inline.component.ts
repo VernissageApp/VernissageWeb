@@ -1,5 +1,4 @@
-import { BreakpointObserver } from '@angular/cdk/layout';
-import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, output } from '@angular/core';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { UserDisplayService } from 'src/app/services/common/user-display.service';
 import { Article } from 'src/app/models/article';
@@ -20,12 +19,8 @@ export class ArticleInlineComponent extends ResponsiveComponent {
         return !!this.authorizationService.getUser();
     });
 
-    constructor(
-        protected userDisplayService: UserDisplayService,
-        protected authorizationService: AuthorizationService,
-        breakpointObserver: BreakpointObserver) {
-        super(breakpointObserver);
-    }
+    protected userDisplayService = inject(UserDisplayService);
+    protected authorizationService = inject(AuthorizationService);
 
     protected onDismissClick(): void {
         this.dismiss.emit(this.article());

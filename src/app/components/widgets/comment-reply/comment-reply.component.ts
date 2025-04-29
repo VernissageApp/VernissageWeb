@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, effect, input, model, OnInit, output, signal, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, inject, input, model, OnInit, output, signal, viewChild } from '@angular/core';
 import { Status } from 'src/app/models/status';
 import { StatusRequest } from 'src/app/models/status-request';
 import { User } from 'src/app/models/user';
@@ -31,11 +31,11 @@ export class CommentReplyComponent implements OnInit {
 
     private commentForm = viewChild<NgForm>('commentForm');
 
-    constructor(
-        private statusesService: StatusesService,
-        private instanceService: InstanceService,
-        private messageService: MessagesService
-    ) {
+    private statusesService = inject(StatusesService);
+    private instanceService = inject(InstanceService);
+    private messageService = inject(MessagesService);
+
+    constructor() {
         effect(() => this.fillUserName(this.status()));
     }
 

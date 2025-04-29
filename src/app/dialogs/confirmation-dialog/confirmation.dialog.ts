@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
@@ -11,10 +11,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 export class ConfirmationDialog implements OnInit {
     protected text = signal('');
 
-    constructor(
-        public dialogRef: MatDialogRef<ConfirmationDialog>,
-        @Inject(MAT_DIALOG_DATA) public data?: string) {
-    }
+    private dialogRef = inject(MatDialogRef<ConfirmationDialog>);
+    private data?: string = inject(MAT_DIALOG_DATA);
 
     ngOnInit(): void {
         this.text.set(this.data ?? '');

@@ -132,9 +132,15 @@
         </div>
     </div>
 
-    <div class="margin-bottom-20">
+    <div>
         <mat-checkbox name="showNews" color="primary" [disableRipple]="true" [(ngModel)]="settings().showNews">
             Show 'News' menu item
+        </mat-checkbox>
+    </div>
+
+    <div class="margin-bottom-20">
+        <mat-checkbox name="showSharedBusinessCards" color="primary" [disableRipple]="true" [(ngModel)]="settings().showSharedBusinessCards">
+            Show 'Shared business cards' menu item
         </mat-checkbox>
     </div>
 

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { Notification } from '../../models/notification';
 import { NotificationsService } from 'src/app/services/http/notifications.service';
@@ -6,7 +6,6 @@ import { Status } from 'src/app/models/status';
 import { NotificationType } from 'src/app/models/notification-type';
 import { LoadingService } from 'src/app/services/common/loading.service';
 import { ResponsiveComponent } from 'src/app/common/responsive';
-import { BreakpointObserver } from '@angular/cdk/layout';
 import { AvatarSize } from 'src/app/components/widgets/avatar/avatar-size';
 import { SwPush } from '@angular/service-worker';
 import { SettingsService } from 'src/app/services/http/settings.service';
@@ -32,17 +31,12 @@ export class NotificationsPage extends ResponsiveComponent implements OnInit {
     protected notifications = signal<Notification[]>([]);
     protected minId = signal<string | undefined>(undefined);
     protected maxId = signal<string | undefined>(undefined);
-    
-    constructor(
-        private notificationsService: NotificationsService,
-        private loadingService: LoadingService,
-        private settingsService: SettingsService,
-        private swPushService: SwPush,
-        public dialog: MatDialog,
-        breakpointObserver: BreakpointObserver
-    ) {
-        super(breakpointObserver);
-    }
+
+    private notificationsService = inject(NotificationsService);
+    private loadingService = inject(LoadingService);
+    private settingsService = inject(SettingsService);
+    private swPushService = inject(SwPush);
+    public dialog = inject(MatDialog);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
