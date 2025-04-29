@@ -31,8 +31,11 @@
                                 <span *ngIf="element.visibilities">
                                     @for (item of element.visibilities; track item) {
                                         @switch (item) {
-                                            @case (articleVisibility.News) {
-                                                <div class="text-muted">News</div>
+                                            @case (articleVisibility.SignInNews) {
+                                                <div class="text-muted">News - sign in</div>
+                                            }
+                                            @case (articleVisibility.SignOutNews) {
+                                                <div class="text-muted">News - sign out</div>
                                             }
                                             @case (articleVisibility.SignInHome) {
                                                 <div class="text-muted">Home - sign in</div>

@@ -134,7 +134,13 @@
 
     <div>
         <mat-checkbox name="showNews" color="primary" [disableRipple]="true" [(ngModel)]="settings().showNews">
-            Show 'News' menu item
+            Show 'News' menu item for signed in users
+        </mat-checkbox>
+    </div>
+
+    <div>
+        <mat-checkbox name="showNewsForAnonymous" color="primary" [disableRipple]="true" [(ngModel)]="settings().showNewsForAnonymous">
+            Show 'News' menu item for anonymous users
         </mat-checkbox>
     </div>
 

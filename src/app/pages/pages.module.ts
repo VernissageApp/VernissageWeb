@@ -39,12 +39,13 @@ import { BookmarksPage } from './bookmarks/bookmarks.page';
 import { FavouritesPage } from './favourites/favourites.page';
 import { ErrorItemsPage } from './error-items/error-items.page';
 import { ArticlesPage } from './articles/articles.page';
-import { ArticlePage } from './article/article.page';
 import { NewsPage } from './news/news.page';
 import { EditBusinessCardPage } from './edit-business-card/edit-business-card.page';
 import { SharedCardsPage } from './shared-cards/shared-cards.page';
 import { SharedCardPage } from './shared-card/shared-card.page';
 import { SharedCardPublicPage } from './shared-card-public/shared-card-public.page';
+import { ArticleEditPage } from './article-edit/article-edit.page';
+import { NewsPreviewPage } from './news-preview/news-preview.page';
 
 @NgModule({
     imports: [
@@ -88,8 +89,9 @@ import { SharedCardPublicPage } from './shared-card-public/shared-card-public.pa
         FavouritesPage,
         ErrorItemsPage,
         ArticlesPage,
-        ArticlePage,
+        ArticleEditPage,
         NewsPage,
+        NewsPreviewPage,
         EditBusinessCardPage,
         SharedCardsPage,
         SharedCardPage,
@@ -132,8 +134,9 @@ import { SharedCardPublicPage } from './shared-card-public/shared-card-public.pa
         FavouritesPage,
         ErrorItemsPage,
         ArticlesPage,
-        ArticlePage,
+        ArticleEditPage,
         NewsPage,
+        NewsPreviewPage,
         EditBusinessCardPage,
         SharedCardsPage,
         SharedCardPage,
