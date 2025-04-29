@@ -10,20 +10,21 @@ import { MessagesService } from 'src/app/services/common/messages.service';
 import { ArticlesService } from 'src/app/services/http/articles.service';
 
 @Component({
-    selector: 'app-article',
-    templateUrl: './article.page.html',
-    styleUrls: ['./article.page.scss'],
+    selector: 'app-article-edit',
+    templateUrl: './article-edit.page.html',
+    styleUrls: ['./article-edit.page.scss'],
     animations: fadeInAnimation,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
-export class ArticlePage extends ResponsiveComponent implements OnInit, OnDestroy {
+export class ArticleEditPage extends ResponsiveComponent implements OnInit, OnDestroy {
     protected isReady = signal(false);
     protected title = model('');
     protected body = model('');
     protected id = model('');
     protected color = model('');
-    protected showInNews = model(false);
+    protected showInNewsSignIn = model(false);
+    protected showInNewsSignOut = model(false);
     protected showInHomeSignIn = model(false);
     protected showInHomeSignOut = model(false);
 
@@ -52,8 +53,12 @@ export class ArticlePage extends ResponsiveComponent implements OnInit, OnDestro
                     this.color.set(article.color ?? '');
 
                     for(const visibility of article.visibilities ?? []) {
-                        if (visibility === ArticleVisibility.News) {
-                            this.showInNews.set(true);
+                        if (visibility === ArticleVisibility.SignInNews) {
+                            this.showInNewsSignIn.set(true);
+                        }
+
+                        if (visibility === ArticleVisibility.SignOutNews) {
+                            this.showInNewsSignOut.set(true);
                         }
 
                         if (visibility === ArticleVisibility.SignInHome) {
@@ -91,8 +96,12 @@ export class ArticlePage extends ResponsiveComponent implements OnInit, OnDestro
             article.color = this.color();
             article.visibilities = [];
 
-            if (this.showInNews()) {
-                article.visibilities.push(ArticleVisibility.News);
+            if (this.showInNewsSignIn()) {
+                article.visibilities.push(ArticleVisibility.SignInNews);
+            }
+
+            if (this.showInNewsSignOut()) {
+                article.visibilities.push(ArticleVisibility.SignOutNews);
             }
 
             if (this.showInHomeSignIn()) {

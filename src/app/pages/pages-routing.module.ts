@@ -38,12 +38,13 @@ import { BookmarksPage } from './bookmarks/bookmarks.page';
 import { FavouritesPage } from './favourites/favourites.page';
 import { ErrorItemsPage } from './error-items/error-items.page';
 import { ArticlesPage } from './articles/articles.page';
-import { ArticlePage } from './article/article.page';
 import { NewsPage } from './news/news.page';
 import { EditBusinessCardPage } from './edit-business-card/edit-business-card.page';
 import { SharedCardsPage } from './shared-cards/shared-cards.page';
 import { SharedCardPage } from './shared-card/shared-card.page';
 import { SharedCardPublicPage } from './shared-card-public/shared-card-public.page';
+import { ArticleEditPage } from './article-edit/article-edit.page';
+import { NewsPreviewPage } from './news-preview/news-preview.page';
 
 const routes: Routes = [
     { path: 'login', component: LoginPage, canActivate: [ loggedOutGuard ], title: 'Vernissage - Login' },
@@ -77,9 +78,10 @@ const routes: Routes = [
     { path: 'favourites', component: FavouritesPage, data: { reuse: true }, title: 'Vernissage - Favourites' },
     { path: 'users', component: UsersPage, canActivate: [ authorizationGuard ], title: 'Vernissage - Users' },
     { path: 'articles', component: ArticlesPage, canActivate: [ authorizationGuard ], title: 'Vernissage - Articles' },
-    { path: 'articles/create', component: ArticlePage, canActivate: [ authorizationGuard ], title: 'Vernissage - Create article' },
-    { path: 'articles/:id', component: ArticlePage, canActivate: [ authorizationGuard ], title: 'Vernissage - Edit article' },
-    { path: 'news', component: NewsPage, canActivate: [ authorizationGuard ], title: 'Vernissage - News' },
+    { path: 'articles/create', component: ArticleEditPage, canActivate: [ authorizationGuard ], title: 'Vernissage - Create article' },
+    { path: 'articles/:id', component: ArticleEditPage, canActivate: [ authorizationGuard ], title: 'Vernissage - Edit article' },
+    { path: 'news', component: NewsPage, title: 'Vernissage - News' },
+    { path: 'news/:id', component: NewsPreviewPage, title: 'Vernissage - News' },
     { path: 'business-card/edit', component: EditBusinessCardPage, canActivate: [ authorizationGuard ], title: 'Vernissage - Edit users business card' },
     { path: 'shared-cards', component: SharedCardsPage, canActivate: [ authorizationGuard ], title: 'Vernissage - List of shared business cards' },
     { path: 'shared-cards/:id', component: SharedCardPage, canActivate: [ authorizationGuard ], title: 'Vernissage - Shared business card' },
