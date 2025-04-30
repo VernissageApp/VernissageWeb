@@ -893,7 +893,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         // <meta property="og:title" content="John Doe (@john@vernissage.xxx)">
         this.metaService.updateTag({ property: 'og:title', content: statusTitle });
 
-        // <meta property="og:description" content="Somethinf apps next?">
+        // <meta property="og:description" content="Something apps next?">
         this.metaService.updateTag({ property: 'og:description', content: statusDescription });
 
         // <meta property="og:logo" content="https://vernissage.xxx/assets/icons/icon-128x128.png" />

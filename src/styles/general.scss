@@ -63,6 +63,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
       margin: 0;
     }
   }
+
+  &.mat-mdc-raised-button {
+    .mat-icon {
+      margin: 0;
+    }
+  }
 }
 
 /*

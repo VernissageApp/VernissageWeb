@@ -405,8 +405,6 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
     }
 
     protected async handleFollowingImportsPageEvent(pageEvent: PageEvent): Promise<void> {
-        console.log('handleFollowingImportsPageEvent');
-
         this.followingImportsPageIndex.set(pageEvent.pageIndex);
         this.followingImportsPageSize.set(pageEvent.pageSize);
 

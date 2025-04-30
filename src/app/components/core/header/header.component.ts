@@ -73,7 +73,6 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
             this.showCategories.set(isLoggedInInternal || (this.settingsService.publicSettings?.showCategoriesForAnonymous ?? false));
             this.showSharedBusinessCards.set(this.settingsService.publicSettings?.showSharedBusinessCards ?? false);
 
-            // this.showNews.set((!isLoggedInInternal && (this.settingsService.publicSettings?.showNewsForAnonymous ?? false)) || (isLoggedInInternal && (this.settingsService.publicSettings?.showNews ?? false)));
             this.showNews.set(false);
             const showNewsForAnonymous = this.settingsService.publicSettings?.showNewsForAnonymous ?? false;
             if (!isLoggedInInternal && showNewsForAnonymous) {
