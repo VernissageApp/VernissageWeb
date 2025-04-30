@@ -1,4 +1,4 @@
-import { DOCUMENT } from '@angular/common';
+import { DOCUMENT, formatDate } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
@@ -9,6 +9,7 @@ import { ForbiddenError } from 'src/app/errors/forbidden-error';
 import { Article } from 'src/app/models/article';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 import { LoadingService } from 'src/app/services/common/loading.service';
+import { UserDisplayService } from 'src/app/services/common/user-display.service';
 import { WindowService } from 'src/app/services/common/window.service';
 import { ArticlesService } from 'src/app/services/http/articles.service';
 import { SettingsService } from 'src/app/services/http/settings.service';
@@ -35,7 +36,8 @@ export class NewsPreviewPage extends ResponsiveComponent implements OnInit, OnDe
     private authorizationService = inject(AuthorizationService);
     private windowService = inject(WindowService);
     private titleService = inject(Title);
-    private metaService = inject(Meta);;
+    private metaService = inject(Meta);
+    private userDisplayService = inject(UserDisplayService);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
@@ -77,7 +79,7 @@ export class NewsPreviewPage extends ResponsiveComponent implements OnInit, OnDe
 
     private setCardMetaTags(): void {
         const newsTitle = this.article()?.title ?? 'Vernissage - news';
-        const newsDescription = this.htmlToText(this.article()?.bodyHtml ?? '').slice(0, 200);
+        const newsDescription = this.htmlToText(this.article()?.bodyHtml ?? '').slice(0, 400);
 
         // <title>John Doe (@john@vernissage.xxx)</title>
         this.titleService.setTitle(newsTitle);
@@ -85,11 +87,14 @@ export class NewsPreviewPage extends ResponsiveComponent implements OnInit, OnDe
         // <meta name="description" content="My suite of cool apps is coming together nicely. What would you like to see me build next?">
         this.metaService.updateTag({ name: 'description', content: newsDescription });
 
+        // <meta name="author" content="John Doe">
+        this.metaService.updateTag({ name: 'author', content: this.userDisplayService.displayName(this.article()?.user) });
+
         // <meta property="og:url" content="https://vernissage.xxx/@user">
         this.metaService.updateTag({ property: 'og:url', content: `${this.windowService.getApplicationBaseUrl()}/news/${this.article()?.id ?? ''}` });
 
         // <meta property="og:type" content="website">
-        this.metaService.updateTag({ property: 'og:type', content: 'website' });
+        this.metaService.updateTag({ property: 'og:type', content: 'article' });
 
         // <meta property="og:title" content="John Doe (@john@vernissage.xxx)">
         this.metaService.updateTag({ property: 'og:title', content: newsTitle });
@@ -100,16 +105,24 @@ export class NewsPreviewPage extends ResponsiveComponent implements OnInit, OnDe
         // <meta property="og:logo" content="https://vernissage.xxx/assets/icons/icon-128x128.png" />
         this.metaService.updateTag({ property: 'og:logo', content: `${this.windowService.getApplicationBaseUrl()}/assets/icons/icon-128x128.png` });
 
-        const avatarImage = this.article()?.user?.avatarUrl;
-        if (avatarImage) {
+        // <meta property="article:published_time" content="2025-04-30T18:45:41+00:00">
+        const publishedTime = formatDate(this.article()?.createdAt ?? new Date(), 'yyyy-MM-ddTHH:mm:ssZ', 'en-US');
+        this.metaService.updateTag({ property: 'article:published_time', content: publishedTime });
+
+        // <meta property="article:modified_time" content="2025-04-30T18:45:41+00:00">
+        const modifiedTime = formatDate(this.article()?.updatedAt ?? new Date(), 'yyyy-MM-ddTHH:mm:ssZ', 'en-US');
+        this.metaService.updateTag({ property: 'article:modified_time', content: modifiedTime });
+
+        const mainArticleFileInfo = this.article()?.mainArticleFileInfo;
+        if (mainArticleFileInfo) {
             // <meta property="og:image" content="https://files.vernissage.xxx/media_attachments/files/112348.png">
-            this.metaService.updateTag({ property: 'og:image', content: avatarImage });
+            this.metaService.updateTag({ property: 'og:image', content: mainArticleFileInfo.url });
 
             // <meta property="og:image:width"" content="1532">
-            this.metaService.updateTag({ property: 'og:image:width', content: '600' });
+            this.metaService.updateTag({ property: 'og:image:width', content: mainArticleFileInfo.width.toString() });
 
             // <meta property="og:image:height"" content="1416">
-            this.metaService.updateTag({ property: 'og:image:height', content: '600' });
+            this.metaService.updateTag({ property: 'og:image:height', content: mainArticleFileInfo.height.toString() });
         } else {
             this.metaService.updateTag({ property: 'og:image', content: '' });
             this.metaService.updateTag({ property: 'og:image:width', content: '' });
@@ -123,11 +136,14 @@ export class NewsPreviewPage extends ResponsiveComponent implements OnInit, OnDe
     private clearCardMetaTags(): void {
         this.titleService.setTitle('');
         this.metaService.updateTag({ name: 'description', content: '' });
+        this.metaService.updateTag({ name: 'author', content: '' });
         this.metaService.updateTag({ property: 'og:url', content: '' });
         this.metaService.updateTag({ property: 'og:type', content: '' });
         this.metaService.updateTag({ property: 'og:title', content: '' });
         this.metaService.updateTag({ property: 'og:description', content: '' });
         this.metaService.updateTag({ property: 'og:logo', content: '' });
+        this.metaService.updateTag({ property: 'article:published_time', content: '' });
+        this.metaService.updateTag({ property: 'article:modified_time', content: '' });
         this.metaService.updateTag({ property: 'og:image', content: '' });
         this.metaService.updateTag({ property: 'og:image:width', content: '' });
         this.metaService.updateTag({ property: 'og:image:height', content: '' });

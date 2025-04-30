@@ -10,6 +10,10 @@ mat-form-field {
     width: 100%;
 }
 
+.title-date {
+    min-width: 180px;
+}
+
 .username {
     margin-top: -5px;
 
@@ -32,6 +36,7 @@ mat-form-field {
     margin-right: auto;
 
     .business-card-message-text {
+        max-width: 400px;
         border-radius: 24px;
         padding: 8px 16px;
         display: inline-block;

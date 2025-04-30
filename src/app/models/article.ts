@@ -1,3 +1,4 @@
+import { ArticleFileInfo } from "./article-file-info";
 import { ArticleVisibility } from "./article-visibility";
 import { User } from "./user";
 
@@ -8,6 +9,7 @@ export class Article {
     public bodyHtml?: string;
     public color?: string;
     public user?: User;
+    public mainArticleFileInfo?: ArticleFileInfo;
     public createdAt?: Date;
     public updatedAt?: Date;
     public visibilities?: ArticleVisibility[];
