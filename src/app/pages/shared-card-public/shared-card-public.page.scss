@@ -32,6 +32,7 @@ mat-form-field {
     margin-right: auto;
 
     .business-card-message-text {
+        max-width: 400px;
         border-radius: 24px;
         padding: 8px 16px;
         display: inline-block;
