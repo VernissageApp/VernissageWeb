@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { BusinessCardField } from 'src/app/models/business-card-field';
 import { WindowService } from 'src/app/services/common/window.service';
+import { SharedBusinessCardsService } from 'src/app/services/http/shared-business-cards.service';
 
 @Component({
     selector: 'app-business-card',
@@ -27,6 +28,7 @@ export class BusinessCardComponent extends ResponsiveComponent {
     public userName = input<string>('');
 
     private windowService = inject(WindowService);
+    private sharedBusinessCardsService = inject(SharedBusinessCardsService);
 
     protected async onImportContact(): Promise<void> {
         let vCardData = '';
@@ -52,9 +54,9 @@ export class BusinessCardComponent extends ResponsiveComponent {
             vCardData += `NOTE;CHARSET=utf-8:${this.body().replaceAll('\n', '\\n')}\n`;
         }
 
-        const internalAvatarUrl = this.downloadAvatarBase64()
+        const internalAvatarUrl = await this.downloadAvatarBase64()
         if (internalAvatarUrl) {
-            vCardData += `PHOTO;ENCODING=b;TYPE=PNG:${internalAvatarUrl}\n`;
+            vCardData += `PHOTO;ENCODING=b;TYPE=JPEG:${internalAvatarUrl}\n`;
         }
 
         vCardData += 'END:VCARD';
@@ -76,7 +78,19 @@ export class BusinessCardComponent extends ResponsiveComponent {
         window.URL.revokeObjectURL(url);
     }
 
-    private downloadAvatarBase64(): string | undefined {
+    private async downloadAvatarBase64(): Promise<string | undefined> {
+        const internalCode = this.sharedBusinessCardCode();
+        if (!internalCode) {
+            return undefined;
+        }
+
+        try {
+            const avatar = await this.sharedBusinessCardsService.avatar(internalCode);
+            return avatar.file == '' ? undefined : avatar.file;
+        } catch (error) {
+            console.error('Error downloading avatar', error);
+        }
+
         return undefined;
     }
 }

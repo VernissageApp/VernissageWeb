@@ -6,6 +6,7 @@ import { PagedResult } from 'src/app/models/paged-result';
 import { SharedBusinessCard } from 'src/app/models/shared-business-card';
 import { SharedBusinessCardMessage } from 'src/app/models/shared-business-card-message';
 import { SharedBusinessCardUpdateRequest } from 'src/app/models/shared-business-card-update-request';
+import { BusinessCardAvatar } from 'src/app/models/business-card-avatar';
 
 @Injectable({
     providedIn: 'root'
@@ -52,6 +53,11 @@ export class SharedBusinessCardsService {
     public async unrevoke(id: string): Promise<void> {
         const event$ = this.httpClient.post(this.windowService.apiUrl() + `/api/v1/shared-business-cards/${id}/unrevoke`, null);
         await firstValueFrom(event$);
+    }
+
+    public async avatar(id: string): Promise<BusinessCardAvatar> {
+        const event$ = this.httpClient.get<BusinessCardAvatar>(this.windowService.apiUrl() + `/api/v1/shared-business-cards/${id}/avatar`);
+        return await firstValueFrom(event$);
     }
 
     public async getByThirdParty(code: string): Promise<SharedBusinessCard> {

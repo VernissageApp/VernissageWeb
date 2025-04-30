@@ -3,14 +3,19 @@
         <div @fadeIn [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
             <div class="flex-row flex-space-around padding-left-10 padding-right-10">
                 <div class="width-100">
-                    <section class="flex-row flex-space-between flex-align-center margin-bottom-20" [ngClass]="{ 'flex-row': !isHandset(), 'flex-column': isHandset() }">
+                    <section class="flex-row flex-space-between flex-align-center margin-bottom-20" [ngClass]="{ 'flex-row': !isHandsetPortrait(), 'flex-column': isHandsetPortrait() }">
                         <h1>
                             <div>Shared business cards</div>
                             <div *ngIf="!isHandset()" class="fs-60 text-muted">Here you can view and manage all the public links through which your business card has been shared.</div>
                         </h1>
-                        <div>
-                            <button type="button" [routerLink]="['/business-card', 'edit']" mat-raised-button color="primary" class="margin-right-10" aria-label="Edit business card">Your business card</button>
-                            <button type="button" (click)="onShareBusinessCard()" mat-raised-button color="accent" aria-label="Edit business card">Share business card</button>
+                        <div class="page-buttons">
+                            @if (isHandset()) {
+                                <button type="button" [routerLink]="['/business-card', 'edit']" mat-raised-button class="margin-right-10 icon-only" aria-label="Your business card"><mat-icon class="fill-symbol">badge</mat-icon></button>
+                                <button type="button" (click)="onShareBusinessCard()" mat-raised-button color="accent" class="icon-only" aria-label="Share business card"><mat-icon class="fill-symbol">share</mat-icon></button>
+                            } @else {
+                                <button type="button" [routerLink]="['/business-card', 'edit']" mat-raised-button class="margin-right-10" aria-label="Your business card">Your business card</button>
+                                <button type="button" (click)="onShareBusinessCard()" mat-raised-button color="accent" aria-label="Share business card">Share business card</button>
+                            }
                         </div>
                     </section>
 
@@ -22,7 +27,7 @@
                             <td mat-cell *matCellDef="let element">
                                 <a [routerLink]="['/shared-cards', element.id]">{{ element.title }}</a>
                                 <div class="fs-90 text-muted">
-                                    {{ element.note | slice: 0: 400 }}...
+                                    {{ element.note }}
                                 </div>
                             </td>
                         </ng-container>

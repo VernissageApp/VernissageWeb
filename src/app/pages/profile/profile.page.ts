@@ -24,6 +24,7 @@ import { SharedBusinessCardsService } from 'src/app/services/http/shared-busines
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { BusinessCardsService } from 'src/app/services/http/business-cards.service';
 import { SettingsService } from 'src/app/services/http/settings.service';
+import { ConfirmationDialog } from 'src/app/dialogs/confirmation-dialog/confirmation.dialog';
 
 @Component({
     selector: 'app-profile',
@@ -278,12 +279,21 @@ export class ProfilePage extends ReusableGalleryPageComponent implements OnInit,
     protected async onShareBusinessCard(): Promise<void> {
         const businessCardExists = await this.businessCardsService.businessCardExists();
         if (!businessCardExists) {
-            this.messageService.showError('You need to create business card first.');
+            const dialogRef = this.dialog.open(ConfirmationDialog, {
+                width: '500px',
+                data: 'You haven\'t created a business card yet. Would you like to create it now?'
+            });
+
+            dialogRef.afterClosed().subscribe(async (result) => {
+                if (result?.confirmed) {
+                    await this.router.navigate(['/business-card', 'edit']);
+                }
+            });
+
             return;
         }
 
         const dialogRef = this.dialog.open(ShareBusinessCardDialog, { width: '500px' });
-
         dialogRef.afterClosed().subscribe(async (result) => {
             if (result) {
                 try {
@@ -387,7 +397,7 @@ export class ProfilePage extends ReusableGalleryPageComponent implements OnInit,
         // <meta property="og:title" content="John Doe (@john@vernissage.xxx)">
         this.metaService.updateTag({ property: 'og:title', content: profileTitle });
 
-        // <meta property="og:description" content="Somethinf apps next?">
+        // <meta property="og:description" content="Something apps next?">
         this.metaService.updateTag({ property: 'og:description', content: profileDescription });
 
         // <meta property="og:logo" content="https://vernissage.xxx/assets/icons/icon-128x128.png" />

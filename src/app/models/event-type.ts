@@ -177,6 +177,7 @@ export enum EventType {
     BusinessCardsRead = 'businessCardsRead',
     BusinessCardsCreate = 'businessCardsCreate',
     BusinessCardsUpdate = 'businessCardsUpdate',
+    BusinessCardsAvatar = 'businessCardsAvatar',
     
     SharedBusinessCardList = 'sharedBusinessCardList',
     SharedBusinessCardRead = 'sharedBusinessCardRead',
