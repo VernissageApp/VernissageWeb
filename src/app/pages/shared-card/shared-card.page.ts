@@ -6,6 +6,7 @@ import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { AvatarSize } from 'src/app/components/widgets/avatar/avatar-size';
 import { ProfileCodeDialog } from 'src/app/dialogs/profile-code-dialog/profile-code.dialog';
+import { UpdateSharedBusinessCardDialog } from 'src/app/dialogs/update-shared-business-card/update-shared-business-card.dialog';
 import { SharedBusinessCard } from 'src/app/models/shared-business-card';
 import { SharedBusinessCardMessage } from 'src/app/models/shared-business-card-message';
 import { User } from 'src/app/models/user';
@@ -52,26 +53,6 @@ export class SharedCardPage extends ResponsiveComponent implements OnInit, OnDes
         return message.addedByUser;
     }
 
-    protected async sendMessage(): Promise<void> {
-        if (!this.message() || this.message().length === 0 || !this.sharedBusinessCardId) {
-            return;
-        }
-
-        try {
-            const sharedBusinessCardMessage = new SharedBusinessCardMessage(this.message(), true);
-            await this.sharedBusinessCardsService.message(this.sharedBusinessCardId, sharedBusinessCardMessage);
-
-            this.cardMessages.update((messages) => {
-                return [...messages, new SharedBusinessCardMessage(this.message(), true)];
-            });
-        } catch (error) {
-            console.error(error);
-            this.messageService.showServerError(error);
-        }
-
-        this.message.set('');
-    }
-
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
 
@@ -91,14 +72,7 @@ export class SharedCardPage extends ResponsiveComponent implements OnInit, OnDes
                         this.cardNote.set(this.sharedBusinessCard.note ?? '');
                         this.cardClientName.set(this.sharedBusinessCard.thirdPartyName ?? '');
                         this.cardClientEmail.set(this.sharedBusinessCard.thirdPartyEmail ?? '');
-    
-                        if (this.cardClientName() || this.cardClientEmail()) {
-                            const internalClientUser = new User();
-                            internalClientUser.name = this.cardClientName();
-                            internalClientUser.userName = this.cardClientEmail();
-                            internalClientUser.avatarUrl = 'assets/user.svg';
-                            this.cardClientUser.set(internalClientUser);
-                        }
+                        this.refreshUserPersonalInfo();
     
                         this.cardMessages.set(this.sharedBusinessCard.messages ?? []);
                     }
@@ -119,6 +93,26 @@ export class SharedCardPage extends ResponsiveComponent implements OnInit, OnDes
         this.routeParamsSubscription?.unsubscribe();
     }
 
+    protected async sendMessage(): Promise<void> {
+        if (!this.message() || this.message().length === 0 || !this.sharedBusinessCardId) {
+            return;
+        }
+
+        try {
+            const sharedBusinessCardMessage = new SharedBusinessCardMessage(this.message(), true);
+            await this.sharedBusinessCardsService.message(this.sharedBusinessCardId, sharedBusinessCardMessage);
+
+            this.cardMessages.update((messages) => {
+                return [...messages, new SharedBusinessCardMessage(this.message(), true)];
+            });
+        } catch (error) {
+            console.error(error);
+            this.messageService.showServerError(error);
+        }
+
+        this.message.set('');
+    }
+
     protected async openQrCodeDialog(): Promise<void> {
         this.dialog.open(ProfileCodeDialog, {
             data: this.windowService.getApplicationBaseUrl() + '/cards/' + this.sharedBusinessCard?.code + '?update=true',
@@ -130,5 +124,44 @@ export class SharedCardPage extends ResponsiveComponent implements OnInit, OnDes
         };
 
         await this.router.navigate([], navigationExtras);
+    }
+
+    protected async openUpdateSharedBusinessCardDialog(): Promise<void> {
+        const dialogRef = this.dialog.open(UpdateSharedBusinessCardDialog, {
+            width: '500px',
+            data: this.sharedBusinessCard
+        });
+
+        dialogRef.afterClosed().subscribe(async (result) => {
+            if (result) {
+                try {
+                    await this.sharedBusinessCardsService.updateByThirdParty(this.sharedBusinessCard?.code ?? '', result);
+
+                    this.cardClientName.set(result.thirdPartyName ?? '');
+                    this.cardClientEmail.set(result.thirdPartyEmail ?? '');
+                    this.refreshUserPersonalInfo();
+
+                    const navigationExtras: NavigationExtras = {
+                        queryParams: { },
+                        queryParamsHandling: 'replace'
+                    };
+
+                    await this.router.navigate([], navigationExtras);
+
+                    this.messageService.showSuccess('Your personal data has been saved.');
+                } catch (error) {
+                    console.error(error);
+                    this.messageService.showServerError(error);
+                }
+            }
+        });
+    }
+
+    private refreshUserPersonalInfo(): void {
+        const internalClientUser = new User();
+        internalClientUser.name = this.cardClientName();
+        internalClientUser.userName = this.cardClientEmail();
+        internalClientUser.avatarUrl = 'assets/user.svg';
+        this.cardClientUser.set(internalClientUser);
     }
 }
