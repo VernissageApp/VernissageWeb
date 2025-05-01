@@ -2,37 +2,35 @@
     <div mat-dialog-title>Enable two factor authentication (2FA)</div>
     <div mat-dialog-content>
         <div class="flex-col gap-0 margin-top-5">
-            @if (twoFactorToken(); as twoFactorTokenInternal) {
+            <div>
+                Scan QR code with 2FA application (like Authy or Google Authenticator).
+            </div>
+            <div class="flex-row flex-responsive gap-16 flex-align-center margin-top-5">
                 <div>
-                    Scan QR code with 2FA application (like Authy or Google Authenticator).
-                </div>
-                <div class="flex-row flex-responsive gap-16 flex-align-center margin-top-5">
-                    <div>
-                        <qrcode [qrdata]="twoFactorTokenInternal.url" [width]="180" [errorCorrectionLevel]="'M'"></qrcode>
-                    </div>
-                    <div>
-                        <mat-form-field appearance="outline" class="token">
-                            <mat-label>Token</mat-label>
-                            <input matInput name="code" #codeInput="ngModel" [(ngModel)]="code" type="text" required aria-label="Code" />
-                            <mat-error *ngIf="codeInput.invalid && codeInput.errors?.required">Token is required.</mat-error>
-                        </mat-form-field>
-                    </div>
+                    <div #canvas></div>
                 </div>
                 <div>
-                    <mat-divider></mat-divider>
-                    <strong>Backup codes</strong>
-                    <div>
-                        <small class="text-muted text-right">
-                            You should keep these codes in case you cannot access the authenticator app.
-                        </small>
-                    </div>
-                    <div>
-                        @for (backupCode of twoFactorTokenInternal.backupCodes; track $index) {
-                            <span> {{ backupCode }} </span>
-                        }
-                    </div>
+                    <mat-form-field appearance="outline" class="token">
+                        <mat-label>Token</mat-label>
+                        <input matInput name="code" #codeInput="ngModel" [(ngModel)]="code" type="text" required aria-label="Code" />
+                        <mat-error *ngIf="codeInput.invalid && codeInput.errors?.required">Token is required.</mat-error>
+                    </mat-form-field>
                 </div>
-            }
+            </div>
+            <div>
+                <mat-divider></mat-divider>
+                <strong>Backup codes</strong>
+                <div>
+                    <small class="text-muted text-right">
+                        You should keep these codes in case you cannot access the authenticator app.
+                    </small>
+                </div>
+                <div>
+                    @for (backupCode of twoFactorToken()?.backupCodes; track $index) {
+                        <span> {{ backupCode }} </span>
+                    }
+                </div>
+            </div>
         </div>
     </div>
     <div mat-dialog-actions>
