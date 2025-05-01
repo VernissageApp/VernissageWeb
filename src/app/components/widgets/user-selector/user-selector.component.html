@@ -2,14 +2,14 @@
     <mat-label>{{ label() }}</mat-label>
     <input
         type="text"
-        [name]="name + '-input'"
-        [id]="name + '-input'"
+        [name]="name() + '-input'"
+        [id]="name() + '-input'"
         matInput
         (change)="onChange()"
         [ngModel]="selectedUser()"
         (ngModelChange)="onModelChange($event)"
         #userSelector="ngModel"
-        [attr.aria-label]="label"
+        [attr.aria-label]="label()"
         [matAutocomplete]="autoUsers"
         [required]="isRequired()"
         [appAutocompleteValid]="true"
