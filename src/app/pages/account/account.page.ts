@@ -115,13 +115,13 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
                 await this.loadArchives();
                 await this.loadFollowingImports();
             } else {
-                this.messageService.showError('Cannot download user settings.');
+                this.messageService.showError('Cannot read username from token.');
             }
 
             const applicationBaseUrl = this.windowService.getApplicationBaseUrl()
             this.verification.set(`<a rel="me" href="${applicationBaseUrl}/@${this.user().userName}">Vernissage</a>`);
         } catch {
-            this.messageService.showError('Error during downloading user settings.');
+            this.messageService.showError('Error during downloading account data.');
             await this.router.navigate(['/home']);
         } finally {
             this.isReady.set(true);
@@ -157,7 +157,7 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
                 await this.usersService.update(userInternal.userName, userInternal);
                 await this.authorizationService.refreshAccessToken();
 
-                this.messageService.showSuccess('Settings was saved.');
+                this.messageService.showSuccess('Account details have been successfully saved.');
             }
         } catch (error) {
             console.error(error);
@@ -173,7 +173,7 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
 
                 await this.avatarsService.uploadAvatar(this.userName, formData);
                 await this.loadUserData();
-                this.messageService.showSuccess('Avatar has ben saved.');
+                this.messageService.showSuccess('Avatar has been saved.');
             }
         } catch (error) {
             console.error(error);
@@ -188,7 +188,7 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
             if (userInternal.avatarUrl) {
                 await this.avatarsService.deleteAvatar(this.userName);
                 await this.loadUserData()
-                this.messageService.showSuccess('Avatar has ben deleted.');
+                this.messageService.showSuccess('Avatar has been deleted.');
             }
         } catch (error) {
             console.error(error);
@@ -204,7 +204,7 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
 
                 await this.headersService.uploadHeader(this.userName, formData);
                 await this.loadUserData();
-                this.messageService.showSuccess('Header has ben saved.');
+                this.messageService.showSuccess('Header has been saved.');
             }
         } catch (error) {
             console.error(error);
@@ -219,7 +219,7 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
             if (userInternal.headerUrl) {
                 await this.headersService.deleteHeader(this.userName);
                 await this.loadUserData();
-                this.messageService.showSuccess('Header has ben deleted.');
+                this.messageService.showSuccess('Header has been deleted.');
             }
         } catch (error) {
             console.error(error);

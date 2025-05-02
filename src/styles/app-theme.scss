@@ -232,12 +232,63 @@
     
         .business-card-message-author {
             .business-card-message-text {
-                background-color: mat.m2-get-color-from-palette($primary)
+                background-color: mat.m2-get-color-from-palette($primary);
             }    
         }
     }
 
     gallery {
         background-color: #202020 !important;
+    }
+
+    .news-text {
+        padding-top: 10px;
+
+        hr {
+            display: block;
+            height: 1px;
+            border: 0;
+            border-top: 1px dashed rgba(mat.m2-get-color-from-palette($accent), 0.5);
+            max-width: 80px;
+            margin-top: 2em;
+            margin-bottom: 2em;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        table {
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 0.9em;
+            font-family: sans-serif;
+            min-width: 100%;
+
+            thead tr {
+                background-color: mat.m2-get-color-from-palette($accent);
+                color: mat.m2-get-color-from-palette($background);
+                text-align: left;
+            }
+
+            th, td {
+                padding: 12px 15px;
+            }
+
+            tbody tr {
+                border-bottom: 1px solid mat.m2-get-color-from-palette($grey);
+            }
+            
+            tbody tr:hover {
+                background-color: rgba(mat.m2-get-color-from-palette($accent), 0.05);
+            }
+
+            tbody tr:last-of-type {
+                border-bottom: 2px solid mat.m2-get-color-from-palette($accent);
+            }
+
+            tbody tr.active-row {
+                font-weight: bold;
+                color: #009879;
+            }
+        }
     }
 }

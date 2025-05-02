@@ -114,10 +114,10 @@ export class ArticleEditPage extends ResponsiveComponent implements OnInit, OnDe
 
             if (this.id()) {
                 await this.articlesService.update(this.id(), article);
-                this.messageService.showSuccess('Article was updated.');                
+                this.messageService.showSuccess('The article has been updated.');                
             } else {
                 await this.articlesService.create(article);
-                this.messageService.showSuccess('Article was saved.');
+                this.messageService.showSuccess('The article has been saved.');
             }
             
             this.router.navigate(['/articles']);
