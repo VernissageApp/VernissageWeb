@@ -25,7 +25,7 @@
                                 <mat-form-field appearance="outline">
                                     <mat-label>Article body</mat-label>
                                     <textarea matInput name="body" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="8"
-                                        cdkAutosizeMaxRows="100" placeholder="Article body" #bodyInput="ngModel" [(ngModel)]="body"
+                                        cdkAutosizeMaxRows="26" placeholder="Article body" #bodyInput="ngModel" [(ngModel)]="body"
                                         aria-label="Article body" appMaxLength="50000" required></textarea>
                                     <mat-hint align="end"><span class="text-muted">This field supports Markdown formatting.</span></mat-hint>
                                     <mat-error *ngIf="bodyInput.invalid && bodyInput.errors?.appMaxLength">Too long article body.</mat-error>

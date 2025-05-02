@@ -35,6 +35,8 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
+              "src/apple-touch-icon.png",
+              "src/apple-touch-icon-precomposed.png",
               "src/robots.txt",
               "src/assets",
               "src/manifest.webmanifest",
@@ -114,6 +116,8 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
+              "src/apple-touch-icon.png",
+              "src/apple-touch-icon-precomposed.png",
               "src/robots.txt",
               "src/assets",
               "src/manifest.webmanifest"

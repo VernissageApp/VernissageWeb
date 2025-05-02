@@ -26,7 +26,6 @@ export class ProfileCodeDialog implements OnInit {
                 height: 280,
                 type: 'svg',
                 data: this.data,
-                image: '/assets/icons/icon-dark-rounded.svg',
                 margin: 0,
                 qrOptions: {
                     typeNumber: 0,

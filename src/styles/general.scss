@@ -91,6 +91,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   font-weight: 500;
 }
 
+.word-break-all {
+  word-break: break-all;
+}
+
 .link {
   cursor: pointer;
 }

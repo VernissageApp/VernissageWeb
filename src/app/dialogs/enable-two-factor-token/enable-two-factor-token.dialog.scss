@@ -1,3 +1,9 @@
 .token {
     width: 160px;
 }
+
+::ng-deep .qr-code {
+    svg {
+        border-radius: 14px;
+    }
+}
