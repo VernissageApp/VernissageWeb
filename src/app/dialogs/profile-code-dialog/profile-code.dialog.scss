@@ -1,6 +1,16 @@
+.mat-mdc-dialog-content {
+    padding: 0;
+}
+
+::ng-deep .mat-mdc-dialog-surface {
+    border-radius: 14px;
+}
+
 .profileUrl {
-    width: 200px;
+    padding: 10px;
+    width: 260px;
     overflow-wrap: break-word;
     font-size: 0.7em;
     line-height: 12px;
+    text-align: center;
 }

@@ -1,23 +1,6 @@
 <div>
     <div mat-dialog-content>
-        @if (isLightTheme()) {
-            <qrcode
-                [qrdata]="profileUrl()"
-                [margin]="0"
-                [width]="200"
-                [errorCorrectionLevel]="'M'">
-            </qrcode>
-        } @else {
-            <qrcode
-                [qrdata]="profileUrl()"
-                [margin]="0"
-                [width]="200"
-                [colorDark]="'#ffffff'"
-                [colorLight]="'#424242'"
-                [errorCorrectionLevel]="'M'">
-            </qrcode>
-        }
-
+        <div #canvas></div>
         <div class="profileUrl">{{ profileUrl() }}</div>
     </div>
 </div>

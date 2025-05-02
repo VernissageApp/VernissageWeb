@@ -36,8 +36,6 @@ import { GalleryModule } from 'ng-gallery';
 import { SatPopoverModule } from '@ncstate/sat-popover';
 import { FileSaverModule } from 'ngx-filesaver';
 
-import { QRCodeComponent } from 'angularx-qrcode';
-
 @NgModule({
     imports: [
         MatToolbarModule,
@@ -76,7 +74,6 @@ import { QRCodeComponent } from 'angularx-qrcode';
         GalleryModule,
         SatPopoverModule,
         FileSaverModule,
-        QRCodeComponent,
         DragDropModule
     ],
     exports: [
@@ -116,7 +113,6 @@ import { QRCodeComponent } from 'angularx-qrcode';
         GalleryModule,
         SatPopoverModule,
         FileSaverModule,
-        QRCodeComponent,
         DragDropModule
     ]
 })

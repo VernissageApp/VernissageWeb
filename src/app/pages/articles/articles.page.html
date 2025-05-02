@@ -17,9 +17,11 @@
                         <ng-container matColumnDef="title">
                             <th mat-header-cell *matHeaderCellDef> Title </th>
                             <td mat-cell *matCellDef="let element">
-                                <a [routerLink]="['/articles', element.id]"><strong>{{ element.title }}</strong></a>
-                                <div class="fs-90 text-muted">
-                                    {{ element.body | slice: 0: 400 }}...
+                                <div class="margin-top-10 margin-bottom-10">
+                                    <a [routerLink]="['/articles', element.id]">{{ element.title }}</a>
+                                    <div class="fs-90 text-muted">
+                                        {{ element.body | slice: 0: 400 }}...
+                                    </div>
                                 </div>
                             </td>
                         </ng-container>
