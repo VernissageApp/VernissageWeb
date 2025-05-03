@@ -1,4 +1,4 @@
-import { Directive } from '@angular/core';
+import { Directive, inject } from '@angular/core';
 import { NG_ASYNC_VALIDATORS, ValidationErrors, AsyncValidator, AbstractControl } from '@angular/forms';
 import { Observable } from 'rxjs/internal/Observable';
 import { of, timer } from 'rxjs';
@@ -14,9 +14,7 @@ import { RegisterService } from 'src/app/services/http/register.service';
     standalone: false
 })
 export class UniqueUserNameValidatorDirective implements AsyncValidator {
-
-    constructor(private registerService: RegisterService) {
-    }
+    private registerService = inject(RegisterService);
 
     validate(control: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> {
         return timer(500).pipe(

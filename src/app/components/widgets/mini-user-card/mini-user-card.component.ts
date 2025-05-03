@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
 import { User } from 'src/app/models/user';
 import { AvatarSize } from '../avatar/avatar-size';
 import { UserDisplayService } from 'src/app/services/common/user-display.service';
@@ -16,6 +16,5 @@ export class MiniUserCardComponent {
     public showUserName = input(true);
     public whiteLink = input(false);
 
-    constructor(protected userDisplayService: UserDisplayService) {
-    }
+    protected userDisplayService = inject(UserDisplayService);
 }

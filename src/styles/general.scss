@@ -47,6 +47,30 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   font-variation-settings: 'FILL' 0, 'wght' 700, 'GRAD' 0, 'opsz' 48;
 }
 
+.icon-only {
+  &.mdc-button {
+    min-width: 48px;
+  }
+
+  &.mat-mdc-unelevated-button {
+    .mat-icon {
+      margin: 0;
+    }
+  }
+
+  &.mat-mdc-outlined-button {
+    .mat-icon {
+      margin: 0;
+    }
+  }
+
+  &.mat-mdc-raised-button {
+    .mat-icon {
+      margin: 0;
+    }
+  }
+}
+
 /*
  * Utilities.
  */
@@ -67,6 +91,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   font-weight: 500;
 }
 
+.word-break-all {
+  word-break: break-all;
+}
+
 .link {
   cursor: pointer;
 }
@@ -77,6 +105,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .display-inline-block {
   display: inline-block !important;
+}
+
+.line-height-normal {
+  line-height: normal;
 }
 
 .pull-right {

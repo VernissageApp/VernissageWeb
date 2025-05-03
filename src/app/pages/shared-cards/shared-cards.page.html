@@ -1,0 +1,104 @@
+@if (isReady()) {
+    @if (sharedBusinessCards(); as sharedBusinessCardsArray) {
+        <div @fadeIn [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
+            <div class="flex-row flex-space-around padding-left-10 padding-right-10">
+                <div class="width-100">
+                    <section class="flex-row flex-space-between flex-align-center margin-bottom-20" [ngClass]="{ 'flex-row': !isHandsetPortrait(), 'flex-column': isHandsetPortrait() }">
+                        <h1>
+                            <div>Shared business cards</div>
+                            <div *ngIf="!isHandset()" class="fs-60 text-muted">Here you can view and manage all the public links through which your business card has been shared.</div>
+                        </h1>
+                        <div class="page-buttons">
+                            @if (isHandset()) {
+                                <button type="button" [routerLink]="['/business-card', 'edit']" mat-raised-button class="margin-right-10 icon-only" aria-label="Your business card"><mat-icon class="fill-symbol">badge</mat-icon></button>
+                                <button type="button" (click)="onShareBusinessCard()" mat-raised-button color="accent" class="icon-only" aria-label="Share business card"><mat-icon class="fill-symbol">share</mat-icon></button>
+                            } @else {
+                                <button type="button" [routerLink]="['/business-card', 'edit']" mat-raised-button class="margin-right-10" aria-label="Your business card">Your business card</button>
+                                <button type="button" (click)="onShareBusinessCard()" mat-raised-button color="accent" aria-label="Share business card">Share business card</button>
+                            }
+                        </div>
+                    </section>
+
+                    <table mat-table [dataSource]="sharedBusinessCardsArray.data" class="mat-elevation-z1">
+
+                        <!-- Title Column -->
+                        <ng-container matColumnDef="title">
+                            <th mat-header-cell *matHeaderCellDef> Title </th>
+                            <td mat-cell *matCellDef="let element">
+                                <a [routerLink]="['/shared-cards', element.id]">{{ element.title }}</a>
+                                <div class="fs-90 text-muted">
+                                    {{ element.note }}
+                                </div>
+                            </td>
+                        </ng-container>
+
+                        <!-- Title ThirdPartyName -->
+                        <ng-container matColumnDef="thirdPartyName">
+                            <th mat-header-cell *matHeaderCellDef> Name </th>
+                            <td mat-cell *matCellDef="let element">
+                                {{ element.thirdPartyName }}
+                            </td>
+                        </ng-container>
+
+                        <!-- Title ThirdPartyName -->
+                        <ng-container matColumnDef="thirdPartyEmail">
+                            <th mat-header-cell *matHeaderCellDef> Email </th>
+                            <td mat-cell *matCellDef="let element">
+                                {{ element.thirdPartyEmail }}
+                            </td>
+                        </ng-container>
+
+                        <!-- Created Date Column -->
+                        <ng-container matColumnDef="createdAt">
+                            <th mat-header-cell *matHeaderCellDef> Created date </th>
+                            <td mat-cell *matCellDef="let element" class="createdAt">
+                                <span *ngIf="element.createdAt">
+                                    {{ element.createdAt | date: 'short' }}
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <!-- Revoked Column -->
+                        <ng-container matColumnDef="enabled">
+                            <th mat-header-cell *matHeaderCellDef> Enabled </th>
+                            <td mat-cell *matCellDef="let element">
+                                <mat-slide-toggle name="alwaysShowNSFW" [ngModel]="!element.revokedAt" (ngModelChange)="onRevokedChange(element.id, $event)"></mat-slide-toggle>
+                            </td>
+                        </ng-container>
+
+                        <!-- Actions Column -->
+                        <ng-container matColumnDef="actions">
+                            <th mat-header-cell *matHeaderCellDef></th>
+                            <td mat-cell *matCellDef="let element" class="text-right">
+                                <button class="more-button" mat-stroked-button [matMenuTriggerFor]="dropdownMenuOne2" color="primary" aria-label="More options">
+                                    <span class="material-symbols-outlined">more_vert</span>
+                                </button>
+                                <mat-menu #dropdownMenuOne2="matMenu" xPosition="before">
+                                    <button (click)="onEdit(element)" mat-menu-item>
+                                        <mat-icon class="outline-symbol">edit</mat-icon>
+                                        <span>Edit</span>
+                                    </button>
+                                    <button (click)="onDelete(element)" mat-menu-item>
+                                        <mat-icon class="outline-symbol">delete</mat-icon>
+                                        <span>Delete</span>
+                                    </button>
+                                </mat-menu>
+                            </td>
+                        </ng-container>
+                    
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns()"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns();"></tr>
+                    </table>
+                    <mat-paginator
+                        (page)="handlePageEvent($event)"
+                        [length]="sharedBusinessCardsArray.total"
+                        [pageIndex]="pageIndex()"
+                        [pageSize]="10"
+                        [pageSizeOptions]="[10, 25, 100]"
+                        aria-label="Select page">
+                    </mat-paginator>
+                </div>
+            </div>
+        </div>
+    }
+}

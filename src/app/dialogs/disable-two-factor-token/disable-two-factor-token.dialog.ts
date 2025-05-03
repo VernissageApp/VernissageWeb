@@ -1,6 +1,5 @@
-import { ChangeDetectionStrategy, Component, Inject, model } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { User } from 'src/app/models/user';
+import { ChangeDetectionStrategy, Component, inject, model } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { AccountService } from 'src/app/services/http/account.service';
 
@@ -13,12 +12,9 @@ import { AccountService } from 'src/app/services/http/account.service';
 export class DisableTwoFactorTokenDialog {
     protected code = model('');
 
-    constructor(
-        private accountService: AccountService,
-        private messageService: MessagesService,
-        public dialogRef: MatDialogRef<DisableTwoFactorTokenDialog>,
-        @Inject(MAT_DIALOG_DATA) public data?: User) {
-    }
+    private accountService = inject(AccountService);
+    private messageService = inject(MessagesService);
+    private dialogRef = inject(MatDialogRef<DisableTwoFactorTokenDialog>);
 
     protected onNoClick(): void {
         this.dialogRef.close();

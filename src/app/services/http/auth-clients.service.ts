@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { AuthClient } from 'src/app/models/auth-client';
 import { WindowService } from '../common/window.service';
@@ -8,8 +8,8 @@ import { WindowService } from '../common/window.service';
     providedIn: 'root'
 })
 export class AuthClientsService {
-    constructor(private httpClient: HttpClient, private windowService: WindowService) {
-    }
+    private httpClient = inject(HttpClient);
+    private windowService = inject(WindowService);
 
     public async getList(): Promise<AuthClient[]> {
         const event$ = this.httpClient.get<AuthClient[]>(this.windowService.apiUrl() + '/api/v1/auth-clients');

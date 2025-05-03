@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, input, model, output, signal } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, input, model, output, signal, inject } from '@angular/core';
 import { ControlContainer, NgForm } from '@angular/forms';
 import { Subject, Subscription } from 'rxjs';
 
@@ -29,9 +29,7 @@ export class UserSelectorComponent implements OnInit, OnDestroy {
     private usersSubscription?: Subscription;
     private textChanged = new Subject<string>();
 
-    constructor(
-        private usersService: UsersService
-    ) { }
+    private usersService = inject(UsersService);
 
     ngOnInit(): void {
         this.usersSubscription = this.textChanged.pipe(

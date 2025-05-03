@@ -1,5 +1,4 @@
-import { BreakpointObserver } from '@angular/cdk/layout';
-import { ChangeDetectionStrategy, Component, model, OnDestroy, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, model, OnDestroy, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
@@ -11,35 +10,31 @@ import { MessagesService } from 'src/app/services/common/messages.service';
 import { ArticlesService } from 'src/app/services/http/articles.service';
 
 @Component({
-    selector: 'app-article',
-    templateUrl: './article.page.html',
-    styleUrls: ['./article.page.scss'],
+    selector: 'app-article-edit',
+    templateUrl: './article-edit.page.html',
+    styleUrls: ['./article-edit.page.scss'],
     animations: fadeInAnimation,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
-export class ArticlePage extends ResponsiveComponent implements OnInit, OnDestroy {
+export class ArticleEditPage extends ResponsiveComponent implements OnInit, OnDestroy {
     protected isReady = signal(false);
     protected title = model('');
     protected body = model('');
     protected id = model('');
     protected color = model('');
-    protected showInNews = model(false);
+    protected showInNewsSignIn = model(false);
+    protected showInNewsSignOut = model(false);
     protected showInHomeSignIn = model(false);
     protected showInHomeSignOut = model(false);
 
     private routeParamsSubscription?: Subscription;
 
-    constructor(
-        private messageService: MessagesService,
-        private articlesService: ArticlesService,
-        private activatedRoute: ActivatedRoute,
-        private loadingService: LoadingService,
-        private router: Router,
-        breakpointObserver: BreakpointObserver
-    ) {
-        super(breakpointObserver);
-    }
+    private messageService = inject(MessagesService);
+    private articlesService = inject(ArticlesService);
+    private activatedRoute = inject(ActivatedRoute);
+    private loadingService = inject(LoadingService);
+    private router = inject(Router);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
@@ -58,8 +53,12 @@ export class ArticlePage extends ResponsiveComponent implements OnInit, OnDestro
                     this.color.set(article.color ?? '');
 
                     for(const visibility of article.visibilities ?? []) {
-                        if (visibility === ArticleVisibility.News) {
-                            this.showInNews.set(true);
+                        if (visibility === ArticleVisibility.SignInNews) {
+                            this.showInNewsSignIn.set(true);
+                        }
+
+                        if (visibility === ArticleVisibility.SignOutNews) {
+                            this.showInNewsSignOut.set(true);
                         }
 
                         if (visibility === ArticleVisibility.SignInHome) {
@@ -97,8 +96,12 @@ export class ArticlePage extends ResponsiveComponent implements OnInit, OnDestro
             article.color = this.color();
             article.visibilities = [];
 
-            if (this.showInNews()) {
-                article.visibilities.push(ArticleVisibility.News);
+            if (this.showInNewsSignIn()) {
+                article.visibilities.push(ArticleVisibility.SignInNews);
+            }
+
+            if (this.showInNewsSignOut()) {
+                article.visibilities.push(ArticleVisibility.SignOutNews);
             }
 
             if (this.showInHomeSignIn()) {
@@ -111,10 +114,10 @@ export class ArticlePage extends ResponsiveComponent implements OnInit, OnDestro
 
             if (this.id()) {
                 await this.articlesService.update(this.id(), article);
-                this.messageService.showSuccess('Article was updated.');                
+                this.messageService.showSuccess('The article has been updated.');                
             } else {
                 await this.articlesService.create(article);
-                this.messageService.showSuccess('Article was saved.');
+                this.messageService.showSuccess('The article has been saved.');
             }
             
             this.router.navigate(['/articles']);

@@ -1,5 +1,5 @@
 import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
-import { Component, OnDestroy, OnInit, signal } from "@angular/core";
+import { Component, inject, OnDestroy, OnInit, signal } from "@angular/core";
 import { Subscription } from "rxjs";
 
 export enum Resolution {
@@ -28,7 +28,9 @@ export class ResponsiveComponent implements OnInit, OnDestroy {
     protected isHandsetPortrait = signal(false);
     protected isHandsetLandscape = signal(false);
 
-    constructor(private breakpointObserver: BreakpointObserver) {
+    private breakpointObserver = inject(BreakpointObserver);
+
+    constructor() {
         this.breakpointSubscription = this.breakpointObserver
             .observe([Breakpoints.XSmall, Breakpoints.Small, Breakpoints.Medium])
             .subscribe(() => {

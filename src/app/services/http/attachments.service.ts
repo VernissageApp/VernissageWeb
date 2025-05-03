@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { TemporaryAttachment } from 'src/app/models/temporary-attachment';
@@ -10,8 +10,8 @@ import { AttachmentHashtag } from 'src/app/models/attachment-hashtag';
     providedIn: 'root'
 })
 export class AttachmentsService {
-    constructor(private httpClient: HttpClient, private windowService: WindowService) {
-    }
+    private httpClient = inject(HttpClient);
+    private windowService = inject(WindowService);
 
     public async uploadAttachment(formData: FormData): Promise<TemporaryAttachment> {
         const event$ = this.httpClient.post<TemporaryAttachment>(this.windowService.apiUrl() + '/api/v1/attachments', formData);

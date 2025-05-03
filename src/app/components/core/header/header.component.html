@@ -180,6 +180,13 @@
                             </button>
                         }
 
+                        @if (showSharedBusinessCards()) {
+                            <button mat-menu-item [routerLink]="['/shared-cards']" (click)="markClearReuseStrategy()" aria-label="Shared business cards">
+                                <mat-icon>badge</mat-icon>
+                                <span>Shared business cards</span>
+                            </button>
+                        }
+
                         <mat-divider></mat-divider>
                         <button mat-menu-item [routerLink]="['/account']" aria-label="Account">
                             <mat-icon>account_circle</mat-icon>

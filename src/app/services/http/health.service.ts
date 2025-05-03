@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { WindowService } from '../common/window.service';
 import { Health } from '../../models/health';
@@ -8,9 +8,8 @@ import { Health } from '../../models/health';
     providedIn: 'root'
 })
 export class HealthService {
-
-    constructor(private httpClient: HttpClient, private windowService: WindowService) {
-    }
+    private httpClient = inject(HttpClient);
+    private windowService = inject(WindowService);
 
     public async get(): Promise<Health> {
         const event$ = this.httpClient.get<Health>(this.windowService.apiUrl() + '/api/v1/health');

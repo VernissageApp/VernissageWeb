@@ -1,5 +1,4 @@
-import { BreakpointObserver } from "@angular/cdk/layout";
-import { ChangeDetectionStrategy, Component, OnInit, signal } from "@angular/core";
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from "@angular/core";
 import { ResponsiveComponent } from "src/app/common/responsive";
 import { WindowService } from "src/app/services/common/window.service";
 
@@ -14,12 +13,7 @@ export class FooterComponent extends ResponsiveComponent implements OnInit {
     protected currentYear = signal('');
     protected apiService = signal('');
 
-    constructor(
-        private windowService: WindowService,
-        breakpointObserver: BreakpointObserver
-    ) {
-        super(breakpointObserver);
-    }
+    private windowService = inject(WindowService);
 
     override ngOnInit(): void {
         super.ngOnInit();

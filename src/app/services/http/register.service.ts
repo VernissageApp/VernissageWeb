@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
 import { firstValueFrom } from 'rxjs';
@@ -12,8 +12,8 @@ import { WindowService } from '../common/window.service';
     providedIn: 'root'
 })
 export class RegisterService {
-    constructor(private httpClient: HttpClient, private windowService: WindowService) {
-    }
+    private httpClient = inject(HttpClient);
+    private windowService = inject(WindowService);
 
     public async register(user: RegisterUser): Promise<User> {
         const event$= this.httpClient.post<User>(this.windowService.apiUrl() + '/api/v1/register', user);

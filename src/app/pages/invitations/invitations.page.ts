@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, OnInit, signal } from '@angular/core';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { InstanceService } from 'src/app/services/http/instance.service';
 import { ForbiddenError } from 'src/app/errors/forbidden-error';
@@ -8,7 +8,6 @@ import { Clipboard } from '@angular/cdk/clipboard';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { LoadingService } from 'src/app/services/common/loading.service';
 import { ResponsiveComponent } from 'src/app/common/responsive';
-import { BreakpointObserver } from '@angular/cdk/layout';
 import { SettingsService } from 'src/app/services/http/settings.service';
 import { PublicSettings } from 'src/app/models/public-settings';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
@@ -33,19 +32,14 @@ export class InvitationsPage extends ResponsiveComponent implements OnInit {
     private readonly displayedColumnsHandsetLandscape: string[] = ['code', 'actions'];
     private readonly displayedColumnsTablet: string[] = ['code', 'invited', 'actions'];
     private readonly displayedColumnsBrowser: string[] = ['code', 'createdAt', 'invited', 'actions'];
-    
-    constructor(
-        private instanceService: InstanceService,
-        private invitationsService: InvitationsService,
-        private messageService: MessagesService,
-        private loadingService: LoadingService,
-        private settingsService: SettingsService,
-        private authorizationService: AuthorizationService,
-        private clipboard: Clipboard,
-        breakpointObserver: BreakpointObserver
-    ) {
-        super(breakpointObserver);
-    }
+
+    private instanceService = inject(InstanceService);
+    private invitationsService = inject(InvitationsService);
+    private messageService = inject(MessagesService);
+    private loadingService = inject(LoadingService);
+    private settingsService = inject(SettingsService);
+    private authorizationService = inject(AuthorizationService);
+    private clipboard = inject(Clipboard);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();

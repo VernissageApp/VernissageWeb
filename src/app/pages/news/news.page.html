@@ -15,7 +15,9 @@
                             <mat-card class="margin-bottom-10" appearance="outlined">                            
                                 <mat-card-header>
                                     @if (article.title; as inlineTitle) {
-                                        <mat-card-title>{{ inlineTitle }}</mat-card-title>
+                                        <mat-card-title>
+                                            <a class="dashed" [routerLink]="['/news', article.id]">{{ inlineTitle }}</a>
+                                        </mat-card-title>
                                     }
                                     @if (article.user; as userObject) {
                                         <mat-card-subtitle>
@@ -24,11 +26,11 @@
                                     }
                                 </mat-card-header>
                                 <mat-card-content>
-                                    <div class="margin-right-40" [innerHTML]="article.bodyHtml"></div>
+                                    <div class="news-text" [innerHTML]="article.bodyHtml"></div>
                                 </mat-card-content>
                                 <mat-card-footer>
                                     <div class="text-muted fs-90">
-                                        {{ article.createdAt| date: 'short' }}
+                                        {{ article.createdAt | date: 'short' }}
                                     </div>
                                 </mat-card-footer>
                             </mat-card>
@@ -38,8 +40,8 @@
                             (page)="handlePageEvent($event)"
                             [length]="articlesArray.total"
                             [pageIndex]="pageIndex()"
-                            [pageSize]="10"
-                            [pageSizeOptions]="[10, 25, 100]"
+                            [pageSize]="5"
+                            [pageSizeOptions]="[5, 10, 25, 100]"
                             aria-label="Select page">
                         </mat-paginator>
                     } @else {

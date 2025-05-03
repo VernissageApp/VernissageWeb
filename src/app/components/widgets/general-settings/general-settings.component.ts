@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input, model, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, model, OnInit, signal } from '@angular/core';
 import { Settings } from 'src/app/models/settings';
 import { SettingsService } from 'src/app/services/http/settings.service';
 import { MessagesService } from 'src/app/services/common/messages.service';
@@ -19,12 +19,10 @@ export class GeneralSettingsComponent implements OnInit {
     public systemDefaultUser = model<User>();
 
     protected eventTypes = signal<string[]>([]);
-    
-    constructor(
-        private settingsService: SettingsService,
-        private messageService: MessagesService,
-        private instanceService: InstanceService) {
-    }
+
+    private settingsService = inject(SettingsService);
+    private messageService = inject(MessagesService);
+    private instanceService = inject(InstanceService);
 
     ngOnInit(): void {
         const values = Object.values(EventType);

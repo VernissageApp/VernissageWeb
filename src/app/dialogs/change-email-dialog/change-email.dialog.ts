@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, model } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, model } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ChangeEmail } from 'src/app/models/change-email';
 import { MessagesService } from 'src/app/services/common/messages.service';
@@ -14,12 +14,10 @@ import { AccountService } from 'src/app/services/http/account.service';
 export class ChangeEmailDialog {
     protected email = model('');
 
-    constructor(
-        private accountService: AccountService,
-        private messagesService: MessagesService,
-        private windowService: WindowService,
-        public dialogRef: MatDialogRef<ChangeEmailDialog>
-    ) { }
+    private accountService = inject(AccountService);
+    private messagesService = inject(MessagesService);
+    private windowService = inject(WindowService);
+    private dialogRef = inject(MatDialogRef<ChangeEmailDialog>);
 
     protected onNoClick(): void {
         this.dialogRef.close();

@@ -1,11 +1,10 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { ForbiddenError } from 'src/app/errors/forbidden-error';
 import { Report } from 'src/app/models/report';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { LoadingService } from 'src/app/services/common/loading.service';
 import { ResponsiveComponent } from 'src/app/common/responsive';
-import { BreakpointObserver } from '@angular/cdk/layout';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 import { ReportsService } from 'src/app/services/http/reports.service';
 import { Role } from 'src/app/models/role';
@@ -40,21 +39,16 @@ export class ReportsPage extends ResponsiveComponent implements OnInit, OnDestro
     private readonly displayedColumnsHandsetLandscape: string[] = ['reportedUser', 'status', 'actions'];
     private readonly displayedColumnsTablet: string[] = ['type', 'user', 'reportedUser', 'category', 'status', 'actions'];
     private readonly displayedColumnsBrowser: string[] = ['type', 'user', 'reportedUser', 'status', 'category', 'considerationUser', 'considerationDate', 'actions'];
-    
-    constructor(
-        private authorizationService: AuthorizationService,
-        private randomGeneratorService: RandomGeneratorService,
-        private reportsService: ReportsService,
-        private statusesService: StatusesService,
-        private messageService: MessagesService,
-        private loadingService: LoadingService,
-        private activatedRoute: ActivatedRoute,
-        private dialog: MatDialog,
-        private router: Router,
-        breakpointObserver: BreakpointObserver
-    ) {
-        super(breakpointObserver);
-    }
+
+    private authorizationService = inject(AuthorizationService);
+    private randomGeneratorService = inject(RandomGeneratorService);
+    private reportsService = inject(ReportsService);
+    private statusesService = inject(StatusesService);
+    private messageService = inject(MessagesService);
+    private loadingService = inject(LoadingService);
+    private activatedRoute = inject(ActivatedRoute);
+    private dialog = inject(MatDialog);
+    private router = inject(Router);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();

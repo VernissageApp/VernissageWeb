@@ -1,0 +1,32 @@
+@if (isReady()) {
+    @if (article(); as articleObject) {
+        <div @fadeIn [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
+
+            <div class="flex-row flex-space-around">
+                <div class="news-container width-100">
+                    <mat-card class="margin-bottom-20" appearance="outlined">                            
+                        <mat-card-header>
+                            @if (articleObject.title; as inlineTitle) {
+                                <mat-card-title>{{ inlineTitle }}</mat-card-title>
+                            }
+                            @if (articleObject.user; as userObject) {
+                                <mat-card-subtitle>
+                                    <app-mini-user-card [user]="userObject"></app-mini-user-card>
+                                </mat-card-subtitle>
+                            }
+                        </mat-card-header>
+                        <mat-card-content>
+                            <div class="news-text" [innerHTML]="articleObject.bodyHtml"></div>
+                        </mat-card-content>
+                        <mat-card-footer>
+                            <div class="text-muted fs-90">
+                                {{ articleObject.createdAt | date: 'short' }}
+                            </div>
+                        </mat-card-footer>
+                    </mat-card>
+
+                </div>
+            </div>
+        </div>
+    }
+}

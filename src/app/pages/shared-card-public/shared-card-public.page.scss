@@ -1,0 +1,40 @@
+::ng-deep .business-card-container {
+    .bottom {
+        max-width: 640px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+mat-form-field {
+    width: 100%;
+}
+
+.username {
+    margin-top: -5px;
+
+    .fullname {
+        line-height: 14px;
+
+        a {
+            line-height: 14px;
+        }
+    }
+
+    .account {
+        line-height: 14px;
+    }
+}
+
+.business-card-messages {
+    max-width: 640px;
+    margin-left: auto;
+    margin-right: auto;
+
+    .business-card-message-text {
+        max-width: 400px;
+        border-radius: 24px;
+        padding: 8px 16px;
+        display: inline-block;
+    }
+}

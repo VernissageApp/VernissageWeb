@@ -1,8 +1,7 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { LoadingService } from 'src/app/services/common/loading.service';
 import { ResponsiveComponent } from 'src/app/common/responsive';
-import { BreakpointObserver } from '@angular/cdk/layout';
 import { PagedResult } from 'src/app/models/paged-result';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
@@ -12,6 +11,7 @@ import { Article } from 'src/app/models/article';
 import { ArticleVisibility } from 'src/app/models/article-visibility';
 import { SettingsService } from 'src/app/services/http/settings.service';
 import { ForbiddenError } from 'src/app/errors/forbidden-error';
+import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 
 @Component({
     selector: 'app-news',
@@ -30,22 +30,25 @@ export class NewsPage extends ResponsiveComponent implements OnInit, OnDestroy {
 
     private routeParamsSubscription?: Subscription;
     
-    constructor(
-        private articlesService: ArticlesService,
-        private loadingService: LoadingService,
-        private activatedRoute: ActivatedRoute,
-        private router: Router,
-        private settingsService: SettingsService,
-        breakpointObserver: BreakpointObserver
-    ) {
-        super(breakpointObserver);
-    }
+    private articlesService = inject(ArticlesService);
+    private loadingService = inject(LoadingService);
+    private activatedRoute = inject(ActivatedRoute);
+    private router = inject(Router);
+    private settingsService = inject(SettingsService);
+    private authorizationService = inject(AuthorizationService);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
 
+        const isLoggedIn = await this.authorizationService.isLoggedIn();
+
+        const showNewsForAnonymous = this.settingsService.publicSettings?.showNewsForAnonymous ?? false;
+        if (!isLoggedIn && !showNewsForAnonymous) {
+            throw new ForbiddenError();
+        }
+
         const showNews = this.settingsService.publicSettings?.showNews ?? false;
-        if (!showNews) {
+        if (isLoggedIn && !showNews) {
             throw new ForbiddenError();
         }
 
@@ -59,8 +62,9 @@ export class NewsPage extends ResponsiveComponent implements OnInit, OnDestroy {
             const size = sizeString ? +sizeString : 10;
 
             this.pageIndex.set(page);
+            const articlesVisibility = isLoggedIn ? ArticleVisibility.SignInNews : ArticleVisibility.SignOutNews;
 
-            const downloadedArticles = await this.articlesService.all(page + 1, size, ArticleVisibility.News, true);
+            const downloadedArticles = await this.articlesService.all(page + 1, size, articlesVisibility, true);
             this.articles.set(downloadedArticles);
 
             this.isReady.set(true);

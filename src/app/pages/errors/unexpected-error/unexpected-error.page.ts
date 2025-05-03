@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { PersistenceService } from 'src/app/services/persistance/persistance.service';
@@ -19,11 +19,9 @@ export class UnexpectedErrorPage implements OnInit, OnDestroy {
     private errorExpanded = false;
     private interval: NodeJS.Timeout | undefined;
 
-    constructor(
-        private persistenceService: PersistenceService,
-        private router: Router,
-        private activatedRoute: ActivatedRoute) {
-    }
+    private persistenceService = inject(PersistenceService);
+    private router = inject(Router);
+    private activatedRoute = inject(ActivatedRoute);
 
     ngOnInit(): void {
         const codeFromQuery = this.activatedRoute.snapshot.queryParamMap.get('code');

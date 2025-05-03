@@ -1,0 +1,50 @@
+<div class="business-card-container">
+    <div class="top" [ngStyle]="{ background: 'linear-gradient(' + color1() + ', ' + color2() + ')' }">
+        <img class="avatar-image" alt="avatar profile" [ngSrc]="avatarUrl()" width="600" height="600" />
+        <div class="text-center" [ngStyle]="{ color: color3() }">
+            <div class="mat-h1">{{ title() }}</div>
+            <div class="mat-h4">{{ subtitle() }}</div>
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="bio" [innerText]="body()"></div>
+                                
+        @if (website()) {
+            <mat-card class="margin-bottom-10 flexi-item" appearance="outlined">
+                <mat-card-content>
+                    <div class="flexi-key"><span class="dashed">WEBSITE</span></div>
+                    <div class="flexi-value">{{ website() }}</div>
+                </mat-card-content>
+            </mat-card>
+        }
+
+        @if (telephone()) {
+            <mat-card class="margin-bottom-10 flexi-item" appearance="outlined">
+                <mat-card-content>
+                    <div class="flexi-key"><span class="dashed">TELEPHONE</span></div>
+                    <div class="flexi-value">{{ telephone() }}</div>
+                </mat-card-content>
+            </mat-card>
+        }
+
+        @if (email()) {
+            <mat-card class="margin-bottom-10 flexi-item" appearance="outlined">
+                <mat-card-content>
+                    <div class="flexi-key"><span class="dashed">EMAIL</span></div>
+                    <div class="flexi-value">{{ email() }}</div>
+                </mat-card-content>
+            </mat-card>
+        }
+
+        @for (item of fields(); track item) {
+            <mat-card class="margin-bottom-10 flexi-item" appearance="outlined">
+                <mat-card-content>
+                    <div class="flexi-key"><span class="dashed">{{ item.key }}</span></div>
+                    <div class="flexi-value">{{ item.value }}</div>
+                </mat-card-content>
+            </mat-card>
+        }
+        
+        <button mat-flat-button color="primary" class="width-100 margin-top-10" type="button" (click)="onImportContact()">Import contact</button>
+    </div>
+</div>

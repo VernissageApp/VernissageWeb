@@ -123,7 +123,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>Images url</mat-label>
-            <input matInput name="imagesUrl" #mastodonUrl="ngModel" [(ngModel)]="settings().imagesUrl"
+            <input matInput name="imagesUrl" #imagesUrl="ngModel" [(ngModel)]="settings().imagesUrl"
                 placeholder="Images url" aria-label="Images url" />
         </mat-form-field>
         <div class="text-muted fs-90 margin-left-10 margin-top-5">
@@ -133,8 +133,32 @@
     </div>
 
     <div class="margin-bottom-20">
+        <mat-form-field appearance="outline">
+            <mat-label>Images quality</mat-label>
+            <input matInput type="number" name="imageQuality" #imageQuality="ngModel" [(ngModel)]="settings().imageQuality"
+                placeholder="Images quality" aria-label="Images quality" />
+        </mat-form-field>
+        <div class="text-muted fs-90 margin-left-10 margin-top-5">
+            Determines the quality of images saved and processed by the system after upload
+            (e.g., for thumbnail generation). Recommended value: 85.
+        </div>
+    </div>
+
+    <div>
         <mat-checkbox name="showNews" color="primary" [disableRipple]="true" [(ngModel)]="settings().showNews">
-            Show 'News' menu item
+            Show 'News' menu item for signed in users
+        </mat-checkbox>
+    </div>
+
+    <div>
+        <mat-checkbox name="showNewsForAnonymous" color="primary" [disableRipple]="true" [(ngModel)]="settings().showNewsForAnonymous">
+            Show 'News' menu item for anonymous users
+        </mat-checkbox>
+    </div>
+
+    <div class="margin-bottom-20">
+        <mat-checkbox name="showSharedBusinessCards" color="primary" [disableRipple]="true" [(ngModel)]="settings().showSharedBusinessCards">
+            Show 'Shared business cards' menu item
         </mat-checkbox>
     </div>
 

@@ -1,5 +1,5 @@
 @if (isReady()) {
-    @if (articles(); as usersArray) {
+    @if (articles(); as articlesArray) {
         <div @fadeIn [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
             <div class="flex-row flex-space-around padding-left-10 padding-right-10">
                 <div class="width-100">
@@ -11,15 +11,17 @@
                         <button type="button" mat-raised-button color="primary" aria-label="Create article" (click)="onCreateArticle()">Create article</button>
                     </section>
 
-                    <table mat-table [dataSource]="usersArray.data" class="mat-elevation-z1">
+                    <table mat-table [dataSource]="articlesArray.data" class="mat-elevation-z1">
 
                         <!-- Title Column -->
                         <ng-container matColumnDef="title">
                             <th mat-header-cell *matHeaderCellDef> Title </th>
                             <td mat-cell *matCellDef="let element">
-                                {{ element.title }}
-                                <div class="fs-90 text-muted">
-                                    {{ element.body | slice: 0: 400 }}...
+                                <div class="margin-top-10 margin-bottom-10">
+                                    <a [routerLink]="['/articles', element.id]">{{ element.title }}</a>
+                                    <div class="fs-90 text-muted">
+                                        {{ element.body | slice: 0: 400 }}...
+                                    </div>
                                 </div>
                             </td>
                         </ng-container>
@@ -31,8 +33,11 @@
                                 <span *ngIf="element.visibilities">
                                     @for (item of element.visibilities; track item) {
                                         @switch (item) {
-                                            @case (articleVisibility.News) {
-                                                <div class="text-muted">News</div>
+                                            @case (articleVisibility.SignInNews) {
+                                                <div class="text-muted">News - sign in</div>
+                                            }
+                                            @case (articleVisibility.SignOutNews) {
+                                                <div class="text-muted">News - sign out</div>
                                             }
                                             @case (articleVisibility.SignInHome) {
                                                 <div class="text-muted">Home - sign in</div>
@@ -81,7 +86,7 @@
                     </table>
                     <mat-paginator
                         (page)="handlePageEvent($event)"
-                        [length]="usersArray.total"
+                        [length]="articlesArray.total"
                         [pageIndex]="pageIndex()"
                         [pageSize]="10"
                         [pageSizeOptions]="[10, 25, 100]"

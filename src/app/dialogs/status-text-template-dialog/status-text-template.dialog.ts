@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject, model, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, model, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { UserSetting, UserSettingKey } from 'src/app/models/user-setting';
 import { MessagesService } from 'src/app/services/common/messages.service';
@@ -14,12 +14,10 @@ import { UserSettingsService } from 'src/app/services/http/user-settings.service
 export class StatusTextDialog implements OnInit {
     protected template = model('');
 
-    constructor(
-        private userSettingsService: UserSettingsService,
-        private messageService: MessagesService,
-        public dialogRef: MatDialogRef<StatusTextDialog>,
-        @Inject(MAT_DIALOG_DATA) public data?: string) {
-    }
+    private userSettingsService = inject(UserSettingsService);
+    private messageService = inject(MessagesService);
+    private dialogRef = inject(MatDialogRef<StatusTextDialog>);
+    private data?: string = inject(MAT_DIALOG_DATA);
 
     ngOnInit(): void {
         this.template.set(this.data ?? '');

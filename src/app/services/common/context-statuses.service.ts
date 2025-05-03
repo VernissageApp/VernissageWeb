@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { LinkableResult } from 'src/app/models/linkable-result';
 import { Status } from 'src/app/models/status';
 import { PersistenceService } from '../persistance/persistance.service';
@@ -18,14 +18,14 @@ export class ContextStatusesService {
     public allOlderStatusesDownloaded = false;
     public allNewerStatusesDownloaded = false;
 
-    constructor(
-        private persistenceService: PersistenceService,
-        private timelineService: TimelineService,
-        private bookmarksService: BookmarksService,
-        private favouritesService: FavouritesService,
-        private usersService: UsersService,
-        private trendingService: TrendingService
-    ) {
+    private persistenceService = inject(PersistenceService);
+    private timelineService = inject(TimelineService);
+    private bookmarksService = inject(BookmarksService);
+    private favouritesService = inject(FavouritesService);
+    private usersService = inject(UsersService);
+    private trendingService = inject(TrendingService);
+
+    constructor() {
         const statusesFromStorage = this.persistenceService.getJson('statusesContext') as LinkableResult<Status>;
         if (statusesFromStorage) {
             this.statuses = statusesFromStorage;

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, model, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, model, OnInit, signal } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { SwPush } from '@angular/service-worker';
 import { firstValueFrom } from 'rxjs';
@@ -36,15 +36,13 @@ export class NotificationSettingsDialog implements OnInit {
     private p256dh?: string;
     private auth?: string;
 
-    constructor(
-        private messageService: MessagesService,
-        private swPushService: SwPush,
-        private loadingService: LoadingService,
-        private authorizationService: AuthorizationService,
-        private settingsService: SettingsService,
-        private pushSubscriptionsService: PushSubscriptionsService,
-        public dialogRef: MatDialogRef<NotificationSettingsDialog>) {
-    }
+    private messageService = inject(MessagesService);
+    private swPushService = inject(SwPush);
+    private loadingService = inject(LoadingService);
+    private authorizationService = inject(AuthorizationService);
+    private settingsService = inject(SettingsService);
+    private pushSubscriptionsService = inject(PushSubscriptionsService);
+    private dialogRef = inject(MatDialogRef<NotificationSettingsDialog>);
 
     async ngOnInit(): Promise<void> {
         this.loadingService.showLoader();

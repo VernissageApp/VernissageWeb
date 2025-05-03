@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, signal, model, computed, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, signal, model, computed, ChangeDetectionStrategy, inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { ReCaptchaV3Service } from 'ngx-captcha';
 import { ForbiddenError } from 'src/app/errors/forbidden-error';
@@ -43,15 +43,13 @@ export class RegisterPage implements OnInit {
     protected isSubmittingMode = computed(() => this.registerPageMode() === RegisterMode.Submitting);
     protected isErrorMode = computed(() => this.registerPageMode() === RegisterMode.Error);
 
-    constructor(
-        private registerService: RegisterService,
-        private router: Router,
-        private messageService: MessagesService,
-        private instanceService: InstanceService,
-        private reCaptchaV3Service: ReCaptchaV3Service,
-        private windowService: WindowService,
-        @Inject(DOCUMENT) private document: Document
-    ) { }
+    private registerService = inject(RegisterService);
+    private router = inject(Router);
+    private messageService = inject(MessagesService);
+    private instanceService = inject(InstanceService);
+    private reCaptchaV3Service = inject(ReCaptchaV3Service);
+    private windowService = inject(WindowService);
+    private document = inject(DOCUMENT);
 
     ngOnInit(): void {
         if (!this.instanceService.isRegistrationEnabled()) {

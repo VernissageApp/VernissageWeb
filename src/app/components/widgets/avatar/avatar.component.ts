@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, OnInit, signal } from '@angular/core';
 import { User } from 'src/app/models/user';
 import { AvatarSize } from './avatar-size';
 import { PreferencesService } from 'src/app/services/common/preferences.service';
@@ -17,8 +17,7 @@ export class AvatarComponent implements OnInit {
     protected readonly avatarSize = AvatarSize;
     protected isCircle = signal(false);
 
-    constructor(private preferencesService: PreferencesService) {
-    }
+    private preferencesService = inject(PreferencesService);
 
     ngOnInit(): void {
         this.isCircle.set(this.preferencesService.isCircleAvatar);

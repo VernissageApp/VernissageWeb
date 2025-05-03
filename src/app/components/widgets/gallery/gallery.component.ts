@@ -1,5 +1,5 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { ChangeDetectionStrategy, Component, computed, effect, Inject, input, OnDestroy, OnInit, PLATFORM_ID, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, inject, input, OnDestroy, OnInit, PLATFORM_ID, signal } from '@angular/core';
 import { Subscription, filter } from 'rxjs';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { LinkableResult } from 'src/app/models/linkable-result';
@@ -48,16 +48,16 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
 
     private routeNavigationEndSubscription?: Subscription;
 
-    constructor(
-        @Inject(PLATFORM_ID) platformId: object,
-        private loadingService: LoadingService,
-        private preferencesService: PreferencesService,
-        private router: Router,
-        private contextStatusesService: ContextStatusesService,
-        private galleryBreakpointObserver: BreakpointObserver
-    ) {
-        super(galleryBreakpointObserver);
-        this.isBrowser.set(isPlatformBrowser(platformId));
+    private platformId = inject(PLATFORM_ID);
+    private loadingService = inject(LoadingService);
+    private preferencesService = inject(PreferencesService);
+    private router = inject(Router);
+    private contextStatusesService = inject(ContextStatusesService);
+    private galleryBreakpointObserver = inject(BreakpointObserver);
+
+    constructor() {
+        super();
+        this.isBrowser.set(isPlatformBrowser(this.platformId));
 
         effect(() => {
             const inputStatuses = this.statuses();

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { User } from 'src/app/models/user';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 
@@ -14,8 +14,7 @@ export class HomePage implements OnInit {
     protected isLoggedIn = signal(false);
     protected isReady = signal(false);
 
-    constructor(private authorizationService: AuthorizationService) {
-    }
+    private authorizationService = inject(AuthorizationService);
 
     async ngOnInit(): Promise<void> {
         this.user.set(this.authorizationService.getUser());

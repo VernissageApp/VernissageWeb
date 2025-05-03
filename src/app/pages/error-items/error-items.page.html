@@ -59,7 +59,9 @@
                         <ng-container matColumnDef="message">
                             <th mat-header-cell *matHeaderCellDef> Message </th>
                             <td mat-cell *matCellDef="let element">
-                                {{ element.message }}
+                                <div class="word-break-all">
+                                    {{ element.message }}
+                                </div>
                             </td>
                         </ng-container>
 

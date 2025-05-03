@@ -4,6 +4,8 @@ export class PublicSettings {
     public webPushVapidPublicKey?: string;
     public imagesUrl?: string;
     public showNews = false;
+    public showNewsForAnonymous = false;
+    public showSharedBusinessCards = false;
 
     public patreonUrl?: string;
     public mastodonUrl?: string;

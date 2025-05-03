@@ -1,5 +1,5 @@
 import { Request } from 'express';
-import { Inject, Injectable, Optional, PLATFORM_ID } from '@angular/core';
+import { inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { REQUEST } from 'express.tokens';
 
@@ -11,11 +11,11 @@ import { REQUEST } from 'express.tokens';
 export class SsrCookieService {
     private readonly documentIsAccessible: boolean;
 
-    constructor(
-        @Inject(DOCUMENT) private document: Document,
-        @Inject(PLATFORM_ID) private platformId: any,
-        @Optional() @Inject(REQUEST) private request: Request
-    ) {
+    private document = inject(DOCUMENT);
+    private platformId = inject(PLATFORM_ID);
+    private request: Request | null = inject(REQUEST, { optional: true });
+
+    constructor() {
         this.documentIsAccessible = isPlatformBrowser(this.platformId);
     }
 

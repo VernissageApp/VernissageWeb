@@ -1,5 +1,6 @@
 export enum ArticleVisibility {
     SignOutHome = 'signOutHome',
     SignInHome = 'signInHome',
-    News = 'news'
+    SignInNews = 'signInNews',
+    SignOutNews = 'signOutNews'
 }

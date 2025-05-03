@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, OnDestroy, model, signal, viewChild, ChangeDetectionStrategy } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, OnDestroy, model, signal, viewChild, ChangeDetectionStrategy, inject } from '@angular/core';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { User } from 'src/app/models/user';
 import { Relationship } from 'src/app/models/relationship';
@@ -8,7 +8,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { LoadingService } from 'src/app/services/common/loading.service';
 import { ResponsiveComponent } from 'src/app/common/responsive';
-import { BreakpointObserver } from '@angular/cdk/layout';
 import { Hashtag } from 'src/app/models/hashtag';
 import { Status } from 'src/app/models/status';
 import { MatTabChangeEvent } from '@angular/material/tabs';
@@ -34,16 +33,11 @@ export class SearchPage extends ResponsiveComponent implements AfterViewInit, On
     protected statuses = signal<Status[]>([]);
     protected usersRelationships = signal<Relationship[]>([]);
 
-    constructor(
-        private searchService: SearchService,
-        private relationshipsService: RelationshipsService,
-        private activatedRoute: ActivatedRoute,
-        private loadingService: LoadingService,
-        private router: Router,
-        breakpointObserver: BreakpointObserver
-    ) {
-        super(breakpointObserver);
-    }
+    private searchService = inject(SearchService);
+    private relationshipsService = inject(RelationshipsService);
+    private activatedRoute = inject(ActivatedRoute);
+    private loadingService = inject(LoadingService);
+    private router = inject(Router);
 
     override ngOnInit(): void {
         super.ngOnInit();

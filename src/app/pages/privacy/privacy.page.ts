@@ -1,5 +1,4 @@
-import { BreakpointObserver } from '@angular/cdk/layout';
-import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { SafeHtml } from '@angular/platform-browser';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { ResponsiveComponent } from 'src/app/common/responsive';
@@ -25,14 +24,9 @@ export class PrivacyPage extends ResponsiveComponent implements OnInit {
     private rules: Rule[] = [];
     private email = '';
 
-    constructor(
-        private windowService: WindowService,
-        private settingsService: SettingsService,
-        private instanceService: InstanceService,
-        breakpointObserver: BreakpointObserver
-    ) {
-        super(breakpointObserver);
-    }
+    private windowService = inject(WindowService);
+    private settingsService = inject(SettingsService);
+    private instanceService = inject(InstanceService);
 
     override ngOnInit(): void {
         this.apiService = this.windowService.apiService();

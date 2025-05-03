@@ -1,4 +1,4 @@
-import { Directive, Input, Inject, OnDestroy, ElementRef, NgZone, PLATFORM_ID } from '@angular/core';
+import { Directive, Input, OnDestroy, ElementRef, NgZone, PLATFORM_ID, inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
 @Directive({
@@ -10,11 +10,11 @@ export class NoteProcessorDirective implements OnDestroy {
     @Input('appNoteProcessor') selector?: string;
     private observer: any;
 
-    constructor(
-        private zone: NgZone,
-        private element: ElementRef,
-        @Inject(PLATFORM_ID) private platformId: object
-    ) {
+    private zone = inject(NgZone);
+    private element = inject(ElementRef);
+    private platformId = inject(PLATFORM_ID);
+
+    constructor() {
         if (isPlatformBrowser(this.platformId)) {
             this.zone.runOutsideAngular(() => {
                 this.observer = new MutationObserver(() =>
@@ -50,4 +50,3 @@ export class NoteProcessorDirective implements OnDestroy {
         }
     }
 }
-

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject, model } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, model, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { InstanceBlockedDomain } from 'src/app/models/instance-blocked-domain';
 import { MessagesService } from 'src/app/services/common/messages.service';
@@ -11,19 +11,20 @@ import { InstanceBlockedDomainsService } from 'src/app/services/http/instance-bl
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
-export class InstanceBlockedDomainDialog {
+export class InstanceBlockedDomainDialog implements OnInit {
     protected domain = model('');
     protected reason = model('');
 
-    constructor(
-        private messageService: MessagesService,
-        private instanceBlockedDomainsService: InstanceBlockedDomainsService,
-        public dialogRef: MatDialogRef<InstanceBlockedDomainDialog>,
-        @Inject(MAT_DIALOG_DATA) public data?: InstanceBlockedDomain) {
-            if (this.data) {
-                this.domain.set(this.data.domain);
-                this.reason.set(this.data.reason ?? '');
-            }
+    private messageService = inject(MessagesService);
+    private instanceBlockedDomainsService = inject(InstanceBlockedDomainsService);
+    private dialogRef = inject(MatDialogRef<InstanceBlockedDomainDialog>);
+    private data?: InstanceBlockedDomain = inject(MAT_DIALOG_DATA);
+
+    ngOnInit(): void {
+        if (this.data) {
+            this.domain.set(this.data.domain);
+            this.reason.set(this.data.reason ?? '');
+        }
     }
 
     protected onNoClick(): void {

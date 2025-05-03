@@ -1,5 +1,4 @@
-import { BreakpointObserver } from '@angular/cdk/layout';
-import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { ResponsiveComponent } from 'src/app/common/responsive';
@@ -28,14 +27,9 @@ export class InstanceRulesComponent extends ResponsiveComponent implements OnIni
     private readonly displayedColumnsTablet: string[] = ['order', 'text', 'actions'];
     private readonly displayedColumnsBrowser: string[] = ['order', 'text', 'actions'];
 
-    constructor(
-        private rulesService: RulesService,
-        private messageService: MessagesService,
-        public dialog: MatDialog,
-        breakpointObserver: BreakpointObserver
-    ) {
-        super(breakpointObserver);
-    }
+    private rulesService = inject(RulesService);
+    private messageService = inject(MessagesService);
+    private dialog = inject(MatDialog);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();

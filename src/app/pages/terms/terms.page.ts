@@ -1,5 +1,4 @@
-import { BreakpointObserver } from '@angular/cdk/layout';
-import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { SafeHtml } from '@angular/platform-browser';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { ResponsiveComponent } from 'src/app/common/responsive';
@@ -25,14 +24,9 @@ export class TermsPage extends ResponsiveComponent implements OnInit {
     private rules: Rule[] = [];
     private email = '';
 
-    constructor(
-        private settingsService: SettingsService,
-        private instanceService: InstanceService,
-        private windowService: WindowService,
-        breakpointObserver: BreakpointObserver
-    ) {
-        super(breakpointObserver);
-    }
+    private settingsService = inject(SettingsService);
+    private instanceService = inject(InstanceService);
+    private windowService = inject(WindowService);
 
     override ngOnInit(): void {
         super.ngOnInit();

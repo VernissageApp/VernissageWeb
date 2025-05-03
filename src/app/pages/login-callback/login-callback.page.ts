@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { IdentityService } from 'src/app/services/http/identity.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IdentityToken } from 'src/app/models/identity-token';
@@ -14,12 +14,10 @@ import { AuthorizationService } from 'src/app/services/authorization/authorizati
 export class LoginCallbackPage implements OnInit {
     protected errorMessage = signal<string | undefined>(undefined);
 
-    constructor(
-        private identityService: IdentityService,
-        private route: ActivatedRoute,
-        private authorizationService: AuthorizationService,
-        private router: Router) {
-    }
+    private identityService = inject(IdentityService);
+    private route = inject(ActivatedRoute);
+    private authorizationService = inject(AuthorizationService);
+    private router = inject(Router);
 
     async ngOnInit(): Promise<void> {
         const authenticateToken = this.route.snapshot.queryParams.authenticateToken;

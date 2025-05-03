@@ -1,9 +1,8 @@
-import { Component, OnInit, OnDestroy, HostListener, signal, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, signal, ChangeDetectionStrategy, inject } from '@angular/core';
 import { TimelineService } from 'src/app/services/http/timeline.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { LoadingService } from 'src/app/services/common/loading.service';
-import { BreakpointObserver } from '@angular/cdk/layout';
 import { ContextTimeline } from 'src/app/models/context-timeline';
 import { SettingsService } from 'src/app/services/http/settings.service';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
@@ -29,16 +28,11 @@ export class HomeSignoutComponent extends ReusableGalleryPageComponent implement
     private lastRefreshTime = new Date();
     private routeParamsSubscription?: Subscription;
 
-    constructor(
-        private timelineService: TimelineService,
-        private loadingService: LoadingService,
-        private settingsService: SettingsService,
-        private activatedRoute: ActivatedRoute,
-        private articlesService: ArticlesService,
-        breakpointObserver: BreakpointObserver
-    ) {
-        super(breakpointObserver);
-    }
+    private timelineService = inject(TimelineService);
+    private loadingService = inject(LoadingService);
+    private settingsService = inject(SettingsService);
+    private activatedRoute = inject(ActivatedRoute);
+    private articlesService = inject(ArticlesService);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();

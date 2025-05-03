@@ -1,6 +1,5 @@
-import { BreakpointObserver } from '@angular/cdk/layout';
 import { isPlatformBrowser } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Inject, input, PLATFORM_ID, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, PLATFORM_ID, signal } from '@angular/core';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { Hashtag } from 'src/app/models/hashtag';
@@ -24,13 +23,12 @@ export class HashtagsSearchComponent extends ResponsiveComponent {
 
     private readonly numberOfVisibleStatuses = 10;
 
-    constructor(
-        @Inject(PLATFORM_ID) platformId: object,
-        private timelineService: TimelineService,
-        breakpointObserver: BreakpointObserver
-    ) {
-        super(breakpointObserver);
-        this.isBrowser.set(isPlatformBrowser(platformId));
+    private platformId = inject(PLATFORM_ID);
+    private timelineService = inject(TimelineService);
+
+    constructor() {
+        super();
+        this.isBrowser.set(isPlatformBrowser(this.platformId));
     }
 
     protected async lazyLoadData(): Promise<void> {

@@ -1,4 +1,4 @@
-import { Component, HostListener, ElementRef, Inject, OnInit, OnDestroy, PLATFORM_ID, signal, viewChild, computed, ChangeDetectionStrategy } from '@angular/core';
+import { Component, HostListener, ElementRef, OnInit, OnDestroy, PLATFORM_ID, signal, viewChild, computed, ChangeDetectionStrategy, inject } from '@angular/core';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { fadeInAnimation } from "src/app/animations/fade-in.animation";
 import { showOrHideAnimation } from 'src/app/animations/show-or-hide.animation';
@@ -12,7 +12,6 @@ import { Location } from 'src/app/models/location';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 import { ResponsiveComponent } from 'src/app/common/responsive';
-import { BreakpointObserver } from '@angular/cdk/layout';
 import { User } from 'src/app/models/user';
 import { StatusComment } from 'src/app/models/status-comment';
 import { AvatarSize } from 'src/app/components/widgets/avatar/avatar-size';
@@ -90,31 +89,30 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     private blurhash = 'LEHV6nWB2yk8pyo0adR*.7kCMdnj';
     private isCommentFieldInFocus = false;
 
-    constructor(
-        @Inject(DOCUMENT) private document: Document,
-        @Inject(PLATFORM_ID) platformId: object,
-        private statusesService: StatusesService,
-        private messageService: MessagesService,
-        private authorizationService: AuthorizationService,
-        private reportsService: ReportsService,
-        private contextStatusesService: ContextStatusesService,
-        private preferencesService: PreferencesService,
-        private activatedRoute: ActivatedRoute,
-        private router: Router,
-        private routingStateService: RoutingStateService,
-        private dialog: MatDialog,
-        private gallery: Gallery,
-        private lightbox: Lightbox,
-        private windowService: WindowService,
-        private titleService: Title,
-        private loadingService: LoadingService,
-        private metaService: Meta,
-        private deviceDetectorService: DeviceDetectorService,
-        private clipboard: Clipboard,
-        breakpointObserver: BreakpointObserver
-    ) {
-        super(breakpointObserver);
-        this.isBrowser.set(isPlatformBrowser(platformId));
+    private document = inject(DOCUMENT);
+    private platformId = inject(PLATFORM_ID);
+    private statusesService = inject(StatusesService);
+    private messageService = inject(MessagesService);
+    private authorizationService = inject(AuthorizationService);
+    private reportsService = inject(ReportsService);
+    private contextStatusesService = inject(ContextStatusesService);
+    private preferencesService = inject(PreferencesService);
+    private activatedRoute = inject(ActivatedRoute);
+    private router = inject(Router);
+    private routingStateService = inject(RoutingStateService);
+    private dialog = inject(MatDialog);
+    private gallery = inject(Gallery);
+    private lightbox = inject(Lightbox);
+    private windowService = inject(WindowService);
+    private titleService = inject(Title);
+    private loadingService = inject(LoadingService);
+    private metaService = inject(Meta);
+    private deviceDetectorService = inject(DeviceDetectorService);
+    private clipboard = inject(Clipboard);
+
+    constructor() {
+        super();
+        this.isBrowser.set(isPlatformBrowser(this.platformId));
     }
 
     override async ngOnInit(): Promise<void> {
@@ -895,7 +893,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         // <meta property="og:title" content="John Doe (@john@vernissage.xxx)">
         this.metaService.updateTag({ property: 'og:title', content: statusTitle });
 
-        // <meta property="og:description" content="Somethinf apps next?">
+        // <meta property="og:description" content="Something apps next?">
         this.metaService.updateTag({ property: 'og:description', content: statusDescription });
 
         // <meta property="og:logo" content="https://vernissage.xxx/assets/icons/icon-128x128.png" />

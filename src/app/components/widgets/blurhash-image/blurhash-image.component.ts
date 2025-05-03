@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Inject, PLATFORM_ID, OnInit, OnDestroy, input, computed, viewChild, signal, ChangeDetectionStrategy, effect } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, PLATFORM_ID, OnInit, OnDestroy, input, computed, viewChild, signal, ChangeDetectionStrategy, effect, inject } from '@angular/core';
 import { decode } from 'blurhash';
 import { AvatarSize } from '../avatar/avatar-size';
 import { User } from 'src/app/models/user';
@@ -53,16 +53,16 @@ export class BlurhashImageComponent implements AfterViewInit, OnInit, OnDestroy 
     private isBrowser = false;
     private blurhash = '';
 
-    constructor(
-        @Inject(PLATFORM_ID) platformId: object,
-        private preferencesService: PreferencesService,
-        private statusesService: StatusesService,
-        private messageService: MessagesService,
-        private relationshipsService: RelationshipsService,
-        private router: Router,
-        private authorizationService: AuthorizationService
-    ) {
-        this.isBrowser = isPlatformBrowser(platformId);
+    private platformId = inject(PLATFORM_ID);
+    private preferencesService = inject(PreferencesService);
+    private statusesService = inject(StatusesService);
+    private messageService = inject(MessagesService);
+    private relationshipsService = inject(RelationshipsService);
+    private router = inject(Router);
+    private authorizationService = inject(AuthorizationService);
+
+    constructor() {
+        this.isBrowser = isPlatformBrowser(this.platformId);
 
         effect(() => {
             this.showAvatar.set(this.preferencesService.showAvatars && this.avatarVisible());

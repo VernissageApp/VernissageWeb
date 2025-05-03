@@ -1,7 +1,7 @@
-import { Directive, ElementRef, input, OnDestroy, OnInit, output } from "@angular/core";
+import { Directive, ElementRef, inject, input, OnDestroy, OnInit, output } from "@angular/core";
 import { WindowService } from "../services/common/window.service";
 import { fromEvent, Subscription, tap, throttleTime } from "rxjs";
-import { RandomGeneratorService } from "../services/common/random-generator.service";
+import { MatDialog } from "@angular/material/dialog";
 
 @Directive({
     selector: '[appInfiniteScroll]',
@@ -15,14 +15,11 @@ export class InfiniteScrollDirective implements OnInit, OnDestroy {
     public infiniteScrollDisabled = input(false);
   
     private window!: Window;
-    private controlId!: string;
     private eventSub?: Subscription;
   
-    constructor(
-        private el: ElementRef,
-        private windowService: WindowService,
-        private random: RandomGeneratorService
-    ) { }
+    private el = inject(ElementRef);
+    private windowService = inject(WindowService);
+    private dialog = inject(MatDialog);
   
     ngOnInit(): void {
 
@@ -45,6 +42,11 @@ export class InfiniteScrollDirective implements OnInit, OnDestroy {
             return;
         }
 
+        // If any dialog is opened we can disable the infinite scroll.
+        if (this.dialog.openDialogs && this.dialog.openDialogs.length) {
+            return;
+        }
+
         // height of whole window page
         const heightOfWholePage = this.window.document.documentElement.scrollHeight;
   
@@ -64,8 +66,7 @@ export class InfiniteScrollDirective implements OnInit, OnDestroy {
         const spaceOfElementAndPage = heightOfWholePage - heightOfElement;
   
         // calculated whether we are near the end
-        const scrollToBottom =
-        heightOfElement - innerHeight - currentScrolledY + spaceOfElementAndPage;
+        const scrollToBottom = heightOfElement - innerHeight - currentScrolledY + spaceOfElementAndPage;
   
         // if the user is near end
         if (scrollToBottom < this.infiniteScrollDistance()) {
