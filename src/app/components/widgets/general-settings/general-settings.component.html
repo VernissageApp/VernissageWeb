@@ -123,12 +123,24 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>Images url</mat-label>
-            <input matInput name="imagesUrl" #mastodonUrl="ngModel" [(ngModel)]="settings().imagesUrl"
+            <input matInput name="imagesUrl" #imagesUrl="ngModel" [(ngModel)]="settings().imagesUrl"
                 placeholder="Images url" aria-label="Images url" />
         </mat-form-field>
         <div class="text-muted fs-90 margin-left-10 margin-top-5">
             If you have a CDN configured, you can override the default image URL generated
             based on the S3 bucket name and address.
+        </div>
+    </div>
+
+    <div class="margin-bottom-20">
+        <mat-form-field appearance="outline">
+            <mat-label>Images quality</mat-label>
+            <input matInput type="number" name="imageQuality" #imageQuality="ngModel" [(ngModel)]="settings().imageQuality"
+                placeholder="Images quality" aria-label="Images quality" />
+        </mat-form-field>
+        <div class="text-muted fs-90 margin-left-10 margin-top-5">
+            Determines the quality of images saved and processed by the system after upload
+            (e.g., for thumbnail generation). Recommended value: 85.
         </div>
     </div>
 

@@ -8,6 +8,7 @@ export class User {
     public isBlocked?: boolean;
     public isApproved?: boolean;
     public userName?: string;
+    public account?: string;
     public email?: string;
     public password?: string;
     public name?: string;

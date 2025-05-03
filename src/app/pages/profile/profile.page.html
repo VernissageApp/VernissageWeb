@@ -35,10 +35,10 @@
                                 <button type="button" [routerLink]="['/bookmarks']" class="icon-only" mat-flat-button aria-label="Bookmarks"><mat-icon class="fill-symbol">bookmark</mat-icon></button>
                             }
 
-                            <button type="button" (click)="onQRCodeClick()" class="icon-only" mat-flat-button aria-label="Favourites"><mat-icon class="fill-symbol">qr_code_2</mat-icon></button>
+                            <button type="button" (click)="onQRCodeClick()" class="icon-only" mat-flat-button aria-label="Profile QR code"><mat-icon class="fill-symbol">qr_code_2</mat-icon></button>
 
                             @if (showSharedBusinessCards()) {
-                                <button type="button" (click)="onShareBusinessCard()" class="icon-only" mat-flat-button aria-label="Favourites"><mat-icon class="fill-symbol">share</mat-icon></button>
+                                <button type="button" (click)="onShareBusinessCard()" class="icon-only" mat-flat-button aria-label="Share business card"><mat-icon class="fill-symbol">share</mat-icon></button>
                             }
                         </div>
                     }
