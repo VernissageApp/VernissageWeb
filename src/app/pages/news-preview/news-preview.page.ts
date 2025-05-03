@@ -90,6 +90,9 @@ export class NewsPreviewPage extends ResponsiveComponent implements OnInit, OnDe
         // <meta name="author" content="John Doe">
         this.metaService.updateTag({ name: 'author', content: this.userDisplayService.displayName(this.article()?.user) });
 
+        // <meta name="fediverse:creator" content="@johndoe@mastodon.xxx" />
+        this.metaService.updateTag({ name: 'fediverse:creator', content: this.article()?.user?.account ?? '' });
+
         // <meta property="og:url" content="https://vernissage.xxx/@user">
         this.metaService.updateTag({ property: 'og:url', content: `${this.windowService.getApplicationBaseUrl()}/news/${this.article()?.id ?? ''}` });
 
@@ -137,6 +140,7 @@ export class NewsPreviewPage extends ResponsiveComponent implements OnInit, OnDe
         this.titleService.setTitle('');
         this.metaService.updateTag({ name: 'description', content: '' });
         this.metaService.updateTag({ name: 'author', content: '' });
+        this.metaService.updateTag({ name: 'fediverse:creator', content: '' });
         this.metaService.updateTag({ property: 'og:url', content: '' });
         this.metaService.updateTag({ property: 'og:type', content: '' });
         this.metaService.updateTag({ property: 'og:title', content: '' });
