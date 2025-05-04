@@ -6,13 +6,15 @@ import { LazyLoadDirective } from './lazy-load.directive';
 import { InfiniteScrollDirective } from './infinite-scroll.directive';
 import { NoteProcessorDirective } from './note-processor.directive';
 import { HrefToRouterLinkDirective } from './href-to-router-link.directive';
+import { InputActivityDirective } from './input-activity.directive';
 
 @NgModule({
     declarations: [
         LazyLoadDirective,
         InfiniteScrollDirective,
         NoteProcessorDirective,
-        HrefToRouterLinkDirective
+        HrefToRouterLinkDirective,
+        InputActivityDirective
     ],
     imports: [
         BrowserModule,
@@ -23,7 +25,8 @@ import { HrefToRouterLinkDirective } from './href-to-router-link.directive';
         LazyLoadDirective,
         InfiniteScrollDirective,
         NoteProcessorDirective,
-        HrefToRouterLinkDirective
+        HrefToRouterLinkDirective,
+        InputActivityDirective
     ]
 })
 export class DirectivesModule { }

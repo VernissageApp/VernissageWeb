@@ -88,7 +88,15 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 
         this.isInUnrecoverableStateSubscription = this.webServiceWorker.$isInUnrecoverableState.subscribe((unrecoverableStateFlag) => {
             if (unrecoverableStateFlag) {
-                this.messagesService.showSuccess('An error occurred that we cannot recover application state. Please reload the page.');
+                const matSnackBarRef = this.matSnackBar.open('An error occurred that we cannot recover application state. Please reload the page.', 'Reload', {
+                    duration: 30000,
+                    verticalPosition: 'top',
+                    panelClass: ['message-success']
+                });
+
+                matSnackBarRef.onAction().subscribe(() => {
+                    document.location.reload();
+                });
             }
         });
       }
