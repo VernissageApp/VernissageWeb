@@ -264,14 +264,14 @@
                                             <mat-icon class="margin-right-20" inline="true" matTooltip="Exposure">brightness_7</mat-icon>
                                             @if (exifInternal.focalLenIn35mmFilm && exifInternal.focalLength) {
                                                 @if (exifInternal.focalLenIn35mmFilm === exifInternal.focalLength) {
-                                                    <span class="margin-right-15 exif-label" matTooltipPosition="right" [matTooltip]="'Full frame lens.'">{{ exifInternal.focalLength }}mm</span>
+                                                    <span class="margin-right-15 exif-label" matTooltipPosition="right" [matTooltip]="'Full frame lens.'">{{ getCleanFocalLength(exifInternal.focalLength) }}mm</span>
                                                 } @else {
-                                                    <span class="margin-right-15 exif-label" matTooltipPosition="right" [matTooltip]="'Equivalent of ' + exifInternal.focalLenIn35mmFilm  + 'mm full frame lens.'">{{ exifInternal.focalLength }}mm</span>
+                                                    <span class="margin-right-15 exif-label" matTooltipPosition="right" [matTooltip]="'Equivalent of ' + getCleanFocalLength(exifInternal.focalLenIn35mmFilm)  + 'mm full frame lens.'">{{ getCleanFocalLength(exifInternal.focalLength) }}mm</span>
                                                 }
                                             } @else if (exifInternal.focalLenIn35mmFilm && !exifInternal.focalLength) {
-                                                <span class="margin-right-15 exif-label">{{ exifInternal.focalLenIn35mmFilm }}mm</span>
+                                                <span class="margin-right-15 exif-label">{{ getCleanFocalLength(exifInternal.focalLenIn35mmFilm) }}mm</span>
                                             } @else if (!exifInternal.focalLenIn35mmFilm && exifInternal.focalLength) {
-                                                <span class="margin-right-15 exif-label">{{ exifInternal.focalLength }}mm</span>
+                                                <span class="margin-right-15 exif-label">{{ getCleanFocalLength(exifInternal.focalLength) }}mm</span>
                                             }
 
                                             <span *ngIf="exifInternal.fNumber" class="margin-right-15 exif-label">{{ exifInternal.fNumber | slice:0:7 }}</span>
@@ -344,7 +344,7 @@
                         </mat-card-header>
                         <mat-card-content>
                             @if (signedInUser(); as signedInUserInternal) {
-                                <app-comment-reply [signedInUser]="signedInUserInternal" [status]="mainStatusInternal" (added)="onCommentAdded()" (focused)="onCommentFieldFocus($event)"></app-comment-reply>
+                                <app-comment-reply [signedInUser]="signedInUserInternal" [status]="mainStatusInternal" (added)="onCommentAdded()"></app-comment-reply>
                             }
 
                             @if ((comments()?.length ?? 0) > 0) {
@@ -416,7 +416,7 @@
                                         @if (replyStatus()?.id === comment.status.id) {
                                             @if (signedInUser(); as signedInUserInternal) {
                                                 <div class="text-right padding-top-5">
-                                                    <app-comment-reply [signedInUser]="signedInUserInternal" [status]="comment.status" [showCancel]="true" (clickCancel)="onReply(undefined)" (added)="onCommentAdded()" (focused)="onCommentFieldFocus($event)"></app-comment-reply>
+                                                    <app-comment-reply [signedInUser]="signedInUserInternal" [status]="comment.status" [showCancel]="true" (clickCancel)="onReply(undefined)" (added)="onCommentAdded()"></app-comment-reply>
                                                 </div>
                                             }
                                         }
