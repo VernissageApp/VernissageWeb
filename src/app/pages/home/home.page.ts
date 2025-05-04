@@ -16,12 +16,8 @@ export class HomePage implements OnInit {
 
     private authorizationService = inject(AuthorizationService);
 
-    async ngOnInit(): Promise<void> {
+    ngOnInit(): void {
         this.user.set(this.authorizationService.getUser());
-
-        const isLoggedInInternal = await this.authorizationService.isLoggedIn();
-        this.isLoggedIn.set(isLoggedInInternal);
-
         this.isReady.set(true);
     }
 }
