@@ -25,6 +25,7 @@ import { MessagesService } from 'src/app/services/common/messages.service';
 import { BusinessCardsService } from 'src/app/services/http/business-cards.service';
 import { SettingsService } from 'src/app/services/http/settings.service';
 import { ConfirmationDialog } from 'src/app/dialogs/confirmation-dialog/confirmation.dialog';
+import { UserType } from 'src/app/models/user-type';
 
 @Component({
     selector: 'app-profile',
@@ -36,6 +37,7 @@ import { ConfirmationDialog } from 'src/app/dialogs/confirmation-dialog/confirma
 })
 export class ProfilePage extends ReusableGalleryPageComponent implements OnInit, OnDestroy {
     protected readonly profilePageTab = ProfilePageTab;
+    protected readonly userType = UserType;
     protected isReady = signal(false);
 
     protected showSharedBusinessCards = signal(false);
