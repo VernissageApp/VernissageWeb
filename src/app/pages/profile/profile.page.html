@@ -10,6 +10,15 @@
                     <div class="text-center">
                         <div class="mat-h1">{{ userDisplayService.displayName(userInternal) }}</div>
                         <div class="mat-h4">&#64;{{ userInternal.userName }}</div>
+
+                        @if (userInternal.type === userType.Service) {
+                            <div class="user-type">
+                                <mat-chip [disableRipple]="true">    
+                                    <mat-icon [inline]="true">smart_toy</mat-icon><div class="user-type-text">Automated</div>
+                                </mat-chip>
+                            </div>
+                        }
+
                         <div class="bio" [innerHTML]="userInternal.bioHtml"></div>
                     </div>
 
