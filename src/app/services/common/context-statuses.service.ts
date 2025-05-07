@@ -1,7 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { LinkableResult } from 'src/app/models/linkable-result';
 import { Status } from 'src/app/models/status';
-import { PersistenceService } from '../persistance/persistance.service';
 import { ContextTimeline } from 'src/app/models/context-timeline';
 import { TimelineService } from '../http/timeline.service';
 import { TrendingService } from '../http/trending.service';
@@ -18,26 +17,16 @@ export class ContextStatusesService {
     public allOlderStatusesDownloaded = false;
     public allNewerStatusesDownloaded = false;
 
-    private persistenceService = inject(PersistenceService);
     private timelineService = inject(TimelineService);
     private bookmarksService = inject(BookmarksService);
     private favouritesService = inject(FavouritesService);
     private usersService = inject(UsersService);
     private trendingService = inject(TrendingService);
 
-    constructor() {
-        const statusesFromStorage = this.persistenceService.getJson('statusesContext') as LinkableResult<Status>;
-        if (statusesFromStorage) {
-            this.statuses = statusesFromStorage;
-        }
-    }
-
     public setContextStatuses(statuses: LinkableResult<Status> | undefined): void {
         this.statuses = statuses ? LinkableResult.copy(statuses) : undefined;
         this.allOlderStatusesDownloaded = false;
         this.allNewerStatusesDownloaded = false;
-
-        this.persistenceService.setJson('statusesContext', this.statuses);
     }
 
     public clearContextStatuses(): void {
@@ -123,7 +112,6 @@ export class ContextStatusesService {
             this.statuses.data.push(...older.data);
             this.statuses.maxId = older.maxId;
 
-            this.persistenceService.setJson('statusesContext', this.statuses);
             return older;
         }
 
@@ -140,7 +128,6 @@ export class ContextStatusesService {
             this.statuses.data.unshift(...newer.data);
             this.statuses.minId = newer.minId;
 
-            this.persistenceService.setJson('statusesContext', this.statuses);
             return newer;
         }
 
