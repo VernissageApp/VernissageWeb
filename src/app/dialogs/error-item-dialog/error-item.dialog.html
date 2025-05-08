@@ -1,0 +1,31 @@
+<div mat-dialog-title>Error data</div>
+<div mat-dialog-content>
+
+    <div class="flex-col gap-0 margin-top-5">
+        <mat-form-field appearance="outline" class="width-100 padding-top-10" >
+            <mat-label>Code</mat-label>
+            <input matInput name="code" #codeInput="ngModel" [ngModel]="code()" type="text" aria-label="Code" [disabled]="true" />
+        </mat-form-field>
+    </div>
+
+    <div class="flex-col gap-0 margin-top-5">
+        <mat-form-field appearance="outline" class="width-100 padding-top-10">
+            <mat-label>Message</mat-label>
+            <textarea matInput name="message" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4"
+                cdkAutosizeMaxRows="4" placeholder="Message" [ngModel]="message()" [disabled]="true"
+                aria-label="Message"></textarea>
+        </mat-form-field>
+    </div>
+
+    <div class="flex-col gap-0 margin-top-5">
+        <mat-form-field appearance="outline" class="width-100 padding-top-10">
+            <mat-label>Exception</mat-label>
+            <textarea matInput name="exception" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4"
+                cdkAutosizeMaxRows="22" placeholder="Message" [ngModel]="exception()" [disabled]="true"
+                aria-label="Exception"></textarea>
+        </mat-form-field>
+    </div>
+</div>
+<div mat-dialog-actions>
+    <button mat-button type="button" (click)="onNoClick()">Close</button>
+</div>
