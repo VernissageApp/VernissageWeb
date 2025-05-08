@@ -31,6 +31,7 @@ import { CategoryHashtagItemComponent } from './category-dialog/category-hashtag
 import { FollowingImportAccountsDialog } from './following-import-accounts-dialog/following-import-accounts.dialog';
 import { ShareBusinessCardDialog } from './share-business-card-dialog/share-business-card.dialog';
 import { UpdateSharedBusinessCardDialog } from './update-shared-business-card/update-shared-business-card.dialog';
+import { ErrorItemDialog } from './error-item-dialog/error-item.dialog';
 
 @NgModule({
     declarations: [
@@ -57,6 +58,7 @@ import { UpdateSharedBusinessCardDialog } from './update-shared-business-card/up
         FollowingImportAccountsDialog,
         ShareBusinessCardDialog,
         UpdateSharedBusinessCardDialog,
+        ErrorItemDialog,
         CategoryHashtagItemComponent
     ],
     exports: [
@@ -82,6 +84,7 @@ import { UpdateSharedBusinessCardDialog } from './update-shared-business-card/up
         CategoryDialog,
         ShareBusinessCardDialog,
         UpdateSharedBusinessCardDialog,
+        ErrorItemDialog,
         FollowingImportAccountsDialog
     ], 
     imports: [
