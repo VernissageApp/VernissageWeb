@@ -31,6 +31,24 @@
         font-weight: 400;
     }
 
+    .user-type {
+        margin-bottom: 10px;
+
+        mat-icon {
+            position: relative;
+            top: 2px;
+            transform: scale(1.6);
+            margin-right: 10px;
+        }
+
+        .user-type-text {
+            display: inline;
+            bottom: 2px;
+            position: relative;
+            line-height: 14px;
+        }
+    }
+
     .bio {
         margin-left: auto;
         margin-right: auto;

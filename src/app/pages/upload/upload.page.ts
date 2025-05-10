@@ -410,7 +410,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
 
             const focalLenIn35mmFilm = tags['FocalLengthIn35mmFilm']?.description.toString();
             if (focalLenIn35mmFilm) {
-                uploadPhoto.focalLenIn35mmFilm = focalLenIn35mmFilm;
+                uploadPhoto.focalLenIn35mmFilm = focalLenIn35mmFilm.replace('mm', '').trim();
                 uploadPhoto.showFocalLenIn35mmFilm = true;
             }
 

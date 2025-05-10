@@ -16,6 +16,7 @@ import { ErrorItemSource } from 'src/app/models/error-item-source';
 import { ConfirmationDialog } from 'src/app/dialogs/confirmation-dialog/confirmation.dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { RandomGeneratorService } from 'src/app/services/common/random-generator.service';
+import { ErrorItemDialog } from 'src/app/dialogs/error-item-dialog/error-item.dialog';
 
 @Component({
     selector: 'app-error-items',
@@ -78,6 +79,13 @@ export class ErrorItemsPage extends ResponsiveComponent implements OnInit, OnDes
 
     override async ngOnDestroy(): Promise<void> {
         this.routeParamsSubscription?.unsubscribe();
+    }
+
+    protected onOpenError(errorItem: ErrorItem): void {
+        this.dialog.open(ErrorItemDialog, {
+            width: '500px',
+            data: errorItem
+        });
     }
 
     protected async onSubmit(): Promise<void> {

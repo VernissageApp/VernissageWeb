@@ -1,8 +1,10 @@
 import { FlexiField } from "./flexi-field";
 import { Role } from "./role";
+import { UserType } from "./user-type";
 
 export class User {
     public id?: string;
+    public type?: UserType;
     public url?: string;
     public isLocal?: boolean;
     public isBlocked?: boolean;

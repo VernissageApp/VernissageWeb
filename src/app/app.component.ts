@@ -7,6 +7,9 @@ import { DOCUMENT } from '@angular/common';
 import { SsrCookieService } from './services/common/ssr-cookie.service';
 import { SettingsService } from './services/http/settings.service';
 import { fadeInAnimation } from './animations/fade-in.animation';
+import { WebServiceWorker } from './services/common/web-service-worker.service';
+import { MessagesService } from './services/common/messages.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
     selector: 'app-root',
@@ -18,6 +21,9 @@ import { fadeInAnimation } from './animations/fade-in.animation';
 })
 export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     protected showLoader = signal(false);
+
+    private isAnyNewUpdateAvailableSubscription?: Subscription;
+    private isInUnrecoverableStateSubscription?: Subscription;
     private loadingStateChangesSubscription?: Subscription;
 
     private document = inject(DOCUMENT);
@@ -25,6 +31,9 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     private cookieService = inject(SsrCookieService);
     private settingsService = inject(SettingsService);
     private routingStateService = inject(RoutingStateService);
+    private webServiceWorker = inject(WebServiceWorker);
+    private messagesService = inject(MessagesService);
+    private matSnackBar = inject(MatSnackBar);
 
     ngOnInit(): void {
         this.routingStateService.startRoutingListener();
@@ -46,6 +55,8 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
         if (imagesUrl.length > 0) {
             this.createPreloadLink(imagesUrl);
         }
+
+        this.initializeApplicationStateUpdates();
     }
 
     ngAfterViewInit(): void {
@@ -56,7 +67,39 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 
     ngOnDestroy(): void {
         this.loadingStateChangesSubscription?.unsubscribe();
+        this.isAnyNewUpdateAvailableSubscription?.unsubscribe();
+        this.isInUnrecoverableStateSubscription?.unsubscribe();
     }
+
+    private initializeApplicationStateUpdates() {
+        this.isAnyNewUpdateAvailableSubscription = this.webServiceWorker.$isAnyNewUpdateAvailable.subscribe((versionAvailableFlag) => {
+            if (versionAvailableFlag) {
+                const matSnackBarRef = this.matSnackBar.open('A new version of Vernissage is available. Please refresh the page to get the latest version.', 'Refresh', {
+                    duration: 30000,
+                    verticalPosition: 'top',
+                    panelClass: ['message-success']
+                });
+
+                matSnackBarRef.onAction().subscribe(() => {
+                    document.location.reload();
+                });
+            }
+        });
+
+        this.isInUnrecoverableStateSubscription = this.webServiceWorker.$isInUnrecoverableState.subscribe((unrecoverableStateFlag) => {
+            if (unrecoverableStateFlag) {
+                const matSnackBarRef = this.matSnackBar.open('An error occurred that we cannot recover application state. Please reload the page.', 'Reload', {
+                    duration: 30000,
+                    verticalPosition: 'top',
+                    panelClass: ['message-success']
+                });
+
+                matSnackBarRef.onAction().subscribe(() => {
+                    document.location.reload();
+                });
+            }
+        });
+      }
 
     // e.g. <link href="https://mastodon.social/@account" rel="me">
     private createMastodonLink(url: string): void {

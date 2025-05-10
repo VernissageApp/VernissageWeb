@@ -34,6 +34,7 @@ import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { Meta, SafeHtml, Title } from '@angular/platform-browser';
 import { LoadingService } from 'src/app/services/common/loading.service';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { FocusTrackerService } from 'src/app/services/common/focus-tracker.service';
 
 @Component({
     selector: 'app-status',
@@ -87,7 +88,6 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     private popupGalleryId = 'popupGalleryId';
     private mainGalleryId = 'mainGalleryId';
     private blurhash = 'LEHV6nWB2yk8pyo0adR*.7kCMdnj';
-    private isCommentFieldInFocus = false;
 
     private document = inject(DOCUMENT);
     private platformId = inject(PLATFORM_ID);
@@ -109,6 +109,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     private metaService = inject(Meta);
     private deviceDetectorService = inject(DeviceDetectorService);
     private clipboard = inject(Clipboard);
+    private focusTrackerService = inject(FocusTrackerService);
 
     constructor() {
         super();
@@ -186,7 +187,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
 
     @HostListener('window:keydown', ['$event'])
     handleKeyDown(event: KeyboardEvent) {
-        if (this.isCommentFieldInFocus) {
+        if (this.focusTrackerService.isCurrentlyFocused) {
             return;
         }
 
@@ -592,10 +593,6 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         this.replyStatus.set(status);
     }
 
-    protected onCommentFieldFocus(isFocused: boolean): void {
-        this.isCommentFieldInFocus = isFocused;
-    }
-
     protected async onCommentAdded(): Promise<void> {
         const internalMainStatus = this.mainStatus();
         if (internalMainStatus) {
@@ -603,6 +600,11 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
             const downloadedComments = await this.getAllReplies(internalMainStatus.id);
             this.comments.set(downloadedComments);
         }
+    }
+
+    protected getCleanFocalLength(focalLength: string): string {
+        const withoutMillimeters = focalLength.replace('mm', '').trim();
+        return withoutMillimeters.split(/\.|,/)[0];
     }
 
     private getAltStatus(index: number): string | undefined {

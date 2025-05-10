@@ -75,9 +75,13 @@ export class HomeSigninComponent extends ReusableGalleryPageComponent implements
             if (lastRefreshTimePlusTwoHours < currentTime) {
                 this.loadingService.showLoader();
 
+                // This event is triggered after two hours of inactivity. At this point, 
+                // the access token is considered expired, so it’s recommended to refresh it.
+                await this.authorizationService.refreshAccessToken();
+
                 await Promise.all([
-                    this.loadData(this.timeline()),
-                    this.loadArticles()
+                    await this.loadData(this.timeline()),
+                    await this.loadArticles()
                 ]);
 
                 this.loadingService.hideLoader();
