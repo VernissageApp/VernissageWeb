@@ -1,5 +1,6 @@
 <div class="flex-row properties text-muted">
-    <div class="margin-right-15" matTooltip="Published date" aria-label="Published date">{{ status().createdAt | date: 'short' }}</div>
+    <div class="margin-right-15" matTooltip="Published date" aria-label="Published date">{{ publishedAt() | date: 'short' }}</div>
+
     @switch (status().visibility) {
         @case (statusVisibility.Public) {
             <mat-icon class="margin-right-15" matTooltip="Public">public</mat-icon>

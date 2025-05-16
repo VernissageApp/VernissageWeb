@@ -19,6 +19,7 @@ export class Status {
     public isLocal = true;
     public activityPubId = '';
     public activityPubUrl = '';
+    public publishedAt?: string;
 
     public repliesCount = 0;
     public reblogsCount = 0;
