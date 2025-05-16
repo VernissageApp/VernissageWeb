@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { Status } from 'src/app/models/status';
 import { StatusVisibility } from 'src/app/models/status-visibility';
@@ -14,4 +14,8 @@ import { StatusVisibility } from 'src/app/models/status-visibility';
 export class StatusPropertiesComponent {
     public status = input.required<Status>();
     protected readonly statusVisibility = StatusVisibility;
+
+    protected publishedAt = computed(() => {
+        return this.status().publishedAt ?? this.status().createdAt;
+    });
 }

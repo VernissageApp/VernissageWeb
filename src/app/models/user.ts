@@ -35,6 +35,7 @@ export class User {
     public manuallyApprovesFollowers = false;
     public featured = false;
     public lastLoginDate = '';
+    public publishedAt?: string;
     public createdAt = '';
     public updatedAt = '';
 }
