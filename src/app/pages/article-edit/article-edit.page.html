@@ -46,6 +46,24 @@
                                 </mat-form-field>
                             </div>
 
+                            <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-40">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Alternative author</mat-label>
+                                    <input matInput name="alternativeAuthor" #alternativeAuthorInput="ngModel" [(ngModel)]="alternativeAuthor"
+                                        placeholder="Color" aria-label="Alternative author" appMaxLength="500" />
+                                    <mat-hint align="end">
+                                        <span class="text-muted">
+                                            You can set an alternative handle for a user's account in the Fediverse.
+                                            It will be displayed as the author in thumbnails generated based on OpenGraph tags.
+                                        </span>
+                                    </mat-hint>
+                                    <mat-error *ngIf="alternativeAuthorInput.invalid && alternativeAuthorInput.errors?.appMaxLength">
+                                        Too long user name.
+                                    </mat-error>
+                                    
+                                </mat-form-field>
+                            </div>
+
                             <h3>Visibilities</h3>
                         
                             <div class="padding-bottom-20">

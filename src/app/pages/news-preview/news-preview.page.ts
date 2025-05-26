@@ -80,6 +80,8 @@ export class NewsPreviewPage extends ResponsiveComponent implements OnInit, OnDe
     private setCardMetaTags(): void {
         const newsTitle = this.article()?.title ?? 'Vernissage - news';
         const newsDescription = this.htmlToText(this.article()?.bodyHtml ?? '').slice(0, 400);
+        const newsUserDisplayName = this.userDisplayService.displayName(this.article()?.user);
+        const newsAuthor = this.article()?.alternativeAuthor;
 
         // <title>John Doe (@john@vernissage.xxx)</title>
         this.titleService.setTitle(newsTitle);
@@ -88,10 +90,10 @@ export class NewsPreviewPage extends ResponsiveComponent implements OnInit, OnDe
         this.metaService.updateTag({ name: 'description', content: newsDescription });
 
         // <meta name="author" content="John Doe">
-        this.metaService.updateTag({ name: 'author', content: this.userDisplayService.displayName(this.article()?.user) });
+        this.metaService.updateTag({ name: 'author', content: newsUserDisplayName});
 
         // <meta name="fediverse:creator" content="@johndoe@mastodon.xxx" />
-        this.metaService.updateTag({ name: 'fediverse:creator', content: this.article()?.user?.account ?? '' });
+        this.metaService.updateTag({ name: 'fediverse:creator', content: newsAuthor ?? '' });
 
         // <meta property="og:url" content="https://vernissage.xxx/@user">
         this.metaService.updateTag({ property: 'og:url', content: `${this.windowService.getApplicationBaseUrl()}/news/${this.article()?.id ?? ''}` });
