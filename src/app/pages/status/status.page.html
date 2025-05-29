@@ -49,7 +49,8 @@
                         @if (imagesInternally.length > 1 && showSensitiveImage() && isBrowser()) {
                             <gallery
                                 id="mainGalleryId"
-                                class="custom-gallery custom-gallery-browser"
+                                class="custom-gallery"
+                                [ngClass]="{ 'custom-gallery-with-icons': showContextArrows() }"
                                 bullets
                                 bulletPosition="bottom"
                                 [bulletSize]="8"
