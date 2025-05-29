@@ -10,13 +10,15 @@
                 }
             </div>
 
-            <div class="photo-container" [ngClass]="{ 'photo-container-table': showContextArrows() }">
+            <div class="photo-container photo-container-table">
                 @if (showContextArrows()) {
                     <div class="icon" (click)="onPrevClick()" (keydown.enter)="onPrevClick()" tabindex="0">
                         @if (!hideLeftArrow()) {
                             <mat-icon>arrow_back_ios</mat-icon>
                         }
                     </div>
+                } @else {
+                    <div class="icon-placeholder"></div>
                 }
 
                 <div class="display-inline">
@@ -43,8 +45,7 @@
                         @if (imagesInternally.length > 1 && showSensitiveImage() && isBrowser()) {
                             <gallery
                                 id="mainGalleryId"
-                                class="custom-gallery"
-                                [ngClass]="{ 'custom-gallery-browser': showContextArrows() }"
+                                class="custom-gallery custom-gallery-browser"
                                 bullets
                                 bulletPosition="bottom"
                                 [bulletSize]="8"
@@ -66,6 +67,8 @@
                             <mat-icon>arrow_forward_ios</mat-icon>
                         }
                     </div>
+                } @else {
+                    <div class="icon-placeholder"></div>
                 }
             </div>
             <div class="photo-margin-bottom"></div>
