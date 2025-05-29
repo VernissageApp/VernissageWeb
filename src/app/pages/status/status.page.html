@@ -18,7 +18,9 @@
                         }
                     </div>
                 } @else {
-                    <div class="icon-placeholder"></div>
+                    @if (!isHandset()) {
+                        <div class="icon-placeholder"></div>
+                    }
                 }
 
                 <div class="display-inline">
@@ -68,7 +70,9 @@
                         }
                     </div>
                 } @else {
-                    <div class="icon-placeholder"></div>
+                    @if (!isHandset()) {
+                        <div class="icon-placeholder"></div>
+                    }
                 }
             </div>
             <div class="photo-margin-bottom"></div>
