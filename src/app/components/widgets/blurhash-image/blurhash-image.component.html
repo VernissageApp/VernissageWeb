@@ -1,6 +1,8 @@
 <div class="blurhash-container">
 
-    <div class="content-warning">{{ contentWarning() }}</div>
+    <div class="content-warning">
+        <div class="text">{{ contentWarning() }}</div>
+    </div>
     <canvas class="blurhash" #canvas width="32" height="32"></canvas>
     <img class="image-item" [ngClass]="{ 'img-vertical': !horizontal(), 'img-horizontal': horizontal() }" [src]="imageSrc()" [alt]="alt() ?? 'Status image'" />
 
