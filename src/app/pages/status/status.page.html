@@ -31,7 +31,9 @@
                                 @if (mainStatusInternal.sensitive && !alwaysShowNSFW()) {
                                     @if (showSensitiveCanvas()) {
                                         <div [@show]="!showSensitiveImage() ? 'true' : 'false'" class="content-warning">
-                                            <div class="text">{{ mainStatusInternal.contentWarning ?? '' }}</div>
+                                            @if (mainStatusInternal.contentWarning) {
+                                                <div class="text">{{ mainStatusInternal.contentWarning }}</div>
+                                            }
                                             <button mat-flat-button color="accent" (click)="onShowSensitiveImageClick()">Show image</button>
                                         </div>
                                         <canvas [@showOrHide]="!showSensitiveImage() ? 'true' : 'false'" class="blurhash" #canvas [width]="imageWidth()" [height]="imageHeight()"></canvas>
