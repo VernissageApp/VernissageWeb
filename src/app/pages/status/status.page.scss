@@ -35,9 +35,14 @@
         color: white;
         text-align: center;
         width: 40px;;
-        display:table-cell;
+        display: table-cell;
         vertical-align: middle;
         cursor: pointer;
+    }
+
+    .icon-placeholder {
+        width: 40px;;
+        display: table-cell;
     }
 
     .custom-gallery {
@@ -57,11 +62,16 @@
         z-index: 101;
 
         .text {
-            color: rgb(209, 209, 209);
-            background-color: transparent;
-            font-size: 1.2em;
-            text-shadow: #777777 1px 0 4px;
+            font-size: 1em;
             margin-bottom: 8px;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 10px;
+            padding: 4px 20px;
+            width: fit-content;
         }
     }
 
