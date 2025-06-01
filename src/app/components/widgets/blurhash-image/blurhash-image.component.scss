@@ -11,13 +11,22 @@
     .content-warning {
         position: absolute;
         top:45%;
-        width: 100%;
         text-align: center;
-        color: rgb(209, 209, 209);
-        background-color: transparent;
-        font-size: 1.2em;
-        text-shadow: #777777 1px 0 4px;
         z-index: 101;
+        width: calc(100% - 12px);
+        padding-left: 6px;
+        padding-right: 6px;
+
+        .text {
+            font-size: 1em;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 4px 20px;
+            width: fit-content;
+        }
     }
 
     @media only screen and (max-width: 768px) {

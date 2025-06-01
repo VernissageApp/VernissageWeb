@@ -8,6 +8,7 @@ export class Article {
     public body = '';
     public bodyHtml?: string;
     public color?: string;
+    public alternativeAuthor?: string;
     public user?: User;
     public mainArticleFileInfo?: ArticleFileInfo;
     public createdAt?: Date;

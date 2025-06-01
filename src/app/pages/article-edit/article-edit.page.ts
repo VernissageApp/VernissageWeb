@@ -23,6 +23,7 @@ export class ArticleEditPage extends ResponsiveComponent implements OnInit, OnDe
     protected body = model('');
     protected id = model('');
     protected color = model('');
+    protected alternativeAuthor = model('');
     protected showInNewsSignIn = model(false);
     protected showInNewsSignOut = model(false);
     protected showInHomeSignIn = model(false);
@@ -51,6 +52,7 @@ export class ArticleEditPage extends ResponsiveComponent implements OnInit, OnDe
                     this.title.set(article.title ?? '');
                     this.body.set(article.body ?? '');
                     this.color.set(article.color ?? '');
+                    this.alternativeAuthor.set(article.alternativeAuthor ?? '');
 
                     for(const visibility of article.visibilities ?? []) {
                         if (visibility === ArticleVisibility.SignInNews) {
@@ -95,6 +97,10 @@ export class ArticleEditPage extends ResponsiveComponent implements OnInit, OnDe
             article.body = this.body();
             article.color = this.color();
             article.visibilities = [];
+
+            if (this.alternativeAuthor()) {
+                article.alternativeAuthor = this.alternativeAuthor();
+            }
 
             if (this.showInNewsSignIn()) {
                 article.visibilities.push(ArticleVisibility.SignInNews);
