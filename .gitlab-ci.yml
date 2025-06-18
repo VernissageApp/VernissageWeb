@@ -23,10 +23,9 @@ test build:
     - npm run build
 
 build image:
-  image: docker:20-dind
+  image: docker:25-dind
   services:
-    - name: docker:20-dind
-      command: ["--tls=false"]
+    - name: docker:25-dind
   stage: image
   variables:
     IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_PIPELINE_ID
@@ -35,3 +34,6 @@ build image:
     - echo "${CI_JOB_TOKEN}" | docker login --username="gitlab-ci-token" --password-stdin "${CI_REGISTRY_IMAGE}"
     - docker build -t "${IMAGE_TAG}" .
     - docker push "${IMAGE_TAG}"
+  rules:
+    - when: manual
+
