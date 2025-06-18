@@ -16,3 +16,17 @@ build:
   script:
     - npm run lint
     - npm run build
+
+image:
+  image: docker:20-dind
+  services:
+    - name: docker:20-dind
+      command: ["--tls=false"]
+  stage: image
+  variables:
+    IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_PIPELINE_ID
+  script:
+    - echo "IMAGE_TAG=${IMAGE_TAG}"
+    - echo "${CI_JOB_TOKEN}" | docker login --username="gitlab-ci-token" --password-stdin "${CI_REGISTRY_IMAGE}"
+    - docker build -t "${IMAGE_TAG}" .
+    - docker push "${IMAGE_TAG}"
