@@ -9,7 +9,7 @@ stages:
   - test 
   - image
 
-build:
+test build:
   stage: test
   before_script:
     - npm install --force
@@ -17,7 +17,7 @@ build:
     - npm run lint
     - npm run build
 
-image:
+build image:
   image: docker:20-dind
   services:
     - name: docker:20-dind
