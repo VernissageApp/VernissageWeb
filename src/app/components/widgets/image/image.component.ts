@@ -245,8 +245,6 @@ export class ImageComponent implements OnInit, OnDestroy, AfterViewInit {
     private getMainAttachment(): Attachment | null {
         const internalMainStatus = this.mainStatus();
 		
-		console.log(internalMainStatus)
-
         if (!internalMainStatus.attachments) {
             return null;
         }
