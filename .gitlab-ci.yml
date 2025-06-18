@@ -5,11 +5,6 @@ variables:
   DOCKER_TLS_CERTDIR: ""
   DOCKER_HOST: "tcp://127.0.0.1:2375"
 
-# And to cache them as well.
-cache:
-  paths:
-    - node_modules/
-
 stages:
   - test 
   - image
@@ -21,6 +16,8 @@ test build:
   script:
     - npm run lint
     - npm run build
+  rules:
+    - when: never
 
 build image:
   image: docker:25-dind
@@ -34,6 +31,6 @@ build image:
     - echo "${CI_JOB_TOKEN}" | docker login --username="gitlab-ci-token" --password-stdin "${CI_REGISTRY_IMAGE}"
     - docker build -t "${IMAGE_TAG}" .
     - docker push "${IMAGE_TAG}"
-  rules:
-    - when: manual
+#  rules:
+#    - when: manual
 
