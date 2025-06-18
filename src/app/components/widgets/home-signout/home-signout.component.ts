@@ -10,7 +10,6 @@ import { ReusableGalleryPageComponent } from 'src/app/common/reusable-gallery-pa
 import { ArticleVisibility } from 'src/app/models/article-visibility';
 import { ArticlesService } from 'src/app/services/http/articles.service';
 import { Article } from 'src/app/models/article';
-import { A } from '@angular/cdk/activedescendant-key-manager.d-Bjic5obv';
 
 @Component({
     selector: 'app-home-signout',
