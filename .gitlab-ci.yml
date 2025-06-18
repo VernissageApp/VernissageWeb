@@ -21,14 +21,12 @@ test build:
     - when: never
 
 build image:
-  image: docker:24-dind
+  stage: image
+  image: docker:25-dind
   services:
-    - name: docker:24-dind
+    - name: docker:25-dind
       variables:
         HEALTHCHECK_TCP_PORT: "2376"
-  before_script:
-    - docker info
-  stage: image
   variables:
     IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_PIPELINE_ID
   script:
@@ -36,6 +34,6 @@ build image:
     - echo "${CI_JOB_TOKEN}" | docker login --username="gitlab-ci-token" --password-stdin "${CI_REGISTRY_IMAGE}"
     - docker build -t "${IMAGE_TAG}" .
     - docker push "${IMAGE_TAG}"
-#  rules:
-#    - when: manual
+  rules:
+    - when: manual
 
