@@ -17,8 +17,6 @@ test build:
   script:
     - npm run lint
     - npm run build
-  rules:
-    - when: never
 
 build image:
   stage: image
