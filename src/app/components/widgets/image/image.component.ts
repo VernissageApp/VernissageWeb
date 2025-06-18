@@ -100,7 +100,8 @@ export class ImageComponent implements OnInit, OnDestroy, AfterViewInit {
         this.showAltIcon.set(this.preferencesService.showAltIcon);
         this.showFavourites.set(this.preferencesService.showFavourites);
         this.showReblog.set(this.preferencesService.showReblog);
-        this.showAvatar.set(this.preferencesService.showAvatars && this.avatarVisible());
+		this.showAvatar.set(this.preferencesService.showAvatars && this.avatarVisible());
+		this.showCount.set(this.preferencesService.showCounts);
 
         this.blurhash = this.getMainAttachmentBlurhash();
 

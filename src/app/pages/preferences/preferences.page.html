@@ -79,6 +79,12 @@
                         </div>
 
                         <div class="margin-bottom-20">
+                            <mat-slide-toggle color="warn" name="showCounts" [(ngModel)]="showCounts" (ngModelChange)="onShowCountsChange()">
+                                Show image counts <div class="text-muted fs-90">Show number of images in a post if > 1.</div>
+                            </mat-slide-toggle>
+                        </div>
+
+                        <div class="margin-bottom-20">
                             <mat-slide-toggle color="warn" name="showFavourites" [(ngModel)]="showFavourites" (ngModelChange)="onShowFavouritesChange()">
                                 Show favourites <div class="text-muted fs-90">Favourite icon will be displayed on timelines.</div>
                             </mat-slide-toggle>
