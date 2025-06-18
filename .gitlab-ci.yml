@@ -1,9 +1,10 @@
 image: node:20
 
 variables:
-  DOCKER_DRIVER: overlay2
-  DOCKER_TLS_CERTDIR: ""
-  DOCKER_HOST: "tcp://docker:2375"
+  DOCKER_HOST: tcp://docker:2376
+  DOCKER_TLS_CERTDIR: "/certs"
+  DOCKER_TLS_VERIFY: 1
+  DOCKER_CERT_PATH: "$DOCKER_TLS_CERTDIR/client"
 
 stages:
   - test 
@@ -20,9 +21,13 @@ test build:
     - when: never
 
 build image:
-  image: docker:25-dind
+  image: docker:24-dind
   services:
-    - name: docker:25-dind
+    - name: docker:24-dind
+      variables:
+        HEALTHCHECK_TCP_PORT: "2376"
+  before_script:
+    - docker info
   stage: image
   variables:
     IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_PIPELINE_ID
