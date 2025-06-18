@@ -66,7 +66,7 @@ export class PreferencesService {
 	}
 
 	public get showCounts(): boolean {
-	    return (this.cookieService.get('showCounts') ?? 'true') === 'true';
+	    return (this.cookieService.get('showCounts') || 'true') === 'true';
 	}
 	
 	public set showCounts(showCounts: boolean) {
