@@ -57,13 +57,21 @@ export class PreferencesService {
         this.cookieService.set('showAlternativeText', showAlternativeText ? 'true' : 'false', { expires: this.longFuture });
     }
 
-    public get showAvatars(): boolean {
-        return (this.cookieService.get('showAvatars') ?? 'false') === 'true';
-    }
+	public get showAvatars(): boolean {
+	    return (this.cookieService.get('showAvatars') ?? 'false') === 'true';
+	}
 
-    public set showAvatars(showAvatars: boolean) {
-        this.cookieService.set('showAvatars', showAvatars ? 'true' : 'false', { expires: this.longFuture });
-    }
+	public set showAvatars(showAvatars: boolean) {
+	    this.cookieService.set('showAvatars', showAvatars ? 'true' : 'false', { expires: this.longFuture });
+	}
+
+	public get showCounts(): boolean {
+	    return (this.cookieService.get('showCounts') ?? 'true') === 'true';
+	}
+	
+	public set showCounts(showCounts: boolean) {
+	    this.cookieService.set('showCounts', showCounts ? 'true' : 'false', { expires: this.longFuture });
+	}
 
     public get showFavourites(): boolean {
         return (this.cookieService.get('showFavourites') ?? 'false') === 'true';
