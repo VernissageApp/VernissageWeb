@@ -1,5 +1,10 @@
 image: node:20
 
+variables:
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: ""
+  DOCKER_HOST: "tcp://127.0.0.1:2375"
+
 # And to cache them as well.
 cache:
   paths:
