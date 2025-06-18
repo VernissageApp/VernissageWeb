@@ -10,6 +10,7 @@ import { ReusableGalleryPageComponent } from 'src/app/common/reusable-gallery-pa
 import { ArticleVisibility } from 'src/app/models/article-visibility';
 import { ArticlesService } from 'src/app/services/http/articles.service';
 import { Article } from 'src/app/models/article';
+import { A } from '@angular/cdk/activedescendant-key-manager.d-Bjic5obv';
 
 @Component({
     selector: 'app-home-signout',
@@ -21,7 +22,8 @@ import { Article } from 'src/app/models/article';
 })
 export class HomeSignoutComponent extends ReusableGalleryPageComponent implements OnInit, OnDestroy {
     protected isReady = signal(false);
-    protected showEditorsChoice = signal(false);
+	protected showLocal = signal(true);
+	protected showEditorsChoice = signal(false);
     protected mastodonUrl = signal<string | undefined>(undefined);
     protected articles = signal<Article[]>([]);
     
@@ -78,11 +80,19 @@ export class HomeSignoutComponent extends ReusableGalleryPageComponent implement
             }
         }
     }
-
+	
     private async loadData(): Promise<void> {
-        this.showEditorsChoice.set(this.settingsService.publicSettings?.showEditorsChoiceForAnonymous ?? false);
+		this.showLocal.set(this.settingsService.publicSettings?.showLocalTimelineForAnonymous ?? false);
+		this.showEditorsChoice.set(this.settingsService.publicSettings?.showEditorsChoiceForAnonymous ?? false);
         
-        if (this.showEditorsChoice()) {
+		console.log('settings', this.settingsService.publicSettings)
+		if (this.settingsService.publicSettings?.showLocalTimelineForAnonymous) {
+			this.lastRefreshTime = new Date();
+			const statuses = await this.timelineService.public(undefined, undefined, undefined, undefined, true);
+			statuses.context = ContextTimeline.editors;
+
+			this.statuses.set(statuses);
+		} else if (this.showEditorsChoice()) {
             this.lastRefreshTime = new Date();
             const statuses = await this.timelineService.featuredStatuses(undefined, undefined, undefined, undefined);
             statuses.context = ContextTimeline.editors;
