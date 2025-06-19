@@ -11,12 +11,21 @@
             </div>
 
             <div class="photo-container photo-container-table">
-                @if (showContextArrows()) {
+                @if (showContextArrows() || showImageNavigationArrows()) {
+                    @if (showContextArrows()) {
                     <div class="icon" (click)="onPrevClick()" (keydown.enter)="onPrevClick()" tabindex="0">
                         @if (!hideLeftArrow()) {
-                            <mat-icon>arrow_back_ios</mat-icon>
+                            <mat-icon>keyboard_double_arrow_left</mat-icon>
                         }
                     </div>
+                    }
+                    @if (showImageNavigationArrows()) {
+                    <div class="icon" (click)="onPrevImageClick()" (keydown.enter)="onPrevImageClick()" tabindex="0">
+                        @if (!hideLeftImageArrow()) {
+                            <mat-icon>keyboard_arrow_left</mat-icon>
+                        }
+                    </div>
+                    }
                 } @else {
                     @if (!isHandset()) {
                         <div class="icon-placeholder"></div>
@@ -47,10 +56,10 @@
                         }
 
                         @if (imagesInternally.length > 1 && showSensitiveImage() && isBrowser()) {
-                            <gallery
+                            <gallery #gallery
                                 id="mainGalleryId"
                                 class="custom-gallery"
-                                [ngClass]="{ 'custom-gallery-with-icons': showContextArrows() }"
+                                [ngClass]="{ 'custom-gallery-with-icons': (showContextArrows() || showImageNavigationArrows()), 'custom-gallery-with-double-icons': (showContextArrows() && showImageNavigationArrows()) }"
                                 bullets
                                 bulletPosition="bottom"
                                 [bulletSize]="8"
@@ -66,12 +75,21 @@
                     }
                 </div>
 
-                @if (showContextArrows()) {
-                    <div class="icon" (click)="onNextClick()" (keydown.enter)="onNextClick()" tabindex="0">
-                        @if (!hideRightArrow()) {
-                            <mat-icon>arrow_forward_ios</mat-icon>
+                @if (showContextArrows() || showImageNavigationArrows()) {
+                    @if (showImageNavigationArrows()) {
+                    <div class="icon" (click)="onNextImageClick()" (keydown.enter)="onNextImageClick()" tabindex="0">
+                        @if (!hideRightImageArrow()) {
+                            <mat-icon>keyboard_arrow_right</mat-icon>
                         }
                     </div>
+                    }
+                    @if (showContextArrows()) {
+                    <div class="icon" (click)="onNextClick()" (keydown.enter)="onNextClick()" tabindex="0">
+                        @if (!hideRightArrow()) {
+                            <mat-icon>keyboard_double_arrow_right</mat-icon>
+                        }
+                    </div>
+                    }
                 } @else {
                     @if (!isHandset()) {
                         <div class="icon-placeholder"></div>

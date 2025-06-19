@@ -19,7 +19,7 @@ import { ReportDialog } from 'src/app/dialogs/report-dialog/report.dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { ReportData } from 'src/app/dialogs/report-dialog/report-data';
 import { ReportsService } from 'src/app/services/http/reports.service';
-import { Gallery, GalleryItem, ImageItem } from 'ng-gallery';
+import { Gallery, GalleryComponent, GalleryItem, ImageItem } from 'ng-gallery';
 import { Lightbox } from 'ng-gallery/lightbox';
 import { ContextStatusesService } from 'src/app/services/common/context-statuses.service';
 import { Role } from 'src/app/models/role';
@@ -60,6 +60,8 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     protected currentIndex = signal(0);
     protected hideLeftArrow = signal(false);
     protected hideRightArrow = signal(false);
+	protected hideLeftImageArrow = computed(() => (this.currentIndex() ?? 0) <= 0)
+	protected hideRightImageArrow = computed(() => (this.currentIndex() ?? 0) + 1 >= (this.images()?.length ?? 1))
     protected showAlternativeText = signal(false);
     protected alwaysShowNSFW = signal(false);
     protected imageWidth = signal(32);
@@ -68,6 +70,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     protected rendered = signal<SafeHtml>('');
     protected hasHdrSupport = signal(false);
 
+	protected showImageNavigationArrows = computed(() => (this.images()?.length ?? 0) > 1 )
     protected altStatus = computed(() => this.getAltStatus(this.currentIndex()));
     protected location = computed(() => this.getLocation(this.currentIndex()));
     protected license = computed(() => this.getLicense(this.currentIndex()));
@@ -79,7 +82,8 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     protected hasHdrVersion = computed<boolean>(() => this.showHdrIcon(this.currentIndex()));
     protected isBrowser = signal(false);
 
-    private canvas = viewChild<ElementRef<HTMLCanvasElement> | undefined>('canvas');
+	private canvas = viewChild<ElementRef<HTMLCanvasElement> | undefined>('canvas');
+	private galleryComponent = viewChild<GalleryComponent>('gallery');
     private routeParamsSubscription?: Subscription;
     private routeNavigationEndSubscription?: Subscription;
     private readonly oneSecond = 1000;
@@ -213,6 +217,24 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     handleKeyUp(event: KeyboardEvent) {
         this.keysPressed[event.key] = false;
     }
+	
+	onPrevImageClick() {
+		const galleryComponent = this.galleryComponent()
+		if (galleryComponent) {
+			galleryComponent.prev()
+		} else {
+			this.currentIndex.set(Math.max(this.currentIndex() - 1, 0))
+		}
+	}
+
+	onNextImageClick() {
+		const galleryComponent = this.galleryComponent()
+		if (galleryComponent) {
+			galleryComponent.next()
+		} else {
+			this.currentIndex.set(Math.min(this.currentIndex() + 1, this.images()?.length ?? 1))
+		}
+	}
 
     protected async onPrevClick(): Promise<void> {
         const internalStatus = this.status();
@@ -386,10 +408,10 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         return !this.isHandset() && !!this.urlToGallery;
     }
 
-    protected showContextArrows(): boolean {
-        return this.contextStatusesService.hasContextStatuses() && !this.isHandset();
-    }
-
+	protected showContextArrows(): boolean {
+	    return this.contextStatusesService.hasContextStatuses() && !this.isHandset();
+	}
+	
     protected showBottomContextArrow(): boolean {
         return this.contextStatusesService.hasContextStatuses() && this.isHandset();
     }
