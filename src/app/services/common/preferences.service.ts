@@ -68,9 +68,17 @@ export class PreferencesService {
 	public get showCounts(): boolean {
 	    return (this.cookieService.get('showCounts') || 'true') === 'true';
 	}
-	
+
 	public set showCounts(showCounts: boolean) {
 	    this.cookieService.set('showCounts', showCounts ? 'true' : 'false', { expires: this.longFuture });
+	}
+
+	public get autoScrollStatus(): boolean {
+	    return (this.cookieService.get('autoScrollStatus') || 'true') === 'true';
+	}
+
+	public set autoScrollStatus(autoScrollStatus: boolean) {
+	    this.cookieService.set('autoScrollStatus', autoScrollStatus ? 'true' : 'false', { expires: this.longFuture });
 	}
 
     public get showFavourites(): boolean {

@@ -66,7 +66,7 @@
                                 [counter]="false"
                                 [nav]="false"
                                 [autoHeight]="galleryAutoheight()"
-                                [autoplay]="true"
+                                [autoplay]="autoScrollStatus()"
                                 [autoplayInterval]="6000"
                                 (itemClick)="openInFullScreen()"
                                 (indexChange)="onImageIndexChange($event)">

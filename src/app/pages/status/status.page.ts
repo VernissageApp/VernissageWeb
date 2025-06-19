@@ -63,7 +63,8 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
 	protected hideLeftImageArrow = computed(() => (this.currentIndex() ?? 0) <= 0)
 	protected hideRightImageArrow = computed(() => (this.currentIndex() ?? 0) + 1 >= (this.images()?.length ?? 1))
     protected showAlternativeText = signal(false);
-    protected alwaysShowNSFW = signal(false);
+	protected alwaysShowNSFW = signal(false);
+	protected autoScrollStatus = signal(true);
     protected imageWidth = signal(32);
     protected imageHeight = signal(32);
     protected isLoggedIn = signal(false);
@@ -129,6 +130,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         this.urlToGallery = this.routingStateService.getPreviousUrl();
         this.showAlternativeText.set(this.preferencesService.showAlternativeText);
         this.alwaysShowNSFW.set(this.preferencesService.alwaysShowNSFW);
+        this.autoScrollStatus.set(this.preferencesService.autoScrollStatus);
         this.hasHdrSupport.set(this.isHdrRendered());
 
         this.routeParamsSubscription = this.activatedRoute.params.subscribe(async params => {

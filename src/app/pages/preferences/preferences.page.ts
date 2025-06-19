@@ -26,7 +26,8 @@ export class PreferencesPage extends ResponsiveComponent implements OnInit {
     protected showFavourites = model(false);
     protected showReblog = model(false);
     protected showAltIcon = model(false);
-    protected alwaysShowSdrPhoto = model(false);
+	protected alwaysShowSdrPhoto = model(false);
+	protected autoScrollStatus = model(true);
 
     private preferencesService = inject(PreferencesService);
     private routeReuseStrategy = inject(RouteReuseStrategy);
@@ -46,6 +47,7 @@ export class PreferencesPage extends ResponsiveComponent implements OnInit {
         this.showReblog.set(this.preferencesService.showReblog);
         this.showAltIcon.set(this.preferencesService.showAltIcon);
         this.alwaysShowSdrPhoto.set(this.preferencesService.alwaysShowSdrPhoto);
+		this.autoScrollStatus.set(this.preferencesService.autoScrollStatus)
 
         this.isReady.set(true);
     }
@@ -100,6 +102,10 @@ export class PreferencesPage extends ResponsiveComponent implements OnInit {
     protected onAlwaysShowSdrPhotoChange(): void {
         this.preferencesService.alwaysShowSdrPhoto = this.alwaysShowSdrPhoto();
     }
+	
+	protected onAutoScrollStatusChange(): void {
+		this.preferencesService.autoScrollStatus = this.autoScrollStatus();
+	}
 
     private clearReuseStrategyState(): void {
         const customReuseStrategy = this.routeReuseStrategy as CustomReuseStrategy;
