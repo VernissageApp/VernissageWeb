@@ -82,6 +82,10 @@ export class WindowService {
         this.nativeWindow.open(url, "_blank");
     }
 
+    redirect(url: string): void {
+        this.nativeWindow.location.href = url;
+    }
+
     scrollToTop(): void {
         this.nativeWindow.scroll({ 
             top: 0, 
