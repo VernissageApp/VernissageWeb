@@ -65,6 +65,14 @@ export class PreferencesService {
         this.cookieService.set('showAvatars', showAvatars ? 'true' : 'false', { expires: this.longFuture });
     }
 
+    public get showCounts(): boolean {
+        return (this.cookieService.get('showCounts') ?? 'false') === 'true';
+    }
+
+    public set showCounts(showCounts: boolean) {
+        this.cookieService.set('showCounts', showCounts ? 'true' : 'false', { expires: this.longFuture });
+    }
+
     public get showFavourites(): boolean {
         return (this.cookieService.get('showFavourites') ?? 'false') === 'true';
     }
