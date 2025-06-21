@@ -20,7 +20,13 @@ export enum EventType {
     AuthClientsRead = 'authClientsRead',
     AuthClientsUpdate = 'authClientsUpdate',
     AuthClientsDelete = 'authClientsDelete',
+
+    AuthDynamicClientsCreate = `authDynamicClientsCreate`,
     
+    OAuthAuthenticate = 'oAuthAuthenticate',
+    OAuthAuthenticateCallback = 'oAuthAuthenticateCallback',
+    OAuthToken = 'oAuthToken',
+
     RegisterNewUser = 'registerNewUser',
     RegisterUserName = 'registerUserName',
     RegisterEmail = 'registerEmail',

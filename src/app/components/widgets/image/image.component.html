@@ -52,6 +52,10 @@
         @if(showAltIcon() && alt()) {
             <div class="alt" [matTooltip]="alt()" matTooltipPosition="above">ALT</div>
         }
+        
+        @if(showCount() && attachmentCount() > 1) {
+            <div class="count" >1 / {{ attachmentCount() }}</div>
+        }
 
         @if (signedInUser() ) {
             <div class="actions-container flex-row gap-4">
