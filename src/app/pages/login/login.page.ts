@@ -96,6 +96,7 @@ export class LoginPage implements OnInit {
             await this.pushSubscriptionsService.updatePushSubscription();
 
             if (this.clientId && this.scope && this.redirectUri) {
+                // If the user logged in and we've params in query string, redirect to the OAuth authorization endpoint.
                 await this.windowService.redirect(this.windowService.apiUrl() + '/api/v1/oauth/authorize?client_id=' + this.clientId 
                     + '&redirect_uri=' + this.redirectUri + '&response_type=code&scope=' + this.scope + '&state=' 
                     + this.state + '&nonce=' + this.nonce + '&csrf_token=' + this.csrfToken);
