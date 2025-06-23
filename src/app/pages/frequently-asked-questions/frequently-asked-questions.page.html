@@ -1,0 +1,92 @@
+@if (isReady()) {
+    <div @fadeIn [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
+
+        <div class="flex-row flex-space-around">
+            <div class="faq-container width-100">
+
+                <div class="flex-row flex-align-center flex-space-between margin-bottom-10">
+                    <h1>
+                        <div>Frequently Asked Questions</div>
+                        <div class="fs-60 text-muted">Here you can find answers to the most common questions about Vernissage.</div>
+                    </h1>
+                </div>
+
+                <div>
+                    <section id="faq">
+                    <h2>Frequently Asked Questions</h2>
+                    <p>
+                        Welcome to the Vernissage FAQ - a curated space to help you
+                        get the most out of your photo sharing experience.
+                    </p>
+                    <hr />
+
+                    <h3>1. Does Vernissage support keyboard shortcuts?</h3>
+                    <p>
+                        Yes. Vernissage offers extensive keyboard navigation for users to help
+                        you move quickly between pages, timelines, and actions.
+                    </p>
+
+                    <h4>Global Shortcuts (available throughout the app, for logged-in users):</h4>
+                    <ul>
+                        <li><strong>H</strong> - Go to the Home timeline</li>
+                        <li><strong>T</strong> - Open the Trending timeline</li>
+                        <li><strong>E</strong> - Open the Editor's Choice timeline</li>
+                        <li><strong>C</strong> - View Categories</li>
+                        <li><strong>N</strong> - View News</li>
+                        <li><strong>U</strong> - Upload a new photo</li>
+                        <li><strong>P</strong> - Go to your Profile</li>
+                        <li><strong>F</strong> - Open this FAQ page</li>
+                    </ul>
+
+                    <p>
+                        If the current page includes multiple tabs (e.g. Home, Trending, or Editor's Choice),
+                        you can switch between them by pressing the number keys:
+                    </p>
+                    <ul>
+                        <li><strong>1</strong> - Switch to the first tab</li>
+                        <li><strong>2</strong> - Switch to the second tab</li>
+                        <li><strong>3</strong> - Switch to the third tab</li>
+                    </ul>
+
+                    <h4 class="padding-top-20">On a Status Detail Page:</h4>
+                    <ul>
+                        <li><strong>←</strong> - View the <em>next</em> status</li>
+                        <li><strong>→</strong> - View the <em>previous</em> status</li>
+                        <li><strong>L</strong> - Like the status</li>
+                        <li><strong>B</strong> - Boost the status</li>
+                        <li><strong>S</strong> - Save the status to bookmarks</li>
+                    </ul>
+
+                    <p>
+                        These shortcuts are designed to enhance accessibility and speed up your
+                        browsing - especially helpful for keyboard-centric users.
+                    </p>
+
+                    <hr />
+
+                    <h3>2. What's the recommended resolution for uploaded images?</h3>
+                    <p>
+                        Vernissage does <strong>not</strong> restrict image resolution - only file size matters.
+                        You're free to upload high-resolution images as long as the file remains within the allowed upload size.
+                    </p>
+
+                    <p>
+                        However, to ensure optimal quality and compatibility across the Fediverse,
+                        we <strong>recommend uploading images in up to 4K resolution</strong> (approximately 3840 x 2160 pixels).
+                        This strikes a balance between image clarity and performance and is fully supported across platforms
+                        like Mastodon and Pixelfed.
+                    </p>
+
+                    <p><strong>Note:</strong></p>
+                    <ul>
+                        <li><strong>Mastodon</strong> may display the image as a placeholder link instead of rendering it inline.</li>
+                        <li><strong>Pixelfed</strong> may <strong>reject</strong> the image entirely if it exceeds 5000px on any side.</li>
+                    </ul>
+
+                    <p>For the best visibility and interoperability, keep it 4K or below.</p>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+}

@@ -183,35 +183,30 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     protected onBackClick(): void {
         history.back();
     }
-    private keysPressed: Record<string, boolean> = {};
 
     @HostListener('window:keydown', ['$event'])
     handleKeyDown(event: KeyboardEvent) {
-        if (this.focusTrackerService.isCurrentlyFocused) {
+        if (this.focusTrackerService.isCurrentlyFocused || event.repeat) {
             return;
         }
 
-        if (!this.keysPressed[event.key]) {
-            this.keysPressed[event.key] = true;
-
-            if (event.key === 'ArrowRight') {
+        switch (event.key) {
+            case 'ArrowRight':
                 this.onNextClick();
-            } else if (event.key === 'ArrowLeft') {
+                break;
+            case 'ArrowLeft':
                 this.onPrevClick();
-            } else if (event.key === 'l') {
-              this.toggleFavourite()
-            } else if (event.key === 'b') {
-                this.toggleReblog()
-            } else if (event.key === 's') {
-              this.toggleBookmark();
-            }
+                break;
+            case 'l':
+                this.toggleFavourite();
+                break;
+            case 'b':
+                this.toggleReblog();
+                break;
+            case 's':
+                this.toggleBookmark();
+                break;
         }
-    }
-
-    // this is to prevent re-triggering the same event when the key is held down
-    @HostListener('window:keyup', ['$event'])
-    handleKeyUp(event: KeyboardEvent) {
-        this.keysPressed[event.key] = false;
     }
 
     protected async onPrevClick(): Promise<void> {
