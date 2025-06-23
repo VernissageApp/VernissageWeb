@@ -433,8 +433,18 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
             }
 
             const createDate = tags['CreateDate']?.description.toString();
+            const dateCreated = tags['DateCreated']?.description.toString();
+            const dateTimeCreated = tags['Date Created']?.description.toString().replace(':', '-').trim();
+            const timeCreated = tags['Time Created']?.description.toString();
+
             if (createDate) {
                 uploadPhoto.createDate = new Date(createDate);
+                uploadPhoto.showCreateDate = true;
+            } else if (dateCreated) {
+                uploadPhoto.createDate = new Date(dateCreated);
+                uploadPhoto.showCreateDate = true;
+            } else if (dateTimeCreated && timeCreated) {
+                uploadPhoto.createDate = new Date(dateTimeCreated + 'T' + timeCreated);
                 uploadPhoto.showCreateDate = true;
             }
 
