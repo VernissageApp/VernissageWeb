@@ -45,6 +45,7 @@ import { SharedCardPage } from './shared-card/shared-card.page';
 import { SharedCardPublicPage } from './shared-card-public/shared-card-public.page';
 import { ArticleEditPage } from './article-edit/article-edit.page';
 import { NewsPreviewPage } from './news-preview/news-preview.page';
+import { FrequentlyAskedQuestionsPage } from './frequently-asked-questions/frequently-asked-questions.page';
 
 const routes: Routes = [
     { path: 'login', component: LoginPage, canActivate: [ loggedOutGuard ], title: 'Vernissage - Login' },
@@ -82,6 +83,7 @@ const routes: Routes = [
     { path: 'articles/:id', component: ArticleEditPage, canActivate: [ authorizationGuard ], title: 'Vernissage - Edit article' },
     { path: 'news', component: NewsPage, title: 'Vernissage - News' },
     { path: 'news/:id', component: NewsPreviewPage, title: 'Vernissage - News' },
+    { path: 'faq', component: FrequentlyAskedQuestionsPage, title: 'Vernissage - Frequently Asked Questions' },
     { path: 'business-card/edit', component: EditBusinessCardPage, canActivate: [ authorizationGuard ], title: 'Vernissage - Edit users business card' },
     { path: 'shared-cards', component: SharedCardsPage, canActivate: [ authorizationGuard ], title: 'Vernissage - List of shared business cards' },
     { path: 'shared-cards/:id', component: SharedCardPage, canActivate: [ authorizationGuard ], title: 'Vernissage - Shared business card' },
