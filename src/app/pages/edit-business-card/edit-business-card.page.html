@@ -23,20 +23,20 @@
                             <mat-card-content>
                                 <div class="flex-row flex-end gap-8 margin-bottom-20">
                                     <div class="input-color-container">
-                                        <input class="input-color" name="color1" type="color" [(ngModel)]="color1" aria-label="Top color">
+                                        <input type="color" class="input-color" name="color1" [(ngModel)]="color1" aria-label="Top color">
                                     </div>
                                     <div class="input-color-container">
-                                        <input class="input-color" name="color2" type="color" [(ngModel)]="color2" aria-label="Bottom color">
+                                        <input type="color" class="input-color" name="color2" [(ngModel)]="color2" aria-label="Bottom color">
                                     </div>
                                     <div class="input-color-container">
-                                        <input class="input-color" name="color3" type="color" [(ngModel)]="color3" aria-label="Text color">
+                                        <input  type="color"class="input-color" name="color3" [(ngModel)]="color3" aria-label="Text color">
                                     </div>
                                 </div>
 
                                 <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-10">
                                     <mat-form-field appearance="outline">
                                         <mat-label>Title</mat-label>
-                                        <input matInput name="title" #titleInput="ngModel" [(ngModel)]="title"
+                                        <input type="text" matInput name="title" #titleInput="ngModel" [(ngModel)]="title"
                                             placeholder="Title" aria-label="Title" appMaxLength="200" required />
                                         <mat-error *ngIf="titleInput.invalid && titleInput.errors?.required">Enter title.</mat-error>
                                         <mat-error *ngIf="titleInput.invalid && titleInput.errors?.appMaxLength">
@@ -48,7 +48,7 @@
                                 <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-10">
                                     <mat-form-field appearance="outline">
                                         <mat-label>Subtitle</mat-label>
-                                        <input matInput name="subtitle" #subtitleInput="ngModel" [(ngModel)]="subtitle"
+                                        <input type="text" matInput name="subtitle" #subtitleInput="ngModel" [(ngModel)]="subtitle"
                                             placeholder="Subtitle" aria-label="Title" appMaxLength="200" />
                                         <mat-error *ngIf="subtitleInput.invalid && subtitleInput.errors?.appMaxLength">
                                             Too long subtitle.
@@ -69,7 +69,7 @@
                                 <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-10">
                                     <mat-form-field appearance="outline">
                                         <mat-label>Website</mat-label>
-                                        <input matInput name="website" #websiteInput="ngModel" [(ngModel)]="website"
+                                        <input type="text" matInput name="website" #websiteInput="ngModel" [(ngModel)]="website"
                                             placeholder="Website" aria-label="Website" appMaxLength="200" />
                                         <mat-error *ngIf="websiteInput.invalid && websiteInput.errors?.appMaxLength">
                                             Too long website.
@@ -80,7 +80,7 @@
                                 <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-10">
                                     <mat-form-field appearance="outline">
                                         <mat-label>Telephone</mat-label>
-                                        <input matInput name="telephone" #telephoneInput="ngModel" [(ngModel)]="telephone"
+                                        <input type="text" matInput name="telephone" #telephoneInput="ngModel" [(ngModel)]="telephone"
                                             placeholder="Telephone" aria-label="Telephone" appMaxLength="200" />
                                         <mat-error *ngIf="telephoneInput.invalid && telephoneInput.errors?.appMaxLength">
                                             Too long telephone.
@@ -91,7 +91,7 @@
                                 <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-10">
                                     <mat-form-field appearance="outline">
                                         <mat-label>Email</mat-label>
-                                        <input matInput name="email" #emailInput="ngModel" [(ngModel)]="email"
+                                        <input type="text" matInput name="email" #emailInput="ngModel" [(ngModel)]="email"
                                             placeholder="Title" aria-label="Title" appMaxLength="200" />
                                         <mat-error *ngIf="emailInput.invalid && emailInput.errors?.appMaxLength">
                                             Too long email.
@@ -117,7 +117,7 @@
                                         <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
                                             <mat-form-field appearance="outline">
                                                 <mat-label>Key</mat-label>
-                                                <input matInput [name]="'key-' + i" #key="ngModel" [(ngModel)]="field.key" (blur)="updateFields()" placeholder="Key" aria-label="Key" appMaxLength="500" />
+                                                <input type="text" matInput [name]="'key-' + i" #key="ngModel" [(ngModel)]="field.key" (blur)="updateFields()" placeholder="Key" aria-label="Key" appMaxLength="500" />
                                                 <mat-error *ngIf="key.invalid && key.errors?.appMaxLength">Too long key.</mat-error>
                                             </mat-form-field>
                                         </div>
@@ -125,7 +125,7 @@
                                         <div class="flex-row flex-responsive flex-stretch gap-16">
                                             <mat-form-field appearance="outline">
                                                 <mat-label>Value</mat-label>
-                                                <input matInput [name]="'value-' + i" #value="ngModel" [(ngModel)]="field.value" (blur)="updateFields()" placeholder="Value" aria-label="Value" appMaxLength="500" />
+                                                <input type="text" matInput [name]="'value-' + i" #value="ngModel" [(ngModel)]="field.value" (blur)="updateFields()" placeholder="Value" aria-label="Value" appMaxLength="500" />
                                                 <mat-error *ngIf="value.invalid && value.errors?.appMaxLength">Too long value.</mat-error>
                                             </mat-form-field>
                                         </div>

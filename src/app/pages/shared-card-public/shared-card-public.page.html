@@ -58,7 +58,7 @@
             <div class="margin-bottom-20 margin-top-20">
                 <form>
                     <mat-form-field appearance="outline">
-                        <input matInput type="text" name="totalCost" #totalCost="ngModel" [(ngModel)]="message" placeholder="Send message..." aria-label="Message" />
+                        <input type="text" matInput name="totalCost" #totalCost="ngModel" [(ngModel)]="message" placeholder="Send message..." aria-label="Message" />
                         <button matSuffix mat-flat-button type="submit" color="primary" class="margin-right-10" (click)="sendMessage()" aria-label="Send">Send</button>
                     </mat-form-field>
                 </form>
