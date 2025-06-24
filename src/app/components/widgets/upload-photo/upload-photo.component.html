@@ -109,10 +109,10 @@
             </mat-checkbox>
             <div class="flex-grow-2">
                 <mat-form-field appearance="outline" class="margin-bottom-20 width-100">
-                    <input matInput [name]="'inputGpsLatitude' + internalIndex" [(ngModel)]="photo().latitude" [disabled]="!photo().showGpsCoordination" aria-label="GPS latitude" />
+                    <input type="text" matInput [name]="'inputGpsLatitude' + internalIndex" [(ngModel)]="photo().latitude" [disabled]="!photo().showGpsCoordination" aria-label="GPS latitude" />
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="width-100">
-                    <input matInput [name]="'inputGpsLongitude' + internalIndex" [(ngModel)]="photo().longitude" [disabled]="!photo().showGpsCoordination" aria-label="GPS longitude" />
+                    <input type="text" matInput [name]="'inputGpsLongitude' + internalIndex" [(ngModel)]="photo().longitude" [disabled]="!photo().showGpsCoordination" aria-label="GPS longitude" />
                 </mat-form-field>
             </div>
         </div>
@@ -127,7 +127,7 @@
                 <span class="text-muted">Manufacturer:</span> 
             </mat-checkbox>
             <mat-form-field appearance="outline" class="flex-grow-2">
-                <input matInput [name]="'inputMake' + internalIndex" [(ngModel)]="photo().make" [disabled]="!photo().showMake" aria-label="Manufacturer" />
+                <input type="text" matInput [name]="'inputMake' + internalIndex" [(ngModel)]="photo().make" [disabled]="!photo().showMake" aria-label="Manufacturer" />
             </mat-form-field>
         </div>
 
@@ -136,7 +136,7 @@
                 <span class="text-muted">Model:</span>
             </mat-checkbox>
             <mat-form-field appearance="outline" class="flex-grow-2">
-                <input matInput [name]="'inputModel' + internalIndex" [(ngModel)]="photo().model" [disabled]="!photo().showModel" aria-label="Model" />
+                <input type="text" matInput [name]="'inputModel' + internalIndex" [(ngModel)]="photo().model" [disabled]="!photo().showModel" aria-label="Model" />
             </mat-form-field>
         </div>
 
@@ -145,7 +145,7 @@
                 <span class="text-muted">Lens:</span>
             </mat-checkbox>
             <mat-form-field appearance="outline" class="flex-grow-2">
-                <input matInput [name]="'inputLens' + internalIndex" [(ngModel)]="photo().lens" [disabled]="!photo().showLens" aria-label="Lens" />
+                <input type="text" matInput [name]="'inputLens' + internalIndex" [(ngModel)]="photo().lens" [disabled]="!photo().showLens" aria-label="Lens" />
             </mat-form-field>
         </div>
 
@@ -156,12 +156,12 @@
             <div class="flex-grow-2">
                 <div class="flex-row flex-stretch gap-4 small-text-input margin-bottom-10 double-field">
                     <mat-form-field appearance="outline">
-                        <input matInput [name]="'inputFocalLength' + internalIndex" [(ngModel)]="photo().focalLength" [disabled]="!photo().showFocalLenIn35mmFilm" aria-label="Focal length" />
+                        <input type="text" matInput [name]="'inputFocalLength' + internalIndex" [(ngModel)]="photo().focalLength" [disabled]="!photo().showFocalLenIn35mmFilm" aria-label="Focal length" />
                         <span class="text-muted" matSuffix>mm&nbsp;&nbsp;</span>
                     </mat-form-field>
                     <mat-form-field appearance="outline" floatLabel="always">
                         <mat-label>Full frame equivalent</mat-label>
-                        <input matInput [name]="'inputFocalLenIn35mmFilm' + internalIndex" [(ngModel)]="photo().focalLenIn35mmFilm" [disabled]="!photo().showFocalLenIn35mmFilm" aria-label="Focal length in 35mm film equivalent" />
+                        <input type="text" matInput [name]="'inputFocalLenIn35mmFilm' + internalIndex" [(ngModel)]="photo().focalLenIn35mmFilm" [disabled]="!photo().showFocalLenIn35mmFilm" aria-label="Focal length in 35mm film equivalent" />
                         <span class="text-muted" matSuffix>mm&nbsp;&nbsp;</span>
                     </mat-form-field>
                 </div>
@@ -174,7 +174,7 @@
             </mat-checkbox>
             <mat-form-field appearance="outline" class="flex-grow-2">
                 <span class="text-muted" matTextPrefix>f/</span>
-                <input matInput [name]="'inputFNumber' + internalIndex" [(ngModel)]="photo().fNumber" [disabled]="!photo().showFNumber" aria-label="Aperture" />
+                <input type="text" matInput [name]="'inputFNumber' + internalIndex" [(ngModel)]="photo().fNumber" [disabled]="!photo().showFNumber" aria-label="Aperture" />
             </mat-form-field>
         </div>
 
@@ -183,7 +183,7 @@
                 <span class="text-muted">Exposure time:</span>
             </mat-checkbox>
             <mat-form-field appearance="outline" class="flex-grow-2">
-                <input matInput [name]="'inputExposureTime' + internalIndex" [(ngModel)]="photo().exposureTime" [disabled]="!photo().showExposureTime" aria-label="Exposure time" />
+                <input type="text" matInput [name]="'inputExposureTime' + internalIndex" [(ngModel)]="photo().exposureTime" [disabled]="!photo().showExposureTime" aria-label="Exposure time" />
                 <span class="text-muted" matSuffix>sec&nbsp;&nbsp;</span>
             </mat-form-field>
         </div>
@@ -193,7 +193,7 @@
                 <span class="text-muted">ISO:</span>
             </mat-checkbox>
             <mat-form-field appearance="outline" class="flex-grow-2">
-                <input matInput [name]="'inputPhotographicSensitivity' + internalIndex" [(ngModel)]="photo().photographicSensitivity" [disabled]="!photo().showPhotographicSensitivity" aria-label="ISO" />
+                <input type="text" matInput [name]="'inputPhotographicSensitivity' + internalIndex" [(ngModel)]="photo().photographicSensitivity" [disabled]="!photo().showPhotographicSensitivity" aria-label="ISO" />
             </mat-form-field>
         </div>
 
@@ -202,7 +202,7 @@
                 <span class="text-muted">Flash:</span>
             </mat-checkbox>
             <mat-form-field appearance="outline" class="flex-grow-2">
-                <input matInput [name]="'inputFlash' + internalIndex" [(ngModel)]="photo().flash" [disabled]="!photo().showFlash" aria-label="Flash" />
+                <input type="text" matInput [name]="'inputFlash' + internalIndex" [(ngModel)]="photo().flash" [disabled]="!photo().showFlash" aria-label="Flash" />
             </mat-form-field>
         </div>
 
@@ -211,7 +211,7 @@
                 <span class="text-muted">Software:</span>
             </mat-checkbox>
             <mat-form-field appearance="outline" class="flex-grow-2">
-                <input matInput [name]="'inputSoftware' + internalIndex" [(ngModel)]="photo().software" [disabled]="!photo().showSoftware" aria-label="Software" />
+                <input type="text" matInput [name]="'inputSoftware' + internalIndex" [(ngModel)]="photo().software" [disabled]="!photo().showSoftware" aria-label="Software" />
             </mat-form-field>
         </div>
 
@@ -220,7 +220,7 @@
                 <span class="text-muted">Film:</span>
             </mat-checkbox>
             <mat-form-field appearance="outline" class="flex-grow-2">
-                <input matInput [name]="'inputFilm' + internalIndex" [(ngModel)]="photo().film" [disabled]="!photo().showFilm" aria-label="Film" />
+                <input type="text" matInput [name]="'inputFilm' + internalIndex" [(ngModel)]="photo().film" [disabled]="!photo().showFilm" aria-label="Film" />
             </mat-form-field>
         </div>
 
@@ -229,7 +229,7 @@
                 <span class="text-muted">Chemistry:</span>
             </mat-checkbox>
             <mat-form-field appearance="outline" class="flex-grow-2">
-                <input matInput [name]="'inputChemistry' + internalIndex" [(ngModel)]="photo().chemistry" [disabled]="!photo().showChemistry" aria-label="Chemistry" />
+                <input type="text" matInput [name]="'inputChemistry' + internalIndex" [(ngModel)]="photo().chemistry" [disabled]="!photo().showChemistry" aria-label="Chemistry" />
             </mat-form-field>
         </div>
 
@@ -238,7 +238,7 @@
                 <span class="text-muted">Scanner:</span>
             </mat-checkbox>
             <mat-form-field appearance="outline" class="flex-grow-2">
-                <input matInput [name]="'inputScanner' + internalIndex" [(ngModel)]="photo().scanner" [disabled]="!photo().showScanner" aria-label="Scanner" />
+                <input type="text" matInput [name]="'inputScanner' + internalIndex" [(ngModel)]="photo().scanner" [disabled]="!photo().showScanner" aria-label="Scanner" />
             </mat-form-field>
         </div>
 
@@ -247,7 +247,7 @@
                 <span class="text-muted">Create date:</span>
             </mat-checkbox>
             <mat-form-field appearance="outline" class="flex-grow-2">
-                <input matInput type="datetime-local" [name]="'inputCreateDate' + internalIndex" [ngModel]="photo().createDate | date:'yyyy-MM-ddTHH:mm'" (ngModelChange)="photo().createDate = $event" [disabled]="!photo().showCreateDate" aria-label="Create date" />
+                <input type="datetime-local" matInput [name]="'inputCreateDate' + internalIndex" type="text" [ngModel]="photo().createDate | date:'yyyy-MM-ddTHH:mm'" (ngModelChange)="photo().createDate = $event" [disabled]="!photo().showCreateDate" aria-label="Create date" />
             </mat-form-field>
         </div>
     </div>
@@ -269,7 +269,7 @@
             }
         </div>
         <div class="pull-right">
-            <input hidden name="hdr-image" type="file" #photoFileUpload accept="image/avif" (change)="onHdrPhotoSelected($event)">
+            <input type="file" hidden name="hdr-image" #photoFileUpload accept="image/avif" (change)="onHdrPhotoSelected($event)">
         </div>
     </div>
     <div class="flex-row gap-16 margin-top-10">

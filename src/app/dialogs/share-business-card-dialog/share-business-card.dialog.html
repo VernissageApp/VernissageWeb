@@ -5,7 +5,7 @@
         <div class="flex-col gap-0 margin-top-5">        
             <mat-form-field appearance="outline" class="width-100 padding-top-10">
                 <mat-label>Title</mat-label>
-                <input matInput name="title" #titleInput="ngModel" [(ngModel)]="title"
+                <input type="text" matInput name="title" #titleInput="ngModel" [(ngModel)]="title"
                     placeholder="Title" aria-label="Title" appMaxLength="200" required />
                 <mat-error *ngIf="titleInput.invalid && titleInput.errors?.required">Enter title.</mat-error>
                 <mat-error *ngIf="titleInput.invalid && titleInput.errors?.appMaxLength">

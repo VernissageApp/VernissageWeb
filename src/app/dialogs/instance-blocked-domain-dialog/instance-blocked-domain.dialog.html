@@ -5,7 +5,7 @@
         <div class="margin-bottom-20 padding-top-5">
             <mat-form-field class="width-100" appearance="outline">
                 <mat-label>Domain</mat-label>
-                <input matInput name="domain" [(ngModel)]="domain" #domainInput="ngModel" type="text" aria-label="Email" required appMaxLength="500" />
+                <input type="text" matInput name="domain" [(ngModel)]="domain" #domainInput="ngModel" aria-label="Email" required appMaxLength="500" />
                 <mat-error *ngIf="domainInput.invalid && domainInput.errors?.required">Enter domain.</mat-error>
                 <mat-error *ngIf="domainInput.invalid && domainInput.errors?.appMaxLength">Domain is too long.</mat-error>
             </mat-form-field>
@@ -14,7 +14,7 @@
         <div class="margin-bottom-20">
             <mat-form-field class="width-100" appearance="outline">
                 <mat-label>Reason</mat-label>
-                <input matInput name="reason" [(ngModel)]="reason" #reasonInput="ngModel" type="text" aria-label="Email" appMaxLength="500" />
+                <input type="text" matInput name="reason" [(ngModel)]="reason" #reasonInput="ngModel" aria-label="Email" appMaxLength="500" />
                 <mat-error *ngIf="reasonInput.invalid && reasonInput.errors?.appMaxLength">Reason is too long.</mat-error>
             </mat-form-field>
         </div>

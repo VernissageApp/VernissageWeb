@@ -6,7 +6,7 @@
                 <mat-card class="margin-bottom-20" appearance="outlined">
                     <mat-card-content>
                         <mat-form-field appearance="outline">
-                            <input #queryInput matInput name="query" [(ngModel)]="search" cdkFocusInitial aria-label="Query" />
+                            <input type="text" #queryInput matInput name="query" [(ngModel)]="search" cdkFocusInitial aria-label="Query" />
                             <button matSuffix mat-flat-button type="submit" color="primary" class="margin-right-10" aria-label="Search">Search</button>
                             <mat-hint class="text-muted"></mat-hint>
                         </mat-form-field>

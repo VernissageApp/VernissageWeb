@@ -9,7 +9,7 @@
         <div class="margin-bottom-20 padding-top-5">
             <mat-form-field class="width-100" appearance="outline">
                 <mat-label>Email</mat-label>
-                <input matInput name="email" [(ngModel)]="email" #emailInput="ngModel" type="email"
+                <input type="email" matInput name="email" [(ngModel)]="email" #emailInput="ngModel"
                        pattern="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
                        aria-label="Email" appUniqueEmail required />
                 <mat-error *ngIf="emailInput.invalid && emailInput.errors?.required">Enter email.</mat-error>
