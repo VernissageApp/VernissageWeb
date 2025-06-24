@@ -448,7 +448,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
                 uploadPhoto.showCreateDate = true;
             }
 
-            const software = tags['CreatorTool']?.description.toString() ?? tags['Software']?.description.toString();
+            const software = tags['Software']?.description.toString() ?? tags['CreatorTool']?.description.toString();
             if (software) {
                 uploadPhoto.software = software;
                 uploadPhoto.showSoftware = true;
