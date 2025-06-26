@@ -6,6 +6,7 @@ export enum EventType {
     AccountLogout = 'accountLogout',
     AccountRefresh = 'accountRefresh',
     AccountConfirm = 'accountConfirm',
+    AccountIsEmailVerified = 'accountIsEmailVerified',
     AccountChangeEmail = 'accountChangeEmail',
     AccountChangePassword = 'accountChangePassword',
     AccountForgotToken = 'accountForgotToken',
@@ -195,5 +196,7 @@ export enum EventType {
     SharedBusinessCardUnrevoke = 'sharedBusinessCardUnrevoke',
     SharedBusinessCardReadByThirdParty = 'sharedBusinessCardReadByThirdParty',
     SharedBusinessCardUpdateByThirdParty = 'sharedBusinessCardUpdateByThirdParty',
-    SharedBusinessCardMessageByThirdParty = 'sharedBusinessCardMessageByThirdParty'
+    SharedBusinessCardMessageByThirdParty = 'sharedBusinessCardMessageByThirdParty',
+
+    QuickCaptchaGenerate = 'quickCaptchaGenerate'
 }

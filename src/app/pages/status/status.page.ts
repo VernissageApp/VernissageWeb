@@ -186,7 +186,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
 
     @HostListener('window:keydown', ['$event'])
     handleKeyDown(event: KeyboardEvent) {
-        if (this.focusTrackerService.isCurrentlyFocused || event.repeat) {
+        if (this.focusTrackerService.isCurrentlyFocused || event.repeat || event.repeat || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) {
             return;
         }
 

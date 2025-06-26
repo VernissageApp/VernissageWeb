@@ -26,6 +26,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { UserSettingsService } from 'src/app/services/http/user-settings.service';
 import { UserSettingKey } from 'src/app/models/user-setting';
 import { FileSizeService } from 'src/app/services/common/file-size.service';
+import { AccountService } from 'src/app/services/http/account.service';
 
 @Component({
     selector: 'app-upload',
@@ -51,6 +52,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
     protected maxFileSizeString = model('');
     protected selectedIndex = model(0);
     protected isCanceling = signal(false);
+    protected emailHasBeenVerified = signal(false);
 
     protected statusTextTemplate = signal<string | undefined>(undefined);
     protected maxStatusLength = signal(0);
@@ -75,6 +77,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
     private dialog = inject(MatDialog);
     private userSettingsService = inject(UserSettingsService);
     private fileSizeService = inject(FileSizeService);
+    private accountService = inject(AccountService);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
@@ -84,15 +87,17 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
         this.maxStatusLength.set(this.instanceService.instance?.configuration?.statuses?.maxCharacters ?? 500);
         this.isOpenAIEnabled.set(this.settingsService.publicSettings?.isOpenAIEnabled ?? false);
 
-        const [internalCategories, internalLicenses, internalStatusTextTemplate] = await Promise.all([
+        const [internalCategories, internalLicenses, internalStatusTextTemplate, internalEmailHasBeenVerified] = await Promise.all([
             this.categoriesService.all(),
             this.licensesService.all(),
-            this.userSettingsService.read(UserSettingKey.statusTextTemplate)
+            this.userSettingsService.read(UserSettingKey.statusTextTemplate),
+            this.accountService.getEmailVerified()
         ]);
 
         this.categories.set(internalCategories);
         this.licenses.set(internalLicenses);
         this.statusTextTemplate.set(internalStatusTextTemplate?.value);
+        this.emailHasBeenVerified.set(internalEmailHasBeenVerified.result);
     }
 
     protected async onPhotoSelected(event: any): Promise<void> {

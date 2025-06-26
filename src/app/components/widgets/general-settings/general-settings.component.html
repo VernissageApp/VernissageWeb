@@ -250,6 +250,20 @@
     </div>
 
     <mat-divider></mat-divider>
+    <h3>Captcha</h3>
+
+    <div class="margin-bottom-20">
+        <div>
+            <mat-checkbox name="isRegistrationOpened" color="primary" [disableRipple]="true" [(ngModel)]="settings().isQuickCaptchaEnabled">
+                Is QuickCaptcha enabled (internal captcha)
+            </mat-checkbox>
+            <div class="text-muted fs-90 margin-left-10 margin-top-5">
+                This CAPTCHA is implemented internally and does not communicate with any external services, ensuring complete privacy for users.
+            </div>
+        </div>
+    </div>
+
+    <mat-divider></mat-divider>
     <h3>Email server</h3>
 
     <div class="margin-bottom-20">

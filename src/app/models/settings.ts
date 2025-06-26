@@ -6,8 +6,7 @@ export class Settings {
     public isRegistrationByApprovalOpened = false;
     public isRegistrationByInvitationsOpened = false;
     
-    public isRecaptchaEnabled = false;
-    public recaptchaKey = '';
+    public isQuickCaptchaEnabled = false;
     
     public corsOrigin = '';
     public maximumNumberOfInvitations = 0;

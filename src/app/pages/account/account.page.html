@@ -430,7 +430,8 @@
             <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
                 <div>
                     You can import data previously exported from another server, such as a list of accounts you are following.
-                    Imported accounts will be merged with the ones you are already following. Max file size is {{ maxImportFileSizeString() }}.
+                    Imported accounts will be merged with the ones you are already following. Only CSV files are currently supported.
+                    Max file size is {{ maxImportFileSizeString() }}.
                 </div>
                 <div class="text-right">
                     <input type="file" hidden (change)="onFileSelected($event)" #fileInput id="file">

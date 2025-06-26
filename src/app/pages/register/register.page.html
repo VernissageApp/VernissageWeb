@@ -76,7 +76,7 @@
                             </mat-checkbox>
                         </div>
 
-                        @if (isRegistrationByInvitationsOpened() || isRegistrationByApprovalOpened()) {
+                        @if (isRegistrationByInvitationsOpened() || isRegistrationByApprovalOpened() || isQuickCaptchaEnabled()) {
                             <mat-divider class="padding-bottom-20"></mat-divider>
                         }
 
@@ -103,6 +103,29 @@
                                 </mat-form-field>
                             </div>
                         }
+
+                        @if (isQuickCaptchaEnabled()) {
+                            <div>
+                                <h4>Solve the captcha</h4>
+                                <div class="flex-row">
+                                    <div class="flex-align-center">
+                                        <img [src]="apiUrl() +'/api/v1/quick-captcha/generate?key=' + securityKey()" class="captcha-image" alt="Captcha" />
+                                    </div>
+                                    <div class="flex-align-center">
+                                        <button class="margin-top-15" type="button" mat-stroked-button (click)="onCaptchaRefreshClick()" aria-label="Refresh captcha">
+                                            Refresh
+                                        </button>
+                                    </div>
+                                </div>
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Captcha text</mat-label>
+                                    <input type="text" matInput name="captcha" [(ngModel)]="securityText" #captchaInput="ngModel" aria-label="Captcha text" appMaxLength="6" required />
+                                    <mat-error *ngIf="captchaInput.invalid && captchaInput.errors?.required">Enter captcha text.</mat-error>
+                                    <mat-error *ngIf="captchaInput.invalid && captchaInput.errors?.appMaxLength">Captcha text is too long.</mat-error>
+                                </mat-form-field>
+                            </div>
+                        }
+
                     </mat-card-content>
 
                     <mat-card-actions>
