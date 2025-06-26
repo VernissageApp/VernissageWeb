@@ -107,7 +107,7 @@
                         @if (isQuickCaptchaEnabled()) {
                             <div>
                                 <h4>Solve the captcha</h4>
-                                <div class="flex-row">
+                                <div class="flex-row gap-16">
                                     <div class="flex-align-center">
                                         <img [src]="apiUrl() +'/api/v1/quick-captcha/generate?key=' + securityKey()" class="captcha-image" alt="Captcha" />
                                     </div>
