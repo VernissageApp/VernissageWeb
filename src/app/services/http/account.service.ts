@@ -12,6 +12,7 @@ import { TwoFactorToken } from 'src/app/models/two-factor-token';
 import { isPlatformBrowser } from '@angular/common';
 import { ServerRefreshTokenNotExistsError } from 'src/app/errors/server-refresh-token-not-exists-error';
 import { SsrCookieService } from '../common/ssr-cookie.service';
+import { BooleanResult } from 'src/app/models/boolean-result';
 
 @Injectable({
     providedIn: 'root'
@@ -56,6 +57,11 @@ export class AccountService {
 
     public async changePassword(changePassword: ChangePassword): Promise<object> {
         const event$ =  this.httpClient.put(this.windowService.apiUrl() + '/api/v1/account/password', changePassword);
+        return await firstValueFrom(event$);
+    }
+
+    public async getEmailVerified(): Promise<BooleanResult> {
+        const event$ =  this.httpClient.get<BooleanResult>(this.windowService.apiUrl() + '/api/v1/account/email/verified');
         return await firstValueFrom(event$);
     }
 

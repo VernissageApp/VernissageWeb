@@ -79,7 +79,8 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 
     @HostListener('window:keydown', ['$event'])
     handleKeyDown(event: KeyboardEvent) {
-        if (this.focusTrackerService.isCurrentlyFocused || event.repeat) {
+        const userInternal = this.authorizationService.getUser();
+        if (!userInternal || this.focusTrackerService.isCurrentlyFocused || event.repeat || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) {
             return;
         }
 
@@ -104,8 +105,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
                 this.router.navigate(['/upload']);
                 break;
             case 'p': {
-                const userInternal = this.authorizationService.getUser();
-                this.router.navigate(['/@' + (userInternal?.userName ?? '')]);
+                this.router.navigate(['/@' + (userInternal.userName ?? '')]);
                 break;
             }
             case 'f':

@@ -1,18 +1,16 @@
 import { Component, OnInit, signal, model, computed, ChangeDetectionStrategy, inject } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
-import { ReCaptchaV3Service } from 'ngx-captcha';
 import { ForbiddenError } from 'src/app/errors/forbidden-error';
 import { RegisterUser } from 'src/app/models/register-user';
 
 import { RegisterMode } from 'src/app/models/register-mode';
 import { InstanceService } from 'src/app/services/http/instance.service';
 import { RegisterService } from 'src/app/services/http/register.service';
-import { environment } from 'src/environments/environment';
 import { WindowService } from 'src/app/services/common/window.service';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { Router } from '@angular/router';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { Rule } from 'src/app/models/rule';
+import { SettingsService } from 'src/app/services/http/settings.service';
 
 @Component({
     selector: 'app-register',
@@ -32,12 +30,16 @@ export class RegisterPage implements OnInit {
     protected agreement = model(false);
     protected inviteToken = model('');
     protected reason = model('');
+    protected apiUrl = model('');
+    protected securityText = model('');
+    protected securityKey = signal('');
 
     protected registerPageMode = signal(RegisterMode.Register);
     protected passwordIsValid = signal(false);
     protected errorMessage = signal<string | undefined>(undefined);
     protected isRegistrationByApprovalOpened = signal(false);
     protected isRegistrationByInvitationsOpened = signal(false);
+    protected isQuickCaptchaEnabled = signal(false);
     protected serverRules = signal<Rule[]>([]);
 
     protected isSubmittingMode = computed(() => this.registerPageMode() === RegisterMode.Submitting);
@@ -47,9 +49,14 @@ export class RegisterPage implements OnInit {
     private router = inject(Router);
     private messageService = inject(MessagesService);
     private instanceService = inject(InstanceService);
-    private reCaptchaV3Service = inject(ReCaptchaV3Service);
+    private settingsService = inject(SettingsService);
     private windowService = inject(WindowService);
-    private document = inject(DOCUMENT);
+
+    constructor() {
+        // Generate a random security key for the registration captcha.
+        this.apiUrl.set(this.windowService.apiUrl());
+        this.securityKey.set(this.generateKey(16));
+    }
 
     ngOnInit(): void {
         if (!this.instanceService.isRegistrationEnabled()) {
@@ -58,19 +65,14 @@ export class RegisterPage implements OnInit {
 
         this.isRegistrationByApprovalOpened.set(this.instanceService.instance?.registrationOpened === false && this.instanceService.instance?.registrationByApprovalOpened === true);
         this.isRegistrationByInvitationsOpened.set(this.instanceService.instance?.registrationOpened === false && this.instanceService.instance?.registrationByInvitationsOpened === true);
+        this.isQuickCaptchaEnabled.set(this.instanceService.instance?.registrationOpened === true && this.settingsService.publicSettings?.isQuickCaptchaEnabled === true);
+
         this.serverRules.set(this.instanceService.instance?.rules ?? []);
     }
 
     async onSubmit(): Promise<void> {
         this.registerPageMode.set(RegisterMode.Submitting);
-
-        if (environment.recaptchaKey != '') {
-            this.reCaptchaV3Service.execute(environment.recaptchaKey, 'homepage', async (token) => {
-                await this.registerUser(token);
-            });
-        } else {
-            await this.registerUser('');
-        }
+        await this.registerUser();
     }
 
     protected onPasswordValid(valid: boolean): void {
@@ -81,11 +83,15 @@ export class RegisterPage implements OnInit {
         this.registerPageMode.set(RegisterMode.Register);
     }
 
-    private async registerUser(token: string): Promise<void> {
+    protected onCaptchaRefreshClick(): void {
+        this.securityKey.set(this.generateKey(16));
+    }
+
+    private async registerUser(): Promise<void> {
         try {
             const user = new RegisterUser();
             user.redirectBaseUrl = this.windowService.getApplicationUrl();
-            user.securityToken = token;
+            user.securityToken = `${this.securityKey()}/${this.securityText()}`;
 
             user.userName = this.userName();
             user.email = this.email();
@@ -97,7 +103,6 @@ export class RegisterPage implements OnInit {
             user.reason = this.reason();
 
             await this.registerService.register(user);
-            this.removeGoogleBadge();
 
             this.messageService.showSuccess('Your account has been created.');
             await this.router.navigate(['/login']);
@@ -122,10 +127,13 @@ export class RegisterPage implements OnInit {
         }
     }
 
-    private removeGoogleBadge(): void {
-        const googleBadge = this.document.getElementsByClassName('grecaptcha-badge');
-        if (googleBadge && googleBadge.length > 0) {
-            googleBadge[0].remove();
+    private generateKey(length: number): string {
+        let result = '';
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        const charactersLength = characters.length;
+        for (let i = 0; i < length; i++ ) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
         }
+        return result;
     }
 }

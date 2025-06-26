@@ -87,7 +87,7 @@ export class TrendingPage extends ReusableGalleryPageComponent implements OnInit
 
     @HostListener('window:keydown', ['$event'])
     handleKeyDown(event: KeyboardEvent) {
-        if (this.focusTrackerService.isCurrentlyFocused || event.repeat) {
+        if (this.focusTrackerService.isCurrentlyFocused || event.repeat || event.repeat || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) {
             return;
         }
 
