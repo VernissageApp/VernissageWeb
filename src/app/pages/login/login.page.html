@@ -42,18 +42,18 @@
                         </div>
                     </mat-card-content>
                     <mat-card-actions>
-                        <div class="flex-row login-actions">
+                        <div class="flex-row flex-align-center gap-8 login-actions">
                             @if (loginPageMode() === loginMode.TwoFactorToken) {
-                                <button type="button" mat-stroked-button (click)="onCancelTwoFactor()" [disabled]="isSubmitting()" class="margin-right-5" aria-label="Cancel">Cancel</button>
+                                <button type="button" mat-stroked-button (click)="onCancelTwoFactor()" [disabled]="isSubmitting()" aria-label="Cancel">Cancel</button>
                             }
                             <button type="submit" mat-flat-button [disabled]="isSubmitting()" color="primary" aria-label="Login">Login</button>
 
                             @if (isSubmitting()) {
-                                <mat-spinner [diameter]="18" class="margin-left-10 margin-top-5"></mat-spinner>
+                                <mat-spinner [diameter]="18"></mat-spinner>
                             }
 
                             @if (errorMessage(); as errorMessageString) {
-                                <div class="mat-small text-error margin-left-10 margin-top-10">{{ errorMessageString }}</div>
+                                <div class="mat-small text-error">{{ errorMessageString }}</div>
                             }
                         </div>
                     </mat-card-actions>
