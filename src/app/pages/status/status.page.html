@@ -53,11 +53,11 @@
                                 [ngClass]="{ 'custom-gallery-with-icons': showContextArrows() }"
                                 bullets
                                 bulletPosition="bottom"
-                                [bulletSize]="8"
+                                [bulletSize]="10"
                                 [counter]="false"
                                 [nav]="false"
                                 [autoHeight]="galleryAutoheight()"
-                                [autoplay]="true"
+                                [autoplay]="autoScrollGalleryImages()"
                                 [autoplayInterval]="6000"
                                 (itemClick)="openInFullScreen()"
                                 (indexChange)="onImageIndexChange($event)">

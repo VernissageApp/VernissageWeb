@@ -106,6 +106,15 @@
             width: calc(100vw - 80px);
         }
     }
+
+    ::ng-deep .g-bullet {
+        width: 12px !important;
+        height: 10px !important;
+    }
+
+    ::ng-deep .g-bullet-inner {
+        border: 1px solid black;
+    }
 }
 
 .photo-container-table {
