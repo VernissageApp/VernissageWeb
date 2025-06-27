@@ -109,7 +109,7 @@
             }
         </div>
 
-        @if (showEditorsChoice()) {
+        @if (showEditorsChoice() || showLocal()) {
             @if (statuses(); as statusesArray) {
                 <app-gallery [statuses]="statusesArray" [startUrl]="pageUrl"></app-gallery>
             }
