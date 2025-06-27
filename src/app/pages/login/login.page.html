@@ -14,7 +14,7 @@
                                 <!-- Username. -->
                                 <mat-form-field appearance="outline">
                                     <mat-label>Username or email</mat-label>
-                                    <input matInput [errorStateMatcher]="dirtyErrorStateMatcher" name="userNameOrEmail" [(ngModel)]="userNameOrEmail" #userNameOrEmailInput="ngModel" type="text" placeholder="Username or email" aria-label="Username or email" required />
+                                    <input type="text" matInput [errorStateMatcher]="dirtyErrorStateMatcher" name="userNameOrEmail" [(ngModel)]="userNameOrEmail" #userNameOrEmailInput="ngModel" placeholder="Username or email" aria-label="Username or email" required />
                                     <mat-error *ngIf="userNameOrEmailInput.dirty && userNameOrEmailInput.invalid && userNameOrEmailInput.errors?.required">Enter username or email.</mat-error>
                                 </mat-form-field>
 
@@ -24,7 +24,7 @@
                                 </div>
                                 <mat-form-field appearance="outline">
                                     <mat-label>Password</mat-label>
-                                    <input matInput [errorStateMatcher]="dirtyErrorStateMatcher" name="password" [(ngModel)]="password" #passwordInput="ngModel" type="password" placeholder="Password" aria-label="Password" required />
+                                    <input type="password" matInput [errorStateMatcher]="dirtyErrorStateMatcher" name="password" [(ngModel)]="password" #passwordInput="ngModel" placeholder="Password" aria-label="Password" required />
                                     <mat-error *ngIf="passwordInput.dirty && passwordInput.invalid && passwordInput.errors?.required">Enter password.</mat-error>
                                 </mat-form-field>
                             }
@@ -32,7 +32,7 @@
                                 <!-- Token 2FA. -->
                                 <mat-form-field appearance="outline">
                                     <mat-label>Token</mat-label>
-                                    <input matInput [errorStateMatcher]="alwaysErrorStateMatcher" inputmode="numeric" name="token" [(ngModel)]="twoFactorToken" #twoFactorTokenInput="ngModel" type="text" placeholder="Two factor token" aria-label="Two factor token" required />
+                                    <input type="text" matInput [errorStateMatcher]="alwaysErrorStateMatcher" inputmode="numeric" name="token" [(ngModel)]="twoFactorToken" #twoFactorTokenInput="ngModel" placeholder="Two factor token" aria-label="Two factor token" required />
                                     <mat-error *ngIf="tokenMessage()">{{ tokenMessage() }}</mat-error>
                                 </mat-form-field>
                                 <mat-checkbox class="margin-bottom-20" name="trustMachine" [disableRipple]="true" [(ngModel)]="trustMachine">
@@ -42,18 +42,18 @@
                         </div>
                     </mat-card-content>
                     <mat-card-actions>
-                        <div class="flex-row login-actions">
+                        <div class="flex-row flex-align-center gap-8 login-actions">
                             @if (loginPageMode() === loginMode.TwoFactorToken) {
-                                <button type="button" mat-stroked-button (click)="onCancelTwoFactor()" [disabled]="isSubmitting()" class="margin-right-5" aria-label="Cancel">Cancel</button>
+                                <button type="button" mat-stroked-button (click)="onCancelTwoFactor()" [disabled]="isSubmitting()" aria-label="Cancel">Cancel</button>
                             }
                             <button type="submit" mat-flat-button [disabled]="isSubmitting()" color="primary" aria-label="Login">Login</button>
 
                             @if (isSubmitting()) {
-                                <mat-spinner [diameter]="18" class="margin-left-10 margin-top-5"></mat-spinner>
+                                <mat-spinner [diameter]="18"></mat-spinner>
                             }
 
                             @if (errorMessage(); as errorMessageString) {
-                                <div class="mat-small text-error margin-left-10 margin-top-10">{{ errorMessageString }}</div>
+                                <div class="mat-small text-error">{{ errorMessageString }}</div>
                             }
                         </div>
                     </mat-card-actions>

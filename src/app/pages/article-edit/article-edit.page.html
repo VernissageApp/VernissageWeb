@@ -13,7 +13,7 @@
                             <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-10">
                                 <mat-form-field appearance="outline">
                                     <mat-label>Title</mat-label>
-                                    <input matInput name="title" #titleInput="ngModel" [(ngModel)]="title"
+                                    <input type="text" matInput name="title" #titleInput="ngModel" [(ngModel)]="title"
                                         placeholder="Title" aria-label="Title" appMaxLength="200" />
                                     <mat-error *ngIf="titleInput.invalid && titleInput.errors?.appMaxLength">
                                         Too long title.
@@ -36,7 +36,7 @@
                             <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-10">
                                 <mat-form-field appearance="outline">
                                     <mat-label>Color</mat-label>
-                                    <input matInput name="color" #colorInput="ngModel" [(ngModel)]="color"
+                                    <input type="text" matInput name="color" #colorInput="ngModel" [(ngModel)]="color"
                                         placeholder="Color" aria-label="Color" appMaxLength="200" />
                                     <mat-hint align="end"><span class="text-muted">You can use CSS-compatible colors here, e.g., #00ff0020.</span></mat-hint>
                                     <mat-error *ngIf="colorInput.invalid && colorInput.errors?.appMaxLength">
@@ -49,7 +49,7 @@
                             <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-40">
                                 <mat-form-field appearance="outline">
                                     <mat-label>Alternative author</mat-label>
-                                    <input matInput name="alternativeAuthor" #alternativeAuthorInput="ngModel" [(ngModel)]="alternativeAuthor"
+                                    <input type="text" matInput name="alternativeAuthor" #alternativeAuthorInput="ngModel" [(ngModel)]="alternativeAuthor"
                                         placeholder="Color" aria-label="Alternative author" appMaxLength="500" />
                                     <mat-hint align="end">
                                         <span class="text-muted">

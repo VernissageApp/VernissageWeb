@@ -7,7 +7,7 @@
             </div>
             <mat-form-field appearance="outline" class="margin-top-10" >
                 <mat-label>Content warning</mat-label>
-                <input matInput name="contentWarning" #contentWarningInput="ngModel" [(ngModel)]="contentWarning" type="text" aria-label="Content warning" required />
+                <input type="text" matInput name="contentWarning" #contentWarningInput="ngModel" [(ngModel)]="contentWarning" aria-label="Content warning" required />
                 <mat-error *ngIf="contentWarningInput.invalid && contentWarningInput.errors?.required">
                     Token is required.
                 </mat-error>

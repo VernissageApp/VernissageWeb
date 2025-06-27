@@ -26,7 +26,7 @@
             <div class="padding-top-20">
                 <mat-form-field>
                     <mat-label>Mute end date</mat-label>
-                    <input name="muteEnd"  matInput [matDatepicker]="picker" [(ngModel)]="muteEnd" [disabled]="!(muteStatuses() || muteReblogs() ||muteNotifications())">
+                    <input type="text" name="muteEnd"  matInput [matDatepicker]="picker" [(ngModel)]="muteEnd" [disabled]="!(muteStatuses() || muteReblogs() ||muteNotifications())">
                     <mat-hint>Optional date when muting will end.</mat-hint>
                     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>

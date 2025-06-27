@@ -12,6 +12,7 @@ import { ArticlesService } from 'src/app/services/http/articles.service';
 import { ArticleVisibility } from 'src/app/models/article-visibility';
 import { Article } from 'src/app/models/article';
 import { MessagesService } from 'src/app/services/common/messages.service';
+import { FocusTrackerService } from 'src/app/services/common/focus-tracker.service';
 
 @Component({
     selector: 'app-home-signin',
@@ -37,6 +38,7 @@ export class HomeSigninComponent extends ReusableGalleryPageComponent implements
     private activatedRoute = inject(ActivatedRoute);
     private articlesService = inject(ArticlesService);
     private messagesService = inject(MessagesService);
+    private focusTrackerService = inject(FocusTrackerService);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
@@ -86,6 +88,25 @@ export class HomeSigninComponent extends ReusableGalleryPageComponent implements
 
                 this.loadingService.hideLoader();
             }
+        }
+    }
+
+    @HostListener('window:keydown', ['$event'])
+    handleKeyDown(event: KeyboardEvent) {
+        if (this.focusTrackerService.isCurrentlyFocused || event.repeat || event.repeat || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) {
+            return;
+        }
+
+        switch (event.key) {
+            case '1':
+                this.router.navigate(['/home'], { queryParams: { t: 'private' } });
+                break;
+            case '2':
+                this.router.navigate(['/home'], { queryParams: { t: 'local' } });
+                break;
+            case '3':
+                this.router.navigate(['/home'], { queryParams: { t: 'global' } });
+                break;
         }
     }
 

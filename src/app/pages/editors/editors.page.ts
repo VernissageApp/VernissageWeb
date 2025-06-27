@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, signal, model, ChangeDetectionStrategy, inject } from "@angular/core";
+import { Component, OnInit, OnDestroy, signal, model, ChangeDetectionStrategy, inject, HostListener } from "@angular/core";
 import { ActivatedRoute, NavigationExtras } from "@angular/router";
 import { Subscription } from "rxjs/internal/Subscription";
 import { fadeInAnimation } from "src/app/animations/fade-in.animation";
@@ -7,6 +7,7 @@ import { ContextTimeline } from "src/app/models/context-timeline";
 import { LinkableResult } from "src/app/models/linkable-result";
 import { User } from "src/app/models/user";
 import { AuthorizationService } from "src/app/services/authorization/authorization.service";
+import { FocusTrackerService } from "src/app/services/common/focus-tracker.service";
 import { LoadingService } from "src/app/services/common/loading.service";
 import { SettingsService } from "src/app/services/http/settings.service";
 import { TimelineService } from "src/app/services/http/timeline.service";
@@ -36,6 +37,7 @@ export class EditorsPage extends ReusableGalleryPageComponent implements OnInit,
     private settingsService = inject(SettingsService);
     private authorizationService = inject(AuthorizationService);
     private activatedRoute = inject(ActivatedRoute);
+    private focusTrackerService = inject(FocusTrackerService);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
@@ -71,6 +73,22 @@ export class EditorsPage extends ReusableGalleryPageComponent implements OnInit,
         super.ngOnDestroy();
 
         this.routeParamsSubscription?.unsubscribe();
+    }
+
+    @HostListener('window:keydown', ['$event'])
+    handleKeyDown(event: KeyboardEvent) {
+        if (this.focusTrackerService.isCurrentlyFocused || event.repeat || event.repeat || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) {
+            return;
+        }
+
+        switch (event.key) {
+            case '1':
+                this.router.navigate(['/editors'], { queryParams: { tab: 'statuses' } });
+                break;
+            case '2':
+                this.router.navigate(['/editors'], { queryParams: { tab: 'users' } });
+                break;
+        }
     }
 
     protected onSelectionChange(): void {

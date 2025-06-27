@@ -21,8 +21,8 @@ export class PreferencesPage extends ResponsiveComponent implements OnInit {
     protected isSquareImages = model(true);
     protected alwaysShowNSFW = model(false);
     protected showAlternativeText = model(false);
-	protected showAvatars = model(false);
-	protected showCounts = model(true);
+    protected showAvatars = model(false);
+    protected showCounts = model(true);
     protected showFavourites = model(false);
     protected showReblog = model(false);
     protected showAltIcon = model(false);
@@ -40,8 +40,8 @@ export class PreferencesPage extends ResponsiveComponent implements OnInit {
         this.isSquareImages.set(this.preferencesService.isSquareImages);
         this.alwaysShowNSFW.set(this.preferencesService.alwaysShowNSFW);
         this.showAlternativeText.set(this.preferencesService.showAlternativeText);
-		this.showAvatars.set(this.preferencesService.showAvatars);
-		this.showCounts.set(this.preferencesService.showCounts);
+        this.showAvatars.set(this.preferencesService.showAvatars);
+        this.showCounts.set(this.preferencesService.showCounts);
         this.showFavourites.set(this.preferencesService.showFavourites);
         this.showReblog.set(this.preferencesService.showReblog);
         this.showAltIcon.set(this.preferencesService.showAltIcon);
@@ -72,15 +72,15 @@ export class PreferencesPage extends ResponsiveComponent implements OnInit {
         this.preferencesService.showAlternativeText = this.showAlternativeText();
     }
 
-	protected onShowAvatarsChange(): void {
-	    this.clearReuseStrategyState();
-	    this.preferencesService.showAvatars = this.showAvatars();
-	}
+    protected onShowAvatarsChange(): void {
+        this.clearReuseStrategyState();
+        this.preferencesService.showAvatars = this.showAvatars();
+    }
 
-	protected onShowCountsChange(): void {
-	    this.clearReuseStrategyState();
-	    this.preferencesService.showCounts = this.showCounts();
-	}
+    protected onShowCountsChange(): void {
+        this.clearReuseStrategyState();
+        this.preferencesService.showCounts = this.showCounts();
+    }
 
     protected onShowFavouritesChange(): void {
         this.clearReuseStrategyState();

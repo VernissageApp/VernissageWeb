@@ -43,6 +43,13 @@ export class LoginPage implements OnInit {
 
     private returnUrl?: string;
 
+    private clientId?: string;
+    private scope?: string;
+    private redirectUri?: string;
+    private state?: string;
+    private nonce?: string;
+    private csrfToken?: string;
+
     private accountService = inject(AccountService);
     private router = inject(Router);
     private authorizationService = inject(AuthorizationService);
@@ -56,6 +63,13 @@ export class LoginPage implements OnInit {
     async ngOnInit(): Promise<void> {
         this.route.queryParams.subscribe(async (params) => {
             this.returnUrl = params.returnUrl;
+
+            this.clientId = params.client_id;
+            this.scope = params.scope;
+            this.redirectUri = params.redirect_uri;
+            this.state = params.state ?? '';
+            this.nonce = params.nonce ?? '';
+            this.csrfToken = params.csrf_token ?? '';
         });
 
         const downloadAuthClients = await this.authClientsService.getList();
@@ -81,7 +95,12 @@ export class LoginPage implements OnInit {
             await this.authorizationService.signIn(userPayloadToken);
             await this.pushSubscriptionsService.updatePushSubscription();
 
-            if (this.returnUrl) {
+            if (this.clientId && this.scope && this.redirectUri) {
+                // If the user logged in and we've params in query string, redirect to the OAuth authorization endpoint.
+                await this.windowService.redirect(this.windowService.apiUrl() + '/api/v1/oauth/authorize?client_id=' + this.clientId 
+                    + '&redirect_uri=' + this.redirectUri + '&response_type=code&scope=' + this.scope + '&state=' 
+                    + this.state + '&nonce=' + this.nonce + '&csrf_token=' + this.csrfToken);
+            } else if (this.returnUrl) {
                 await this.router.navigateByUrl(this.returnUrl);
             } else {
                 await this.router.navigate(['/home']);
@@ -96,8 +115,8 @@ export class LoginPage implements OnInit {
                 this.tokenMessage.set('Token is not valid. Please enter new token.');
             } else if (error.error.code === 'invalidLoginCredentials') {
                 this.errorMessage.set('Invalid credentials.');
-            } else if (error.error.code === 'emailNotConfirmed') {
-                this.errorMessage.set('Your email is not confirmed. Check your inbox or reset your password.');
+            } else if (error.error.code === 'loginAttemptsExceeded') {
+                this.errorMessage.set('Too many failed logins. Please try again in 5 minutes.');
             } else if (error.error.code === 'userAccountIsBlocked') {
                 this.errorMessage.set('Your account is blocked. Contact with our support.');
             } else if (error.error.code === 'userAccountIsNotApproved') {
