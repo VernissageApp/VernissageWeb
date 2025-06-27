@@ -5,6 +5,12 @@
         width: 100%;
     }
 
+    .captcha {
+        img {
+            border-radius: 6px;
+        }
+    }
+
     .register-actions {
         margin-left: 8px;
         margin-right: 8px;

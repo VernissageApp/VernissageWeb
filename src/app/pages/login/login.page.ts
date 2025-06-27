@@ -115,8 +115,8 @@ export class LoginPage implements OnInit {
                 this.tokenMessage.set('Token is not valid. Please enter new token.');
             } else if (error.error.code === 'invalidLoginCredentials') {
                 this.errorMessage.set('Invalid credentials.');
-            } else if (error.error.code === 'emailNotConfirmed') {
-                this.errorMessage.set('Your email is not confirmed. Check your inbox or reset your password.');
+            } else if (error.error.code === 'loginAttemptsExceeded') {
+                this.errorMessage.set('Too many failed logins. Please try again in 5 minutes.');
             } else if (error.error.code === 'userAccountIsBlocked') {
                 this.errorMessage.set('Your account is blocked. Contact with our support.');
             } else if (error.error.code === 'userAccountIsNotApproved') {
