@@ -105,6 +105,14 @@ export class PreferencesService {
         this.cookieService.set('alwaysShowSdrPhoto', alwaysShowSdrPhoto ? 'true' : 'false', { expires: this.longFuture });
     }
 
+    public get autoScrollGalleryImages(): boolean {
+        return (this.cookieService.get('autoScrollGalleryImages') ?? 'false') === 'true';
+    }
+
+    public set autoScrollGalleryImages(autoScrollGalleryImages: boolean) {
+        this.cookieService.set('autoScrollGalleryImages', autoScrollGalleryImages ? 'true' : 'false', { expires: this.longFuture });
+    }
+
     public toggleTheme(renderer: Renderer2): void {
         const isLightThemeInternal = this.isLightTheme;
         this.isLightTheme = !isLightThemeInternal;
