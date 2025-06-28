@@ -11,7 +11,15 @@
 
         <div class="flex-row flex-align-center flex-space-between margin-bottom-10" [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
             <h1>
-                <div>Timeline</div>
+                <div class="flex-row flex-align-center gap-8">
+                    <div>Timeline</div>
+                    <div class="small-icon-button ">
+                        <button mat-icon-button (click)="onTimelineRefresh()" aria-label="Refresh current timeline">
+                            <mat-icon>change_circle</mat-icon>
+                        </button>
+                    </div>
+                </div>
+
                 @if (!isHandset()) {
                     @switch (timeline()) {
                         @case ('private') { 
