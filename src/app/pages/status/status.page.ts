@@ -62,6 +62,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     protected hideRightArrow = signal(false);
     protected showAlternativeText = signal(false);
     protected alwaysShowNSFW = signal(false);
+    protected autoScrollGalleryImages = signal(true);
     protected imageWidth = signal(32);
     protected imageHeight = signal(32);
     protected isLoggedIn = signal(false);
@@ -125,6 +126,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         this.urlToGallery = this.routingStateService.getPreviousUrl();
         this.showAlternativeText.set(this.preferencesService.showAlternativeText);
         this.alwaysShowNSFW.set(this.preferencesService.alwaysShowNSFW);
+        this.autoScrollGalleryImages.set(this.preferencesService.autoScrollGalleryImages);
         this.hasHdrSupport.set(this.isHdrRendered());
 
         this.routeParamsSubscription = this.activatedRoute.params.subscribe(async params => {
@@ -183,35 +185,30 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     protected onBackClick(): void {
         history.back();
     }
-    private keysPressed: Record<string, boolean> = {};
 
     @HostListener('window:keydown', ['$event'])
     handleKeyDown(event: KeyboardEvent) {
-        if (this.focusTrackerService.isCurrentlyFocused) {
+        if (this.focusTrackerService.isCurrentlyFocused || event.repeat || event.repeat || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) {
             return;
         }
 
-        if (!this.keysPressed[event.key]) {
-            this.keysPressed[event.key] = true;
-
-            if (event.key === 'ArrowRight') {
+        switch (event.key) {
+            case 'ArrowRight':
                 this.onNextClick();
-            } else if (event.key === 'ArrowLeft') {
+                break;
+            case 'ArrowLeft':
                 this.onPrevClick();
-            } else if (event.key === 'l') {
-              this.toggleFavourite()
-            } else if (event.key === 'b') {
-                this.toggleReblog()
-            } else if (event.key === 's') {
-              this.toggleBookmark();
-            }
+                break;
+            case 'l':
+                this.toggleFavourite();
+                break;
+            case 'b':
+                this.toggleReblog();
+                break;
+            case 's':
+                this.toggleBookmark();
+                break;
         }
-    }
-
-    // this is to prevent re-triggering the same event when the key is held down
-    @HostListener('window:keyup', ['$event'])
-    handleKeyUp(event: KeyboardEvent) {
-        this.keysPressed[event.key] = false;
     }
 
     protected async onPrevClick(): Promise<void> {

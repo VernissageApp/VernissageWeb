@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { Notification } from '../../models/notification';
 import { NotificationsService } from 'src/app/services/http/notifications.service';
@@ -11,6 +11,9 @@ import { SwPush } from '@angular/service-worker';
 import { SettingsService } from 'src/app/services/http/settings.service';
 import { NotificationSettingsDialog } from 'src/app/dialogs/notification-settings-dialog/notification-settings.dialog';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { Subscription } from 'rxjs/internal/Subscription';
+import { RandomGeneratorService } from 'src/app/services/common/random-generator.service';
 
 @Component({
     selector: 'app-notifications',
@@ -20,7 +23,7 @@ import { MatDialog } from '@angular/material/dialog';
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
-export class NotificationsPage extends ResponsiveComponent implements OnInit {
+export class NotificationsPage extends ResponsiveComponent implements OnInit, OnDestroy {
     protected readonly notificationType = NotificationType;
     protected readonly avatarSize = AvatarSize;
 
@@ -32,28 +35,41 @@ export class NotificationsPage extends ResponsiveComponent implements OnInit {
     protected minId = signal<string | undefined>(undefined);
     protected maxId = signal<string | undefined>(undefined);
 
+    private routeParamsSubscription?: Subscription;
+
     private notificationsService = inject(NotificationsService);
     private loadingService = inject(LoadingService);
     private settingsService = inject(SettingsService);
     private swPushService = inject(SwPush);
+    private activatedRoute = inject(ActivatedRoute);
+    private randomGeneratorService = inject(RandomGeneratorService);
+    private router = inject(Router);
     public dialog = inject(MatDialog);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
 
-        this.loadingService.showLoader();
-        await this.onLoadMore();
-        
-        const linkedNotifications = this.notifications();
-        if (linkedNotifications?.length) {
-            await this.notificationsService.marker(linkedNotifications[0].id);
-            this.notificationsService.changes.next(0);
-        }
         const isPushApiEnabled = this.notificationsService.isPushApiSupported() && this.swPushService.isEnabled && !!this.settingsService.publicSettings?.webPushVapidPublicKey;
         this.showEnableNotificationButton.set(isPushApiEnabled);
 
-        this.isReady.set(true);
-        this.loadingService.hideLoader();
+        this.routeParamsSubscription = this.activatedRoute.queryParams.subscribe(async () => {
+            this.loadingService.showLoader();
+            await this.onLoadMore();
+            
+            const linkedNotifications = this.notifications();
+            if (linkedNotifications?.length) {
+                await this.notificationsService.marker(linkedNotifications[0].id);
+                this.notificationsService.changes.next(0);
+            }
+
+            this.isReady.set(true);
+            this.loadingService.hideLoader();
+        });
+    }
+
+    override ngOnDestroy(): void {
+        super.ngOnDestroy();
+        this.routeParamsSubscription?.unsubscribe();
     }
 
     protected async onLoadMore(): Promise<void> {
@@ -76,6 +92,15 @@ export class NotificationsPage extends ResponsiveComponent implements OnInit {
                 this.showLoadMore.set(false);
             }
         }
+    }
+
+    protected onNotificationsRefresh(): void {
+        const navigationExtras: NavigationExtras = {
+            queryParams: { f: this.randomGeneratorService.generateString(8) },
+            queryParamsHandling: 'merge'
+        };
+
+        this.router.navigate([], navigationExtras);
     }
 
     protected getAttachmentUrl(status: Status): string | undefined {

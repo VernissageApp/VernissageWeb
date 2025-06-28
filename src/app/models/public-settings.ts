@@ -6,6 +6,7 @@ export class PublicSettings {
     public showNews = false;
     public showNewsForAnonymous = false;
     public showSharedBusinessCards = false;
+    public isQuickCaptchaEnabled = false;
 
     public patreonUrl?: string;
     public mastodonUrl?: string;

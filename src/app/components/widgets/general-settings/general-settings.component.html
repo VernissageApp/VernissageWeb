@@ -5,7 +5,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>Web title</mat-label>
-            <input matInput name="webTitle" #webTitle="ngModel" [(ngModel)]="settings().webTitle"
+            <input type="text" matInput name="webTitle" #webTitle="ngModel" [(ngModel)]="settings().webTitle"
                 placeholder="Web title" aria-label="Web title" />
         </mat-form-field>
     </div>
@@ -13,7 +13,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>Web description</mat-label>
-            <input matInput name="webDescription" #webDescription="ngModel" [(ngModel)]="settings().webDescription"
+            <input type="text" matInput name="webDescription" #webDescription="ngModel" [(ngModel)]="settings().webDescription"
                 placeholder="Web description" aria-label="Web description" />
         </mat-form-field>
     </div>
@@ -30,7 +30,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>Web email</mat-label>
-            <input matInput name="webEmail" #webEmail="ngModel" [(ngModel)]="settings().webEmail"
+            <input type="text" matInput name="webEmail" #webEmail="ngModel" [(ngModel)]="settings().webEmail"
                 placeholder="Web email" aria-label="Web email" />
         </mat-form-field>
     </div>
@@ -38,7 +38,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>Web thumbnail url</mat-label>
-            <input matInput name="webThumbnail" #webThumbnail="ngModel" [(ngModel)]="settings().webThumbnail"
+            <input type="text" matInput name="webThumbnail" #webThumbnail="ngModel" [(ngModel)]="settings().webThumbnail"
                 placeholder="Web thumbnail ur" aria-label="Web thumbnail ur" />
         </mat-form-field>
     </div>
@@ -46,7 +46,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>Web languages</mat-label>
-            <input matInput name="webLanguages" #webLanguages="ngModel" [(ngModel)]="settings().webLanguages"
+            <input type="text" matInput name="webLanguages" #webLanguages="ngModel" [(ngModel)]="settings().webLanguages"
                 placeholder="Web languages" aria-label="Web languages" />
         </mat-form-field>
     </div>
@@ -54,7 +54,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>CORS orgins</mat-label>
-            <input matInput name="corsOrigin" #corsOrigin="ngModel" [(ngModel)]="settings().corsOrigin"
+            <input type="text" matInput name="corsOrigin" #corsOrigin="ngModel" [(ngModel)]="settings().corsOrigin"
                 placeholder="CORS orgins" aria-label="CORS orgins" />
         </mat-form-field>
     </div>
@@ -62,7 +62,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>Maximum number of invitations per user</mat-label>
-            <input matInput type="number" name="maximumNumberOfInvitations" #maximumNumberOfInvitations="ngModel" [(ngModel)]="settings().maximumNumberOfInvitations"
+            <input type="text" matInput type="number" name="maximumNumberOfInvitations" #maximumNumberOfInvitations="ngModel" [(ngModel)]="settings().maximumNumberOfInvitations"
                 placeholder="Maximum number of invitations" aria-label="Maximum number of invitations" />
         </mat-form-field>
     </div>
@@ -70,7 +70,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>Maximum number of characters in status</mat-label>
-            <input matInput type="number" name="maxCharacters" #maxCharacters="ngModel" [(ngModel)]="settings().maxCharacters"
+            <input type="text" matInput type="number" name="maxCharacters" #maxCharacters="ngModel" [(ngModel)]="settings().maxCharacters"
                 placeholder="Maximum number of characters in status" aria-label="Maximum number of characters in status" />
         </mat-form-field>
     </div>
@@ -78,7 +78,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>Maximum number of attachments</mat-label>
-            <input matInput type="number" name="maxMediaAttachments" #maxMediaAttachments="ngModel" [(ngModel)]="settings().maxMediaAttachments"
+            <input type="text" matInput type="number" name="maxMediaAttachments" #maxMediaAttachments="ngModel" [(ngModel)]="settings().maxMediaAttachments"
                 placeholder="Maximum number of attachments" aria-label="Maximum number of attachments" />
         </mat-form-field>
     </div>
@@ -86,7 +86,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>Maximum file size</mat-label>
-            <input matInput type="number" name="imageSizeLimit" #imageSizeLimit="ngModel" [(ngModel)]="settings().imageSizeLimit"
+            <input type="text" matInput type="number" name="imageSizeLimit" #imageSizeLimit="ngModel" [(ngModel)]="settings().imageSizeLimit"
                 placeholder="Maximum file size" aria-label="Maximum file size" />
         </mat-form-field>
     </div>
@@ -94,7 +94,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>Delete statuses older than (days)</mat-label>
-            <input matInput type="number" name="statusPurgeAfterDays" #statusPurgeAfterDays="ngModel" [(ngModel)]="settings().statusPurgeAfterDays"
+            <input type="text" matInput type="number" name="statusPurgeAfterDays" #statusPurgeAfterDays="ngModel" [(ngModel)]="settings().statusPurgeAfterDays"
                 placeholder="Delete statuses older than (days)" aria-label="Delete statuses older than (days)" />
         </mat-form-field>
     </div>
@@ -102,7 +102,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>Patreon url</mat-label>
-            <input matInput name="patreonUrl" #patreonUrl="ngModel" [(ngModel)]="settings().patreonUrl"
+            <input type="text" matInput name="patreonUrl" #patreonUrl="ngModel" [(ngModel)]="settings().patreonUrl"
                 placeholder="Patreon url" aria-label="Patreon url" />
         </mat-form-field>
     </div>
@@ -110,7 +110,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>Mastodon url</mat-label>
-            <input matInput name="mastodonUrl" #mastodonUrl="ngModel" [(ngModel)]="settings().mastodonUrl"
+            <input type="text" matInput name="mastodonUrl" #mastodonUrl="ngModel" [(ngModel)]="settings().mastodonUrl"
                 placeholder="Mastodon url" aria-label="Mastodon url" />
         </mat-form-field>
         <div class="text-muted fs-90 margin-left-10 margin-top-5">
@@ -123,7 +123,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>Images url</mat-label>
-            <input matInput name="imagesUrl" #imagesUrl="ngModel" [(ngModel)]="settings().imagesUrl"
+            <input type="text" matInput name="imagesUrl" #imagesUrl="ngModel" [(ngModel)]="settings().imagesUrl"
                 placeholder="Images url" aria-label="Images url" />
         </mat-form-field>
         <div class="text-muted fs-90 margin-left-10 margin-top-5">
@@ -135,7 +135,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>Images quality</mat-label>
-            <input matInput type="number" name="imageQuality" #imageQuality="ngModel" [(ngModel)]="settings().imageQuality"
+            <input type="text" matInput type="number" name="imageQuality" #imageQuality="ngModel" [(ngModel)]="settings().imageQuality"
                 placeholder="Images quality" aria-label="Images quality" />
         </mat-form-field>
         <div class="text-muted fs-90 margin-left-10 margin-top-5">
@@ -179,7 +179,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>Total cost</mat-label>
-            <input matInput type="number" name="totalCost" #totalCost="ngModel" [(ngModel)]="settings().totalCost"
+            <input type="number" matInput name="totalCost" #totalCost="ngModel" [(ngModel)]="settings().totalCost"
                 placeholder="Total cost" aria-label="Total cost" />
         </mat-form-field>
     </div>
@@ -187,7 +187,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>Users support</mat-label>
-            <input matInput type="number" name="usersSupport" #usersSupport="ngModel" [(ngModel)]="settings().usersSupport"
+            <input type="number" matInput name="usersSupport" #usersSupport="ngModel" [(ngModel)]="settings().usersSupport"
                 placeholder="Users support" aria-label="Users support" />
         </mat-form-field>
     </div>
@@ -250,12 +250,26 @@
     </div>
 
     <mat-divider></mat-divider>
+    <h3>Captcha</h3>
+
+    <div class="margin-bottom-20">
+        <div>
+            <mat-checkbox name="isRegistrationOpened" color="primary" [disableRipple]="true" [(ngModel)]="settings().isQuickCaptchaEnabled">
+                Is QuickCaptcha enabled (internal captcha)
+            </mat-checkbox>
+            <div class="text-muted fs-90 margin-left-10 margin-top-5">
+                This CAPTCHA is implemented internally and does not communicate with any external services, ensuring complete privacy for users.
+            </div>
+        </div>
+    </div>
+
+    <mat-divider></mat-divider>
     <h3>Email server</h3>
 
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>Email hostname</mat-label>
-            <input matInput name="emailHostname" #emailHostname="ngModel" [(ngModel)]="settings().emailHostname"
+            <input type="text" matInput name="emailHostname" #emailHostname="ngModel" [(ngModel)]="settings().emailHostname"
                 placeholder="Email hostname" aria-label="Email hostname" />
         </mat-form-field>
     </div>
@@ -263,7 +277,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>Email port</mat-label>
-            <input matInput type="number" name="emailPort" #emailPort="ngModel" [(ngModel)]="settings().emailPort"
+            <input type="text" matInput type="number" name="emailPort" #emailPort="ngModel" [(ngModel)]="settings().emailPort"
                 placeholder="Email port" aria-label="Email port" />
         </mat-form-field>
     </div>
@@ -271,7 +285,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>Email username</mat-label>
-            <input matInput name="emailUserName" #emailUserName="ngModel" [(ngModel)]="settings().emailUserName"
+            <input type="text" matInput name="emailUserName" #emailUserName="ngModel" [(ngModel)]="settings().emailUserName"
                 placeholder="Email username" aria-label="Email username" />
         </mat-form-field>
     </div>
@@ -279,7 +293,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>Email password</mat-label>
-            <input matInput name="emailPassword" #emailPassword="ngModel" [(ngModel)]="settings().emailPassword"
+            <input type="text" matInput name="emailPassword" #emailPassword="ngModel" [(ngModel)]="settings().emailPassword"
                 placeholder="Email password" aria-label="Email password" />
         </mat-form-field>
     </div>
@@ -287,7 +301,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>Email from address</mat-label>
-            <input matInput name="emailFromAddress" #emailFromAddress="ngModel" [(ngModel)]="settings().emailFromAddress"
+            <input type="text" matInput name="emailFromAddress" #emailFromAddress="ngModel" [(ngModel)]="settings().emailFromAddress"
                 placeholder="Email from address" aria-label="Email from address" />
         </mat-form-field>
     </div>
@@ -295,7 +309,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>Email from name</mat-label>
-            <input matInput name="emailFromName" #emailFromName="ngModel" [(ngModel)]="settings().emailFromName"
+            <input type="text" matInput name="emailFromName" #emailFromName="ngModel" [(ngModel)]="settings().emailFromName"
                 placeholder="Email from name" aria-label="Email from name" />
         </mat-form-field>
     </div>
@@ -326,7 +340,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>OpenAI secure key</mat-label>
-            <input matInput name="openAPIKey" #openAPIKey="ngModel" [(ngModel)]="settings().openAIKey"
+            <input type="text" matInput name="openAPIKey" #openAPIKey="ngModel" [(ngModel)]="settings().openAIKey"
                 placeholder="OpenAI key" aria-label="OpenAI key" />
         </mat-form-field>
     </div>
@@ -334,7 +348,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>OpenAI model</mat-label>
-            <input matInput name="openAPIModel" #openAPIModel="ngModel" [(ngModel)]="settings().openAIModel"
+            <input type="text" matInput name="openAPIModel" #openAPIModel="ngModel" [(ngModel)]="settings().openAIModel"
                 placeholder="OpenAI model" aria-label="OpenAI model" />
         </mat-form-field>
     </div>
@@ -353,7 +367,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>WebPush service endpoint</mat-label>
-            <input matInput name="webPushEndpoint" #webPushEndpoint="ngModel" [(ngModel)]="settings().webPushEndpoint"
+            <input type="text" matInput name="webPushEndpoint" #webPushEndpoint="ngModel" [(ngModel)]="settings().webPushEndpoint"
                 placeholder="WebPush service endpoint" aria-label="WebPush service endpoint" />
         </mat-form-field>
     </div>
@@ -361,7 +375,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>WebPush service secret key</mat-label>
-            <input matInput name="webPushSecretKey" #webPushSecretKey="ngModel" [(ngModel)]="settings().webPushSecretKey"
+            <input type="text" matInput name="webPushSecretKey" #webPushSecretKey="ngModel" [(ngModel)]="settings().webPushSecretKey"
                 placeholder="WebPush service secret key" aria-label="WebPush service secret key" />
         </mat-form-field>
     </div>
@@ -369,7 +383,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>WebPush Vapid subject</mat-label>
-            <input matInput name="webPushVapidSubject" #webPushVapidSubject="ngModel" [(ngModel)]="settings().webPushVapidSubject"
+            <input type="text" matInput name="webPushVapidSubject" #webPushVapidSubject="ngModel" [(ngModel)]="settings().webPushVapidSubject"
                 placeholder="WebPush Vapid subject" aria-label="WebPush Vapid subject" />
         </mat-form-field>
     </div>
@@ -377,7 +391,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>WebPush Vapid public key</mat-label>
-            <input matInput name="webPushVapidPublicKey" #webPushVapidPublicKey="ngModel" [(ngModel)]="settings().webPushVapidPublicKey"
+            <input type="text" matInput name="webPushVapidPublicKey" #webPushVapidPublicKey="ngModel" [(ngModel)]="settings().webPushVapidPublicKey"
                 placeholder="WebPush Vapid public key" aria-label="WebPush Vapid public key" />
         </mat-form-field>
     </div>
@@ -385,7 +399,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>WebPush Vapid private key</mat-label>
-            <input matInput name="webPushVapidPrivateKey" #webPushVapidPrivateKey="ngModel" [(ngModel)]="settings().webPushVapidPrivateKey"
+            <input type="text" matInput name="webPushVapidPrivateKey" #webPushVapidPrivateKey="ngModel" [(ngModel)]="settings().webPushVapidPrivateKey"
                 placeholder="WebPush Vapid priavte key" aria-label="WebPush Vapid priavte key" />
         </mat-form-field>
     </div>
@@ -396,7 +410,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>Privacy policy update date</mat-label>
-            <input matInput name="privacyPolicyUpdatedAt" #privacyPolicyUpdatedAt="ngModel" [(ngModel)]="settings().privacyPolicyUpdatedAt"
+            <input type="text" matInput name="privacyPolicyUpdatedAt" #privacyPolicyUpdatedAt="ngModel" [(ngModel)]="settings().privacyPolicyUpdatedAt"
                 placeholder="Privacy policy update date" aria-label="Privacy policy update date" />
         </mat-form-field>
     </div>
@@ -419,7 +433,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>Terms of Service update date</mat-label>
-            <input matInput name="termsOfServiceUpdatedAt" #termsOfServiceUpdatedAt="ngModel" [(ngModel)]="settings().termsOfServiceUpdatedAt"
+            <input type="text" matInput name="termsOfServiceUpdatedAt" #termsOfServiceUpdatedAt="ngModel" [(ngModel)]="settings().termsOfServiceUpdatedAt"
                 placeholder="Terms of Service update date" aria-label="Terms of Service update date" />
         </mat-form-field>
     </div>
@@ -442,7 +456,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>HTTP path to custom CSS file</mat-label>
-            <input matInput name="customFileStyle" #customFileStyle="ngModel" [(ngModel)]="settings().customFileStyle"
+            <input type="text" matInput name="customFileStyle" #customFileStyle="ngModel" [(ngModel)]="settings().customFileStyle"
                 placeholder="HTTP path to custom CSS file" aria-label="HTTP path to custom CSS file" />
         </mat-form-field>
         <div class="text-muted fs-90 margin-left-10 margin-top-5">
@@ -466,7 +480,7 @@
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
             <mat-label>HTTP path to custom JavaScript file</mat-label>
-            <input matInput name="customFileScript" #customFileScript="ngModel" [(ngModel)]="settings().customFileScript"
+            <input type="text" matInput name="customFileScript" #customFileScript="ngModel" [(ngModel)]="settings().customFileScript"
                 placeholder="HTTP path to custom JavaScript file" aria-label="HTTP path to custom JavaScript file" />
         </mat-form-field>
         <div class="text-muted fs-90 margin-left-10 margin-top-5">

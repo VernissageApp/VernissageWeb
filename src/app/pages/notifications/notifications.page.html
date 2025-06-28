@@ -4,7 +4,14 @@
             <div class="flex-row flex-space-around">
                 <div class="notifications-container width-100">
                     <div class="flex-row flex-align-center flex-space-between margin-bottom-20">
-                        <h1>Notifications</h1>
+                        <div class="flex-row flex-align-center gap-8">
+                            <h1>Notifications</h1>
+                            <div class="small-icon-button ">
+                                <button mat-icon-button (click)="onNotificationsRefresh()" aria-label="Refresh current timeline">
+                                    <mat-icon>change_circle</mat-icon>
+                                </button>
+                            </div>
+                        </div>
 
                         @if (showEnableNotificationButton()) {
                             <button mat-flat-button color="primary" (click)="openNotificationsSettings()">

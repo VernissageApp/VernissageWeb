@@ -4,8 +4,7 @@
 
 export const environment = {
     production: false,
-    version: '1.16.0-buildx',
-    recaptchaKey: ''
+    version: '1.17.0-buildx'
 };
 
 /*

@@ -16,7 +16,7 @@
                                 <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
                                     <div class="flex-row flex-align-center gap-16">
                                         <mat-form-field appearance="outline" class="width-100">
-                                            <input #queryInput matInput name="query" [(ngModel)]="search" cdkFocusInitial aria-label="Query" />
+                                            <input type="text" #queryInput matInput name="query" [(ngModel)]="search" cdkFocusInitial aria-label="Query" />
                                         </mat-form-field>
                                         <button mat-flat-button color="primary">Search</button>
                                     </div>

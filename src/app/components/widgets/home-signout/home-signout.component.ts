@@ -21,6 +21,7 @@ import { Article } from 'src/app/models/article';
 })
 export class HomeSignoutComponent extends ReusableGalleryPageComponent implements OnInit, OnDestroy {
     protected isReady = signal(false);
+    protected showLocal = signal(true);
     protected showEditorsChoice = signal(false);
     protected mastodonUrl = signal<string | undefined>(undefined);
     protected articles = signal<Article[]>([]);
@@ -80,9 +81,16 @@ export class HomeSignoutComponent extends ReusableGalleryPageComponent implement
     }
 
     private async loadData(): Promise<void> {
+        this.showLocal.set(this.settingsService.publicSettings?.showLocalTimelineForAnonymous ?? false);
         this.showEditorsChoice.set(this.settingsService.publicSettings?.showEditorsChoiceForAnonymous ?? false);
         
-        if (this.showEditorsChoice()) {
+        if (this.settingsService.publicSettings?.showLocalTimelineForAnonymous) {
+            this.lastRefreshTime = new Date();
+            const statuses = await this.timelineService.public(undefined, undefined, undefined, undefined, true);
+            statuses.context = ContextTimeline.local;
+
+            this.statuses.set(statuses);
+        } else if (this.showEditorsChoice()) {
             this.lastRefreshTime = new Date();
             const statuses = await this.timelineService.featuredStatuses(undefined, undefined, undefined, undefined);
             statuses.context = ContextTimeline.editors;

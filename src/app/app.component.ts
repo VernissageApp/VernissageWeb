@@ -1,4 +1,4 @@
-import { Component, OnDestroy, AfterViewInit, OnInit, signal, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, OnDestroy, AfterViewInit, OnInit, signal, ChangeDetectionStrategy, inject, HostListener } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { LoadingService } from './services/common/loading.service';
@@ -8,8 +8,11 @@ import { SsrCookieService } from './services/common/ssr-cookie.service';
 import { SettingsService } from './services/http/settings.service';
 import { fadeInAnimation } from './animations/fade-in.animation';
 import { WebServiceWorker } from './services/common/web-service-worker.service';
-import { MessagesService } from './services/common/messages.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FocusTrackerService } from './services/common/focus-tracker.service';
+import { Router, RouteReuseStrategy } from '@angular/router';
+import { CustomReuseStrategy } from './common/custom-reuse-strategy';
+import { AuthorizationService } from './services/authorization/authorization.service';
 
 @Component({
     selector: 'app-root',
@@ -32,8 +35,11 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     private settingsService = inject(SettingsService);
     private routingStateService = inject(RoutingStateService);
     private webServiceWorker = inject(WebServiceWorker);
-    private messagesService = inject(MessagesService);
     private matSnackBar = inject(MatSnackBar);
+    private focusTrackerService = inject(FocusTrackerService);
+    private router = inject(Router);
+    private routeReuseStrategy = inject(RouteReuseStrategy);
+    private authorizationService = inject(AuthorizationService);
 
     ngOnInit(): void {
         this.routingStateService.startRoutingListener();
@@ -69,6 +75,43 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
         this.loadingStateChangesSubscription?.unsubscribe();
         this.isAnyNewUpdateAvailableSubscription?.unsubscribe();
         this.isInUnrecoverableStateSubscription?.unsubscribe();
+    }
+
+    @HostListener('window:keydown', ['$event'])
+    handleKeyDown(event: KeyboardEvent) {
+        const userInternal = this.authorizationService.getUser();
+        if (!userInternal || this.focusTrackerService.isCurrentlyFocused || event.repeat || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) {
+            return;
+        }
+
+        this.clearReuseStrategyState();
+        switch (event.key) {
+            case 'h':
+                this.router.navigate(['/home'], { queryParams: { t: 'private' } });
+                break;
+            case 't':
+                this.router.navigate(['/trending']);
+                break;
+            case 'e':
+                this.router.navigate(['/editors']);
+                break;
+            case 'c':
+                this.router.navigate(['/categories']);
+                break;
+            case 'n':
+                this.router.navigate(['/news']);
+                break;
+            case 'u':
+                this.router.navigate(['/upload']);
+                break;
+            case 'p': {
+                this.router.navigate(['/@' + (userInternal.userName ?? '')]);
+                break;
+            }
+            case 'f':
+                this.router.navigate(['/faq']);
+                break;
+        }
     }
 
     private initializeApplicationStateUpdates() {
@@ -117,5 +160,12 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
         link.setAttribute('rel', 'preconnect');
 
         this.document.head.appendChild(link);
+    }
+
+    private clearReuseStrategyState(): void {
+        const customReuseStrategy = this.routeReuseStrategy as CustomReuseStrategy;
+        if (customReuseStrategy) {
+            customReuseStrategy.clear();
+        }
     }
 }

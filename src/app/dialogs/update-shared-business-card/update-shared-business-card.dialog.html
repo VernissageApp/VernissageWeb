@@ -5,7 +5,7 @@
         <div class="flex-col gap-0 margin-top-5">        
             <mat-form-field appearance="outline" class="width-100 padding-top-10">
                 <mat-label>Your name</mat-label>
-                <input matInput name="name" #nameInput="ngModel" [(ngModel)]="name"
+                <input type="text" matInput name="name" #nameInput="ngModel" [(ngModel)]="name"
                     placeholder="Your name" aria-label="Your name" appMaxLength="100" autocomplete="off" required />
                 <mat-error *ngIf="nameInput.invalid && nameInput.errors?.required">Enter your name.</mat-error>
                 <mat-error *ngIf="nameInput.invalid && nameInput.errors?.appMaxLength">Too long name.</mat-error>
@@ -13,7 +13,7 @@
 
             <mat-form-field appearance="outline" class="width-100 padding-top-10">
                 <mat-label>Your email</mat-label>
-                <input matInput name="email" type="email" #emailInput="ngModel" [(ngModel)]="email"
+                <input type="email" matInput name="email" #emailInput="ngModel" [(ngModel)]="email"
                     pattern="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
                     placeholder="Your email" aria-label="Your email" appMaxLength="500" autocomplete="off" />
                 <mat-error *ngIf="emailInput.invalid && emailInput.errors?.pattern">Verify that you've entered proper email.</mat-error>

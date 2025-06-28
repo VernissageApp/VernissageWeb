@@ -9,25 +9,38 @@
         }
     </h1>
 
-    <div class="flex-row flex-responsive flex-stretch">
-        <div class="padding-bottom-10">
-            <div class="flex-row flex-wrap gap-10">
-                <div cdkDropList class="example-list" cdkDropListOrientation="mixed" (cdkDropListDropped)="drop($event)">
-                    @for (photo of photos(); track photo.uuid; let i = $index) {
-                        <div class="display-inline-block" cdkDrag>
-                            <img (click)="onImageClick(i)" (keydown.enter)="onImageClick(i)" tabindex="0" [src]="photo.photoSrc()" alt="Uploaded photo" [ngClass]="{ 'selected': selectedIndex() === i, 'small': isHandset() }" class="photo-thumbnail" />
+    <div class="flex-row flex-responsive flex-stretch gap-10">
+        @if (emailHasBeenVerified()) {
+            <div class="padding-bottom-10">
+                <div class="flex-row flex-wrap gap-10">
+                    <div cdkDropList class="example-list" cdkDropListOrientation="mixed" (cdkDropListDropped)="drop($event)">
+                        @for (photo of photos(); track photo.uuid; let i = $index) {
+                            <div class="display-inline-block" cdkDrag>
+                                <img (click)="onImageClick(i)" (keydown.enter)="onImageClick(i)" tabindex="0" [src]="photo.photoSrc()" alt="Uploaded photo" [ngClass]="{ 'selected': selectedIndex() === i, 'small': isHandset() }" class="photo-thumbnail" />
+                            </div>
+                        }
+                    </div>                
+                    <div class="dropzone active" [ngClass]="{ 'small': isHandset() }" (click)="photoFileUpload.click()" (keydown.enter)="photoFileUpload.click()" tabindex="0">
+                        <div class="plus">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M20.889 10.889H13.111V3.11097C13.111 2.4974 12.6136 2 12 2C11.3864 2 10.889 2.4974 10.889 3.11097V10.889H3.11097C2.4974 10.889 2 11.3864 2 12C2 12.6136 2.4974 13.111 3.11097 13.111H10.889V20.889C10.889 21.5026 11.3864 22 12 22C12.6136 22 13.111 21.5026 13.111 20.889V13.111H20.889C21.5026 13.111 22 12.6136 22 12C22 11.3864 21.5026 10.889 20.889 10.889Z" fill="#0870D1"></path></svg>
                         </div>
-                    }
-                </div>
-
-                <div class="dropzone active" [ngClass]="{ 'small': isHandset() }" (click)="photoFileUpload.click()" (keydown.enter)="photoFileUpload.click()" tabindex="0">
-                    <div class="plus">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M20.889 10.889H13.111V3.11097C13.111 2.4974 12.6136 2 12 2C11.3864 2 10.889 2.4974 10.889 3.11097V10.889H3.11097C2.4974 10.889 2 11.3864 2 12C2 12.6136 2.4974 13.111 3.11097 13.111H10.889V20.889C10.889 21.5026 11.3864 22 12 22C12.6136 22 13.111 21.5026 13.111 20.889V13.111H20.889C21.5026 13.111 22 12.6136 22 12C22 11.3864 21.5026 10.889 20.889 10.889Z" fill="#0870D1"></path></svg>
+                        <input type="file" hidden name="avatar" #photoFileUpload accept="image/png, image/jpeg" (change)="onPhotoSelected($event)">
                     </div>
-                    <input hidden name="avatar" type="file" #photoFileUpload accept="image/png, image/jpeg" (change)="onPhotoSelected($event)">
                 </div>
             </div>
-        </div>
+        } @else {
+            <!-- <mat-card class="margin-bottom-20" appearance="outlined">
+                <mat-card-content>
+
+                </mat-card-content>
+            </mat-card> -->
+            <div class="text-center margin-20">
+                To upload photos, please verify your email address. You can resend the confirmation email
+                from your <a routerLink="/account">Account</a> page if you haven't received it yet.
+                Requiring email verification helps ensure that only legitimate accounts can upload content,
+                which improves both security and the overall quality of shared materials.
+            </div>
+        }
 
         <mat-card class="margin-bottom-20" appearance="outlined">
             <mat-card-header>
@@ -137,7 +150,7 @@
 
                                 <mat-form-field appearance="outline" class="margin-top-10" >
                                     <mat-label>Content warning</mat-label>
-                                    <input [disabled]="!isSensitive()" matInput name="status" [(ngModel)]="contentWarning" type="text" aria-label="Content warning" />
+                                    <input type="text" [disabled]="!isSensitive()" matInput name="status" [(ngModel)]="contentWarning" aria-label="Content warning" />
                                 </mat-form-field>
                             </div>
                             <div class="flex-row flex-space-between">

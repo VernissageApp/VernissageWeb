@@ -5,7 +5,7 @@
         <div class="margin-bottom-20 padding-top-5">
             <mat-form-field class="width-100" appearance="outline">
                 <mat-label>Order</mat-label>
-                <input matInput name="order" [(ngModel)]="order" #orderInput="ngModel" type="number" aria-label="Email" required />
+                <input type="number" matInput name="order" [(ngModel)]="order" #orderInput="ngModel" aria-label="Email" required />
                 <mat-error *ngIf="orderInput.invalid && orderInput.errors?.required">Enter order.</mat-error>
             </mat-form-field>
         </div>
@@ -13,7 +13,7 @@
         <div class="margin-bottom-20">
             <mat-form-field class="width-100" appearance="outline">
                 <mat-label>Rule</mat-label>
-                <input matInput name="text" [(ngModel)]="text" #textInput="ngModel" type="text" aria-label="Email" required appMaxLength="1000" />
+                <input type="text" matInput name="text" [(ngModel)]="text" #textInput="ngModel" aria-label="Email" required appMaxLength="1000" />
                 <mat-error *ngIf="textInput.invalid && textInput.errors?.appMaxLength">Rule is too long.</mat-error>
                 <mat-error *ngIf="textInput.invalid && textInput.errors?.required">Enter rule.</mat-error>
             </mat-form-field>

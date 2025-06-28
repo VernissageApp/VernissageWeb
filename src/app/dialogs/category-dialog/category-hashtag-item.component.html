@@ -1,7 +1,7 @@
 <div class="margin-bottom-5">
     <mat-form-field class="width-100" appearance="outline">
         <mat-label>Name</mat-label>
-        <input matInput [name]="'hashtagName-' + index()" [ngModel]="hashtag().hashtag" (ngModelChange)="onHashtagNameChange($event)" #hashtagNameInput="ngModel" type="text" aria-label="Hashtag name" required appMaxLength="100" />
+        <input type="text" matInput [name]="'hashtagName-' + index()" [ngModel]="hashtag().hashtag" (ngModelChange)="onHashtagNameChange($event)" #hashtagNameInput="ngModel" aria-label="Hashtag name" required appMaxLength="100" />
         <mat-error *ngIf="hashtagNameInput.invalid && hashtagNameInput.errors?.required">Enter hashtag name.</mat-error>
         <mat-error *ngIf="hashtagNameInput.invalid && hashtagNameInput.errors?.appMaxLength">Name is too long.</mat-error>
         <button matSuffix type="button" mat-icon-button aria-label="Delete" (click)="onDelete()">

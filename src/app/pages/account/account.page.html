@@ -16,7 +16,7 @@
                 <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
                     <mat-form-field appearance="outline">
                         <mat-label>Name</mat-label>
-                        <input matInput name="userName" #userName="ngModel" [(ngModel)]="user().name"
+                        <input type="text" matInput name="userName" #userName="ngModel" [(ngModel)]="user().name"
                             placeholder="Name" aria-label="Name" appMaxLength="100" />
                         <mat-error *ngIf="userName.invalid && userName.errors?.appMaxLength">
                             Too long name.
@@ -77,7 +77,7 @@
                         <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
                             <mat-form-field appearance="outline">
                                 <mat-label>Key</mat-label>
-                                <input matInput [name]="'key-' + i" #key="ngModel" [(ngModel)]="field.key" placeholder="Key" aria-label="Key" appMaxLength="500" />
+                                <input type="text" matInput [name]="'key-' + i" #key="ngModel" [(ngModel)]="field.key" placeholder="Key" aria-label="Key" appMaxLength="500" />
                                 <mat-error *ngIf="key.invalid && key.errors?.appMaxLength">Too long key.</mat-error>
                             </mat-form-field>
                             <div></div>
@@ -86,7 +86,7 @@
                         <div class="flex-row flex-responsive flex-stretch gap-16">
                             <mat-form-field appearance="outline">
                                 <mat-label>Value</mat-label>
-                                <input matInput [name]="'value-' + i" #value="ngModel" [(ngModel)]="field.value" placeholder="Value" aria-label="Value" appMaxLength="500" />
+                                <input type="text" matInput [name]="'value-' + i" #value="ngModel" [(ngModel)]="field.value" placeholder="Value" aria-label="Value" appMaxLength="500" />
                                 <mat-error *ngIf="value.invalid && value.errors?.appMaxLength">Too long value.</mat-error>
                             </mat-form-field>
                             <div></div>
@@ -113,7 +113,7 @@
                             </p>
                             
                             <mat-form-field class="width-100" appearance="outline">
-                                <input matInput name="verification" type="text" [ngModel]="verification()" aria-label="Verification example" [readonly]="true">
+                                <input type="text" matInput name="verification" [ngModel]="verification()" aria-label="Verification example" [readonly]="true">
                                 <button matSuffix mat-flat-button type="button" class="margin-right-10" (click)="onCopyVerification()" aria-label="Copy verification">Copy</button>
                             </mat-form-field>
 
@@ -147,7 +147,7 @@
                 <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
                     <div>
                         <button type="button" mat-stroked-button (click)="avatarFileUpload.click()" class="margin-right-20">Choose file</button>
-                        <input hidden name="avatar" type="file" #avatarFileUpload accept="image/*" (change)="onAvatarSelected($event)">
+                        <input type="file" hidden name="avatar" #avatarFileUpload accept="image/*" (change)="onAvatarSelected($event)">
                     </div>
 
                     <div>
@@ -175,7 +175,7 @@
                 <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
                     <div>
                         <button type="button" mat-stroked-button (click)="headerFileUpload.click()" class="margin-right-20">Choose file</button>
-                        <input hidden name="header" type="file" #headerFileUpload accept="image/*" (change)="onHeaderSelected($event)">
+                        <input type="file" hidden name="header" #headerFileUpload accept="image/*" (change)="onHeaderSelected($event)">
                     </div>
 
                     <div>
@@ -430,10 +430,11 @@
             <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
                 <div>
                     You can import data previously exported from another server, such as a list of accounts you are following.
-                    Imported accounts will be merged with the ones you are already following. Max file size is {{ maxImportFileSizeString() }}.
+                    Imported accounts will be merged with the ones you are already following. Only CSV files are currently supported.
+                    Max file size is {{ maxImportFileSizeString() }}.
                 </div>
                 <div class="text-right">
-                    <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file">
+                    <input type="file" hidden (change)="onFileSelected($event)" #fileInput id="file">
                     <button type="button" mat-raised-button color="primary" aria-label="Request archive" (click)="fileInput.click()">Import</button>
                 </div>
             </div>

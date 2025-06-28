@@ -46,6 +46,7 @@ import { SharedCardPage } from './shared-card/shared-card.page';
 import { SharedCardPublicPage } from './shared-card-public/shared-card-public.page';
 import { ArticleEditPage } from './article-edit/article-edit.page';
 import { NewsPreviewPage } from './news-preview/news-preview.page';
+import { FrequentlyAskedQuestionsPage } from './frequently-asked-questions/frequently-asked-questions.page';
 
 @NgModule({
     imports: [
@@ -95,7 +96,8 @@ import { NewsPreviewPage } from './news-preview/news-preview.page';
         EditBusinessCardPage,
         SharedCardsPage,
         SharedCardPage,
-        SharedCardPublicPage
+        SharedCardPublicPage,
+        FrequentlyAskedQuestionsPage
     ],
     exports: [
         ComponentsModule,
@@ -140,7 +142,8 @@ import { NewsPreviewPage } from './news-preview/news-preview.page';
         EditBusinessCardPage,
         SharedCardsPage,
         SharedCardPage,
-        SharedCardPublicPage
+        SharedCardPublicPage,
+        FrequentlyAskedQuestionsPage
     ]
 })
 export class PagesModule { }
