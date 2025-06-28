@@ -296,6 +296,10 @@ $vernissage-dark-toolbar-theme: mat.m2-define-light-theme((
   @include mat.button-density(-3);
 }
 
+.small-icon-button {
+  @include mat.icon-button-density(-3);
+}
+
 // =======================================================================
 // Custom route animation.
 

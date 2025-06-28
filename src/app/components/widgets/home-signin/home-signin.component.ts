@@ -13,6 +13,7 @@ import { ArticleVisibility } from 'src/app/models/article-visibility';
 import { Article } from 'src/app/models/article';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { FocusTrackerService } from 'src/app/services/common/focus-tracker.service';
+import { RandomGeneratorService } from 'src/app/services/common/random-generator.service';
 
 @Component({
     selector: 'app-home-signin',
@@ -39,6 +40,7 @@ export class HomeSigninComponent extends ReusableGalleryPageComponent implements
     private articlesService = inject(ArticlesService);
     private messagesService = inject(MessagesService);
     private focusTrackerService = inject(FocusTrackerService);
+    private randomGeneratorService = inject(RandomGeneratorService);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
@@ -108,6 +110,15 @@ export class HomeSigninComponent extends ReusableGalleryPageComponent implements
                 this.router.navigate(['/home'], { queryParams: { t: 'global' } });
                 break;
         }
+    }
+
+    protected onTimelineRefresh(): void {
+        const navigationExtras: NavigationExtras = {
+            queryParams: { f: this.randomGeneratorService.generateString(8) },
+            queryParamsHandling: 'merge'
+        };
+
+        this.router.navigate([], navigationExtras);
     }
 
     protected onTimelineChange(): void {
