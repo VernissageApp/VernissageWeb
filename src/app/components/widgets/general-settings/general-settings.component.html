@@ -238,14 +238,17 @@
             </mat-checkbox>
         </div>
         <div>
-            <mat-checkbox name="isRegistrationByApprovalOpened" color="primary" [disableRipple]="true" [(ngModel)]="settings().isRegistrationByApprovalOpened">
+            <mat-checkbox name="isRegistrationByApprovalOpened" color="primary" [disableRipple]="true" [disabled]="settings().isRegistrationOpened" [(ngModel)]="settings().isRegistrationByApprovalOpened">
                 Is registration by approval opened
             </mat-checkbox>
         </div>
         <div>
-            <mat-checkbox name="isRegistrationByInvitationsOpened" color="primary" [disableRipple]="true" [(ngModel)]="settings().isRegistrationByInvitationsOpened">
+            <mat-checkbox name="isRegistrationByInvitationsOpened" color="primary" [disableRipple]="true" [disabled]="settings().isRegistrationOpened" [(ngModel)]="settings().isRegistrationByInvitationsOpened">
                 Is registration by invitations opened
             </mat-checkbox>
+        </div>
+        <div class="text-muted fs-90 margin-left-10 margin-top-5">
+            Invitation-based registration and registration by approval only work when registration for all users is disabled.
         </div>
     </div>
 
@@ -254,11 +257,12 @@
 
     <div class="margin-bottom-20">
         <div>
-            <mat-checkbox name="isRegistrationOpened" color="primary" [disableRipple]="true" [(ngModel)]="settings().isQuickCaptchaEnabled">
+            <mat-checkbox name="isQuickCaptchaEnabled" color="primary" [disableRipple]="true" [disabled]="!settings().isRegistrationOpened" [(ngModel)]="settings().isQuickCaptchaEnabled">
                 Is QuickCaptcha enabled (internal captcha)
             </mat-checkbox>
             <div class="text-muted fs-90 margin-left-10 margin-top-5">
                 This CAPTCHA is implemented internally and does not communicate with any external services, ensuring complete privacy for users.
+                Captcha is shown only when registration is open for all new users.
             </div>
         </div>
     </div>
