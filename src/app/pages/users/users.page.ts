@@ -31,6 +31,8 @@ export class UsersPage extends ResponsiveComponent implements OnInit, OnDestroy 
     protected readonly role = Role;
 
     protected search = model('');
+    protected sortColumn = model('createdAt');
+    protected sortDirection = model('descending');
     protected onlyLocal = model(false);
     protected isReady = signal(false);
     protected users = signal<PagedResult<User> | undefined>(undefined);
@@ -41,7 +43,7 @@ export class UsersPage extends ResponsiveComponent implements OnInit, OnDestroy 
     private readonly displayedColumnsHandsetPortrait: string[] = ['avatar', 'userName', 'actions'];
     private readonly displayedColumnsHandsetLandscape: string[] = ['avatar', 'userName', 'createdAt', 'actions'];
     private readonly displayedColumnsTablet: string[] = ['avatar', 'userName', 'email', 'isApproved', 'lastLoginDate', 'createdAt', 'actions'];
-    private readonly displayedColumnsBrowser: string[] = ['avatar', 'userName', 'email', 'isLocal', 'isApproved', 'statuses', 'lastLoginDate', 'createdAt', 'actions'];
+    private readonly displayedColumnsBrowser: string[] = ['avatar', 'userName', 'email', 'isLocal', 'isApproved', 'emailWasConfirmed', 'statuses', 'lastLoginDate', 'createdAt', 'actions'];
 
     private authorizationService = inject(AuthorizationService);
     private usersService = inject(UsersService);
@@ -66,6 +68,8 @@ export class UsersPage extends ResponsiveComponent implements OnInit, OnDestroy 
             const sizeString = params['size'] as string;
             const query = params['query'] as string;
             const local = params['onlyLocal'] as string;
+            const sortColumn = params['sortColumn'] as string;
+            const sortDirection = params['sortDirection'] as string;
 
             const page = pageString ? +pageString : 0;
             const size = sizeString ? +sizeString : 10;
@@ -73,8 +77,10 @@ export class UsersPage extends ResponsiveComponent implements OnInit, OnDestroy 
             this.pageIndex.set(page);
             this.search.set(query);
             this.onlyLocal.set(local === 'true');
+            this.sortColumn.set(sortColumn ?? 'createdAt');
+            this.sortDirection.set(sortDirection === 'ascending' ? 'ascending' : 'descending');
 
-            const downloadedUsers = await this.usersService.get(page + 1, size, query, this.onlyLocal());
+            const downloadedUsers = await this.usersService.get(page + 1, size, query, this.onlyLocal(), this.sortColumn(), this.sortDirection());
             this.users.set(downloadedUsers);
 
             this.isReady.set(true);
@@ -89,7 +95,7 @@ export class UsersPage extends ResponsiveComponent implements OnInit, OnDestroy 
 
     protected async onSubmit(): Promise<void> {
         const navigationExtras: NavigationExtras = {
-            queryParams: { query: this.search(), onlyLocal: this.onlyLocal() },
+            queryParams: { query: this.search(), onlyLocal: this.onlyLocal(), sortColumn: this.sortColumn(), sortDirection: this.sortDirection() },
             queryParamsHandling: 'merge'
         };
 
@@ -171,6 +177,34 @@ export class UsersPage extends ResponsiveComponent implements OnInit, OnDestroy 
             console.error(error);
             this.messageService.showServerError(error);
         }
+    }
+
+    protected async onDisableTwoFactor(user: User): Promise<void> {
+        const dialogRef = this.dialog.open(ConfirmationDialog, {
+            width: '500px',
+            data: 'Do you want to disable user\'s 2FA?'
+        });
+
+        dialogRef.afterClosed().subscribe(async (result) => {
+            if (result?.confirmed) {
+                try {
+                    if (user.userName) {
+                        await this.usersService.disableTwoFactorAuthentication(user.userName);
+                        this.messageService.showSuccess('2FA has been disabled.');
+        
+                        const navigationExtras: NavigationExtras = {
+                            queryParams: { t: this.randomGeneratorService.generateString(8) },
+                            queryParamsHandling: 'merge'
+                        };
+                
+                        await this.router.navigate([], navigationExtras);
+                    }
+                } catch (error) {
+                    console.error(error);
+                    this.messageService.showServerError(error);
+                }
+            }
+        });
     }
 
     protected async onUserRefresh(user: User): Promise<void> {
