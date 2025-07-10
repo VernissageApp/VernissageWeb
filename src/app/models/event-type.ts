@@ -57,6 +57,7 @@ export enum EventType {
     UserFeature = 'userFeature',
     UserUnfeature = 'userUnfeature',
     UsersStatuses = 'usersStatuses',
+    UsersRemoveOneTimePassword = 'usersRemoveOneTimePassword',
     
     AvatarUpdate = 'avatarUpdate',
     AvatarDelete = 'avatarDelete',

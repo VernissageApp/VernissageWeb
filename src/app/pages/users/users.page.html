@@ -18,12 +18,29 @@
                                         <mat-form-field appearance="outline" class="width-100">
                                             <input type="text" #queryInput matInput name="query" [(ngModel)]="search" cdkFocusInitial aria-label="Query" />
                                         </mat-form-field>
+                                        @if (!isHandset()) {
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Sorting</mat-label>
+                                                <mat-select [(value)]="sortColumn">
+                                                    <mat-option value="userName">Username</mat-option>
+                                                    <mat-option value="lastLoginDate">Last login</mat-option>
+                                                    <mat-option value="createdAt">Created date</mat-option>
+                                                    <mat-option value="statusesCount">Statuses</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        }
                                         <button mat-flat-button color="primary">Search</button>
                                     </div>
                                     <div class="margin-top-5">
                                         <mat-checkbox name="isLocal" color="primary" [disableRipple]="true" [(ngModel)]="onlyLocal">
                                             Only local
                                         </mat-checkbox>
+                                        @if (!isHandset()) {
+                                            <mat-radio-group name="sortDirection" class="margin-left-20" [(ngModel)]="sortDirection" aria-label="Sort direction">
+                                                <mat-radio-button value="ascending">Ascending</mat-radio-button>
+                                                <mat-radio-button value="descending">Descending</mat-radio-button>
+                                            </mat-radio-group>
+                                        }
                                     </div>
                                 </form>
                             </mat-card-content>
@@ -92,6 +109,17 @@
                             </td>
                         </ng-container>
 
+                        <!-- Email was confirmed Column -->
+                        <ng-container matColumnDef="emailWasConfirmed">
+                            <th mat-header-cell *matHeaderCellDef> Email confirmed </th>
+                            <td mat-cell *matCellDef="let element">
+                                @if (element.isLocal) {
+                                    <mat-checkbox color="primary" [disableRipple]="true" [ngModel]="element.emailWasConfirmed" disabled>
+                                    </mat-checkbox>
+                                }
+                            </td>
+                        </ng-container>
+
                         <!-- Statuses Column -->
                         <ng-container matColumnDef="statuses">
                             <th mat-header-cell *matHeaderCellDef> Statuses </th>
@@ -148,6 +176,10 @@
                                         <button *ngIf="!element.isApproved" (click)="onReject(element)" mat-menu-item>
                                             <mat-icon class="outline-symbol">unpublished</mat-icon>
                                             <span>Reject</span>
+                                        </button>
+                                        <button *ngIf="element.twoFactorEnabled" (click)="onDisableTwoFactor(element)" mat-menu-item>
+                                            <mat-icon class="outline-symbol">safety_check_off</mat-icon>
+                                            <span>Disable 2FA</span>
                                         </button>
                                     } @else {
                                         <button (click)="onUserRefresh(element)" mat-menu-item>
