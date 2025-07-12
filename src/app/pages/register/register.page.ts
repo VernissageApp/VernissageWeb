@@ -119,6 +119,8 @@ export class RegisterPage implements OnInit {
                 this.errorMessage.set('You have to accept server rules.');
             } else if (error.error.code === 'disposableEmailCannotBeUsed') {
                 this.errorMessage.set('Disposable email cannot be used.');
+            } else if (error.error.code === 'securityTokenIsInvalid') {
+                this.errorMessage.set('Captcha code is invalid. Please try again.');
             } else {
                 this.errorMessage.set('Unexpected error occurred. Please try again.');
             }
