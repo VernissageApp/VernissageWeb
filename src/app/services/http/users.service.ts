@@ -16,8 +16,8 @@ export class UsersService {
     private httpClient = inject(HttpClient);
     private windowService = inject(WindowService);
 
-    public async get(page: number, size: number, query: string, onlyLocal = false): Promise<PagedResult<User>> {
-        const event$ = this.httpClient.get<PagedResult<User>>(this.windowService.apiUrl() + `/api/v1/users?page=${page}&size=${size}&query=${query ?? ''}&onlyLocal=${onlyLocal}`);
+    public async get(page: number, size: number, query: string, onlyLocal = false, sortColumn = 'createdAt', sortDirection = 'descending'): Promise<PagedResult<User>> {
+        const event$ = this.httpClient.get<PagedResult<User>>(this.windowService.apiUrl() + `/api/v1/users?page=${page}&size=${size}&query=${query ?? ''}&onlyLocal=${onlyLocal}&sortColumn=${sortColumn}&sortDirection=${sortDirection}`);
         return await firstValueFrom(event$);
     }
 
@@ -33,6 +33,11 @@ export class UsersService {
 
     public async delete(userName: string): Promise<object> {
         const event$ = this.httpClient.delete(this.windowService.apiUrl() + '/api/v1/users/@' + userName);
+        return await firstValueFrom(event$);
+    }
+
+    public async disableTwoFactorAuthentication(userName: string): Promise<object> {
+        const event$ = this.httpClient.post(this.windowService.apiUrl() + '/api/v1/users/@' + userName + '/disable-2fa', null);
         return await firstValueFrom(event$);
     }
 
