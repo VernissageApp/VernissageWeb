@@ -69,6 +69,11 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     protected rendered = signal<SafeHtml>('');
     protected hasHdrSupport = signal(false);
 
+    protected isDuringBoostProcessing = signal(false);
+    protected isDuringFavouriteProcessing = signal(false);
+    protected isDuringBookmarkProcessing = signal(false);
+    protected isDuringFeatureProcessing = signal(false);
+
     protected altStatus = computed(() => this.getAltStatus(this.currentIndex()));
     protected location = computed(() => this.getLocation(this.currentIndex()));
     protected license = computed(() => this.getLicense(this.currentIndex()));
@@ -404,22 +409,23 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     }
 
     protected async toggleReblog(): Promise<void> {
-      try {
-          const internalMainStatus = this.mainStatus();
-          if (internalMainStatus) {
-              if (internalMainStatus.reblogged) {
-                  await this.unreblog();
-              } else {
-                  await this.reblog();
-              }
-          }
-      } catch (error) {
-          console.error(error);
-          this.messageService.showServerError(error);
-      }
+        try {
+            const internalMainStatus = this.mainStatus();
+            if (internalMainStatus) {
+                if (internalMainStatus.reblogged) {
+                    await this.unreblog();
+                } else {
+                    await this.reblog();
+                }
+            }
+        } catch (error) {
+            console.error(error);
+            this.messageService.showServerError(error);
+        }
     }
     protected async reblog(): Promise<void> {
         try {
+            this.isDuringBoostProcessing.set(true);
             const internalMainStatus = this.mainStatus();
             if (internalMainStatus) {
                 const downloadedMainStatus = await this.statusesService.reblog(internalMainStatus.id);
@@ -429,11 +435,14 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         } catch (error) {
             console.error(error);
             this.messageService.showServerError(error);
+        } finally {
+            this.isDuringBoostProcessing.set(false);
         }
     }
 
     protected async unreblog(): Promise<void> {
         try {
+            this.isDuringBoostProcessing.set(true);
             const internalMainStatus = this.mainStatus();
             if (internalMainStatus) {
                 const downloadedMainStatus = await this.statusesService.unreblog(internalMainStatus.id);
@@ -443,27 +452,30 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         } catch (error) {
             console.error(error);
             this.messageService.showServerError(error);
+        } finally {
+            this.isDuringBoostProcessing.set(false);
         }
     }
 
     protected async toggleFavourite(): Promise<void> {
-      try {
-          const internalMainStatus = this.mainStatus();
-          if (internalMainStatus) {
-              if (internalMainStatus.favourited) {
-                  await this.unfavourite();
-              } else {
-                  await this.favourite();
-              }
-          }
-      } catch (error) {
-          console.error(error);
-          this.messageService.showServerError(error);
-      }
+        try {
+            const internalMainStatus = this.mainStatus();
+            if (internalMainStatus) {
+                if (internalMainStatus.favourited) {
+                    await this.unfavourite();
+                } else {
+                    await this.favourite();
+                }
+            }
+        } catch (error) {
+            console.error(error);
+            this.messageService.showServerError(error);
+        }
     }
 
     protected async favourite(): Promise<void> {
         try {
+            this.isDuringFavouriteProcessing.set(true);
             const internalMainStatus = this.mainStatus();
             if (internalMainStatus) {
                 const downloadedMainStatus = await this.statusesService.favourite(internalMainStatus.id);
@@ -473,11 +485,14 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         } catch (error) {
             console.error(error);
             this.messageService.showServerError(error);
+        } finally {
+            this.isDuringFavouriteProcessing.set(false);
         }
     }
 
     protected async unfavourite(): Promise<void> {
         try {
+            this.isDuringFavouriteProcessing.set(true);
             const internalMainStatus = this.mainStatus();
             if (internalMainStatus) {
                 const downloadMainStatus = await this.statusesService.unfavourite(internalMainStatus.id);
@@ -487,27 +502,30 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         } catch (error) {
             console.error(error);
             this.messageService.showServerError(error);
+        } finally {
+            this.isDuringFavouriteProcessing.set(false);
         }
     }
 
     protected async toggleBookmark(): Promise<void> {
-      try {
-          const internalMainStatus = this.mainStatus();
-          if (internalMainStatus) {
-              if (internalMainStatus.bookmarked) {
-                  await this.unbookmark();
-              } else {
-                  await this.bookmark();
-              }
-          }
-      } catch (error) {
-          console.error(error);
-          this.messageService.showServerError(error);
-      }
-   }
+        try {
+            const internalMainStatus = this.mainStatus();
+            if (internalMainStatus) {
+                if (internalMainStatus.bookmarked) {
+                    await this.unbookmark();
+                } else {
+                    await this.bookmark();
+                }
+            }
+        } catch (error) {
+            console.error(error);
+            this.messageService.showServerError(error);
+        }
+    }
 
     protected async bookmark(): Promise<void> {
         try {
+            this.isDuringBookmarkProcessing.set(true);
             const internalMainStatus = this.mainStatus();
             if (internalMainStatus) {
                 const downloadedMainStatus = await this.statusesService.bookmark(internalMainStatus.id);
@@ -517,11 +535,14 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         } catch (error) {
             console.error(error);
             this.messageService.showServerError(error);
+        } finally {
+            this.isDuringBookmarkProcessing.set(false);
         }
     }
 
     protected async unbookmark(): Promise<void> {
         try {
+            this.isDuringBookmarkProcessing.set(true);
             const internalMainStatus = this.mainStatus();
             if (internalMainStatus) {
                 const downloadedMainStatus = await this.statusesService.unbookmark(internalMainStatus.id);
@@ -531,11 +552,14 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         } catch (error) {
             console.error(error);
             this.messageService.showServerError(error);
+        } finally {
+            this.isDuringBookmarkProcessing.set(false);
         }
     }
 
     protected async feature(): Promise<void> {
         try {
+            this.isDuringFeatureProcessing.set(true);
             const internalMainStatus = this.mainStatus();
             if (internalMainStatus) {
                 const downloadedMainStatus = await this.statusesService.feature(internalMainStatus.id);
@@ -545,11 +569,14 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         } catch (error) {
             console.error(error);
             this.messageService.showServerError(error);
+        } finally {
+            this.isDuringFeatureProcessing.set(false);
         }
     }
 
     protected async unfeature(): Promise<void> {
         try {
+            this.isDuringFeatureProcessing.set(true);
             const internalMainStatus = this.mainStatus();
             if (internalMainStatus) {
                 const downloadMainStatus = await this.statusesService.unfeature(internalMainStatus.id);
@@ -559,6 +586,8 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         } catch (error) {
             console.error(error);
             this.messageService.showServerError(error);
+        } finally {
+            this.isDuringFeatureProcessing.set(false);
         }
     }
 
@@ -574,7 +603,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         }
     }
 
-    protected async unfavouriteComment(status: Status): Promise<void> {
+    protected async unFavouriteComment(status: Status): Promise<void> {
         try {
             await this.statusesService.unfavourite(status.id);
             status.favourited = false;

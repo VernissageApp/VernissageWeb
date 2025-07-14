@@ -111,40 +111,40 @@
                     <mat-card class="flex-grow-3 height-100" appearance="outlined">
                         <mat-card-content>
 
-                            <div class="flex-row flex-wrap">
+                            <div class="flex-row flex-wrap flex-align-center">
 
                                 <!-- Actions panel -->
                                 @if (isLoggedIn()) {
-                                    <button *ngIf="!mainStatusInternal.reblogged" mat-icon-button class="margin-right-10" color="primary" matTooltip="Boost" matTooltipPosition="above" aria-label="Boost" (click)="reblog()">
+                                    <button *ngIf="!mainStatusInternal.reblogged" mat-icon-button class="margin-right-10" color="primary" matTooltip="Boost" matTooltipPosition="above" aria-label="Boost" [disabled]="isDuringBoostProcessing()" (click)="reblog()">
                                         <mat-icon class="outline-symbol">rocket_launch</mat-icon>
                                     </button>
 
-                                    <button *ngIf="mainStatusInternal.reblogged" mat-icon-button class="margin-right-10" color="primary" matTooltip="Unboost" matTooltipPosition="above" aria-label="Unboost" (click)="unreblog()">
+                                    <button *ngIf="mainStatusInternal.reblogged" mat-icon-button class="margin-right-10" color="primary" matTooltip="Unboost" matTooltipPosition="above" aria-label="Unboost" [disabled]="isDuringBoostProcessing()" (click)="unreblog()">
                                         <mat-icon class="fill-symbol">rocket_launch</mat-icon>
                                     </button>
 
-                                    <button *ngIf="!mainStatusInternal.favourited" mat-icon-button class="margin-right-10" color="primary" matTooltip="Like" matTooltipPosition="above" aria-label="Like" (click)="favourite()">
+                                    <button *ngIf="!mainStatusInternal.favourited" mat-icon-button class="margin-right-10" color="primary" matTooltip="Like" matTooltipPosition="above" aria-label="Like" [disabled]="isDuringFavouriteProcessing()" (click)="favourite()">
                                         <mat-icon class="outline-symbol">grade</mat-icon>
                                     </button>
 
-                                    <button *ngIf="mainStatusInternal.favourited" mat-icon-button class="margin-right-10" color="primary" matTooltip="Unlike" matTooltipPosition="above" aria-label="Unlike" (click)="unfavourite()">
+                                    <button *ngIf="mainStatusInternal.favourited" mat-icon-button class="margin-right-10" color="primary" matTooltip="Unlike" matTooltipPosition="above" aria-label="Unlike" [disabled]="isDuringFavouriteProcessing()" (click)="unfavourite()">
                                         <mat-icon class="fill-symbol">grade</mat-icon>
                                     </button>
 
-                                    <button *ngIf="!mainStatusInternal.bookmarked" mat-icon-button class="margin-right-10" color="primary" matTooltip="Bookmark" matTooltipPosition="above" aria-label="Bookmark" (click)="bookmark()">
+                                    <button *ngIf="!mainStatusInternal.bookmarked" mat-icon-button class="margin-right-10" color="primary" matTooltip="Bookmark" matTooltipPosition="above" aria-label="Bookmark" [disabled]="isDuringBookmarkProcessing()" (click)="bookmark()">
                                         <mat-icon class="outline-symbol">bookmark</mat-icon>
                                     </button>
 
-                                    <button *ngIf="mainStatusInternal.bookmarked" mat-icon-button class="margin-right-10" color="primary" matTooltip="Unbookmark" matTooltipPosition="above" aria-label="Unbookmark" (click)="unbookmark()">
+                                    <button *ngIf="mainStatusInternal.bookmarked" mat-icon-button class="margin-right-10" color="primary" matTooltip="Unbookmark" matTooltipPosition="above" aria-label="Unbookmark" [disabled]="isDuringBookmarkProcessing()" (click)="unbookmark()">
                                         <mat-icon class="fill-symbol">bookmark</mat-icon>
                                     </button>
 
                                     @if (shouldDisplayFeatureButton()) {
-                                        <button *ngIf="!mainStatusInternal.featured" mat-icon-button class="margin-right-10" color="primary" matTooltip="Feature" matTooltipPosition="above" aria-label="Feature" (click)="feature()">
+                                        <button *ngIf="!mainStatusInternal.featured" mat-icon-button class="margin-right-10" color="primary" matTooltip="Feature" matTooltipPosition="above" aria-label="Feature" [disabled]="isDuringFeatureProcessing()" (click)="feature()">
                                             <mat-icon class="outline-symbol">stars</mat-icon>
                                         </button>
 
-                                        <button *ngIf="mainStatusInternal.featured" mat-icon-button class="margin-right-10" color="primary" matTooltip="Unfeature" matTooltipPosition="above" aria-label="Unfeature" (click)="unfeature()">
+                                        <button *ngIf="mainStatusInternal.featured" mat-icon-button class="margin-right-10" color="primary" matTooltip="Unfeature" matTooltipPosition="above" aria-label="Unfeature" [disabled]="isDuringFeatureProcessing()" (click)="unfeature()">
                                             <mat-icon class="fill-symbol">stars</mat-icon>
                                         </button>
                                     }
@@ -180,6 +180,10 @@
                                             <span>Delete</span>
                                         </button>
                                     </mat-menu>
+
+                                    @if (isDuringBoostProcessing() || isDuringFavouriteProcessing() || isDuringBookmarkProcessing() || isDuringFeatureProcessing()) {
+                                        <mat-spinner class="display-inline-block" [diameter]="18"></mat-spinner>
+                                    }
                                 }
 
                                 <div class="flex-spacer"></div>
@@ -390,7 +394,7 @@
                                                             <mat-icon>star_border</mat-icon>
                                                             <span>Like</span>
                                                         </button>
-                                                        <button *ngIf="comment.status.favourited" mat-menu-item (click)="unfavouriteComment(comment.status)">
+                                                        <button *ngIf="comment.status.favourited" mat-menu-item (click)="unFavouriteComment(comment.status)">
                                                             <mat-icon>star</mat-icon>
                                                             <span>Unlike</span>
                                                         </button>
