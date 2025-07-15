@@ -89,6 +89,36 @@
                                 </div>
                             </div>
 
+                            <h3>
+                                <div class="flex-row flex-space-between">
+                                    <div>Files</div>
+                                    <div class="text-right">
+                                        <input type="file" hidden (change)="onFileSelected($event)" #fileInput id="file">
+                                        <button type="button" mat-stroked-button color="primary" class="small-button" aria-label="Upload file" (click)="fileInput.click()">Upload</button>
+                                    </div>
+                                </div>
+                            </h3>
+                            <div class="padding-bottom-20 images-container">
+                                @for (item of articleFileInfos(); track item.id) {
+                                    <div class="margin-bottom-10">
+                                        <div class="flex-row flex-space-between flex-align-center">
+                                            <div>
+                                                <img [src]="item.url" alt="Article file">
+                                            </div>
+                                            <div>
+                                                @if (mainArticleFileInfoId() === item.id) {
+                                                    <span class="margin-right-10"><strong>Main file</strong></span>
+                                                } @else {
+                                                    <button type="button" mat-stroked-button color="primary" class="small-button margin-right-10" aria-label="Delete file" (click)="onMarkAsMainFile(item)">Mark as main</button>
+                                                }
+                                                <button type="button" mat-stroked-button color="primary" class="small-button margin-right-10" (click)="onCopyMarkdown(item)" aria-label="Copy markdown">Copy</button>
+                                                <button type="button" mat-stroked-button color="accent" class="small-button" aria-label="Delete file" (click)="onDeleteFile(item)">Delete</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+
                         </mat-card-content>
                         <mat-card-actions>
                             <button mat-button type="button" (click)="onCancelClick()">Cancel</button>
