@@ -14,4 +14,5 @@ export class Article {
     public createdAt?: Date;
     public updatedAt?: Date;
     public visibilities?: ArticleVisibility[];
+    public articleFileInfos?: ArticleFileInfo[];
 }

@@ -5,6 +5,7 @@ import { WindowService } from '../common/window.service';
 import { PagedResult } from 'src/app/models/paged-result';
 import { Article } from 'src/app/models/article';
 import { ArticleVisibility } from 'src/app/models/article-visibility';
+import { ArticleFileInfo } from 'src/app/models/article-file-info';
 
 @Injectable({
     providedIn: 'root'
@@ -40,6 +41,21 @@ export class ArticlesService {
 
     public async delete(id: string): Promise<object> {
         const event$ = this.httpClient.delete(this.windowService.apiUrl() + '/api/v1/articles/' + id);
+        return await firstValueFrom(event$);
+    }
+
+    public async fileUpload(id: string, formData: FormData): Promise<ArticleFileInfo> {
+        const event$ = this.httpClient.post<ArticleFileInfo>(this.windowService.apiUrl() + '/api/v1/articles/' + id + '/file', formData);
+        return await firstValueFrom(event$);
+    }
+
+    public async fileDelete(id: string, fileId: string): Promise<object> {
+        const event$ = this.httpClient.delete(this.windowService.apiUrl() + '/api/v1/articles/' + id + '/file/' + fileId);
+        return await firstValueFrom(event$);
+    }
+
+    public async markAsMainFile(id: string, fileId: string): Promise<object> {
+        const event$ = this.httpClient.post(this.windowService.apiUrl() + '/api/v1/articles/' + id + '/file/' + fileId + '/main', null);
         return await firstValueFrom(event$);
     }
 
