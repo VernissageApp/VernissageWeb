@@ -36,6 +36,17 @@ export class GeneralSettingsComponent implements OnInit {
                 internalSettings.webContactUserId = this.webContactUser()?.id ?? '';
                 internalSettings.systemDefaultUserId = this.systemDefaultUser()?.id ?? '';
 
+                // Convert eventual input strings into numbers.
+                internalSettings.maximumNumberOfInvitations = +internalSettings.maximumNumberOfInvitations;
+                internalSettings.maxCharacters = +internalSettings.maxCharacters;
+                internalSettings.maxMediaAttachments = +internalSettings.maxMediaAttachments;
+                internalSettings.imageSizeLimit = +internalSettings.imageSizeLimit;
+                internalSettings.emailPort = +internalSettings.emailPort;
+                internalSettings.statusPurgeAfterDays = +internalSettings.statusPurgeAfterDays;
+                internalSettings.imageQuality = +internalSettings.imageQuality;
+                internalSettings.totalCost = +internalSettings.totalCost;
+                internalSettings.usersSupport = +internalSettings.usersSupport;
+
                 await this.settingsService.put(internalSettings);
 
                 await Promise.all([

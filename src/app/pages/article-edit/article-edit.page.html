@@ -10,7 +10,7 @@
 
                     <mat-card class="margin-bottom-20" appearance="outlined">
                         <mat-card-content>
-                            <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-10">
+                            <div class="margin-bottom-10">
                                 <mat-form-field appearance="outline">
                                     <mat-label>Title</mat-label>
                                     <input type="text" matInput name="title" #titleInput="ngModel" [(ngModel)]="title"
@@ -21,7 +21,7 @@
                                 </mat-form-field>
                             </div>
 
-                            <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-10">
+                            <div class="margin-bottom-10">
                                 <mat-form-field appearance="outline">
                                     <mat-label>Article body</mat-label>
                                     <textarea matInput name="body" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="8"
@@ -33,7 +33,7 @@
                                 </mat-form-field>
                             </div>
 
-                            <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-10">
+                            <div [ngClass]="{ 'margin-bottom-30': isHandsetPortrait(), 'margin-bottom-10': !isHandsetPortrait() }">
                                 <mat-form-field appearance="outline">
                                     <mat-label>Color</mat-label>
                                     <input type="text" matInput name="color" #colorInput="ngModel" [(ngModel)]="color"
@@ -46,7 +46,7 @@
                                 </mat-form-field>
                             </div>
 
-                            <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-40">
+                            <div ngClass="margin-bottom-40">
                                 <mat-form-field appearance="outline">
                                     <mat-label>Alternative author</mat-label>
                                     <input type="text" matInput name="alternativeAuthor" #alternativeAuthorInput="ngModel" [(ngModel)]="alternativeAuthor"
@@ -60,11 +60,10 @@
                                     <mat-error *ngIf="alternativeAuthorInput.invalid && alternativeAuthorInput.errors?.appMaxLength">
                                         Too long user name.
                                     </mat-error>
-                                    
                                 </mat-form-field>
                             </div>
 
-                            <h3>Visibilities</h3>
+                            <h3 [ngClass]="{ 'padding-top-20': isHandsetPortrait() }">Visibilities</h3>
                         
                             <div class="padding-bottom-20">
                                 <div>
@@ -87,6 +86,48 @@
                                         Home - sign out
                                     </mat-checkbox>
                                 </div>
+                            </div>
+
+                            <h3>
+                                <div class="flex-row flex-space-between">
+                                    <div>Files</div>
+                                    <div class="text-right">
+                                        <input type="file" hidden (change)="onFileSelected($event)" #fileInput id="file">
+                                        <button type="button" mat-stroked-button color="primary" class="small-button" aria-label="Upload file" (click)="fileInput.click()">Upload</button>
+                                    </div>
+                                </div>
+                            </h3>
+                            <div class="padding-bottom-20 images-container">
+                                @for (item of articleFileInfos(); track item.id) {
+                                    <div class="margin-bottom-10">
+                                        <div class="flex-row flex-space-between flex-align-center">
+                                            <div>
+                                                <img [src]="item.url" alt="Article file">
+                                            </div>
+                                            <div>
+                                                @if (mainArticleFileInfoId() === item.id) {
+                                                    <span class="margin-right-10"><strong>Main file</strong></span>
+                                                } @else {
+                                                    <button type="button" mat-stroked-button color="primary" class="small-button margin-right-10" aria-label="Delete file" (click)="onMarkAsMainFile(item)">Mark as main</button>
+                                                }
+                                                <button type="button" mat-stroked-button color="primary" class="icon-only small-button margin-right-10" (click)="onCopyMarkdown(item)" aria-label="Copy markdown">
+                                                    @if (isHandset()) {
+                                                        <mat-icon>content_copy</mat-icon>
+                                                    } @else {
+                                                        <span>Copy</span>
+                                                    }
+                                                </button>
+                                                <button type="button" mat-stroked-button color="accent" class="icon-only small-button" aria-label="Delete file" (click)="onDeleteFile(item)">
+                                                    @if (isHandset()) {
+                                                        <mat-icon>delete</mat-icon>
+                                                    } @else {
+                                                        <span>Delete</span>
+                                                    }
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
                             </div>
 
                         </mat-card-content>
