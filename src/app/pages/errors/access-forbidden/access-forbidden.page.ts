@@ -19,14 +19,14 @@ export class AccessForbiddenPage implements OnInit, OnDestroy {
     async ngOnInit(): Promise<void> {
         this.interval = setInterval(async ()=> {
             this.value.update(progress => {
-                progress = progress - 4;
+                progress = progress - 10;
                 if (progress < 0) {
                     this.router.navigate(['/']);
                 }
 
                 return progress;
             });
-        }, 200);
+        }, 500);
     }
 
     ngOnDestroy() {

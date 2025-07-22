@@ -100,6 +100,7 @@ const routes: Routes = [
         { path: 'followers', component: ProfilePage }
     ]},
     { path: ':userName/:id', component: StatusPage },
+    { path: 'statuses/:id/edit', component: UploadPage, canActivate: [ authorizationGuard ], title: 'Vernissage - Upload images' },
     { path: 'statuses/:id', component: StatusPage },
     { path: '', redirectTo: '/home', pathMatch: 'full' },
     { path: '**', component: PageNotFoundPage }

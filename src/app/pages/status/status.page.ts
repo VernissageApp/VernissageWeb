@@ -323,6 +323,10 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         });
     }
 
+    protected async onEditStatus(): Promise<void> {
+        await this.router.navigate(['/statuses', this.status()?.id, 'edit']);
+    }
+
     protected async onDeleteComment(comment: Status): Promise<void> {
         const dialogRef = this.dialog.open(DeleteStatusDialog, {
             width: '500px'
@@ -398,6 +402,10 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
 
     protected shouldDisplayDeleteButton(): boolean {
         return this.isStatusOwner() || this.authorizationService.hasRole(Role.Administrator) || this.authorizationService.hasRole(Role.Moderator);
+    }
+
+    protected shouldDisplayEditButton(): boolean {
+        return this.isStatusOwner();
     }
 
     protected shouldDisplayFeatureButton(): boolean {

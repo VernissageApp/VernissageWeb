@@ -8,12 +8,13 @@ export class UploadPhoto {
     public isDeleting = signal(false);
 
     public blurhash?: string;
-    public photoFile: Blob;
+    public photoFile?: Blob;
     public photoHdrFile?: Blob;
     public photoHdrSrc?: string;
     public isHdrUploaded = false;
 
     public id = '';
+    public isAlreadyConnected = false;
     public description?: string;
 
     public locationId?: string;
@@ -51,8 +52,7 @@ export class UploadPhoto {
     public latitude?: string;
     public longitude?: string;
 
-    constructor(uuid: string, photoFile: Blob) {
+    constructor(uuid: string) {
         this.uuid = uuid;
-        this.photoFile = photoFile;
     }
 }

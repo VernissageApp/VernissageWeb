@@ -175,6 +175,10 @@
                                             <mat-icon class="outline-symbol">report</mat-icon>
                                             <span>Report</span>
                                         </button>
+                                        <button *ngIf="shouldDisplayEditButton()" mat-menu-item (click)="onEditStatus()">
+                                            <mat-icon class="outline-symbol">edit</mat-icon>
+                                            <span>Edit</span>
+                                        </button>
                                         <button *ngIf="shouldDisplayDeleteButton()" mat-menu-item (click)="onDeleteStatus()">
                                             <mat-icon class="outline-symbol">delete</mat-icon>
                                             <span>Delete</span>

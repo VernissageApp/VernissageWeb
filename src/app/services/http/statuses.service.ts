@@ -23,6 +23,11 @@ export class StatusesService {
         return await firstValueFrom(event$);
     }
 
+    public async update(statusRequest: StatusRequest): Promise<Status> {
+        const event$ = this.httpClient.put<Status>(this.windowService.apiUrl() + '/api/v1/statuses/' + statusRequest.id, statusRequest);
+        return await firstValueFrom(event$);
+    }
+
     public async delete(id: string): Promise<void> {
         const event$ = this.httpClient.delete(this.windowService.apiUrl() + '/api/v1/statuses/' + id);
         await firstValueFrom(event$);
