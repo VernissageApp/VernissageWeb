@@ -53,6 +53,11 @@ export class StatusesService {
         return await firstValueFrom(event$);
     }
 
+    public async getHistories(id: string): Promise<Status[]> {
+        const event$ = this.httpClient.get<Status[]>(this.windowService.apiUrl() + '/api/v1/statuses/' + id + '/history');
+        return await firstValueFrom(event$);
+    }
+
     public async reblog(id: string): Promise<Status> {
         const event$ = this.httpClient.post<Status>(this.windowService.apiUrl() + '/api/v1/statuses/' + id + '/reblog', new ReblogRequest(StatusVisibility.Public));
         return await firstValueFrom(event$);

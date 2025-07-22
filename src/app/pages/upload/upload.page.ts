@@ -574,7 +574,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
                     uploadPhoto.lens = internalExif.lens;
                     uploadPhoto.focalLength = internalExif.focalLength;
                     uploadPhoto.focalLenIn35mmFilm = internalExif.focalLenIn35mmFilm;
-                    uploadPhoto.fNumber = internalExif.fNumber;
+                    uploadPhoto.fNumber = internalExif.fNumber?.replaceAll('f/', '');
                     uploadPhoto.exposureTime = internalExif.exposureTime;
                     uploadPhoto.flash = internalExif.flash;
                     uploadPhoto.photographicSensitivity = internalExif.photographicSensitivity;

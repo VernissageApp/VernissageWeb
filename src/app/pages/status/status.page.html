@@ -355,99 +355,122 @@
                         </mat-card-content>
                     </mat-card>
 
-                    <!-- Right comments panel -->
-                    <mat-card class="flex-grow-2 height-100" appearance="outlined">
-                        <mat-card-header>
-                            <mat-card-title>Comments</mat-card-title>
-                        </mat-card-header>
-                        <mat-card-content>
-                            @if (signedInUser(); as signedInUserInternal) {
-                                <app-comment-reply [signedInUser]="signedInUserInternal" [status]="mainStatusInternal" (added)="onCommentAdded()"></app-comment-reply>
-                            }
+                    <!-- Right panel -->
+                    <div class="flex-grow-2 height-100">
+                        <!-- Comments -->
+                        <mat-card class="margin-bottom-20" appearance="outlined">
+                            <mat-card-header>
+                                <mat-card-title>Comments</mat-card-title>
+                            </mat-card-header>
+                            <mat-card-content>
+                                @if (signedInUser(); as signedInUserInternal) {
+                                    <app-comment-reply [signedInUser]="signedInUserInternal" [status]="mainStatusInternal" (added)="onCommentAdded()"></app-comment-reply>
+                                }
 
-                            @if ((comments()?.length ?? 0) > 0) {
-                                @for (comment of comments(); track comment.status.id) {
-                                    <div class="padding-top-10 comments">
-                                        <div class="flex-row gap-8" [ngClass]="{ 'replies': !comment.showDivider, 'padding-top-15': comment.showDivider }">
-                                            <div>
-                                                <app-avatar [user]="comment.status.user" [size]="avatarSize.medium"></app-avatar>
-                                            </div>
-                                            <div>
+                                @if ((comments()?.length ?? 0) > 0) {
+                                    @for (comment of comments(); track comment.status.id) {
+                                        <div class="padding-top-10 comments">
+                                            <div class="flex-row gap-8" [ngClass]="{ 'replies': !comment.showDivider, 'padding-top-15': comment.showDivider }">
                                                 <div>
-                                                    <a [routerLink]="[ '/@' + comment.status.user?.userName ]" class="margin-right-5 fw-600">{{ comment.status.user?.name }}</a>
+                                                    <app-avatar [user]="comment.status.user" [size]="avatarSize.medium"></app-avatar>
                                                 </div>
                                                 <div>
-                                                    <span class="fw-400 fs-90 text-muted">&#64;{{ comment.status.user?.userName }}</span>
+                                                    <div>
+                                                        <a [routerLink]="[ '/@' + comment.status.user?.userName ]" class="margin-right-5 fw-600">{{ comment.status.user?.name }}</a>
+                                                    </div>
+                                                    <div>
+                                                        <span class="fw-400 fs-90 text-muted">&#64;{{ comment.status.user?.userName }}</span>
+                                                    </div>
+                                                    <div class="comment-text">
+                                                        <div [innerHTML]="comment.status.noteHtml"></div>
+                                                    </div>
                                                 </div>
-                                                <div class="comment-text">
-                                                    <div [innerHTML]="comment.status.noteHtml"></div>
-                                                </div>
-                                            </div>
 
-                                            @if (signedInUser()) {
-                                                <div class="comment-actions flex-grow-1 text-right">
-                                                    @if (comment.status.favourited) {
-                                                        <mat-icon class="favourited fill-symbol">star</mat-icon>
-                                                    }
+                                                @if (signedInUser()) {
+                                                    <div class="comment-actions flex-grow-1 text-right">
+                                                        @if (comment.status.favourited) {
+                                                            <mat-icon class="favourited fill-symbol">star</mat-icon>
+                                                        }
 
-                                                    <button mat-icon-button [matMenuTriggerFor]="menu" class="margin-right-10" color="primary" aria-label="More options">
-                                                        <mat-icon>more_vert</mat-icon>
-                                                    </button>
-                                                    <mat-menu #menu="matMenu">
-                                                        <button *ngIf="!comment.status.favourited" mat-menu-item (click)="favouriteComment(comment.status)">
-                                                            <mat-icon>star_border</mat-icon>
-                                                            <span>Like</span>
+                                                        <button mat-icon-button [matMenuTriggerFor]="menu" class="margin-right-10" color="primary" aria-label="More options">
+                                                            <mat-icon>more_vert</mat-icon>
                                                         </button>
-                                                        <button *ngIf="comment.status.favourited" mat-menu-item (click)="unFavouriteComment(comment.status)">
-                                                            <mat-icon>star</mat-icon>
-                                                            <span>Unlike</span>
-                                                        </button>
-                                                        <button mat-menu-item (click)="onReply(comment.status)">
-                                                            <mat-icon>reply</mat-icon>
-                                                            <span>Reply</span>
-                                                        </button>
-                                                        <mat-divider></mat-divider>
-                                                        <button mat-menu-item (click)="onReportDialog(comment.status)">
-                                                            <mat-icon>warning</mat-icon>
-                                                            <span>Report</span>
-                                                        </button>
-                                                        <button *ngIf="shouldDisplayDeleteCommentButton(comment.status)" mat-menu-item (click)="onDeleteComment(comment.status)">
-                                                            <mat-icon class="outline-symbol">delete</mat-icon>
-                                                            <span>Delete</span>
-                                                        </button>
-                                                    </mat-menu>
-                                                </div>
-                                            }
-                                        </div>
-
-                                        <div class="flex-row flex-responsive gap-horizontal-16 margin-left-40" [ngClass]="{ 'replies': !comment.showDivider }">                                            
-                                            <div class="text-muted fs-80">{{ comment.status.createdAt | ago }}</div>
-                                            <div class="text-muted fs-80" >
-                                                @if (comment.status.favouritesCount > 0) {
-                                                    <span>
-                                                        Comment liked by {{ comment.status.favouritesCount }} {{ comment.status.favouritesCount === 1 ? 'person' : 'people'}}.
-                                                    </span>
+                                                        <mat-menu #menu="matMenu">
+                                                            <button *ngIf="!comment.status.favourited" mat-menu-item (click)="favouriteComment(comment.status)">
+                                                                <mat-icon>star_border</mat-icon>
+                                                                <span>Like</span>
+                                                            </button>
+                                                            <button *ngIf="comment.status.favourited" mat-menu-item (click)="unFavouriteComment(comment.status)">
+                                                                <mat-icon>star</mat-icon>
+                                                                <span>Unlike</span>
+                                                            </button>
+                                                            <button mat-menu-item (click)="onReply(comment.status)">
+                                                                <mat-icon>reply</mat-icon>
+                                                                <span>Reply</span>
+                                                            </button>
+                                                            <mat-divider></mat-divider>
+                                                            <button mat-menu-item (click)="onReportDialog(comment.status)">
+                                                                <mat-icon>warning</mat-icon>
+                                                                <span>Report</span>
+                                                            </button>
+                                                            <button *ngIf="shouldDisplayDeleteCommentButton(comment.status)" mat-menu-item (click)="onDeleteComment(comment.status)">
+                                                                <mat-icon class="outline-symbol">delete</mat-icon>
+                                                                <span>Delete</span>
+                                                            </button>
+                                                        </mat-menu>
+                                                    </div>
                                                 }
                                             </div>
-                                        </div>
 
-                                        @if (replyStatus()?.id === comment.status.id) {
-                                            @if (signedInUser(); as signedInUserInternal) {
-                                                <div class="text-right padding-top-5">
-                                                    <app-comment-reply [signedInUser]="signedInUserInternal" [status]="comment.status" [showCancel]="true" (clickCancel)="onReply(undefined)" (added)="onCommentAdded()"></app-comment-reply>
+                                            <div class="flex-row flex-responsive gap-horizontal-16 margin-left-40" [ngClass]="{ 'replies': !comment.showDivider }">                                            
+                                                <div class="text-muted fs-80">{{ comment.status.createdAt | ago }}</div>
+                                                <div class="text-muted fs-80" >
+                                                    @if (comment.status.favouritesCount > 0) {
+                                                        <span>
+                                                            Comment liked by {{ comment.status.favouritesCount }} {{ comment.status.favouritesCount === 1 ? 'person' : 'people'}}.
+                                                        </span>
+                                                    }
                                                 </div>
-                                            }
-                                        }
-                                    </div>
-                                }
-                            }
+                                            </div>
 
-                            @if ((comments()?.length ?? 0) === 0) {
-                                <div>There is nothing to read here yet.</div>
-                            }
-                            
-                        </mat-card-content>
-                    </mat-card>
+                                            @if (replyStatus()?.id === comment.status.id) {
+                                                @if (signedInUser(); as signedInUserInternal) {
+                                                    <div class="text-right padding-top-5">
+                                                        <app-comment-reply [signedInUser]="signedInUserInternal" [status]="comment.status" [showCancel]="true" (clickCancel)="onReply(undefined)" (added)="onCommentAdded()"></app-comment-reply>
+                                                    </div>
+                                                }
+                                            }
+                                        </div>
+                                    }
+                                }
+
+                                @if ((comments()?.length ?? 0) === 0) {
+                                    <div>There is nothing to read here yet.</div>
+                                }
+                                
+                            </mat-card-content>
+                        </mat-card>
+
+                        <!-- Versions -->
+                         @if (versions() && versions().length) {
+                            <mat-card appearance="outlined">
+                                <mat-card-content>
+                                    <div class="versions">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Previous versions</mat-label>
+                                            <mat-select [(value)]="versionId" (selectionChange)="onVersionChange()">
+                                                <mat-option value="">Latest version</mat-option>
+                                                @for (version of versions(); track version.id) {
+                                                    <mat-option [value]="version.id">{{ version.orginalStatusUpdatedAt | date:'medium' }}</mat-option>
+                                                }
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </mat-card-content>
+                            </mat-card>
+                        }
+                    </div>
+
                 </div>
             </div>
 
