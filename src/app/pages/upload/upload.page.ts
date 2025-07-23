@@ -185,9 +185,11 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
 
     protected async onPhotoDelete(photo: UploadPhoto): Promise<void> {
         try {
-            photo.isDeleting.set(true);
-            await this.attachmentsService.deleteAttachment(photo.id);
-            photo.isDeleting.set(false);
+            if (!this.isEditMode()) {
+                photo.isDeleting.set(true);
+                await this.attachmentsService.deleteAttachment(photo.id);
+                photo.isDeleting.set(false);
+            }
 
             this.photos.update(photos => photos.filter(x => x !== photo));
         } catch (error) {
