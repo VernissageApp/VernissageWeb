@@ -22,6 +22,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatTimepickerModule } from '@angular/material/timepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -60,6 +61,7 @@ import { FileSaverModule } from 'ngx-filesaver';
         MatPaginatorModule,
         MatSortModule,
         MatDatepickerModule,
+        MatTimepickerModule,
         MatNativeDateModule,
         MatCheckboxModule,
         MatStepperModule,
@@ -99,6 +101,7 @@ import { FileSaverModule } from 'ngx-filesaver';
         MatPaginatorModule,
         MatSortModule,
         MatDatepickerModule,
+        MatTimepickerModule,
         MatNativeDateModule,
         MatCheckboxModule,
         MatStepperModule,

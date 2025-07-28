@@ -246,9 +246,22 @@
             <mat-checkbox class="exif-label" [name]="'createDate' + internalIndex" color="primary" [disableRipple]="true" [(ngModel)]="photo().showCreateDate">
                 <span class="text-muted">Create date:</span>
             </mat-checkbox>
-            <mat-form-field appearance="outline" class="flex-grow-2">
-                <input type="datetime-local" matInput [name]="'inputCreateDate' + internalIndex" type="text" [ngModel]="photo().createDate | date:'yyyy-MM-ddTHH:mm'" (ngModelChange)="photo().createDate = $event" [disabled]="!photo().showCreateDate" aria-label="Create date" />
-            </mat-form-field>
+            <div class="flex-grow-2">
+                <div class="flex-row flex-stretch gap-4 small-text-input margin-bottom-10 double-field">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Date</mat-label>
+                        <input matInput [matDatepicker]="datepicker" [(ngModel)]="photo().createDate" aria-label="Create date">
+                        <mat-datepicker #datepicker/>
+                        <mat-datepicker-toggle [for]="datepicker" matSuffix/>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Time</mat-label>
+                        <input matInput [matTimepicker]="timepicker" [(ngModel)]="photo().createDate" [ngModelOptions]="{updateOn: 'blur'}" aria-label="Create time">
+                        <mat-timepicker #timepicker />
+                        <mat-timepicker-toggle [for]="timepicker" matSuffix/>
+                    </mat-form-field>
+                </div>
+            </div>
         </div>
     </div>
 
