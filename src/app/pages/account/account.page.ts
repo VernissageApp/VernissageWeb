@@ -293,7 +293,7 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
 
     protected openDeleteAccountDialog(): void {
         const dialogRef = this.dialog.open(DeleteAccountDialog, {
-            data: this.user
+            data: this.user()
         });
 
         dialogRef.afterClosed().subscribe(async (result) => {
@@ -325,7 +325,7 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
 
     protected openCreateAccountDialog(): void {
         const dialogRef = this.dialog.open(CreateAliasDialog, {
-            data: this.user
+            data: this.user()
         });
 
         dialogRef.afterClosed().subscribe(async () => {
