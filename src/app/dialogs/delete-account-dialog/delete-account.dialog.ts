@@ -19,6 +19,6 @@ export class DeleteAccountDialog {
     }
 
     protected async onSubmit(): Promise<void> {
-        this.dialogRef.close({ confirmed: true});
+        this.dialogRef.close({ confirmed: true });
     }
 }
