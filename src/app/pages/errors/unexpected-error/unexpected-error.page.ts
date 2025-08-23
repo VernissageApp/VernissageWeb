@@ -39,14 +39,14 @@ export class UnexpectedErrorPage implements OnInit, OnDestroy {
             }
 
             this.value.update(progress => {
-                progress = progress - 4;
+                progress = progress - 10;
                 if (progress < 0) {
                     this.router.navigate(['/']);
                 }
 
                 return progress;
             });
-        }, 200);
+        }, 500);
 
         const errorObject = this.persistenceService.get('exception');
         if (errorObject) {

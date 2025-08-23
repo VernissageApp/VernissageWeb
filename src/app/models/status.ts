@@ -9,6 +9,7 @@ export class Status {
     public note = '';
     public noteHtml = '';
     public application?: string;
+    public orginalStatusUpdatedAt = '';
     public createdAt = '';
     public updatedAt = '';
     public visibility = StatusVisibility.Public;

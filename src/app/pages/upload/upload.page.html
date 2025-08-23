@@ -1,6 +1,6 @@
 <div @fadeIn [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
     <h1>
-        <div>Upload photos</div>
+        <div>{{ isEditMode() ? 'Edit status' : 'Upload photos' }}</div>
         @if (!isHandset()) {
             <div class="fs-60 text-muted">
                 Currently supported file formats are JPEG and PNG. The maximum file size is {{ maxFileSizeString() }}.
@@ -156,7 +156,9 @@
                             <div class="flex-row flex-space-between">
                                 <div>
                                     <button class="margin-right-10" mat-stroked-button matStepperPrevious>Back</button>
-                                    <button mat-flat-button color="primary" [disabled]="!allPhotosUploaded()" matStepperNext>Upload</button>
+                                    <button mat-flat-button color="primary" [disabled]="!allPhotosUploaded()" matStepperNext>
+                                        {{ isEditMode() ? 'Update' : 'Upload' }}
+                                    </button>
                                 </div>
                                 <div>
                                     @if (isCanceling()) {

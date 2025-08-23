@@ -1,11 +1,11 @@
-import { Component, HostListener, ElementRef, OnInit, OnDestroy, PLATFORM_ID, signal, viewChild, computed, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, HostListener, ElementRef, OnInit, OnDestroy, PLATFORM_ID, signal, viewChild, computed, ChangeDetectionStrategy, inject, model } from '@angular/core';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { fadeInAnimation } from "src/app/animations/fade-in.animation";
 import { showOrHideAnimation } from 'src/app/animations/show-or-hide.animation';
 import { decode } from 'blurhash';
-import { Subscription } from 'rxjs';
+import { combineLatest, map, Subscription } from 'rxjs';
 import { StatusesService } from 'src/app/services/http/statuses.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { Status } from 'src/app/models/status';
 import { Exif } from 'src/app/models/exif';
 import { Location } from 'src/app/models/location';
@@ -35,6 +35,7 @@ import { Meta, SafeHtml, Title } from '@angular/platform-browser';
 import { LoadingService } from 'src/app/services/common/loading.service';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { FocusTrackerService } from 'src/app/services/common/focus-tracker.service';
+import { PageNotFoundError } from 'src/app/errors/page-not-found-error';
 
 @Component({
     selector: 'app-status',
@@ -68,6 +69,10 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     protected isLoggedIn = signal(false);
     protected rendered = signal<SafeHtml>('');
     protected hasHdrSupport = signal(false);
+
+    protected versionId = model<string>('');
+    protected versions = signal<Status[]>([]);
+    protected isInVersionMode = signal(false);
 
     protected isDuringBoostProcessing = signal(false);
     protected isDuringFavouriteProcessing = signal(false);
@@ -134,39 +139,50 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         this.autoScrollGalleryImages.set(this.preferencesService.autoScrollGalleryImages);
         this.hasHdrSupport.set(this.isHdrRendered());
 
-        this.routeParamsSubscription = this.activatedRoute.params.subscribe(async params => {
-            const statusId = params['id'] as string;
+        this.routeParamsSubscription = combineLatest([this.activatedRoute.params, this.activatedRoute.queryParamMap])
+            .pipe(map(params => ({ routeParams: params[0], queryParams: params[1] })))
+            .subscribe(async params => {
+                const statusId = params.routeParams['id'] as string;
 
-            const signedInUserInternal = this.authorizationService.getUser()
-            const isLoggedInInternal = await  this.authorizationService.isLoggedIn();
+                if (params.queryParams.has('version')) {
+                    const internalVersionId = params.queryParams.get('version');
+                    this.versionId.set(internalVersionId ?? '');
+                    this.isInVersionMode.set(true);
+                } else {
+                    this.isInVersionMode.set(false);
+                    this.versionId.set('');
+                }
 
-            this.signedInUser.set(signedInUserInternal);
-            this.isLoggedIn.set(isLoggedInInternal);
-            this.currentIndex.set(0);
+                const signedInUserInternal = this.authorizationService.getUser()
+                const isLoggedInInternal = await  this.authorizationService.isLoggedIn();
 
-            // Load status information.
-            await this.loadPageData(statusId);
+                this.signedInUser.set(signedInUserInternal);
+                this.isLoggedIn.set(isLoggedInInternal);
+                this.currentIndex.set(0);
 
-            // Load images to gallery (and reset gallery state).
-            const mainGallery = this.gallery.ref(this.mainGalleryId);
-            mainGallery.load(this.images() ?? []);
-            mainGallery.set(0);
+                // Load status information.
+                await this.loadPageData(statusId);
 
-            // Load images to popup gallery.
-            const popupGallery = this.gallery.ref(this.popupGalleryId);
-            popupGallery.load(this.images() ?? []);
+                // Load images to gallery (and reset gallery state).
+                const mainGallery = this.gallery.ref(this.mainGalleryId);
+                mainGallery.load(this.images() ?? []);
+                mainGallery.set(0);
 
-            this.setNoIndexMeta();
+                // Load images to popup gallery.
+                const popupGallery = this.gallery.ref(this.popupGalleryId);
+                popupGallery.load(this.images() ?? []);
 
-            this.loadingService.hideLoader();
-            this.isReady.set(true);
+                this.setNoIndexMeta();
 
-            if (!this.firstCanvasInitialization) {
-                setTimeout(() => {
-                    this.drawCanvas();
-                });
-            }
-        });
+                this.loadingService.hideLoader();
+                this.isReady.set(true);
+
+                if (!this.firstCanvasInitialization) {
+                    setTimeout(() => {
+                        this.drawCanvas();
+                    });
+                }
+            });
     }
 
     override ngOnDestroy(): void {
@@ -175,6 +191,15 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         this.clearNoIndexMeta();
         this.routeParamsSubscription?.unsubscribe();
         this.routeNavigationEndSubscription?.unsubscribe();
+    }
+
+    protected onVersionChange(): void {
+        const navigationExtras: NavigationExtras = {
+            queryParams: { version: this.versionId().length > 0 ?  this.versionId() : undefined },
+            queryParamsHandling: 'merge'
+        };
+
+        this.router.navigate([], navigationExtras);
     }
 
     protected onImageLoaded(): void {
@@ -323,6 +348,10 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         });
     }
 
+    protected async onEditStatus(): Promise<void> {
+        await this.router.navigate(['/statuses', this.status()?.id, 'edit']);
+    }
+
     protected async onDeleteComment(comment: Status): Promise<void> {
         const dialogRef = this.dialog.open(DeleteStatusDialog, {
             width: '500px'
@@ -398,6 +427,10 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
 
     protected shouldDisplayDeleteButton(): boolean {
         return this.isStatusOwner() || this.authorizationService.hasRole(Role.Administrator) || this.authorizationService.hasRole(Role.Moderator);
+    }
+
+    protected shouldDisplayEditButton(): boolean {
+        return this.isStatusOwner();
     }
 
     protected shouldDisplayFeatureButton(): boolean {
@@ -764,7 +797,9 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     }
 
     private async loadPageData(statusId: string): Promise<void> {
-        const downloadedStatus = await this.statusesService.get(statusId);
+        const firstImageUrlBeforeLoad = this.getFirstImageUrl();
+
+        const downloadedStatus = await this.getStatusData(statusId);
         this.status.set(downloadedStatus);
 
         if (downloadedStatus.reblog) {
@@ -778,7 +813,8 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         this.setImageHeight();
         this.setCardMetatags();
 
-        this.imageIsLoaded.set(false);
+        const firstImageUrlAfterLoad = this.getFirstImageUrl();
+        this.imageIsLoaded.set(firstImageUrlBeforeLoad === firstImageUrlAfterLoad);
 
         if (this.mainStatus()?.sensitive && !this.alwaysShowNSFW()) {
             this.showSensitiveImage.set(false);
@@ -803,10 +839,15 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         this.images.set(internalImages);
         this.rendered.set(this.mainStatus()?.noteHtml ?? '');
 
-        const mainStatusId = this.mainStatus()?.id;
-        if (mainStatusId) {
-            const downloadedComments = await this.getAllReplies(mainStatusId);
-            this.comments.set(downloadedComments);
+        // Load status histories asynchronously.
+        this.loadStatusHistories(statusId);
+
+        if (!this.isInVersionMode()) {
+            const mainStatusId = this.mainStatus()?.id;
+            if (mainStatusId) {
+                const downloadedComments = await this.getAllReplies(mainStatusId);
+                this.comments.set(downloadedComments);
+            }
         }
     }
 
@@ -964,5 +1005,33 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
 
     private clearNoIndexMeta(): void {
         this.metaService.removeTag('name="robots"');
+    }
+
+    private async getStatusData(statusId: string): Promise<Status> {
+        if (this.isInVersionMode()) {
+            const histories = await this.statusesService.getHistories(statusId);
+            const version = histories.find(x => x.id === this.versionId());
+            if (!version) {
+                throw new PageNotFoundError();
+            }
+
+            return version;
+        } else {
+            return await this.statusesService.get(statusId);
+        }
+    }
+
+    private async loadStatusHistories(statusId: string): Promise<void> {
+        const histories = await this.statusesService.getHistories(statusId);
+        this.versions.set(histories);
+    }
+
+    private getFirstImageUrl(): string | undefined {
+        const internalAttachments = this.mainStatus()?.attachments;
+        if (internalAttachments && internalAttachments.length > 0) {
+            return internalAttachments[0].originalFile?.url;
+        }
+
+        return undefined;
     }
 }

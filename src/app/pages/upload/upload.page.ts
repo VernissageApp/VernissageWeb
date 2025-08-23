@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject, model, OnInit, signal } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { encode } from 'blurhash';
 import * as ExifReader from 'exifreader';
 import { StatusRequest } from 'src/app/models/status-request';
@@ -27,6 +27,9 @@ import { UserSettingsService } from 'src/app/services/http/user-settings.service
 import { UserSettingKey } from 'src/app/models/user-setting';
 import { FileSizeService } from 'src/app/services/common/file-size.service';
 import { AccountService } from 'src/app/services/http/account.service';
+import { LoadingService } from 'src/app/services/common/loading.service';
+import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
+import { ForbiddenError } from 'src/app/errors/forbidden-error';
 
 @Component({
     selector: 'app-upload',
@@ -58,10 +61,12 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
     protected maxStatusLength = signal(0);
     protected isOpenAIEnabled = signal(false);
     protected hashtagsInProgress = signal(false);
+    protected isEditMode = signal(false);
 
     protected allPhotosUploaded = computed(() => !this.photos().some(x => !x.isUploaded() || (x.photoHdrFile && !x.isHdrUploaded)));
 
     private maxFileSize = 0;
+    private statusId = '';
     private readonly defaultMaxFileSize = 10485760;
 
     private messageService = inject(MessagesService);
@@ -71,6 +76,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
     private statusesService = inject(StatusesService);
     private instanceService = inject(InstanceService);
     private router = inject(Router);
+    private activatedRoute = inject(ActivatedRoute);
     private settingsService = inject(SettingsService);
     private randomGeneratorService = inject(RandomGeneratorService);
     private windowService = inject(WindowService);
@@ -78,9 +84,12 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
     private userSettingsService = inject(UserSettingsService);
     private fileSizeService = inject(FileSizeService);
     private accountService = inject(AccountService);
+    private loadingService = inject(LoadingService);
+    private authorizationService = inject(AuthorizationService);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
+
         this.maxFileSize = this.instanceService.instance?.configuration?.attachments?.imageSizeLimit ?? this.defaultMaxFileSize;
         this.maxFileSizeString.set(this.fileSizeService.getHumanFileSize(this.maxFileSize, 0));
 
@@ -98,6 +107,12 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
         this.licenses.set(internalLicenses);
         this.statusTextTemplate.set(internalStatusTextTemplate?.value);
         this.emailHasBeenVerified.set(internalEmailHasBeenVerified.result);
+
+        if (this.router.routerState.snapshot.url.includes('edit')) {
+            this.loadingService.showLoader();
+            await this.loadStatusData();
+            this.loadingService.hideLoader();
+        }
     }
 
     protected async onPhotoSelected(event: any): Promise<void> {
@@ -108,7 +123,8 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
         }
 
         const photoUuid = this.randomGeneratorService.generateString(16);
-        const uploadPhoto = new UploadPhoto(photoUuid, event.target.files[0]);
+        const uploadPhoto = new UploadPhoto(photoUuid);
+        uploadPhoto.photoFile = event.target.files[0];
 
         this.setPhotoData(uploadPhoto);
         this.setExifMetadata(uploadPhoto, async () => {
@@ -116,9 +132,12 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
                 this.photos.update(photos => [...photos, uploadPhoto]);
 
                 const formData = new FormData();
-                formData.append('file', uploadPhoto.photoFile);
-                const temporaryAttachment = await this.attachmentsService.uploadAttachment(formData);
 
+                if (uploadPhoto.photoFile) {
+                    formData.append('file', uploadPhoto.photoFile);
+                }
+
+                const temporaryAttachment = await this.attachmentsService.uploadAttachment(formData);
                 this.photos.update(photosArray => {
                     const photo = photosArray.find(item => item.uuid === uploadPhoto.uuid);
                     if (photo) {
@@ -144,13 +163,18 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
             this.isCanceling.set(true);
 
             for (const photo of this.photos()) {
-                if (photo.isUploaded()) {
+                if (photo.isUploaded() && !photo.isAlreadyConnected) {
                     await this.attachmentsService.deleteAttachment(photo.id);
                 }
             }
 
             this.isCanceling.set(false);
-            await this.router.navigate(['/']);
+
+            if (this.isEditMode()) {
+                await this.router.navigate(['/statuses', this.statusId]);
+            } else {
+                await this.router.navigate(['/']);
+            }
         } catch (error) {
             console.error(error);
             this.messageService.showServerError(error);
@@ -161,9 +185,11 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
 
     protected async onPhotoDelete(photo: UploadPhoto): Promise<void> {
         try {
-            photo.isDeleting.set(true);
-            await this.attachmentsService.deleteAttachment(photo.id);
-            photo.isDeleting.set(false);
+            if (!this.isEditMode()) {
+                photo.isDeleting.set(true);
+                await this.attachmentsService.deleteAttachment(photo.id);
+                photo.isDeleting.set(false);
+            }
 
             this.photos.update(photos => photos.filter(x => x !== photo));
         } catch (error) {
@@ -292,6 +318,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
             }
 
             const status = new StatusRequest();
+            status.id = this.statusId;
             status.note = this.statusText();
             status.categoryId = this.categoryId();
             status.visibility = this.visibility();
@@ -303,10 +330,17 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
                 status.attachmentIds.push(photo.id);
             }
 
-            await this.statusesService.create(status)
+            if (this.isEditMode()) {
+                await this.statusesService.update(status)
 
-            this.messageService.showSuccess('Status has been saved.');
-            await this.router.navigate(['/']);
+                this.messageService.showSuccess('Status has been updated.');
+                await this.router.navigate(['/statuses', this.statusId]);
+            } else {
+                await this.statusesService.create(status)
+
+                this.messageService.showSuccess('Status has been saved.');
+                await this.router.navigate(['/']);
+            }
         } catch (error) {
             console.error(error);
             this.messageService.showServerError(error);
@@ -370,7 +404,9 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
             uploadPhoto.blurhash = blurhash;
         }
 
-        reader.readAsDataURL(uploadPhoto.photoFile);
+        if (uploadPhoto.photoFile) {
+            reader.readAsDataURL(uploadPhoto.photoFile);
+        }
     }
 
     private setExifMetadata(uploadPhoto: UploadPhoto, listener: () => void): void {
@@ -488,7 +524,95 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
             listener();
         });
 
-        bufferReader.readAsArrayBuffer(uploadPhoto.photoFile);
+        if (uploadPhoto.photoFile) {
+            bufferReader.readAsArrayBuffer(uploadPhoto.photoFile);
+        }
+    }
+
+    private async loadStatusData(): Promise<void> {
+        this.isEditMode.set(true);
+
+        this.statusId = this.activatedRoute.snapshot.params['id'] as string;
+        const status = await this.statusesService.get(this.statusId);
+
+        if (status.user?.userName !== this.authorizationService.getUser()?.userName) {
+            throw new ForbiddenError();
+        }
+
+        this.statusText.set(status.note);
+        this.categoryId.set(status.category?.id);
+        this.visibility.set(status.visibility);
+        this.commentsDisabled.set(status.commentsDisabled);
+        this.isSensitive.set(status.sensitive);
+        this.contentWarning.set(status.contentWarning ?? '');
+
+        const internalPhotos: UploadPhoto[] = [];
+        const internalAttachments = status.attachments;
+
+        if (internalAttachments) {
+            for (const attachment of internalAttachments) {
+                const photoUuid = this.randomGeneratorService.generateString(16);
+                const uploadPhoto = new UploadPhoto(photoUuid);
+
+                uploadPhoto.id = attachment.id;
+                uploadPhoto.isAlreadyConnected = true;
+                uploadPhoto.description = attachment.description;
+                
+                if (attachment.originalFile?.url) {
+                    uploadPhoto.photoSrc.set(attachment.originalFile.url);
+                }
+
+                if (attachment.originalHdrFile?.url) {
+                    uploadPhoto.photoHdrSrc = attachment.originalHdrFile.url;
+                }
+
+                uploadPhoto.locationId = attachment.location?.id;
+                uploadPhoto.licenseId = attachment.license?.id;
+
+                const internalExif = attachment.metadata?.exif;
+                if (internalExif) {
+                    uploadPhoto.make = internalExif.make;
+                    uploadPhoto.model = internalExif.model;
+                    uploadPhoto.lens = internalExif.lens;
+                    uploadPhoto.focalLength = internalExif.focalLength;
+                    uploadPhoto.focalLenIn35mmFilm = internalExif.focalLenIn35mmFilm;
+                    uploadPhoto.fNumber = internalExif.fNumber?.replaceAll('f/', '');
+                    uploadPhoto.exposureTime = internalExif.exposureTime;
+                    uploadPhoto.flash = internalExif.flash;
+                    uploadPhoto.photographicSensitivity = internalExif.photographicSensitivity;
+                    uploadPhoto.software = internalExif.software;
+                    uploadPhoto.film = internalExif.film;
+                    uploadPhoto.chemistry = internalExif.chemistry;
+                    uploadPhoto.scanner = internalExif.scanner;
+                    uploadPhoto.latitude = internalExif.latitude;
+                    uploadPhoto.longitude = internalExif.longitude;
+
+                    if (internalExif.createDate) {
+                        uploadPhoto.createDate = new Date(internalExif.createDate);
+                    }
+                }
+
+                uploadPhoto.showMake = !!uploadPhoto.make;
+                uploadPhoto.showModel = !!uploadPhoto.model;
+                uploadPhoto.showLens = !!uploadPhoto.lens;
+                uploadPhoto.showCreateDate = !!uploadPhoto.createDate;
+                uploadPhoto.showFocalLenIn35mmFilm = !!uploadPhoto.focalLenIn35mmFilm;
+                uploadPhoto.showFNumber = !!uploadPhoto.fNumber;
+                uploadPhoto.showExposureTime = !!uploadPhoto.exposureTime;
+                uploadPhoto.showPhotographicSensitivity = !!uploadPhoto.photographicSensitivity;
+                uploadPhoto.showSoftware = !!uploadPhoto.software;
+                uploadPhoto.showFilm = !!uploadPhoto.film;
+                uploadPhoto.showChemistry = !!uploadPhoto.chemistry;
+                uploadPhoto.showScanner = !!uploadPhoto.scanner;
+                uploadPhoto.showGpsCoordination = !!uploadPhoto.latitude && !!uploadPhoto.longitude;
+                uploadPhoto.showFlash = !!uploadPhoto.flash;
+
+                uploadPhoto.isUploaded.set(true);
+                internalPhotos.push(uploadPhoto);
+            }
+        }
+
+        this.photos.set(internalPhotos);
     }
 
     private loadImage(src: string): Promise<any> {
