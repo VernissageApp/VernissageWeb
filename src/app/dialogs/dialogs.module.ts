@@ -32,6 +32,7 @@ import { FollowingImportAccountsDialog } from './following-import-accounts-dialo
 import { ShareBusinessCardDialog } from './share-business-card-dialog/share-business-card.dialog';
 import { UpdateSharedBusinessCardDialog } from './update-shared-business-card/update-shared-business-card.dialog';
 import { ErrorItemDialog } from './error-item-dialog/error-item.dialog';
+import { StatusEventErrorMessageDialog } from './status-event-error-message-dialog/status-event-error-message.dialog';
 
 @NgModule({
     declarations: [
@@ -59,6 +60,7 @@ import { ErrorItemDialog } from './error-item-dialog/error-item.dialog';
         ShareBusinessCardDialog,
         UpdateSharedBusinessCardDialog,
         ErrorItemDialog,
+        StatusEventErrorMessageDialog,
         CategoryHashtagItemComponent
     ],
     exports: [
@@ -85,7 +87,8 @@ import { ErrorItemDialog } from './error-item-dialog/error-item.dialog';
         ShareBusinessCardDialog,
         UpdateSharedBusinessCardDialog,
         ErrorItemDialog,
-        FollowingImportAccountsDialog
+        FollowingImportAccountsDialog,
+        StatusEventErrorMessageDialog
     ], 
     imports: [
         BrowserModule,

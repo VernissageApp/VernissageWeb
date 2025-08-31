@@ -1,0 +1,212 @@
+@if (isReady()) {
+    @if (events(); as eventsArray) {
+        <div @fadeIn [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
+            <div class="flex-row flex-space-around padding-left-10 padding-right-10">
+                <div class="width-100">
+                    <section class="flex-row flex-space-between flex-align-center margin-bottom-20" [ngClass]="{ 'flex-row': !isHandset(), 'flex-column': isHandset() }">
+                        <h1>
+                            <div>Status events</div>
+                            <div *ngIf="!isHandset()" class="fs-60 text-muted">
+                                List of events sent from the system via the ActivityPub protocol to other Fediverse instances associated with the <a [routerLink]="['/statuses', this.statusId()]">status</a>.
+                            </div>
+                        </h1>
+                    </section>
+
+                    <div class="search width-100">
+                        <mat-card class="margin-bottom-20" appearance="outlined">
+                            <mat-card-content>
+                                <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+                                    <div class="flex-row flex-align-center flex-space-between gap-16">
+                                        <div class="flex-row flex-align-center gap-16">
+                                            @if (!isHandset()) {
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Action</mat-label>
+                                                    <mat-select [(value)]="type">
+                                                        <mat-option value="">All</mat-option>
+                                                        <mat-option value="create">Create</mat-option>
+                                                        <mat-option value="update">Update</mat-option>
+                                                        <mat-option value="like">Like</mat-option>
+                                                        <mat-option value="unlike">Undo like</mat-option>
+                                                        <mat-option value="announce">Announce</mat-option>
+                                                        <mat-option value="unannounce">Undo announce</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            }
+                           
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Result</mat-label>
+                                                <mat-select [(value)]="result">
+                                                    <mat-option value="">All</mat-option>
+                                                    <mat-option value="waiting">Waiting</mat-option>
+                                                    <mat-option value="processing">Processing</mat-option>
+                                                    <mat-option value="finished">Finished</mat-option>
+                                                    <mat-option value="finishedWithErrors">Finished with errors</mat-option>
+                                                    <mat-option value="failed">Failed</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+
+                                            @if (!isHandset()) {
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Sorting</mat-label>
+                                                    <mat-select [(value)]="sortColumn">
+                                                        <mat-option value="startAt">Start date</mat-option>
+                                                        <mat-option value="endAt">End date</mat-option>
+                                                        <mat-option value="createdAt">Created date</mat-option>
+                                                        <mat-option value="updatedAt">Updated date</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            }
+                                        </div>
+                                        <button mat-flat-button color="primary">Search</button>
+                                    </div>
+                                    <div class="margin-top-5">
+                                        @if (!isHandset()) {
+                                            <mat-radio-group name="sortDirection" [(ngModel)]="sortDirection" aria-label="Sort direction">
+                                                <mat-radio-button value="ascending">Ascending</mat-radio-button>
+                                                <mat-radio-button value="descending">Descending</mat-radio-button>
+                                            </mat-radio-group>
+                                        }
+                                    </div>
+                                </form>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+
+                    <table mat-table [dataSource]="eventsArray.data" class="mat-elevation-z1">
+
+                        <!-- Type Column -->
+                        <ng-container matColumnDef="type">
+                            <th mat-header-cell *matHeaderCellDef> Action </th>
+                            <td mat-cell *matCellDef="let element">
+                                @switch (element.type) {
+                                    @case ('create') { 
+                                        <span>Create</span>
+                                    }
+                                    @case ('update') { 
+                                        <span>Update</span>
+                                    }
+                                    @case ('like') { 
+                                        <span>Like</span>
+                                    }
+                                    @case ('unlike') { 
+                                        <span>Undo like</span>
+                                    }
+                                    @case ('announce') { 
+                                        <span>Announce</span>
+                                    }
+                                    @case ('unannounce') { 
+                                        <span>Undo announce</span>
+                                    }
+                                }
+                            </td>
+                        </ng-container>
+
+                        <!-- Result Column -->
+                        <ng-container matColumnDef="result">
+                            <th mat-header-cell *matHeaderCellDef> Result </th>
+                            <td mat-cell *matCellDef="let element">
+                                @switch (element.result) {
+                                    @case ('waiting') { 
+                                        <span>Waiting</span>
+                                    }
+                                    @case ('processing') { 
+                                        <span>Processing</span>
+                                    }
+                                    @case ('finished') { 
+                                        <span>Finished</span>
+                                    }
+                                    @case ('finishedWithErrors') { 
+                                        <span>Finished (with errors)</span>
+                                    }
+                                    @case ('failed') { 
+                                        <span>Failed</span>
+                                    }
+                                }
+
+                                @if (element.errorMessage) {
+                                    <div class="fs-80">
+                                        <a href="javascript:void(0)" (click)="onOpenErrorMessage(element)">Error message</a>
+                                    </div>
+                                }
+                            </td>
+                        </ng-container>
+
+                        <!-- User Name Column -->
+                        <ng-container matColumnDef="user">
+                            <th mat-header-cell *matHeaderCellDef> User </th>
+                            <td mat-cell *matCellDef="let element">
+                                <div class="user-name-link">
+                                    <a [routerLink]="['/@' + element.user.userName ]">
+                                        {{ element.user.userName }}
+                                    </a>
+                                </div>
+                                <div class="name">
+                                    {{ element.name }}
+                                </div>
+                            </td>
+                        </ng-container>
+
+                        <!-- Attempts Column -->
+                        <ng-container matColumnDef="attempts">
+                            <th mat-header-cell *matHeaderCellDef> Attempts </th>
+                            <td mat-cell *matCellDef="let element">
+                                <span>
+                                    {{ element.attempts }}
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <!-- Created Date Column -->
+                        <ng-container matColumnDef="createdAt">
+                            <th mat-header-cell *matHeaderCellDef> Created date </th>
+                            <td mat-cell *matCellDef="let element">
+                                <span *ngIf="element.createdAt">
+                                    {{ element.createdAt | date: 'short' }}
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <!-- Start Date Column -->
+                        <ng-container matColumnDef="startAt">
+                            <th mat-header-cell *matHeaderCellDef> Start date </th>
+                            <td mat-cell *matCellDef="let element">
+                                <span *ngIf="element.startAt">
+                                    {{ element.startAt | date: 'short' }}
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <!-- Start Date Column -->
+                        <ng-container matColumnDef="endAt">
+                            <th mat-header-cell *matHeaderCellDef> End date </th>
+                            <td mat-cell *matCellDef="let element">
+                                <span *ngIf="element.endAt">
+                                    {{ element.endAt | date: 'short' }}
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <!-- Actions Column -->
+                        <ng-container matColumnDef="actions">
+                            <th mat-header-cell *matHeaderCellDef></th>
+                            <td mat-cell *matCellDef="let element" class="text-right">
+                                <a [routerLink]="['/statuses', this.statusId(), 'events', element.id, 'items']">Details</a>
+                            </td>
+                        </ng-container>
+                    
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns()"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns();"></tr>
+                    </table>
+                    <mat-paginator
+                        (page)="handlePageEvent($event)"
+                        [length]="eventsArray.total"
+                        [pageIndex]="pageIndex()"
+                        [pageSize]="10"
+                        [pageSizeOptions]="[10, 25, 100]"
+                        aria-label="Select page">
+                    </mat-paginator>
+                </div>
+            </div>
+        </div>
+    }
+}

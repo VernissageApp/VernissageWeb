@@ -10,6 +10,9 @@ import { LinkableResult } from 'src/app/models/linkable-result';
 import { StatusContext } from 'src/app/models/status-context';
 import { User } from 'src/app/models/user';
 import { ContentWarning } from 'src/app/models/content-warning';
+import { PagedResult } from 'src/app/models/paged-result';
+import { StatusActivityPubEvent } from 'src/app/models/status-activity-pub-event';
+import { StatusActivityPubEventItem } from 'src/app/models/status-activity-pub-event-item';
 
 @Injectable({
     providedIn: 'root'
@@ -110,6 +113,16 @@ export class StatusesService {
 
     public async favourited(statusId: string, minId?: string, maxId?: string, sinceId?: string, limit?: number): Promise<LinkableResult<User>> {
         const event$ = this.httpClient.get<LinkableResult<User>>(this.windowService.apiUrl() +  '/api/v1/statuses/' + statusId + `/favourited?minId=${minId ?? ''}&maxId=${maxId ?? ''}&sinceId=${sinceId ?? ''}&limit=${limit ?? ''}`);
+        return await firstValueFrom(event$);
+    }
+
+    public async events(statusId: string, page: number, size: number, type?: string, result?: string, sortColumn = 'createdAt', sortDirection = 'descending'): Promise<PagedResult<StatusActivityPubEvent>> {
+        const event$ = this.httpClient.get<PagedResult<StatusActivityPubEvent>>(this.windowService.apiUrl() + `/api/v1/statuses/${statusId}/events?page=${page}&size=${size}&type=${type ?? ''}&result=${result ?? ''}&sortColumn=${sortColumn}&sortDirection=${sortDirection}`);
+        return await firstValueFrom(event$);
+    }
+
+    public async eventItems(statusId: string, eventId: string, page: number, size: number, onlyErrors?: boolean, sortColumn = 'createdAt', sortDirection = 'descending'): Promise<PagedResult<StatusActivityPubEventItem>> {
+        const event$ = this.httpClient.get<PagedResult<StatusActivityPubEventItem>>(this.windowService.apiUrl() + `/api/v1/statuses/${statusId}/events/${eventId}/items?page=${page}&size=${size}&onlyErrors=${onlyErrors}&sortColumn=${sortColumn}&sortDirection=${sortDirection}`);
         return await firstValueFrom(event$);
     }
 }
