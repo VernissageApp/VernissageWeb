@@ -1,0 +1,15 @@
+<div mat-dialog-title>Error message</div>
+<div mat-dialog-content>
+
+    <div class="flex-col gap-0 margin-top-5">
+        <mat-form-field appearance="outline" class="width-100 padding-top-10">
+            <mat-label>Error message</mat-label>
+            <textarea matInput name="errorMessage" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4"
+                cdkAutosizeMaxRows="22" placeholder="Message" [ngModel]="errorMessage()" [disabled]="true"
+                aria-label="Error message"></textarea>
+        </mat-form-field>
+    </div>
+</div>
+<div mat-dialog-actions>
+    <button mat-button type="button" (click)="onNoClick()">Close</button>
+</div>
