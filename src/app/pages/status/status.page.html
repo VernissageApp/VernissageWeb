@@ -175,6 +175,10 @@
                                             <mat-icon class="outline-symbol">report</mat-icon>
                                             <span>Report</span>
                                         </button>
+                                        <button *ngIf="shouldDisplayEventsButton()" mat-menu-item (click)="onStatusEvents()">
+                                            <mat-icon class="outline-symbol">call_split</mat-icon>
+                                            <span>Events</span>
+                                        </button>
                                         <button *ngIf="shouldDisplayEditButton()" mat-menu-item (click)="onEditStatus()">
                                             <mat-icon class="outline-symbol">edit</mat-icon>
                                             <span>Edit</span>
