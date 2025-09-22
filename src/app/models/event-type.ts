@@ -199,5 +199,7 @@ export enum EventType {
     SharedBusinessCardUpdateByThirdParty = 'sharedBusinessCardUpdateByThirdParty',
     SharedBusinessCardMessageByThirdParty = 'sharedBusinessCardMessageByThirdParty',
 
-    QuickCaptchaGenerate = 'quickCaptchaGenerate'
+    QuickCaptchaGenerate = 'quickCaptchaGenerate',
+    StatusActivityPubEventsList = 'statusActivityPubEventsList',
+    StatusActivityPubEventsItems = 'statusActivityPubEventsItems'
 }

@@ -5,6 +5,7 @@ import { User } from "./user";
 export class StatusActivityPubEvent {
     public id = '';
     public user?: User;
+    public statusId = '';
     public type?: StatusActivityPubEventType;
     public result?: StatusActivityPubEventResult;
     public errorMessage?: string;
