@@ -49,6 +49,8 @@ import { NewsPreviewPage } from './news-preview/news-preview.page';
 import { FrequentlyAskedQuestionsPage } from './frequently-asked-questions/frequently-asked-questions.page';
 import { StatusEventsPage } from './status-events/status-events.page';
 import { StatusEventItemsPage } from './status-event-items/status-event-items.page';
+import { StatusActivityPubEventsPage } from './status-activity-pub-events/status-activity-pub-events.page';
+import { StatusActivityPubEventItemsPage } from './status-activity-pub-event-items/status-activity-pub-event-items.page';
 
 @NgModule({
     imports: [
@@ -101,7 +103,9 @@ import { StatusEventItemsPage } from './status-event-items/status-event-items.pa
         SharedCardPublicPage,
         FrequentlyAskedQuestionsPage,
         StatusEventsPage,
-        StatusEventItemsPage
+        StatusEventItemsPage,
+        StatusActivityPubEventsPage,
+        StatusActivityPubEventItemsPage
     ],
     exports: [
         ComponentsModule,
@@ -149,7 +153,9 @@ import { StatusEventItemsPage } from './status-event-items/status-event-items.pa
         SharedCardPublicPage,
         FrequentlyAskedQuestionsPage,
         StatusEventsPage,
-        StatusEventItemsPage
+        StatusEventItemsPage,
+        StatusActivityPubEventsPage,
+        StatusActivityPubEventItemsPage
     ]
 })
 export class PagesModule { }
