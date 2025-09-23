@@ -10,39 +10,37 @@ import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { combineLatest, map, Subscription } from 'rxjs';
 import { AvatarSize } from 'src/app/components/widgets/avatar/avatar-size';
-import { StatusActivityPubEventItem } from 'src/app/models/status-activity-pub-event-item';
-import { StatusEventErrorMessageDialog } from 'src/app/dialogs/status-event-error-message-dialog/status-event-error-message.dialog';
+import { StatusActivityPubEvent } from 'src/app/models/status-activity-pub-event';
 import { MatDialog } from '@angular/material/dialog';
+import { StatusEventErrorMessageDialog } from 'src/app/dialogs/status-event-error-message-dialog/status-event-error-message.dialog';
 import { StatusActivityPubEventsService } from 'src/app/services/http/status-activity-pub-events.service';
 
 @Component({
-    selector: 'app-status-activity-pub-event-items',
-    templateUrl: './status-activity-pub-event-items.page.html',
-    styleUrls: ['./status-activity-pub-event-items.page.scss'],
+    selector: 'app-activity-pub-events',
+    templateUrl: './activity-pub-events.page.html',
+    styleUrls: ['./activity-pub-events.page.scss'],
     animations: fadeInAnimation,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
-export class StatusActivityPubEventItemsPage extends ResponsiveComponent implements OnInit, OnDestroy {
+export class ActivityPubEventsPage extends ResponsiveComponent implements OnInit, OnDestroy {
     protected readonly avatarSize = AvatarSize
     protected readonly role = Role;
 
-    protected onlyErrors = model(false);
+    protected type = model('');
+    protected result = model('');
     protected sortColumn = model('createdAt');
     protected sortDirection = model('descending');
-    protected statusId = signal('');
-    protected eventId = signal('');
     protected isReady = signal(false);
-    protected eventItems = signal<PagedResult<StatusActivityPubEventItem> | undefined>(undefined);
+    protected events = signal<PagedResult<StatusActivityPubEvent> | undefined>(undefined);
     protected pageIndex = signal(0);
     protected displayedColumns = signal<string[]>([]);
 
-    
     private routeParamsSubscription?: Subscription;
-    private readonly displayedColumnsHandsetPortrait: string[] = ['url', 'isSuccess', 'error'];
-    private readonly displayedColumnsHandsetLandscape: string[] = ['url', 'isSuccess', 'error'];
-    private readonly displayedColumnsTablet: string[] = ['url', 'isSuccess', 'createdAt', 'startAt', 'error'];
-    private readonly displayedColumnsBrowser: string[] = ['url', 'isSuccess', 'createdAt', 'startAt', 'endAt', 'error'];
+    private readonly displayedColumnsHandsetPortrait: string[] = ['type', 'result', 'actions'];
+    private readonly displayedColumnsHandsetLandscape: string[] = ['type', 'result', 'user', 'actions'];
+    private readonly displayedColumnsTablet: string[] = ['type', 'result', 'user', 'attempts', 'createdAt', 'startAt', 'actions'];
+    private readonly displayedColumnsBrowser: string[] = ['type', 'result', 'user', 'attempts', 'createdAt', 'startAt', 'endAt', 'actions'];
 
     private statusActivityPubEventsService = inject(StatusActivityPubEventsService);
     private authorizationService = inject(AuthorizationService);
@@ -64,12 +62,10 @@ export class StatusActivityPubEventItemsPage extends ResponsiveComponent impleme
                 throw new ForbiddenError();
             }
 
-            const internalEventId = params.routeParams['eventId'] as string;
-            this.eventId.set(internalEventId);
-
             const pageString = params.queryParams.get('page');
             const sizeString = params.queryParams.get('size');
-            const queryOnlyErrors = params.queryParams.get('onlyErrors');
+            const queryType = params.queryParams.get('type');
+            const queryResult = params.queryParams.get('result');
             const sortColumn = params.queryParams.get('sortColumn');
             const sortDirection = params.queryParams.get('sortDirection');
 
@@ -77,12 +73,13 @@ export class StatusActivityPubEventItemsPage extends ResponsiveComponent impleme
             const size = sizeString ? +sizeString : 10;
 
             this.pageIndex.set(page);
-            this.onlyErrors.set(queryOnlyErrors === 'true');
+            this.type.set(queryType ?? '');
+            this.result.set(queryResult ?? '');
             this.sortColumn.set(sortColumn ?? 'createdAt');
             this.sortDirection.set(sortDirection === 'ascending' ? 'ascending' : 'descending');
 
-            const downloadedEvents = await this.statusActivityPubEventsService.eventItems(this.eventId(), page + 1, size, this.onlyErrors(), this.sortColumn(), this.sortDirection());
-            this.eventItems.set(downloadedEvents);
+            const downloadedEvents = await this.statusActivityPubEventsService.events(page + 1, size, this.type(), this.result(), this.sortColumn(), this.sortDirection());
+            this.events.set(downloadedEvents);
 
             this.isReady.set(true);
             this.loadingService.hideLoader();
@@ -96,14 +93,14 @@ export class StatusActivityPubEventItemsPage extends ResponsiveComponent impleme
 
     protected async onSubmit(): Promise<void> {
         const navigationExtras: NavigationExtras = {
-            queryParams: { onlyErrors: this.onlyErrors(), sortColumn: this.sortColumn(), sortDirection: this.sortDirection() },
+            queryParams: { type: this.type(), result: this.result(), sortColumn: this.sortColumn(), sortDirection: this.sortDirection() },
             queryParamsHandling: 'merge'
         };
 
         this.router.navigate([], navigationExtras);
     }
 
-    protected onOpenErrorMessage(element: StatusActivityPubEventItem): void {
+    protected onOpenErrorMessage(element: StatusActivityPubEvent): void {
         this.dialog.open(StatusEventErrorMessageDialog, {
             width: '500px',
             data: element

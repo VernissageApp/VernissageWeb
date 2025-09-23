@@ -5,9 +5,9 @@
                 <div class="width-100">
                     <section class="flex-row flex-space-between flex-align-center margin-bottom-20" [ngClass]="{ 'flex-row': !isHandset(), 'flex-column': isHandset() }">
                         <h1>
-                            <div>ActivityPub statuses events</div>
+                            <div>Outgoing ActivityPub events</div>
                             <div *ngIf="!isHandset()" class="fs-60 text-muted">
-                                List of events sent from the system via the ActivityPub protocol to other Fediverse instances.
+                                List of events sent by the system via the ActivityPub protocol to other Fediverse instances.
                             </div>
                         </h1>
                     </section>
@@ -191,7 +191,7 @@
                             <th mat-header-cell *matHeaderCellDef></th>
                             <td mat-cell *matCellDef="let element" class="text-right">
                                 <a class="margin-right-10" [routerLink]="['/statuses', element.statusId]">Status</a>
-                                <a [routerLink]="['/status-activity-pub-events', element.id, 'items']">Details</a>
+                                <a [routerLink]="['/activity-pub-events', element.id, 'items']">Details</a>
                             </td>
                         </ng-container>
                     
