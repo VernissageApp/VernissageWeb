@@ -1,0 +1,128 @@
+@if (isReady()) {
+    @if (eventItems(); as eventsArray) {
+        <div @fadeIn [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
+            <div class="flex-row flex-space-around padding-left-10 padding-right-10">
+                <div class="width-100">
+                    <section class="flex-row flex-space-between flex-align-center margin-bottom-20" [ngClass]="{ 'flex-row': !isHandset(), 'flex-column': isHandset() }">
+                        <h1>
+                            <div>ActivityPub event recipients</div>
+                            <div *ngIf="!isHandset()" class="fs-60 text-muted">
+                                List of Fediverse servers the event has been sent to.
+                            </div>
+                        </h1>
+                    </section>
+
+                    <div class="search width-100">
+                        <mat-card class="margin-bottom-20" appearance="outlined">
+                            <mat-card-content>
+                                <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+                                    <div class="flex-row flex-align-center flex-space-between gap-16">
+                                        <div class="flex-row flex-align-center gap-16">
+                                            @if (!isHandset()) {
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Sorting</mat-label>
+                                                    <mat-select [(value)]="sortColumn">
+                                                        <mat-option value="startAt">Start date</mat-option>
+                                                        <mat-option value="endAt">End date</mat-option>
+                                                        <mat-option value="createdAt">Created date</mat-option>
+                                                        <mat-option value="updatedAt">Updated date</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            }
+                                            <mat-checkbox name="onlyErrors" color="primary" [disableRipple]="true" [(ngModel)]="onlyErrors">
+                                                Only errors
+                                            </mat-checkbox>
+                                            @if (!isHandset()) {
+                                                <mat-radio-group name="sortDirection" [(ngModel)]="sortDirection" aria-label="Sort direction">
+                                                    <mat-radio-button value="ascending">Ascending</mat-radio-button>
+                                                    <mat-radio-button value="descending">Descending</mat-radio-button>
+                                                </mat-radio-group>
+                                            }
+                                        </div>
+                                        <button mat-flat-button color="primary">Search</button>
+                                    </div>
+                                    <div>
+
+                                    </div>
+                                </form>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+
+                    <table mat-table [dataSource]="eventsArray.data" class="mat-elevation-z1">
+
+                        <!-- Url Column -->
+                        <ng-container matColumnDef="url">
+                            <th mat-header-cell *matHeaderCellDef> Inbox URL </th>
+                            <td mat-cell *matCellDef="let element">
+                                <span>{{ element.url }}</span>
+                            </td>
+                        </ng-container>
+
+                        <!-- Is success Column -->
+                        <ng-container matColumnDef="isSuccess">
+                            <th mat-header-cell *matHeaderCellDef> Is success </th>
+                            <td mat-cell *matCellDef="let element">
+                                <mat-checkbox color="primary" [disableRipple]="true" [ngModel]="element.isSuccess" disabled>
+                                </mat-checkbox>
+                            </td>
+                        </ng-container>
+
+                        <!-- Created Date Column -->
+                        <ng-container matColumnDef="createdAt">
+                            <th mat-header-cell *matHeaderCellDef> Created date </th>
+                            <td mat-cell *matCellDef="let element">
+                                <span *ngIf="element.createdAt">
+                                    {{ element.createdAt | date: 'short' }}
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <!-- Start Date Column -->
+                        <ng-container matColumnDef="startAt">
+                            <th mat-header-cell *matHeaderCellDef> Start date </th>
+                            <td mat-cell *matCellDef="let element">
+                                <span *ngIf="element.startAt">
+                                    {{ element.startAt | date: 'short' }}
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <!-- Start Date Column -->
+                        <ng-container matColumnDef="endAt">
+                            <th mat-header-cell *matHeaderCellDef> End date </th>
+                            <td mat-cell *matCellDef="let element">
+                                <span *ngIf="element.endAt">
+                                    {{ element.endAt | date: 'short' }}
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <!-- Result Column -->
+                        <ng-container matColumnDef="error">
+                            <th mat-header-cell *matHeaderCellDef> Error </th>
+                            <td mat-cell *matCellDef="let element">
+                                @if (element.errorMessage) {
+                                    <div>
+                                        <a href="javascript:void(0)" (click)="onOpenErrorMessage(element)">Open</a>
+                                    </div>
+                                }
+                            </td>
+                        </ng-container>
+                    
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns()"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns();"></tr>
+                    </table>
+                    <mat-paginator
+                        (page)="handlePageEvent($event)"
+                        [length]="eventsArray.total"
+                        [pageIndex]="pageIndex()"
+                        [pageSize]="10"
+                        [pageSizeOptions]="[10, 25, 100]"
+                        aria-label="Select page">
+                    </mat-paginator>
+                </div>
+            </div>
+        </div>
+    }
+}

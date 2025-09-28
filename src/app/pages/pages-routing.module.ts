@@ -48,6 +48,8 @@ import { NewsPreviewPage } from './news-preview/news-preview.page';
 import { FrequentlyAskedQuestionsPage } from './frequently-asked-questions/frequently-asked-questions.page';
 import { StatusEventsPage } from './status-events/status-events.page';
 import { StatusEventItemsPage } from './status-event-items/status-event-items.page';
+import { ActivityPubEventsPage } from './activity-pub-events/activity-pub-events.page';
+import { ActivityPubEventItemsPage } from './activity-pub-event-items/activity-pub-event-items.page';
 
 const routes: Routes = [
     { path: 'login', component: LoginPage, canActivate: [ loggedOutGuard ], title: 'Vernissage - Login' },
@@ -91,6 +93,8 @@ const routes: Routes = [
     { path: 'shared-cards/:id', component: SharedCardPage, canActivate: [ authorizationGuard ], title: 'Vernissage - Shared business card' },
     { path: 'cards/:code', component: SharedCardPublicPage, title: 'Vernissage - Shared business card' },
     { path: 'error-items', component: ErrorItemsPage, canActivate: [ authorizationGuard ], title: 'Vernissage - Errors' },
+    { path: 'activity-pub-events', component: ActivityPubEventsPage, canActivate: [ authorizationGuard ], title: 'Vernissage - Activity Pub events'},
+    { path: 'activity-pub-events/:eventId/items', component: ActivityPubEventItemsPage, canActivate: [ authorizationGuard ], title: 'Vernissage - Activity Pub event recipients'},
     { path: 'actors/:userName', component: ProfilePage, data: { reuse: true }, children: [
         { path: 'posts', component: ProfilePage },
         { path: 'following', component: ProfilePage },
