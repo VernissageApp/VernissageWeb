@@ -502,6 +502,66 @@
         </mat-form-field>
     </div>
 
+    <mat-divider></mat-divider>
+    <h3>Scheduled jobs</h3>
+
+    <div class="margin-bottom-20">
+        <div>
+            <mat-checkbox name="clearAttachmentsJobEnabled" color="primary" [disableRipple]="true" [(ngModel)]="settings().clearAttachmentsJobEnabled">
+                Clear attachments not connected to statuses job
+            </mat-checkbox>
+        </div>
+        <div>
+            <mat-checkbox name="clearErrorItemsJobEnabled" color="primary" [disableRipple]="true" [(ngModel)]="settings().clearErrorItemsJobEnabled">
+                Clear old errors job
+            </mat-checkbox>
+        </div>
+        <div>
+            <mat-checkbox name="clearFailedLoginsJobEnabled" color="primary" [disableRipple]="true" [(ngModel)]="settings().clearFailedLoginsJobEnabled">
+                Clear old failed logins logs job
+            </mat-checkbox>
+        </div>
+        <div>
+            <mat-checkbox name="clearQuickCaptchasJobEnabled" color="primary" [disableRipple]="true" [(ngModel)]="settings().clearQuickCaptchasJobEnabled">
+                Clear old captcha tokens job
+            </mat-checkbox>
+        </div>
+        <div>
+            <mat-checkbox name="createArchiveJobEnabled" color="primary" [disableRipple]="true" [(ngModel)]="settings().createArchiveJobEnabled">
+                Create archives job
+            </mat-checkbox>
+        </div>
+        <div>
+            <mat-checkbox name="deleteArchiveJobEnabled" color="primary" [disableRipple]="true" [(ngModel)]="settings().deleteArchiveJobEnabled">
+                Delete old archives job
+            </mat-checkbox>
+        </div>
+        <div>
+            <mat-checkbox name="locationsJobEnabled" color="primary" [disableRipple]="true" [(ngModel)]="settings().locationsJobEnabled">
+                Fill locations table job
+            </mat-checkbox>
+        </div>
+        <div>
+            <mat-checkbox name="longPeriodTrendingJobEnabled" color="primary" [disableRipple]="true" [(ngModel)]="settings().longPeriodTrendingJobEnabled">
+                Calculate long period trending job
+            </mat-checkbox>
+        </div>
+        <div>
+            <mat-checkbox name="shortPeriodTrendingJobEnabled" color="primary" [disableRipple]="true" [(ngModel)]="settings().shortPeriodTrendingJobEnabled">
+                Calculate short period trending job
+            </mat-checkbox>
+        </div>
+        <div>
+            <mat-checkbox name="purgeStatusesJobEnabled" color="primary" [disableRipple]="true" [(ngModel)]="settings().purgeStatusesJobEnabled">
+                Purge old statuses job
+            </mat-checkbox>
+        </div>
+        <div>
+            <mat-checkbox name="rescheduleActivityPubJobEnabled" color="primary" [disableRipple]="true" [(ngModel)]="settings().rescheduleActivityPubJobEnabled">
+                Reschedule failed ActivityPub events job
+            </mat-checkbox>
+        </div>
+    </div>
 
     <mat-divider></mat-divider>
     <h3>Database logged events</h3>
