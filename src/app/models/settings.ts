@@ -72,4 +72,17 @@ export class Settings {
     public customInlineStyle = '';
     public customFileScript = '';
     public customFileStyle = '';
+
+    /// Enabled scheduled jobs.
+    public clearAttachmentsJobEnabled = false;
+    public clearErrorItemsJobEnabled = false;
+    public clearFailedLoginsJobEnabled = false;
+    public clearQuickCaptchasJobEnabled = false;
+    public createArchiveJobEnabled = false;
+    public deleteArchiveJobEnabled = false;
+    public locationsJobEnabled = false;
+    public longPeriodTrendingJobEnabled = false;
+    public purgeStatusesJobEnabled = false;
+    public rescheduleActivityPubJobEnabled = false;
+    public shortPeriodTrendingJobEnabled = false;
 }
