@@ -15,6 +15,8 @@ export enum EventType {
     AccountGetTwoFactorToken = 'accountGetTwoFactorToken',
     AccountEnableTwoFactorAuthentication = 'accountEnableTwoFactorAuthentication',
     AccountDisableTwoFactorAuthentication = 'accountDisableTwoFactorAuthentication',
+    AccountEnableSupporterFlag = 'accountEnableSupporterFlag',
+    AccountDisableSupportedFlag = 'accountDisableSupportedFlag',
     
     AuthClientsCreate = 'authClientsCreate',
     AuthClientsList = 'authClientsList',
@@ -50,6 +52,8 @@ export enum EventType {
     UsersUnmute = 'usersUnmute',
     UsersEnable = 'usersEnable',
     UsersDisable = 'usersDisable',
+    UsersSupporter = 'usersSupporter',
+    UsersNotSupporter = 'usersNotSupporter',
     UserRolesConnect = 'userRolesConnect',
     UserRolesDisconnect = 'userRolesDisconnect',
     UserApprove = 'userApprove',

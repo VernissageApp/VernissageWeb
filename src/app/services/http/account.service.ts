@@ -96,6 +96,16 @@ export class AccountService {
         await firstValueFrom(event$);
     }
 
+    public async enableSupporterFlag(): Promise<void> {
+        const event$ =  this.httpClient.post(this.windowService.apiUrl() + '/api/v1/account/enable-supporter-flag', null);
+        await firstValueFrom(event$);
+    }
+
+    public async disableSupporterFlag(): Promise<void> {
+        const event$ =  this.httpClient.post(this.windowService.apiUrl() + '/api/v1/account/disable-supporter-flag', null);
+        await firstValueFrom(event$);
+    }
+
     private getRefreshToken(): RefreshToken | null {
         // In browser mode refresh token is send as a cookie (by browser).
         if (this.isBrowser) {
