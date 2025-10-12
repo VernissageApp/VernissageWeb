@@ -94,7 +94,17 @@ export enum EventType {
     LocationsRead = 'locationsRead',
 
     CategoriesList = 'categoriesList',
+    CategoriesCreate = 'categoriesCreate',
+    CategoriesUpdate = 'categoriesUpdate',
+    CategoriesDelete = 'categoriesDelete',
+    CategoriesEnable = 'categoriesEnable',
+    CategoriesDisable = 'categoriesDisable',
     
+    LicensesList = 'licensesList',
+    LicensesCreate = 'licensesCreate',
+    LicensesUpdate = 'licensesUpdate',
+    LicensesDelete = 'licensesDelete',
+
     StatusesList = 'statusesList',
     StatusesCreate = 'statusesCreate',
     StatusesRead = 'statusesRead',

@@ -15,7 +15,7 @@ import { CategoriesService } from 'src/app/services/http/categories.service';
 import { Category } from 'src/app/models/category';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { License } from 'src/app/models/license';
-import { LicensesService } from 'src/app/services/http/liceses.service';
+import { LicensesService } from 'src/app/services/http/licenses.service';
 import { InstanceService } from 'src/app/services/http/instance.service';
 import { SettingsService } from 'src/app/services/http/settings.service';
 import { RandomGeneratorService } from 'src/app/services/common/random-generator.service';

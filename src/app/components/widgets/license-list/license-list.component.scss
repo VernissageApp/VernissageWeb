@@ -1,0 +1,16 @@
+.code {
+    width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.actions {
+    width: 100px;
+}
+
+@media only screen and (min-width: 600px) {
+    .actions {
+        width: 210px;
+    }
+}
