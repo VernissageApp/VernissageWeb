@@ -33,6 +33,7 @@ import { ShareBusinessCardDialog } from './share-business-card-dialog/share-busi
 import { UpdateSharedBusinessCardDialog } from './update-shared-business-card/update-shared-business-card.dialog';
 import { ErrorItemDialog } from './error-item-dialog/error-item.dialog';
 import { StatusEventErrorMessageDialog } from './status-event-error-message-dialog/status-event-error-message.dialog';
+import { LicenseDialog } from './license-dialog/license.dialog';
 
 @NgModule({
     declarations: [
@@ -61,6 +62,7 @@ import { StatusEventErrorMessageDialog } from './status-event-error-message-dial
         UpdateSharedBusinessCardDialog,
         ErrorItemDialog,
         StatusEventErrorMessageDialog,
+        LicenseDialog,
         CategoryHashtagItemComponent
     ],
     exports: [
@@ -88,7 +90,8 @@ import { StatusEventErrorMessageDialog } from './status-event-error-message-dial
         UpdateSharedBusinessCardDialog,
         ErrorItemDialog,
         FollowingImportAccountsDialog,
-        StatusEventErrorMessageDialog
+        StatusEventErrorMessageDialog,
+        LicenseDialog
     ], 
     imports: [
         BrowserModule,

@@ -59,10 +59,24 @@
                                 </mat-panel-title>
                                 <mat-panel-description *ngIf="!isHandset()">
                                     Here you can manage categories and hashtags.
-                                    <mat-icon>public_off</mat-icon>
+                                    <mat-icon>loyalty</mat-icon>
                                 </mat-panel-description>
                             </mat-expansion-panel-header>
                             <app-category-list></app-category-list>
+                        </mat-expansion-panel>
+
+                        <!-- Licenses. -->
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Licenses
+                                </mat-panel-title>
+                                <mat-panel-description *ngIf="!isHandset()">
+                                    Here you can manage photo's licenses.
+                                    <mat-icon>license</mat-icon>
+                                </mat-panel-description>
+                            </mat-expansion-panel-header>
+                            <app-license-list></app-license-list>
                         </mat-expansion-panel>
 
                     </mat-accordion>
