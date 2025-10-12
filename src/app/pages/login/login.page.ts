@@ -89,7 +89,7 @@ export class LoginPage implements OnInit {
         try {
             this.clearReuseStrategyState();
 
-            const login = new Login(this.userNameOrEmail(), this.password(), this.trustMachine());
+            const login = new Login(this.userNameOrEmail().trim(), this.password(), this.trustMachine());
             const userPayloadToken = await this.accountService.login(login, this.twoFactorToken());
 
             await this.authorizationService.signIn(userPayloadToken);
