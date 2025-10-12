@@ -19,6 +19,14 @@
                             </div>
                         }
 
+                        @if (userInternal.isSupporterFlagEnabled) {
+                            <div class="user-type">
+                                <mat-chip color="accent" highlighted [disableRipple]="true">    
+                                    <mat-icon [inline]="true">diamond_shine</mat-icon><div class="user-type-text">Supporter</div>
+                                </mat-chip>
+                            </div>
+                        }
+
                         <div class="bio" [innerHTML]="userInternal.bioHtml"></div>
                     </div>
 

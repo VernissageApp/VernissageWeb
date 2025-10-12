@@ -53,6 +53,7 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
     protected verification = signal('');
     protected user = model<User>(new User());
     protected isReady = signal(false);
+    protected isSupporterFlagEnabled = model(false);
 
     protected aliasDisplayedColumns = signal<string[]>(['alias', 'actions']);
     protected archivesDisplayedColumns = signal<string[]>([]);
@@ -446,12 +447,28 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
         });
     }
 
+    protected async onIsSupporterFlagChange(): Promise<void> {
+        try {
+            if (!this.isSupporterFlagEnabled()) {
+                await this.accountService.disableSupporterFlag();
+                this.messageService.showSuccess('Supporter flag has been disabled.');
+            } else {
+                await this.accountService.enableSupporterFlag();
+                this.messageService.showSuccess('Supporter flag has been enabled.');
+            }
+        } catch (error) {
+            console.error(error);
+            this.messageService.showServerError(error);
+        }
+    }
+
     private async loadUserData(): Promise<void> {
         const downloadedUser = await this.usersService.profile(this.userName);
 
         this.user.set(downloadedUser);
         this.avatarSrc.set(this.user().avatarUrl ?? 'assets/avatar-placeholder.svg');
         this.headerSrc.set(this.user().headerUrl ?? 'assets/header-placeholder.svg');
+        this.isSupporterFlagEnabled.set(downloadedUser.isSupporterFlagEnabled);
     }
 
     private async loadUserAliases(): Promise<void> {

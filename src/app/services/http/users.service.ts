@@ -91,6 +91,16 @@ export class UsersService {
         await firstValueFrom(event$);
     }
 
+    public async supporter(userName: string): Promise<void> {
+        const event$ = this.httpClient.post(this.windowService.apiUrl() + '/api/v1/users/@' + userName + '/supporter', null);
+        await firstValueFrom(event$);
+    }
+
+    public async notSupporter(userName: string): Promise<void> {
+        const event$ = this.httpClient.post(this.windowService.apiUrl() + '/api/v1/users/@' + userName + '/not-supporter', null);
+        await firstValueFrom(event$);
+    }
+
     public async connect(userName: string, code: string): Promise<void> {
         const event$ = this.httpClient.post<Report>(this.windowService.apiUrl() + `/api/v1/users/@${userName}/connect/${code}`, null);
         await firstValueFrom(event$);
