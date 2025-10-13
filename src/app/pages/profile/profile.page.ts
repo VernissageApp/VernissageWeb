@@ -26,6 +26,7 @@ import { BusinessCardsService } from 'src/app/services/http/business-cards.servi
 import { SettingsService } from 'src/app/services/http/settings.service';
 import { ConfirmationDialog } from 'src/app/dialogs/confirmation-dialog/confirmation.dialog';
 import { UserType } from 'src/app/models/user-type';
+import { Role } from 'src/app/models/role';
 
 @Component({
     selector: 'app-profile',
@@ -38,6 +39,7 @@ import { UserType } from 'src/app/models/user-type';
 export class ProfilePage extends ReusableGalleryPageComponent implements OnInit, OnDestroy {
     protected readonly profilePageTab = ProfilePageTab;
     protected readonly userType = UserType;
+    protected readonly role = Role;
     protected isReady = signal(false);
 
     protected showSharedBusinessCards = signal(false);
