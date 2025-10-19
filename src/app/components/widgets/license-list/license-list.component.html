@@ -1,0 +1,52 @@
+@if (licenses(); as licensesArray) {
+    <table mat-table [dataSource]="licensesArray.data">
+
+        <!-- License Code Column -->
+        <ng-container matColumnDef="code">
+            <th mat-header-cell *matHeaderCellDef> Code </th>
+            <td mat-cell *matCellDef="let element" class="code">
+                {{ element.code }}
+            </td>
+        </ng-container>
+
+        <!-- License Name Column -->
+        <ng-container matColumnDef="licenseName">
+            <th mat-header-cell *matHeaderCellDef> Name </th>
+            <td mat-cell *matCellDef="let element" class="name">
+                {{ element.name }}
+            </td>
+        </ng-container>
+        
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element" class="text-right actions">
+                @if (!isHandsetPortrait()) {
+                    <button mat-stroked-button color="primary" class="margin-right-10" (click)="openLicenseDialog(element)">Update</button>
+                    <button mat-stroked-button color="warn" (click)="onDelete(element)">Delete</button>
+                } @else {
+                    <button class="more-button" mat-stroked-button [matMenuTriggerFor]="dropdownMenuAction" color="primary" aria-label="More options">
+                        <span class="material-symbols-outlined">more_vert</span>
+                    </button>
+                    <mat-menu #dropdownMenuAction="matMenu" xPosition="before">
+                        <button mat-menu-item (click)="openLicenseDialog(element)">Update</button>
+                        <button mat-menu-item (click)="onDelete(element)">Delete</button>
+                    </mat-menu>
+                }
+            </td>
+        </ng-container>
+    
+        <tr mat-header-row *matHeaderRowDef="displayedColumns()"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns();"></tr>
+    </table>
+    <mat-paginator
+        (page)="handlePageEvent($event)"
+        [length]="licensesArray.total"
+        [pageIndex]="pageIndex"
+        [pageSize]="10"
+        [pageSizeOptions]="[10, 25, 100]"
+        aria-label="Select page">
+    </mat-paginator>
+
+    <button mat-flat-button color="primary" (click)="openLicenseDialog(undefined)">New license</button>
+}

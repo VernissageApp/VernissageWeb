@@ -15,7 +15,7 @@ import { CategoriesService } from 'src/app/services/http/categories.service';
 import { Category } from 'src/app/models/category';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { License } from 'src/app/models/license';
-import { LicensesService } from 'src/app/services/http/liceses.service';
+import { LicensesService } from 'src/app/services/http/licenses.service';
 import { InstanceService } from 'src/app/services/http/instance.service';
 import { SettingsService } from 'src/app/services/http/settings.service';
 import { RandomGeneratorService } from 'src/app/services/common/random-generator.service';
@@ -59,6 +59,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
 
     protected statusTextTemplate = signal<string | undefined>(undefined);
     protected maxStatusLength = signal(0);
+    protected maxMediaAttachments = signal(0);
     protected isOpenAIEnabled = signal(false);
     protected hashtagsInProgress = signal(false);
     protected isEditMode = signal(false);
@@ -68,6 +69,8 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
     private maxFileSize = 0;
     private statusId = '';
     private readonly defaultMaxFileSize = 10485760;
+    private readonly defaultMaxMediaAttachments = 4;
+    private readonly defaultMaxCharacters = 500;
 
     private messageService = inject(MessagesService);
     private attachmentsService = inject(AttachmentsService);
@@ -93,7 +96,8 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
         this.maxFileSize = this.instanceService.instance?.configuration?.attachments?.imageSizeLimit ?? this.defaultMaxFileSize;
         this.maxFileSizeString.set(this.fileSizeService.getHumanFileSize(this.maxFileSize, 0));
 
-        this.maxStatusLength.set(this.instanceService.instance?.configuration?.statuses?.maxCharacters ?? 500);
+        this.maxStatusLength.set(this.instanceService.instance?.configuration?.statuses?.maxCharacters ?? this.defaultMaxCharacters);
+        this.maxMediaAttachments.set(this.instanceService.instance?.configuration?.statuses?.maxMediaAttachments ?? this.defaultMaxMediaAttachments)
         this.isOpenAIEnabled.set(this.settingsService.publicSettings?.isOpenAIEnabled ?? false);
 
         const [internalCategories, internalLicenses, internalStatusTextTemplate, internalEmailHasBeenVerified] = await Promise.all([

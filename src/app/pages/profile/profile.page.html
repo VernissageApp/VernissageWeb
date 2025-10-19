@@ -12,10 +12,30 @@
                         <div class="mat-h4">&#64;{{ userInternal.userName }}</div>
 
                         @if (userInternal.type === userType.Service) {
-                            <div class="user-type">
+                            <div class="user-flag">
                                 <mat-chip [disableRipple]="true">    
-                                    <mat-icon [inline]="true">smart_toy</mat-icon><div class="user-type-text">Automated</div>
+                                    <mat-icon [inline]="true">smart_toy</mat-icon><div class="user-flag-text">Automated</div>
                                 </mat-chip>
+                            </div>
+                        }
+
+                        @if (userInternal.isSupporterFlagEnabled || userInternal.roles?.includes(role.Administrator) || userInternal.roles?.includes(role.Moderator)) {
+                            <div class="user-flag">
+                                @if (userInternal.roles?.includes(role.Administrator)) {
+                                    <mat-chip color="primary" class="margin-right-10" highlighted [disableRipple]="true">    
+                                        <mat-icon [inline]="true">server_person</mat-icon><div class="user-flag-text">Administrator</div>
+                                    </mat-chip>
+                                } @else if (userInternal.roles?.includes(role.Moderator)) {
+                                    <mat-chip color="primary" class="margin-right-10"  highlighted [disableRipple]="true">    
+                                        <mat-icon [inline]="true">clinical_notes</mat-icon><div class="user-flag-text">Moderator</div>
+                                    </mat-chip>
+                                }
+
+                                @if (userInternal.isSupporterFlagEnabled) {
+                                    <mat-chip color="accent" highlighted [disableRipple]="true">    
+                                        <mat-icon [inline]="true">diamond_shine</mat-icon><div class="user-flag-text">Supporter</div>
+                                    </mat-chip>
+                                }
                             </div>
                         }
 

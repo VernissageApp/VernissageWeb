@@ -146,6 +146,34 @@ export class UsersPage extends ResponsiveComponent implements OnInit, OnDestroy 
         }
     }
 
+    protected async onSetSupporter(user: User): Promise<void> {
+        try {
+            if (user.userName) {
+                await this.usersService.supporter(user.userName);
+
+                user.isSupporter = true;
+                this.messageService.showSuccess('Account has been mark as supporter.');
+            }
+        } catch (error) {
+            console.error(error);
+            this.messageService.showServerError(error);
+        }
+    }
+
+    protected async onSetNotSupporter(user: User): Promise<void> {
+        try {
+            if (user.userName) {
+                await this.usersService.notSupporter(user.userName);
+
+                user.isSupporter = false;
+                this.messageService.showSuccess('Account has been mark as not supporter.');
+            }
+        } catch (error) {
+            console.error(error);
+            this.messageService.showServerError(error);
+        }
+    }
+
     protected async onApprove(user: User): Promise<void> {
         try {
             if (user.userName) {

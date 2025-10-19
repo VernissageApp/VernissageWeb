@@ -196,6 +196,39 @@
     <mat-card class="margin-bottom-20" appearance="outlined">
         <mat-card-header>
             <mat-card-title>
+                Show your support
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
+                <div>
+                    <p>
+                        Thank you for supporting Vernissage! You can choose to display a small badge on your
+                        profile as a token of appreciation and to inspire others to join our community of supporters.
+                    </p>
+                    <p>
+                        This option is available only to users who support Vernissage.
+                        If you're a supporter but don't see this option, please contact your instance administrator.
+                    </p>
+
+                    <p>
+                        The badge is optional - you decide whether to show it or keep your support private.
+                    </p>
+                </div>
+                <div class="text-right">
+                    <div class="margin-bottom-20">
+                        <mat-slide-toggle color="warn" name="isSupporterFlagEnabled" [(ngModel)]="isSupporterFlagEnabled" (ngModelChange)="onIsSupporterFlagChange()" [disabled]="!user().isSupporter">
+                            Show badge on your profile
+                        </mat-slide-toggle>
+                    </div>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card class="margin-bottom-20" appearance="outlined">
+        <mat-card-header>
+            <mat-card-title>
                 Two factor authentication (2FA)
             </mat-card-title>
         </mat-card-header>

@@ -55,11 +55,25 @@
                             <td mat-cell *matCellDef="let element">
                                 <div class="flex-row gap-8 flex-align-center">
                                     <app-avatar [user]="element" [size]="avatarSize.medium"></app-avatar>
-                                    <mat-chip-set *ngIf="!isHandset()" aria-label="Roles">
-                                        <mat-chip-option *ngIf="element.roles?.includes(role.Administrator)" [disableRipple]="true" disabled>A</mat-chip-option>
-                                        <mat-chip-option *ngIf="element.roles?.includes(role.Moderator)" [disableRipple]="true" disabled>M</mat-chip-option>
-                                        <mat-chip-option *ngIf="element.isBlocked === true" [disableRipple]="true" disabled>Disabled</mat-chip-option>
-                                    </mat-chip-set>
+                                    @if (!isHandset()) {
+                                        <mat-chip-set aria-label="Roles">
+                                            @if (element.roles?.includes(role.Administrator)) {
+                                                <mat-chip-option [disableRipple]="true" disabled>A</mat-chip-option>
+                                            }
+
+                                            @if (element.roles?.includes(role.Moderator)) {
+                                                <mat-chip-option [disableRipple]="true" disabled>M</mat-chip-option>
+                                            }
+
+                                            @if (element.isBlocked === true) {
+                                                <mat-chip-option [disableRipple]="true" disabled>Disabled</mat-chip-option>
+                                            }
+                                        </mat-chip-set>
+
+                                        @if (element.isSupporter) {
+                                            <mat-icon color="accent">diamond_shine</mat-icon>
+                                        }
+                                    }
                                 </div>
                             </td>
                         </ng-container>
@@ -161,26 +175,48 @@
                                             <mat-icon class="outline-symbol">key</mat-icon>
                                             <span>Assign roles</span>
                                         </button>
-                                        <button *ngIf="element.isBlocked" (click)="onSetEnable(element)" mat-menu-item>
-                                            <mat-icon class="outline-symbol">person_check</mat-icon>
-                                            <span>Enable</span>
-                                        </button>
-                                        <button *ngIf="!element.isBlocked" (click)="onSetDisable(element)" mat-menu-item>
-                                            <mat-icon class="outline-symbol">person_cancel</mat-icon>
-                                            <span>Disable</span>
-                                        </button>
-                                        <button *ngIf="!element.isApproved" (click)="onApprove(element)" mat-menu-item>
-                                            <mat-icon class="outline-symbol">check_circle</mat-icon>
-                                            <span>Approve</span>
-                                        </button>
-                                        <button *ngIf="!element.isApproved" (click)="onReject(element)" mat-menu-item>
-                                            <mat-icon class="outline-symbol">unpublished</mat-icon>
-                                            <span>Reject</span>
-                                        </button>
-                                        <button *ngIf="element.twoFactorEnabled" (click)="onDisableTwoFactor(element)" mat-menu-item>
-                                            <mat-icon class="outline-symbol">safety_check_off</mat-icon>
-                                            <span>Disable 2FA</span>
-                                        </button>
+
+                                        @if (element.isBlocked) {
+                                            <button (click)="onSetEnable(element)" mat-menu-item>
+                                                <mat-icon class="outline-symbol">person_check</mat-icon>
+                                                <span>Enable</span>
+                                            </button>
+                                        } @else {
+                                            <button (click)="onSetDisable(element)" mat-menu-item>
+                                                <mat-icon class="outline-symbol">person_cancel</mat-icon>
+                                                <span>Disable</span>
+                                            </button>
+                                        }
+
+                                        @if (element.isSupporter) {
+                                            <button (click)="onSetNotSupporter(element)" mat-menu-item>
+                                                <mat-icon class="outline-symbol">diamond_shine</mat-icon>
+                                                <span>Not supporter</span>
+                                            </button>
+                                        } @else {
+                                            <button (click)="onSetSupporter(element)" mat-menu-item>
+                                                <mat-icon class="outline-symbol">diamond_shine</mat-icon>
+                                                <span>Supporter</span>
+                                            </button>
+                                        }
+
+                                        @if (!element.isApproved) {
+                                            <button (click)="onApprove(element)" mat-menu-item>
+                                                <mat-icon class="outline-symbol">check_circle</mat-icon>
+                                                <span>Approve</span>
+                                            </button>
+                                            <button (click)="onReject(element)" mat-menu-item>
+                                                <mat-icon class="outline-symbol">unpublished</mat-icon>
+                                                <span>Reject</span>
+                                            </button>
+                                        }
+
+                                        @if (element.twoFactorEnabled) {
+                                            <button (click)="onDisableTwoFactor(element)" mat-menu-item>
+                                                <mat-icon class="outline-symbol">safety_check_off</mat-icon>
+                                                <span>Disable 2FA</span>
+                                            </button>
+                                        }
                                     } @else {
                                         <button (click)="onUserRefresh(element)" mat-menu-item>
                                             <mat-icon class="outline-symbol">sync</mat-icon>

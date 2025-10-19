@@ -34,6 +34,8 @@ export class User {
     public twoFactorEnabled = false;
     public manuallyApprovesFollowers = false;
     public featured = false;
+    public isSupporter = false;
+    public isSupporterFlagEnabled = false;
     public lastLoginDate = '';
     public publishedAt?: string;
     public createdAt = '';
