@@ -121,6 +121,10 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
 
     protected async onPhotoSelected(event: any): Promise<void> {
         const file = event.target.files[0];
+        if (!file) {
+            return;
+        }
+
         if (file.size > this.maxFileSize) {
             this.messageService.showError(`Uploaded file is too large. Maximum size is ${this.maxFileSizeString()}.`);
             return;
