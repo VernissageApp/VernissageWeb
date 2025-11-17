@@ -161,6 +161,10 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
     protected async onHdrPhotoSelected(event: any): Promise<void> {
         try {
             const file = event.target.files[0];
+            if (!file) {
+                return;
+            }
+
             if (file.size > this.defaultMaxHdrFileSize) {
                 this.messageService.showError(`Uploaded file is too large. Maximum size is ${this.hdrFileSizeString()}.`);
                 return;
