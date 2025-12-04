@@ -1,6 +1,6 @@
 import { Request } from 'express';
-import { inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { inject, Injectable, PLATFORM_ID, DOCUMENT } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { REQUEST } from 'express.tokens';
 
 // Code copied from https://github.com/stevermeister/ngx-cookie-service.

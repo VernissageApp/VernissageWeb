@@ -1,9 +1,9 @@
-import { Component, OnDestroy, AfterViewInit, OnInit, signal, ChangeDetectionStrategy, inject, HostListener } from '@angular/core';
+import { Component, OnDestroy, AfterViewInit, OnInit, signal, ChangeDetectionStrategy, inject, HostListener, DOCUMENT } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { LoadingService } from './services/common/loading.service';
 import { RoutingStateService } from './services/common/routing-state.service';
-import { DOCUMENT } from '@angular/common';
+
 import { SsrCookieService } from './services/common/ssr-cookie.service';
 import { SettingsService } from './services/http/settings.service';
 import { fadeInAnimation } from './animations/fade-in.animation';

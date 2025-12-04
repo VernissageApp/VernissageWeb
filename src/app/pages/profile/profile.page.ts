@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit, signal, DOCUMENT } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, NavigationStart } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/models/user';
@@ -10,7 +10,7 @@ import { RelationshipsService } from 'src/app/services/http/relationships.servic
 import { ProfilePageTab } from 'src/app/models/profile-page-tab';
 import { LoadingService } from 'src/app/services/common/loading.service';
 import { LinkableResult } from 'src/app/models/linkable-result';
-import { DOCUMENT } from '@angular/common';
+
 import { Meta, Title } from '@angular/platform-browser';
 import { WindowService } from 'src/app/services/common/window.service';
 import { MatDialog } from '@angular/material/dialog';

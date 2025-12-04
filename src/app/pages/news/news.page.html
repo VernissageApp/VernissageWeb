@@ -6,13 +6,15 @@
                     <section>
                         <h1>
                             <div>News</div>
-                            <div *ngIf="!isHandset()" class="fs-60 text-muted">Stay updated with our latest posts.</div>
+                            @if (!isHandset()) {
+                                <div class="fs-60 text-muted">Stay updated with our latest posts.</div>
+                            }
                         </h1>
                     </section>
 
                     @if (articlesArray.data.length > 0) {
                         @for (article of articlesArray.data; track article) {
-                            <mat-card class="margin-bottom-10" appearance="outlined">                            
+                            <mat-card class="margin-bottom-10" appearance="outlined">
                                 <mat-card-header>
                                     @if (article.title; as inlineTitle) {
                                         <mat-card-title>

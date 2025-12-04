@@ -1,5 +1,5 @@
-import { DOCUMENT, formatDate } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { formatDate } from '@angular/common';
+import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit, signal, DOCUMENT } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';

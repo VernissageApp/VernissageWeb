@@ -10,11 +10,20 @@
             <mat-form-field class="width-100" appearance="outline">
                 <mat-label>Email</mat-label>
                 <input type="email" matInput name="email" [(ngModel)]="email" #emailInput="ngModel"
-                       pattern="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
-                       aria-label="Email" appUniqueEmail required />
-                <mat-error *ngIf="emailInput.invalid && emailInput.errors?.required">Enter email.</mat-error>
-                <mat-error *ngIf="emailInput.invalid && emailInput.errors?.pattern">Verify that you've entered proper email.</mat-error>
-                <mat-error *ngIf="emailInput.invalid && emailInput.errors?.appUniqueEmail">Choose other email, this one is already connected to different account.</mat-error>
+                    pattern="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
+                    aria-label="Email" appUniqueEmail required />
+
+                @if (emailInput.invalid && emailInput.errors?.required) {
+                    <mat-error>Enter email.</mat-error>
+                }
+
+                @if (emailInput.invalid && emailInput.errors?.pattern) {
+                    <mat-error>Verify that you've entered proper email.</mat-error>
+                }
+
+                @if (emailInput.invalid && emailInput.errors?.appUniqueEmail) {
+                    <mat-error>Choose other email, this one is already connected to different account.</mat-error>
+                }
             </mat-form-field>
         </div>
     </div>

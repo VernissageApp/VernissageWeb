@@ -16,7 +16,7 @@
         [disabled]="isReadOnly()" />
     <mat-autocomplete
         #autoUsers="matAutocomplete"
-        [displayWith]="userDisplayFn" 
+        [displayWith]="userDisplayFn"
         (optionSelected)='onSelectedUser($event.option.value)'>
 
         @for (option of filteredUsers(); track option.id) {
@@ -36,6 +36,11 @@
         <mat-spinner matSuffix [diameter]="16"></mat-spinner>
     }
 
-    <mat-error *ngIf="userSelector.invalid && userSelector.errors?.required">Chose user.</mat-error>
-    <mat-error *ngIf="userSelector.invalid && userSelector.errors?.appAutocompleteValid">Chose user from list.</mat-error>
+    @if (userSelector.invalid && userSelector.errors?.required) {
+        <mat-error>Chose user.</mat-error>
+    }
+
+    @if (userSelector.invalid && userSelector.errors?.appAutocompleteValid) {
+        <mat-error>Chose user from list.</mat-error>
+    }
 </mat-form-field>

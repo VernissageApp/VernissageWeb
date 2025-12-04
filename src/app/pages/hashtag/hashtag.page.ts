@@ -1,5 +1,5 @@
-import { DOCUMENT } from "@angular/common";
-import { Component, OnInit, OnDestroy, signal, ChangeDetectionStrategy, inject } from "@angular/core";
+
+import { Component, OnInit, OnDestroy, signal, ChangeDetectionStrategy, inject, DOCUMENT } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs/internal/Subscription";
 import { fadeInAnimation } from "src/app/animations/fade-in.animation";

@@ -7,10 +7,13 @@
                 <mat-label>Comment</mat-label>
                 <textarea matInput name="comment" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4"
                     cdkAutosizeMaxRows="10" placeholder="Comment" #commentModel="ngModel" [(ngModel)]="comment"
-                    aria-label="Comment" appMaxLength="1000"></textarea>
-                <mat-error *ngIf="commentModel.invalid && commentModel.errors?.appMaxLength">Too long comment.</mat-error>
+                aria-label="Comment" appMaxLength="1000"></textarea>
+
+                @if (commentModel.invalid && commentModel.errors?.appMaxLength) {
+                    <mat-error>Too long comment.</mat-error>
+                }
             </mat-form-field>
-        
+
             <mat-form-field appearance="outline">
                 <mat-label>Category</mat-label>
                 <mat-select [(value)]="category">
@@ -30,9 +33,9 @@
             </mat-form-field>
 
             <!-- @if (!isLocal()) {
-                <mat-checkbox name="forward" color="primary" [disableRipple]="true" [(ngModel)]="forward">
-                    Should the report be forwarded to the remote admin?
-                </mat-checkbox>
+            <mat-checkbox name="forward" color="primary" [disableRipple]="true" [(ngModel)]="forward">
+                Should the report be forwarded to the remote admin?
+            </mat-checkbox>
             } -->
         </div>
     </div>

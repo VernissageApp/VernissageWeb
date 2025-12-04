@@ -13,7 +13,10 @@
                     <mat-form-field appearance="outline" class="token">
                         <mat-label>Token</mat-label>
                         <input type="text" matInput name="code" #codeInput="ngModel" [(ngModel)]="code" required aria-label="Code" />
-                        <mat-error *ngIf="codeInput.invalid && codeInput.errors?.required">Token is required.</mat-error>
+
+                        @if (codeInput.invalid && codeInput.errors?.required) {
+                            <mat-error>Token is required.</mat-error>
+                        }
                     </mat-form-field>
                 </div>
             </div>

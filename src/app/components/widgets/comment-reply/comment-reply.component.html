@@ -25,12 +25,17 @@
 
                 <mat-hint class="text-muted" align="end">{{ comment()?.length ?? "0" }}/{{ maxStatusLength() }}</mat-hint>
 
-                <mat-error *ngIf="commentInput.touched && commentInput.invalid && commentInput.errors?.appMaxLength">
-                    Too long comment.
-                </mat-error>
-                <mat-error *ngIf="commentInput.touched && commentInput.invalid && commentInput.errors?.required">
-                    Comment required.
-                </mat-error>
+                @if (commentInput.touched && commentInput.invalid && commentInput.errors?.appMaxLength) {
+                    <mat-error>
+                        Too long comment.
+                    </mat-error>
+                }
+
+                @if (commentInput.touched && commentInput.invalid && commentInput.errors?.required) {
+                    <mat-error>
+                        Comment required.
+                    </mat-error>
+                }
             </mat-form-field>
 
         </div>
