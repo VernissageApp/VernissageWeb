@@ -25,7 +25,7 @@
     "@angular/service-worker": "^20.3.15",
     "@angular/ssr": "^20.3.13",
     "@auth0/angular-jwt": "^5.2.0",
-    "@ncstate/sat-popover": "^14.4.0",
+    "@ncstate/sat-popover": "^15.0.0",
     "blurhash": "^2.0.5",
     "exifreader": "^4.30.0",
     "express": "^4.21.2",
