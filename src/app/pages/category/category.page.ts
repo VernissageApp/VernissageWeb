@@ -2,7 +2,6 @@
 import { Component, OnInit, OnDestroy, signal, ChangeDetectionStrategy, inject, DOCUMENT } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs/internal/Subscription";
-import { fadeInAnimation } from "src/app/animations/fade-in.animation";
 import { ReusableGalleryPageComponent } from "src/app/common/reusable-gallery-page";
 import { ContextTimeline } from "src/app/models/context-timeline";
 import { LoadingService } from "src/app/services/common/loading.service";
@@ -12,7 +11,6 @@ import { TimelineService } from "src/app/services/http/timeline.service";
     selector: 'app-category',
     templateUrl: './category.page.html',
     styleUrls: ['./category.page.scss'],
-    animations: fadeInAnimation,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })

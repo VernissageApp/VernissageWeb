@@ -6,7 +6,6 @@ import { Subscription } from 'rxjs';
 import { LoadingService } from 'src/app/services/common/loading.service';
 import { ContextTimeline } from 'src/app/models/context-timeline';
 import { SettingsService } from 'src/app/services/http/settings.service';
-import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { ReusableGalleryPageComponent } from 'src/app/common/reusable-gallery-page';
 import { ArticlesService } from 'src/app/services/http/articles.service';
 import { ArticleVisibility } from 'src/app/models/article-visibility';
@@ -19,7 +18,6 @@ import { RandomGeneratorService } from 'src/app/services/common/random-generator
     selector: 'app-home-signin',
     templateUrl: './home-signin.component.html',
     styleUrls: ['./home-signin.component.scss'],
-    animations: fadeInAnimation,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })

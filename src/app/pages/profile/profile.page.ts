@@ -4,7 +4,6 @@ import { Subscription } from 'rxjs';
 import { User } from 'src/app/models/user';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 import { UsersService } from 'src/app/services/http/users.service';
-import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { Relationship } from 'src/app/models/relationship';
 import { RelationshipsService } from 'src/app/services/http/relationships.service';
 import { ProfilePageTab } from 'src/app/models/profile-page-tab';
@@ -32,7 +31,6 @@ import { Role } from 'src/app/models/role';
     selector: 'app-profile',
     templateUrl: './profile.page.html',
     styleUrls: ['./profile.page.scss'],
-    animations: fadeInAnimation,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })

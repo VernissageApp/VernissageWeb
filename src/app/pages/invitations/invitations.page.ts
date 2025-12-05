@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, computed, inject, OnInit, signal } from '@angular/core';
-import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { InstanceService } from 'src/app/services/http/instance.service';
 import { ForbiddenError } from 'src/app/errors/forbidden-error';
 import { Invitation } from 'src/app/models/invitation';
@@ -17,7 +16,6 @@ import { Role } from 'src/app/models/role';
     selector: 'app-invitations',
     templateUrl: './invitations.page.html',
     styleUrls: ['./invitations.page.scss'],
-    animations: fadeInAnimation,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })

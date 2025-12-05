@@ -6,7 +6,6 @@ import { RoutingStateService } from './services/common/routing-state.service';
 
 import { SsrCookieService } from './services/common/ssr-cookie.service';
 import { SettingsService } from './services/http/settings.service';
-import { fadeInAnimation } from './animations/fade-in.animation';
 import { WebServiceWorker } from './services/common/web-service-worker.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FocusTrackerService } from './services/common/focus-tracker.service';
@@ -19,7 +18,6 @@ import { AuthorizationService } from './services/authorization/authorization.ser
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    animations: [fadeInAnimation],
     standalone: false
 })
 export class AppComponent implements OnInit, OnDestroy, AfterViewInit {

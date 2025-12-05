@@ -1,21 +1,21 @@
 @if (!singleButton()) {
     <div class="multiple-buttons flex-row flex-center gap-8">
         @if (isDuringRelationshipAction()) {
-            <button @fadeIn type="button" mat-flat-button aria-label="Processing" disabled="disabled">Processing...</button>
+            <button animate.enter="fade-in" type="button" mat-flat-button aria-label="Processing" disabled="disabled">Processing...</button>
         }
 
         @if (!isDuringRelationshipAction()) {
             @if (showChangeRelationshipButton()) {
                 @if (showFollowButton()) {
-                    <button @fadeIn type="button" (click)="onFollow()" mat-flat-button color="primary" aria-label="Follow">{{ updatedRelationship().followedBy ? "Follow back" : "Follow" }}</button>
+                    <button animate.enter="fade-in" type="button" (click)="onFollow()" mat-flat-button color="primary" aria-label="Follow">{{ updatedRelationship().followedBy ? "Follow back" : "Follow" }}</button>
                 } @else {
-                    <button @fadeIn type="button" (click)="onUnfollow()" mat-flat-button color="accent" aria-label="Unfollow">{{ updatedRelationship().following ? "Unfollow" : "Cancel request" }}</button>
+                    <button animate.enter="fade-in" type="button" (click)="onUnfollow()" mat-flat-button color="accent" aria-label="Unfollow">{{ updatedRelationship().following ? "Unfollow" : "Cancel request" }}</button>
                 }
             }
             
             @if (showApproveFollowButton()) {
-                <button @fadeIn type="button" (click)="onApproveFollow()" mat-flat-button aria-label="Approve follow">Approve follow</button>
-                <button @fadeIn type="button" (click)="onRejectFollow()" mat-flat-button aria-label="Approve follow">Reject follow</button>
+                <button animate.enter="fade-in" type="button" (click)="onApproveFollow()" mat-flat-button aria-label="Approve follow">Approve follow</button>
+                <button animate.enter="fade-in" type="button" (click)="onRejectFollow()" mat-flat-button aria-label="Approve follow">Reject follow</button>
             }
         }
 

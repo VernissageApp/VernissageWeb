@@ -1,4 +1,4 @@
-<div @fadeIn [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
+<div animate.enter="fade-in" [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
     <h1>
         <div>{{ isEditMode() ? 'Edit status' : 'Upload photos' }}</div>
         @if (!isHandset()) {

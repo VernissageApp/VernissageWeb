@@ -3,7 +3,6 @@ import { FormControl } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, startWith } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
 import { map, switchMap } from 'rxjs/operators';
-import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { Country } from 'src/app/models/country';
 import { License } from 'src/app/models/license';
@@ -21,7 +20,6 @@ import { PersistenceService } from 'src/app/services/persistance/persistance.ser
     selector: 'app-upload-photo',
     templateUrl: './upload-photo.component.html',
     styleUrls: ['./upload-photo.component.scss'],
-    animations: fadeInAnimation,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })

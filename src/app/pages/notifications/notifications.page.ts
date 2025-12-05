@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
-import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { Notification } from '../../models/notification';
 import { NotificationsService } from 'src/app/services/http/notifications.service';
 import { Status } from 'src/app/models/status';
@@ -19,7 +18,6 @@ import { RandomGeneratorService } from 'src/app/services/common/random-generator
     selector: 'app-notifications',
     templateUrl: './notifications.page.html',
     styleUrls: ['./notifications.page.scss'],
-    animations: fadeInAnimation,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })

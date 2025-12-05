@@ -10,7 +10,6 @@ import { UploadPhoto } from 'src/app/models/upload-photo';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { AttachmentsService } from 'src/app/services/http/attachments.service';
 import { StatusesService } from 'src/app/services/http/statuses.service';
-import { fadeInAnimation } from '../../animations/fade-in.animation';
 import { CategoriesService } from 'src/app/services/http/categories.service';
 import { Category } from 'src/app/models/category';
 import { ResponsiveComponent } from 'src/app/common/responsive';
@@ -35,7 +34,6 @@ import { ForbiddenError } from 'src/app/errors/forbidden-error';
     selector: 'app-upload',
     templateUrl: './upload.page.html',
     styleUrls: ['./upload.page.scss'],
-    animations: fadeInAnimation,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })

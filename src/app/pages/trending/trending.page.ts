@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy, signal, model, ChangeDetectionStrategy, inject, HostListener } from "@angular/core";
 import { ActivatedRoute, NavigationExtras } from "@angular/router";
 import { Subscription } from "rxjs";
-import { fadeInAnimation } from "src/app/animations/fade-in.animation";
 import { ReusableGalleryPageComponent } from "src/app/common/reusable-gallery-page";
 import { ContextTimeline } from "src/app/models/context-timeline";
 import { Hashtag } from "src/app/models/hashtag";
@@ -18,7 +17,6 @@ import { TrendingService } from "src/app/services/http/trending.service";
     selector: 'app-trending',
     templateUrl: './trending.page.html',
     styleUrls: ['./trending.page.scss'],
-    animations: fadeInAnimation,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })

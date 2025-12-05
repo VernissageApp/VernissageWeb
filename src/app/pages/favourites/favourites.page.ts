@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy, signal, ChangeDetectionStrategy, inject } from '@angular/core';
-import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { LoadingService } from 'src/app/services/common/loading.service';
@@ -14,7 +13,6 @@ import { ReusableGalleryPageComponent } from 'src/app/common/reusable-gallery-pa
     selector: 'app-favourites',
     templateUrl: './favourites.page.html',
     styleUrls: ['./favourites.page.scss'],
-    animations: fadeInAnimation,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })

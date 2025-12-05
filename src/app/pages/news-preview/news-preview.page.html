@@ -1,6 +1,6 @@
 @if (isReady()) {
     @if (article(); as articleObject) {
-        <div @fadeIn [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
+        <div animate.enter="fade-in" [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
 
             <div class="flex-row flex-space-around">
                 <div class="news-container width-100">

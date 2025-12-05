@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy, signal, model, ChangeDetectionStrategy, inject, HostListener } from "@angular/core";
 import { ActivatedRoute, NavigationExtras } from "@angular/router";
 import { Subscription } from "rxjs/internal/Subscription";
-import { fadeInAnimation } from "src/app/animations/fade-in.animation";
 import { ReusableGalleryPageComponent } from "src/app/common/reusable-gallery-page";
 import { ContextTimeline } from "src/app/models/context-timeline";
 import { LinkableResult } from "src/app/models/linkable-result";
@@ -16,7 +15,6 @@ import { TimelineService } from "src/app/services/http/timeline.service";
     selector: 'app-editors',
     templateUrl: './editors.page.html',
     styleUrls: ['./editors.page.scss'],
-    animations: fadeInAnimation,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })

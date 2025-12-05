@@ -484,3 +484,66 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .mat-typography p.margin-right-0 {
   margin-right: 0;
 }
+
+/*
+ * Animations.
+ */
+.fade-in {
+  animation: fade-in 0.5s;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.slow-fade-in {
+  opacity: 0;
+  animation: slow-fade-in 1s forwards;
+}
+
+@keyframes slow-fade-in {
+  0% {
+    opacity: 0;
+  }
+  40% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.show-fade {
+  opacity: 0;
+  transition: opacity 500ms;
+}
+
+.show-fade.is-visible {
+  opacity: 1;
+}
+
+.hide-fade {
+  opacity: 1;
+  transition: opacity 500ms;
+}
+
+.hide-fade.is-hidden {
+  opacity: 0;
+}
+
+.show-or-hide {
+  transition: opacity 500ms;
+}
+
+.show-or-hide.is-hidden {
+  opacity: 0;
+}
+
+.show-or-hide.is-visible {
+  opacity: 1;
+}

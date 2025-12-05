@@ -1,7 +1,5 @@
 import { Component, HostListener, ElementRef, OnInit, OnDestroy, PLATFORM_ID, signal, viewChild, computed, ChangeDetectionStrategy, inject, model, DOCUMENT } from '@angular/core';
 import { Clipboard } from '@angular/cdk/clipboard';
-import { fadeInAnimation } from "src/app/animations/fade-in.animation";
-import { showOrHideAnimation } from 'src/app/animations/show-or-hide.animation';
 import { decode } from 'blurhash';
 import { combineLatest, map, Subscription } from 'rxjs';
 import { StatusesService } from 'src/app/services/http/statuses.service';
@@ -41,7 +39,6 @@ import { PageNotFoundError } from 'src/app/errors/page-not-found-error';
     selector: 'app-status',
     templateUrl: './status.page.html',
     styleUrls: ['./status.page.scss'],
-    animations: [fadeInAnimation, showOrHideAnimation],
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })

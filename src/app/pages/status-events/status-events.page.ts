@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, inject, model, OnDestroy, OnInit, signal } from '@angular/core';
-import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { ForbiddenError } from 'src/app/errors/forbidden-error';
 import { LoadingService } from 'src/app/services/common/loading.service';
 import { ResponsiveComponent } from 'src/app/common/responsive';
@@ -19,7 +18,6 @@ import { StatusEventErrorMessageDialog } from 'src/app/dialogs/status-event-erro
     selector: 'app-status-events',
     templateUrl: './status-events.page.html',
     styleUrls: ['./status-events.page.scss'],
-    animations: fadeInAnimation,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })

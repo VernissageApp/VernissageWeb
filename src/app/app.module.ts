@@ -1,7 +1,6 @@
 import { BrowserModule, provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { NgModule, ErrorHandler, Injector, NgZone, isDevMode, PLATFORM_ID, inject, provideAppInitializer } from '@angular/core';
 import { HTTP_INTERCEPTORS, provideHttpClient, withFetch, withInterceptorsFromDi } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MAT_CHECKBOX_DEFAULT_OPTIONS, MatCheckboxDefaultOptions } from '@angular/material/checkbox';
 import { MAT_TOOLTIP_DEFAULT_OPTIONS, MatTooltipDefaultOptions } from '@angular/material/tooltip';
 import { GlobalErrorHandler } from 'src/app/handlers/global-error-handler';
@@ -45,7 +44,6 @@ export const customTooltipDefaults: MatTooltipDefaultOptions = {
     bootstrap: [AppComponent],
     imports: [
         BrowserModule,
-        BrowserAnimationsModule,
         HammerModule,
         PagesModule,
         ServiceWorkerModule.register('service-worker.js', {

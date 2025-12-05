@@ -9,7 +9,6 @@ import { DirtyErrorStateMatcher } from 'src/app/common/dirty-error-state-matcher
 import { AuthClientsService } from 'src/app/services/http/auth-clients.service';
 import { AuthClient } from 'src/app/models/auth-client';
 import { InstanceService } from 'src/app/services/http/instance.service';
-import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { WindowService } from 'src/app/services/common/window.service';
 import { CustomReuseStrategy } from 'src/app/common/custom-reuse-strategy';
 import { AlwaysErrorStateMatcher } from 'src/app/common/always-error-state-mather';
@@ -19,7 +18,6 @@ import { PushSubscriptionsService } from 'src/app/services/http/push-subscriptio
     selector: 'app-login',
     templateUrl: './login.page.html',
     styleUrls: ['./login.page.scss'],
-    animations: fadeInAnimation,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })

@@ -1,6 +1,6 @@
 @if (isReady()) {
     @if (mainStatus(); as mainStatusInternal) {
-        <div @fadeIn>
+        <div animate.enter="fade-in">
             <div class="photo-margin-top">
                 @if (showBackArrow()) {
                     <div class="back-container" (click)="onBackClick()" (keydown.enter)="onBackClick()" tabindex="0">
@@ -30,18 +30,18 @@
                             <div [ngClass]="{ 'photo-image-container-fixed': !isHandset() }">
                                 @if (mainStatusInternal.sensitive && !alwaysShowNSFW()) {
                                     @if (showSensitiveCanvas()) {
-                                        <div [@show]="!showSensitiveImage() ? 'true' : 'false'" class="content-warning">
+                                        <div class="content-warning show-fade" [class.is-visible]="!showSensitiveImage()">
                                             @if (mainStatusInternal.contentWarning) {
                                                 <div class="text">{{ mainStatusInternal.contentWarning }}</div>
                                             }
                                             <button mat-flat-button color="accent" (click)="onShowSensitiveImageClick()">Show image</button>
                                         </div>
-                                        <canvas [@showOrHide]="!showSensitiveImage() ? 'true' : 'false'" class="blurhash" #canvas [width]="imageWidth()" [height]="imageHeight()"></canvas>
+                                        <canvas class="blurhash show-or-hide" [class.is-visible]="!showSensitiveImage()" [class.is-hidden]="showSensitiveImage()" #canvas [width]="imageWidth()" [height]="imageHeight()"></canvas>
                                     }
 
-                                    <img class="link" [@show]="showSensitiveImage() ? 'true' : 'false'" [src]="imagesInternally[0].data?.src" (click)="openInFullScreen()" (keydown.enter)="openInFullScreen()" tabindex="0" (load)="onImageLoaded()" [alt]="altStatus() ?? 'Status image'" />
+                                    <img class="link show-fade" [class.is-visible]="showSensitiveImage()" [src]="imagesInternally[0].data?.src" (click)="openInFullScreen()" (keydown.enter)="openInFullScreen()" tabindex="0" (load)="onImageLoaded()" [alt]="altStatus() ?? 'Status image'" />
                                 } @else {
-                                    <img class="link" [@show]="imageIsLoaded() ? 'true' : 'false'" [src]="imagesInternally[0].data?.src" (click)="openInFullScreen()" (keydown.enter)="openInFullScreen()" tabindex="0" (load)="onImageLoaded()" [alt]="altStatus() ?? 'Status image'" />
+                                    <img class="link show-fade" [class.is-visible]="imageIsLoaded()" [src]="imagesInternally[0].data?.src" (click)="openInFullScreen()" (keydown.enter)="openInFullScreen()" tabindex="0" (load)="onImageLoaded()" [alt]="altStatus() ?? 'Status image'" />
                                 }
                             </div>
                         }

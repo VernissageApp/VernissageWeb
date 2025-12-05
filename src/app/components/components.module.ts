@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { provideHttpClient, withFetch, withInterceptorsFromDi } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
@@ -81,7 +80,6 @@ import { LicenseListComponent } from './widgets/license-list/license-list.compon
     ],
     exports: [
         BrowserModule,
-        BrowserAnimationsModule,
         FormsModule,
         ReactiveFormsModule,
         AngularMaterialModule,
@@ -122,7 +120,6 @@ import { LicenseListComponent } from './widgets/license-list/license-list.compon
     ],
     imports: [
         BrowserModule,
-        BrowserAnimationsModule,
         FormsModule,
         ReactiveFormsModule,
         AngularMaterialModule,

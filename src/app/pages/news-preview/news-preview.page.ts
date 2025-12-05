@@ -3,7 +3,6 @@ import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit, signal, 
 import { Meta, Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { ForbiddenError } from 'src/app/errors/forbidden-error';
 import { Article } from 'src/app/models/article';
@@ -18,7 +17,6 @@ import { SettingsService } from 'src/app/services/http/settings.service';
     selector: 'app-news-preview',
     templateUrl: './news-preview.page.html',
     styleUrls: ['./news-preview.page.scss'],
-    animations: fadeInAnimation,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })

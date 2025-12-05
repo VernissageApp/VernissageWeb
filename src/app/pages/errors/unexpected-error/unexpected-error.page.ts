@@ -1,13 +1,11 @@
 import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { PersistenceService } from 'src/app/services/persistance/persistance.service';
 
 @Component({
     selector: 'app-unexpected-error',
     templateUrl: './unexpected-error.page.html',
     styleUrls: ['./unexpected-error.page.scss'],
-    animations: fadeInAnimation,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })

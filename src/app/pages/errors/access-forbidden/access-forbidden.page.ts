@@ -1,12 +1,10 @@
 import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 
 @Component({
     selector: 'app-access-forbidden',
     templateUrl: './access-forbidden.page.html',
     styleUrls: ['./access-forbidden.page.scss'],
-    animations: fadeInAnimation,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })

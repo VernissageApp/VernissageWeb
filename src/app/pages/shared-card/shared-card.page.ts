@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, inject, model, OnDestroy, OnInit, s
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { combineLatest, map, Subscription } from 'rxjs';
-import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { AvatarSize } from 'src/app/components/widgets/avatar/avatar-size';
 import { ProfileCodeDialog } from 'src/app/dialogs/profile-code-dialog/profile-code.dialog';
@@ -19,7 +18,6 @@ import { SharedBusinessCardsService } from 'src/app/services/http/shared-busines
     selector: 'app-shared-card',
     templateUrl: './shared-card.page.html',
     styleUrls: ['./shared-card.page.scss'],
-    animations: fadeInAnimation,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })

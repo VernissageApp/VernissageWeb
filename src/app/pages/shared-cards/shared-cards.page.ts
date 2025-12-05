@@ -3,7 +3,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { ConfirmationDialog } from 'src/app/dialogs/confirmation-dialog/confirmation.dialog';
 import { ShareBusinessCardDialog } from 'src/app/dialogs/share-business-card-dialog/share-business-card.dialog';
@@ -19,7 +18,7 @@ import { SharedBusinessCardsService } from 'src/app/services/http/shared-busines
     selector: 'app-shared-cards',
     templateUrl: './shared-cards.page.html',
     styleUrls: ['./shared-cards.page.scss'],
-    animations: fadeInAnimation,
+
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })

@@ -1,6 +1,6 @@
 @if (isReady()) {
     @if (sharedBusinessCards(); as sharedBusinessCardsArray) {
-        <div @fadeIn [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
+        <div animate.enter="fade-in" [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
             <div class="flex-row flex-space-around padding-left-10 padding-right-10">
                 <div class="width-100">
                     <section class="flex-row flex-space-between flex-align-center margin-bottom-20" [ngClass]="{ 'flex-row': !isHandsetPortrait(), 'flex-column': isHandsetPortrait() }">

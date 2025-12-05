@@ -5,7 +5,6 @@ import { Subscription } from 'rxjs';
 import { LoadingService } from 'src/app/services/common/loading.service';
 import { ContextTimeline } from 'src/app/models/context-timeline';
 import { SettingsService } from 'src/app/services/http/settings.service';
-import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { ReusableGalleryPageComponent } from 'src/app/common/reusable-gallery-page';
 import { ArticleVisibility } from 'src/app/models/article-visibility';
 import { ArticlesService } from 'src/app/services/http/articles.service';
@@ -15,7 +14,6 @@ import { Article } from 'src/app/models/article';
     selector: 'app-home-signout',
     templateUrl: './home-signout.component.html',
     styleUrls: ['./home-signout.component.scss'],
-    animations: fadeInAnimation,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })

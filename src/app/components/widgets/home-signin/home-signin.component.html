@@ -1,5 +1,5 @@
 @if (isReady()) {
-    <div @fadeIn>
+    <div animate.enter="fade-in">
 
         @if (articles().length > 0) {
             <div [ngClass]="{ 'padding-top-30': !isHandset(), 'padding-left-30': !isHandset(), 'padding-right-30': !isHandset(), 'padding-10': isHandset() }">

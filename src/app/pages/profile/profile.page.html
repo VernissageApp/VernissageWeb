@@ -116,7 +116,7 @@
 
                     @if (selectedProfilePageTab() === profilePageTab.Following) {
                         <div>
-                            <div @fadeIn class="padding-bottom-20 padding-top-20">
+                            <div animate.enter="fade-in" class="padding-bottom-20 padding-top-20">
                                 <mat-card class="users-card" appearance="outlined">
                                     <mat-card-content>
                                         @if ((following()?.data?.length ?? 0) > 0) {
@@ -145,7 +145,7 @@
 
                     @if (selectedProfilePageTab() === profilePageTab.Followers) {
                         <div>
-                            <div @fadeIn class="padding-bottom-20 padding-top-20">
+                            <div animate.enter="fade-in" class="padding-bottom-20 padding-top-20">
                                 <mat-card class="users-card" appearance="outlined">
                                     <mat-card-content>
                                         @if ((followers()?.data?.length ?? 0) > 0) {
