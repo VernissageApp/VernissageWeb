@@ -1,4 +1,4 @@
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 
 import { Observable } from 'rxjs/internal/Observable';
@@ -11,11 +11,11 @@ import { from } from 'rxjs';
 export class APIInterceptor implements HttpInterceptor {
     private isBrowser = false;
 
-    constructor(
-        @Inject(PLATFORM_ID) platformId: object,
-        private authorizationService: AuthorizationService
-    ) {
-        this.isBrowser = isPlatformBrowser(platformId);
+    private platformId = inject(PLATFORM_ID);
+    private authorizationService = inject(AuthorizationService);
+
+    constructor() {
+        this.isBrowser = isPlatformBrowser(this.platformId);
     }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {

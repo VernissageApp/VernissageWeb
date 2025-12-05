@@ -27,9 +27,6 @@ import { RandomGeneratorService } from './services/common/random-generator.servi
 import { CustomScriptsService } from './services/common/custom-scripts.service';
 import { CustomStylesService } from './services/common/custom-styles.service';
 
-const httpInterceptor = (platformId: object, authorizationService: AuthorizationService) => 
-    new APIInterceptor(platformId, authorizationService);
-
 /** Custom options the configure the tooltip's default show/hide delays. */
 export const customTooltipDefaults: MatTooltipDefaultOptions = {
     showDelay: 750,
@@ -62,12 +59,7 @@ export const customTooltipDefaults: MatTooltipDefaultOptions = {
             const initializerFn = (appInitialization)(inject(AuthorizationService), inject(InstanceService), inject(SettingsService), inject(CustomScriptsService), inject(CustomStylesService));
             return initializerFn();
         }),
-        {
-            provide: HTTP_INTERCEPTORS,
-            useFactory: httpInterceptor,
-            deps: [PLATFORM_ID, AuthorizationService],
-            multi: true
-        },
+        { provide: HTTP_INTERCEPTORS, useClass: APIInterceptor, multi: true },
         {
             provide: PersistenceService,
             useFactory: (platformId: object) => {
