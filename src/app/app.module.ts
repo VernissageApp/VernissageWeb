@@ -7,6 +7,7 @@ import { GlobalErrorHandler } from 'src/app/handlers/global-error-handler';
 import { InstanceService } from 'src/app/services/http/instance.service';
 import { appInitialization } from './app-initialization';
 import { HammerModule } from "@angular/platform-browser";
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 import { RouteReuseStrategy } from '@angular/router';
 import { AppComponent } from './app.component';
@@ -83,7 +84,9 @@ export const customTooltipDefaults: MatTooltipDefaultOptions = {
             provide: ErrorHandler, useClass: GlobalErrorHandler, deps: [PLATFORM_ID, Injector, NgZone, AuthorizationService, PersistenceService, LoadingService, ErrorItemsService, RandomGeneratorService]
         },
         provideHttpClient(withFetch(), withInterceptorsFromDi()),
-        provideClientHydration(withEventReplay())
+        provideClientHydration(withEventReplay()),
+        // The animations are required now only by sat-popover library.
+        provideAnimations()
     ]
 })
 export class AppModule {
