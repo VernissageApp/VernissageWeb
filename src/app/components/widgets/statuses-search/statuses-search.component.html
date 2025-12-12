@@ -1,4 +1,4 @@
-<div @fadeIn>
+<div animate.enter="fade-in">
     <!-- Image -->
     <a [routerLink]="['/statuses', status().id]" [ariaLabel]="'Status added by: ' + mainStatus().user?.userName">
         @if (mainStatus().sensitive && !alwaysShowNSFW) {

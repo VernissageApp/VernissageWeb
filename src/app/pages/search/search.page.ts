@@ -1,5 +1,4 @@
 import { AfterViewInit, Component, ElementRef, OnInit, OnDestroy, model, signal, viewChild, ChangeDetectionStrategy, inject } from '@angular/core';
-import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { User } from 'src/app/models/user';
 import { Relationship } from 'src/app/models/relationship';
 import { SearchService } from 'src/app/services/http/search.service';
@@ -16,7 +15,6 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
     selector: 'app-search',
     templateUrl: './search.page.html',
     styleUrls: ['./search.page.scss'],
-    animations: fadeInAnimation,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })

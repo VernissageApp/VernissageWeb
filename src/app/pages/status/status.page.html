@@ -1,6 +1,6 @@
 @if (isReady()) {
     @if (mainStatus(); as mainStatusInternal) {
-        <div @fadeIn>
+        <div animate.enter="fade-in">
             <div class="photo-margin-top">
                 @if (showBackArrow()) {
                     <div class="back-container" (click)="onBackClick()" (keydown.enter)="onBackClick()" tabindex="0">
@@ -30,18 +30,18 @@
                             <div [ngClass]="{ 'photo-image-container-fixed': !isHandset() }">
                                 @if (mainStatusInternal.sensitive && !alwaysShowNSFW()) {
                                     @if (showSensitiveCanvas()) {
-                                        <div [@show]="!showSensitiveImage() ? 'true' : 'false'" class="content-warning">
+                                        <div class="content-warning show-fade" [class.is-visible]="!showSensitiveImage()">
                                             @if (mainStatusInternal.contentWarning) {
                                                 <div class="text">{{ mainStatusInternal.contentWarning }}</div>
                                             }
                                             <button mat-flat-button color="accent" (click)="onShowSensitiveImageClick()">Show image</button>
                                         </div>
-                                        <canvas [@showOrHide]="!showSensitiveImage() ? 'true' : 'false'" class="blurhash" #canvas [width]="imageWidth()" [height]="imageHeight()"></canvas>
+                                        <canvas class="blurhash show-or-hide" [class.is-visible]="!showSensitiveImage()" [class.is-hidden]="showSensitiveImage()" #canvas [width]="imageWidth()" [height]="imageHeight()"></canvas>
                                     }
 
-                                    <img class="link" [@show]="showSensitiveImage() ? 'true' : 'false'" [src]="imagesInternally[0].data?.src" (click)="openInFullScreen()" (keydown.enter)="openInFullScreen()" tabindex="0" (load)="onImageLoaded()" [alt]="altStatus() ?? 'Status image'" />
+                                    <img class="link show-fade" [class.is-visible]="showSensitiveImage()" [src]="imagesInternally[0].data?.src" (click)="openInFullScreen()" (keydown.enter)="openInFullScreen()" tabindex="0" (load)="onImageLoaded()" [alt]="altStatus() ?? 'Status image'" />
                                 } @else {
-                                    <img class="link" [@show]="imageIsLoaded() ? 'true' : 'false'" [src]="imagesInternally[0].data?.src" (click)="openInFullScreen()" (keydown.enter)="openInFullScreen()" tabindex="0" (load)="onImageLoaded()" [alt]="altStatus() ?? 'Status image'" />
+                                    <img class="link show-fade" [class.is-visible]="imageIsLoaded()" [src]="imagesInternally[0].data?.src" (click)="openInFullScreen()" (keydown.enter)="openInFullScreen()" tabindex="0" (load)="onImageLoaded()" [alt]="altStatus() ?? 'Status image'" />
                                 }
                             </div>
                         }
@@ -115,38 +115,54 @@
 
                                 <!-- Actions panel -->
                                 @if (isLoggedIn()) {
-                                    <button *ngIf="!mainStatusInternal.reblogged" mat-icon-button class="margin-right-10" color="primary" matTooltip="Boost" matTooltipPosition="above" aria-label="Boost" [disabled]="isDuringBoostProcessing()" (click)="reblog()">
-                                        <mat-icon class="outline-symbol">rocket_launch</mat-icon>
-                                    </button>
+                                    @if (!mainStatusInternal.reblogged) {
+                                        <button mat-icon-button class="margin-right-10" color="primary" matTooltip="Boost" matTooltipPosition="above" aria-label="Boost" [disabled]="isDuringBoostProcessing()" (click)="reblog()">
+                                            <mat-icon class="outline-symbol">rocket_launch</mat-icon>
+                                        </button>
+                                    }
 
-                                    <button *ngIf="mainStatusInternal.reblogged" mat-icon-button class="margin-right-10" color="primary" matTooltip="Unboost" matTooltipPosition="above" aria-label="Unboost" [disabled]="isDuringBoostProcessing()" (click)="unreblog()">
-                                        <mat-icon class="fill-symbol">rocket_launch</mat-icon>
-                                    </button>
+                                    @if (mainStatusInternal.reblogged) {
+                                        <button mat-icon-button class="margin-right-10" color="primary" matTooltip="Unboost" matTooltipPosition="above" aria-label="Unboost" [disabled]="isDuringBoostProcessing()" (click)="unreblog()">
+                                            <mat-icon class="fill-symbol">rocket_launch</mat-icon>
+                                        </button>
+                                    }
 
-                                    <button *ngIf="!mainStatusInternal.favourited" mat-icon-button class="margin-right-10" color="primary" matTooltip="Like" matTooltipPosition="above" aria-label="Like" [disabled]="isDuringFavouriteProcessing()" (click)="favourite()">
-                                        <mat-icon class="outline-symbol">grade</mat-icon>
-                                    </button>
+                                    @if (!mainStatusInternal.favourited) {
+                                        <button mat-icon-button class="margin-right-10" color="primary" matTooltip="Like" matTooltipPosition="above" aria-label="Like" [disabled]="isDuringFavouriteProcessing()" (click)="favourite()">
+                                            <mat-icon class="outline-symbol">grade</mat-icon>
+                                        </button>
+                                    }
 
-                                    <button *ngIf="mainStatusInternal.favourited" mat-icon-button class="margin-right-10" color="primary" matTooltip="Unlike" matTooltipPosition="above" aria-label="Unlike" [disabled]="isDuringFavouriteProcessing()" (click)="unfavourite()">
-                                        <mat-icon class="fill-symbol">grade</mat-icon>
-                                    </button>
+                                    @if (mainStatusInternal.favourited) {
+                                        <button mat-icon-button class="margin-right-10" color="primary" matTooltip="Unlike" matTooltipPosition="above" aria-label="Unlike" [disabled]="isDuringFavouriteProcessing()" (click)="unfavourite()">
+                                            <mat-icon class="fill-symbol">grade</mat-icon>
+                                        </button>
+                                    }
 
-                                    <button *ngIf="!mainStatusInternal.bookmarked" mat-icon-button class="margin-right-10" color="primary" matTooltip="Bookmark" matTooltipPosition="above" aria-label="Bookmark" [disabled]="isDuringBookmarkProcessing()" (click)="bookmark()">
-                                        <mat-icon class="outline-symbol">bookmark</mat-icon>
-                                    </button>
+                                    @if (!mainStatusInternal.bookmarked) {
+                                        <button mat-icon-button class="margin-right-10" color="primary" matTooltip="Bookmark" matTooltipPosition="above" aria-label="Bookmark" [disabled]="isDuringBookmarkProcessing()" (click)="bookmark()">
+                                            <mat-icon class="outline-symbol">bookmark</mat-icon>
+                                        </button>
+                                    }
 
-                                    <button *ngIf="mainStatusInternal.bookmarked" mat-icon-button class="margin-right-10" color="primary" matTooltip="Unbookmark" matTooltipPosition="above" aria-label="Unbookmark" [disabled]="isDuringBookmarkProcessing()" (click)="unbookmark()">
-                                        <mat-icon class="fill-symbol">bookmark</mat-icon>
-                                    </button>
+                                    @if (mainStatusInternal.bookmarked) {
+                                        <button mat-icon-button class="margin-right-10" color="primary" matTooltip="Unbookmark" matTooltipPosition="above" aria-label="Unbookmark" [disabled]="isDuringBookmarkProcessing()" (click)="unbookmark()">
+                                            <mat-icon class="fill-symbol">bookmark</mat-icon>
+                                        </button>
+                                    }
 
                                     @if (shouldDisplayFeatureButton()) {
-                                        <button *ngIf="!mainStatusInternal.featured" mat-icon-button class="margin-right-10" color="primary" matTooltip="Feature" matTooltipPosition="above" aria-label="Feature" [disabled]="isDuringFeatureProcessing()" (click)="feature()">
-                                            <mat-icon class="outline-symbol">stars</mat-icon>
-                                        </button>
+                                        @if (!mainStatusInternal.featured) {
+                                            <button mat-icon-button class="margin-right-10" color="primary" matTooltip="Feature" matTooltipPosition="above" aria-label="Feature" [disabled]="isDuringFeatureProcessing()" (click)="feature()">
+                                                <mat-icon class="outline-symbol">stars</mat-icon>
+                                            </button>
+                                        }
 
-                                        <button *ngIf="mainStatusInternal.featured" mat-icon-button class="margin-right-10" color="primary" matTooltip="Unfeature" matTooltipPosition="above" aria-label="Unfeature" [disabled]="isDuringFeatureProcessing()" (click)="unfeature()">
-                                            <mat-icon class="fill-symbol">stars</mat-icon>
-                                        </button>
+                                        @if (mainStatusInternal.featured) {
+                                            <button mat-icon-button class="margin-right-10" color="primary" matTooltip="Unfeature" matTooltipPosition="above" aria-label="Unfeature" [disabled]="isDuringFeatureProcessing()" (click)="unfeature()">
+                                                <mat-icon class="fill-symbol">stars</mat-icon>
+                                            </button>
+                                        }
                                     }
 
                                     <button mat-icon-button [matMenuTriggerFor]="menu" class="margin-right-10" color="primary" aria-label="More options">
@@ -162,10 +178,12 @@
                                             <span>Favourited by</span>
                                         </button>
                                         <mat-divider></mat-divider>
-                                        <button *ngIf="!mainStatusInternal.isLocal" mat-menu-item (click)="onOpenOriginalPage()">
-                                            <mat-icon class="fill-symbol">export_notes</mat-icon>
-                                            <span>Open original page</span>
-                                        </button>
+                                        @if (!mainStatusInternal.isLocal) {
+                                            <button mat-menu-item (click)="onOpenOriginalPage()">
+                                                <mat-icon class="fill-symbol">export_notes</mat-icon>
+                                                <span>Open original page</span>
+                                            </button>
+                                        }
                                         <button mat-menu-item (click)="onCopyLinkToPost()">
                                             <mat-icon class="fill-symbol">file_copy</mat-icon>
                                             <span>Copy link to post</span>
@@ -175,18 +193,24 @@
                                             <mat-icon class="outline-symbol">report</mat-icon>
                                             <span>Report</span>
                                         </button>
-                                        <button *ngIf="shouldDisplayEventsButton()" mat-menu-item (click)="onStatusEvents()">
-                                            <mat-icon class="outline-symbol">call_split</mat-icon>
-                                            <span>Events</span>
-                                        </button>
-                                        <button *ngIf="shouldDisplayEditButton()" mat-menu-item (click)="onEditStatus()">
-                                            <mat-icon class="outline-symbol">edit</mat-icon>
-                                            <span>Edit</span>
-                                        </button>
-                                        <button *ngIf="shouldDisplayDeleteButton()" mat-menu-item (click)="onDeleteStatus()">
-                                            <mat-icon class="outline-symbol">delete</mat-icon>
-                                            <span>Delete</span>
-                                        </button>
+                                        @if (shouldDisplayEventsButton()) {
+                                            <button mat-menu-item (click)="onStatusEvents()">
+                                                <mat-icon class="outline-symbol">call_split</mat-icon>
+                                                <span>Events</span>
+                                            </button>
+                                        }
+                                        @if (shouldDisplayEditButton()) {
+                                            <button mat-menu-item (click)="onEditStatus()">
+                                                <mat-icon class="outline-symbol">edit</mat-icon>
+                                                <span>Edit</span>
+                                            </button>
+                                        }
+                                        @if (shouldDisplayDeleteButton()) {
+                                            <button mat-menu-item (click)="onDeleteStatus()">
+                                                <mat-icon class="outline-symbol">delete</mat-icon>
+                                                <span>Delete</span>
+                                            </button>
+                                        }
                                     </mat-menu>
 
                                     @if (isDuringBoostProcessing() || isDuringFavouriteProcessing() || isDuringBookmarkProcessing() || isDuringFeatureProcessing()) {
@@ -236,7 +260,9 @@
                             @if (location()) {
                                 <div class="location margin-bottom-10">
                                     <mat-icon class="margin-right-20" inline="true" matTooltip="Place">place</mat-icon>
-                                    <span *ngIf="location()?.name" class="location-label"><a class="dashed" target="_blank" [href]="mapsUrl()">{{ location()?.name }}</a> ({{ location()?.country?.name }})</span>
+                                    @if (location()?.name) {
+                                        <span class="location-label"><a class="dashed" target="_blank" [href]="mapsUrl()">{{ location()?.name }}</a> ({{ location()?.country?.name }})</span>
+                                    }
                                 </div>
                             }
                             @if (!location() && hasGpsCoordinations()) {
@@ -253,9 +279,15 @@
                                     @if (internalLicense.name) {
                                         <span class="license-label">
                                             @if (internalLicense.url) {
-                                                <a class="dashed" target="_blank" [href]="internalLicense.url">{{ internalLicense.name }}</a><ng-container *ngIf="internalLicense.code"> ({{ internalLicense.code }})</ng-container>
+                                                <a class="dashed" target="_blank" [href]="internalLicense.url">{{ internalLicense.name }}</a>
+                                                @if (internalLicense.code) {
+                                                    ({{ internalLicense.code }})
+                                                }
                                             } @else {
-                                                {{ internalLicense.name }}<ng-container *ngIf="internalLicense.code"> ({{ internalLicense.code }})</ng-container>
+                                                {{ internalLicense.name }}
+                                                @if (internalLicense.code) {
+                                                    ({{ internalLicense.code }})
+                                                }
                                             }
                                         </span>
                                     }
@@ -269,7 +301,11 @@
                                         <div class="margin-bottom-10">
                                             <mat-icon class="margin-right-20" inline="true" matTooltip="Camera">camera_alt</mat-icon>
                                             <span class="exif-label">
-                                                <span *ngIf="exifInternal.make">{{ exifInternal.make }}</span>&nbsp;<span *ngIf="exifInternal.model">{{ exifInternal.model }}</span>
+                                                @if (exifInternal.make) {
+                                                    <span>{{ exifInternal.make }}</span>
+                                                    }&nbsp;@if (exifInternal.model) {
+                                                    <span>{{ exifInternal.model }}</span>
+                                                }
                                             </span>
                                         </div>
                                     }
@@ -288,7 +324,7 @@
                                                 @if (exifInternal.focalLenIn35mmFilm === exifInternal.focalLength) {
                                                     <span class="margin-right-15 exif-label" matTooltipPosition="right" [matTooltip]="'Full frame lens.'">{{ getCleanFocalLength(exifInternal.focalLength) }}mm</span>
                                                 } @else {
-                                                    <span class="margin-right-15 exif-label" matTooltipPosition="right" [matTooltip]="'Equivalent of ' + getCleanFocalLength(exifInternal.focalLenIn35mmFilm)  + 'mm full frame lens.'">{{ getCleanFocalLength(exifInternal.focalLength) }}mm</span>
+                                                    <span class="margin-right-15 exif-label" matTooltipPosition="right" [matTooltip]="'Equivalent of ' + getCleanFocalLength(exifInternal.focalLenIn35mmFilm)    + 'mm full frame lens.'">{{ getCleanFocalLength(exifInternal.focalLength) }}mm</span>
                                                 }
                                             } @else if (exifInternal.focalLenIn35mmFilm && !exifInternal.focalLength) {
                                                 <span class="margin-right-15 exif-label">{{ getCleanFocalLength(exifInternal.focalLenIn35mmFilm) }}mm</span>
@@ -296,9 +332,15 @@
                                                 <span class="margin-right-15 exif-label">{{ getCleanFocalLength(exifInternal.focalLength) }}mm</span>
                                             }
 
-                                            <span *ngIf="exifInternal.fNumber" class="margin-right-15 exif-label">{{ exifInternal.fNumber | slice:0:7 }}</span>
-                                            <span *ngIf="exifInternal.exposureTime" class="margin-right-15 exif-label">{{ exifInternal.exposureTime }}s</span>
-                                            <span *ngIf="exifInternal.photographicSensitivity" class="margin-right-15 exif-label">ISO {{ exifInternal.photographicSensitivity }}</span>
+                                            @if (exifInternal.fNumber) {
+                                                <span class="margin-right-15 exif-label">{{ exifInternal.fNumber | slice:0:7 }}</span>
+                                            }
+                                            @if (exifInternal.exposureTime) {
+                                                <span class="margin-right-15 exif-label">{{ exifInternal.exposureTime }}s</span>
+                                            }
+                                            @if (exifInternal.photographicSensitivity) {
+                                                <span class="margin-right-15 exif-label">ISO {{ exifInternal.photographicSensitivity }}</span>
+                                            }
                                         </div>
                                     }
 
@@ -315,7 +357,7 @@
                                             <span class="exif-label">{{ exifInternal.software }}</span>
                                         </div>
                                     }
-                                    
+
                                     @if (exifInternal.film) {
                                         <div class="margin-bottom-10">
                                             <mat-icon class="margin-right-20" inline="true" matTooltip="Camera roll">camera_roll</mat-icon>
@@ -400,14 +442,18 @@
                                                             <mat-icon>more_vert</mat-icon>
                                                         </button>
                                                         <mat-menu #menu="matMenu">
-                                                            <button *ngIf="!comment.status.favourited" mat-menu-item (click)="favouriteComment(comment.status)">
-                                                                <mat-icon>star_border</mat-icon>
-                                                                <span>Like</span>
-                                                            </button>
-                                                            <button *ngIf="comment.status.favourited" mat-menu-item (click)="unFavouriteComment(comment.status)">
-                                                                <mat-icon>star</mat-icon>
-                                                                <span>Unlike</span>
-                                                            </button>
+                                                            @if (!comment.status.favourited) {
+                                                                <button mat-menu-item (click)="favouriteComment(comment.status)">
+                                                                    <mat-icon>star_border</mat-icon>
+                                                                    <span>Like</span>
+                                                                </button>
+                                                            }
+                                                            @if (comment.status.favourited) {
+                                                                <button mat-menu-item (click)="unFavouriteComment(comment.status)">
+                                                                    <mat-icon>star</mat-icon>
+                                                                    <span>Unlike</span>
+                                                                </button>
+                                                            }
                                                             <button mat-menu-item (click)="onReply(comment.status)">
                                                                 <mat-icon>reply</mat-icon>
                                                                 <span>Reply</span>
@@ -417,16 +463,18 @@
                                                                 <mat-icon>warning</mat-icon>
                                                                 <span>Report</span>
                                                             </button>
-                                                            <button *ngIf="shouldDisplayDeleteCommentButton(comment.status)" mat-menu-item (click)="onDeleteComment(comment.status)">
-                                                                <mat-icon class="outline-symbol">delete</mat-icon>
-                                                                <span>Delete</span>
-                                                            </button>
+                                                            @if (shouldDisplayDeleteCommentButton(comment.status)) {
+                                                                <button mat-menu-item (click)="onDeleteComment(comment.status)">
+                                                                    <mat-icon class="outline-symbol">delete</mat-icon>
+                                                                    <span>Delete</span>
+                                                                </button>
+                                                            }
                                                         </mat-menu>
                                                     </div>
                                                 }
                                             </div>
 
-                                            <div class="flex-row flex-responsive gap-horizontal-16 margin-left-40" [ngClass]="{ 'replies': !comment.showDivider }">                                            
+                                            <div class="flex-row flex-responsive gap-horizontal-16 margin-left-40" [ngClass]="{ 'replies': !comment.showDivider }">
                                                 <div class="text-muted fs-80">{{ comment.status.createdAt | ago }}</div>
                                                 <div class="text-muted fs-80" >
                                                     @if (comment.status.favouritesCount > 0) {
@@ -451,12 +499,12 @@
                                 @if ((comments()?.length ?? 0) === 0) {
                                     <div>There is nothing to read here yet.</div>
                                 }
-                                
+
                             </mat-card-content>
                         </mat-card>
 
                         <!-- Versions -->
-                         @if (versions() && versions().length) {
+                        @if (versions() && versions().length) {
                             <mat-card appearance="outlined">
                                 <mat-card-content>
                                     <div class="versions">
@@ -477,7 +525,6 @@
 
                 </div>
             </div>
-
         </div>
     }
 }

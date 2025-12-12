@@ -7,8 +7,11 @@
                 <mat-label>Template</mat-label>
                 <textarea matInput name="template" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="6"
                     cdkAutosizeMaxRows="12" placeholder="Template" #templateModel="ngModel" [(ngModel)]="template"
-                    aria-label="Comment" appMaxLength="1000"></textarea>
-                <mat-error *ngIf="templateModel.invalid && templateModel.errors?.appMaxLength">Too long template.</mat-error>
+                aria-label="Comment" appMaxLength="1000"></textarea>
+
+                @if (templateModel.invalid && templateModel.errors?.appMaxLength) {
+                    <mat-error>Too long template.</mat-error>
+                }
             </mat-form-field>
         </div>
     </div>

@@ -1,4 +1,4 @@
-<div class="padding-top-30" @fadeIn>
+<div class="padding-top-30" animate.enter="fade-in">
     <div class="flex-row flex-center">
         <div class="login-container margin-left-10 margin-right-10">
             <!-- Sign in via username and password. -->
@@ -15,7 +15,10 @@
                                 <mat-form-field appearance="outline">
                                     <mat-label>Username or email</mat-label>
                                     <input type="text" matInput [errorStateMatcher]="dirtyErrorStateMatcher" name="userNameOrEmail" [(ngModel)]="userNameOrEmail" #userNameOrEmailInput="ngModel" placeholder="Username or email" aria-label="Username or email" required />
-                                    <mat-error *ngIf="userNameOrEmailInput.dirty && userNameOrEmailInput.invalid && userNameOrEmailInput.errors?.required">Enter username or email.</mat-error>
+
+                                    @if (userNameOrEmailInput.dirty && userNameOrEmailInput.invalid && userNameOrEmailInput.errors?.required) {
+                                        <mat-error>Enter username or email.</mat-error>
+                                    }
                                 </mat-form-field>
 
                                 <!-- Password. -->
@@ -25,15 +28,19 @@
                                 <mat-form-field appearance="outline">
                                     <mat-label>Password</mat-label>
                                     <input type="password" matInput [errorStateMatcher]="dirtyErrorStateMatcher" name="password" [(ngModel)]="password" #passwordInput="ngModel" placeholder="Password" aria-label="Password" required />
-                                    <mat-error *ngIf="passwordInput.dirty && passwordInput.invalid && passwordInput.errors?.required">Enter password.</mat-error>
+
+                                    @if (passwordInput.dirty && passwordInput.invalid && passwordInput.errors?.required) {
+                                        <mat-error>Enter password.</mat-error>
+                                    }
                                 </mat-form-field>
-                            }
-                            @else {
+                            } @else {
                                 <!-- Token 2FA. -->
                                 <mat-form-field appearance="outline">
                                     <mat-label>Token</mat-label>
                                     <input type="text" matInput [errorStateMatcher]="alwaysErrorStateMatcher" inputmode="numeric" name="token" [(ngModel)]="twoFactorToken" #twoFactorTokenInput="ngModel" placeholder="Two factor token" aria-label="Two factor token" required />
-                                    <mat-error *ngIf="tokenMessage()">{{ tokenMessage() }}</mat-error>
+                                    @if (tokenMessage()) {
+                                        <mat-error>{{ tokenMessage() }}</mat-error>
+                                    }
                                 </mat-form-field>
                                 <mat-checkbox class="margin-bottom-20" name="trustMachine" [disableRipple]="true" [(ngModel)]="trustMachine">
                                     Trust this machine for the next 30 days.

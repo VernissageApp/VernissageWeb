@@ -2,7 +2,7 @@
 # Stage 1: Compile and Build angular codebase
 
 # Use official node image as the base image
-FROM node:20 as build
+FROM node:24 as build
 
 # Set the working directory
 WORKDIR /usr/local/app
@@ -23,7 +23,7 @@ RUN npm run build
 # Stage 2: Serve dynamic app with node server (SSR).
 
 # Use official node server.
-FROM node:20 AS ssr-server
+FROM node:24 AS ssr-server
 
 # Set the working directory.
 WORKDIR /usr/local/app

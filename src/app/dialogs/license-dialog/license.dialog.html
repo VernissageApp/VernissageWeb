@@ -6,8 +6,14 @@
             <mat-form-field class="width-100" appearance="outline">
                 <mat-label>Name</mat-label>
                 <input type="text" matInput name="licenseName" [(ngModel)]="name" #nameInput="ngModel" aria-label="License name" required appMaxLength="100" />
-                <mat-error *ngIf="nameInput.invalid && nameInput.errors?.required">Enter license name.</mat-error>
-                <mat-error *ngIf="nameInput.invalid && nameInput.errors?.appMaxLength">Name is too long.</mat-error>
+
+                @if (nameInput.invalid && nameInput.errors?.required) {
+                    <mat-error>Enter license name.</mat-error>
+                }
+
+                @if (nameInput.invalid && nameInput.errors?.appMaxLength) {
+                    <mat-error>Name is too long.</mat-error>
+                }
             </mat-form-field>
         </div>
 
@@ -15,7 +21,10 @@
             <mat-form-field class="width-100" appearance="outline">
                 <mat-label>Code</mat-label>
                 <input type="text" matInput name="licenseCode" [(ngModel)]="code" #codeInput="ngModel" aria-label="License code" appMaxLength="50" />
-                <mat-error *ngIf="codeInput.invalid && codeInput.errors?.appMaxLength">Code is too long.</mat-error>
+
+                @if (codeInput.invalid && codeInput.errors?.appMaxLength) {
+                    <mat-error>Code is too long.</mat-error>
+                }
             </mat-form-field>
         </div>
 
@@ -24,8 +33,11 @@
                 <mat-label>Description</mat-label>
                 <textarea matInput name="licenseDescription" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4"
                     cdkAutosizeMaxRows="10" #descriptionInput="ngModel" [(ngModel)]="description"
-                    aria-label="License description"></textarea>
-                <mat-error *ngIf="descriptionInput.invalid && descriptionInput.errors?.appMaxLength">Description is too long.</mat-error>
+                aria-label="License description"></textarea>
+
+                @if (descriptionInput.invalid && descriptionInput.errors?.appMaxLength) {
+                    <mat-error>Description is too long.</mat-error>
+                }
             </mat-form-field>
         </div>
 
@@ -33,7 +45,10 @@
             <mat-form-field class="width-100" appearance="outline">
                 <mat-label>Url</mat-label>
                 <input type="text" matInput name="licenseUrl" [(ngModel)]="url" #urlInput="ngModel" aria-label="Url" appMaxLength="500" />
-                <mat-error *ngIf="urlInput.invalid && urlInput.errors?.appMaxLength">Url is too long.</mat-error>
+
+                @if (urlInput.invalid && urlInput.errors?.appMaxLength) {
+                    <mat-error>Url is too long.</mat-error>
+                }
             </mat-form-field>
         </div>
 

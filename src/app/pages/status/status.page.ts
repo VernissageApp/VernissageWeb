@@ -1,7 +1,5 @@
-import { Component, HostListener, ElementRef, OnInit, OnDestroy, PLATFORM_ID, signal, viewChild, computed, ChangeDetectionStrategy, inject, model } from '@angular/core';
+import { Component, HostListener, ElementRef, OnInit, OnDestroy, PLATFORM_ID, signal, viewChild, computed, ChangeDetectionStrategy, inject, model, DOCUMENT } from '@angular/core';
 import { Clipboard } from '@angular/cdk/clipboard';
-import { fadeInAnimation } from "src/app/animations/fade-in.animation";
-import { showOrHideAnimation } from 'src/app/animations/show-or-hide.animation';
 import { decode } from 'blurhash';
 import { combineLatest, map, Subscription } from 'rxjs';
 import { StatusesService } from 'src/app/services/http/statuses.service';
@@ -30,7 +28,7 @@ import { UsersDialogContext, UsersListType } from 'src/app/dialogs/users-dialog/
 import { License } from 'src/app/models/license';
 import { WindowService } from 'src/app/services/common/window.service';
 import { RoutingStateService } from 'src/app/services/common/routing-state.service';
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import { Meta, SafeHtml, Title } from '@angular/platform-browser';
 import { LoadingService } from 'src/app/services/common/loading.service';
 import { DeviceDetectorService } from 'ngx-device-detector';
@@ -41,7 +39,6 @@ import { PageNotFoundError } from 'src/app/errors/page-not-found-error';
     selector: 'app-status',
     templateUrl: './status.page.html',
     styleUrls: ['./status.page.scss'],
-    animations: [fadeInAnimation, showOrHideAnimation],
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })

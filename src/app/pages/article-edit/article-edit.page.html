@@ -1,5 +1,5 @@
 @if (isReady()) {
-    <div @fadeIn [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
+    <div animate.enter="fade-in" [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
         <div class="flex-row flex-space-around">
             <div class="article-container width-100">
                 <section>
@@ -15,9 +15,11 @@
                                     <mat-label>Title</mat-label>
                                     <input type="text" matInput name="title" #titleInput="ngModel" [(ngModel)]="title"
                                         placeholder="Title" aria-label="Title" appMaxLength="200" />
-                                    <mat-error *ngIf="titleInput.invalid && titleInput.errors?.appMaxLength">
-                                        Too long title.
-                                    </mat-error>
+                                    @if (titleInput.invalid && titleInput.errors?.appMaxLength) {
+                                        <mat-error>
+                                            Too long title.
+                                        </mat-error>
+                                    }
                                 </mat-form-field>
                             </div>
 
@@ -26,10 +28,14 @@
                                     <mat-label>Article body</mat-label>
                                     <textarea matInput name="body" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="8"
                                         cdkAutosizeMaxRows="26" placeholder="Article body" #bodyInput="ngModel" [(ngModel)]="body"
-                                        aria-label="Article body" appMaxLength="50000" required></textarea>
+                                    aria-label="Article body" appMaxLength="50000" required></textarea>
                                     <mat-hint align="end"><span class="text-muted">This field supports Markdown formatting.</span></mat-hint>
-                                    <mat-error *ngIf="bodyInput.invalid && bodyInput.errors?.appMaxLength">Too long article body.</mat-error>
-                                    <mat-error *ngIf="bodyInput.invalid && bodyInput.errors?.required">Enter article body.</mat-error>
+                                    @if (bodyInput.invalid && bodyInput.errors?.appMaxLength) {
+                                        <mat-error>Too long article body.</mat-error>
+                                    }
+                                    @if (bodyInput.invalid && bodyInput.errors?.required) {
+                                        <mat-error>Enter article body.</mat-error>
+                                    }
                                 </mat-form-field>
                             </div>
 
@@ -39,10 +45,12 @@
                                     <input type="text" matInput name="color" #colorInput="ngModel" [(ngModel)]="color"
                                         placeholder="Color" aria-label="Color" appMaxLength="200" />
                                     <mat-hint align="end"><span class="text-muted">You can use CSS-compatible colors here, e.g., #00ff0020.</span></mat-hint>
-                                    <mat-error *ngIf="colorInput.invalid && colorInput.errors?.appMaxLength">
-                                        Too long color.
-                                    </mat-error>
-                                    
+                                    @if (colorInput.invalid && colorInput.errors?.appMaxLength) {
+                                        <mat-error>
+                                            Too long color.
+                                        </mat-error>
+                                    }
+
                                 </mat-form-field>
                             </div>
 
@@ -57,14 +65,16 @@
                                             It will be displayed as the author in thumbnails generated based on OpenGraph tags.
                                         </span>
                                     </mat-hint>
-                                    <mat-error *ngIf="alternativeAuthorInput.invalid && alternativeAuthorInput.errors?.appMaxLength">
-                                        Too long user name.
-                                    </mat-error>
+                                    @if (alternativeAuthorInput.invalid && alternativeAuthorInput.errors?.appMaxLength) {
+                                        <mat-error>
+                                            Too long user name.
+                                        </mat-error>
+                                    }
                                 </mat-form-field>
                             </div>
 
                             <h3 [ngClass]="{ 'padding-top-20': isHandsetPortrait() }">Visibilities</h3>
-                        
+
                             <div class="padding-bottom-20">
                                 <div>
                                     <mat-checkbox name="showInNewsSignIn" color="primary" [disableRipple]="true" [(ngModel)]="showInNewsSignIn">

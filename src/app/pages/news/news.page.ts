@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
-import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { LoadingService } from 'src/app/services/common/loading.service';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { PagedResult } from 'src/app/models/paged-result';
@@ -17,7 +16,6 @@ import { AuthorizationService } from 'src/app/services/authorization/authorizati
     selector: 'app-news',
     templateUrl: './news.page.html',
     styleUrls: ['./news.page.scss'],
-    animations: fadeInAnimation,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })

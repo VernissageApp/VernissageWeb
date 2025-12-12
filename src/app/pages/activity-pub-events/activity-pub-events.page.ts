@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, inject, model, OnDestroy, OnInit, signal } from '@angular/core';
-import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { ForbiddenError } from 'src/app/errors/forbidden-error';
 import { LoadingService } from 'src/app/services/common/loading.service';
 import { ResponsiveComponent } from 'src/app/common/responsive';
@@ -19,7 +18,6 @@ import { StatusActivityPubEventsService } from 'src/app/services/http/status-act
     selector: 'app-activity-pub-events',
     templateUrl: './activity-pub-events.page.html',
     styleUrls: ['./activity-pub-events.page.scss'],
-    animations: fadeInAnimation,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })

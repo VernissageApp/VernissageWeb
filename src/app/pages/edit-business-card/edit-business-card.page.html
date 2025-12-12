@@ -1,16 +1,18 @@
 @if (isReady()) {
-    <div @fadeIn [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
+    <div animate.enter="fade-in" [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
         <section>
             <h1>
                 <div>Business card</div>
-                <div *ngIf="!isHandset()" class="flex-row flex-responsive flex-stretch">
-                    <div class="fs-60 text-muted line-height-normal">
-                        You can create your business card here and share it securely with individuals who do not have an account.
-                        Your card is only visible to those who have the unique, hard-to-guess link you generate.
-                        Each share creates a new link that you can remove at any time.
+                @if (!isHandset()) {
+                    <div class="flex-row flex-responsive flex-stretch">
+                        <div class="fs-60 text-muted line-height-normal">
+                            You can create your business card here and share it securely with individuals who do not have an account.
+                            Your card is only visible to those who have the unique, hard-to-guess link you generate.
+                            Each share creates a new link that you can remove at any time.
+                        </div>
+                        <div></div>
                     </div>
-                    <div></div>
-                </div>
+                }
             </h1>
         </section>
 
@@ -29,7 +31,7 @@
                                         <input type="color" class="input-color" name="color2" [(ngModel)]="color2" aria-label="Bottom color">
                                     </div>
                                     <div class="input-color-container">
-                                        <input  type="color"class="input-color" name="color3" [(ngModel)]="color3" aria-label="Text color">
+                                        <input    type="color"class="input-color" name="color3" [(ngModel)]="color3" aria-label="Text color">
                                     </div>
                                 </div>
 
@@ -38,10 +40,16 @@
                                         <mat-label>Title</mat-label>
                                         <input type="text" matInput name="title" #titleInput="ngModel" [(ngModel)]="title"
                                             placeholder="Title" aria-label="Title" appMaxLength="200" required />
-                                        <mat-error *ngIf="titleInput.invalid && titleInput.errors?.required">Enter title.</mat-error>
-                                        <mat-error *ngIf="titleInput.invalid && titleInput.errors?.appMaxLength">
-                                            Too long title.
-                                        </mat-error>
+
+                                        @if (titleInput.invalid && titleInput.errors?.required) {
+                                            <mat-error>Enter title.</mat-error>
+                                        }
+
+                                        @if (titleInput.invalid && titleInput.errors?.appMaxLength) {
+                                            <mat-error>
+                                                Too long title.
+                                            </mat-error>
+                                        }
                                     </mat-form-field>
                                 </div>
 
@@ -50,9 +58,12 @@
                                         <mat-label>Subtitle</mat-label>
                                         <input type="text" matInput name="subtitle" #subtitleInput="ngModel" [(ngModel)]="subtitle"
                                             placeholder="Subtitle" aria-label="Title" appMaxLength="200" />
-                                        <mat-error *ngIf="subtitleInput.invalid && subtitleInput.errors?.appMaxLength">
-                                            Too long subtitle.
-                                        </mat-error>
+
+                                        @if (subtitleInput.invalid && subtitleInput.errors?.appMaxLength) {
+                                            <mat-error>
+                                                Too long subtitle.
+                                            </mat-error>
+                                        }
                                     </mat-form-field>
                                 </div>
 
@@ -61,8 +72,11 @@
                                         <mat-label>Note</mat-label>
                                         <textarea matInput name="body" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="8"
                                             cdkAutosizeMaxRows="100" placeholder="Note" #bodyInput="ngModel" [(ngModel)]="body"
-                                            aria-label="Note" appMaxLength="50000"></textarea>
-                                        <mat-error *ngIf="bodyInput.invalid && bodyInput.errors?.appMaxLength">Too long article body.</mat-error>
+                                        aria-label="Note" appMaxLength="50000"></textarea>
+
+                                        @if (bodyInput.invalid && bodyInput.errors?.appMaxLength) {
+                                            <mat-error>Too long article body.</mat-error>
+                                        }
                                     </mat-form-field>
                                 </div>
 
@@ -71,9 +85,12 @@
                                         <mat-label>Website</mat-label>
                                         <input type="text" matInput name="website" #websiteInput="ngModel" [(ngModel)]="website"
                                             placeholder="Website" aria-label="Website" appMaxLength="200" />
-                                        <mat-error *ngIf="websiteInput.invalid && websiteInput.errors?.appMaxLength">
-                                            Too long website.
-                                        </mat-error>
+
+                                        @if (websiteInput.invalid && websiteInput.errors?.appMaxLength) {
+                                            <mat-error>
+                                                Too long website.
+                                            </mat-error>
+                                        }
                                     </mat-form-field>
                                 </div>
 
@@ -82,9 +99,12 @@
                                         <mat-label>Telephone</mat-label>
                                         <input type="text" matInput name="telephone" #telephoneInput="ngModel" [(ngModel)]="telephone"
                                             placeholder="Telephone" aria-label="Telephone" appMaxLength="200" />
-                                        <mat-error *ngIf="telephoneInput.invalid && telephoneInput.errors?.appMaxLength">
-                                            Too long telephone.
-                                        </mat-error>
+
+                                        @if (telephoneInput.invalid && telephoneInput.errors?.appMaxLength) {
+                                            <mat-error>
+                                                Too long telephone.
+                                            </mat-error>
+                                        }
                                     </mat-form-field>
                                 </div>
 
@@ -93,16 +113,19 @@
                                         <mat-label>Email</mat-label>
                                         <input type="text" matInput name="email" #emailInput="ngModel" [(ngModel)]="email"
                                             placeholder="Title" aria-label="Title" appMaxLength="200" />
-                                        <mat-error *ngIf="emailInput.invalid && emailInput.errors?.appMaxLength">
-                                            Too long email.
-                                        </mat-error>
+
+                                        @if (emailInput.invalid && emailInput.errors?.appMaxLength) {
+                                            <mat-error>
+                                                Too long email.
+                                            </mat-error>
+                                        }
                                     </mat-form-field>
                                 </div>
 
                                 <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
                                     <mat-divider></mat-divider>
                                 </div>
-                
+
                                 <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20 padding-top-20">
                                     <div class="flex-row flex-stretch flex-space-between">
                                         <h3>Fields</h3>
@@ -111,25 +134,31 @@
                                         </div>
                                     </div>
                                 </div>
-                
+
                                 @for (field of fields(); track field; let i = $index) {
                                     <div>
                                         <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
                                             <mat-form-field appearance="outline">
                                                 <mat-label>Key</mat-label>
                                                 <input type="text" matInput [name]="'key-' + i" #key="ngModel" [(ngModel)]="field.key" (blur)="updateFields()" placeholder="Key" aria-label="Key" appMaxLength="500" />
-                                                <mat-error *ngIf="key.invalid && key.errors?.appMaxLength">Too long key.</mat-error>
+
+                                                @if (key.invalid && key.errors?.appMaxLength) {
+                                                    <mat-error>Too long key.</mat-error>
+                                                }
                                             </mat-form-field>
                                         </div>
-                
+
                                         <div class="flex-row flex-responsive flex-stretch gap-16">
                                             <mat-form-field appearance="outline">
                                                 <mat-label>Value</mat-label>
                                                 <input type="text" matInput [name]="'value-' + i" #value="ngModel" [(ngModel)]="field.value" (blur)="updateFields()" placeholder="Value" aria-label="Value" appMaxLength="500" />
-                                                <mat-error *ngIf="value.invalid && value.errors?.appMaxLength">Too long value.</mat-error>
+
+                                                @if (value.invalid && value.errors?.appMaxLength) {
+                                                    <mat-error>Too long value.</mat-error>
+                                                }
                                             </mat-form-field>
                                         </div>
-                
+
                                         <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
                                             <div class="text-right">
                                                 <button mat-stroked-button color="primary" type="button" (click)="onDeleteField(field)">Delete</button>

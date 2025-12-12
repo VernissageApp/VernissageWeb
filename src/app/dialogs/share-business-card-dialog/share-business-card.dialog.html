@@ -2,23 +2,32 @@
     <div mat-dialog-title>Share business card</div>
     <div mat-dialog-content>
 
-        <div class="flex-col gap-0 margin-top-5">        
+        <div class="flex-col gap-0 margin-top-5">
             <mat-form-field appearance="outline" class="width-100 padding-top-10">
                 <mat-label>Title</mat-label>
                 <input type="text" matInput name="title" #titleInput="ngModel" [(ngModel)]="title"
                     placeholder="Title" aria-label="Title" appMaxLength="200" required />
-                <mat-error *ngIf="titleInput.invalid && titleInput.errors?.required">Enter title.</mat-error>
-                <mat-error *ngIf="titleInput.invalid && titleInput.errors?.appMaxLength">
-                    Too long title.
-                </mat-error>
+
+                @if (titleInput.invalid && titleInput.errors?.required) {
+                    <mat-error>Enter title.</mat-error>
+                }
+
+                @if (titleInput.invalid && titleInput.errors?.appMaxLength) {
+                    <mat-error>
+                        Too long title.
+                    </mat-error>
+                }
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="width-100 padding-top-10">
                 <mat-label>Comment</mat-label>
                 <textarea matInput name="note" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4"
                     cdkAutosizeMaxRows="10" placeholder="Comment" #noteModel="ngModel" [(ngModel)]="note"
-                    aria-label="Comment" appMaxLength="500"></textarea>
-                <mat-error *ngIf="noteModel.invalid && noteModel.errors?.appMaxLength">Too long note.</mat-error>
+                aria-label="Comment" appMaxLength="500"></textarea>
+
+                @if (noteModel.invalid && noteModel.errors?.appMaxLength) {
+                    <mat-error>Too long note.</mat-error>
+                }
             </mat-form-field>
         </div>
     </div>

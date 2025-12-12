@@ -1,54 +1,60 @@
-<div *ngIf="isValidatingMode()" @fadeIn class="padding-top-30 flex-row flex-center">
-    <div class="confirm-container margin-left-10 margin-right-10">
-        <mat-card appearance="outlined">
-            <mat-card-header>
-                <mat-card-title>
-                    <mat-icon inline="true" class="vertical-align-bottom">email</mat-icon>
-                    Email validation...
-                </mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                System now validates your email. Please be patient. Operation should take a few seconds.
-            </mat-card-content>
-        </mat-card>
+@if (isValidatingMode()) {
+    <div animate.enter="fade-in" class="padding-top-30 flex-row flex-center">
+        <div class="confirm-container margin-left-10 margin-right-10">
+            <mat-card appearance="outlined">
+                <mat-card-header>
+                    <mat-card-title>
+                        <mat-icon inline="true" class="vertical-align-bottom">email</mat-icon>
+                        Email validation...
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    System now validates your email. Please be patient. Operation should take a few seconds.
+                </mat-card-content>
+            </mat-card>
+        </div>
     </div>
-</div>
+}
 
-<div *ngIf="isSuccessMode()" class="padding-top-30 flex-row flex-center">
-    <div class="confirm-container margin-left-10 margin-right-10">
-        <mat-card appearance="outlined">
-            <mat-card-header>
-                <mat-card-title>
-                    <mat-icon inline="true" class="vertical-align-bottom">check_circle</mat-icon>
-                    Email confirmed
-                </mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <strong>Congratulations!</strong> Your email has been confirmed. Your account was successfully
-                created and all features has been enabled.
-                @if (!isLoggedIn()) {
-                    You can go to the <a routerLink="/login">login</a> page and use your
-                    credentials to sign in into the system. Thank you!
-                }
-            </mat-card-content>
-        </mat-card>
+@if (isSuccessMode()) {
+    <div class="padding-top-30 flex-row flex-center">
+        <div class="confirm-container margin-left-10 margin-right-10">
+            <mat-card appearance="outlined">
+                <mat-card-header>
+                    <mat-card-title>
+                        <mat-icon inline="true" class="vertical-align-bottom">check_circle</mat-icon>
+                        Email confirmed
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <strong>Congratulations!</strong> Your email has been confirmed. Your account was successfully
+                    created and all features has been enabled.
+                    @if (!isLoggedIn()) {
+                        You can go to the <a routerLink="/login">login</a> page and use your
+                        credentials to sign in into the system. Thank you!
+                    }
+                </mat-card-content>
+            </mat-card>
+        </div>
     </div>
-</div>
+}
 
-<div *ngIf="isErrorMode()" class="padding-top-30 flex-row flex-center">
-    <div class="confirm-container margin-left-10 margin-right-10">
-        <mat-card appearance="outlined">
-            <mat-card-header>
-                <mat-card-title>
-                    <mat-icon inline="true" class="vertical-align-bottom">error</mat-icon>
-                    Error!
-                </mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                During confirming email unexpected error occurred. Please try again later.
-                If error will still occurs you can try to <a routerLink="/forgot-password">reset your password</a> (it
-                will also activate your account) or contact wih us.
-            </mat-card-content>
-        </mat-card>
+@if (isErrorMode()) {
+    <div class="padding-top-30 flex-row flex-center">
+        <div class="confirm-container margin-left-10 margin-right-10">
+            <mat-card appearance="outlined">
+                <mat-card-header>
+                    <mat-card-title>
+                        <mat-icon inline="true" class="vertical-align-bottom">error</mat-icon>
+                        Error!
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    During confirming email unexpected error occurred. Please try again later.
+                    If error will still occurs you can try to <a routerLink="/forgot-password">reset your password</a> (it
+                    will also activate your account) or contact wih us.
+                </mat-card-content>
+            </mat-card>
+        </div>
     </div>
-</div>
+}

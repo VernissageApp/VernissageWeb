@@ -8,7 +8,7 @@
         <div class="flex-row">
             @if (statuses()?.data; as statusesArray) {
                 @for (status of statusesArray; track status.id) {
-                    <a @slowFadeIn [routerLink]="['/statuses', status.id]" [ariaLabel]="'Status added by: ' + getMainStatus(status).user?.userName" (click)="onStatusClick()">
+                    <a animate.enter="slow-fade-in" [routerLink]="['/statuses', status.id]" [ariaLabel]="'Status added by: ' + getMainStatus(status).user?.userName" (click)="onStatusClick()">
                         @if (getMainStatus(status).sensitive && !alwaysShowNSFW()) {
                             <div class="blurhash">
                                 <app-blurhash-image [horizontal]="true" [status]="status"></app-blurhash-image>

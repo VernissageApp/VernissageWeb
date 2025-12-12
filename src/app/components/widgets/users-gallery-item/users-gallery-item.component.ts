@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, inject, input, OnInit, signal } from '@angular/core';
-import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { LinkableResult } from 'src/app/models/linkable-result';
 import { Status } from 'src/app/models/status';
@@ -12,7 +11,6 @@ import { UsersService } from 'src/app/services/http/users.service';
     selector: 'app-users-gallery-item',
     templateUrl: './users-gallery-item.component.html',
     styleUrls: ['./users-gallery-item.component.scss'],
-    animations: fadeInAnimation,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })

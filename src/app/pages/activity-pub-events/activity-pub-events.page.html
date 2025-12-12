@@ -1,14 +1,16 @@
 @if (isReady()) {
     @if (events(); as eventsArray) {
-        <div @fadeIn [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
+        <div animate.enter="fade-in" [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
             <div class="flex-row flex-space-around padding-left-10 padding-right-10">
                 <div class="width-100">
                     <section class="flex-row flex-space-between flex-align-center margin-bottom-20" [ngClass]="{ 'flex-row': !isHandset(), 'flex-column': isHandset() }">
                         <h1>
                             <div>Outgoing ActivityPub events</div>
-                            <div *ngIf="!isHandset()" class="fs-60 text-muted">
-                                List of events sent by the system via the ActivityPub protocol to other Fediverse instances.
-                            </div>
+                            @if (!isHandset()) {
+                                <div class="fs-60 text-muted">
+                                    List of events sent by the system via the ActivityPub protocol to other Fediverse instances.
+                                </div>
+                            }
                         </h1>
                     </section>
 
@@ -32,7 +34,7 @@
                                                     </mat-select>
                                                 </mat-form-field>
                                             }
-                           
+
                                             <mat-form-field appearance="outline">
                                                 <mat-label>Result</mat-label>
                                                 <mat-select [(value)]="result">
@@ -79,22 +81,22 @@
                             <th mat-header-cell *matHeaderCellDef> Action </th>
                             <td mat-cell *matCellDef="let element">
                                 @switch (element.type) {
-                                    @case ('create') { 
+                                    @case ('create') {
                                         <span>Create</span>
                                     }
-                                    @case ('update') { 
+                                    @case ('update') {
                                         <span>Update</span>
                                     }
-                                    @case ('like') { 
+                                    @case ('like') {
                                         <span>Like</span>
                                     }
-                                    @case ('unlike') { 
+                                    @case ('unlike') {
                                         <span>Undo like</span>
                                     }
-                                    @case ('announce') { 
+                                    @case ('announce') {
                                         <span>Announce</span>
                                     }
-                                    @case ('unannounce') { 
+                                    @case ('unannounce') {
                                         <span>Undo announce</span>
                                     }
                                 }
@@ -106,19 +108,19 @@
                             <th mat-header-cell *matHeaderCellDef> Result </th>
                             <td mat-cell *matCellDef="let element">
                                 @switch (element.result) {
-                                    @case ('waiting') { 
+                                    @case ('waiting') {
                                         <span>Waiting</span>
                                     }
-                                    @case ('processing') { 
+                                    @case ('processing') {
                                         <span>Processing</span>
                                     }
-                                    @case ('finished') { 
+                                    @case ('finished') {
                                         <span>Finished</span>
                                     }
-                                    @case ('finishedWithErrors') { 
+                                    @case ('finishedWithErrors') {
                                         <span>Finished (with errors)</span>
                                     }
-                                    @case ('failed') { 
+                                    @case ('failed') {
                                         <span>Failed</span>
                                     }
                                 }
@@ -160,9 +162,11 @@
                         <ng-container matColumnDef="createdAt">
                             <th mat-header-cell *matHeaderCellDef> Created date </th>
                             <td mat-cell *matCellDef="let element">
-                                <span *ngIf="element.createdAt">
-                                    {{ element.createdAt | date: 'short' }}
-                                </span>
+                                @if (element.createdAt) {
+                                    <span>
+                                        {{ element.createdAt | date: 'short' }}
+                                    </span>
+                                }
                             </td>
                         </ng-container>
 
@@ -170,9 +174,11 @@
                         <ng-container matColumnDef="startAt">
                             <th mat-header-cell *matHeaderCellDef> Start date </th>
                             <td mat-cell *matCellDef="let element">
-                                <span *ngIf="element.startAt">
-                                    {{ element.startAt | date: 'short' }}
-                                </span>
+                                @if (element.startAt) {
+                                    <span>
+                                        {{ element.startAt | date: 'short' }}
+                                    </span>
+                                }
                             </td>
                         </ng-container>
 
@@ -180,9 +186,11 @@
                         <ng-container matColumnDef="endAt">
                             <th mat-header-cell *matHeaderCellDef> End date </th>
                             <td mat-cell *matCellDef="let element">
-                                <span *ngIf="element.endAt">
-                                    {{ element.endAt | date: 'short' }}
-                                </span>
+                                @if (element.endAt) {
+                                    <span>
+                                        {{ element.endAt | date: 'short' }}
+                                    </span>
+                                }
                             </td>
                         </ng-container>
 
@@ -194,7 +202,7 @@
                                 <a [routerLink]="['/activity-pub-events', element.id, 'items']">Details</a>
                             </td>
                         </ng-container>
-                    
+
                         <tr mat-header-row *matHeaderRowDef="displayedColumns()"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumns();"></tr>
                     </table>

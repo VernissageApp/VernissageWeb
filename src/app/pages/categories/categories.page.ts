@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy, signal, ChangeDetectionStrategy, inject } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs";
-import { fadeInAnimation } from "src/app/animations/fade-in.animation";
 import { ReusableGalleryPageComponent } from "src/app/common/reusable-gallery-page";
 import { Category } from "src/app/models/category";
 import { AuthorizationService } from "src/app/services/authorization/authorization.service";
@@ -13,7 +12,6 @@ import { SettingsService } from "src/app/services/http/settings.service";
     selector: 'app-categories',
     templateUrl: './categories.page.html',
     styleUrls: ['./categories.page.scss'],
-    animations: fadeInAnimation,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })

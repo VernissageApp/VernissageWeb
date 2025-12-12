@@ -1,6 +1,5 @@
 import { isPlatformBrowser } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, input, PLATFORM_ID, signal } from '@angular/core';
-import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { Hashtag } from 'src/app/models/hashtag';
 import { LinkableResult } from 'src/app/models/linkable-result';
@@ -11,7 +10,6 @@ import { TimelineService } from 'src/app/services/http/timeline.service';
     selector: 'app-hashtags-search',
     templateUrl: './hashtags-search.component.html',
     styleUrls: ['./hashtags-search.component.scss'],
-    animations: fadeInAnimation,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })

@@ -21,6 +21,7 @@
                 </button>
             </div>
         </div>
+
         <div class="text-right text-muted fs-80">
             Feature powered by OpenAI.
         </div>
@@ -29,16 +30,19 @@
     <mat-form-field appearance="outline" class="margin-top-10">
         <mat-label>Alt text</mat-label>
         <textarea
-                matInput [name]="'altText-' + internalIndex"
-                cdkTextareaAutosize
-                #autosize="cdkTextareaAutosize"
-                cdkAutosizeMinRows="4"
-                cdkAutosizeMaxRows="10"
-                #altTextInput="ngModel"
-                [(ngModel)]="photo().description"
-                aria-label="Alt text"
-                appMaxLength="2000"></textarea>
-        <mat-error *ngIf="altTextInput.invalid && altTextInput.errors?.appMaxLength">Too long alt text.</mat-error>
+            matInput [name]="'altText-' + internalIndex"
+            cdkTextareaAutosize
+            #autosize="cdkTextareaAutosize"
+            cdkAutosizeMinRows="4"
+            cdkAutosizeMaxRows="10"
+            #altTextInput="ngModel"
+            [(ngModel)]="photo().description"
+            aria-label="Alt text"
+        appMaxLength="2000"></textarea>
+
+        @if (altTextInput.invalid && altTextInput.errors?.appMaxLength) {
+            <mat-error>Too long alt text.</mat-error>
+        }
     </mat-form-field>
 
     <mat-form-field appearance="outline">
@@ -47,7 +51,10 @@
             <mat-option [value]="null"><span class="text-muted">Without a license</span></mat-option>
             @for (license of licenses(); track license.id) {
                 <mat-option [value]="license.id">
-                    {{ license.name }} <ng-container *ngIf="license.code">({{ license.code }})</ng-container>
+                    {{ license.name }}
+                    @if (license.code) {
+                        ({{ license.code }})
+                    }
                 </mat-option>
             }
         </mat-select>
@@ -57,15 +64,17 @@
     <mat-form-field appearance="outline" class="margin-top-10">
         <mat-label>Country</mat-label>
         <input type="text"
-               placeholder="Enter location"
-               aria-label="Number"
-               matInput
-               [formControl]="countriesControl"
-               [matAutocomplete]="autoCountry">
+            placeholder="Enter location"
+            aria-label="Number"
+            matInput
+            [formControl]="countriesControl"
+            [matAutocomplete]="autoCountry">
         <mat-autocomplete autoActiveFirstOption #autoCountry="matAutocomplete" [displayWith]="displayCountryFn" (optionSelected)="selectedCountry($event.option.value)">
-            <mat-option *ngFor="let option of filteredCountries$ | async" [value]="option">
-                {{ option.name }} <small class="text-muted">({{ option.code }})</small>
-            </mat-option>
+            @for (option of filteredCountries$ | async; track option) {
+                <mat-option [value]="option">
+                    {{ option.name }} <small class="text-muted">({{ option.code }})</small>
+                </mat-option>
+            }
         </mat-autocomplete>
 
         @if (currentCountry()) {
@@ -78,15 +87,17 @@
     <mat-form-field appearance="outline">
         <mat-label>City</mat-label>
         <input type="text"
-               placeholder="Enter location"
-               aria-label="Number"
-               matInput
-               [formControl]="citiesControl"
-               [matAutocomplete]="auto">
+            placeholder="Enter location"
+            aria-label="Number"
+            matInput
+            [formControl]="citiesControl"
+            [matAutocomplete]="auto">
         <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayCityFn" (optionSelected)="selectedCity($event.option.value)">
-            <mat-option *ngFor="let option of cities$ | async" [value]="option">
-                {{ option.name }}
-            </mat-option>
+            @for (option of cities$ | async; track option) {
+                <mat-option [value]="option">
+                    {{ option.name }}
+                </mat-option>
+            }
         </mat-autocomplete>
 
         @if (currentCity()) {
@@ -105,7 +116,7 @@
 
         <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
             <mat-checkbox class="exif-label" [name]="'gpsCoordination' + internalIndex" color="primary" [disableRipple]="true" [(ngModel)]="photo().showGpsCoordination">
-                <span class="text-muted">GPS coordinates:</span> 
+                <span class="text-muted">GPS coordinates:</span>
             </mat-checkbox>
             <div class="flex-grow-2">
                 <mat-form-field appearance="outline" class="margin-bottom-20 width-100">
@@ -124,7 +135,7 @@
 
         <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
             <mat-checkbox class="exif-label" [name]="'make' + internalIndex" color="primary" [disableRipple]="true" [(ngModel)]="photo().showMake">
-                <span class="text-muted">Manufacturer:</span> 
+                <span class="text-muted">Manufacturer:</span>
             </mat-checkbox>
             <mat-form-field appearance="outline" class="flex-grow-2">
                 <input type="text" matInput [name]="'inputMake' + internalIndex" [(ngModel)]="photo().make" [disabled]="!photo().showMake" aria-label="Manufacturer" />
@@ -271,7 +282,7 @@
 
     <div class="text-muted">
         HDR image version
-        
+
         <div class="pull-right">
             @if (photo().photoHdrSrc) {
                 @if (photo().isHdrUploaded) {
@@ -285,9 +296,10 @@
             <input type="file" hidden name="hdr-image" #photoFileUpload accept="image/avif" (change)="onHdrPhotoSelected($event)">
         </div>
     </div>
+
     <div class="flex-row gap-16 margin-top-10">
         <div class="flex-align-start hdr-image margin-bottom-20">
-            @if (photo().photoHdrSrc) {                
+            @if (photo().photoHdrSrc) {
                 <img [src]="photo().photoHdrSrc" alt="Uploaded photo" />
             } @else {
                 @if (!photo().isUploaded()) {

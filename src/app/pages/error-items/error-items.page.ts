@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, inject, model, OnDestroy, OnInit, signal } from '@angular/core';
-import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { ForbiddenError } from 'src/app/errors/forbidden-error';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { LoadingService } from 'src/app/services/common/loading.service';
@@ -22,7 +21,6 @@ import { ErrorItemDialog } from 'src/app/dialogs/error-item-dialog/error-item.di
     selector: 'app-error-items',
     templateUrl: './error-items.page.html',
     styleUrls: ['./error-items.page.scss'],
-    animations: fadeInAnimation,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
