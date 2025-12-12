@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, inject, model, OnDestroy, OnInit, s
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Clipboard } from '@angular/cdk/clipboard';
-import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { Article } from 'src/app/models/article';
 import { ArticleFileInfo } from 'src/app/models/article-file-info';
@@ -16,7 +15,6 @@ import { ArticlesService } from 'src/app/services/http/articles.service';
     selector: 'app-article-edit',
     templateUrl: './article-edit.page.html',
     styleUrls: ['./article-edit.page.scss'],
-    animations: fadeInAnimation,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })

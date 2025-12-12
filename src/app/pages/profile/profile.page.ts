@@ -1,16 +1,15 @@
-import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit, signal, DOCUMENT } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, NavigationStart } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/models/user';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 import { UsersService } from 'src/app/services/http/users.service';
-import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { Relationship } from 'src/app/models/relationship';
 import { RelationshipsService } from 'src/app/services/http/relationships.service';
 import { ProfilePageTab } from 'src/app/models/profile-page-tab';
 import { LoadingService } from 'src/app/services/common/loading.service';
 import { LinkableResult } from 'src/app/models/linkable-result';
-import { DOCUMENT } from '@angular/common';
+
 import { Meta, Title } from '@angular/platform-browser';
 import { WindowService } from 'src/app/services/common/window.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -32,7 +31,6 @@ import { Role } from 'src/app/models/role';
     selector: 'app-profile',
     templateUrl: './profile.page.html',
     styleUrls: ['./profile.page.scss'],
-    animations: fadeInAnimation,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })

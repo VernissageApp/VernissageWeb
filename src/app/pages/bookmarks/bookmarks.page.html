@@ -1,5 +1,5 @@
 @if (isReady()) {
-    <div @fadeIn>
+    <div animate.enter="fade-in">
         <section [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
             <h1>Bookmarks</h1>
 

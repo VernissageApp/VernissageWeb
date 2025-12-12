@@ -1,7 +1,7 @@
-import { inject, Injectable, Renderer2 } from '@angular/core';
+import { inject, Injectable, Renderer2, DOCUMENT } from '@angular/core';
 import { SsrCookieService } from './ssr-cookie.service';
 import { WindowService } from './window.service';
-import { DOCUMENT } from '@angular/common';
+
 
 // We are storing preferences in the cookies instead of local storage because of
 // Server Side Rendering. The cookies are send to server even with the first browser

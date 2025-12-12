@@ -1,15 +1,14 @@
 @if (isReady()) {
-    <div @fadeIn>
-
+    <div animate.enter="fade-in">
         <div class="flex-row flex-align-center flex-space-between margin-bottom-20" [ngClass]="{ 'padding-left-30 padding-right-30 padding-top-30': !isHandset(), 'padding-left-10 padding-right-10 padding-top-10': isHandset() }">
             <h1>
                 <div>Editor's choice</div>
                 @if (!isHandset()) {
                     @switch (selectedTab()) {
-                        @case ('statuses') { 
+                        @case ('statuses') {
                             <div class="fs-60 text-muted">A collection of photos that have been featured by curators on this server.</div>
                         }
-                        @case ('users') { 
+                        @case ('users') {
                             <div class="fs-60 text-muted">A collection of artists who have been featured by curators on this server.</div>
                         }
                     }
@@ -19,10 +18,19 @@
             <section class="small-button-toggle">
                 <mat-button-toggle-group [(ngModel)]="tab" (ngModelChange)="onSelectionChange()" [hideSingleSelectionIndicator]="true" aria-label="Trending type">
                     @if (showStatusesButton()) {
-                        <mat-button-toggle value="statuses"><mat-icon>insert_photo</mat-icon><span *ngIf="!isHandset()"> Photos</span></mat-button-toggle>
+                        <mat-button-toggle value="statuses"><mat-icon>insert_photo</mat-icon>
+                            @if (!isHandset()) {
+                                <span> Photos</span>
+                            }
+                        </mat-button-toggle>
                     }
+
                     @if (showUsersButton()) {
-                        <mat-button-toggle value="users"><mat-icon>groups</mat-icon><span *ngIf="!isHandset()"> Artists</span></mat-button-toggle>
+                        <mat-button-toggle value="users"><mat-icon>groups</mat-icon>
+                            @if (!isHandset()) {
+                                <span> Artists</span>
+                            }
+                        </mat-button-toggle>
                     }
                 </mat-button-toggle-group>
             </section>

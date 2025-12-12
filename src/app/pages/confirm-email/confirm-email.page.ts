@@ -4,7 +4,6 @@ import { ActivatedRoute } from '@angular/router';
 import { ConfirmEmail } from 'src/app/models/confirm-email';
 import { ConfirmEmailMode } from 'src/app/models/confirm-email-mode';
 import { RegisterService } from 'src/app/services/http/register.service';
-import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { isPlatformBrowser } from '@angular/common';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 
@@ -12,7 +11,6 @@ import { AuthorizationService } from 'src/app/services/authorization/authorizati
     selector: 'app-confirm-email',
     templateUrl: './confirm-email.page.html',
     styleUrls: ['./confirm-email.page.scss'],
-    animations: fadeInAnimation,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })

@@ -8,7 +8,7 @@
                 <div class="column">
                     @if(column.statuses.length > 0) {
                         @for (galleryStatus of column.statuses; track galleryStatus.status.id) {
-                            <div @fadeIn>
+                            <div animate.enter="fade-in">
                                 <a [routerLink]="['/statuses', galleryStatus.status.id]" [ariaLabel]="'Status added by: ' + getMainStatus(galleryStatus.status).user?.userName">
                                     @if (getMainStatus(galleryStatus.status).sensitive && !alwaysShowNSFW()) {
                                         <app-blurhash-image [horizontal]="false" [avatarVisible]="avatarVisible() && !hideAvatars()" [status]="galleryStatus.status"></app-blurhash-image>

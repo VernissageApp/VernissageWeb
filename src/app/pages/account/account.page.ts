@@ -12,7 +12,6 @@ import { AccountService } from 'src/app/services/http/account.service';
 import { AvatarsService } from 'src/app/services/http/avatars.service';
 import { HeadersService } from 'src/app/services/http/headers.service';
 import { UsersService } from 'src/app/services/http/users.service';
-import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { WindowService } from 'src/app/services/common/window.service';
 import { FlexiField } from 'src/app/models/flexi-field';
 import { ResendEmailConfirmation } from 'src/app/models/resend-email-confirmation';
@@ -42,7 +41,6 @@ import { FileSizeService } from 'src/app/services/common/file-size.service';
     selector: 'app-account',
     templateUrl: './account.page.html',
     styleUrls: ['./account.page.scss'],
-    animations: fadeInAnimation,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })

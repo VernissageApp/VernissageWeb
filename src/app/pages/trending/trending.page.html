@@ -1,18 +1,18 @@
 @if (isReady()) {
-    <div @fadeIn>
+    <div animate.enter="fade-in">
 
         <div class="flex-row flex-align-center flex-space-between margin-bottom-10" [ngClass]="{ 'padding-left-30 padding-right-30 padding-top-30': !isHandset(), 'padding-left-10 padding-right-10 padding-top-10': isHandset() }">
             <h1>
                 <div>Trending</div>
                 @if (!isHandset()) {
                     @switch (selectedTrending()) {
-                        @case ('statuses') { 
+                        @case ('statuses') {
                             <div class="fs-60 text-muted">A collection of photos that received the most likes within a specified time frame.</div>
                         }
-                        @case ('users') { 
+                        @case ('users') {
                             <div class="fs-60 text-muted">A collection of artists who received the most likes on their photos within a specified time frame.</div>
                         }
-                        @case ('hashtags') { 
+                        @case ('hashtags') {
                             <div class="fs-60 text-muted">A collection of hashtags assigned to photos that received the most likes within a specified time frame.</div>
                         }
                     }
@@ -21,11 +21,23 @@
 
             <section class="small-button-toggle">
                 <mat-button-toggle-group [(ngModel)]="trending" (ngModelChange)="onSelectionChange()" [hideSingleSelectionIndicator]="true" aria-label="Trending type">
-                    <mat-button-toggle value="statuses"><mat-icon>insert_photo</mat-icon><span *ngIf="!isHandset()"> Photos</span></mat-button-toggle>
-                    <mat-button-toggle value="users"><mat-icon>groups</mat-icon><span *ngIf="!isHandset()"> Artists</span></mat-button-toggle>
+                    <mat-button-toggle value="statuses"><mat-icon>insert_photo</mat-icon>
+                        @if (!isHandset()) {
+                            <span> Photos</span>
+                        }
+                    </mat-button-toggle>
+                    <mat-button-toggle value="users"><mat-icon>groups</mat-icon>
+                        @if (!isHandset()) {
+                            <span> Artists</span>
+                        }
+                    </mat-button-toggle>
 
                     @if (showHashtags()) {
-                        <mat-button-toggle value="hashtags"><mat-icon>tag</mat-icon><span *ngIf="!isHandset()"> Tags</span></mat-button-toggle>
+                        <mat-button-toggle value="hashtags"><mat-icon>tag</mat-icon>
+                            @if (!isHandset()) {
+                                <span> Tags</span>
+                            }
+                        </mat-button-toggle>
                     }
                 </mat-button-toggle-group>
             </section>

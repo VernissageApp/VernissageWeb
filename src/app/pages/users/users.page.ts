@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, inject, model, OnDestroy, OnInit, signal } from '@angular/core';
-import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { ForbiddenError } from 'src/app/errors/forbidden-error';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { LoadingService } from 'src/app/services/common/loading.service';
@@ -22,7 +21,6 @@ import { ConfirmationDialog } from 'src/app/dialogs/confirmation-dialog/confirma
     selector: 'app-users',
     templateUrl: './users.page.html',
     styleUrls: ['./users.page.scss'],
-    animations: fadeInAnimation,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })

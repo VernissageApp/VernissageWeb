@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
-import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { ForbiddenError } from 'src/app/errors/forbidden-error';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 import { Role } from 'src/app/models/role';
@@ -14,7 +13,6 @@ import { UsersService } from 'src/app/services/http/users.service';
     selector: 'app-settings',
     templateUrl: './settings.page.html',
     styleUrls: ['./settings.page.scss'],
-    animations: fadeInAnimation,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })

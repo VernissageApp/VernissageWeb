@@ -1,12 +1,14 @@
 @if (isReady()) {
     @if (reports(); as reportsArray) {
-        <div @fadeIn [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
+        <div animate.enter="fade-in" [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
             <div class="flex-row flex-space-around padding-left-10 padding-right-10">
                 <div class="width-100">
                     <section class="flex-row flex-space-between flex-align-center margin-bottom-20" [ngClass]="{ 'flex-row': !isHandset(), 'flex-column': isHandset() }">
                         <h1>
                             <div>Reports</div>
-                            <div *ngIf="!isHandset()" class="fs-60 text-muted">Issues reported by other system users.</div>
+                            @if (!isHandset()) {
+                                <div class="fs-60 text-muted">Issues reported by other system users.</div>
+                            }
                         </h1>
                     </section>
 
@@ -16,9 +18,11 @@
                         <ng-container matColumnDef="type">
                             <th mat-header-cell *matHeaderCellDef> </th>
                             <td mat-cell *matCellDef="let element">
-                                <mat-chip-set *ngIf="!isHandset()" aria-label="Type">
-                                    <mat-chip-option [disableRipple]="true" disabled><span class="fs-90">{{ getReportType(element) }}</span></mat-chip-option>
-                                </mat-chip-set>
+                                @if (!isHandset()) {
+                                    <mat-chip-set aria-label="Type">
+                                        <mat-chip-option [disableRipple]="true" disabled><span class="fs-90">{{ getReportType(element) }}</span></mat-chip-option>
+                                    </mat-chip-set>
+                                }
                             </td>
                         </ng-container>
 
@@ -56,7 +60,9 @@
                         <ng-container matColumnDef="status">
                             <th mat-header-cell *matHeaderCellDef> Status </th>
                             <td mat-cell *matCellDef="let element">
-                                <span><a *ngIf="element.status?.id || element.mainStatusId" [routerLink]="['/statuses', element.mainStatusId ?? element.status?.id ]">Link</a></span>
+                                <span>@if (element.status?.id || element.mainStatusId) {
+                                    <a [routerLink]="['/statuses', element.mainStatusId ?? element.status?.id ]">Link</a>
+                                }</span>
                             </td>
                         </ng-container>
 
@@ -65,14 +71,16 @@
                             <th mat-header-cell *matHeaderCellDef> Category </th>
                             <td mat-cell *matCellDef="let element"> {{ element.category }} </td>
                         </ng-container>
-                    
+
                         <!-- Consideration User Column -->
                         <ng-container matColumnDef="considerationUser">
                             <th mat-header-cell *matHeaderCellDef> Consideration user </th>
                             <td mat-cell *matCellDef="let element">
-                                <span *ngIf="element.considerationUser">
-                                    <a [routerLink]="['/@' + element.considerationUser?.userName ]">{{ element.considerationUser?.name }}</a>
-                                </span>
+                                @if (element.considerationUser) {
+                                    <span>
+                                        <a [routerLink]="['/@' + element.considerationUser?.userName ]">{{ element.considerationUser?.name }}</a>
+                                    </span>
+                                }
                             </td>
                         </ng-container>
 
@@ -80,9 +88,11 @@
                         <ng-container matColumnDef="considerationDate">
                             <th mat-header-cell *matHeaderCellDef> Consideration date </th>
                             <td mat-cell *matCellDef="let element">
-                                <span *ngIf="element.considerationDate">
-                                    {{ element.considerationDate | date: 'short' }}
-                                </span>
+                                @if (element.considerationDate) {
+                                    <span>
+                                        {{ element.considerationDate | date: 'short' }}
+                                    </span>
+                                }
                             </td>
                         </ng-container>
 
@@ -93,76 +103,85 @@
                                 <button type="button" mat-raised-button aria-label="Close report" (click)="onOpen(element)" class="action-button margin-right-10">Open</button>
 
                                 @if (!element.status || element.considerationDate) {
-                                    <button *ngIf="!element.considerationDate" type="button" mat-raised-button color="accent" aria-label="Close report" (click)="onClose(element)" class="action-button">Close</button>
-                                    <button *ngIf="element.considerationDate" type="button" mat-raised-button color="accent" aria-label="Restore report" (click)="onRestore(element)" class="action-button">Restore</button>
+                                    @if (!element.considerationDate) {
+                                        <button type="button" mat-raised-button color="accent" aria-label="Close report" (click)="onClose(element)" class="action-button">Close</button>
+                                    }
+                                    @if (element.considerationDate) {
+                                        <button type="button" mat-raised-button color="accent" aria-label="Restore report" (click)="onRestore(element)" class="action-button">Restore</button>
+                                    }
                                 } @else {
                                     <button mat-button [matMenuTriggerFor]="menu" class="submenu" aria-label="Report actions">
                                         <mat-icon>more_vert</mat-icon>
                                     </button>
                                     <mat-menu #menu="matMenu">
-                                        <button
-                                            *ngIf="!element.considerationDate"
-                                            type="button"
-                                            mat-menu-item
-                                            color="accent"
-                                            aria-label="Close report"
-                                            (click)="onClose(element)"
-                                            class="action-button">
-                                            <mat-icon>cancel</mat-icon>
-                                            <span>Close</span>
-                                        </button>
-                                        <button
-                                            *ngIf="element.considerationDate"
-                                            type="button"
-                                            mat-menu-item
-                                            color="accent"
-                                            aria-label="Restore report"
-                                            (click)="onRestore(element)"
-                                            class="action-button">
-                                            <mat-icon>settings_backup_restore</mat-icon>
-                                            <span>Restore</span>
-                                        </button>
+                                        @if (!element.considerationDate) {
+                                            <button
+                                                type="button"
+                                                mat-menu-item
+                                                color="accent"
+                                                aria-label="Close report"
+                                                (click)="onClose(element)"
+                                                class="action-button">
+                                                <mat-icon>cancel</mat-icon>
+                                                <span>Close</span>
+                                            </button>
+                                        }
+                                        @if (element.considerationDate) {
+                                            <button
+                                                type="button"
+                                                mat-menu-item
+                                                color="accent"
+                                                aria-label="Restore report"
+                                                (click)="onRestore(element)"
+                                                class="action-button">
+                                                <mat-icon>settings_backup_restore</mat-icon>
+                                                <span>Restore</span>
+                                            </button>
+                                        }
 
-                                        <button
-                                            *ngIf="element.status && !element.considerationDate"
-                                            type="button"
-                                            mat-menu-item
-                                            color="accent"
-                                            aria-label="Restore report"
-                                            (click)="onUnlist(element)"
-                                            class="action-button">
-                                            <mat-icon>hide_image</mat-icon>
-                                            <span>Unlist status</span>
-                                        </button>
+                                        @if (element.status && !element.considerationDate) {
+                                            <button
+                                                type="button"
+                                                mat-menu-item
+                                                color="accent"
+                                                aria-label="Restore report"
+                                                (click)="onUnlist(element)"
+                                                class="action-button">
+                                                <mat-icon>hide_image</mat-icon>
+                                                <span>Unlist status</span>
+                                            </button>
+                                        }
 
-                                        <button
-                                            *ngIf="element.status && !element.considerationDate"
-                                            type="button"
-                                            mat-menu-item
-                                            color="accent"
-                                            aria-label="Restore report"
-                                            (click)="onDelete(element)"
-                                            class="action-button">
-                                            <mat-icon>delete</mat-icon>
-                                            <span>Delete status</span>
-                                        </button>
+                                        @if (element.status && !element.considerationDate) {
+                                            <button
+                                                type="button"
+                                                mat-menu-item
+                                                color="accent"
+                                                aria-label="Restore report"
+                                                (click)="onDelete(element)"
+                                                class="action-button">
+                                                <mat-icon>delete</mat-icon>
+                                                <span>Delete status</span>
+                                            </button>
+                                        }
 
-                                        <button
-                                            *ngIf="element.status && !element.considerationDate"
-                                            type="button"
-                                            mat-menu-item
-                                            color="accent"
-                                            aria-label="Restore report"
-                                            (click)="onApplyCW(element)"
-                                            class="action-button">
-                                            <mat-icon>warning</mat-icon>
-                                            <span>Apply CW to status</span>
-                                        </button>
+                                        @if (element.status && !element.considerationDate) {
+                                            <button
+                                                type="button"
+                                                mat-menu-item
+                                                color="accent"
+                                                aria-label="Restore report"
+                                                (click)="onApplyCW(element)"
+                                                class="action-button">
+                                                <mat-icon>warning</mat-icon>
+                                                <span>Apply CW to status</span>
+                                            </button>
+                                        }
                                     </mat-menu>
                                 }
                             </td>
                         </ng-container>
-                    
+
                         <tr mat-header-row *matHeaderRowDef="displayedColumns()"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumns();"></tr>
                     </table>

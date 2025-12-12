@@ -1,12 +1,14 @@
 @if (isReady()) {
     @if (articles(); as articlesArray) {
-        <div @fadeIn [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
+        <div animate.enter="fade-in" [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
             <div class="flex-row flex-space-around padding-left-10 padding-right-10">
                 <div class="width-100">
                     <section class="flex-row flex-space-between flex-align-center margin-bottom-20" [ngClass]="{ 'flex-row': !isHandset(), 'flex-column': isHandset() }">
                         <h1>
                             <div>Articles</div>
-                            <div *ngIf="!isHandset()" class="fs-60 text-muted">List of articles created in the system.</div>
+                            @if (!isHandset()) {
+                                <div class="fs-60 text-muted">List of articles created in the system.</div>
+                            }
                         </h1>
                         <button type="button" mat-raised-button color="primary" aria-label="Create article" (click)="onCreateArticle()">Create article</button>
                     </section>
@@ -30,24 +32,26 @@
                         <ng-container matColumnDef="visibility">
                             <th mat-header-cell *matHeaderCellDef> Visibility </th>
                             <td mat-cell *matCellDef="let element" class="visibility">
-                                <span *ngIf="element.visibilities">
-                                    @for (item of element.visibilities; track item) {
-                                        @switch (item) {
-                                            @case (articleVisibility.SignInNews) {
-                                                <div class="text-muted">News - sign in</div>
-                                            }
-                                            @case (articleVisibility.SignOutNews) {
-                                                <div class="text-muted">News - sign out</div>
-                                            }
-                                            @case (articleVisibility.SignInHome) {
-                                                <div class="text-muted">Home - sign in</div>
-                                            }
-                                            @case (articleVisibility.SignOutHome) {
-                                                <div class="text-muted">Home - sign out</div>
+                                @if (element.visibilities) {
+                                    <span>
+                                        @for (item of element.visibilities; track item) {
+                                            @switch (item) {
+                                                @case (articleVisibility.SignInNews) {
+                                                    <div class="text-muted">News - sign in</div>
+                                                }
+                                                @case (articleVisibility.SignOutNews) {
+                                                    <div class="text-muted">News - sign out</div>
+                                                }
+                                                @case (articleVisibility.SignInHome) {
+                                                    <div class="text-muted">Home - sign in</div>
+                                                }
+                                                @case (articleVisibility.SignOutHome) {
+                                                    <div class="text-muted">Home - sign out</div>
+                                                }
                                             }
                                         }
-                                    }
-                                </span>
+                                    </span>
+                                }
                             </td>
                         </ng-container>
 
@@ -55,9 +59,11 @@
                         <ng-container matColumnDef="createdAt">
                             <th mat-header-cell *matHeaderCellDef> Created date </th>
                             <td mat-cell *matCellDef="let element" class="createdAt">
-                                <span *ngIf="element.createdAt">
-                                    {{ element.createdAt | date: 'short' }}
-                                </span>
+                                @if (element.createdAt) {
+                                    <span>
+                                        {{ element.createdAt | date: 'short' }}
+                                    </span>
+                                }
                             </td>
                         </ng-container>
 
@@ -80,7 +86,7 @@
                                 </mat-menu>
                             </td>
                         </ng-container>
-                    
+
                         <tr mat-header-row *matHeaderRowDef="displayedColumns()"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumns();"></tr>
                     </table>

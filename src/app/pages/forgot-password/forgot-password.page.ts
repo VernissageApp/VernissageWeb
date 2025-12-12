@@ -5,13 +5,11 @@ import { ForgotPasswordMode } from 'src/app/models/forgot-password-mode';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { WindowService } from 'src/app/services/common/window.service';
 import { ForgotPasswordService } from 'src/app/services/http/forgot-password.service';
-import { fadeInAnimation } from "../../animations/fade-in.animation";
 
 @Component({
     selector: 'app-forgot-password',
     templateUrl: './forgot-password.page.html',
     styleUrls: ['./forgot-password.page.scss'],
-    animations: fadeInAnimation,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })

@@ -1,6 +1,6 @@
 @if(isReady()) {
     @if (notifications(); as notificationsArray) {
-        <div @fadeIn [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
+        <div animate.enter="fade-in" [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
             <div class="flex-row flex-space-around">
                 <div class="notifications-container width-100">
                     <div class="flex-row flex-align-center flex-space-between margin-bottom-20">

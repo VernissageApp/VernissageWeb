@@ -35,7 +35,6 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { GalleryModule } from 'ng-gallery';
 import { SatPopoverModule } from '@ncstate/sat-popover';
-import { FileSaverModule } from 'ngx-filesaver';
 
 @NgModule({
     imports: [
@@ -75,7 +74,6 @@ import { FileSaverModule } from 'ngx-filesaver';
         MatTabsModule,
         GalleryModule,
         SatPopoverModule,
-        FileSaverModule,
         DragDropModule
     ],
     exports: [
@@ -115,7 +113,6 @@ import { FileSaverModule } from 'ngx-filesaver';
         MatTabsModule,
         GalleryModule,
         SatPopoverModule,
-        FileSaverModule,
         DragDropModule
     ]
 })

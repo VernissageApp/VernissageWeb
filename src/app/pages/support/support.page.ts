@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
-import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { Instance } from 'src/app/models/instance';
 import { InstanceService } from 'src/app/services/http/instance.service';
@@ -14,7 +13,6 @@ import { FileSizeService } from 'src/app/services/common/file-size.service';
     selector: 'app-support',
     templateUrl: './support.page.html',
     styleUrls: ['./support.page.scss'],
-    animations: fadeInAnimation,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })

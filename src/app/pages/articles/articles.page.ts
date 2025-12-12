@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
-import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { ForbiddenError } from 'src/app/errors/forbidden-error';
 import { LoadingService } from 'src/app/services/common/loading.service';
 import { ResponsiveComponent } from 'src/app/common/responsive';
@@ -21,7 +20,6 @@ import { RandomGeneratorService } from 'src/app/services/common/random-generator
     selector: 'app-articles',
     templateUrl: './articles.page.html',
     styleUrls: ['./articles.page.scss'],
-    animations: fadeInAnimation,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })

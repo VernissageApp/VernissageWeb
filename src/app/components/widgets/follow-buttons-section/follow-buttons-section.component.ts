@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, computed, effect, inject, input, On
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { MatDialog } from '@angular/material/dialog';
-import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { MuteAccountDialog } from 'src/app/dialogs/mute-account-dialog/mute-account.dialog';
 import { ReportData } from 'src/app/dialogs/report-dialog/report-data';
 import { ReportDialog } from 'src/app/dialogs/report-dialog/report.dialog';
@@ -21,7 +20,6 @@ import { RelationshipsService } from 'src/app/services/http/relationships.servic
     selector: 'app-follow-buttons-section',
     templateUrl: './follow-buttons-section.component.html',
     styleUrls: ['./follow-buttons-section.component.scss'],
-    animations: fadeInAnimation,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })

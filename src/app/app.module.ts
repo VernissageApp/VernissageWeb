@@ -1,13 +1,13 @@
 import { BrowserModule, provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { NgModule, ErrorHandler, Injector, NgZone, isDevMode, PLATFORM_ID, inject, provideAppInitializer } from '@angular/core';
 import { HTTP_INTERCEPTORS, provideHttpClient, withFetch, withInterceptorsFromDi } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MAT_CHECKBOX_DEFAULT_OPTIONS, MatCheckboxDefaultOptions } from '@angular/material/checkbox';
 import { MAT_TOOLTIP_DEFAULT_OPTIONS, MatTooltipDefaultOptions } from '@angular/material/tooltip';
 import { GlobalErrorHandler } from 'src/app/handlers/global-error-handler';
 import { InstanceService } from 'src/app/services/http/instance.service';
 import { appInitialization } from './app-initialization';
 import { HammerModule } from "@angular/platform-browser";
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 import { RouteReuseStrategy } from '@angular/router';
 import { AppComponent } from './app.component';
@@ -27,9 +27,6 @@ import { RandomGeneratorService } from './services/common/random-generator.servi
 import { CustomScriptsService } from './services/common/custom-scripts.service';
 import { CustomStylesService } from './services/common/custom-styles.service';
 
-const httpInterceptor = (platformId: object, authorizationService: AuthorizationService) => 
-    new APIInterceptor(platformId, authorizationService);
-
 /** Custom options the configure the tooltip's default show/hide delays. */
 export const customTooltipDefaults: MatTooltipDefaultOptions = {
     showDelay: 750,
@@ -45,7 +42,6 @@ export const customTooltipDefaults: MatTooltipDefaultOptions = {
     bootstrap: [AppComponent],
     imports: [
         BrowserModule,
-        BrowserAnimationsModule,
         HammerModule,
         PagesModule,
         ServiceWorkerModule.register('service-worker.js', {
@@ -63,12 +59,7 @@ export const customTooltipDefaults: MatTooltipDefaultOptions = {
             const initializerFn = (appInitialization)(inject(AuthorizationService), inject(InstanceService), inject(SettingsService), inject(CustomScriptsService), inject(CustomStylesService));
             return initializerFn();
         }),
-        {
-            provide: HTTP_INTERCEPTORS,
-            useFactory: httpInterceptor,
-            deps: [PLATFORM_ID, AuthorizationService],
-            multi: true
-        },
+        { provide: HTTP_INTERCEPTORS, useClass: APIInterceptor, multi: true },
         {
             provide: PersistenceService,
             useFactory: (platformId: object) => {
@@ -85,7 +76,9 @@ export const customTooltipDefaults: MatTooltipDefaultOptions = {
             provide: ErrorHandler, useClass: GlobalErrorHandler, deps: [PLATFORM_ID, Injector, NgZone, AuthorizationService, PersistenceService, LoadingService, ErrorItemsService, RandomGeneratorService]
         },
         provideHttpClient(withFetch(), withInterceptorsFromDi()),
-        provideClientHydration(withEventReplay())
+        provideClientHydration(withEventReplay()),
+        // The animations are required now only by sat-popover library.
+        provideAnimations()
     ]
 })
 export class AppModule {

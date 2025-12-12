@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, inject, input, OnInit, signal } from '@angular/core';
-import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { Category } from 'src/app/models/category';
 import { LinkableResult } from 'src/app/models/linkable-result';
@@ -12,7 +11,6 @@ import { TimelineService } from 'src/app/services/http/timeline.service';
     selector: 'app-category-gallery-item',
     templateUrl: './category-gallery-item.component.html',
     styleUrls: ['./category-gallery-item.component.scss'],
-    animations: fadeInAnimation,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })

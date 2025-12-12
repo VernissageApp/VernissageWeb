@@ -1,10 +1,9 @@
-<div [hidden]="!isReady()" @fadeIn [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
+<div [hidden]="!isReady()" animate.enter="fade-in" [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
     <section>
         <h1>Account</h1>
     </section>
 
     <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
-
         <mat-card class="margin-bottom-20" appearance="outlined">
             <mat-card-header>
                 <mat-card-title>
@@ -18,9 +17,12 @@
                         <mat-label>Name</mat-label>
                         <input type="text" matInput name="userName" #userName="ngModel" [(ngModel)]="user().name"
                             placeholder="Name" aria-label="Name" appMaxLength="100" />
-                        <mat-error *ngIf="userName.invalid && userName.errors?.appMaxLength">
-                            Too long name.
-                        </mat-error>
+
+                        @if (userName.invalid && userName.errors?.appMaxLength) {
+                            <mat-error>
+                                Too long name.
+                            </mat-error>
+                        }
                     </mat-form-field>
                     <div></div>
                 </div>
@@ -30,8 +32,11 @@
                         <mat-label>Bio</mat-label>
                         <textarea matInput name="bio" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4"
                             cdkAutosizeMaxRows="10" placeholder="Bio" #bio="ngModel" [(ngModel)]="user().bio"
-                            aria-label="Bio" appMaxLength="500"></textarea>
-                        <mat-error *ngIf="bio.invalid && bio.errors?.appMaxLength">Too long bio.</mat-error>
+                        aria-label="Bio" appMaxLength="500"></textarea>
+
+                        @if (bio.invalid && bio.errors?.appMaxLength) {
+                            <mat-error>Too long bio.</mat-error>
+                        }
                     </mat-form-field>
                     <div></div>
                 </div>
@@ -78,7 +83,10 @@
                             <mat-form-field appearance="outline">
                                 <mat-label>Key</mat-label>
                                 <input type="text" matInput [name]="'key-' + i" #key="ngModel" [(ngModel)]="field.key" placeholder="Key" aria-label="Key" appMaxLength="500" />
-                                <mat-error *ngIf="key.invalid && key.errors?.appMaxLength">Too long key.</mat-error>
+
+                                @if (key.invalid && key.errors?.appMaxLength) {
+                                    <mat-error>Too long key.</mat-error>
+                                }
                             </mat-form-field>
                             <div></div>
                         </div>
@@ -87,7 +95,10 @@
                             <mat-form-field appearance="outline">
                                 <mat-label>Value</mat-label>
                                 <input type="text" matInput [name]="'value-' + i" #value="ngModel" [(ngModel)]="field.value" placeholder="Value" aria-label="Value" appMaxLength="500" />
-                                <mat-error *ngIf="value.invalid && value.errors?.appMaxLength">Too long value.</mat-error>
+
+                                @if (value.invalid && value.errors?.appMaxLength) {
+                                    <mat-error>Too long value.</mat-error>
+                                }
                             </mat-form-field>
                             <div></div>
                         </div>
@@ -111,7 +122,7 @@
                                 display a visual indicator to confirm this. Simply copy and paste the code provided below into the HTML of your
                                 website, then add your website's address into one of the extra fields above.
                             </p>
-                            
+
                             <mat-form-field class="width-100" appearance="outline">
                                 <input type="text" matInput name="verification" [ngModel]="verification()" aria-label="Verification example" [readonly]="true">
                                 <button matSuffix mat-flat-button type="button" class="margin-right-10" (click)="onCopyVerification()" aria-label="Copy verification">Copy</button>
@@ -238,8 +249,12 @@
                     Protect access to your account by two factor authentication (2FA) process.
                 </div>
                 <div>
-                    <button *ngIf="!user().twoFactorEnabled" type="button" (click)="openEnableTwoFactorTokenDialog()" mat-raised-button color="primary" aria-label="Enable two factor authentication">Enable</button>
-                    <button *ngIf="user().twoFactorEnabled" type="button" (click)="openDisableTwoFactorTokenDialog()" mat-raised-button color="accent" aria-label="Disable two factor authentication">Disable</button>
+                    @if (!user().twoFactorEnabled) {
+                        <button type="button" (click)="openEnableTwoFactorTokenDialog()" mat-raised-button color="primary" aria-label="Enable two factor authentication">Enable</button>
+                    }
+                    @if (user().twoFactorEnabled) {
+                        <button type="button" (click)="openDisableTwoFactorTokenDialog()" mat-raised-button color="accent" aria-label="Disable two factor authentication">Disable</button>
+                    }
                 </div>
             </div>
         </mat-card-content>
@@ -255,10 +270,14 @@
             <div class="flex-row flex-responsive flex-space-between gap-16 margin-bottom-20">
                 <div>
                     Your current email: <strong>{{ user().email }}</strong>
-                    <span *ngIf="!user().emailWasConfirmed" class="text-error margin-left-5">(not confirmed)</span>
+                    @if (!user().emailWasConfirmed) {
+                        <span class="text-error margin-left-5">(not confirmed)</span>
+                    }
                 </div>
                 <div>
-                    <button *ngIf="!user().emailWasConfirmed" type="button" (click)="resentConfirmationEmail()" mat-stroked-button color="primary" class="margin-right-10" aria-label="Resend confirmation email">Resend confirmation email</button>
+                    @if (!user().emailWasConfirmed) {
+                        <button type="button" (click)="resentConfirmationEmail()" mat-stroked-button color="primary" class="margin-right-10" aria-label="Resend confirmation email">Resend confirmation email</button>
+                    }
                     <button type="button" (click)="openChangeEmailDialog()" mat-raised-button color="primary" aria-label="Change email">Change email</button>
                 </div>
             </div>
@@ -298,8 +317,8 @@
 
                     @if (userAliases(); as userAliasesArray) {
                         @if (userAliasesArray.length > 0) {
-                            <table mat-table [dataSource]="userAliasesArray" @fadeIn>
-            
+                            <table mat-table [dataSource]="userAliasesArray" animate.enter="fade-in">
+
                                 <!-- Alias Column -->
                                 <ng-container matColumnDef="alias">
                                     <th mat-header-cell *matHeaderCellDef> Alias </th>
@@ -307,7 +326,7 @@
                                         {{ element.alias }}
                                     </td>
                                 </ng-container>
-                        
+
                                 <!-- Actions Column -->
                                 <ng-container matColumnDef="actions">
                                     <th mat-header-cell *matHeaderCellDef></th>
@@ -315,7 +334,7 @@
                                         <button mat-stroked-button color="warn" (click)="onUserAliasDelete(element)">Delete</button>
                                     </td>
                                 </ng-container>
-                            
+
                                 <tr mat-header-row *matHeaderRowDef="aliasDisplayedColumns()"></tr>
                                 <tr mat-row *matRowDef="let row; columns: aliasDisplayedColumns();"></tr>
                             </table>
@@ -352,7 +371,7 @@
 
             @if (archives(); as archivesArray) {
                 @if (archivesArray.length > 0) {
-                    <table mat-table [dataSource]="archivesArray" @fadeIn>
+                    <table mat-table [dataSource]="archivesArray" animate.enter="fade-in">
 
                         <!-- RequestDate Column -->
                         <ng-container matColumnDef="requestDate">
@@ -417,7 +436,7 @@
                                 }
                             </td>
                         </ng-container>
-                                        
+
                         <tr mat-header-row *matHeaderRowDef="archivesDisplayedColumns()"></tr>
                         <tr mat-row *matRowDef="let row; columns: archivesDisplayedColumns();"></tr>
                     </table>
@@ -474,7 +493,7 @@
 
             @if (followingImports(); as followingImportsArray) {
                 @if (followingImportsArray.data.length > 0) {
-                    <table mat-table [dataSource]="followingImportsArray.data" @fadeIn>
+                    <table mat-table [dataSource]="followingImportsArray.data" animate.enter="fade-in">
 
                         <!-- RequestDate Column -->
                         <ng-container matColumnDef="createdAt">
@@ -531,7 +550,7 @@
                                 <a [routerLink]="[]" (click)="openShowAccountsDialog(element)" aria-label="Show accounts">Show accounts</a>
                             </td>
                         </ng-container>
-                                        
+
                         <tr mat-header-row *matHeaderRowDef="followingImportsDisplayedColumns()"></tr>
                         <tr mat-row *matRowDef="let row; columns: followingImportsDisplayedColumns();"></tr>
                     </table>

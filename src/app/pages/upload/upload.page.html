@@ -1,4 +1,4 @@
-<div @fadeIn [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
+<div animate.enter="fade-in" [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
     <h1>
         <div>{{ isEditMode() ? 'Edit status' : 'Upload photos' }}</div>
         @if (!isHandset()) {
@@ -31,7 +31,7 @@
                 </div>
             </div>
         } @else {
-            <!-- <mat-card class="margin-bottom-20" appearance="outlined">
+                <!-- <mat-card class="margin-bottom-20" appearance="outlined">
                 <mat-card-content>
 
                 </mat-card-content>
@@ -59,7 +59,9 @@
                             <app-upload-photo [photo]="photo" [licenses]="licenses()"></app-upload-photo>
                             <div class="margin-top-15 flex-row flex-space-between">
                                 <div>
-                                    <button *ngIf="i > 0" class="margin-right-10" mat-stroked-button matStepperPrevious>Back</button>
+                                    @if (i > 0) {
+                                        <button class="margin-right-10" mat-stroked-button matStepperPrevious>Back</button>
+                                    }
                                     <button mat-flat-button color="primary" matStepperNext>Next</button>
                                 </div>
                                 <div>
@@ -77,7 +79,7 @@
                             <ng-template matStepLabel>Status</ng-template>
                             <div class="flex-col gap-0 margin-top-5">
 
-                                <div class="flex-row flex-space-between">
+                                <div class="flex-row flex-space-between margin-bottom-5">
                                     <div class="flex-row gap-8">
                                         <button type="button" class="text-template" mat-stroked-button color="primary" (click)="onInsertTemplate()" [disabled]="!statusTextTemplate() || statusTextTemplate()?.length === 0">
                                             <mat-icon>text_snippet</mat-icon>
@@ -111,7 +113,7 @@
                                     <textarea
                                         matInput
                                         name="statusText"
-                                        cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4" cdkAutosizeMaxRows="10" 
+                                        cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4" cdkAutosizeMaxRows="10"
                                         #statusInput="ngModel"
                                         [(ngModel)]="statusText"
                                         (ngModelChange)="onStatusTextChange()"
@@ -125,8 +127,12 @@
                                     }
 
                                     <mat-hint class="text-muted" align="end">{{ statusText().length }}/{{ maxStatusLength() }}</mat-hint>
-                                    <mat-error *ngIf="statusInput.invalid && statusInput.errors?.required">Enter status text.</mat-error>
-                                    <mat-error *ngIf="statusInput.invalid && statusInput.errors?.appMaxLength">Too long status.</mat-error>
+                                    @if (statusInput.invalid && statusInput.errors?.required) {
+                                        <mat-error>Enter status text.</mat-error>
+                                    }
+                                    @if (statusInput.invalid && statusInput.errors?.appMaxLength) {
+                                        <mat-error>Too long status.</mat-error>
+                                    }
                                 </mat-form-field>
 
                                 <mat-form-field appearance="outline" class=" margin-bottom-20">

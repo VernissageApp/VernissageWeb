@@ -10,8 +10,14 @@
             <mat-form-field class="width-100" appearance="outline">
                 <mat-label>Account alias</mat-label>
                 <input type="text" matInput name="text" [(ngModel)]="alias" #aliasInput="ngModel" aria-label="Alias" required appMaxLength="100" />
-                <mat-error *ngIf="aliasInput.invalid && aliasInput.errors?.appMaxLength">Account alias is too long.</mat-error>
-                <mat-error *ngIf="aliasInput.invalid && aliasInput.errors?.required">Enter account alias.</mat-error>
+
+                @if (aliasInput.invalid && aliasInput.errors?.appMaxLength) {
+                    <mat-error>Account alias is too long.</mat-error>
+                }
+
+                @if (aliasInput.invalid && aliasInput.errors?.required) {
+                    <mat-error>Enter account alias.</mat-error>
+                }
             </mat-form-field>
         </div>
 

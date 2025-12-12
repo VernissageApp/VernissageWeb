@@ -16,7 +16,7 @@
         [userName]="userName()">
     </app-business-card>
 
-    <div @fadeIn [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
+    <div animate.enter="fade-in" [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
         <div class="business-card-messages">
             <mat-divider></mat-divider>
             <div class="margin-bottom-20"></div>

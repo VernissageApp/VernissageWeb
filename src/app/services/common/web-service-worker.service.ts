@@ -14,8 +14,9 @@ export class WebServiceWorker implements OnDestroy {
     private unrecoverableSubscription?: Subscription;
 
     private applicationRef = inject(ApplicationRef);
+    private swUpdate = inject(SwUpdate);
 
-    constructor(public swUpdate: SwUpdate) {
+    constructor() {
         this.initialize();
     }
 

@@ -6,8 +6,14 @@
             <mat-form-field class="width-100" appearance="outline">
                 <mat-label>Category name</mat-label>
                 <input type="text" matInput name="categoryName" [(ngModel)]="name" #nameInput="ngModel" aria-label="Category name" required appMaxLength="100" />
-                <mat-error *ngIf="nameInput.invalid && nameInput.errors?.required">Enter category name.</mat-error>
-                <mat-error *ngIf="nameInput.invalid && nameInput.errors?.appMaxLength">Name is too long.</mat-error>
+
+                @if (nameInput.invalid && nameInput.errors?.required) {
+                    <mat-error>Enter category name.</mat-error>
+                }
+
+                @if (nameInput.invalid && nameInput.errors?.appMaxLength) {
+                    <mat-error>Name is too long.</mat-error>
+                }
             </mat-form-field>
         </div>
 
@@ -15,7 +21,10 @@
             <mat-form-field class="width-100" appearance="outline">
                 <mat-label>Priority</mat-label>
                 <input type="number" matInput name="priority" [(ngModel)]="priority" #priorityInput="ngModel" aria-label="Priority" required />
-                <mat-error *ngIf="priorityInput.invalid && priorityInput.errors?.required">Enter priority.</mat-error>
+
+                @if (priorityInput.invalid && priorityInput.errors?.required) {
+                    <mat-error>Enter priority.</mat-error>
+                }
             </mat-form-field>
         </div>
 

@@ -6,7 +6,10 @@
             <mat-form-field class="width-100" appearance="outline">
                 <mat-label>Order</mat-label>
                 <input type="number" matInput name="order" [(ngModel)]="order" #orderInput="ngModel" aria-label="Email" required />
-                <mat-error *ngIf="orderInput.invalid && orderInput.errors?.required">Enter order.</mat-error>
+
+                @if (orderInput.invalid && orderInput.errors?.required) {
+                    <mat-error>Enter order.</mat-error>
+                }
             </mat-form-field>
         </div>
 
@@ -14,8 +17,14 @@
             <mat-form-field class="width-100" appearance="outline">
                 <mat-label>Rule</mat-label>
                 <input type="text" matInput name="text" [(ngModel)]="text" #textInput="ngModel" aria-label="Email" required appMaxLength="1000" />
-                <mat-error *ngIf="textInput.invalid && textInput.errors?.appMaxLength">Rule is too long.</mat-error>
-                <mat-error *ngIf="textInput.invalid && textInput.errors?.required">Enter rule.</mat-error>
+
+                @if (textInput.invalid && textInput.errors?.appMaxLength) {
+                    <mat-error>Rule is too long.</mat-error>
+                }
+
+                @if (textInput.invalid && textInput.errors?.required) {
+                    <mat-error>Enter rule.</mat-error>
+                }
             </mat-form-field>
         </div>
 

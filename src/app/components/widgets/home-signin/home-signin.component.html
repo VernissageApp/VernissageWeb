@@ -1,5 +1,5 @@
 @if (isReady()) {
-    <div @fadeIn>
+    <div animate.enter="fade-in">
 
         @if (articles().length > 0) {
             <div [ngClass]="{ 'padding-top-30': !isHandset(), 'padding-left-30': !isHandset(), 'padding-right-30': !isHandset(), 'padding-10': isHandset() }">
@@ -22,13 +22,13 @@
 
                 @if (!isHandset()) {
                     @switch (timeline()) {
-                        @case ('private') { 
+                        @case ('private') {
                             <div class="fs-60 text-muted">Your personal collection of photos, created based on posts from users you follow.</div>
                         }
-                        @case ('local') { 
+                        @case ('local') {
                             <div class="fs-60 text-muted">A collection of photos created from all posts made by users publishing on this server.</div>
                         }
-                        @case ('global') { 
+                        @case ('global') {
                             <div class="fs-60 text-muted">A collection of photos created from all user-uploaded images that have reached this server.</div>
                         }
                     }
@@ -39,11 +39,24 @@
                 <mat-button-toggle-group [(ngModel)]="timeline" (ngModelChange)="onTimelineChange()" [hideSingleSelectionIndicator]="true" aria-label="Timeline type">
 
                     @if (isLoggedIn()) {
-                        <mat-button-toggle value="private"><mat-icon>person</mat-icon><span *ngIf="!isHandset()"> Private</span></mat-button-toggle>
+                        <mat-button-toggle value="private">
+                            <mat-icon>person</mat-icon>
+                            @if (!isHandset()) {
+                                <span> Private</span>
+                            }
+                        </mat-button-toggle>
                     }
 
-                    <mat-button-toggle value="local"><mat-icon>communities</mat-icon><span *ngIf="!isHandset()"> Local</span></mat-button-toggle>
-                    <mat-button-toggle value="global"><mat-icon>hub</mat-icon><span *ngIf="!isHandset()"> All</span></mat-button-toggle>
+                    <mat-button-toggle value="local"><mat-icon>communities</mat-icon>
+                        @if (!isHandset()) {
+                            <span> Local</span>
+                        }
+                    </mat-button-toggle>
+                    <mat-button-toggle value="global"><mat-icon>hub</mat-icon>
+                        @if (!isHandset()) {
+                            <span> All</span>
+                        }
+                    </mat-button-toggle>
                 </mat-button-toggle-group>
             </section>
         </div>

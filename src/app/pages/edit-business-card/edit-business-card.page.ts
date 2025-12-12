@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject, model, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { ForbiddenError } from 'src/app/errors/forbidden-error';
 import { BusinessCard } from 'src/app/models/business-card';
@@ -16,7 +15,6 @@ import { UsersService } from 'src/app/services/http/users.service';
     selector: 'app-edit-business-card',
     templateUrl: './edit-business-card.page.html',
     styleUrls: ['./edit-business-card.page.scss'],
-    animations: fadeInAnimation,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })

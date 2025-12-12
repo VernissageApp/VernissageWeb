@@ -1,7 +1,6 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { ChangeDetectionStrategy, Component, computed, effect, inject, input, OnDestroy, OnInit, PLATFORM_ID, signal } from '@angular/core';
 import { Subscription, filter } from 'rxjs';
-import { fadeInAnimation } from 'src/app/animations/fade-in.animation';
 import { LinkableResult } from 'src/app/models/linkable-result';
 import { Status } from 'src/app/models/status';
 import { ContextStatusesService } from 'src/app/services/common/context-statuses.service';
@@ -18,7 +17,6 @@ import { GalleryColumn } from 'src/app/models/gallery-column';
     selector: 'app-gallery',
     templateUrl: './gallery.component.html',
     styleUrls: ['./gallery.component.scss'],
-    animations: fadeInAnimation,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })

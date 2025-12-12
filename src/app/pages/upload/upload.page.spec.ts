@@ -10,11 +10,11 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaxLengthValidatorDirective } from 'src/app/validators/directives/max-length-validator.directive'; // Import the directive
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { PersistenceBrowserService, PersistenceService } from 'src/app/services/persistance/persistance.service';
+import { provideZoneChangeDetection } from '@angular/core';
 
 describe('UploadPage', () => {
     let component: UploadPage;
@@ -38,8 +38,10 @@ describe('UploadPage', () => {
                 useFactory: () => {
                     return new PersistenceBrowserService();
                 }
-            }],
-            imports: [HttpClientTestingModule,
+            },
+            provideZoneChangeDetection()],
+            imports: [
+                HttpClientTestingModule,
                 MatCardModule,
                 MatStepperModule,
                 FormsModule,
@@ -47,7 +49,6 @@ describe('UploadPage', () => {
                 MatFormFieldModule,
                 MatInputModule,
                 MatSelectModule,
-                BrowserAnimationsModule,
                 MatCheckboxModule
             ] // Add MatCardModule here] // Add HttpClientTestingModule here
         }).compileComponents();

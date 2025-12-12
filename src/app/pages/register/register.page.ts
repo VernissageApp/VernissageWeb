@@ -8,7 +8,6 @@ import { RegisterService } from 'src/app/services/http/register.service';
 import { WindowService } from 'src/app/services/common/window.service';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { Router } from '@angular/router';
-import { fadeInAnimation } from "../../animations/fade-in.animation";
 import { Rule } from 'src/app/models/rule';
 import { SettingsService } from 'src/app/services/http/settings.service';
 
@@ -16,7 +15,6 @@ import { SettingsService } from 'src/app/services/http/settings.service';
     selector: 'app-register',
     templateUrl: './register.page.html',
     styleUrls: ['./register.page.scss'],
-    animations: fadeInAnimation,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
