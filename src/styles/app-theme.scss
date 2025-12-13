@@ -21,6 +21,14 @@
         }
     }
 
+    .mat-button-toggle-group{
+        .mat-button-toggle-appearance-standard {
+            &.mat-button-toggle-checked {
+                background-color: rgba(mat.m2-get-color-from-palette($primary), 0.1);
+            }
+        }
+    }
+
     a {
         &:link {
             color: mat.m2-get-color-from-palette($primary);
