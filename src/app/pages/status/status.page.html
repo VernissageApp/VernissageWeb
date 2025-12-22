@@ -34,7 +34,7 @@
                                             @if (mainStatusInternal.contentWarning) {
                                                 <div class="text">{{ mainStatusInternal.contentWarning }}</div>
                                             }
-                                            <button mat-flat-button color="accent" (click)="onShowSensitiveImageClick()">Show image</button>
+                                            <button matButton="filled" (click)="onShowSensitiveImageClick()">Show image</button>
                                         </div>
                                         <canvas class="blurhash show-or-hide" [class.is-visible]="!showSensitiveImage()" [class.is-hidden]="showSensitiveImage()" #canvas [width]="imageWidth()" [height]="imageHeight()"></canvas>
                                     }
@@ -84,7 +84,7 @@
                 <div class="flex-row flex-space-between padding-left-10 padding-right-10 padding-top-10">
                     @if (!hideLeftArrow()) {
                         <div>
-                            <button mat-stroked-button (click)="onPrevClick()" class="small-button context-left" aria-label="Previous image">
+                            <button matButton="outlined" (click)="onPrevClick()" class="small-button context-left" aria-label="Previous image">
                                 <mat-icon>arrow_back_ios</mat-icon>
                             </button>
                         </div>
@@ -94,7 +94,7 @@
 
                     @if (!hideRightArrow()) {
                         <div>
-                            <button mat-stroked-button (click)="onNextClick()" class="small-button context-right" aria-label="Next image">
+                            <button matButton="outlined" (click)="onNextClick()" class="small-button context-right" aria-label="Next image">
                                 <mat-icon iconPositionEnd>arrow_forward_ios</mat-icon>
                             </button>
                         </div>
@@ -116,56 +116,56 @@
                                 <!-- Actions panel -->
                                 @if (isLoggedIn()) {
                                     @if (!mainStatusInternal.reblogged) {
-                                        <button mat-icon-button class="margin-right-10" color="primary" matTooltip="Boost" matTooltipPosition="above" aria-label="Boost" [disabled]="isDuringBoostProcessing()" (click)="reblog()">
+                                        <button matIconButton class="margin-right-10" matTooltip="Boost" matTooltipPosition="above" aria-label="Boost" [disabled]="isDuringBoostProcessing()" (click)="reblog()">
                                             <mat-icon class="outline-symbol">rocket_launch</mat-icon>
                                         </button>
                                     }
 
                                     @if (mainStatusInternal.reblogged) {
-                                        <button mat-icon-button class="margin-right-10" color="primary" matTooltip="Unboost" matTooltipPosition="above" aria-label="Unboost" [disabled]="isDuringBoostProcessing()" (click)="unreblog()">
+                                        <button matIconButton class="margin-right-10" matTooltip="Unboost" matTooltipPosition="above" aria-label="Unboost" [disabled]="isDuringBoostProcessing()" (click)="unreblog()">
                                             <mat-icon class="fill-symbol">rocket_launch</mat-icon>
                                         </button>
                                     }
 
                                     @if (!mainStatusInternal.favourited) {
-                                        <button mat-icon-button class="margin-right-10" color="primary" matTooltip="Like" matTooltipPosition="above" aria-label="Like" [disabled]="isDuringFavouriteProcessing()" (click)="favourite()">
+                                        <button matIconButton class="margin-right-10" matTooltip="Like" matTooltipPosition="above" aria-label="Like" [disabled]="isDuringFavouriteProcessing()" (click)="favourite()">
                                             <mat-icon class="outline-symbol">grade</mat-icon>
                                         </button>
                                     }
 
                                     @if (mainStatusInternal.favourited) {
-                                        <button mat-icon-button class="margin-right-10" color="primary" matTooltip="Unlike" matTooltipPosition="above" aria-label="Unlike" [disabled]="isDuringFavouriteProcessing()" (click)="unfavourite()">
+                                        <button matIconButton class="margin-right-10" matTooltip="Unlike" matTooltipPosition="above" aria-label="Unlike" [disabled]="isDuringFavouriteProcessing()" (click)="unfavourite()">
                                             <mat-icon class="fill-symbol">grade</mat-icon>
                                         </button>
                                     }
 
                                     @if (!mainStatusInternal.bookmarked) {
-                                        <button mat-icon-button class="margin-right-10" color="primary" matTooltip="Bookmark" matTooltipPosition="above" aria-label="Bookmark" [disabled]="isDuringBookmarkProcessing()" (click)="bookmark()">
+                                        <button matIconButton class="margin-right-10" matTooltip="Bookmark" matTooltipPosition="above" aria-label="Bookmark" [disabled]="isDuringBookmarkProcessing()" (click)="bookmark()">
                                             <mat-icon class="outline-symbol">bookmark</mat-icon>
                                         </button>
                                     }
 
                                     @if (mainStatusInternal.bookmarked) {
-                                        <button mat-icon-button class="margin-right-10" color="primary" matTooltip="Unbookmark" matTooltipPosition="above" aria-label="Unbookmark" [disabled]="isDuringBookmarkProcessing()" (click)="unbookmark()">
+                                        <button matIconButton class="margin-right-10" matTooltip="Unbookmark" matTooltipPosition="above" aria-label="Unbookmark" [disabled]="isDuringBookmarkProcessing()" (click)="unbookmark()">
                                             <mat-icon class="fill-symbol">bookmark</mat-icon>
                                         </button>
                                     }
 
                                     @if (shouldDisplayFeatureButton()) {
                                         @if (!mainStatusInternal.featured) {
-                                            <button mat-icon-button class="margin-right-10" color="primary" matTooltip="Feature" matTooltipPosition="above" aria-label="Feature" [disabled]="isDuringFeatureProcessing()" (click)="feature()">
+                                            <button matIconButton class="margin-right-10" matTooltip="Feature" matTooltipPosition="above" aria-label="Feature" [disabled]="isDuringFeatureProcessing()" (click)="feature()">
                                                 <mat-icon class="outline-symbol">stars</mat-icon>
                                             </button>
                                         }
 
                                         @if (mainStatusInternal.featured) {
-                                            <button mat-icon-button class="margin-right-10" color="primary" matTooltip="Unfeature" matTooltipPosition="above" aria-label="Unfeature" [disabled]="isDuringFeatureProcessing()" (click)="unfeature()">
+                                            <button matIconButton class="margin-right-10" matTooltip="Unfeature" matTooltipPosition="above" aria-label="Unfeature" [disabled]="isDuringFeatureProcessing()" (click)="unfeature()">
                                                 <mat-icon class="fill-symbol">stars</mat-icon>
                                             </button>
                                         }
                                     }
 
-                                    <button mat-icon-button [matMenuTriggerFor]="menu" class="margin-right-10" color="primary" aria-label="More options">
+                                    <button matIconButton [matMenuTriggerFor]="menu" class="margin-right-10" aria-label="More options">
                                         <mat-icon>more_vert</mat-icon>
                                     </button>
                                     <mat-menu #menu="matMenu">
@@ -438,7 +438,7 @@
                                                             <mat-icon class="favourited fill-symbol">star</mat-icon>
                                                         }
 
-                                                        <button mat-icon-button [matMenuTriggerFor]="menu" class="margin-right-10" color="primary" aria-label="More options">
+                                                        <button matIconButton [matMenuTriggerFor]="menu" class="margin-right-10" aria-label="More options">
                                                             <mat-icon>more_vert</mat-icon>
                                                         </button>
                                                         <mat-menu #menu="matMenu">

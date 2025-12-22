@@ -16,7 +16,7 @@
                     <mat-spinner class="margin-right-10 margin-top-10" [diameter]="18"></mat-spinner>
                 }
 
-                <button mat-stroked-button color="primary" (click)="onGenerateDescription()" [disabled]="!photo().isUploaded() || describeInProgress()">
+                <button matButton="outlined" (click)="onGenerateDescription()" [disabled]="!photo().isUploaded() || describeInProgress()">
                     <mat-icon>smart_toy</mat-icon> Generate
                 </button>
             </div>
@@ -78,7 +78,7 @@
         </mat-autocomplete>
 
         @if (currentCountry()) {
-            <button matSuffix mat-icon-button aria-label="Clear" (click)="onCountryClear()">
+            <button matSuffix matIconButton aria-label="Clear" (click)="onCountryClear()">
                 <mat-icon>close</mat-icon>
             </button>
         }
@@ -101,7 +101,7 @@
         </mat-autocomplete>
 
         @if (currentCity()) {
-            <button matSuffix mat-icon-button aria-label="Clear" (click)="onCityClear()">
+            <button matSuffix matIconButton aria-label="Clear" (click)="onCityClear()">
                 <mat-icon>close</mat-icon>
             </button>
         }
@@ -115,7 +115,7 @@
     <div class="exif-values">
 
         <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
-            <mat-checkbox class="exif-label" [name]="'gpsCoordination' + internalIndex" color="primary" [disableRipple]="true" [(ngModel)]="photo().showGpsCoordination">
+            <mat-checkbox class="exif-label" [name]="'gpsCoordination' + internalIndex" [disableRipple]="true" [(ngModel)]="photo().showGpsCoordination">
                 <span class="text-muted">GPS coordinates:</span>
             </mat-checkbox>
             <div class="flex-grow-2">
@@ -134,7 +134,7 @@
         </div>
 
         <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
-            <mat-checkbox class="exif-label" [name]="'make' + internalIndex" color="primary" [disableRipple]="true" [(ngModel)]="photo().showMake">
+            <mat-checkbox class="exif-label" [name]="'make' + internalIndex" [disableRipple]="true" [(ngModel)]="photo().showMake">
                 <span class="text-muted">Manufacturer:</span>
             </mat-checkbox>
             <mat-form-field appearance="outline" class="flex-grow-2">
@@ -143,7 +143,7 @@
         </div>
 
         <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
-            <mat-checkbox class="exif-label" [name]="'model' + internalIndex" color="primary" [disableRipple]="true" [(ngModel)]="photo().showModel">
+            <mat-checkbox class="exif-label" [name]="'model' + internalIndex" [disableRipple]="true" [(ngModel)]="photo().showModel">
                 <span class="text-muted">Model:</span>
             </mat-checkbox>
             <mat-form-field appearance="outline" class="flex-grow-2">
@@ -152,7 +152,7 @@
         </div>
 
         <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
-            <mat-checkbox class="exif-label" [name]="'lens' + internalIndex" color="primary" [disableRipple]="true" [(ngModel)]="photo().showLens">
+            <mat-checkbox class="exif-label" [name]="'lens' + internalIndex" [disableRipple]="true" [(ngModel)]="photo().showLens">
                 <span class="text-muted">Lens:</span>
             </mat-checkbox>
             <mat-form-field appearance="outline" class="flex-grow-2">
@@ -161,7 +161,7 @@
         </div>
 
         <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
-            <mat-checkbox class="exif-label" [name]="'focalLenIn35mmFilm' + internalIndex" color="primary" [disableRipple]="true" [(ngModel)]="photo().showFocalLenIn35mmFilm">
+            <mat-checkbox class="exif-label" [name]="'focalLenIn35mmFilm' + internalIndex" [disableRipple]="true" [(ngModel)]="photo().showFocalLenIn35mmFilm">
                 <span class="text-muted">Focal length:</span>
             </mat-checkbox>
             <div class="flex-grow-2">
@@ -180,7 +180,7 @@
         </div>
 
         <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
-            <mat-checkbox class="exif-label" [name]="'fNumber' + internalIndex" color="primary" [disableRipple]="true" [(ngModel)]="photo().showFNumber">
+            <mat-checkbox class="exif-label" [name]="'fNumber' + internalIndex" [disableRipple]="true" [(ngModel)]="photo().showFNumber">
                 <span class="text-muted">Aperture:</span>
             </mat-checkbox>
             <mat-form-field appearance="outline" class="flex-grow-2">
@@ -190,7 +190,7 @@
         </div>
 
         <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
-            <mat-checkbox class="exif-label" [name]="'exposureTime' + internalIndex" color="primary" [disableRipple]="true" [(ngModel)]="photo().showExposureTime">
+            <mat-checkbox class="exif-label" [name]="'exposureTime' + internalIndex" [disableRipple]="true" [(ngModel)]="photo().showExposureTime">
                 <span class="text-muted">Exposure time:</span>
             </mat-checkbox>
             <mat-form-field appearance="outline" class="flex-grow-2">
@@ -200,7 +200,7 @@
         </div>
 
         <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
-            <mat-checkbox class="exif-label" [name]="'photographicSensitivity' + internalIndex" color="primary" [disableRipple]="true" [(ngModel)]="photo().showPhotographicSensitivity">
+            <mat-checkbox class="exif-label" [name]="'photographicSensitivity' + internalIndex" [disableRipple]="true" [(ngModel)]="photo().showPhotographicSensitivity">
                 <span class="text-muted">ISO:</span>
             </mat-checkbox>
             <mat-form-field appearance="outline" class="flex-grow-2">
@@ -209,7 +209,7 @@
         </div>
 
         <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
-            <mat-checkbox class="exif-label" [name]="'flash' + internalIndex" color="primary" [disableRipple]="true" [(ngModel)]="photo().showFlash">
+            <mat-checkbox class="exif-label" [name]="'flash' + internalIndex" [disableRipple]="true" [(ngModel)]="photo().showFlash">
                 <span class="text-muted">Flash:</span>
             </mat-checkbox>
             <mat-form-field appearance="outline" class="flex-grow-2">
@@ -218,7 +218,7 @@
         </div>
 
         <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
-            <mat-checkbox class="exif-label" [name]="'software' + internalIndex" color="primary" [disableRipple]="true" [(ngModel)]="photo().showSoftware">
+            <mat-checkbox class="exif-label" [name]="'software' + internalIndex" [disableRipple]="true" [(ngModel)]="photo().showSoftware">
                 <span class="text-muted">Software:</span>
             </mat-checkbox>
             <mat-form-field appearance="outline" class="flex-grow-2">
@@ -227,7 +227,7 @@
         </div>
 
         <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
-            <mat-checkbox class="exif-label" [name]="'film' + internalIndex" color="primary" [disableRipple]="true" [(ngModel)]="photo().showFilm">
+            <mat-checkbox class="exif-label" [name]="'film' + internalIndex" [disableRipple]="true" [(ngModel)]="photo().showFilm">
                 <span class="text-muted">Film:</span>
             </mat-checkbox>
             <mat-form-field appearance="outline" class="flex-grow-2">
@@ -236,7 +236,7 @@
         </div>
 
         <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
-            <mat-checkbox class="exif-label" [name]="'chemistry' + internalIndex" color="primary" [disableRipple]="true" [(ngModel)]="photo().showChemistry">
+            <mat-checkbox class="exif-label" [name]="'chemistry' + internalIndex" [disableRipple]="true" [(ngModel)]="photo().showChemistry">
                 <span class="text-muted">Chemistry:</span>
             </mat-checkbox>
             <mat-form-field appearance="outline" class="flex-grow-2">
@@ -245,7 +245,7 @@
         </div>
 
         <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
-            <mat-checkbox class="exif-label" [name]="'scanner' + internalIndex" color="primary" [disableRipple]="true" [(ngModel)]="photo().showScanner">
+            <mat-checkbox class="exif-label" [name]="'scanner' + internalIndex" [disableRipple]="true" [(ngModel)]="photo().showScanner">
                 <span class="text-muted">Scanner:</span>
             </mat-checkbox>
             <mat-form-field appearance="outline" class="flex-grow-2">
@@ -254,7 +254,7 @@
         </div>
 
         <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
-            <mat-checkbox class="exif-label" [name]="'createDate' + internalIndex" color="primary" [disableRipple]="true" [(ngModel)]="photo().showCreateDate">
+            <mat-checkbox class="exif-label" [name]="'createDate' + internalIndex" [disableRipple]="true" [(ngModel)]="photo().showCreateDate">
                 <span class="text-muted">Create date:</span>
             </mat-checkbox>
             <div class="flex-grow-2">
@@ -286,7 +286,7 @@
         <div class="pull-right">
             @if (photo().photoHdrSrc) {
                 @if (photo().isHdrUploaded) {
-                    <button mat-stroked-button color="warn" class="small-button" (click)="onHdrDelete()">Delete HDR version</button>
+                    <button matButton="tonal" class="small-button" (click)="onHdrDelete()">Delete HDR version</button>
                 } @else {
                     <mat-spinner class="display-inline-block" [diameter]="18"></mat-spinner>
                 }

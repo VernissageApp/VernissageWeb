@@ -32,7 +32,7 @@
                         <mat-label>Bio</mat-label>
                         <textarea matInput name="bio" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4"
                             cdkAutosizeMaxRows="10" placeholder="Bio" #bio="ngModel" [(ngModel)]="user().bio"
-                        aria-label="Bio" appMaxLength="500"></textarea>
+                            aria-label="Bio" appMaxLength="500"></textarea>
 
                         @if (bio.invalid && bio.errors?.appMaxLength) {
                             <mat-error>Too long bio.</mat-error>
@@ -54,7 +54,7 @@
 
                 <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
                     <div>
-                        <mat-checkbox name="manuallyApprovesFollowers" color="primary" [disableRipple]="true" [(ngModel)]="user().manuallyApprovesFollowers">Manually accept new followers</mat-checkbox>
+                        <mat-checkbox name="manuallyApprovesFollowers" [disableRipple]="true" [(ngModel)]="user().manuallyApprovesFollowers">Manually accept new followers</mat-checkbox>
                         <div class="text-muted checkbox-hint">
                             People will need to wait for you to accept their follow request. Check this option if you prefer to manually review follow requests and decide whether to accept or reject new followers, or uncheck it to allow people to follow you without requiring approval.
                         </div>
@@ -71,7 +71,7 @@
                     <div class="flex-row flex-stretch flex-space-between">
                         <h3>Fields</h3>
                         <div class="text-right">
-                            <button mat-stroked-button color="accent" type="button" (click)="onAddField()">Add field</button>
+                            <button matButton="filled" type="button" (click)="onAddField()">Add field</button>
                         </div>
                     </div>
                     <div></div>
@@ -105,7 +105,7 @@
 
                         <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
                             <div class="text-right">
-                                <button mat-stroked-button color="primary" type="button" (click)="onDeleteField(field)">Delete</button>
+                                <button matButton="outlined" type="button" (click)="onDeleteField(field)">Delete</button>
                             </div>
                             <div></div>
                         </div>
@@ -125,7 +125,7 @@
 
                             <mat-form-field class="width-100" appearance="outline">
                                 <input type="text" matInput name="verification" [ngModel]="verification()" aria-label="Verification example" [readonly]="true">
-                                <button matSuffix mat-flat-button type="button" class="margin-right-10" (click)="onCopyVerification()" aria-label="Copy verification">Copy</button>
+                                <button matSuffix matButton="outlined" type="button" class="margin-right-10" (click)="onCopyVerification()" aria-label="Copy verification">Copy</button>
                             </mat-form-field>
 
                             <p>
@@ -141,7 +141,7 @@
 
             <mat-card-actions>
                 <div class="account-actions padding-top-20">
-                    <button type="submit" mat-raised-button color="primary" aria-label="Save">Save</button>
+                    <button type="submit" matButton="elevated" aria-label="Save">Save</button>
                 </div>
             </mat-card-actions>
 
@@ -157,7 +157,7 @@
             <mat-card-content>
                 <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
                     <div>
-                        <button type="button" mat-stroked-button (click)="avatarFileUpload.click()" class="margin-right-20">Choose file</button>
+                        <button type="button" matButton="outlined" (click)="avatarFileUpload.click()" class="margin-right-20">Choose file</button>
                         <input type="file" hidden name="avatar" #avatarFileUpload accept="image/*" (change)="onAvatarSelected($event)">
                     </div>
 
@@ -169,8 +169,8 @@
 
             <mat-card-actions>
                 <div class="account-actions">
-                    <button type="submit" mat-raised-button color="primary" aria-label="Save" class="margin-right-10">Save</button>
-                    <button type="button" mat-raised-button color="accent" aria-label="Remove avatar" (click)="onRemoveAvatar()">Remove</button>
+                    <button type="submit" matButton="elevated" aria-label="Save" class="margin-right-10">Save</button>
+                    <button type="button" matButton="elevated" aria-label="Remove avatar" (click)="onRemoveAvatar()">Remove</button>
                 </div>
             </mat-card-actions>
         </mat-card>
@@ -185,7 +185,7 @@
             <mat-card-content>
                 <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
                     <div>
-                        <button type="button" mat-stroked-button (click)="headerFileUpload.click()" class="margin-right-20">Choose file</button>
+                        <button type="button"matButton="outlined" (click)="headerFileUpload.click()" class="margin-right-20">Choose file</button>
                         <input type="file" hidden name="header" #headerFileUpload accept="image/*" (change)="onHeaderSelected($event)">
                     </div>
 
@@ -197,8 +197,8 @@
 
             <mat-card-actions>
                 <div class="account-actions">
-                    <button type="submit" mat-raised-button color="primary" aria-label="Save" class="margin-right-10">Save</button>
-                    <button type="button" mat-raised-button color="accent" aria-label="Remove header" (click)="onRemoveHeader()">Remove</button>
+                    <button type="submit" matButton="elevated" aria-label="Save" class="margin-right-10">Save</button>
+                    <button type="button" matButton="elevated" aria-label="Remove header" (click)="onRemoveHeader()">Remove</button>
                 </div>
             </mat-card-actions>
         </mat-card>
@@ -228,7 +228,7 @@
                 </div>
                 <div class="text-right">
                     <div class="margin-bottom-20">
-                        <mat-slide-toggle color="warn" name="isSupporterFlagEnabled" [(ngModel)]="isSupporterFlagEnabled" (ngModelChange)="onIsSupporterFlagChange()" [disabled]="!user().isSupporter">
+                        <mat-slide-toggle name="isSupporterFlagEnabled" [(ngModel)]="isSupporterFlagEnabled" (ngModelChange)="onIsSupporterFlagChange()" [disabled]="!user().isSupporter">
                             Show badge on your profile
                         </mat-slide-toggle>
                     </div>
@@ -250,10 +250,10 @@
                 </div>
                 <div>
                     @if (!user().twoFactorEnabled) {
-                        <button type="button" (click)="openEnableTwoFactorTokenDialog()" mat-raised-button color="primary" aria-label="Enable two factor authentication">Enable</button>
+                        <button type="button" (click)="openEnableTwoFactorTokenDialog()" matButton="elevated" aria-label="Enable two factor authentication">Enable</button>
                     }
                     @if (user().twoFactorEnabled) {
-                        <button type="button" (click)="openDisableTwoFactorTokenDialog()" mat-raised-button color="accent" aria-label="Disable two factor authentication">Disable</button>
+                        <button type="button" (click)="openDisableTwoFactorTokenDialog()" matButton="elevated" aria-label="Disable two factor authentication">Disable</button>
                     }
                 </div>
             </div>
@@ -276,9 +276,9 @@
                 </div>
                 <div>
                     @if (!user().emailWasConfirmed) {
-                        <button type="button" (click)="resentConfirmationEmail()" mat-stroked-button color="primary" class="margin-right-10" aria-label="Resend confirmation email">Resend confirmation email</button>
+                        <button type="button" (click)="resentConfirmationEmail()" matButton="elevated" class="margin-right-10" aria-label="Resend confirmation email">Resend confirmation email</button>
                     }
-                    <button type="button" (click)="openChangeEmailDialog()" mat-raised-button color="primary" aria-label="Change email">Change email</button>
+                    <button type="button" (click)="openChangeEmailDialog()" matButton="elevated" aria-label="Change email">Change email</button>
                 </div>
             </div>
         </mat-card-content>
@@ -296,7 +296,7 @@
                     Set a strong password and don't reuse it for other accounts.
                 </div>
                 <div>
-                    <button type="button" (click)="openChangePasswordDialog()" mat-raised-button color="primary" aria-label="Change password">Change password</button>
+                    <button type="button" (click)="openChangePasswordDialog()" matButton="elevated" aria-label="Change password">Change password</button>
                 </div>
             </div>
         </mat-card-content>
@@ -331,7 +331,7 @@
                                 <ng-container matColumnDef="actions">
                                     <th mat-header-cell *matHeaderCellDef></th>
                                     <td mat-cell *matCellDef="let element" class="text-right actions">
-                                        <button mat-stroked-button color="warn" (click)="onUserAliasDelete(element)">Delete</button>
+                                        <button matButton="outlined" (click)="onUserAliasDelete(element)">Delete</button>
                                     </td>
                                 </ng-container>
 
@@ -342,7 +342,7 @@
                     }
                 </div>
                 <div class="text-right">
-                    <button type="button" (click)="openCreateAccountDialog()" mat-raised-button color="primary" aria-label="Create account">Create alias</button>
+                    <button type="button" (click)="openCreateAccountDialog()" matButton="elevated" aria-label="Create account">Create alias</button>
                 </div>
             </div>
         </mat-card-content>
@@ -364,7 +364,7 @@
                 </div>
                 <div class="text-right">
                     @if (showRequestArchiveButton()) {
-                        <button type="button" mat-raised-button color="primary" aria-label="Request archive" (click)="onRequestArchive()">Request archive</button>
+                        <button type="button" matButton="elevated" aria-label="Request archive" (click)="onRequestArchive()">Request archive</button>
                     }
                 </div>
             </div>
@@ -487,7 +487,7 @@
                 </div>
                 <div class="text-right">
                     <input type="file" hidden (change)="onFileSelected($event)" #fileInput id="file">
-                    <button type="button" mat-raised-button color="primary" aria-label="Request archive" (click)="fileInput.click()">Import</button>
+                    <button type="button" matButton="elevated" aria-label="Request archive" (click)="fileInput.click()">Import</button>
                 </div>
             </div>
 
@@ -582,7 +582,7 @@
                     you have added.
                 </div>
                 <div class="text-right">
-                    <button type="button" mat-raised-button color="accent" aria-label="Delete account" (click)="openDeleteAccountDialog()">Delete account</button>
+                    <button type="button" matButton="elevated" aria-label="Delete account" (click)="openDeleteAccountDialog()">Delete account</button>
                 </div>
             </div>
         </mat-card-content>

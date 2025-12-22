@@ -100,17 +100,17 @@
                         <ng-container matColumnDef="actions">
                             <th mat-header-cell *matHeaderCellDef></th>
                             <td mat-cell *matCellDef="let element" class="text-right">
-                                <button type="button" mat-raised-button aria-label="Close report" (click)="onOpen(element)" class="action-button margin-right-10">Open</button>
+                                <button type="button" matButton="outlined" aria-label="Close report" (click)="onOpen(element)" class="action-button margin-right-10">Open</button>
 
                                 @if (!element.status || element.considerationDate) {
                                     @if (!element.considerationDate) {
-                                        <button type="button" mat-raised-button color="accent" aria-label="Close report" (click)="onClose(element)" class="action-button">Close</button>
+                                        <button type="button" matButton="outlined" aria-label="Close report" (click)="onClose(element)" class="action-button">Close</button>
                                     }
                                     @if (element.considerationDate) {
-                                        <button type="button" mat-raised-button color="accent" aria-label="Restore report" (click)="onRestore(element)" class="action-button">Restore</button>
+                                        <button type="button" matButton="outlined" aria-label="Restore report" (click)="onRestore(element)" class="action-button">Restore</button>
                                     }
                                 } @else {
-                                    <button mat-button [matMenuTriggerFor]="menu" class="submenu" aria-label="Report actions">
+                                    <button matButton="outlined" [matMenuTriggerFor]="menu" class="submenu" aria-label="Report actions">
                                         <mat-icon>more_vert</mat-icon>
                                     </button>
                                     <mat-menu #menu="matMenu">
@@ -118,7 +118,6 @@
                                             <button
                                                 type="button"
                                                 mat-menu-item
-                                                color="accent"
                                                 aria-label="Close report"
                                                 (click)="onClose(element)"
                                                 class="action-button">
@@ -130,7 +129,6 @@
                                             <button
                                                 type="button"
                                                 mat-menu-item
-                                                color="accent"
                                                 aria-label="Restore report"
                                                 (click)="onRestore(element)"
                                                 class="action-button">
@@ -143,7 +141,6 @@
                                             <button
                                                 type="button"
                                                 mat-menu-item
-                                                color="accent"
                                                 aria-label="Restore report"
                                                 (click)="onUnlist(element)"
                                                 class="action-button">
@@ -156,7 +153,6 @@
                                             <button
                                                 type="button"
                                                 mat-menu-item
-                                                color="accent"
                                                 aria-label="Restore report"
                                                 (click)="onDelete(element)"
                                                 class="action-button">
@@ -169,7 +165,6 @@
                                             <button
                                                 type="button"
                                                 mat-menu-item
-                                                color="accent"
                                                 aria-label="Restore report"
                                                 (click)="onApplyCW(element)"
                                                 class="action-button">

@@ -77,22 +77,22 @@
 
                             <div class="padding-bottom-20">
                                 <div>
-                                    <mat-checkbox name="showInNewsSignIn" color="primary" [disableRipple]="true" [(ngModel)]="showInNewsSignIn">
+                                    <mat-checkbox name="showInNewsSignIn" [disableRipple]="true" [(ngModel)]="showInNewsSignIn">
                                         News - sign in
                                     </mat-checkbox>
                                 </div>
                                 <div>
-                                    <mat-checkbox name="showInNewsSignOut" color="primary" [disableRipple]="true" [(ngModel)]="showInNewsSignOut">
+                                    <mat-checkbox name="showInNewsSignOut" [disableRipple]="true" [(ngModel)]="showInNewsSignOut">
                                         News - sign out
                                     </mat-checkbox>
                                 </div>
                                 <div>
-                                    <mat-checkbox name="showInHomeSignIn" color="primary" [disableRipple]="true" [(ngModel)]="showInHomeSignIn">
+                                    <mat-checkbox name="showInHomeSignIn" [disableRipple]="true" [(ngModel)]="showInHomeSignIn">
                                         Home - sign in
                                     </mat-checkbox>
                                 </div>
                                 <div>
-                                    <mat-checkbox name="showInHomeSignOut" color="primary" [disableRipple]="true" [(ngModel)]="showInHomeSignOut">
+                                    <mat-checkbox name="showInHomeSignOut" [disableRipple]="true" [(ngModel)]="showInHomeSignOut">
                                         Home - sign out
                                     </mat-checkbox>
                                 </div>
@@ -103,7 +103,7 @@
                                     <div>Files</div>
                                     <div class="text-right">
                                         <input type="file" hidden (change)="onFileSelected($event)" #fileInput id="file">
-                                        <button type="button" mat-stroked-button color="primary" class="small-button" aria-label="Upload file" (click)="fileInput.click()">Upload</button>
+                                        <button type="button" matButton="outlined" class="small-button" aria-label="Upload file" (click)="fileInput.click()">Upload</button>
                                     </div>
                                 </div>
                             </h3>
@@ -118,16 +118,16 @@
                                                 @if (mainArticleFileInfoId() === item.id) {
                                                     <span class="margin-right-10"><strong>Main file</strong></span>
                                                 } @else {
-                                                    <button type="button" mat-stroked-button color="primary" class="small-button margin-right-10" aria-label="Delete file" (click)="onMarkAsMainFile(item)">Mark as main</button>
+                                                    <button type="button" matButton="outlined" class="small-button margin-right-10" aria-label="Delete file" (click)="onMarkAsMainFile(item)">Mark as main</button>
                                                 }
-                                                <button type="button" mat-stroked-button color="primary" class="icon-only small-button margin-right-10" (click)="onCopyMarkdown(item)" aria-label="Copy markdown">
+                                                <button type="button" matButton="outlined" class="icon-only small-button margin-right-10" (click)="onCopyMarkdown(item)" aria-label="Copy markdown">
                                                     @if (isHandset()) {
                                                         <mat-icon>content_copy</mat-icon>
                                                     } @else {
                                                         <span>Copy</span>
                                                     }
                                                 </button>
-                                                <button type="button" mat-stroked-button color="accent" class="icon-only small-button" aria-label="Delete file" (click)="onDeleteFile(item)">
+                                                <button type="button" matButton="outlined" class="icon-only small-button" aria-label="Delete file" (click)="onDeleteFile(item)">
                                                     @if (isHandset()) {
                                                         <mat-icon>delete</mat-icon>
                                                     } @else {
@@ -142,8 +142,8 @@
 
                         </mat-card-content>
                         <mat-card-actions>
-                            <button mat-button type="button" (click)="onCancelClick()">Cancel</button>
-                            <button mat-raised-button type="submit" color="accent" class="margin-left-10" cdkFocusInitial>Save</button>
+                            <button matButton="text" type="button" (click)="onCancelClick()">Cancel</button>
+                            <button matButton="elevated" type="submit" class="margin-left-10" cdkFocusInitial>Save</button>
                         </mat-card-actions>
                     </mat-card>
                 </form>

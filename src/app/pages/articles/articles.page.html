@@ -10,7 +10,7 @@
                                 <div class="fs-60 text-muted">List of articles created in the system.</div>
                             }
                         </h1>
-                        <button type="button" mat-raised-button color="primary" aria-label="Create article" (click)="onCreateArticle()">Create article</button>
+                        <button type="button" matButton="filled" aria-label="Create article" (click)="onCreateArticle()">Create article</button>
                     </section>
 
                     <table mat-table [dataSource]="articlesArray.data" class="mat-elevation-z1">
@@ -71,7 +71,7 @@
                         <ng-container matColumnDef="actions">
                             <th mat-header-cell *matHeaderCellDef></th>
                             <td mat-cell *matCellDef="let element" class="text-right">
-                                <button class="more-button" mat-stroked-button [matMenuTriggerFor]="dropdownMenuOne2" color="primary" aria-label="More options">
+                                <button class="more-button" matButton="outlined" [matMenuTriggerFor]="dropdownMenuOne2" aria-label="More options">
                                     <span class="material-symbols-outlined">more_vert</span>
                                 </button>
                                 <mat-menu #dropdownMenuOne2="matMenu" xPosition="before">

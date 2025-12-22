@@ -3,18 +3,20 @@
         <div animate.enter="fade-in" [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
             <div class="flex-row flex-space-around">
                 <div class="notifications-container width-100">
-                    <div class="flex-row flex-align-center flex-space-between margin-bottom-20">
-                        <div class="flex-row flex-align-center gap-8">
-                            <h1>Notifications</h1>
-                            <div class="small-icon-button ">
-                                <button mat-icon-button (click)="onNotificationsRefresh()" aria-label="Refresh current timeline">
-                                    <mat-icon>change_circle</mat-icon>
-                                </button>
+                    <div class="flex-row flex-align-top flex-space-between margin-bottom-20">
+                        <div>
+                            <div class="flex-row gap-8">
+                                <h1>Notifications</h1>
+                                <div class="small-icon-button">
+                                    <button matIconButton (click)="onNotificationsRefresh()" aria-label="Refresh current timeline">
+                                        <mat-icon>change_circle</mat-icon>
+                                    </button>
+                                </div>
                             </div>
                         </div>
 
                         @if (showEnableNotificationButton()) {
-                            <button mat-flat-button color="primary" (click)="openNotificationsSettings()">
+                            <button matButton="outlined" (click)="openNotificationsSettings()">
                                 <mat-icon>notifications_none</mat-icon>
                                 Settings
                             </button>
@@ -68,14 +70,14 @@
                                         }
 
                                         @if (notification.notificationType === notificationType.AdminReport) {
-                                            <button mat-stroked-button [routerLink]="['/reports']">Reports</button>
+                                            <button matButton="text" [routerLink]="['/reports']">Reports</button>
                                         }
                                     </div>
                                 }
 
                                 @if(showLoadMore()) {
                                     <div class="flex-row flex-space-around">
-                                        <button mat-button (click)="onLoadMore()">Load more...</button>
+                                        <button matButton="text" (click)="onLoadMore()">Load more...</button>
                                     </div>
                                 }
                             </mat-card-content>

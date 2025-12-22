@@ -27,7 +27,7 @@
     </mat-autocomplete>
 
     @if (selectedUser() && !isReadOnly) {
-        <button [name]="name + '-clear'" [id]="name + '-clear'" type="button" matSuffix mat-icon-button aria-label="Clear" (click)="onChange()">
+        <button [name]="name + '-clear'" [id]="name + '-clear'" type="button" matSuffix matIconButton aria-label="Clear" (click)="onChange()">
             <mat-icon class="text-muted">backspace</mat-icon>
         </button>
     }
