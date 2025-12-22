@@ -30,7 +30,7 @@ export class CommentReplyComponent implements OnInit {
     protected commentEntered = computed(() => {
         const internalComment =this.comment() ?? '';
         const userName = this.status()?.user?.userName ?? '';
-        const commentWithoutUsername = internalComment.replace(`@${userName} `, '');
+        const commentWithoutUsername = internalComment.trim().replace(`@${userName}`, '');
 
         return commentWithoutUsername.length > 0;
     });

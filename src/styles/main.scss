@@ -71,6 +71,7 @@ html {
 
     @include mat.button-toggle-overrides((
         divider-color: $light-outline,
+        background-color: $light-toolbar-background-color,
         label-text-tracking: 0.09em
     ));
 
@@ -216,7 +217,8 @@ body.dark-theme {
     ));
 
     @include mat.button-toggle-overrides((
-        divider-color: $dark-outline
+        divider-color: $dark-outline,
+        background-color: $dark-toolbar-background-color,
     ));
 
     @include mat.table-overrides((
