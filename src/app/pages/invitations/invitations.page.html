@@ -10,7 +10,7 @@
                                 <div class="fs-60 text-muted">Generate and share invitation codes with others to grant access to this server.</div>
                             }
                         </h1>
-                        <button type="button" matButton="outlined" aria-label="Generate invitation" (click)="generate()" [disabled]="!canGenerateNewInvitations()" >Generate code</button>
+                        <button type="button" matButton="filled" aria-label="Generate invitation" (click)="generate()" [disabled]="!canGenerateNewInvitations()" >Generate code</button>
                     </section>
 
                     <table mat-table [dataSource]="invitationsArray" class="mat-elevation-z1">

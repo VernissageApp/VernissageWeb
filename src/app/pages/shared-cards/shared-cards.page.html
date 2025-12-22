@@ -13,10 +13,10 @@
                         <div class="page-buttons">
                             @if (isHandset()) {
                                 <button type="button" [routerLink]="['/business-card', 'edit']" matButton="outlined" class="margin-right-10 icon-only" aria-label="Your business card"><mat-icon class="fill-symbol">badge</mat-icon></button>
-                                <button type="button" (click)="onShareBusinessCard()" matButton="outlined" class="icon-only" aria-label="Share business card"><mat-icon class="fill-symbol">share</mat-icon></button>
+                                <button type="button" (click)="onShareBusinessCard()" matButton="filled" class="icon-only" aria-label="Share business card"><mat-icon class="fill-symbol">share</mat-icon></button>
                             } @else {
                                 <button type="button" [routerLink]="['/business-card', 'edit']" matButton="outlined" class="margin-right-10" aria-label="Your business card">Your business card</button>
-                                <button type="button" (click)="onShareBusinessCard()" matButton="outlined" aria-label="Share business card">Share business card</button>
+                                <button type="button" (click)="onShareBusinessCard()" matButton="filled" aria-label="Share business card">Share business card</button>
                             }
                         </div>
                     </section>

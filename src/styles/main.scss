@@ -8,14 +8,14 @@
 // Own custom styles.
 @import './fonts';
 @import './flex-layout';
-@import './general';
+@import './utilities';
 
 html {
     height: 100%;
     @include mat.theme((
         color: (
             primary: mat.$azure-palette,
-            tertiary: mat.$cyan-palette,
+            tertiary: mat.$rose-palette,
         ),
         typography: Roboto,
         density: 0,
@@ -58,6 +58,10 @@ html {
         outlined-label-text-tracking: 0.09em,
         tonal-label-text-tracking: 0.09em,
         text-label-text-tracking: 0.09em
+    ));
+
+    @include mat.icon-button-overrides((
+        icon-color: var(--mat-sys-primary)
     ));
 
     @include mat.button-toggle-overrides((
@@ -183,7 +187,7 @@ body.dark-theme {
     --mat-sys-on-surface: #{$dark-text-color};
 
     @include mat.toolbar-overrides((
-        container-background-color: rgba($dark-toolbar-background-color, 0.7),
+        container-background-color: $dark-toolbar-background-color,
         container-text-color: var(--mat-sys-primary)
     ));
 
@@ -330,7 +334,6 @@ body {
 }
 
 /* You can add global styles to this file, and also import other style files */
-
 html {
     background-color: var(--mat-sys-surface);
 }
@@ -563,7 +566,7 @@ a.mdc-button {
 }
 
 gallery {
-    background-color: #202020 !important;
+    background-color: $gallery-background !important;
 }
 
 .news-text {
@@ -573,7 +576,7 @@ gallery {
         display: block;
         height: 1px;
         border: 0;
-        border-top: 1px dashed var(--mat-sys-accent);
+        border-top: 1px dashed var(--mat-sys-primary);
         max-width: 80px;
         margin-top: 2em;
         margin-bottom: 2em;
@@ -613,6 +616,72 @@ gallery {
         tbody tr.active-row {
             font-weight: bold;
             color: #009879;
+        }
+    }
+}
+
+.mat-card-content {
+    margin-left: 16px;
+    margin-right: 16px;
+}
+
+.mat-mdc-card-subtitle {
+    padding-bottom: 10px;
+}
+
+.mat-mdc-card-title {
+    padding-bottom: 10px;
+}
+
+.loading-shade {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.1);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cdk-visually-hidden {
+    width: 0;
+    height: 0;
+    position: fixed;
+    overflow: hidden;
+    top: -500px;
+}
+
+.fill-symbol {
+    font-variation-settings: 'FILL' 1, 'wght' 700, 'GRAD' 0, 'opsz' 48;
+}
+
+.outline-symbol {
+    font-variation-settings: 'FILL' 0, 'wght' 700, 'GRAD' 0, 'opsz' 48;
+}
+
+.icon-only {
+    &.mdc-button {
+        min-width: 48px;
+    }
+
+    &.mat-mdc-unelevated-button {
+        .mat-icon {
+            margin: 0;
+        }
+    }
+
+    &.mat-mdc-outlined-button {
+        .mat-icon {
+            margin: 0;
+        }
+    }
+
+    &.mat-mdc-raised-button {
+        .mat-icon {
+            margin: 0;
         }
     }
 }

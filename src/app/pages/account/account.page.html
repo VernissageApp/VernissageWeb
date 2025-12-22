@@ -71,7 +71,7 @@
                     <div class="flex-row flex-stretch flex-space-between">
                         <h3>Fields</h3>
                         <div class="text-right">
-                            <button matButton="filled" type="button" (click)="onAddField()">Add field</button>
+                            <button matButton="outlined" type="button" (click)="onAddField()">Add field</button>
                         </div>
                     </div>
                     <div></div>
@@ -141,7 +141,7 @@
 
             <mat-card-actions>
                 <div class="account-actions padding-top-20">
-                    <button type="submit" matButton="elevated" aria-label="Save">Save</button>
+                    <button type="submit" matButton="filled" aria-label="Save">Save</button>
                 </div>
             </mat-card-actions>
 
@@ -169,8 +169,11 @@
 
             <mat-card-actions>
                 <div class="account-actions">
-                    <button type="submit" matButton="elevated" aria-label="Save" class="margin-right-10">Save</button>
-                    <button type="button" matButton="elevated" aria-label="Remove avatar" (click)="onRemoveAvatar()">Remove</button>
+                    <button type="submit" matButton="filled" aria-label="Save" class="margin-right-10" [disabled]="!avatarFileSelected() || uploadingAvatarFile()">Save</button>
+                    <button type="button" matButton="elevated" aria-label="Remove avatar" (click)="onRemoveAvatar()" [disabled]="!avatarFileAlreadySet()">Remove</button>
+                    @if (uploadingAvatarFile()) {
+                        <mat-spinner class="display-inline-block vertical-align-middle margin-left-20 margin-top-5" [diameter]="18"></mat-spinner>
+                    }
                 </div>
             </mat-card-actions>
         </mat-card>
@@ -197,8 +200,11 @@
 
             <mat-card-actions>
                 <div class="account-actions">
-                    <button type="submit" matButton="elevated" aria-label="Save" class="margin-right-10">Save</button>
-                    <button type="button" matButton="elevated" aria-label="Remove header" (click)="onRemoveHeader()">Remove</button>
+                    <button type="submit" matButton="filled" aria-label="Save" class="margin-right-10" [disabled]="!headerFileSelected() || uploadingHeaderFile()">Save</button>
+                    <button type="button" matButton="elevated" aria-label="Remove header" (click)="onRemoveHeader()" [disabled]="!headerFileAlreadySet()">Remove</button>
+                    @if (uploadingHeaderFile()) {
+                        <mat-spinner class="display-inline-block vertical-align-middle margin-left-20 margin-top-5" [diameter]="18"></mat-spinner>
+                    }
                 </div>
             </mat-card-actions>
         </mat-card>
