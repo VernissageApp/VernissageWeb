@@ -172,8 +172,8 @@
                         <ng-container matColumnDef="actions">
                             <th mat-header-cell *matHeaderCellDef></th>
                             <td mat-cell *matCellDef="let element" class="text-right">
-                                <button class="more-button" matButton="outlined" [matMenuTriggerFor]="dropdownMenuOne2" aria-label="More options">
-                                    <span class="material-symbols-outlined">more_vert</span>
+                                <button class="more-button" matIconButton [matMenuTriggerFor]="dropdownMenuOne2" aria-label="More options">
+                                    <mat-icon>more_vert</mat-icon>
                                 </button>
                                 <mat-menu #dropdownMenuOne2="matMenu" xPosition="before">
                                     @if (element.isLocal) {

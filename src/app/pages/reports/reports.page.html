@@ -100,80 +100,82 @@
                         <ng-container matColumnDef="actions">
                             <th mat-header-cell *matHeaderCellDef></th>
                             <td mat-cell *matCellDef="let element" class="text-right">
-                                <button type="button" matButton="outlined" aria-label="Close report" (click)="onOpen(element)" class="action-button margin-right-10">Open</button>
+                                <div class="flex-row flex-end">
+                                    <button type="button" matButton="outlined" aria-label="Show report details" (click)="onOpen(element)" class="action-button margin-right-10">Show</button>
 
-                                @if (!element.status || element.considerationDate) {
-                                    @if (!element.considerationDate) {
-                                        <button type="button" matButton="outlined" aria-label="Close report" (click)="onClose(element)" class="action-button">Close</button>
-                                    }
-                                    @if (element.considerationDate) {
-                                        <button type="button" matButton="outlined" aria-label="Restore report" (click)="onRestore(element)" class="action-button">Restore</button>
-                                    }
-                                } @else {
-                                    <button matButton="outlined" [matMenuTriggerFor]="menu" class="submenu" aria-label="Report actions">
-                                        <mat-icon>more_vert</mat-icon>
-                                    </button>
-                                    <mat-menu #menu="matMenu">
+                                    @if (!element.status || element.considerationDate) {
                                         @if (!element.considerationDate) {
-                                            <button
-                                                type="button"
-                                                mat-menu-item
-                                                aria-label="Close report"
-                                                (click)="onClose(element)"
-                                                class="action-button">
-                                                <mat-icon>cancel</mat-icon>
-                                                <span>Close</span>
-                                            </button>
+                                            <button type="button" matButton="outlined" aria-label="Close report" (click)="onClose(element)" class="action-button">Close</button>
                                         }
                                         @if (element.considerationDate) {
-                                            <button
-                                                type="button"
-                                                mat-menu-item
-                                                aria-label="Restore report"
-                                                (click)="onRestore(element)"
-                                                class="action-button">
-                                                <mat-icon>settings_backup_restore</mat-icon>
-                                                <span>Restore</span>
-                                            </button>
+                                            <button type="button" matButton="outlined" aria-label="Restore report" (click)="onRestore(element)" class="action-button">Restore</button>
                                         }
+                                    } @else {
+                                        <button matIconButton [matMenuTriggerFor]="menu" class="submenu" aria-label="Report actions">
+                                            <mat-icon>more_vert</mat-icon>
+                                        </button>
+                                        <mat-menu #menu="matMenu">
+                                            @if (!element.considerationDate) {
+                                                <button
+                                                    type="button"
+                                                    mat-menu-item
+                                                    aria-label="Close report"
+                                                    (click)="onClose(element)"
+                                                    class="action-button">
+                                                    <mat-icon>cancel</mat-icon>
+                                                    <span>Close</span>
+                                                </button>
+                                            }
+                                            @if (element.considerationDate) {
+                                                <button
+                                                    type="button"
+                                                    mat-menu-item
+                                                    aria-label="Restore report"
+                                                    (click)="onRestore(element)"
+                                                    class="action-button">
+                                                    <mat-icon>settings_backup_restore</mat-icon>
+                                                    <span>Restore</span>
+                                                </button>
+                                            }
 
-                                        @if (element.status && !element.considerationDate) {
-                                            <button
-                                                type="button"
-                                                mat-menu-item
-                                                aria-label="Restore report"
-                                                (click)="onUnlist(element)"
-                                                class="action-button">
-                                                <mat-icon>hide_image</mat-icon>
-                                                <span>Unlist status</span>
-                                            </button>
-                                        }
+                                            @if (element.status && !element.considerationDate) {
+                                                <button
+                                                    type="button"
+                                                    mat-menu-item
+                                                    aria-label="Restore report"
+                                                    (click)="onUnlist(element)"
+                                                    class="action-button">
+                                                    <mat-icon>hide_image</mat-icon>
+                                                    <span>Unlist status</span>
+                                                </button>
+                                            }
 
-                                        @if (element.status && !element.considerationDate) {
-                                            <button
-                                                type="button"
-                                                mat-menu-item
-                                                aria-label="Restore report"
-                                                (click)="onDelete(element)"
-                                                class="action-button">
-                                                <mat-icon>delete</mat-icon>
-                                                <span>Delete status</span>
-                                            </button>
-                                        }
+                                            @if (element.status && !element.considerationDate) {
+                                                <button
+                                                    type="button"
+                                                    mat-menu-item
+                                                    aria-label="Restore report"
+                                                    (click)="onDelete(element)"
+                                                    class="action-button">
+                                                    <mat-icon>delete</mat-icon>
+                                                    <span>Delete status</span>
+                                                </button>
+                                            }
 
-                                        @if (element.status && !element.considerationDate) {
-                                            <button
-                                                type="button"
-                                                mat-menu-item
-                                                aria-label="Restore report"
-                                                (click)="onApplyCW(element)"
-                                                class="action-button">
-                                                <mat-icon>warning</mat-icon>
-                                                <span>Apply CW to status</span>
-                                            </button>
-                                        }
-                                    </mat-menu>
-                                }
+                                            @if (element.status && !element.considerationDate) {
+                                                <button
+                                                    type="button"
+                                                    mat-menu-item
+                                                    aria-label="Restore report"
+                                                    (click)="onApplyCW(element)"
+                                                    class="action-button">
+                                                    <mat-icon>warning</mat-icon>
+                                                    <span>Apply CW to status</span>
+                                                </button>
+                                            }
+                                        </mat-menu>
+                                    }
+                                </div>
                             </td>
                         </ng-container>
 
