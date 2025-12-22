@@ -991,7 +991,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     }
 
     private browserSupportsHdr(): boolean {
-        return this.deviceDetectorService.browser === "Chrome" && this.deviceDetectorService.isDesktop();
+        return this.deviceDetectorService.browser() === "Chrome" && this.deviceDetectorService.isDesktop();
     }
 
     private htmlToText(value: string): string {
