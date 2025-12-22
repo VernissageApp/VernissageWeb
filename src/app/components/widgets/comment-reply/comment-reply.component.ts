@@ -22,11 +22,18 @@ export class CommentReplyComponent implements OnInit {
     public clickCancel = output();
     public added = output();
 
+    protected readonly avatarSize = AvatarSize;
     protected maxStatusLength = signal(0);
     protected comment = model<string | undefined>('');
     protected isDuringSave = signal(false);
-    protected commentEntered = computed(() => (this.comment()?.length ?? 0) > 0);
-    protected readonly avatarSize = AvatarSize;
+
+    protected commentEntered = computed(() => {
+        const internalComment =this.comment() ?? '';
+        const userName = this.status()?.user?.userName ?? '';
+        const commentWithoutUsername = internalComment.trim().replace(`@${userName}`, '');
+
+        return commentWithoutUsername.length > 0;
+    });
 
     private commentForm = viewChild<NgForm>('commentForm');
 
@@ -55,7 +62,10 @@ export class CommentReplyComponent implements OnInit {
                 await this.statusesService.create(newStatusRequest);
 
                 this.commentForm()?.resetForm();
-                this.fillUserName(this.status());
+
+                setTimeout(() => {
+                    this.fillUserName(this.status());
+                });
 
                 this.messageService.showSuccess('Comment has been added.');
                 this.added.emit();

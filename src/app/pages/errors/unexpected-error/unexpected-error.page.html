@@ -9,7 +9,7 @@
                 <span>Error code: <code>{{ codeString }}</code>.</span>
             }
         </p>
-        <mat-progress-bar mode="determinate" color="accent" [value]="value()"></mat-progress-bar>
+        <mat-progress-bar mode="determinate" [value]="value()"></mat-progress-bar>
 
         @if (errorMessage(); as errorMessageInternal) {
             <div class="margin-top-20">

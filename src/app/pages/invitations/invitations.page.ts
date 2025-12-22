@@ -26,10 +26,10 @@ export class InvitationsPage extends ResponsiveComponent implements OnInit {
     protected displayedColumns = signal<string[]>([]);
     protected canGenerateNewInvitations = computed(() => (this.authorizationService.hasRole(Role.Administrator) || (this.invitations()?.length ?? 0) < (this.publicSettings()?.maximumNumberOfInvitations ?? 0)));
 
-    private readonly displayedColumnsHandsetPortrait: string[] = ['code', 'actions'];
-    private readonly displayedColumnsHandsetLandscape: string[] = ['code', 'actions'];
-    private readonly displayedColumnsTablet: string[] = ['code', 'invited', 'actions'];
-    private readonly displayedColumnsBrowser: string[] = ['code', 'createdAt', 'invited', 'actions'];
+    private readonly displayedColumnsHandsetPortrait: string[] = ['copy', 'code', 'actions'];
+    private readonly displayedColumnsHandsetLandscape: string[] = ['copy', 'code', 'actions'];
+    private readonly displayedColumnsTablet: string[] = ['copy', 'code', 'invited', 'actions'];
+    private readonly displayedColumnsBrowser: string[] = ['copy', 'code', 'createdAt', 'invited', 'actions'];
 
     private instanceService = inject(InstanceService);
     private invitationsService = inject(InvitationsService);

@@ -35,11 +35,11 @@
             <app-category-hashtag-item [hashtag]="hashtag" [index]="i" (delete)="onHashtagDelete($event)"></app-category-hashtag-item>
         }
 
-        <button type="button" mat-flat-button color="primary" (click)="onNewHashtag()">New hashtag</button>
+        <button type="button" matButton="outlined" (click)="onNewHashtag()">New hashtag</button>
 
     </div>
     <div mat-dialog-actions>
-        <button type="button" mat-button type="button" (click)="onNoClick()">Cancel</button>
-        <button mat-raised-button type="submit" color="accent" cdkFocusInitial>Save</button>
+        <button type="button" matButton="text" type="button" (click)="onNoClick()">Cancel</button>
+        <button matButton="filled" type="submit" cdkFocusInitial>Save</button>
     </div>
 </form>

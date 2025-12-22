@@ -33,14 +33,14 @@
             </mat-form-field>
 
             <!-- @if (!isLocal()) {
-            <mat-checkbox name="forward" color="primary" [disableRipple]="true" [(ngModel)]="forward">
+            <mat-checkbox name="forward" [disableRipple]="true" [(ngModel)]="forward">
                 Should the report be forwarded to the remote admin?
             </mat-checkbox>
             } -->
         </div>
     </div>
     <div mat-dialog-actions>
-        <button mat-button type="button" (click)="onNoClick()">Cancel</button>
-        <button mat-raised-button type="submit" color="accent" cdkFocusInitial>Report</button>
+        <button matButton="text" type="button" (click)="onNoClick()">Cancel</button>
+        <button matButton="filled" type="submit" cdkFocusInitial>Report</button>
     </div>
 </form>

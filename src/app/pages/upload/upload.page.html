@@ -60,15 +60,15 @@
                             <div class="margin-top-15 flex-row flex-space-between">
                                 <div>
                                     @if (i > 0) {
-                                        <button class="margin-right-10" mat-stroked-button matStepperPrevious>Back</button>
+                                        <button class="margin-right-10" matButton="text" matStepperPrevious>Back</button>
                                     }
-                                    <button mat-flat-button color="primary" matStepperNext>Next</button>
+                                    <button matButton="filled" matStepperNext>Next</button>
                                 </div>
                                 <div>
                                     @if (photo.isDeleting()) {
                                         <mat-spinner class="display-inline-block vertical-align-middle margin-right-10" [diameter]="18"></mat-spinner>
                                     }
-                                    <button mat-flat-button color="warn" (click)="onPhotoDelete(photo)" [disabled]="!photo.isUploaded() || photo.isDeleting()">Delete</button>
+                                    <button matButton="tonal" (click)="onPhotoDelete(photo)" [disabled]="!photo.isUploaded() || photo.isDeleting()">Delete</button>
                                 </div>
                             </div>
                         </mat-step>
@@ -81,13 +81,13 @@
 
                                 <div class="flex-row flex-space-between margin-bottom-5">
                                     <div class="flex-row gap-8">
-                                        <button type="button" class="text-template" mat-stroked-button color="primary" (click)="onInsertTemplate()" [disabled]="!statusTextTemplate() || statusTextTemplate()?.length === 0">
+                                        <button type="button" class="text-template" matButton="outlined" (click)="onInsertTemplate()" [disabled]="!statusTextTemplate() || statusTextTemplate()?.length === 0">
                                             <mat-icon>text_snippet</mat-icon>
                                             @if (!isHandset()) {
                                                 <span>Use template</span>
                                             }
                                         </button>
-                                        <button type="button" class="edit-template" mat-stroked-button color="primary" (click)="onEditTemplate()">
+                                        <button type="button" class="edit-template" matButton="outlined" (click)="onEditTemplate()">
                                             <mat-icon>edit_note</mat-icon>
                                         </button>
                                     </div>
@@ -97,7 +97,7 @@
                                                 @if (hashtagsInProgress()) {
                                                     <mat-spinner class="margin-top-10 margin-right-10" [diameter]="18"></mat-spinner>
                                                 }
-                                                <button mat-stroked-button color="primary" (click)="onGenerateHashtags()" [disabled]="!allPhotosUploaded() || photos().length === 0 || hashtagsInProgress()">
+                                                <button matButton="outlined" (click)="onGenerateHashtags()" [disabled]="!allPhotosUploaded() || photos().length === 0 || hashtagsInProgress()">
                                                     <mat-icon>smart_toy</mat-icon> Hashtags
                                                 </button>
                                             </div>
@@ -153,8 +153,8 @@
                                     </mat-select>
                                 </mat-form-field>
 
-                                <mat-checkbox name="commentsDisabled" color="primary" [disableRipple]="true" [(ngModel)]="commentsDisabled">Disable comments</mat-checkbox>
-                                <mat-checkbox name="isSensitive" color="primary" [disableRipple]="true" [(ngModel)]="isSensitive">Sensitive/NSFW media</mat-checkbox>
+                                <mat-checkbox name="commentsDisabled" [disableRipple]="true" [(ngModel)]="commentsDisabled">Disable comments</mat-checkbox>
+                                <mat-checkbox name="isSensitive" [disableRipple]="true" [(ngModel)]="isSensitive">Sensitive/NSFW media</mat-checkbox>
 
                                 <mat-form-field appearance="outline" class="margin-top-10" >
                                     <mat-label>Content warning</mat-label>
@@ -163,8 +163,8 @@
                             </div>
                             <div class="flex-row flex-space-between">
                                 <div>
-                                    <button class="margin-right-10" mat-stroked-button matStepperPrevious>Back</button>
-                                    <button mat-flat-button color="primary" [disabled]="!allPhotosUploaded()" matStepperNext>
+                                    <button class="margin-right-10" matButton="text" matStepperPrevious>Back</button>
+                                    <button matButton="filled" [disabled]="!allPhotosUploaded()" matStepperNext>
                                         {{ isEditMode() ? 'Update' : 'Upload' }}
                                     </button>
                                 </div>
@@ -172,7 +172,7 @@
                                     @if (isCanceling()) {
                                         <mat-spinner class="display-inline-block vertical-align-middle margin-right-10" [diameter]="18"></mat-spinner>
                                     }
-                                    <button type="button" mat-stroked-button (click)="onCancel()" [disabled]="isCanceling()">Cancel</button>
+                                    <button type="button" matButton="outlined" (click)="onCancel()" [disabled]="isCanceling()">Cancel</button>
                                 </div>
                             </div>
                         </form>

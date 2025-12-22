@@ -43,3 +43,19 @@ ul {
 .description {
     max-width: 640px;
 }
+
+.patreon-img {
+    display: inline-block;
+    vertical-align: text-bottom;
+    width: 16px;
+    height: 16px;
+    margin-top: 2px;
+    margin-right: 8px;
+    background-image: url('/assets/patreon-white.svg');
+}
+
+:host-context(.dark-theme) {
+    .patreon-img {
+        background-image: url('/assets/patreon-black.svg');
+    }
+}

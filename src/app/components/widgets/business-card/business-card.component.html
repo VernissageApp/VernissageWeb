@@ -2,8 +2,8 @@
     <div class="top" [ngStyle]="{ background: 'linear-gradient(' + color1() + ', ' + color2() + ')' }">
         <img class="avatar-image" alt="avatar profile" [ngSrc]="avatarUrl()" width="600" height="600" />
         <div class="text-center" [ngStyle]="{ color: color3() }">
-            <div class="mat-h1">{{ title() }}</div>
-            <div class="mat-h4">{{ subtitle() }}</div>
+            <h1>{{ title() }}</h1>
+            <h4>{{ subtitle() }}</h4>
         </div>
     </div>
     <div class="bottom">
@@ -45,6 +45,6 @@
             </mat-card>
         }
         
-        <button mat-flat-button color="primary" class="width-100 margin-top-10" type="button" (click)="onImportContact()">Import contact</button>
+        <button matButton="filled" class="width-100 margin-top-10" type="button" (click)="onImportContact()">Import contact</button>
     </div>
 </div>

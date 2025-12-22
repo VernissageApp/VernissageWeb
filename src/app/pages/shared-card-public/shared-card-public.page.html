@@ -35,7 +35,7 @@
                         }
                     </div>
                     <div class="flex-grow-2">
-                        <button type="button" (click)="openUpdateSharedBusinessCardDialog()" class="icon-only pull-right" mat-stroked-button aria-label="Edit"><mat-icon class="fill-symbol">edit</mat-icon></button>
+                        <button type="button" (click)="openUpdateSharedBusinessCardDialog()" class="icon-only pull-right" matButton="outlined" aria-label="Edit"><mat-icon class="fill-symbol">edit</mat-icon></button>
                     </div>
                 </div>
             }
@@ -58,8 +58,8 @@
             <div class="margin-bottom-20 margin-top-20">
                 <form>
                     <mat-form-field appearance="outline">
-                        <input type="text" matInput name="totalCost" #totalCost="ngModel" [(ngModel)]="message" placeholder="Send message..." aria-label="Message" />
-                        <button matSuffix mat-flat-button type="submit" color="primary" class="margin-right-10" (click)="sendMessage()" aria-label="Send">Send</button>
+                        <input type="text" matInput name="message" [(ngModel)]="message" placeholder="Send message..." aria-label="Message" />
+                        <button matSuffix matButton="outlined" type="submit" class="margin-right-10" (click)="sendMessage()" aria-label="Send">Send</button>
                     </mat-form-field>
                 </form>
             </div>

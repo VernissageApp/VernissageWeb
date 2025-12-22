@@ -31,10 +31,10 @@
                                                 </mat-select>
                                             </mat-form-field>
                                         }
-                                        <button mat-flat-button color="primary">Search</button>
+                                        <button matButton="outlined">Search</button>
                                     </div>
                                     <div class="margin-top-5">
-                                        <mat-checkbox name="isLocal" color="primary" [disableRipple]="true" [(ngModel)]="onlyLocal">
+                                        <mat-checkbox name="isLocal" [disableRipple]="true" [(ngModel)]="onlyLocal">
                                             Only local
                                         </mat-checkbox>
                                         @if (!isHandset()) {
@@ -73,7 +73,7 @@
                                         </mat-chip-set>
 
                                         @if (element.isSupporter) {
-                                            <mat-icon color="accent">diamond_shine</mat-icon>
+                                            <mat-icon>diamond_shine</mat-icon>
                                         }
                                     }
                                 </div>
@@ -109,7 +109,7 @@
                         <ng-container matColumnDef="isLocal">
                             <th mat-header-cell *matHeaderCellDef> Local </th>
                             <td mat-cell *matCellDef="let element">
-                                <mat-checkbox color="primary" [disableRipple]="true" [ngModel]="element.isLocal" disabled>
+                                <mat-checkbox [disableRipple]="true" [ngModel]="element.isLocal" disabled>
                                 </mat-checkbox>
                             </td>
                         </ng-container>
@@ -119,7 +119,7 @@
                             <th mat-header-cell *matHeaderCellDef> Approved </th>
                             <td mat-cell *matCellDef="let element">
                                 @if (element.isLocal) {
-                                    <mat-checkbox color="primary" [disableRipple]="true" [ngModel]="element.isApproved" disabled>
+                                    <mat-checkbox [disableRipple]="true" [ngModel]="element.isApproved" disabled>
                                     </mat-checkbox>
                                 }
                             </td>
@@ -130,7 +130,7 @@
                             <th mat-header-cell *matHeaderCellDef> Email confirmed </th>
                             <td mat-cell *matCellDef="let element">
                                 @if (element.isLocal) {
-                                    <mat-checkbox color="primary" [disableRipple]="true" [ngModel]="element.emailWasConfirmed" disabled>
+                                    <mat-checkbox [disableRipple]="true" [ngModel]="element.emailWasConfirmed" disabled>
                                     </mat-checkbox>
                                 }
                             </td>
@@ -172,8 +172,8 @@
                         <ng-container matColumnDef="actions">
                             <th mat-header-cell *matHeaderCellDef></th>
                             <td mat-cell *matCellDef="let element" class="text-right">
-                                <button class="more-button" mat-stroked-button [matMenuTriggerFor]="dropdownMenuOne2" color="primary" aria-label="More options">
-                                    <span class="material-symbols-outlined">more_vert</span>
+                                <button class="more-button" matIconButton [matMenuTriggerFor]="dropdownMenuOne2" aria-label="More options">
+                                    <mat-icon>more_vert</mat-icon>
                                 </button>
                                 <mat-menu #dropdownMenuOne2="matMenu" xPosition="before">
                                     @if (element.isLocal) {

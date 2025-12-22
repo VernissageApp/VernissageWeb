@@ -1,6 +1,6 @@
 <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
     <div mat-dialog-title>
-        <mat-slide-toggle color="warn" name="alwaysShowNSFW" [disabled]="switchDisabled()" [(ngModel)]="notificationsEnabled" (ngModelChange)="onNotificationsChange()">
+        <mat-slide-toggle name="alwaysShowNSFW" [disabled]="switchDisabled()" [(ngModel)]="notificationsEnabled" (ngModelChange)="onNotificationsChange()">
         </mat-slide-toggle> Notifications settings
     </div>
     <div mat-dialog-content>
@@ -12,54 +12,54 @@
 
         <div class="margin-bottom-20">
             <div>
-                <mat-checkbox name="webPushMentionEnabled" color="primary" [disabled]="switchDisabled() || !notificationsEnabled()" [disableRipple]="true" [(ngModel)]="webPushMentionEnabled">
+                <mat-checkbox name="webPushMentionEnabled" [disabled]="switchDisabled() || !notificationsEnabled()" [disableRipple]="true" [(ngModel)]="webPushMentionEnabled">
                     You have been mentioned
                 </mat-checkbox>
             </div>
             <div>
-                <mat-checkbox name="webPushNewCommentEnabled" color="primary" [disabled]="switchDisabled() || !notificationsEnabled()" [disableRipple]="true" [(ngModel)]="webPushNewCommentEnabled">
+                <mat-checkbox name="webPushNewCommentEnabled" [disabled]="switchDisabled() || !notificationsEnabled()" [disableRipple]="true" [(ngModel)]="webPushNewCommentEnabled">
                     New comment added
                 </mat-checkbox>
             </div>
 
             <!-- Not supported yet.
             <div>
-                <mat-checkbox name="webPushStatusEnabled" color="primary" [disabled]="switchDisabled() || !notificationsEnabled()" [disableRipple]="true" [(ngModel)]="webPushStatusEnabled">
+                <mat-checkbox name="webPushStatusEnabled" [disabled]="switchDisabled() || !notificationsEnabled()" [disableRipple]="true" [(ngModel)]="webPushStatusEnabled">
                     New status
                 </mat-checkbox>
             </div>
             -->
 
             <div>
-                <mat-checkbox name="webPushReblogEnabled" color="primary" [disabled]="switchDisabled() || !notificationsEnabled()" [disableRipple]="true" [(ngModel)]="webPushReblogEnabled">
+                <mat-checkbox name="webPushReblogEnabled" [disabled]="switchDisabled() || !notificationsEnabled()" [disableRipple]="true" [(ngModel)]="webPushReblogEnabled">
                     Boosted status
                 </mat-checkbox>
             </div>
             <div>
-                <mat-checkbox name="webPushFollowEnabled" color="primary" [disabled]="switchDisabled() || !notificationsEnabled()" [disableRipple]="true" [(ngModel)]="webPushFollowEnabled">
+                <mat-checkbox name="webPushFollowEnabled" [disabled]="switchDisabled() || !notificationsEnabled()" [disableRipple]="true" [(ngModel)]="webPushFollowEnabled">
                     New follower
                 </mat-checkbox>
             </div>
             <div>
-                <mat-checkbox name="webPushFollowRequestEnabled" color="primary" [disabled]="switchDisabled() || !notificationsEnabled()" [disableRipple]="true" [(ngModel)]="webPushFollowRequestEnabled">
+                <mat-checkbox name="webPushFollowRequestEnabled" [disabled]="switchDisabled() || !notificationsEnabled()" [disableRipple]="true" [(ngModel)]="webPushFollowRequestEnabled">
                     New follow request
                 </mat-checkbox>
             </div>
             <div>
-                <mat-checkbox name="webPushFavouriteEnabled" color="primary" [disabled]="switchDisabled() || !notificationsEnabled()" [disableRipple]="true" [(ngModel)]="webPushFavouriteEnabled">
+                <mat-checkbox name="webPushFavouriteEnabled" [disabled]="switchDisabled() || !notificationsEnabled()" [disableRipple]="true" [(ngModel)]="webPushFavouriteEnabled">
                     New like
                 </mat-checkbox>
             </div>
 
             <div>
-                <mat-checkbox name="webPushUpdateEnabled" color="primary" [disabled]="switchDisabled() || !notificationsEnabled()" [disableRipple]="true" [(ngModel)]="webPushUpdateEnabled">
+                <mat-checkbox name="webPushUpdateEnabled" [disabled]="switchDisabled() || !notificationsEnabled()" [disableRipple]="true" [(ngModel)]="webPushUpdateEnabled">
                     Status updated
                 </mat-checkbox>
             </div>
 
             @if (isModerator() || isAdministrator()) {
                 <div>
-                    <mat-checkbox name="webPushAdminReportEnabled" color="primary" [disabled]="switchDisabled() || !notificationsEnabled()" [disableRipple]="true" [(ngModel)]="webPushAdminReportEnabled">
+                    <mat-checkbox name="webPushAdminReportEnabled" [disabled]="switchDisabled() || !notificationsEnabled()" [disableRipple]="true" [(ngModel)]="webPushAdminReportEnabled">
                         New report
                     </mat-checkbox>
                 </div>
@@ -67,7 +67,7 @@
 
             @if (isAdministrator()) {
                 <div>
-                    <mat-checkbox name="webPushAdminSignUpEnabled" color="primary" [disabled]="switchDisabled() || !notificationsEnabled()" [disableRipple]="true" [(ngModel)]="webPushAdminSignUpEnabled">
+                    <mat-checkbox name="webPushAdminSignUpEnabled" [disabled]="switchDisabled() || !notificationsEnabled()" [disableRipple]="true" [(ngModel)]="webPushAdminSignUpEnabled">
                         New user
                     </mat-checkbox>
                 </div>
@@ -76,7 +76,7 @@
 
     </div>
     <div mat-dialog-actions>
-        <button mat-button type="button" (click)="onNoClick()">Cancel</button>
-        <button mat-raised-button type="submit" color="accent" cdkFocusInitial>Save</button>
+        <button matButton="text" type="button" (click)="onNoClick()">Cancel</button>
+        <button matButton="filled" type="submit" cdkFocusInitial>Save</button>
     </div>
 </form>

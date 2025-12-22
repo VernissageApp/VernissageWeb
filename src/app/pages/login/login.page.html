@@ -51,9 +51,9 @@
                     <mat-card-actions>
                         <div class="flex-row flex-align-center gap-8 login-actions">
                             @if (loginPageMode() === loginMode.TwoFactorToken) {
-                                <button type="button" mat-stroked-button (click)="onCancelTwoFactor()" [disabled]="isSubmitting()" aria-label="Cancel">Cancel</button>
+                                <button type="button" matButton="text" (click)="onCancelTwoFactor()" [disabled]="isSubmitting()" aria-label="Cancel">Cancel</button>
                             }
-                            <button type="submit" mat-flat-button [disabled]="isSubmitting()" color="primary" aria-label="Login">Login</button>
+                            <button type="submit" matButton="filled" [disabled]="isSubmitting()" aria-label="Login">Login</button>
 
                             @if (isSubmitting()) {
                                 <mat-spinner [diameter]="18"></mat-spinner>
@@ -83,7 +83,7 @@
                     <div class="external-sign-in">
                         @for (authClient of authClientsArray; track authClient.id) {
                             <div>
-                                <a [href]="getExternalProviderUrl(authClient)" type="button" mat-flat-button color="basic">
+                                <a [href]="getExternalProviderUrl(authClient)" type="button" matButton="outlined">
                                     @if (authClient.svgIcon) {
                                         <div class='icon' [innerHTML]="authClient.svgIcon | sanitizeHtml"></div>
                                     }

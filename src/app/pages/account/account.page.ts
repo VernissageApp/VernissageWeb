@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, model, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, model, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -68,9 +68,18 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
     protected avatarSrc = signal('assets/avatar-placeholder.svg');
     protected headerSrc = signal('assets/header-placeholder.svg');
 
-    private selectedAvatarFile: any = null;
-    private selectedHeaderFile: any = null;
-    
+    protected avatarFileSelected = computed(() => !!this.selectedAvatarFile());
+    protected headerFileSelected = computed(() => !!this.selectedHeaderFile());
+
+    protected avatarFileAlreadySet = computed(() => !!this.user()?.avatarUrl);
+    protected headerFileAlreadySet = computed(() => !!this.user()?.headerUrl);
+
+    protected uploadingAvatarFile = signal(false);
+    protected uploadingHeaderFile = signal(false);
+
+    private selectedAvatarFile = signal<any>(null);
+    private selectedHeaderFile = signal<any>(null);
+
     private readonly defaultPictureMaxFileSize = 2097152;
     private readonly defaultImportMaxFileSize = 10485760;
     private userName = '';
@@ -166,17 +175,24 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
 
     protected async onAvatarFormSubmit(): Promise<void> {
         try {
-            if (this.selectedAvatarFile) {
+            const internalSelectedAvatarFile = this.selectedAvatarFile();
+            if (internalSelectedAvatarFile) {
+                this.uploadingAvatarFile.set(true);
+
                 const formData = new FormData();
-                formData.append('file', this.selectedAvatarFile);
+                formData.append('file', internalSelectedAvatarFile);
 
                 await this.avatarsService.uploadAvatar(this.userName, formData);
                 await this.loadUserData();
+
+                this.selectedAvatarFile.set(undefined);
                 this.messageService.showSuccess('Avatar has been saved.');
             }
         } catch (error) {
             console.error(error);
             this.messageService.showServerError(error);
+        } finally {
+            this.uploadingAvatarFile.set(false);
         }
     }
 
@@ -197,17 +213,24 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
 
     protected async onHeaderFormSubmit(): Promise<void> {
         try {
-            if (this.selectedHeaderFile) {
+            const internalSelectedHeaderFile = this.selectedHeaderFile();
+            if (internalSelectedHeaderFile) {
+                this.uploadingHeaderFile.set(true);
+
                 const formData = new FormData();
-                formData.append('file', this.selectedHeaderFile);
+                formData.append('file', internalSelectedHeaderFile);
 
                 await this.headersService.uploadHeader(this.userName, formData);
                 await this.loadUserData();
+
+                this.selectedHeaderFile.set(undefined);
                 this.messageService.showSuccess('Header has been saved.');
             }
         } catch (error) {
             console.error(error);
             this.messageService.showServerError(error);
+        } finally {
+            this.uploadingHeaderFile.set(false);
         }
     }
 
@@ -242,22 +265,24 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
     }
 
     protected onAvatarSelected(event: any): void {
-        this.selectedAvatarFile = event.target.files[0] ?? null;
+        const internalSelectedAvatarFile = event.target.files[0] ?? null;
+        this.selectedAvatarFile.set(internalSelectedAvatarFile);
 
-        if (this.selectedAvatarFile) {
+        if (internalSelectedAvatarFile) {
             const reader = new FileReader();
             reader.onload = () => this.avatarSrc.set(reader.result as string);
-            reader.readAsDataURL(this.selectedAvatarFile);
+            reader.readAsDataURL(internalSelectedAvatarFile);
         }
     }
 
     protected onHeaderSelected(event: any): void {
-        this.selectedHeaderFile = event.target.files[0] ?? null;
+        const internalSelectedHeaderFile = event.target.files[0] ?? null;
+        this.selectedHeaderFile.set(internalSelectedHeaderFile);
 
-        if (this.selectedHeaderFile) {
+        if (internalSelectedHeaderFile) {
             const reader = new FileReader();
             reader.onload = () => this.headerSrc.set(reader.result as string);
-            reader.readAsDataURL(this.selectedHeaderFile);
+            reader.readAsDataURL(internalSelectedHeaderFile);
         }
     }
 
