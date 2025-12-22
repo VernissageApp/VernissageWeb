@@ -27,10 +27,14 @@ html {
     --mat-sys-surface: #{$light-background-color};
     --mat-sys-on-surface: #{$light-text-color};
 
-    // Override default h1 font (maybe it's better way to do this in M3).
+    // Override default h1/h2 font (maybe it's better way to do this in M3).
     h1 {
         font-weight: 100;
         line-height: 0.95em;
+    }
+
+    h2 {
+        font-weight: 300;
     }
 
     // Override Angular Material components styles.
