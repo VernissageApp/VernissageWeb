@@ -33,6 +33,7 @@ html {
         line-height: 0.95em;
     }
 
+    // Override Angular Material components styles.
     @include mat.toolbar-overrides((
         container-background-color: $light-toolbar-background-color,
         container-text-color: var(--mat-sys-primary)
@@ -95,6 +96,7 @@ html {
         container-color: $light-dialog-background-color
     ));
 
+    // Other styles for light theme.
     mat-toolbar {
         border-bottom: 1px solid $light-outline;
         -webkit-backdrop-filter: blur(16px);
@@ -186,6 +188,7 @@ body.dark-theme {
     --mat-sys-surface: #{$dark-background-color};
     --mat-sys-on-surface: #{$dark-text-color};
 
+    // Override Angular Material components styles.
     @include mat.toolbar-overrides((
         container-background-color: $dark-toolbar-background-color,
         container-text-color: var(--mat-sys-primary)
@@ -230,6 +233,7 @@ body.dark-theme {
         container-color: $dark-dialog-background-color
     ));
 
+    // Other styles for dark theme.
     mat-toolbar {
         border-bottom: 1px solid $dark-outline;
     }
@@ -351,6 +355,10 @@ html {
 mat-panel-description {
     font-size: 0.9em;
 }
+
+/*
+ * Other general styles for application components.
+ */
 
 a {
     &:link {
