@@ -1,7 +1,7 @@
 @if (isReady()) {
     @if (user(); as userInternal) {
         <div>
-            <img class="header-image" alt="header profile" [ngSrc]="userInternal.headerUrl ?? 'assets/header.jpg'" width="1500" height="500" priority />
+            <img class="header-image" alt="header profile" [ngSrc]="userInternal.headerUrl ?? 'assets/header@2x.jpg'" width="1500" height="500" priority />
             <img class="avatar-image" alt="avatar profile" [ngSrc]="userInternal.avatarUrl ?? 'assets/avatar.svg'" width="600" height="600" priority />
 
 
