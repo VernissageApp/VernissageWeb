@@ -2,7 +2,9 @@
 <main class="content mat-app-background">
     @if (showLoader()) {
         <div animate.enter="fade-in" class="loading-shade">
-            <mat-spinner [diameter]="36"></mat-spinner>
+            <div class="loading-shade-container">
+                <mat-spinner [diameter]="36"></mat-spinner>
+            </div>
         </div>
     }
 

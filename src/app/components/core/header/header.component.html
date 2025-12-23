@@ -152,7 +152,7 @@
 
                 <button matIconButton [routerLink]="['/notifications']" aria-label="Notifications">
                     @if (notificationCounter(); as notificationCounterNumber) {
-                        <mat-icon [matBadge]="notificationCounterNumber" matBadgeColor="warn" matBadgeSize="small" aria-hidden="false">notifications_none</mat-icon>
+                        <mat-icon [matBadge]="notificationCounterNumber > 99 ? '99+' : `${notificationCounterNumber}`" aria-hidden="false">notifications_none</mat-icon>
                     } @else {
                         <mat-icon>notifications_none</mat-icon>
                     }
