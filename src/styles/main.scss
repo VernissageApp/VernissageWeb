@@ -653,11 +653,17 @@ gallery {
     left: 0;
     bottom: 0;
     right: 0;
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.15);
     z-index: 2000;
     display: flex;
     align-items: center;
     justify-content: center;
+
+    .loading-shade-container {
+        padding: 30px;
+        background-color: var(--mat-sys-surface);
+        border-radius: 12px;
+    }
 }
 
 .cdk-visually-hidden {
