@@ -920,15 +920,16 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     }
 
     private drawCanvas(): void {
-        if (!this.isBrowser) {
+        if (!this.isBrowser()) {
             return;
         }
 
-        if (!this.canvas) {
+        const internalCanvas = this.canvas();
+        if (!internalCanvas) {
             return;
         }
 
-        const ctx = this.canvas()?.nativeElement.getContext('2d');
+        const ctx = internalCanvas.nativeElement.getContext('2d');
         if (!ctx) {
             return;
         }
