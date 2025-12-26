@@ -202,6 +202,10 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
         
         // Append new statuses to temporary array.
         for (const status of statusesArray.data) {
+            if (!status.attachments || status.attachments.length === 0) {
+                continue;
+            }
+
             const imageHeight = this.getImageConstraintHeight(status);
             const smallerColumnIndex = this.getSmallerColumnIndex(internalColumns, imageHeight);
             const aspectRatio = this.getSmallAttachmentAspectRatio(status);
