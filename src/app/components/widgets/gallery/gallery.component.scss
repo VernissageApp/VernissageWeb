@@ -5,21 +5,68 @@
         gap: 6px;
 
         .column {
-            max-width: calc((100vw - 12px) / 3);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex: 1 1 0;
+            min-width: 0;
         }
 
         &.square {
-            .column {    
+            .column {
                 ::ng-deep .image-item {
-                    width: calc((100vw - 12px) / 3);
-                    height: calc((100vw - 12px) / 3);
+                    width: 100%;
+                    height: 100%;
                     object-fit: cover;
                 }
             }
         }
     }
 
-    .placeholder {
-        width: calc((100vw - 12px) / 3);
+    .image-column {
+        .column {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
     }
+
+    .placeholder {
+        width: 100%;
+    }
+
+    .gallery-item {
+        width: 100%;
+    }
+
+    .gallery-link {
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+
+    .gallery-placeholder {
+        display: block;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.04);
+        border-radius: 6px;
+        overflow: hidden;
+    }
+
+    .gallery-item app-image,
+    .gallery-item app-blurhash-image {
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+
+    .gallery-item {
+        ::ng-deep .image-container,
+        ::ng-deep .blurhash-container {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
 }
