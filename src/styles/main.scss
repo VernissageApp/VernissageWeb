@@ -661,7 +661,7 @@ gallery {
 
     .loading-shade-container {
         padding: 30px;
-        background-color: var(--mat-sys-surface);
+        background-color: color-mix(in srgb, var(--mat-sys-surface) 95%, transparent);
         border-radius: 12px;
     }
 }
