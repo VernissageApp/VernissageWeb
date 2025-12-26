@@ -169,6 +169,10 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
         }
 
         for (const [index, status] of statusesArray.data.entries()) {
+            if (!status.attachments || status.attachments.length === 0) {
+                continue;
+            }
+
             const imageHeight = this.getImageConstraintHeight(status);
             const smallerColumnIndex = this.getSmallerColumnIndex(columns, imageHeight);
             const aspectRatio = this.getSmallAttachmentAspectRatio(status);
