@@ -107,6 +107,17 @@ export class EditorsPage extends ReusableGalleryPageComponent implements OnInit,
 
     private async loadUsers(): Promise<void> {
         const downloadUsers = await this.timelineService.featuredUsers(undefined, undefined, undefined, undefined);
+
+        // If we have next part of featured users we can download it and combine.
+        if (downloadUsers.maxId) {
+            const nextDownloadUsers = await this.timelineService.featuredUsers(undefined, downloadUsers.maxId, undefined, undefined);
+
+            if (nextDownloadUsers.data && nextDownloadUsers.data.length) {
+                downloadUsers.data = [...downloadUsers.data, ...nextDownloadUsers.data];
+                downloadUsers.maxId = nextDownloadUsers.maxId;
+            }
+        }
+
         this.users.set(downloadUsers);
     }
 
