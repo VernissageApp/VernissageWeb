@@ -33,6 +33,8 @@ export class User {
     public followingCount = 0;
     public twoFactorEnabled = false;
     public manuallyApprovesFollowers = false;
+    public includeProfilePageInSearchEngines = false;
+    public includePublicPostsInSearchEngines = false;
     public featured = false;
     public isSupporter = false;
     public isSupporterFlagEnabled = false;
