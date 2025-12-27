@@ -60,7 +60,7 @@ export class ViewportObserverDirective implements AfterViewInit, OnDestroy {
                 return;
             }
 
-            this.reobserve();
+            this.reObserve();
         });
     }
 
@@ -96,7 +96,7 @@ export class ViewportObserverDirective implements AfterViewInit, OnDestroy {
         this.bucket.observer.unobserve(element);
     }
 
-    private reobserve(): void {
+    private reObserve(): void {
         if (!this.bucket) {
             return;
         }

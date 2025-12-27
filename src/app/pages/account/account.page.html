@@ -63,6 +63,26 @@
                 </div>
 
                 <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
+                    <div>
+                        <mat-checkbox name="includePublicPostsInSearchEngines" [disableRipple]="true" [(ngModel)]="user().includePublicPostsInSearchEngines">Include public posts in search engines</mat-checkbox>
+                        <div class="text-muted checkbox-hint">
+                            Allow your public posts to be indexed and displayed in external search engines such as Google or Bing. This may make your content discoverable outside of Vernissage.
+                        </div>
+                    </div>
+                    <div></div>
+                </div>
+
+                <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
+                    <div>
+                        <mat-checkbox name="includeProfilePageInSearchEngines" [disableRipple]="true" [(ngModel)]="user().includeProfilePageInSearchEngines">Include profile page in search engines</mat-checkbox>
+                        <div class="text-muted checkbox-hint">
+                            Allow your profile page to appear in results from external search engines, making your profile discoverable beyond the Vernissage platform.
+                        </div>
+                    </div>
+                    <div></div>
+                </div>
+
+                <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
                     <mat-divider></mat-divider>
                     <div></div>
                 </div>

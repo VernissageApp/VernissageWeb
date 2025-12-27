@@ -34,6 +34,7 @@ import { LoadingService } from 'src/app/services/common/loading.service';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { FocusTrackerService } from 'src/app/services/common/focus-tracker.service';
 import { PageNotFoundError } from 'src/app/errors/page-not-found-error';
+import { StatusVisibility } from 'src/app/models/status-visibility';
 
 @Component({
     selector: 'app-status',
@@ -1006,7 +1007,15 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     }
 
     private setNoIndexMeta(): void {
-        this.metaService.updateTag({ name: 'robots', content: 'noindex, noarchive' });
+        const isLocal = this.mainStatus()?.isLocal ?? false;
+        const isPublic = this.mainStatus()?.visibility === StatusVisibility.Public;
+        const includePublicPostsInSearchEngines = this.mainStatus()?.user?.includePublicPostsInSearchEngines ?? false;
+
+        if (isLocal && isPublic && includePublicPostsInSearchEngines) {
+            this.metaService.removeTag('name="robots"');
+        } else {
+            this.metaService.updateTag({ name: 'robots', content: 'noindex, noarchive' });
+        }
     }
 
     private clearNoIndexMeta(): void {
