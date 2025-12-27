@@ -349,7 +349,7 @@ html {
 }
 
 .mat-dark {
-    background-color: var(--mat-sys-surface);
+    background-color: $dark-background-color;
 }
 
 // Workaround for not working 'label-text-tracking' for button-toggle-overrides.
