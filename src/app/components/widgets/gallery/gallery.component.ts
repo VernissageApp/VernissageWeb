@@ -169,7 +169,8 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
         }
 
         for (const [index, status] of statusesArray.data.entries()) {
-            if (!status.attachments || status.attachments.length === 0) {
+            const mainStatusAttachment = this.getMainAttachment(status);
+            if (!mainStatusAttachment) {
                 continue;
             }
 
@@ -202,7 +203,8 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
         
         // Append new statuses to temporary array.
         for (const status of statusesArray.data) {
-            if (!status.attachments || status.attachments.length === 0) {
+            const mainStatusAttachment = this.getMainAttachment(status);
+            if (!mainStatusAttachment) {
                 continue;
             }
 
