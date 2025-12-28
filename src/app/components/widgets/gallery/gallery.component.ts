@@ -254,7 +254,7 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
             return null;
         }
     
-        return mainStatus.attachments[0]
+        return mainStatus.attachments[0];
     }
 
     private getSmallAttachmentAspectRatio(status: Status): string {
