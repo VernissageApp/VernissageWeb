@@ -10,18 +10,24 @@
                                 <div class="fs-60 text-muted">Generate and share invitation codes with others to grant access to this server.</div>
                             }
                         </h1>
-                        <button type="button" mat-raised-button color="primary" aria-label="Generate invitation" (click)="generate()" [disabled]="!canGenerateNewInvitations()" >Generate code</button>
+                        <button type="button" matButton="filled" aria-label="Generate invitation" (click)="generate()" [disabled]="!canGenerateNewInvitations()" >Generate code</button>
                     </section>
 
                     <table mat-table [dataSource]="invitationsArray" class="mat-elevation-z1">
+
+                        <ng-container matColumnDef="copy">
+                            <th mat-header-cell *matHeaderCellDef class="copy-column"></th>
+                            <td mat-cell *matCellDef="let element" class="copy-column">
+                                <button matIconButton matTooltip="Copy" matTooltipPosition="above" aria-label="Copy" (click)="copy(element.code)">
+                                    <mat-icon>file_copy</mat-icon>
+                                </button>
+                            </td>
+                        </ng-container>
 
                         <!-- Code Column -->
                         <ng-container matColumnDef="code">
                             <th mat-header-cell *matHeaderCellDef> Code </th>
                             <td mat-cell *matCellDef="let element">
-                                <button mat-icon-button    color="primary" matTooltip="Copy" matTooltipPosition="above" aria-label="Copy" (click)="copy(element.code)">
-                                    <mat-icon>file_copy</mat-icon>
-                                </button>
                                 @if (!element.invited) {
                                     <span>{{ element.code }}</span>
                                 } @else {
@@ -51,7 +57,9 @@
                             <th mat-header-cell *matHeaderCellDef></th>
                             <td mat-cell *matCellDef="let element" class="text-right">
                                 @if (!element.invited) {
-                                    <button type="button" mat-raised-button color="accent" aria-label="Delete invitation" (click)="delete(element.id)">Delete</button>
+                                    <button type="button" matIconButton aria-label="Delete invitation" (click)="delete(element.id)">
+                                        <mat-icon>delete</mat-icon>
+                                    </button>
                                 }
                             </td>
                         </ng-container>

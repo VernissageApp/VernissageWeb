@@ -151,7 +151,7 @@
                                         <img [src]="apiUrl() +'/api/v1/quick-captcha/generate?key=' + securityKey()" class="captcha-image" alt="Captcha" />
                                     </div>
                                     <div class="flex-align-center">
-                                        <button class="margin-top-15" type="button" mat-stroked-button (click)="onCaptchaRefreshClick()" aria-label="Refresh captcha">
+                                        <button class="margin-top-15" type="button" matButton="outlined" (click)="onCaptchaRefreshClick()" aria-label="Refresh captcha">
                                             Refresh
                                         </button>
                                     </div>
@@ -174,7 +174,7 @@
 
                     <mat-card-actions>
                         <div class="flex-row register-actions">
-                            <button type="submit" mat-flat-button (click)="onRegisterClick()" [disabled]="isSubmittingMode()" color="primary" aria-label="Register">Register</button>
+                            <button type="submit" matButton="filled" (click)="onRegisterClick()" [disabled]="isSubmittingMode()" aria-label="Register">Register</button>
                                                         
                             @if (isSubmittingMode()) {
                                 <mat-spinner [diameter]="18" class="margin-left-10 margin-top-5"></mat-spinner>

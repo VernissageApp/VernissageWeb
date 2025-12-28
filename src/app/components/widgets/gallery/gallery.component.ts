@@ -31,6 +31,8 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
     protected avatarVisible = signal(true);
     protected isBrowser = signal(false);
     protected statusesExists = computed(() => (this.internalStatuses().data.length ?? 0) > 0);
+    protected viewportRootMargin = '2000px 0px 2000px 0px';
+    protected viewportRefreshToken = signal(0);
 
     private internalStatuses = signal<LinkableResult<Status>>(new LinkableResult<Status>());
     private isReady = false;
@@ -64,6 +66,7 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
             this.internalStatuses.set(copyStatuses);
             this.contextStatusesService.setContextStatuses(copyStatuses);
             this.buildGallery(copyStatuses);
+            this.refreshViewportObservers();
         });
     }
 
@@ -75,10 +78,12 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
                 this.columns = this.squareImages() ? 3 : 1;
                 this.avatarVisible.set(!this.squareImages());
                 this.buildGallery(this.internalStatuses());
+                this.refreshViewportObservers();
             } else {
                 this.columns = 3;
                 this.avatarVisible.set(true);
                 this.buildGallery(this.internalStatuses());
+                this.refreshViewportObservers();
             }
         });
 
@@ -143,6 +148,14 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
         return status.reblog ?? status;
     }
 
+    protected onViewportChange(galleryStatus: GalleryStatus, isVisible: boolean): void {
+        galleryStatus.inViewport.set(isVisible);
+    }
+
+    private refreshViewportObservers(): void {
+        this.viewportRefreshToken.update(value => value + 1);
+    }
+
     private buildGallery(statusesArray: LinkableResult<Status> | undefined): void {
         const columns: GalleryColumn[] = [];
 
@@ -156,11 +169,16 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
         }
 
         for (const [index, status] of statusesArray.data.entries()) {
+            if (!status.attachments || status.attachments.length === 0) {
+                continue;
+            }
+
             const imageHeight = this.getImageConstraintHeight(status);
             const smallerColumnIndex = this.getSmallerColumnIndex(columns, imageHeight);
+            const aspectRatio = this.getSmallAttachmentAspectRatio(status);
 
             columns[smallerColumnIndex].size = columns[smallerColumnIndex].size + imageHeight;
-            columns[smallerColumnIndex].statuses.push(new GalleryStatus(status, index < this.amountOfPriorityImages));
+            columns[smallerColumnIndex].statuses.push(new GalleryStatus(status, index < this.amountOfPriorityImages, aspectRatio));
         }
 
         this.galleryColumns.set(columns);
@@ -184,11 +202,16 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
         
         // Append new statuses to temporary array.
         for (const status of statusesArray.data) {
+            if (!status.attachments || status.attachments.length === 0) {
+                continue;
+            }
+
             const imageHeight = this.getImageConstraintHeight(status);
             const smallerColumnIndex = this.getSmallerColumnIndex(internalColumns, imageHeight);
+            const aspectRatio = this.getSmallAttachmentAspectRatio(status);
 
             internalColumns[smallerColumnIndex].size = internalColumns[smallerColumnIndex].size + imageHeight;
-            internalColumns[smallerColumnIndex].statuses.push(new GalleryStatus(status, false));
+            internalColumns[smallerColumnIndex].statuses.push(new GalleryStatus(status, false, aspectRatio));
         }
 
         // Update internal list of statuses (used to rebuild when size of screen is changed).
@@ -230,6 +253,14 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
         }
     
         return mainStatus.attachments[0]
+    }
+
+    private getSmallAttachmentAspectRatio(status: Status): string {
+        const mainAttachment = this.getMainAttachment(status);
+        const width = Math.max(mainAttachment?.smallFile?.width ?? this.minimalFileSize, this.minimalFileSize);
+        const height = Math.max(mainAttachment?.smallFile?.height ?? this.minimalFileSize, this.minimalFileSize);
+
+        return `${width} / ${height}`;
     }
 
     private getImageConstraintHeight(status: Status): number {

@@ -4,7 +4,9 @@
         <div class="flex-row flex-align-center flex-space-between margin-bottom-10">
             <h1>Support</h1>
             @if (patreonUrl(); as patreonUrlString) {
-                <a class="patreon" mat-flat-button color="primary" [href]="patreonUrlString" target="_blank"><img src="assets/patreon-white.svg" width="16" height="16" alt="patreon"> Support us</a>
+                <a class="patreon" matButton="filled" [href]="patreonUrlString" target="_blank">
+                    <div class="patreon-img"></div> Support us
+                </a>
             }
         </div>
 

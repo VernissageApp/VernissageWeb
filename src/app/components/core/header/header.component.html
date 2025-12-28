@@ -1,8 +1,8 @@
 <nav>
-    <mat-toolbar color="primary">
+    <mat-toolbar>
         @if (deviceResolution() === resolution.handsetPortrait) {
             @if (showTrending() || showEditorsChoice() || showCategories()) {
-                <button mat-icon-button [matMenuTriggerFor]="discover" color="primary" class="hamburger-menu" aria-label="More options">
+                <button matIconButton [matMenuTriggerFor]="discover" class="hamburger-menu" aria-label="More options">
                     <mat-icon>menu</mat-icon>
                 </button>
                 <mat-menu #discover="matMenu">
@@ -58,25 +58,25 @@
         @if (deviceResolution() === resolution.handsetLandscape || deviceResolution() === resolution.tablet || deviceResolution() === resolution.browser) {
             @if (deviceResolution() === resolution.handsetLandscape) {
                 @if (showTrending()) {
-                    <button mat-icon-button color="primary" [routerLink]="['/trending']" (click)="markClearReuseStrategy()" aria-label="Trending">
+                    <button matIconButton [routerLink]="['/trending']" (click)="markClearReuseStrategy()" aria-label="Trending">
                         <mat-icon>trending_up</mat-icon>
                     </button>
                 }
                 
                 @if (showEditorsChoice()) {
-                    <button mat-icon-button color="primary" [routerLink]="['/editors']"(click)="markClearReuseStrategy()" aria-label="Editor's choice">
+                    <button matIconButton [routerLink]="['/editors']"(click)="markClearReuseStrategy()" aria-label="Editor's choice">
                         <mat-icon>stars</mat-icon>
                     </button>
                 }
 
                 @if (showCategories()) {
-                    <button mat-icon-button color="primary" [routerLink]="['/categories']" (click)="markClearReuseStrategy()" aria-label="Categories">
+                    <button matIconButton [routerLink]="['/categories']" (click)="markClearReuseStrategy()" aria-label="Categories">
                         <mat-icon>loyalty</mat-icon>
                     </button>
                 }
 
                 @if (showNews()) {
-                    <button mat-icon-button color="primary" [routerLink]="['/news']" (click)="markClearReuseStrategy()" aria-label="News">
+                    <button matIconButton [routerLink]="['/news']" (click)="markClearReuseStrategy()" aria-label="News">
                         <mat-icon>news</mat-icon>
                     </button>
                 }
@@ -84,25 +84,25 @@
 
             @if (deviceResolution() === resolution.tablet || deviceResolution() === resolution.browser) {
                 @if(showTrending()) {
-                    <button mat-button color="primary" [routerLink]="['/trending']" (click)="markClearReuseStrategy()" aria-label="Trending" class="margin-right-5">
+                    <button matButton="text" [routerLink]="['/trending']" (click)="markClearReuseStrategy()" aria-label="Trending" class="margin-right-5">
                         <mat-icon>trending_up</mat-icon> Trending
                     </button>
                 }
 
                 @if (showEditorsChoice()) {
-                    <button mat-button color="primary" [routerLink]="['/editors']" (click)="markClearReuseStrategy()" aria-label="Editor's choice" class="margin-right-5">
+                    <button matButton="text" [routerLink]="['/editors']" (click)="markClearReuseStrategy()" aria-label="Editor's choice" class="margin-right-5">
                         <mat-icon>stars</mat-icon> Editor's choice
                     </button>
                 }
 
                 @if (showCategories()) {
-                    <button mat-button color="primary" [routerLink]="['/categories']" (click)="markClearReuseStrategy()" aria-label="Categories" class="margin-right-5">
+                    <button matButton="text" [routerLink]="['/categories']" (click)="markClearReuseStrategy()" aria-label="Categories" class="margin-right-5">
                         <mat-icon>loyalty</mat-icon> Categories
                     </button>
                 }
 
                 @if (showNews()) {
-                    <button mat-button color="primary" [routerLink]="['/news']" (click)="markClearReuseStrategy()" aria-label="News" class="margin-right-5">
+                    <button matButton="text" [routerLink]="['/news']" (click)="markClearReuseStrategy()" aria-label="News" class="margin-right-5">
                         <mat-icon>news</mat-icon> News
                     </button>
                 }
@@ -114,12 +114,12 @@
         @if (user() && isLoggedIn()) {
             @if (deviceResolution() === resolution.handsetLandscape || deviceResolution() === resolution.tablet || deviceResolution() === resolution.browser) {
                 @if (deviceResolution() === resolution.handsetLandscape) {
-                    <button mat-icon-button color="primary" [routerLink]="['/upload']" aria-label="Upload">
+                    <button matIconButton [routerLink]="['/upload']" aria-label="Upload">
                         <mat-icon>arrow_upward</mat-icon>
                     </button>
                 }
                 @if (deviceResolution() === resolution.tablet || deviceResolution() === resolution.browser) {
-                    <button mat-stroked-button color="primary" class="margin-right-10" [routerLink]="['/upload']">
+                    <button matButton="outlined" class="margin-right-10" [routerLink]="['/upload']">
                         <mat-icon>arrow_upward</mat-icon> Upload
                     </button>
                 }
@@ -128,16 +128,16 @@
 
         @if(!user() || !isLoggedIn()) {
             @if (!isHandsetPortrait()) {
-                <button mat-icon-button color="primary" class="margin-right-5" (click)="onThemeToggle()" aria-label="Switch theme">
+                <button matIconButton class="margin-right-5" (click)="onThemeToggle()" aria-label="Switch theme">
                     <mat-icon>{{ isLightTheme() ? 'dark_mode' : 'light_mode' }}</mat-icon>
                 </button>
             }
 
             @if (isRegistrationEnabled()) {
-                <button mat-stroked-button color="primary" [routerLink]="['/register']" class="margin-right-5">Sign up</button>
+                <button matButton="outlined" [routerLink]="['/register']" class="margin-right-5">Sign up</button>
             }
 
-            <button mat-button [routerLink]="['/login']">Log in</button>
+            <button matButton="text" [routerLink]="['/login']">Log in</button>
         }
 
         @if (user(); as userObject) {
@@ -145,21 +145,21 @@
                 @if (deviceResolution() !== resolution.handsetPortrait) {
                     <mat-divider class="menu-divider" [vertical]="true"></mat-divider>
 
-                    <button mat-icon-button color="primary" [routerLink]="['/search']" aria-label="Search">
+                    <button matIconButton [routerLink]="['/search']" aria-label="Search">
                         <mat-icon>search</mat-icon>
                     </button>
                 }
 
-                <button mat-icon-button color="primary" [routerLink]="['/notifications']" aria-label="Notifications">
+                <button matIconButton [routerLink]="['/notifications']" aria-label="Notifications">
                     @if (notificationCounter(); as notificationCounterNumber) {
-                        <mat-icon [matBadge]="notificationCounterNumber" matBadgeColor="warn" matBadgeSize="small" aria-hidden="false">notifications_none</mat-icon>
+                        <mat-icon [matBadge]="notificationCounterNumber > 99 ? '99+' : `${notificationCounterNumber}`" aria-hidden="false">notifications_none</mat-icon>
                     } @else {
                         <mat-icon>notifications_none</mat-icon>
                     }
                 </button>
 
                 <div>
-                    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu with actions">
+                    <button matIconButton [matMenuTriggerFor]="menu" aria-label="Menu with actions">
                         <img class="avatar" [ngSrc]="avatarUrl()" width="600" height="600" alt="Avatar" priority />
                     </button>
                     <mat-menu #menu="matMenu">

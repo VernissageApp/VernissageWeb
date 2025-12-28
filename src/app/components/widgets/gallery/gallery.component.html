@@ -3,19 +3,31 @@
 }
 @else if (statusesExists()) {
     <div class="gallery-container" appInfiniteScroll [infiniteScrollDistance]="500" [infiniteScrollThrottle]="200" (scrolled)="onNearEndScroll()">
-        <div [ngClass]="{ 'image-gallery': !isHandsetPortrait() || squareImages(), 'square': squareImages() }">
+        <div [ngClass]="{ 'image-gallery': !isHandsetPortrait() || squareImages(), 'image-column': isHandsetPortrait() && !squareImages(), 'square': squareImages() }">
             @for (column of galleryColumns(); track column.columnId) {
                 <div class="column">
                     @if(column.statuses.length > 0) {
                         @for (galleryStatus of column.statuses; track galleryStatus.status.id) {
-                            <div animate.enter="fade-in">
-                                <a [routerLink]="['/statuses', galleryStatus.status.id]" [ariaLabel]="'Status added by: ' + getMainStatus(galleryStatus.status).user?.userName">
-                                    @if (getMainStatus(galleryStatus.status).sensitive && !alwaysShowNSFW()) {
-                                        <app-blurhash-image [horizontal]="false" [avatarVisible]="avatarVisible() && !hideAvatars()" [status]="galleryStatus.status"></app-blurhash-image>
-                                    } @else {
-                                        <app-image [horizontal]="false" [avatarVisible]="avatarVisible() && !hideAvatars()" [status]="galleryStatus.status" [priority]="galleryStatus.priority"></app-image>
-                                    }
-                                </a>
+                            <div
+                                animate.enter="fade-in"
+                                appViewportObserver
+                                [rootMargin]="viewportRootMargin"
+                                [leaveDelayMs]="150"
+                                [observeKey]="viewportRefreshToken()"
+                                (viewportChange)="onViewportChange(galleryStatus, $event)">
+                                <div class="gallery-item" [style.aspect-ratio]="squareImages() ? '1 / 1' : galleryStatus.aspectRatio">
+                                    <a class="gallery-link" [routerLink]="['/statuses', galleryStatus.status.id]" [ariaLabel]="'Status added by: ' + getMainStatus(galleryStatus.status).user?.userName">
+                                        @if (galleryStatus.inViewport()) {
+                                            @if (getMainStatus(galleryStatus.status).sensitive && !alwaysShowNSFW()) {
+                                                <app-blurhash-image [horizontal]="false" [avatarVisible]="avatarVisible() && !hideAvatars()" [status]="galleryStatus.status"></app-blurhash-image>
+                                            } @else {
+                                                <app-image [horizontal]="false" [avatarVisible]="avatarVisible() && !hideAvatars()" [status]="galleryStatus.status" [priority]="galleryStatus.priority"></app-image>
+                                            }
+                                        } @else {
+                                            <div class="gallery-placeholder" aria-hidden="true"></div>
+                                        }
+                                    </a>
+                                </div>
                             </div>
                         }
                     } @else {

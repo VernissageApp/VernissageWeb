@@ -14,6 +14,11 @@ primary_region = "ams"
   min_machines_running = 1
   processes = ["app"]
 
+[[restart]]
+  policy = "always"
+  retries = 1000
+  processes = ["app"]
+
 [[vm]]
   memory = '1gb'
   cpu_kind = 'shared'

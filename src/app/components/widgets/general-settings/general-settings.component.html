@@ -145,19 +145,19 @@
     </div>
 
     <div>
-        <mat-checkbox name="showNews" color="primary" [disableRipple]="true" [(ngModel)]="settings().showNews">
+        <mat-checkbox name="showNews" [disableRipple]="true" [(ngModel)]="settings().showNews">
             Show 'News' menu item for signed in users
         </mat-checkbox>
     </div>
 
     <div>
-        <mat-checkbox name="showNewsForAnonymous" color="primary" [disableRipple]="true" [(ngModel)]="settings().showNewsForAnonymous">
+        <mat-checkbox name="showNewsForAnonymous" [disableRipple]="true" [(ngModel)]="settings().showNewsForAnonymous">
             Show 'News' menu item for anonymous users
         </mat-checkbox>
     </div>
 
     <div class="margin-bottom-20">
-        <mat-checkbox name="showSharedBusinessCards" color="primary" [disableRipple]="true" [(ngModel)]="settings().showSharedBusinessCards">
+        <mat-checkbox name="showSharedBusinessCards" [disableRipple]="true" [(ngModel)]="settings().showSharedBusinessCards">
             Show 'Shared business cards' menu item
         </mat-checkbox>
     </div>
@@ -197,32 +197,32 @@
 
     <div class="margin-bottom-20">
         <div>
-            <mat-checkbox name="showLocalTimelineForAnonymous" color="primary" [disableRipple]="true" [(ngModel)]="settings().showLocalTimelineForAnonymous">
+            <mat-checkbox name="showLocalTimelineForAnonymous" [disableRipple]="true" [(ngModel)]="settings().showLocalTimelineForAnonymous">
                 Show local timeline for anonymous user
             </mat-checkbox>
         </div>
         <div>
-            <mat-checkbox name="showTrendingForAnonymous" color="primary" [disableRipple]="true" [(ngModel)]="settings().showTrendingForAnonymous">
+            <mat-checkbox name="showTrendingForAnonymous" [disableRipple]="true" [(ngModel)]="settings().showTrendingForAnonymous">
                 Show trending for anonymous user
             </mat-checkbox>
         </div>
         <div>
-            <mat-checkbox name="showEditorsChoiceForAnonymous" color="primary" [disableRipple]="true" [(ngModel)]="settings().showEditorsChoiceForAnonymous">
+            <mat-checkbox name="showEditorsChoiceForAnonymous" [disableRipple]="true" [(ngModel)]="settings().showEditorsChoiceForAnonymous">
                 Show editor's statuses choice for anonymous user
             </mat-checkbox>
         </div>
         <div>
-            <mat-checkbox name="showEditorsUsersChoiceForAnonymous" color="primary" [disableRipple]="true" [(ngModel)]="settings().showEditorsUsersChoiceForAnonymous">
+            <mat-checkbox name="showEditorsUsersChoiceForAnonymous" [disableRipple]="true" [(ngModel)]="settings().showEditorsUsersChoiceForAnonymous">
                 Show editor's users choice for anonymous user
             </mat-checkbox>
         </div>
         <div>
-            <mat-checkbox name="showHashtagsForAnonymous" color="primary" [disableRipple]="true" [(ngModel)]="settings().showHashtagsForAnonymous">
+            <mat-checkbox name="showHashtagsForAnonymous" [disableRipple]="true" [(ngModel)]="settings().showHashtagsForAnonymous">
                 Show hashtags for anonymous user
             </mat-checkbox>
         </div>
         <div>
-            <mat-checkbox name="showCategoriesForAnonymous" color="primary" [disableRipple]="true" [(ngModel)]="settings().showCategoriesForAnonymous">
+            <mat-checkbox name="showCategoriesForAnonymous" [disableRipple]="true" [(ngModel)]="settings().showCategoriesForAnonymous">
                 Show categories for anonymous user
             </mat-checkbox>
         </div>
@@ -233,17 +233,17 @@
 
     <div class="margin-bottom-20">
         <div>
-            <mat-checkbox name="isRegistrationOpened" color="primary" [disableRipple]="true" [(ngModel)]="settings().isRegistrationOpened">
+            <mat-checkbox name="isRegistrationOpened" [disableRipple]="true" [(ngModel)]="settings().isRegistrationOpened">
                 Is registration opened
             </mat-checkbox>
         </div>
         <div>
-            <mat-checkbox name="isRegistrationByApprovalOpened" color="primary" [disableRipple]="true" [disabled]="settings().isRegistrationOpened" [(ngModel)]="settings().isRegistrationByApprovalOpened">
+            <mat-checkbox name="isRegistrationByApprovalOpened" [disableRipple]="true" [disabled]="settings().isRegistrationOpened" [(ngModel)]="settings().isRegistrationByApprovalOpened">
                 Is registration by approval opened
             </mat-checkbox>
         </div>
         <div>
-            <mat-checkbox name="isRegistrationByInvitationsOpened" color="primary" [disableRipple]="true" [disabled]="settings().isRegistrationOpened" [(ngModel)]="settings().isRegistrationByInvitationsOpened">
+            <mat-checkbox name="isRegistrationByInvitationsOpened" [disableRipple]="true" [disabled]="settings().isRegistrationOpened" [(ngModel)]="settings().isRegistrationByInvitationsOpened">
                 Is registration by invitations opened
             </mat-checkbox>
         </div>
@@ -257,7 +257,7 @@
 
     <div class="margin-bottom-20">
         <div>
-            <mat-checkbox name="isQuickCaptchaEnabled" color="primary" [disableRipple]="true" [disabled]="!settings().isRegistrationOpened" [(ngModel)]="settings().isQuickCaptchaEnabled">
+            <mat-checkbox name="isQuickCaptchaEnabled" [disableRipple]="true" [disabled]="!settings().isRegistrationOpened" [(ngModel)]="settings().isQuickCaptchaEnabled">
                 Is QuickCaptcha enabled (internal captcha)
             </mat-checkbox>
             <div class="text-muted fs-90 margin-left-10 margin-top-5">
@@ -335,7 +335,7 @@
 
     <div class="margin-bottom-20">
         <div>
-            <mat-checkbox name="isOpenAIEnabled" color="primary" [disableRipple]="true" [(ngModel)]="settings().isOpenAIEnabled">
+            <mat-checkbox name="isOpenAIEnabled" [disableRipple]="true" [(ngModel)]="settings().isOpenAIEnabled">
                 Is OpenAPI enabled
             </mat-checkbox>
         </div>
@@ -362,7 +362,7 @@
 
     <div class="margin-bottom-20">
         <div>
-            <mat-checkbox name="isWebPushEnabled" color="primary" [disableRipple]="true" [(ngModel)]="settings().isWebPushEnabled">
+            <mat-checkbox name="isWebPushEnabled" [disableRipple]="true" [(ngModel)]="settings().isWebPushEnabled">
                 Are WebPush notifications enabled
             </mat-checkbox>
         </div>
@@ -507,57 +507,57 @@
 
     <div class="margin-bottom-20">
         <div>
-            <mat-checkbox name="clearAttachmentsJobEnabled" color="primary" [disableRipple]="true" [(ngModel)]="settings().clearAttachmentsJobEnabled">
+            <mat-checkbox name="clearAttachmentsJobEnabled" [disableRipple]="true" [(ngModel)]="settings().clearAttachmentsJobEnabled">
                 Clear attachments not connected to statuses job
             </mat-checkbox>
         </div>
         <div>
-            <mat-checkbox name="clearErrorItemsJobEnabled" color="primary" [disableRipple]="true" [(ngModel)]="settings().clearErrorItemsJobEnabled">
+            <mat-checkbox name="clearErrorItemsJobEnabled" [disableRipple]="true" [(ngModel)]="settings().clearErrorItemsJobEnabled">
                 Clear old errors job
             </mat-checkbox>
         </div>
         <div>
-            <mat-checkbox name="clearFailedLoginsJobEnabled" color="primary" [disableRipple]="true" [(ngModel)]="settings().clearFailedLoginsJobEnabled">
+            <mat-checkbox name="clearFailedLoginsJobEnabled" [disableRipple]="true" [(ngModel)]="settings().clearFailedLoginsJobEnabled">
                 Clear old failed logins logs job
             </mat-checkbox>
         </div>
         <div>
-            <mat-checkbox name="clearQuickCaptchasJobEnabled" color="primary" [disableRipple]="true" [(ngModel)]="settings().clearQuickCaptchasJobEnabled">
+            <mat-checkbox name="clearQuickCaptchasJobEnabled" [disableRipple]="true" [(ngModel)]="settings().clearQuickCaptchasJobEnabled">
                 Clear old captcha tokens job
             </mat-checkbox>
         </div>
         <div>
-            <mat-checkbox name="createArchiveJobEnabled" color="primary" [disableRipple]="true" [(ngModel)]="settings().createArchiveJobEnabled">
+            <mat-checkbox name="createArchiveJobEnabled" [disableRipple]="true" [(ngModel)]="settings().createArchiveJobEnabled">
                 Create archives job
             </mat-checkbox>
         </div>
         <div>
-            <mat-checkbox name="deleteArchiveJobEnabled" color="primary" [disableRipple]="true" [(ngModel)]="settings().deleteArchiveJobEnabled">
+            <mat-checkbox name="deleteArchiveJobEnabled" [disableRipple]="true" [(ngModel)]="settings().deleteArchiveJobEnabled">
                 Delete old archives job
             </mat-checkbox>
         </div>
         <div>
-            <mat-checkbox name="locationsJobEnabled" color="primary" [disableRipple]="true" [(ngModel)]="settings().locationsJobEnabled">
+            <mat-checkbox name="locationsJobEnabled" [disableRipple]="true" [(ngModel)]="settings().locationsJobEnabled">
                 Fill locations table job
             </mat-checkbox>
         </div>
         <div>
-            <mat-checkbox name="longPeriodTrendingJobEnabled" color="primary" [disableRipple]="true" [(ngModel)]="settings().longPeriodTrendingJobEnabled">
+            <mat-checkbox name="longPeriodTrendingJobEnabled" [disableRipple]="true" [(ngModel)]="settings().longPeriodTrendingJobEnabled">
                 Calculate long period trending job
             </mat-checkbox>
         </div>
         <div>
-            <mat-checkbox name="shortPeriodTrendingJobEnabled" color="primary" [disableRipple]="true" [(ngModel)]="settings().shortPeriodTrendingJobEnabled">
+            <mat-checkbox name="shortPeriodTrendingJobEnabled" [disableRipple]="true" [(ngModel)]="settings().shortPeriodTrendingJobEnabled">
                 Calculate short period trending job
             </mat-checkbox>
         </div>
         <div>
-            <mat-checkbox name="purgeStatusesJobEnabled" color="primary" [disableRipple]="true" [(ngModel)]="settings().purgeStatusesJobEnabled">
+            <mat-checkbox name="purgeStatusesJobEnabled" [disableRipple]="true" [(ngModel)]="settings().purgeStatusesJobEnabled">
                 Purge old statuses job
             </mat-checkbox>
         </div>
         <div>
-            <mat-checkbox name="rescheduleActivityPubJobEnabled" color="primary" [disableRipple]="true" [(ngModel)]="settings().rescheduleActivityPubJobEnabled">
+            <mat-checkbox name="rescheduleActivityPubJobEnabled" [disableRipple]="true" [(ngModel)]="settings().rescheduleActivityPubJobEnabled">
                 Reschedule failed ActivityPub events job
             </mat-checkbox>
         </div>
@@ -581,5 +581,5 @@
         </div>
     </div>
 
-    <button type="submit" mat-raised-button color="primary" aria-label="Save">Save</button>
+    <button type="submit" matButton="filled" aria-label="Save">Save</button>
 </form>

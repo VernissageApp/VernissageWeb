@@ -484,7 +484,12 @@ export class ProfilePage extends ReusableGalleryPageComponent implements OnInit,
     }
 
     private setNoIndexMeta(): void {
-        this.metaService.updateTag({ name: 'robots', content: 'noindex, noarchive' });
+        const internalUser = this.user();
+        if (internalUser && internalUser.isLocal && internalUser.includeProfilePageInSearchEngines) {
+            this.metaService.removeTag('name="robots"');
+        } else {
+            this.metaService.updateTag({ name: 'robots', content: 'noindex, noarchive' });
+        }
     }
 
     private clearNoIndexMeta(): void {

@@ -6,6 +6,7 @@ import { InfiniteScrollDirective } from './infinite-scroll.directive';
 import { NoteProcessorDirective } from './note-processor.directive';
 import { HrefToRouterLinkDirective } from './href-to-router-link.directive';
 import { InputActivityDirective } from './input-activity.directive';
+import { ViewportObserverDirective } from './viewport-observer.directive';
 
 @NgModule({
     declarations: [
@@ -13,7 +14,8 @@ import { InputActivityDirective } from './input-activity.directive';
         InfiniteScrollDirective,
         NoteProcessorDirective,
         HrefToRouterLinkDirective,
-        InputActivityDirective
+        InputActivityDirective,
+        ViewportObserverDirective
     ],
     imports: [
         BrowserModule,
@@ -24,7 +26,8 @@ import { InputActivityDirective } from './input-activity.directive';
         InfiniteScrollDirective,
         NoteProcessorDirective,
         HrefToRouterLinkDirective,
-        InputActivityDirective
+        InputActivityDirective,
+        ViewportObserverDirective
     ]
 })
 export class DirectivesModule { }

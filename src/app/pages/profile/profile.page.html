@@ -1,15 +1,15 @@
 @if (isReady()) {
     @if (user(); as userInternal) {
         <div>
-            <img class="header-image" alt="header profile" [ngSrc]="userInternal.headerUrl ?? 'assets/header.jpg'" width="1500" height="500" priority />
+            <img class="header-image" alt="header profile" [ngSrc]="userInternal.headerUrl ?? 'assets/header@2x.jpg'" width="1500" height="500" priority />
             <img class="avatar-image" alt="avatar profile" [ngSrc]="userInternal.avatarUrl ?? 'assets/avatar.svg'" width="600" height="600" priority />
 
 
             <div class="flex-row flex-space-around padding-left-10 padding-right-10">
                 <div class="profile">
                     <div class="text-center">
-                        <div class="mat-h1">{{ userDisplayService.displayName(userInternal) }}</div>
-                        <div class="mat-h4">&#64;{{ userInternal.userName }}</div>
+                        <h1>{{ userDisplayService.displayName(userInternal) }}</h1>
+                        <h4>&#64;{{ userInternal.userName }}</h4>
 
                         @if (userInternal.type === userType.Service) {
                             <div class="user-flag">
@@ -22,17 +22,17 @@
                         @if (userInternal.isSupporterFlagEnabled || userInternal.roles?.includes(role.Administrator) || userInternal.roles?.includes(role.Moderator)) {
                             <div class="user-flag">
                                 @if (userInternal.roles?.includes(role.Administrator)) {
-                                    <mat-chip color="primary" class="margin-right-10" highlighted [disableRipple]="true">
+                                    <mat-chip class="margin-right-10" highlighted [disableRipple]="true">
                                         <mat-icon [inline]="true">server_person</mat-icon><div class="user-flag-text">Administrator</div>
                                     </mat-chip>
                                 } @else if (userInternal.roles?.includes(role.Moderator)) {
-                                    <mat-chip color="primary" class="margin-right-10"    highlighted [disableRipple]="true">
+                                    <mat-chip class="margin-right-10"    highlighted [disableRipple]="true">
                                         <mat-icon [inline]="true">clinical_notes</mat-icon><div class="user-flag-text">Moderator</div>
                                     </mat-chip>
                                 }
 
                                 @if (userInternal.isSupporterFlagEnabled) {
-                                    <mat-chip color="accent" highlighted [disableRipple]="true">
+                                    <mat-chip highlighted [disableRipple]="true">
                                         <mat-icon [inline]="true">diamond_shine</mat-icon><div class="user-flag-text">Supporter</div>
                                     </mat-chip>
                                 }
@@ -57,17 +57,17 @@
                     @if (signedInUser()?.id === userInternal.id) {
                         <div class="flex-row flex-center gap-8 padding-top-10">
                             @if (!isHandsetPortrait()) {
-                                <button type="button" [routerLink]="['/favourites']" mat-flat-button aria-label="Favourites"><mat-icon class="fill-symbol">grade</mat-icon> Favourites</button>
-                                <button type="button" [routerLink]="['/bookmarks']" mat-flat-button aria-label="Bookmarks"><mat-icon class="fill-symbol">bookmark</mat-icon> Bookmarks</button>
+                                <button type="button" [routerLink]="['/favourites']" matButton="outlined" aria-label="Favourites"><mat-icon class="fill-symbol">grade</mat-icon> Favourites</button>
+                                <button type="button" [routerLink]="['/bookmarks']" matButton="outlined" aria-label="Bookmarks"><mat-icon class="fill-symbol">bookmark</mat-icon> Bookmarks</button>
                             } @else {
-                                <button type="button" [routerLink]="['/favourites']" class="icon-only" mat-flat-button aria-label="Favourites"><mat-icon class="fill-symbol">grade</mat-icon></button>
-                                <button type="button" [routerLink]="['/bookmarks']" class="icon-only" mat-flat-button aria-label="Bookmarks"><mat-icon class="fill-symbol">bookmark</mat-icon></button>
+                                <button type="button" [routerLink]="['/favourites']" class="icon-only" matButton="outlined" aria-label="Favourites"><mat-icon class="fill-symbol">grade</mat-icon></button>
+                                <button type="button" [routerLink]="['/bookmarks']" class="icon-only" matButton="outlined" aria-label="Bookmarks"><mat-icon class="fill-symbol">bookmark</mat-icon></button>
                             }
 
-                            <button type="button" (click)="onQRCodeClick()" class="icon-only" mat-flat-button aria-label="Profile QR code"><mat-icon class="fill-symbol">qr_code_2</mat-icon></button>
+                            <button type="button" (click)="onQRCodeClick()" class="icon-only" matButton="outlined" aria-label="Profile QR code"><mat-icon class="fill-symbol">qr_code_2</mat-icon></button>
 
                             @if (showSharedBusinessCards()) {
-                                <button type="button" (click)="onShareBusinessCard()" class="icon-only" mat-flat-button aria-label="Share business card"><mat-icon class="fill-symbol">share</mat-icon></button>
+                                <button type="button" (click)="onShareBusinessCard()" class="icon-only" matButton="outlined" aria-label="Share business card"><mat-icon class="fill-symbol">share</mat-icon></button>
                             }
                         </div>
                     }
