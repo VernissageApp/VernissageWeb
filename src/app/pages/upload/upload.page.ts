@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, computed, inject, model, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, ElementRef, inject, model, OnInit, signal, viewChild } from '@angular/core';
+import { HttpEventType } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { encode } from 'blurhash';
 import * as ExifReader from 'exifreader';
@@ -63,6 +64,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
     protected isEditMode = signal(false);
 
     protected allPhotosUploaded = computed(() => !this.photos().some(x => !x.isUploaded() || (x.photoHdrFile && !x.isHdrUploaded)));
+    protected photoFileUpload = viewChild<ElementRef<HTMLInputElement>>('photoFileUpload');
 
     private maxFileSize = 0;
     private statusId = '';
@@ -133,31 +135,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
         uploadPhoto.photoFile = event.target.files[0];
 
         this.setPhotoData(uploadPhoto);
-        this.setExifMetadata(uploadPhoto, async () => {
-            try {
-                this.photos.update(photos => [...photos, uploadPhoto]);
-
-                const formData = new FormData();
-
-                if (uploadPhoto.photoFile) {
-                    formData.append('file', uploadPhoto.photoFile);
-                }
-
-                const temporaryAttachment = await this.attachmentsService.uploadAttachment(formData);
-                this.photos.update(photosArray => {
-                    const photo = photosArray.find(item => item.uuid === uploadPhoto.uuid);
-                    if (photo) {
-                        photo.id = temporaryAttachment.id;
-                        photo.isUploaded.set(true);
-                    }
-
-                    return [...photosArray];
-                });
-            } catch (error) {
-                console.error(error);
-                this.messageService.showServerError(error);
-            }
-        });
+        this.readExifMetadataAndUpload(uploadPhoto);
     }
 
     protected onImageClick(index: number): void {
@@ -204,6 +182,19 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
         } finally {
             this.hashtagsInProgress.set(false);
         }
+    }
+
+    protected onPhotoUploadCancel(photo: UploadPhoto): void {
+        if (!photo.isUploading() || photo.isUploaded()) {
+            return;
+        }
+
+        photo.uploadSubscription?.unsubscribe();
+        photo.uploadSubscription = undefined;
+
+        photo.isUploading.set(false);
+        photo.uploadProgress.set(0);
+        this.photos.update(photos => photos.filter(x => x !== photo));
     }
 
     protected onInsertTemplate(): void {
@@ -415,10 +406,78 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
         }
     }
 
-    private setExifMetadata(uploadPhoto: UploadPhoto, listener: () => void): void {
+    private uploadPhoto(uploadPhoto: UploadPhoto): void {
+        try {
+            this.photos.update(photos => [...photos, uploadPhoto]);
+
+            const formData = new FormData();
+
+            if (uploadPhoto.photoFile) {
+                formData.append('file', uploadPhoto.photoFile);
+            }
+
+            // Reset file form (in case if we want to send the same file once again).
+            setTimeout(() => {
+                this.resetPhotoFileUpload();
+            });
+
+            uploadPhoto.isUploading.set(true);
+            uploadPhoto.uploadProgress.set(0);
+            uploadPhoto.uploadSubscription = this.attachmentsService.uploadAttachmentWithProgress(formData).subscribe({
+                next: (event) => {
+                    // Upload progress is working only when we delete withFetch() from HttpClient configuration.
+                    // However, it's strongly recommended to enable fetch for applications that use Server-Side
+                    // Rendering for better performance and compatibility (https://angular.dev/api/common/http/provideHttpClient).
+                    if (event.type === HttpEventType.UploadProgress) {
+                        const total = event.total ?? uploadPhoto.photoFile?.size ?? 0;
+                        if (total > 0) {
+                            uploadPhoto.uploadProgress.set(Math.round((event.loaded / total) * 100));
+                        }
+                    }
+
+                    if (event.type === HttpEventType.Response) {
+                        const temporaryAttachment = event.body;
+                        if (!temporaryAttachment) {
+                            return;
+                        }
+
+                        this.photos.update(photosArray => {
+                            const photo = photosArray.find(item => item.uuid === uploadPhoto.uuid);
+                            if (photo) {
+                                photo.id = temporaryAttachment.id;
+                                photo.isUploaded.set(true);
+                                photo.isUploading.set(false);
+                                photo.uploadProgress.set(100);
+                            }
+
+                            return [...photosArray];
+                        });
+
+                        uploadPhoto.uploadSubscription?.unsubscribe();
+                        uploadPhoto.uploadSubscription = undefined;
+                    }
+                },
+                error: (error) => {
+                    console.error(error);
+                    this.messageService.showServerError(error);
+                    uploadPhoto.isUploading.set(false);
+                    uploadPhoto.uploadProgress.set(0);
+
+                    uploadPhoto.uploadSubscription?.unsubscribe();
+                    uploadPhoto.uploadSubscription = undefined;
+                }
+            });
+        } catch (error) {
+            console.error(error);
+            this.messageService.showServerError(error);
+        }
+    }
+
+    private readExifMetadataAndUpload(uploadPhoto: UploadPhoto): void {
         const bufferReader = new FileReader();
 
         bufferReader.addEventListener('load', () => {
+            // First we can read exif metadata from the file.
             const tags = ExifReader.load(bufferReader.result as ArrayBuffer);
 
             const caption = tags['Caption/Abstract']?.description.toString();
@@ -527,7 +586,8 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
                 uploadPhoto.showGpsCoordination = false;
             }
 
-            listener();
+            // After reading exif metadata from file, we can upload file to the server.
+            this.uploadPhoto(uploadPhoto);
         });
 
         if (uploadPhoto.photoFile) {
@@ -658,4 +718,10 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
       return model;
     }
 
+    private resetPhotoFileUpload(): void {
+        const internalPhotoFileUpload = this.photoFileUpload();
+        if (internalPhotoFileUpload) {
+            internalPhotoFileUpload.nativeElement.value = '';
+        }
+    }
 }

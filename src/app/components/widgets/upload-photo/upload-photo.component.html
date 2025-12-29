@@ -5,9 +5,12 @@
     @if (isOpenAIEnabled()) {
         <div class="flex-row flex-space-between">
             <div class="margin-top-10">
-                @if (!photo().isUploaded()) {
-                    <mat-spinner class="display-inline-block margin-right-10" [diameter]="18"></mat-spinner>
-                    <span class="uploading-text">Uploading...</span>
+                @if (photo().isUploading()) {
+                    <div class="flex-row flex-align-center gap-10">
+                        <mat-spinner class="display-inline-block margin-right-10" [diameter]="18"></mat-spinner>
+                        <div class="text-muted">Uploading...</div>
+                        <button type="button" matButton="text" (click)="onCancelUpload()">Cancel</button>
+                    </div>
                 }
             </div>
 

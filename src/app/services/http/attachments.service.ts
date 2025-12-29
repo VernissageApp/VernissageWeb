@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { firstValueFrom } from 'rxjs';
+import { HttpClient, HttpEvent } from '@angular/common/http';
+import { firstValueFrom, Observable } from 'rxjs';
 import { TemporaryAttachment } from 'src/app/models/temporary-attachment';
 import { WindowService } from '../common/window.service';
 import { AttachmentDescription } from 'src/app/models/attachment-description';
@@ -16,6 +16,13 @@ export class AttachmentsService {
     public async uploadAttachment(formData: FormData): Promise<TemporaryAttachment> {
         const event$ = this.httpClient.post<TemporaryAttachment>(this.windowService.apiUrl() + '/api/v1/attachments', formData);
         return await firstValueFrom(event$);
+    }
+
+    public uploadAttachmentWithProgress(formData: FormData): Observable<HttpEvent<TemporaryAttachment>> {
+        return this.httpClient.post<TemporaryAttachment>(this.windowService.apiUrl() + '/api/v1/attachments', formData, {
+            reportProgress: true,
+            observe: 'events'
+        });
     }
 
     public async uploadHdrImage(id: string, formData: FormData): Promise<TemporaryAttachment> {
