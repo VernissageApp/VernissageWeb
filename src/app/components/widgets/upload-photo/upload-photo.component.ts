@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, input, model, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, model, OnInit, output, signal } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, startWith } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
@@ -26,6 +26,7 @@ import { PersistenceService } from 'src/app/services/persistance/persistance.ser
 export class UploadPhotoComponent extends ResponsiveComponent implements OnInit {
     public photo = model.required<UploadPhoto>();
     public licenses = input.required<License[]>();
+    public cancelUpload = output<UploadPhoto>();
 
     protected cities$?: Observable<Location[]>;
     protected citiesControl = new FormControl<string | Location>('');
@@ -154,6 +155,10 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
         } finally {
             this.describeInProgress.set(false);
         }
+    }
+
+    protected onCancelUpload(): void {
+        this.cancelUpload.emit(this.photo());
     }
 
     protected async onHdrPhotoSelected(event: any): Promise<void> {
