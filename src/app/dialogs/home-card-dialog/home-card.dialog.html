@@ -1,0 +1,53 @@
+<form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+    <div mat-dialog-title>Home card</div>
+    <div mat-dialog-content>
+
+        <div class="margin-bottom-20 padding-top-5">
+            <mat-form-field class="width-100" appearance="outline">
+                <mat-label>Title</mat-label>
+                <input type="text" matInput name="homeCardTitle" [(ngModel)]="title" #titleInput="ngModel" aria-label="Home card title" required appMaxLength="200" />
+
+                @if (titleInput.invalid && titleInput.errors?.required) {
+                    <mat-error>Enter home card title.</mat-error>
+                }
+
+                @if (titleInput.invalid && titleInput.errors?.appMaxLength) {
+                    <mat-error>Title is too long.</mat-error>
+                }
+            </mat-form-field>
+        </div>
+
+        <div class="margin-bottom-20">
+            <mat-form-field class="width-100" appearance="outline">
+                <mat-label>Body</mat-label>
+                <textarea matInput name="homeCardBody" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4"
+                    cdkAutosizeMaxRows="10" #bodyInput="ngModel" [(ngModel)]="body" required appMaxLength="1000"
+                    aria-label="License description"></textarea>
+
+                @if (bodyInput.invalid && bodyInput.errors?.required) {
+                    <mat-error>Enter home card body.</mat-error>
+                }
+
+                @if (bodyInput.invalid && bodyInput.errors?.appMaxLength) {
+                    <mat-error>Body is too long.</mat-error>
+                }
+            </mat-form-field>
+        </div>
+
+        <div class="margin-bottom-20">
+            <mat-form-field class="width-100" appearance="outline">
+                <mat-label>Order</mat-label>
+                <input type="number" matInput name="homeCardOrder" [(ngModel)]="order" #orderInput="ngModel" aria-label="Order" />
+
+                @if (orderInput.invalid && orderInput.errors?.required) {
+                    <mat-error>Enter home card order.</mat-error>
+                }
+            </mat-form-field>
+        </div>
+
+    </div>
+    <div mat-dialog-actions>
+        <button matButton="text" type="button" type="button" (click)="onNoClick()">Cancel</button>
+        <button matButton="filled" type="submit" cdkFocusInitial>Save</button>
+    </div>
+</form>

@@ -109,6 +109,12 @@ export enum EventType {
     LicensesUpdate = 'licensesUpdate',
     LicensesDelete = 'licensesDelete',
 
+    HomeCardsList = 'homeCardsList',
+    HomeCardsCachedList = 'homeCardsCachedList',
+    HomeCardsCreate = 'homeCardsCreate',
+    HomeCardsUpdate = 'homeCardsUpdate',
+    HomeCardsDelete = 'homeCardsDelete',
+
     StatusesList = 'statusesList',
     StatusesCreate = 'statusesCreate',
     StatusesRead = 'statusesRead',

@@ -89,6 +89,22 @@
                             <app-license-list></app-license-list>
                         </mat-expansion-panel>
 
+                        <!-- Home cards. -->
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Home cards
+                                </mat-panel-title>
+                                @if (!isHandset()) {
+                                    <mat-panel-description>
+                                        Here you can manage home's cards.
+                                        <mat-icon>home</mat-icon>
+                                    </mat-panel-description>
+                                }
+                            </mat-expansion-panel-header>
+                            <app-home-cards></app-home-cards>
+                        </mat-expansion-panel>
+
                     </mat-accordion>
 
                 </div>

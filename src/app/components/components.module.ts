@@ -41,6 +41,7 @@ import { CategoryListComponent } from './widgets/category-list/category-list.com
 import { ArticleInlineComponent } from './widgets/article-inline/article-inline.component';
 import { BusinessCardComponent } from './widgets/business-card/business-card.component';
 import { LicenseListComponent } from './widgets/license-list/license-list.component';
+import { HomeCardsComponent } from './widgets/home-cards/home-cards.component';
 
 @NgModule({
     declarations: [
@@ -76,7 +77,8 @@ import { LicenseListComponent } from './widgets/license-list/license-list.compon
         CategoryListComponent,
         ArticleInlineComponent,
         BusinessCardComponent,
-        LicenseListComponent
+        LicenseListComponent,
+        HomeCardsComponent
     ],
     exports: [
         BrowserModule,
@@ -116,6 +118,7 @@ import { LicenseListComponent } from './widgets/license-list/license-list.compon
         ArticleInlineComponent,
         BusinessCardComponent,
         LicenseListComponent,
+        HomeCardsComponent,
         DirectivesModule
     ],
     imports: [
