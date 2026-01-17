@@ -17,77 +17,16 @@
             </div>
 
             <div class="flex-row flex-wrap flex-center gap-8 margin-top-20 margin-bottom-20 margin-left-10 margin-right-10">
-                <mat-card appearance="outlined">
-                    <mat-card-header>
-                        <mat-card-title>Support for the ActivityPub</mat-card-title>
-                    </mat-card-header>
-                    <mat-card-content>
-                        <p class="text-muted">Connect with leading photographers across Mastodon, Pixelfed, and other platforms seamlessly.</p>
-                    </mat-card-content>
-                </mat-card>
-
-                <mat-card appearance="outlined">
-                    <mat-card-header>
-                        <mat-card-title>Photography centric</mat-card-title>
-                    </mat-card-header>
-                    <mat-card-content>
-                        <p class="text-muted">Enjoy multiple curated timelines, including your followers' photos, trending images, artist spotlights, hashtags, editor's choice photos, and much more.</p>
-                    </mat-card-content>
-                </mat-card>
-
-                <mat-card appearance="outlined">
-                    <mat-card-header>
-                        <mat-card-title>Metadata support</mat-card-title>
-                    </mat-card-header>
-                    <mat-card-content>
-                        <p class="text-muted">Share Exif metadata (such as camera manufacturer, model, aperture settings) or set up your own values, even for analog photography (like film, scanner or chemistry details). Photo location sharing is also available, if desired.</p>
-                    </mat-card-content>
-                </mat-card>
-
-                <mat-card appearance="outlined">
-                    <mat-card-header>
-                        <mat-card-title>High Dynamic Range (HDR)</mat-card-title>
-                    </mat-card-header>
-                    <mat-card-content>
-                        <p class="text-muted">Display HDR versions of your photos to take full advantage of modern monitor capabilities.</p>
-                    </mat-card-content>
-                </mat-card>
-
-                <mat-card appearance="outlined">
-                    <mat-card-header>
-                        <mat-card-title>AI integration</mat-card-title>
-                    </mat-card-header>
-                    <mat-card-content>
-                        <p class="text-muted">Leverage AI to generate ALT text for accessibility or to suggest hashtags.</p>
-                    </mat-card-content>
-                </mat-card>
-
-                <mat-card appearance="outlined">
-                    <mat-card-header>
-                        <mat-card-title>Push notifications</mat-card-title>
-                    </mat-card-header>
-                    <mat-card-content>
-                        <p class="text-muted">Upon installing the app, configure push notifications to receive alerts for new likes, followers, and other interactions.</p>
-                    </mat-card-content>
-                </mat-card>
-
-                <mat-card appearance="outlined">
-                    <mat-card-header>
-                        <mat-card-title>Account verification</mat-card-title>
-                    </mat-card-header>
-                    <mat-card-content>
-                        <p class="text-muted">Verify your account if you have a well-recognized personal website.</p>
-                    </mat-card-content>
-                </mat-card>
-
-                <mat-card appearance="outlined">
-                    <mat-card-header>
-                        <mat-card-title>Open source</mat-card-title>
-                    </mat-card-header>
-                    <mat-card-content>
-                        <p class="text-muted">All source codes are available under the Apache 2.0 license. Anyone can view, download, and modify them.</p>
-                    </mat-card-content>
-                </mat-card>
+                @for(homeCard of homeCards(); track homeCard.id) {
+                    <mat-card appearance="outlined">
+                        <mat-card-header>
+                            <mat-card-title>{{ homeCard.title }}</mat-card-title>
+                        </mat-card-header>
+                        <mat-card-content>
+                            <p class="text-muted">{{ homeCard.body }}</p>
+                        </mat-card-content>
+                    </mat-card>
+                }
             </div>
 
             <ul>
