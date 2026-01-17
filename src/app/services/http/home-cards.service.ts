@@ -15,7 +15,7 @@ export class HomeCardsService {
     public async cached(): Promise<HomeCard[]> {
         const event$ = this.httpClient.get<PagedResult<HomeCard>>(this.windowService.apiUrl() +  '/api/v1/home-cards/cached?page=1&size=100');
         const list = await firstValueFrom(event$);
-        return list.data ?? [];
+        return list.data.sort((a, b)=> a.order - b.order) ?? [];
     }
 
     public async get(page: number, size: number): Promise<PagedResult<HomeCard>> {
