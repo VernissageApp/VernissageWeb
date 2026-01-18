@@ -9,6 +9,8 @@ import { ReusableGalleryPageComponent } from 'src/app/common/reusable-gallery-pa
 import { ArticleVisibility } from 'src/app/models/article-visibility';
 import { ArticlesService } from 'src/app/services/http/articles.service';
 import { Article } from 'src/app/models/article';
+import { HomeCardsService } from 'src/app/services/http/home-cards.service';
+import { HomeCard } from 'src/app/models/home-card';
 
 @Component({
     selector: 'app-home-signout',
@@ -23,6 +25,7 @@ export class HomeSignoutComponent extends ReusableGalleryPageComponent implement
     protected showEditorsChoice = signal(false);
     protected mastodonUrl = signal<string | undefined>(undefined);
     protected articles = signal<Article[]>([]);
+    protected homeCards = signal<HomeCard[]>([]);
     
     private lastRefreshTime = new Date();
     private routeParamsSubscription?: Subscription;
@@ -32,6 +35,7 @@ export class HomeSignoutComponent extends ReusableGalleryPageComponent implement
     private settingsService = inject(SettingsService);
     private activatedRoute = inject(ActivatedRoute);
     private articlesService = inject(ArticlesService);
+    private homeCardsService = inject(HomeCardsService);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
@@ -45,7 +49,8 @@ export class HomeSignoutComponent extends ReusableGalleryPageComponent implement
             this.loadingService.showLoader();
             await Promise.all([
                 this.loadData(),
-                this.loadArticles()
+                this.loadArticles(),
+                this.loadHomeCards()
             ]);
 
             this.isReady.set(true);
@@ -70,7 +75,8 @@ export class HomeSignoutComponent extends ReusableGalleryPageComponent implement
 
                 await Promise.all([
                     this.loadData(),
-                    this.loadArticles()
+                    this.loadArticles(),
+                    this.loadHomeCards()
                 ]);
 
                 this.loadingService.hideLoader();
@@ -103,5 +109,10 @@ export class HomeSignoutComponent extends ReusableGalleryPageComponent implement
 
         const internalArticles = await this.articlesService.all(articlesPage, articlesSize, ArticleVisibility.SignOutHome, false);
         this.articles.set(internalArticles.data);
+    }
+
+    private async loadHomeCards(): Promise<void> {
+        const internalHomeCards = await this.homeCardsService.cached()
+        this.homeCards.set(internalHomeCards);
     }
 }

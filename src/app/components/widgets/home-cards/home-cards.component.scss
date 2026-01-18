@@ -1,0 +1,15 @@
+.title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.actions {
+    width: 100px;
+}
+
+@media only screen and (min-width: 600px) {
+    .actions {
+        width: 140px;
+    }
+}

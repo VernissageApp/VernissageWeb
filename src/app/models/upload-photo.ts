@@ -1,4 +1,5 @@
 import { signal } from "@angular/core";
+import { Subscription } from "rxjs";
 
 export class UploadPhoto {
     public uuid = '';
@@ -6,6 +7,8 @@ export class UploadPhoto {
     public photoSrc = signal<string | undefined>(undefined);
     public isUploaded = signal(false);
     public isDeleting = signal(false);
+    public isUploading = signal(false);
+    public uploadProgress = signal(0);
 
     public blurhash?: string;
     public photoFile?: Blob;
@@ -16,6 +19,7 @@ export class UploadPhoto {
     public id = '';
     public isAlreadyConnected = false;
     public description?: string;
+    public uploadSubscription?: Subscription;
 
     public locationId?: string;
     public licenseId?: string;
