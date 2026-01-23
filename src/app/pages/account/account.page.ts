@@ -36,6 +36,10 @@ import { PageEvent } from '@angular/material/paginator';
 import { FollowingImportStatus } from 'src/app/models/following-import-status';
 import { FollowingImportAccountsDialog } from 'src/app/dialogs/following-import-accounts-dialog/following-import-accounts.dialog';
 import { FileSizeService } from 'src/app/services/common/file-size.service';
+import { UserBlockedDomain } from 'src/app/models/user-blocked-domain';
+import { UserBlockedDomainsService } from 'src/app/services/http/user-blocked-domains.service';
+import { UserBlockedDomainDialog } from 'src/app/dialogs/user-blocked-domain-dialog/user-blocked-domain.dialog';
+import { UserBlockedDomainDialogEntity } from 'src/app/dialogs/user-blocked-domain-dialog/user-blocked-domain-dialog-entity';
 
 @Component({
     selector: 'app-account',
@@ -56,12 +60,19 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
     protected aliasDisplayedColumns = signal<string[]>(['alias', 'actions']);
     protected archivesDisplayedColumns = signal<string[]>([]);
     protected followingImportsDisplayedColumns = signal<string[]>([]);
+    protected userBlockedDomainsDisplayedColumns = signal<string[]>([]);
 
     protected userAliases = signal<UserAlias[]>([]);
     protected archives = signal<Archive[]>([]);
+
     protected followingImports = signal<PagedResult<FollowingImport> | undefined>(undefined);
     protected followingImportsPageIndex = signal(0);
     protected followingImportsPageSize = signal(10);
+
+    protected userBlockedDomains = signal<PagedResult<UserBlockedDomain> | undefined>(undefined);
+    protected userBlockedDomainsPageIndex = signal(0);
+    protected userBlockedDomainsPageSize = signal(10);
+
     protected maxPictureFileSizeString = signal('');
     protected maxImportFileSizeString = signal('');
 
@@ -87,6 +98,8 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
     private readonly archivesDisplayedColumnsMinimum: string[] = ['requestDate', 'download'];
     private readonly followingImportsDisplayedColumnsFull: string[] = ['createdAt', 'startedAt', 'endedAt', 'status', 'action'];
     private readonly followingImportsDisplayedColumnsMinimum: string[] = ['createdAt', 'status', 'action'];
+    private readonly userBlockedDomainsDisplayedColumnsFull: string[] = ['domain', 'createdAt', 'actions'];
+    private readonly userBlockedDomainsDisplayedColumnsMinimum: string[] = ['domain', 'actions'];
 
     private usersService = inject(UsersService);
     private avatarsService = inject(AvatarsService);
@@ -100,6 +113,7 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
     private exportsService = inject(ExportsService);
     private fileSaverService = inject(FileSaverService);
     private followingImportsService = inject(FollowingImportsService);
+    private userBlockedDomainsService = inject(UserBlockedDomainsService);
     private fileSizeService = inject(FileSizeService);
     private router = inject(Router);
     private dialog = inject(MatDialog);
@@ -118,10 +132,14 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
             const userFromToken = this.authorizationService.getUser();
             if (userFromToken?.userName) {
                 this.userName = userFromToken?.userName;
+
                 await this.loadUserData();
-                await this.loadUserAliases();
-                await this.loadArchives();
-                await this.loadFollowingImports();
+                await Promise.all([
+                    this.loadUserAliases(),
+                    this.loadArchives(),
+                    this.loadFollowingImports(),
+                    this.loadUserBlockedDomains(),
+                ]);
             } else {
                 this.messageService.showError('Cannot read username from token.');
             }
@@ -140,21 +158,25 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
     protected override onHandsetPortrait(): void {
         this.archivesDisplayedColumns?.set(this.archivesDisplayedColumnsMinimum);
         this.followingImportsDisplayedColumns?.set(this.followingImportsDisplayedColumnsMinimum);
+        this.userBlockedDomainsDisplayedColumns?.set(this.userBlockedDomainsDisplayedColumnsMinimum);
     }
 
     protected override onHandsetLandscape(): void {
         this.archivesDisplayedColumns?.set(this.archivesDisplayedColumnsMinimum);
         this.followingImportsDisplayedColumns?.set(this.followingImportsDisplayedColumnsMinimum);
+        this.userBlockedDomainsDisplayedColumns?.set(this.userBlockedDomainsDisplayedColumnsMinimum);
     }
 
     protected override onTablet(): void {
         this.archivesDisplayedColumns?.set(this.archivesDisplayedColumnsMinimum);
         this.followingImportsDisplayedColumns?.set(this.followingImportsDisplayedColumnsMinimum);
+        this.userBlockedDomainsDisplayedColumns?.set(this.userBlockedDomainsDisplayedColumnsMinimum);
     }
 
     protected override onBrowser(): void {
         this.archivesDisplayedColumns?.set(this.archivesDisplayedColumnsFull);
         this.followingImportsDisplayedColumns?.set(this.followingImportsDisplayedColumnsFull);
+        this.userBlockedDomainsDisplayedColumns?.set(this.userBlockedDomainsDisplayedColumnsFull);
     }
 
     protected async onSubmit(): Promise<void> {
@@ -378,6 +400,45 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
         });
     }
 
+    protected openUserBlockDomain(userBlockedDomain: UserBlockedDomain): void {
+        const dialogRef = this.dialog.open(UserBlockedDomainDialog, {
+            width: '500px',
+            data: new UserBlockedDomainDialogEntity('Edit blocked domain', userBlockedDomain, false)
+        });
+
+        dialogRef.afterClosed().subscribe(async (result) => {
+            if (result?.confirmed) {
+                try {
+                    await this.loadUserBlockedDomains();
+                } catch (error) {
+                    console.error(error);
+                    this.messageService.showServerError(error);
+                }
+            }
+        });
+    }
+
+    protected onUserBlockedDomainDelete(userBlockedDomain: UserBlockedDomain): void {
+        const dialogRef = this.dialog.open(ConfirmationDialog, {
+            width: '500px',
+            data: 'Do you want to delete blocked domain?'
+        });
+
+        dialogRef.afterClosed().subscribe(async (result) => {
+            if (result?.confirmed) {
+                try {
+                    await this.userBlockedDomainsService.delete(userBlockedDomain.id);
+                    await this.loadUserBlockedDomains();
+
+                    this.messageService.showSuccess('Blocked domain has been deleted.');
+                } catch (error) {
+                    console.error(error);
+                    this.messageService.showServerError(error);
+                }
+            }
+        });
+    }
+
     protected async onRequestArchive(): Promise<void> {
         try {
             await this.archivesService.create();
@@ -433,6 +494,13 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
         this.followingImportsPageSize.set(pageEvent.pageSize);
 
         this.loadFollowingImports();
+    }
+
+    protected async handleUserBlockedDomainsPageEvent(pageEvent: PageEvent): Promise<void> {
+        this.userBlockedDomainsPageIndex.set(pageEvent.pageIndex);
+        this.userBlockedDomainsPageSize.set(pageEvent.pageSize);
+
+        this.loadUserBlockedDomains();
     }
 
     protected async onFileSelected(event: any): Promise<void> {
@@ -507,5 +575,10 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
     private async loadFollowingImports(): Promise<void> {
         const downloadedFollowingImports = await this.followingImportsService.get(this.followingImportsPageIndex() + 1, this.followingImportsPageSize());
         this.followingImports.set(downloadedFollowingImports);
+    }
+
+    private async loadUserBlockedDomains(): Promise<void> {
+        const downloadedUserBlockedDomains = await this.userBlockedDomainsService.get(this.followingImportsPageIndex() + 1, this.followingImportsPageSize());
+        this.userBlockedDomains.set(downloadedUserBlockedDomains);
     }
 }
