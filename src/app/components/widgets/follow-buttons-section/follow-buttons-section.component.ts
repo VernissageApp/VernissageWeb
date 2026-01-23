@@ -15,6 +15,11 @@ import { FollowRequestsService } from 'src/app/services/http/follow-requests.ser
 import { ReportsService } from 'src/app/services/http/reports.service';
 import { UsersService } from 'src/app/services/http/users.service';
 import { RelationshipsService } from 'src/app/services/http/relationships.service';
+import { UserBlockedDomainDialog } from 'src/app/dialogs/user-blocked-domain-dialog/user-blocked-domain.dialog';
+import { UserBlockedDomain } from 'src/app/models/user-blocked-domain';
+import { UserBlockedDomainsService } from 'src/app/services/http/user-blocked-domains.service';
+import { ConfirmationDialog } from 'src/app/dialogs/confirmation-dialog/confirmation.dialog';
+import { UserBlockedDomainDialogEntity } from 'src/app/dialogs/user-blocked-domain-dialog/user-blocked-domain-dialog-entity';
 
 @Component({
     selector: 'app-follow-buttons-section',
@@ -40,6 +45,8 @@ export class FollowButtonsSectionComponent implements OnInit, OnDestroy {
     protected showCopyProfileUrlButton = signal(false);
     protected showMuteButton = signal(false);
     protected showUnmuteButton = signal(false);
+    protected showUserBlockDomainButton = signal(false);
+    protected showUserUnblockDomainButton = signal(false);
     protected showFeatureButton = signal(false);
     protected showUnfeatureButton = signal(false);
     protected showReportButton = signal(false);
@@ -47,6 +54,7 @@ export class FollowButtonsSectionComponent implements OnInit, OnDestroy {
     private signedInUser?: User;
     private relationshipAfterAction = signal<Relationship | undefined>(undefined);
     private userAfterAction = signal<User | undefined>(undefined);
+    private userBlockedDomain = signal<UserBlockedDomain | undefined>(undefined);
 
     private relationshipRefreshInterval: NodeJS.Timeout | undefined;
     private relationshipRefreshCounter = 0;
@@ -61,6 +69,7 @@ export class FollowButtonsSectionComponent implements OnInit, OnDestroy {
     private windowService = inject(WindowService);
     private messagesService = inject(MessagesService);
     private relationshipsService = inject(RelationshipsService);
+    private userBlockedDomainsService = inject(UserBlockedDomainsService);
     private dialog = inject(MatDialog);
     private clipboard = inject(Clipboard);
 
@@ -74,9 +83,13 @@ export class FollowButtonsSectionComponent implements OnInit, OnDestroy {
         });
     }
 
-    ngOnInit(): void {
+    async ngOnInit(): Promise<void> {
         this.signedInUser = this.authorizationService.getUser();
         this.recalculateRelationship();
+
+        if (this.shouldShowUserBlockOrUnblockDomainButton() && !this.singleButton()) {
+            await this.loadUserBlockedDomain();
+        }
     }
 
     ngOnDestroy(): void {
@@ -156,6 +169,59 @@ export class FollowButtonsSectionComponent implements OnInit, OnDestroy {
                 try {
                     await this.reportsService.create(result);
                     this.messageService.showSuccess('Report has been saved.');
+                } catch (error) {
+                    console.error(error);
+                    this.messageService.showServerError(error);
+                }
+            }
+        });
+    }
+
+    protected async onUserBlockDomainDialog(): Promise<void> {
+        const activityPubProfile = this.updatedUser().activityPubProfile;
+        if (!activityPubProfile) {
+            return;
+        }
+
+        const userBlockedDomain = new UserBlockedDomain();
+        userBlockedDomain.domain = this.getHostFromActivityPubProfile(activityPubProfile);
+
+        const dialogRef = this.dialog.open(UserBlockedDomainDialog, {
+            width: '500px',
+            data: new UserBlockedDomainDialogEntity('Block domain', userBlockedDomain, true)
+        });
+
+        dialogRef.afterClosed().subscribe(async (result) => {
+            if (result?.confirmed) {
+                try {
+                    await this.loadUserBlockedDomain();
+                } catch (error) {
+                    console.error(error);
+                    this.messageService.showServerError(error);
+                }
+            }
+        });
+
+        
+    }
+
+    protected async onUserUnblockDomainDialog(): Promise<void> {
+        const internalUserBlockDomain = this.userBlockedDomain();
+        if (!internalUserBlockDomain) {
+            return;
+        }
+
+        const dialogRef = this.dialog.open(ConfirmationDialog, {
+            width: '500px',
+            data: 'Do you want to delete blocked domain?'
+        });
+
+        dialogRef.afterClosed().subscribe(async (result) => {
+            if (result?.confirmed) {
+                try {
+                    await this.userBlockedDomainsService.delete(internalUserBlockDomain.id);
+                    await this.loadUserBlockedDomain();
+                    this.messageService.showSuccess('Blocked domain has been deleted.');
                 } catch (error) {
                     console.error(error);
                     this.messageService.showServerError(error);
@@ -371,6 +437,22 @@ export class FollowButtonsSectionComponent implements OnInit, OnDestroy {
         return isMuted === true;
     }
 
+    private shouldShowUserBlockOrUnblockDomainButton(): boolean {
+        if (!this.signedInUser) {
+            return false;
+        }
+
+        if (this.signedInUser.id === this.updatedUser().id) {
+            return false;
+        }
+
+        if (this.updatedUser().isLocal) {
+            return false;
+        }
+        
+        return true;
+    }
+
     private shouldShowFeatureButton(): boolean {
         if (!this.signedInUser) {
             return false;
@@ -472,5 +554,41 @@ export class FollowButtonsSectionComponent implements OnInit, OnDestroy {
         }
 
         return await this.relationshipsService.get(internalUser.id);
+    }
+
+    private getHostFromActivityPubProfile(activityPubProfile: string): string {
+        const url = new URL(activityPubProfile);
+        return url.host;
+    }
+
+    private async loadUserBlockedDomain(): Promise<void> {
+        this.userBlockedDomain.set(undefined);
+
+        const shouldShownButtons = this.shouldShowUserBlockOrUnblockDomainButton();
+        if (!shouldShownButtons) {
+            this.showUserBlockDomainButton.set(false);
+            this.showUserUnblockDomainButton.set(false);
+
+            return;
+        }
+
+        const activityPubProfile = this.updatedUser().activityPubProfile;
+        if (!activityPubProfile) {
+            this.showUserBlockDomainButton.set(true);
+            this.showUserUnblockDomainButton.set(false);
+
+            return;
+        }
+
+        const domain = this.getHostFromActivityPubProfile(activityPubProfile);
+        const userBlockedDomains = await this.userBlockedDomainsService.get(1, 1, domain);
+        if (userBlockedDomains && userBlockedDomains.data.length === 1) {
+            this.userBlockedDomain.set(userBlockedDomains.data[0]);
+            this.showUserBlockDomainButton.set(false);
+            this.showUserUnblockDomainButton.set(true);
+        } else {
+            this.showUserBlockDomainButton.set(true);
+            this.showUserUnblockDomainButton.set(false);
+        }
     }
 }

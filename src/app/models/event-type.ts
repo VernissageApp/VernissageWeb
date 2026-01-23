@@ -168,9 +168,16 @@ export enum EventType {
     FavouritesList = 'favouritesList',
 
     InstanceBlockedDomainsList = 'instanceBlockedDomainsList',
+    InstanceBlockedDomainsRead = 'instanceBlockedDomainsRead',
     InstanceBlockedDomainsCreate = 'instanceBlockedDomainsCreate',
     InstanceBlockedDomainsUpdate = 'instanceBlockedDomainsUpdate',
     InstanceBlockedDomainsDelete = 'instanceBlockedDomainsDelete',
+
+    UserBlockedDomainsList = 'userBlockedDomainsList',
+    UserBlockedDomainsRead = 'userBlockedDomainsRead',
+    UserBlockedDomainsCreate = 'userBlockedDomainsCreate',
+    UserBlockedDomainsUpdate = 'userBlockedDomainsUpdate',
+    UserBlockedDomainsDelete = 'userBlockedDomainsDelete',
 
     PushSubscriptionsList = 'pushSubscriptionsList',
     PushSubscriptionsCreate = 'pushSubscriptionsCreate',

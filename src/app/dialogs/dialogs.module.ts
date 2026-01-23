@@ -34,6 +34,7 @@ import { ErrorItemDialog } from './error-item-dialog/error-item.dialog';
 import { StatusEventErrorMessageDialog } from './status-event-error-message-dialog/status-event-error-message.dialog';
 import { LicenseDialog } from './license-dialog/license.dialog';
 import { HomeCardDialog } from './home-card-dialog/home-card.dialog';
+import { UserBlockedDomainDialog } from './user-blocked-domain-dialog/user-blocked-domain.dialog';
 
 @NgModule({
     declarations: [
@@ -50,6 +51,7 @@ import { HomeCardDialog } from './home-card-dialog/home-card.dialog';
         DisableTwoFactorTokenDialog,
         ContentWarningDialog,
         InstanceBlockedDomainDialog,
+        UserBlockedDomainDialog,
         ProfileCodeDialog,
         NotificationSettingsDialog,
         InstanceRuleDialog,
@@ -80,6 +82,7 @@ import { HomeCardDialog } from './home-card-dialog/home-card.dialog';
         DisableTwoFactorTokenDialog,
         ContentWarningDialog,
         InstanceBlockedDomainDialog,
+        UserBlockedDomainDialog,
         ProfileCodeDialog,
         NotificationSettingsDialog,
         InstanceRuleDialog,
