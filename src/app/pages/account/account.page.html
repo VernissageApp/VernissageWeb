@@ -597,6 +597,79 @@
     <mat-card class="margin-bottom-20" appearance="outlined">
         <mat-card-header>
             <mat-card-title>
+                Blocked domains
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
+                <div>
+                    List of domains you have blocked. Users from these domains cannot follow you.
+                    Their posts will not appear in your local timeline, and your posts are not delivered
+                    directly to them. However, they may still see your posts if a third party they follow boosts them.
+                </div>
+                <div class="text-right"></div>
+            </div>
+
+            @if (userBlockedDomains(); as userBlockedDomainsArray) {
+                @if (userBlockedDomainsArray.data.length > 0) {
+                    <table mat-table [dataSource]="userBlockedDomainsArray.data" animate.enter="fade-in">
+
+                        <!-- Domain Column -->
+                        <ng-container matColumnDef="domain">
+                            <th mat-header-cell *matHeaderCellDef> Domain </th>
+                            <td mat-cell *matCellDef="let element">
+                                {{ element.domain }}
+                                <div class="text-muted">
+                                    <small>
+                                        {{ element.reason }}
+                                    </small>
+                                </div>
+                            </td>
+                        </ng-container>
+
+                        <!-- Created at Column -->
+                        <ng-container matColumnDef="createdAt">
+                            <th mat-header-cell *matHeaderCellDef> Created at </th>
+                            <td mat-cell *matCellDef="let element">
+                                @if (element.createdAt) {
+                                    {{ element.createdAt | date: 'short' }}
+                                }
+                            </td>
+                        </ng-container>
+
+                        <!-- Actions Column -->
+                        <ng-container matColumnDef="actions">
+                            <th mat-header-cell *matHeaderCellDef></th>
+                            <td mat-cell *matCellDef="let element" class="text-right blocked-domains-actions">
+                                <button matIconButton class="margin-right-10" (click)="openUserBlockDomain(element)">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+                                <button matIconButton (click)="onUserBlockedDomainDelete(element)">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="userBlockedDomainsDisplayedColumns()"></tr>
+                        <tr mat-row *matRowDef="let row; columns: userBlockedDomainsDisplayedColumns();"></tr>
+                    </table>
+                    <mat-paginator
+                        (page)="handleUserBlockedDomainsPageEvent($event)"
+                        [length]="userBlockedDomainsArray.total"
+                        [pageIndex]="userBlockedDomainsPageIndex()"
+                        [pageSize]="userBlockedDomainsPageSize()"
+                        [pageSizeOptions]="[10, 25, 100]"
+                        aria-label="Select page">
+                    </mat-paginator>
+                }
+            }
+
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card class="margin-bottom-20" appearance="outlined">
+        <mat-card-header>
+            <mat-card-title>
                 Delete account
             </mat-card-title>
         </mat-card-header>

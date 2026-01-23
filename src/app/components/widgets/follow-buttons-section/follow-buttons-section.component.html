@@ -53,7 +53,17 @@
                 }
                 
                 @if (showReportButton()) {
-                    <button  (click)="onReportDialog()" mat-menu-item><mat-icon>report</mat-icon> Report</button>
+                    <button (click)="onReportDialog()" mat-menu-item><mat-icon>report</mat-icon> Report</button>
+                }
+
+                @if (showUserBlockDomainButton()) {
+                    <mat-divider></mat-divider>
+                    <button (click)="onUserBlockDomainDialog()" mat-menu-item><mat-icon>supervised_user_circle_off</mat-icon> Block domain</button>
+                }
+
+                @if (showUserUnblockDomainButton()) {
+                    <mat-divider></mat-divider>
+                    <button (click)="onUserUnblockDomainDialog()" mat-menu-item><mat-icon>supervised_user_circle</mat-icon> Unblock domain</button>
                 }
             </mat-menu>
         }
