@@ -302,8 +302,10 @@
                                             <mat-icon class="margin-right-20" inline="true" matTooltip="Camera">camera_alt</mat-icon>
                                             <span class="exif-label">
                                                 @if (exifInternal.make) {
-                                                    <span>{{ exifInternal.make }}</span>
-                                                    }&nbsp;@if (exifInternal.model) {
+                                                    <span>{{ exifInternal.make }}</span>&nbsp;
+                                                }
+                                                
+                                                @if (exifInternal.model) {
                                                     <span>{{ exifInternal.model }}</span>
                                                 }
                                             </span>
