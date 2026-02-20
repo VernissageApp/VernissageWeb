@@ -672,6 +672,27 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         return withoutMillimeters.split(/\.|,/)[0];
     }
 
+    protected getCorrectIsoDate(stringDate?: string): Date | undefined {
+        console.log(stringDate);
+        if (!stringDate || stringDate.length === 0) {
+            return undefined;
+        }
+
+        // 2025-02-15T15:12:41.706Z (regular ISO date).
+        const dateIso = Date.parse(stringDate);
+        if (dateIso && isNaN(dateIso) === false) {
+            return new Date(dateIso);
+        }
+
+        // 2025:12:18 12:20:02 (we should avoid storing that kind of date format into the database).
+        const dateSpecific = this.parseSpecificDateString(stringDate);
+        if (dateSpecific) {
+            return dateSpecific
+        }
+
+        return undefined;
+    }
+
     private getAltStatus(index: number): string | undefined {
         const attachment = this.mainStatus()?.attachments?.at(index);
         if (attachment) {
@@ -1045,6 +1066,34 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         const internalAttachments = this.mainStatus()?.attachments;
         if (internalAttachments && internalAttachments.length > 0) {
             return internalAttachments[0].originalFile?.url;
+        }
+
+        return undefined;
+    }
+
+    private parseSpecificDateString(stringDate: string): Date | undefined {
+        const exifDateRegex = /^(\d{4}):(\d{2}):(\d{2}) (\d{2}):(\d{2}):(\d{2})$/;
+        const exifDateMatch = stringDate.match(exifDateRegex);
+
+        if (exifDateMatch) {
+            const year = Number.parseInt(exifDateMatch[1], 10);
+            const month = Number.parseInt(exifDateMatch[2], 10);
+            const day = Number.parseInt(exifDateMatch[3], 10);
+            const hours = Number.parseInt(exifDateMatch[4], 10);
+            const minutes = Number.parseInt(exifDateMatch[5], 10);
+            const seconds = Number.parseInt(exifDateMatch[6], 10);
+
+            const parsedDate = new Date(year, month - 1, day, hours, minutes, seconds);
+            if (
+                parsedDate.getFullYear() === year &&
+                parsedDate.getMonth() === month - 1 &&
+                parsedDate.getDate() === day &&
+                parsedDate.getHours() === hours &&
+                parsedDate.getMinutes() === minutes &&
+                parsedDate.getSeconds() === seconds
+            ) {
+                return parsedDate;
+            }
         }
 
         return undefined;
