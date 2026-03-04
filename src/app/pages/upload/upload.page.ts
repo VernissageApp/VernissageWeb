@@ -493,15 +493,29 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
 
             const model = tags['Model']?.description.toString();
             if (model) {
-              if (make) {
-                const strippedModel = this.stripModel(model, make);
-                uploadPhoto.model = strippedModel;
-              } else {
-                uploadPhoto.model = model;
-              }
+                if (make) {
+                    const strippedModel = this.stripModel(model, make);
+                    uploadPhoto.model = strippedModel;
+                } else {
+                    uploadPhoto.model = model;
+                }
+
                 uploadPhoto.showModel = true;
             }
 
+            const lensModel = tags['LensModel']?.description.toString().trim();
+            if (lensModel) {
+                uploadPhoto.lens = lensModel.trim();
+
+                const lensMake = tags['LensMake']?.description.toString().trim();
+                if (lensMake && !lensModel.startsWith(lensMake)) {
+                    uploadPhoto.lens = `${lensMake} ${lensModel}`.trim();
+                }
+
+                uploadPhoto.showLens = true;
+            }
+
+            // If we have lens tag it's more important then lens model tag (and should override it).
             const lens = tags['Lens']?.description.toString();
             if (lens) {
                 uploadPhoto.lens = lens;
@@ -540,8 +554,9 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
 
             const createDate = tags['CreateDate']?.description.toString();
             const dateCreated = tags['DateCreated']?.description.toString();
-            const dateTimeCreated = tags['Date Created']?.description.toString().replace(':', '-').trim();
+            const dateTimeCreated = tags['Date Created']?.description.toString().replaceAll(':', '-').trim();
             const timeCreated = tags['Time Created']?.description.toString();
+            const dateTimeOrginal = tags['DateTimeOriginal']?.description.toString();
 
             if (createDate) {
                 uploadPhoto.createDate = new Date(createDate);
@@ -552,6 +567,15 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
             } else if (dateTimeCreated && timeCreated) {
                 uploadPhoto.createDate = new Date(dateTimeCreated + 'T' + timeCreated);
                 uploadPhoto.showCreateDate = true;
+            } else if (dateTimeOrginal) {
+                const dateTimeParts = dateTimeOrginal.split(' ');
+                if (dateTimeParts.length === 2) {
+                    const datePart = dateTimeParts[0].replaceAll(':', '-').trim();
+                    const timePart = dateTimeParts[1].trim();
+
+                    uploadPhoto.createDate = new Date(datePart + 'T' + timePart);
+                    uploadPhoto.showCreateDate = true;
+                }
             }
 
             const software = tags['Software']?.description.toString() ?? tags['CreatorTool']?.description.toString();
@@ -711,11 +735,11 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
     }
 
     private stripModel(model: string, manufacturer: string): string {
+        if (manufacturer && model.startsWith(manufacturer)) {
+            model = model.replace(manufacturer, '').trim();
+        }
 
-      if (manufacturer && model.startsWith(manufacturer)) {
-          model = model.replace(manufacturer, '').trim();
-      }
-      return model;
+        return model;
     }
 
     private resetPhotoFileUpload(): void {
