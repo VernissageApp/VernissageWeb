@@ -63,7 +63,7 @@ export class RegisterPage implements OnInit {
 
         this.isRegistrationByApprovalOpened.set(this.instanceService.instance?.registrationOpened === false && this.instanceService.instance?.registrationByApprovalOpened === true);
         this.isRegistrationByInvitationsOpened.set(this.instanceService.instance?.registrationOpened === false && this.instanceService.instance?.registrationByInvitationsOpened === true);
-        this.isQuickCaptchaEnabled.set(this.instanceService.instance?.registrationOpened === true && this.settingsService.publicSettings?.isQuickCaptchaEnabled === true);
+        this.isQuickCaptchaEnabled.set(this.settingsService.publicSettings?.isQuickCaptchaEnabled === true);
 
         this.serverRules.set(this.instanceService.instance?.rules ?? []);
     }
