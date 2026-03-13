@@ -13,6 +13,7 @@
                     placeholder="Leave a comment"
                     #commentInput="ngModel"
                     [(ngModel)]="comment"
+                    [disabled]="disabled()"
                     aria-label="Leave a comment"
                     [appMaxLength]="maxStatusLength().toString()">
                 </textarea>
