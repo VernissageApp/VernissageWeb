@@ -19,6 +19,7 @@ export class CommentReplyComponent implements OnInit {
     public signedInUser = input.required<User>();
     public status = input.required<Status>();
     public showCancel = input(false);
+    public disabled = input(false);
     public clickCancel = output();
     public added = output();
 
