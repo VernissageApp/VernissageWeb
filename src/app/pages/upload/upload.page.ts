@@ -30,6 +30,7 @@ import { AccountService } from 'src/app/services/http/account.service';
 import { LoadingService } from 'src/app/services/common/loading.service';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 import { ForbiddenError } from 'src/app/errors/forbidden-error';
+import { CanonExifService } from 'src/app/services/common/canon-exif.service';
 
 @Component({
     selector: 'app-upload',
@@ -89,6 +90,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
     private accountService = inject(AccountService);
     private loadingService = inject(LoadingService);
     private authorizationService = inject(AuthorizationService);
+    private canonExifService = inject(CanonExifService);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
@@ -503,6 +505,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
                 uploadPhoto.showModel = true;
             }
 
+            // First we can try to extract lens information from 'LensModel' and 'LensMake' tags.
             const lensModel = tags['LensModel']?.description.toString().trim();
             if (lensModel) {
                 uploadPhoto.lens = lensModel.trim();
@@ -515,7 +518,18 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
                 uploadPhoto.showLens = true;
             }
 
-            // If we have lens tag it's more important then lens model tag (and should override it).
+            // Than we try to extract lens from 'LensType' tag (Canon proprietary, non-standard tag).
+            const lensTypeValue = tags['LensType']?.value;
+            if (lensTypeValue) {
+                const lensName = this.canonExifService.extractLensModel(lensTypeValue);
+                if (lensName) {
+                    uploadPhoto.lens = lensName;
+                    uploadPhoto.showLens = true;
+                }
+            }
+
+            // If we have exif 'LensModel' tag it's more important then 'LensModel' tag and 'LensType'
+            // tag from additional exif (and should override it).
             const lens = tags['Lens']?.description.toString();
             if (lens) {
                 uploadPhoto.lens = lens;
