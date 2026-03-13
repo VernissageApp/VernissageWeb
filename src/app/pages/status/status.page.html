@@ -11,7 +11,7 @@
             </div>
 
             <div class="photo-container photo-container-table">
-                @if (showContextArrows()) {
+                @if (showContextArrows() && !isInVersionMode()) {
                     <div class="icon" (click)="onPrevClick()" (keydown.enter)="onPrevClick()" tabindex="0">
                         @if (!hideLeftArrow()) {
                             <mat-icon>arrow_back_ios</mat-icon>
@@ -66,7 +66,7 @@
                     }
                 </div>
 
-                @if (showContextArrows()) {
+                @if (showContextArrows() && !isInVersionMode()) {
                     <div class="icon" (click)="onNextClick()" (keydown.enter)="onNextClick()" tabindex="0">
                         @if (!hideRightArrow()) {
                             <mat-icon>arrow_forward_ios</mat-icon>
@@ -116,56 +116,56 @@
                                 <!-- Actions panel -->
                                 @if (isLoggedIn()) {
                                     @if (!mainStatusInternal.reblogged) {
-                                        <button matIconButton class="margin-right-10" matTooltip="Boost" matTooltipPosition="above" aria-label="Boost" [disabled]="isDuringBoostProcessing()" (click)="reblog()">
+                                        <button matIconButton class="margin-right-10" matTooltip="Boost" matTooltipPosition="above" aria-label="Boost" [disabled]="isDuringBoostProcessing() || isInVersionMode()" (click)="reblog()">
                                             <mat-icon class="outline-symbol">rocket_launch</mat-icon>
                                         </button>
                                     }
 
                                     @if (mainStatusInternal.reblogged) {
-                                        <button matIconButton class="margin-right-10" matTooltip="Unboost" matTooltipPosition="above" aria-label="Unboost" [disabled]="isDuringBoostProcessing()" (click)="unreblog()">
+                                        <button matIconButton class="margin-right-10" matTooltip="Unboost" matTooltipPosition="above" aria-label="Unboost" [disabled]="isDuringBoostProcessing() || isInVersionMode()" (click)="unreblog()">
                                             <mat-icon class="fill-symbol">rocket_launch</mat-icon>
                                         </button>
                                     }
 
                                     @if (!mainStatusInternal.favourited) {
-                                        <button matIconButton class="margin-right-10" matTooltip="Like" matTooltipPosition="above" aria-label="Like" [disabled]="isDuringFavouriteProcessing()" (click)="favourite()">
+                                        <button matIconButton class="margin-right-10" matTooltip="Like" matTooltipPosition="above" aria-label="Like" [disabled]="isDuringFavouriteProcessing() || isInVersionMode()" (click)="favourite()">
                                             <mat-icon class="outline-symbol">grade</mat-icon>
                                         </button>
                                     }
 
                                     @if (mainStatusInternal.favourited) {
-                                        <button matIconButton class="margin-right-10" matTooltip="Unlike" matTooltipPosition="above" aria-label="Unlike" [disabled]="isDuringFavouriteProcessing()" (click)="unfavourite()">
+                                        <button matIconButton class="margin-right-10" matTooltip="Unlike" matTooltipPosition="above" aria-label="Unlike" [disabled]="isDuringFavouriteProcessing() || isInVersionMode()" (click)="unfavourite()">
                                             <mat-icon class="fill-symbol">grade</mat-icon>
                                         </button>
                                     }
 
                                     @if (!mainStatusInternal.bookmarked) {
-                                        <button matIconButton class="margin-right-10" matTooltip="Bookmark" matTooltipPosition="above" aria-label="Bookmark" [disabled]="isDuringBookmarkProcessing()" (click)="bookmark()">
+                                        <button matIconButton class="margin-right-10" matTooltip="Bookmark" matTooltipPosition="above" aria-label="Bookmark" [disabled]="isDuringBookmarkProcessing() || isInVersionMode()" (click)="bookmark()">
                                             <mat-icon class="outline-symbol">bookmark</mat-icon>
                                         </button>
                                     }
 
                                     @if (mainStatusInternal.bookmarked) {
-                                        <button matIconButton class="margin-right-10" matTooltip="Unbookmark" matTooltipPosition="above" aria-label="Unbookmark" [disabled]="isDuringBookmarkProcessing()" (click)="unbookmark()">
+                                        <button matIconButton class="margin-right-10" matTooltip="Unbookmark" matTooltipPosition="above" aria-label="Unbookmark" [disabled]="isDuringBookmarkProcessing() || isInVersionMode()" (click)="unbookmark()">
                                             <mat-icon class="fill-symbol">bookmark</mat-icon>
                                         </button>
                                     }
 
                                     @if (shouldDisplayFeatureButton()) {
                                         @if (!mainStatusInternal.featured) {
-                                            <button matIconButton class="margin-right-10" matTooltip="Feature" matTooltipPosition="above" aria-label="Feature" [disabled]="isDuringFeatureProcessing()" (click)="feature()">
+                                            <button matIconButton class="margin-right-10" matTooltip="Feature" matTooltipPosition="above" aria-label="Feature" [disabled]="isDuringFeatureProcessing() || isInVersionMode()" (click)="feature()">
                                                 <mat-icon class="outline-symbol">stars</mat-icon>
                                             </button>
                                         }
 
                                         @if (mainStatusInternal.featured) {
-                                            <button matIconButton class="margin-right-10" matTooltip="Unfeature" matTooltipPosition="above" aria-label="Unfeature" [disabled]="isDuringFeatureProcessing()" (click)="unfeature()">
+                                            <button matIconButton class="margin-right-10" matTooltip="Unfeature" matTooltipPosition="above" aria-label="Unfeature" [disabled]="isDuringFeatureProcessing() || isInVersionMode()" (click)="unfeature()">
                                                 <mat-icon class="fill-symbol">stars</mat-icon>
                                             </button>
                                         }
                                     }
 
-                                    <button matIconButton [matMenuTriggerFor]="menu" class="margin-right-10" aria-label="More options">
+                                    <button matIconButton [matMenuTriggerFor]="menu" [disabled]="isInVersionMode()" class="margin-right-10" aria-label="More options">
                                         <mat-icon>more_vert</mat-icon>
                                     </button>
                                     <mat-menu #menu="matMenu">
@@ -412,7 +412,7 @@
                             </mat-card-header>
                             <mat-card-content>
                                 @if (signedInUser(); as signedInUserInternal) {
-                                    <app-comment-reply [signedInUser]="signedInUserInternal" [status]="mainStatusInternal" (added)="onCommentAdded()"></app-comment-reply>
+                                    <app-comment-reply [signedInUser]="signedInUserInternal" [status]="mainStatusInternal" [disabled]="isInVersionMode()" (added)="onCommentAdded()"></app-comment-reply>
                                 }
 
                                 @if ((comments()?.length ?? 0) > 0) {
