@@ -20,7 +20,7 @@ export class FocusTrackerService {
         }
 
         // If there are any overlays open (like mat-select), we consider the app focused.
-        const overlayContainer = this.document.body.querySelector('.cdk-overlay-pane');
+        const overlayContainer = this.document.body.querySelector('.cdk-overlay-pane:not(.mat-mdc-tooltip-panel)');
         const isOverlayOpen = overlayContainer && overlayContainer.childElementCount > 0;
         if (isOverlayOpen) {
             return true;
