@@ -31,7 +31,7 @@ import { LoadingService } from 'src/app/services/common/loading.service';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 import { ForbiddenError } from 'src/app/errors/forbidden-error';
 import { CanonExifService } from 'src/app/services/common/canon-exif.service';
-import { DeviceDetectorService } from 'ngx-device-detector';
+import { DeviceDetectorService, DeviceType } from 'ngx-device-detector';
 
 @Component({
     selector: 'app-upload',
@@ -53,7 +53,6 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
     protected commentsDisabled = model(false);
     protected isSensitive = model(false);
     protected contentWarning = model('');
-    protected maxFileSizeString = model('');
     protected selectedIndex = model(0);
     protected isCanceling = signal(false);
     protected emailHasBeenVerified = signal(false);
@@ -64,6 +63,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
     protected isOpenAIEnabled = signal(false);
     protected hashtagsInProgress = signal(false);
     protected isEditMode = signal(false);
+    protected maxFileSizeString = signal('');
 
     protected allPhotosUploaded = computed(() => !this.photos().some(x => !x.isUploaded() || (x.photoHdrFile && !x.isHdrUploaded)));
     protected photoFileUpload = viewChild<ElementRef<HTMLInputElement>>('photoFileUpload');
@@ -74,6 +74,8 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
     private readonly defaultMaxFileSize = 10485760;
     private readonly defaultMaxMediaAttachments = 4;
     private readonly defaultMaxCharacters = 500;
+    private readonly imageResizeLongerEdge = 4096;
+    private readonly imageResizeJpegQuality = 0.9;
 
     private messageService = inject(MessagesService);
     private attachmentsService = inject(AttachmentsService);
@@ -138,14 +140,29 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
             return;
         }
 
-        if (file.size > this.maxFileSize) {
-            this.messageService.showError(`Uploaded file is too large. Maximum size is ${this.maxFileSizeString()}.`);
-            return;
-        }
-
         const photoUuid = this.randomGeneratorService.generateString(16);
         const uploadPhoto = new UploadPhoto(photoUuid);
-        uploadPhoto.photoFile = event.target.files[0];
+        uploadPhoto.photoFile = file;
+
+        if (file.size > this.maxFileSize) {
+            if (this.deviceDetectorService.deviceType() !== DeviceType.Mobile) {
+                this.messageService.showError(`Uploaded file is too large. Maximum size is ${this.maxFileSizeString()}.`);
+                return;
+            }
+
+            try {
+                uploadPhoto.photoResizedFile = await this.resizeImageToJpeg(file);
+            } catch (error) {
+                console.error(error);
+                this.messageService.showError('Unable to resize image before upload.');
+                return;
+            }
+
+            if (uploadPhoto.photoResizedFile.size > this.maxFileSize) {
+                this.messageService.showError(`Uploaded file is too large. Maximum size is ${this.maxFileSizeString()}.`);
+                return;
+            }
+        }
 
         this.setPhotoData(uploadPhoto);
         this.readExifMetadataAndUpload(uploadPhoto);
@@ -424,9 +441,10 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
             this.photos.update(photos => [...photos, uploadPhoto]);
 
             const formData = new FormData();
+            const fileToUpload = uploadPhoto.photoResizedFile ?? uploadPhoto.photoFile;
 
-            if (uploadPhoto.photoFile) {
-                formData.append('file', uploadPhoto.photoFile);
+            if (fileToUpload) {
+                formData.append('file', fileToUpload);
             }
 
             // Reset file form (in case if we want to send the same file once again).
@@ -442,7 +460,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
                     // However, it's strongly recommended to enable fetch for applications that use Server-Side
                     // Rendering for better performance and compatibility (https://angular.dev/api/common/http/provideHttpClient).
                     if (event.type === HttpEventType.UploadProgress) {
-                        const total = event.total ?? uploadPhoto.photoFile?.size ?? 0;
+                        const total = event.total ?? fileToUpload?.size ?? 0;
                         if (total > 0) {
                             uploadPhoto.uploadProgress.set(Math.round((event.loaded / total) * 100));
                         }
@@ -765,6 +783,50 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
         }
 
         return model;
+    }
+
+    private async resizeImageToJpeg(sourceFile: Blob): Promise<Blob> {
+        const objectUrl = URL.createObjectURL(sourceFile);
+
+        try {
+            const image = await this.loadImage(objectUrl) as HTMLImageElement;
+            const sourceWidth = image.naturalWidth || image.width;
+            const sourceHeight = image.naturalHeight || image.height;
+
+            if (!sourceWidth || !sourceHeight) {
+                throw new Error('Invalid image size.');
+            }
+
+            const scale = Math.min(1, this.imageResizeLongerEdge / Math.max(sourceWidth, sourceHeight));
+            const targetWidth = Math.max(1, Math.round(sourceWidth * scale));
+            const targetHeight = Math.max(1, Math.round(sourceHeight * scale));
+
+            const canvas = document.createElement('canvas');
+            canvas.width = targetWidth;
+            canvas.height = targetHeight;
+
+            const context = canvas.getContext('2d');
+            if (!context) {
+                throw new Error('Unable to create canvas context.');
+            }
+
+            context.drawImage(image, 0, 0, targetWidth, targetHeight);
+
+            const resizedBlob = await new Promise<Blob>((resolve, reject) => {
+                canvas.toBlob((blob) => {
+                    if (blob) {
+                        resolve(blob);
+                        return;
+                    }
+
+                    reject(new Error('Unable to create JPEG blob.'));
+                }, 'image/jpeg', this.imageResizeJpegQuality);
+            });
+
+            return resizedBlob;
+        } finally {
+            URL.revokeObjectURL(objectUrl);
+        }
     }
 
     private resetPhotoFileUpload(): void {

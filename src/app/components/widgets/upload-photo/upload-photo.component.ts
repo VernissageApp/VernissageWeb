@@ -12,6 +12,7 @@ import { FileSizeService } from 'src/app/services/common/file-size.service';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { AttachmentsService } from 'src/app/services/http/attachments.service';
 import { CountriesService } from 'src/app/services/http/countries.service';
+import { InstanceService } from 'src/app/services/http/instance.service';
 import { LocationsService } from 'src/app/services/http/locations.service';
 import { SettingsService } from 'src/app/services/http/settings.service';
 import { PersistenceService } from 'src/app/services/persistance/persistance.service';
@@ -36,9 +37,11 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
     protected describeInProgress = signal(false);
     protected currentCountry = signal<Country | undefined>(undefined);
     protected currentCity = signal<Location | undefined>(undefined);
-    protected hdrFileSizeString = signal<string>('');
+    protected hdrFileSizeString = signal('');
+    protected maxFileSizeString = signal('');
 
     private readonly defaultMaxHdrFileSize = 4194304;
+    private readonly defaultMaxFileSize = 10485760;
     private readonly defaultCountryCacheKey = 'default-country';
     private readonly defaultLocationCacheKey = 'default-location';
     private readonly defaultLicenseCacheKey = 'default-license';
@@ -53,6 +56,7 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
     private settingsService = inject(SettingsService);
     private persistenceService = inject(PersistenceService);
     private fileSizeService = inject(FileSizeService);
+    private instanceService = inject(InstanceService);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
@@ -60,6 +64,9 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
         this.isOpenAIEnabled.set(this.settingsService.publicSettings?.isOpenAIEnabled ?? false);
         this.allCountries = await this.countriesService.all();
         this.hdrFileSizeString.set(this.fileSizeService.getHumanFileSize(this.defaultMaxHdrFileSize, 0));
+
+        const maxFileSize = this.instanceService.instance?.configuration?.attachments?.imageSizeLimit ?? this.defaultMaxFileSize;
+        this.maxFileSizeString.set(this.fileSizeService.getHumanFileSize(maxFileSize, 0));
 
         this.filteredCountries$ = this.countriesControl.valueChanges.pipe(
             startWith(''),

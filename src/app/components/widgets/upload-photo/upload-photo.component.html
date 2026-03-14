@@ -2,6 +2,12 @@
 
 <div class="flex-col gap-0 margin-top-5">
 
+    @if (photo().photoResizedFile) {
+        <div class="margin-bottom-10 width-100 text-warning fs-90">
+            <strong>Information:</strong> Your image exceeded the {{ maxFileSizeString() }} limit, so it was automatically resized to 4096 px on the longer edge.
+        </div>
+    }
+
     @if (isOpenAIEnabled()) {
         <div class="flex-row flex-space-between">
             <div class="margin-top-10">
