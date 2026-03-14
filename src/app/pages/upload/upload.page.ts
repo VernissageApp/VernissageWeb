@@ -31,6 +31,7 @@ import { LoadingService } from 'src/app/services/common/loading.service';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 import { ForbiddenError } from 'src/app/errors/forbidden-error';
 import { CanonExifService } from 'src/app/services/common/canon-exif.service';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
     selector: 'app-upload',
@@ -66,6 +67,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
 
     protected allPhotosUploaded = computed(() => !this.photos().some(x => !x.isUploaded() || (x.photoHdrFile && !x.isHdrUploaded)));
     protected photoFileUpload = viewChild<ElementRef<HTMLInputElement>>('photoFileUpload');
+    protected isAndroidDevice = computed(() => this.deviceDetectorService.os().toLocaleLowerCase() === 'android');
 
     private maxFileSize = 0;
     private statusId = '';
@@ -91,9 +93,11 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
     private loadingService = inject(LoadingService);
     private authorizationService = inject(AuthorizationService);
     private canonExifService = inject(CanonExifService);
+    private deviceDetectorService = inject(DeviceDetectorService);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
+        console.log(this.deviceDetectorService.os());
 
         this.maxFileSize = this.instanceService.instance?.configuration?.attachments?.imageSizeLimit ?? this.defaultMaxFileSize;
         this.maxFileSizeString.set(this.fileSizeService.getHumanFileSize(this.maxFileSize, 0));
@@ -124,6 +128,14 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
     protected async onPhotoSelected(event: any): Promise<void> {
         const file = event.target.files[0];
         if (!file) {
+            return;
+        }
+
+        const fileExtension = file.name.split('.').pop()?.toLowerCase();
+        const isSupportedType = file.type === 'image/jpeg' || file.type === 'image/png' || fileExtension === 'jpg' || fileExtension === 'jpeg' || fileExtension === 'png';
+
+        if (!isSupportedType) {
+            this.messageService.showError('This file type is not supported. Please upload a JPG or PNG image.');
             return;
         }
 
@@ -610,7 +622,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
             const gpsLatitudeRef = tags['GPSLatitudeRef']?.value?.toString().toUpperCase();
             const gpsLongitudeRef = tags['GPSLongitudeRef']?.value?.toString().toUpperCase();
 
-            if (gpsLatitude && gpsLongitude) {
+            if (gpsLatitude && gpsLongitude && gpsLatitude !== 'NaN' && gpsLongitude !== 'NaN') {
                 if (gpsLatitudeRef === 'S' && !gpsLatitude.startsWith('-')) {
                     gpsLatitude = '-' + gpsLatitude;
                 }
