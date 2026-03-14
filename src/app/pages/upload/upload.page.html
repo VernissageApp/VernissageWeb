@@ -3,8 +3,8 @@
         <div>{{ isEditMode() ? 'Edit status' : 'Upload photos' }}</div>
         @if (!isHandset()) {
             <div class="fs-60 text-muted">
-                Currently supported file formats are JPEG and PNG. The maximum file size is {{ maxFileSizeString() }}.
-                The recommended image resolution is 4K (3840 x 2160).
+                You can upload JPEG and PNG files up to {{ maxFileSizeString() }}.
+                To improve interoperability across different systems, use images with the longer edge set to 4096 px.
             </div>
         }
     </h1>
