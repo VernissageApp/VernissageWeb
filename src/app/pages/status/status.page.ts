@@ -673,7 +673,6 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     }
 
     protected getCorrectIsoDate(stringDate?: string): Date | undefined {
-        console.log(stringDate);
         if (!stringDate || stringDate.length === 0) {
             return undefined;
         }

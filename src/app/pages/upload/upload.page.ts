@@ -97,7 +97,6 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
-        console.log(this.deviceDetectorService.os());
 
         this.maxFileSize = this.instanceService.instance?.configuration?.attachments?.imageSizeLimit ?? this.defaultMaxFileSize;
         this.maxFileSizeString.set(this.fileSizeService.getHumanFileSize(this.maxFileSize, 0));
