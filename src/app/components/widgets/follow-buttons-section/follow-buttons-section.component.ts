@@ -20,6 +20,7 @@ import { UserBlockedDomain } from 'src/app/models/user-blocked-domain';
 import { UserBlockedDomainsService } from 'src/app/services/http/user-blocked-domains.service';
 import { ConfirmationDialog } from 'src/app/dialogs/confirmation-dialog/confirmation.dialog';
 import { UserBlockedDomainDialogEntity } from 'src/app/dialogs/user-blocked-domain-dialog/user-blocked-domain-dialog-entity';
+import { UnfollowAccountDialog } from 'src/app/dialogs/unfollow-account-dialog/unfollow-account.dialog';
 
 @Component({
     selector: 'app-follow-buttons-section',
@@ -260,20 +261,28 @@ export class FollowButtonsSectionComponent implements OnInit, OnDestroy {
         const internalUser = this.user();
 
         if (internalUser.userName) {
-            try {
-                this.isDuringRelationshipAction.set(true);
-                const downloadedRelationship = await this.usersService.unfollow(internalUser.userName);
-                this.relationshipAfterAction.set(downloadedRelationship);
-                this.recalculateRelationship();
+            const dialogRef = this.dialog.open(UnfollowAccountDialog, {
+                width: '500px'
+            });
 
-                this.emitRelationChange();
-                this.messageService.showSuccess('You have unfollowed the user.');
-            } catch (error) {
-                console.error(error);
-                this.messageService.showServerError(error);
-            } finally {
-                this.isDuringRelationshipAction.set(false);
-            }
+            dialogRef.afterClosed().subscribe(async (result) => {
+                if (result && internalUser.userName) {
+                    try {
+                        this.isDuringRelationshipAction.set(true);
+                        const downloadedRelationship = await this.usersService.unfollow(internalUser.userName, result);
+                        this.relationshipAfterAction.set(downloadedRelationship);
+                        this.recalculateRelationship();
+
+                        this.emitRelationChange();
+                        this.messageService.showSuccess('You have unfollowed the user.');
+                    } catch (error) {
+                        console.error(error);
+                        this.messageService.showServerError(error);
+                    } finally {
+                        this.isDuringRelationshipAction.set(false);
+                    }
+                }
+            });
         }
     }
 

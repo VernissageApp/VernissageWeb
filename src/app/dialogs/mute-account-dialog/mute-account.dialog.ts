@@ -12,6 +12,8 @@ export class MuteAccountDialog {
     protected muteStatuses = model(false);
     protected muteReblogs = model(false);
     protected muteNotifications = model(false);
+    protected removeStatusesFromTimeline = model(false);
+    protected removeReblogsFromTimeline = model(false);
     protected muteEnd = model<Date>();
 
     public dialogRef = inject(MatDialogRef<MuteAccountDialog>);
@@ -21,7 +23,15 @@ export class MuteAccountDialog {
     }
 
     protected async onSubmit(): Promise<void> {
-        const userMuteRequest = new UserMuteRequest(this.muteStatuses(), this.muteReblogs(), this.muteNotifications(), this.muteEnd());
+        const userMuteRequest = new UserMuteRequest(
+            this.muteStatuses(),
+            this.muteReblogs(),
+            this.muteNotifications(),
+            this.muteStatuses() && this.removeStatusesFromTimeline(),
+            this.muteReblogs() && this.removeReblogsFromTimeline(),
+            this.muteEnd(),
+        );
+
         this.dialogRef.close(userMuteRequest);
     }
 }
