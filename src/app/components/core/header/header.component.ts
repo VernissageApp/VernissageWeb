@@ -147,6 +147,13 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
         this.isLightTheme.set(this.preferencesService.isLightTheme);
     }
 
+    protected onUserMenuClosed(): void {
+        const activeElement = document.activeElement;
+        if (activeElement instanceof HTMLElement) {
+            activeElement.blur();
+        }
+    }
+
     private async loadNotificationCount(): Promise<void> {
         try {
             if (this.user()) {

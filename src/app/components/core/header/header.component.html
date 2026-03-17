@@ -159,7 +159,12 @@
                 </button>
 
                 <div>
-                    <button matIconButton [matMenuTriggerFor]="menu" aria-label="Menu with actions">
+                    <button
+                        matIconButton
+                        [matMenuTriggerFor]="menu"
+                        [matMenuTriggerRestoreFocus]="false"
+                        (menuClosed)="onUserMenuClosed()"
+                        aria-label="Menu with actions">
                         <img class="avatar" [ngSrc]="avatarUrl()" width="600" height="600" alt="Avatar" priority />
                     </button>
                     <mat-menu #menu="matMenu">
