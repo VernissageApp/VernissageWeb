@@ -35,6 +35,7 @@ import { StatusEventErrorMessageDialog } from './status-event-error-message-dial
 import { LicenseDialog } from './license-dialog/license.dialog';
 import { HomeCardDialog } from './home-card-dialog/home-card.dialog';
 import { UserBlockedDomainDialog } from './user-blocked-domain-dialog/user-blocked-domain.dialog';
+import { UnfollowAccountDialog } from './unfollow-account-dialog/unfollow-account.dialog';
 
 @NgModule({
     declarations: [
@@ -66,6 +67,7 @@ import { UserBlockedDomainDialog } from './user-blocked-domain-dialog/user-block
         StatusEventErrorMessageDialog,
         LicenseDialog,
         HomeCardDialog,
+        UnfollowAccountDialog,
         CategoryHashtagItemComponent
     ],
     exports: [
@@ -96,7 +98,8 @@ import { UserBlockedDomainDialog } from './user-blocked-domain-dialog/user-block
         FollowingImportAccountsDialog,
         StatusEventErrorMessageDialog,
         LicenseDialog,
-        HomeCardDialog
+        HomeCardDialog,
+        UnfollowAccountDialog
     ], 
     imports: [
         BrowserModule,

@@ -8,6 +8,7 @@ import { WindowService } from '../common/window.service';
 import { LinkableResult } from 'src/app/models/linkable-result';
 import { UserMuteRequest } from 'src/app/models/user-mute-request';
 import { PagedResult } from 'src/app/models/paged-result';
+import { UnfollowRequest } from 'src/app/models/unfollow-request';
 
 @Injectable({
     providedIn: 'root'
@@ -46,8 +47,8 @@ export class UsersService {
         return await firstValueFrom(event$);
     }
 
-    public async unfollow(userName: string): Promise<Relationship> {
-        const event$ = this.httpClient.post<Relationship>(this.windowService.apiUrl() + '/api/v1/users/@' + userName + '/unfollow', null);
+    public async unfollow(userName: string, unfollowRequest: UnfollowRequest): Promise<Relationship> {
+        const event$ = this.httpClient.post<Relationship>(this.windowService.apiUrl() + '/api/v1/users/@' + userName + '/unfollow', unfollowRequest);
         return await firstValueFrom(event$);
     }
 
