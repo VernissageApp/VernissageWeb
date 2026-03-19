@@ -432,6 +432,14 @@
                                                     <div class="comment-text">
                                                         <div [innerHTML]="comment.status.noteHtml"></div>
                                                     </div>
+
+                                                    @if (commentHasImages(comment)) {
+                                                        <div class="comment-images-container" (click)="openCommentImagesInFullScreen(comment)" (keydown.enter)="openCommentImagesInFullScreen(comment)" tabindex="0">
+                                                            @for (commentAttachment of commentImagesToDisplay(comment); track commentAttachment.id) {
+                                                                <img [src]="getCommentAttachmentUrl(commentAttachment)" class="" [alt]="getCommentAttachmentAlt(commentAttachment) ?? 'Status image'" />
+                                                            }
+                                                        </div>
+                                                    }
                                                 </div>
 
                                                 @if (signedInUser()) {

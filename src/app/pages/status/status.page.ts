@@ -35,6 +35,7 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 import { FocusTrackerService } from 'src/app/services/common/focus-tracker.service';
 import { PageNotFoundError } from 'src/app/errors/page-not-found-error';
 import { StatusVisibility } from 'src/app/models/status-visibility';
+import { Attachment } from 'src/app/models/attachment';
 
 @Component({
     selector: 'app-status',
@@ -92,10 +93,12 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     private routeParamsSubscription?: Subscription;
     private routeNavigationEndSubscription?: Subscription;
     private readonly oneSecond = 1000;
+    private readonly maxImagesInComments = 4;
     private firstCanvasInitialization = false;
     private urlToGallery?: string;
     private popupGalleryId = 'popupGalleryId';
     private mainGalleryId = 'mainGalleryId';
+    private commentGalleryId = 'commentGalleryId';
     private blurhash = 'LEHV6nWB2yk8pyo0adR*.7kCMdnj';
 
     private document = inject(DOCUMENT);
@@ -690,6 +693,47 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         }
 
         return undefined;
+    }
+
+    protected commentHasImages(statusComment: StatusComment): boolean {
+        if (!statusComment.status.attachments) {
+            return false;
+        }
+
+        if (statusComment.status.attachments.length === 0) {
+            return false;
+        }
+
+        return true;
+    }
+
+    protected commentImagesToDisplay(statusComment: StatusComment): Attachment[] {
+        if (statusComment.status.attachments && statusComment.status.attachments.length > 0) {
+            return statusComment.status.attachments.slice(0, this.maxImagesInComments);
+        }
+
+        return [];
+    }
+
+    protected getCommentAttachmentUrl(attachment: Attachment): string | undefined {
+        return attachment.smallFile?.url
+    }
+
+    protected getCommentAttachmentAlt(attachment: Attachment): string | undefined {
+        return attachment.description;
+    }
+
+    protected openCommentImagesInFullScreen(statusComment: StatusComment): void {
+        const internalImages = statusComment.status?.attachments?.map(attachment => {
+            return new ImageItem({ src: attachment.originalFile?.url, thumb: attachment.smallFile?.url });
+        });
+
+        const commentGallery = this.gallery.ref(this.commentGalleryId);
+        commentGallery.load(internalImages ?? []);
+
+        this.lightbox.open(this.currentIndex(), this.commentGalleryId, {
+            panelClass: 'fullscreen'
+        });
     }
 
     private getAltStatus(index: number): string | undefined {
