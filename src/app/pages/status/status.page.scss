@@ -237,6 +237,22 @@
             word-break: break-all;
         }
     }
+
+    .comment-images-container {
+        width: 80px;
+        height: 80px;
+        padding-top: 8px;
+        padding-bottom: 8px;
+
+        img {
+            object-fit: cover;
+            cursor: pointer;
+            border-radius: 10%;
+            width: 80px;
+            height: 80px;
+            margin-right: 8px;
+        }
+    }
 }
 
 .replies {
