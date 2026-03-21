@@ -2,21 +2,39 @@
     <div mat-dialog-title>Mute account</div>
     <div mat-dialog-content>
 
-        <div class="padding-top-5">
+        <div class="padding-top-5 text-muted fs-90">
+            Muting statuses and reblogs only applies to your private photo timeline.
+            The user's posts will still appear in the local and global timelines,
+            as those timelines are visible to all users of the system.
+        </div>
+
+        <div class="padding-top-10">
             <div>
-                <mat-checkbox name="isRegistrationOpened" [disableRipple]="true" [(ngModel)]="muteStatuses">
+                <mat-checkbox name="muteStatuses" [disableRipple]="true" [(ngModel)]="muteStatuses">
                     Mute new statuses
                 </mat-checkbox>
             </div>
 
+            <div class="padding-left-20">
+                <mat-checkbox name="removeStatusesFromTimeline" [disableRipple]="true" [(ngModel)]="removeStatusesFromTimeline" [disabled]="!muteStatuses()">
+                    Remove user's statuses from your timeline
+                </mat-checkbox>
+            </div>
+
             <div>
-                <mat-checkbox name="isRegistrationOpened" [disableRipple]="true" [(ngModel)]="muteReblogs">
+                <mat-checkbox name="muteReblogs" [disableRipple]="true" [(ngModel)]="muteReblogs">
                     Mute reblogs
                 </mat-checkbox>
             </div>
 
+            <div class="padding-left-20">
+                <mat-checkbox name="removeReblogsFromTimeline" [disableRipple]="true" [(ngModel)]="removeReblogsFromTimeline" [disabled]="!muteReblogs()">
+                    Remove user's reblogs from your timeline
+                </mat-checkbox>
+            </div>
+
             <div class="padding-bottom-20">
-                <mat-checkbox name="isRegistrationOpened" [disableRipple]="true" [(ngModel)]="muteNotifications">
+                <mat-checkbox name="muteNotifications" [disableRipple]="true" [(ngModel)]="muteNotifications">
                     Mute notifications
                 </mat-checkbox>
             </div>

@@ -3,8 +3,8 @@
         <div>{{ isEditMode() ? 'Edit status' : 'Upload photos' }}</div>
         @if (!isHandset()) {
             <div class="fs-60 text-muted">
-                Currently supported file formats are JPEG and PNG. The maximum file size is {{ maxFileSizeString() }}.
-                The recommended image resolution is 4K (3840 x 2160).
+                You can upload JPEG and PNG files up to {{ maxFileSizeString() }}.
+                To improve interoperability across different systems, use images with the longer edge set to 4096 px.
             </div>
         }
     </h1>
@@ -25,17 +25,12 @@
                             <div class="plus">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M20.889 10.889H13.111V3.11097C13.111 2.4974 12.6136 2 12 2C11.3864 2 10.889 2.4974 10.889 3.11097V10.889H3.11097C2.4974 10.889 2 11.3864 2 12C2 12.6136 2.4974 13.111 3.11097 13.111H10.889V20.889C10.889 21.5026 11.3864 22 12 22C12.6136 22 13.111 21.5026 13.111 20.889V13.111H20.889C21.5026 13.111 22 12.6136 22 12C22 11.3864 21.5026 10.889 20.889 10.889Z" fill="#0870D1"></path></svg>
                             </div>
-                            <input type="file" hidden name="photography" #photoFileUpload accept="image/png, image/jpeg" (change)="onPhotoSelected($event)">
+                            <input type="file" hidden name="photography" #photoFileUpload [accept]="isAndroidDevice() ? '' : 'image/png, image/jpeg'" (change)="onPhotoSelected($event)">
                         </div>
                     }
                 </div>
             </div>
         } @else {
-                <!-- <mat-card class="margin-bottom-20" appearance="outlined">
-                <mat-card-content>
-
-                </mat-card-content>
-            </mat-card> -->
             <div class="text-center margin-20">
                 To upload photos, please verify your email address. You can resend the confirmation email
                 from your <a routerLink="/account">Account</a> page if you haven't received it yet.

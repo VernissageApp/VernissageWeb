@@ -1,0 +1,31 @@
+<form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+    <div mat-dialog-title>Unfollow account</div>
+    <div mat-dialog-content>
+
+        <div class="padding-top-5 text-muted fs-90">
+            This action will prevent the user's new posts and reblogs from appearing
+            on your private photo timeline. However, they may still appear if another
+            user you follow reblogs (boosts) that user's post. You can also choose
+            what to do with the user's existing posts already visible on your
+            timeline. Removing them is irreversible.
+        </div>
+
+        <div class="padding-top-10">
+            <div>
+                <mat-checkbox name="removeStatusesFromTimeline" [disableRipple]="true" [(ngModel)]="removeStatusesFromTimeline">
+                    Remove user's statuses from your timeline
+                </mat-checkbox>
+            </div>
+
+            <div>
+                <mat-checkbox name="removeReblogsFromTimeline" [disableRipple]="true" [(ngModel)]="removeReblogsFromTimeline">
+                    Remove user's reblogs from your timeline
+                </mat-checkbox>
+            </div>
+        </div>
+    </div>
+    <div mat-dialog-actions>
+        <button matButton="text" type="button" (click)="onNoClick()">Cancel</button>
+        <button matButton="filled" type="submit" cdkFocusInitial>Unfollow</button>
+    </div>
+</form>
