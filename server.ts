@@ -7,6 +7,25 @@ import { dirname, join, resolve } from 'node:path';
 import AppServerModule from './src/main.server';
 import { REQUEST, RESPONSE } from 'express.tokens';
 
+const DEFAULT_ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    '::1',
+    'vernissage.photos',
+    '*.vernissage.photos'
+];
+
+function parseAllowedHosts(value: string | undefined): string[] {
+    if (!value) {
+        return [];
+    }
+
+    return value
+        .split(',')
+        .map((item) => item.trim())
+        .filter((item) => item.length > 0);
+}
+
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
     const server = express();
@@ -50,7 +69,12 @@ export function app(): express.Express {
     const browserDistFolder = resolve(serverDistFolder, '../browser');
     const indexHtml = join(serverDistFolder, 'index.server.html');
 
-    const commonEngine = new CommonEngine();
+    const configuredAllowedHosts = parseAllowedHosts(
+        process.env['VERNISSAGE_ALLOWED_HOSTS'] || process.env['NG_ALLOWED_HOSTS'],
+    );
+    const commonEngine = new CommonEngine({
+        allowedHosts: configuredAllowedHosts.length > 0 ? configuredAllowedHosts : DEFAULT_ALLOWED_HOSTS,
+    });
 
     server.set('view engine', 'html');
     server.set('views', browserDistFolder);
