@@ -157,6 +157,17 @@ export VERNISSAGE_CSP_IMG=https://s3.eu-central-1.amazonaws.com
 
 This value is used by `server.ts` to extend the `Content-Security-Policy` header for remote image loading.
 
+Angular SSR also validates request hostnames (SSRF protection). To allow your production host, configure one of the following environment variables:
+
+```bash
+export VERNISSAGE_ALLOWED_HOSTS=yourdomain.photos,*.otherdomain.social
+# or
+export NG_ALLOWED_HOSTS=yourdomain.photos,*.otherdomain.social
+```
+
+If no variable is provided, the server falls back to:
+`localhost, 127.0.0.1, ::1, vernissage.photos, *.vernissage.photos`.
+
 ## Contributing
 
 Contributions are welcome.
