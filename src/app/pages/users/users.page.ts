@@ -32,6 +32,7 @@ export class UsersPage extends ResponsiveComponent implements OnInit, OnDestroy 
     protected sortColumn = model('createdAt');
     protected sortDirection = model('descending');
     protected onlyLocal = model(false);
+    protected onlyBlocked = model(false);
     protected isReady = signal(false);
     protected users = signal<PagedResult<User> | undefined>(undefined);
     protected pageIndex = signal(0);
@@ -40,8 +41,8 @@ export class UsersPage extends ResponsiveComponent implements OnInit, OnDestroy 
     private routeParamsSubscription?: Subscription;
     private readonly displayedColumnsHandsetPortrait: string[] = ['avatar', 'userName', 'actions'];
     private readonly displayedColumnsHandsetLandscape: string[] = ['avatar', 'userName', 'createdAt', 'actions'];
-    private readonly displayedColumnsTablet: string[] = ['avatar', 'userName', 'email', 'isApproved', 'lastLoginDate', 'createdAt', 'actions'];
-    private readonly displayedColumnsBrowser: string[] = ['avatar', 'userName', 'email', 'isLocal', 'isApproved', 'emailWasConfirmed', 'statuses', 'lastLoginDate', 'createdAt', 'actions'];
+    private readonly displayedColumnsTablet: string[] = ['avatar', 'userName', 'isApproved', 'lastLoginDate', 'createdAt', 'actions'];
+    private readonly displayedColumnsBrowser: string[] = ['avatar', 'userName', 'isLocal', 'isApproved', 'emailWasConfirmed', 'statuses', 'lastLoginDate', 'createdAt', 'actions'];
 
     private authorizationService = inject(AuthorizationService);
     private usersService = inject(UsersService);
@@ -66,6 +67,7 @@ export class UsersPage extends ResponsiveComponent implements OnInit, OnDestroy 
             const sizeString = params['size'] as string;
             const query = params['query'] as string;
             const local = params['onlyLocal'] as string;
+            const blocked = params['onlyBlocked'] as string;
             const sortColumn = params['sortColumn'] as string;
             const sortDirection = params['sortDirection'] as string;
 
@@ -75,10 +77,11 @@ export class UsersPage extends ResponsiveComponent implements OnInit, OnDestroy 
             this.pageIndex.set(page);
             this.search.set(query);
             this.onlyLocal.set(local === 'true');
+            this.onlyBlocked.set(blocked === 'true');
             this.sortColumn.set(sortColumn ?? 'createdAt');
             this.sortDirection.set(sortDirection === 'ascending' ? 'ascending' : 'descending');
 
-            const downloadedUsers = await this.usersService.get(page + 1, size, query, this.onlyLocal(), this.sortColumn(), this.sortDirection());
+            const downloadedUsers = await this.usersService.get(page + 1, size, query, this.onlyLocal(), this.onlyBlocked(), this.sortColumn(), this.sortDirection());
             this.users.set(downloadedUsers);
 
             this.isReady.set(true);
@@ -93,7 +96,13 @@ export class UsersPage extends ResponsiveComponent implements OnInit, OnDestroy 
 
     protected async onSubmit(): Promise<void> {
         const navigationExtras: NavigationExtras = {
-            queryParams: { query: this.search(), onlyLocal: this.onlyLocal(), sortColumn: this.sortColumn(), sortDirection: this.sortDirection() },
+            queryParams: {
+                query: this.search(),
+                onlyLocal: this.onlyLocal(),
+                onlyBlocked: this.onlyBlocked(),
+                sortColumn: this.sortColumn(),
+                sortDirection: this.sortDirection() 
+            },
             queryParamsHandling: 'merge'
         };
 
@@ -122,7 +131,7 @@ export class UsersPage extends ResponsiveComponent implements OnInit, OnDestroy 
                 await this.usersService.enable(user.userName);
 
                 user.isBlocked = false;
-                this.messageService.showSuccess('Account has been enabled.');
+                this.messageService.showSuccess(user.isLocal ? 'Account has been enabled.' : 'User has been unblocked.');
             }
         } catch (error) {
             console.error(error);
@@ -136,7 +145,7 @@ export class UsersPage extends ResponsiveComponent implements OnInit, OnDestroy 
                 await this.usersService.disable(user.userName);
 
                 user.isBlocked = true;
-                this.messageService.showSuccess('Account has been disabled.');
+                this.messageService.showSuccess(user.isLocal ? 'Account has been disabled.' : 'User has been blocked.');
             }
         } catch (error) {
             console.error(error);
