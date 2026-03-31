@@ -133,10 +133,10 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
         }
 
         const fileExtension = file.name.split('.').pop()?.toLowerCase();
-        const isSupportedType = file.type === 'image/jpeg' || file.type === 'image/png' || fileExtension === 'jpg' || fileExtension === 'jpeg' || fileExtension === 'png';
+        const isSupportedType = file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/webp' || fileExtension === 'jpg' || fileExtension === 'jpeg' || fileExtension === 'png' || fileExtension === 'webp';
 
         if (!isSupportedType) {
-            this.messageService.showError('This file type is not supported. Please upload a JPG or PNG image.');
+            this.messageService.showError('This file type is not supported. Please upload a JPG, PNG or WEBP image.');
             return;
         }
 
