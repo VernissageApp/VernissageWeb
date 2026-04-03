@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, model, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, model } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { UserBlockRequest } from 'src/app/models/user-block-request';
 
