@@ -35,14 +35,6 @@
                 @if (showOpenOriginalProfileButton() || showCopyProfileUrlButton()) {
                     <mat-divider></mat-divider>
                 }
-
-                @if (showMuteButton()) {
-                    <button (click)="openMuteAccountDialog()" mat-menu-item><mat-icon>voice_over_off</mat-icon> Mute</button>
-                }
-                
-                @if (showUnmuteButton()) {
-                    <button (click)="unmuteAccount()" mat-menu-item><mat-icon>record_voice_over</mat-icon> Unmute</button>
-                }
                 
                 @if (showFeatureButton()) {
                     <button (click)="onFeature()" mat-menu-item><mat-icon class="outline-symbol">stars</mat-icon> Feature</button>
@@ -56,13 +48,29 @@
                     <button (click)="onReportDialog()" mat-menu-item><mat-icon>report</mat-icon> Report</button>
                 }
 
-                @if (showUserBlockDomainButton()) {
+                @if (showMuteButton()) {
                     <mat-divider></mat-divider>
+                    <button (click)="openMuteAccountDialog()" mat-menu-item><mat-icon>voice_over_off</mat-icon> Mute</button>
+                }
+                
+                @if (showUnmuteButton()) {
+                    <mat-divider></mat-divider>
+                    <button (click)="unmuteAccount()" mat-menu-item><mat-icon>record_voice_over</mat-icon> Unmute</button>
+                }
+
+                @if (showBlockButton()) {
+                    <button (click)="openBlockAccountDialog()" mat-menu-item><mat-icon>do_not_touch</mat-icon> Block user</button>
+                }
+                
+                @if (showUnblockButton()) {
+                    <button (click)="unblockAccount()" mat-menu-item><mat-icon>hand_gesture</mat-icon> Unblock user</button>
+                }
+
+                @if (showUserBlockDomainButton()) {
                     <button (click)="onUserBlockDomainDialog()" mat-menu-item><mat-icon>supervised_user_circle_off</mat-icon> Block domain</button>
                 }
 
                 @if (showUserUnblockDomainButton()) {
-                    <mat-divider></mat-divider>
                     <button (click)="onUserUnblockDomainDialog()" mat-menu-item><mat-icon>supervised_user_circle</mat-icon> Unblock domain</button>
                 }
             </mat-menu>
