@@ -1,0 +1,29 @@
+<form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+    <div mat-dialog-title>Block user</div>
+    <div mat-dialog-content>
+
+        <div class="text-muted margin-bottom-20">
+            <small>
+                This user can no longer follow you unless they already do. Their posts will not appear
+                in your local timeline, and your posts will not be delivered directly to them. However,
+                they may still see your posts if someone they follow boosts them.
+            </small>
+        </div>
+
+        <div class="margin-bottom-20">
+            <mat-form-field class="width-100" appearance="outline">
+                <mat-label>Reason</mat-label>
+                <input type="text" matInput name="reason" [(ngModel)]="reason" #reasonInput="ngModel" aria-label="Email" appMaxLength="500" />
+
+                @if (reasonInput.invalid && reasonInput.errors?.appMaxLength) {
+                    <mat-error>Reason is too long.</mat-error>
+                }
+            </mat-form-field>
+        </div>
+
+    </div>
+    <div mat-dialog-actions>
+        <button matButton="text" type="button" (click)="onNoClick()">Cancel</button>
+        <button matButton="filled" type="submit" cdkFocusInitial>Block</button>
+    </div>
+</form>

@@ -9,6 +9,7 @@ import { LinkableResult } from 'src/app/models/linkable-result';
 import { UserMuteRequest } from 'src/app/models/user-mute-request';
 import { PagedResult } from 'src/app/models/paged-result';
 import { UnfollowRequest } from 'src/app/models/unfollow-request';
+import { UserBlockRequest } from 'src/app/models/user-block-request';
 
 @Injectable({
     providedIn: 'root'
@@ -69,6 +70,16 @@ export class UsersService {
 
     public async unmute(userName: string): Promise<Relationship> {
         const event$ = this.httpClient.post<Relationship>(this.windowService.apiUrl() + '/api/v1/users/@' + userName + '/unmute', null);
+        return await firstValueFrom(event$);
+    }
+
+    public async block(userName: string, userBlockRequest: UserBlockRequest): Promise<Relationship> {
+        const event$ = this.httpClient.post<Relationship>(this.windowService.apiUrl() + '/api/v1/users/@' + userName + '/block', userBlockRequest);
+        return await firstValueFrom(event$);
+    }
+
+    public async unblock(userName: string): Promise<Relationship> {
+        const event$ = this.httpClient.post<Relationship>(this.windowService.apiUrl() + '/api/v1/users/@' + userName + '/unblock', null);
         return await firstValueFrom(event$);
     }
 
