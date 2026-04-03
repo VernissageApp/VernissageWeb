@@ -145,11 +145,6 @@ export class FollowButtonsSectionComponent implements OnInit, OnDestroy {
     }
 
     protected async unmuteAccount(): Promise<void> {
-        const internalUserBlockDomain = this.userBlockedDomain();
-        if (!internalUserBlockDomain) {
-            return;
-        }
-
         const dialogRef = this.dialog.open(ConfirmationDialog, {
             width: '500px',
             data: 'Do you want to unmute user?'
@@ -203,11 +198,6 @@ export class FollowButtonsSectionComponent implements OnInit, OnDestroy {
     }
 
     protected async unblockAccount(): Promise<void> {
-        const internalUserBlockDomain = this.userBlockedDomain();
-        if (!internalUserBlockDomain) {
-            return;
-        }
-
         const dialogRef = this.dialog.open(ConfirmationDialog, {
             width: '500px',
             data: 'Do you want to unblock user?'
