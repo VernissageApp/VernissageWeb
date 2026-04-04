@@ -1,5 +1,6 @@
 import { signal } from "@angular/core";
 import { Subscription } from "rxjs";
+import { Location } from 'src/app/models/location';
 
 export class UploadPhoto {
     public uuid = '';
@@ -24,6 +25,9 @@ export class UploadPhoto {
 
     public locationId?: string;
     public licenseId?: string;
+
+    // Location is used in edit mode.
+    public location?: Location;
 
     public showMake = false;
     public showModel = false;
