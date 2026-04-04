@@ -700,6 +700,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
                 }
 
                 uploadPhoto.locationId = attachment.location?.id;
+                uploadPhoto.location = attachment.location;
                 uploadPhoto.licenseId = attachment.license?.id;
 
                 const internalExif = attachment.metadata?.exif;

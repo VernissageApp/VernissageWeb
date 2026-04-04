@@ -78,7 +78,10 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
                     this.citiesControl.setValue('');
                     this.currentCity.set(undefined);
                 } else {
-                    this.restoreCityFromCache();
+                    if (!this.photo().id) {
+                        this.restoreCityFromCache();
+                    }
+
                     this.initialized = true;
                 }
 
@@ -95,9 +98,23 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
             })
         );
 
-        this.restoreCountryFromCache();
-        this.restoreCityFromCache();
-        this.restoreLicenseFromCache();
+        if (!this.photo().id) {
+            this.restoreCountryFromCache();
+            this.restoreCityFromCache();
+            this.restoreLicenseFromCache();
+        }
+
+        const location = this.photo().location;
+        if (location) {
+            const country = this.photo().location?.country;
+            if (country) {
+                this.currentCountry.set(country);
+                this.countriesControl.setValue(country);
+            }
+
+            this.currentCity.set(location);
+            this.citiesControl.setValue(location);
+        }
     }
 
     protected displayCountryFn(country: Country): string {
