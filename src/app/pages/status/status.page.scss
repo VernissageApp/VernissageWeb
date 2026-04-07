@@ -30,19 +30,27 @@
     width: 100%;
     background-color: #202020;
     position: relative;
+    display: flex;
+    align-items: stretch;
+    overflow: hidden;
 
     .icon {
         color: white;
         text-align: center;
-        width: 40px;;
-        display: table-cell;
-        vertical-align: middle;
+        width: 40px;
+        flex: 0 0 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         cursor: pointer;
+        position: relative;
+        z-index: 120;
     }
 
     .icon-placeholder {
-        width: 40px;;
-        display: table-cell;
+        width: 40px;
+        flex: 0 0 40px;
+        display: block;
     }
 
     .custom-gallery {
@@ -51,7 +59,19 @@
     }
 
     .custom-gallery-with-icons {
-        width: calc(100vw - 80px);
+        width: calc(100% - 80px);
+    }
+
+    .photo-content-cell {
+        width: 100%;
+        flex: 1 1 auto;
+        min-width: 0;
+        height: 100%;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
     }
 
     .content-warning {
@@ -78,12 +98,16 @@
 
     .blurhash {
         position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
         display: block;
         height: 100%;
         width: 100%;
         max-height: 600px;
         object-fit: contain;
-        z-index: 100;
+        z-index: 98;
+        pointer-events: none;
     }
 
     img {
@@ -96,14 +120,26 @@
     }
 
     .photo-image-container-fixed {
-        height: 600px;
+        height: 100%;
+        max-height: 100%;
+        width: 100%;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
 
         .content-warning {
-            width: calc(100vw - 80px);
+            width: 100%;
         }
 
         .blurhash {
-            width: calc(100vw - 80px);
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 100%;
+            max-height: 100%;
         }
     }
 
@@ -118,7 +154,139 @@
 }
 
 .photo-container-table {
-    display: table;
+    display: flex;
+}
+
+@media only screen and (min-width: 769px) {
+    .photo-container {
+        .custom-gallery {
+            max-height: none;
+        }
+
+        .photo-image-container-fixed {
+            height: 100%;
+            max-height: 100%;
+
+            .blurhash {
+                width: auto !important;
+                height: 100% !important;
+                max-height: 100% !important;
+                max-width: 100% !important;
+                object-fit: contain !important;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            img {
+                width: auto !important;
+                height: 100% !important;
+                max-height: 100% !important;
+                max-width: 100% !important;
+                object-fit: contain !important;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+
+        .custom-gallery {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .custom-gallery-with-icons {
+            height: 100%;
+        }
+
+        ::ng-deep gallery-core,
+        ::ng-deep .g-slider,
+        ::ng-deep .g-slider-content {
+            height: 100% !important;
+        }
+
+        ::ng-deep gallery-image {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        ::ng-deep img.g-image-item {
+            width: auto !important;
+            height: 100% !important;
+            max-width: 100% !important;
+            max-height: 100% !important;
+            object-fit: contain !important;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+}
+
+@media only screen and (max-width: 920px) {
+    .status-layout-root {
+        height: auto !important;
+        overflow: visible !important;
+    }
+
+    .status-main-layout {
+        height: auto !important;
+        flex-direction: column !important;
+    }
+
+    .status-left-column {
+        flex: 1 1 auto !important;
+        height: auto !important;
+    }
+
+    .status-left-column .photo-container {
+        height: auto !important;
+    }
+
+    .status-right-column {
+        flex: 1 1 auto !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+        height: auto !important;
+        overflow-y: visible !important;
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+        padding-top: 10px !important;
+        padding-bottom: 10px !important;
+    }
+}
+
+.status-layout-root.status-layout-mobile {
+    height: auto !important;
+    overflow: visible !important;
+}
+
+.status-main-layout.status-main-layout-mobile {
+    height: auto !important;
+    flex-direction: column !important;
+}
+
+.status-left-column.status-left-column-mobile {
+    flex: 1 1 auto !important;
+    height: auto !important;
+}
+
+.status-left-column.status-left-column-mobile .photo-container {
+    height: auto !important;
+}
+
+.status-right-column.status-right-column-mobile {
+    flex: 1 1 auto !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    height: auto !important;
+    overflow-y: visible !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
 }
 
 .note {
@@ -127,6 +295,18 @@
     a {
         word-break: break-all;
     }
+}
+
+.status-details-card {
+    ::ng-deep .mat-mdc-card-content {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+}
+
+.reblog-user-row {
+    margin-top: 8px;
+    margin-bottom: 4px;
 }
 
 .category {
