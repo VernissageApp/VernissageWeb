@@ -3,8 +3,19 @@
         padding-top: 1px;
     }
 
-    button {
-        margin-top: 4px;
+    .comment-main {
+        min-width: 0;
+    }
+
+    .comment-submit-row {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 2px;
+    }
+
+    ::ng-deep textarea.mat-mdc-input-element {
+        font-size: 14px;
+        line-height: 1.35;
     }
 
     ::ng-deep .mat-mdc-form-field-infix {

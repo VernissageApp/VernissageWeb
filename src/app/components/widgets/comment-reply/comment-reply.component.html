@@ -3,7 +3,7 @@
         <div>
             <app-avatar [user]="signedInUser()" [size]="avatarSize.big"></app-avatar>
         </div>
-        <div class="flex-grow-1">
+        <div class="flex-grow-1 comment-main">
             <mat-form-field appearance="outline" class="width-100">
                 <mat-label>Comment</mat-label>
                 <textarea
@@ -39,7 +39,9 @@
                 }
             </mat-form-field>
 
+            <div class="comment-submit-row">
+                <button type="submit" matButton="filled" [disabled]="isDuringSave() || !commentEntered()">Send</button>
+            </div>
         </div>
-        <button type="submit" matButton="filled" [disabled]="isDuringSave() || !commentEntered()">Send</button>
     </div>
 </form>
