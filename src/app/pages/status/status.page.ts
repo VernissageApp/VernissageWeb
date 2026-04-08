@@ -1016,7 +1016,10 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         const internalMainStatus = this.mainStatus();
 
         const statusTitle = (internalMainStatus?.user?.name ?? '') + ` (@${internalMainStatus?.user?.userName ?? ''})`;
-        const statusDescription = this.htmlToText(internalMainStatus?.note ?? '');
+        const imageCount = internalMainStatus?.attachments?.length ?? 0;
+        const noteText = this.htmlToText(internalMainStatus?.note ?? '');
+        const imageCountText = imageCount > 0 ? `\uD83D\uDDBC\uFE0F ${imageCount} image${imageCount > 1 ? 's' : ''}` : '';
+        const statusDescription = [imageCountText, noteText].filter(Boolean).join(' \u2022 ');
 
         // <title>John Doe (@john@vernissage.xxx)</title>
         this.titleService.setTitle(statusTitle);
@@ -1040,20 +1043,23 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         this.metaService.updateTag({ property: 'og:logo', content: `${this.windowService.getApplicationBaseUrl()}/assets/icons/icon-128x128.png` });
 
         if (internalMainStatus?.attachments && internalMainStatus?.attachments.length > 0) {
-            const firstImage = internalMainStatus?.attachments[0];
+            // Remove any previously added og:image tags
+            this.removeOgImageTags();
 
-            // <meta property="og:image" content="https://files.vernissage.xxx/media_attachments/files/112348.png">
-            this.metaService.updateTag({ property: 'og:image', content: firstImage.smallFile?.url ?? '' });
-
-            // <meta property="og:image:width"" content="1532">
-            this.metaService.updateTag({ property: 'og:image:width', content: firstImage.smallFile?.width.toString() ?? '' });
-
-            // <meta property="og:image:height"" content="1416">
-            this.metaService.updateTag({ property: 'og:image:height', content: firstImage.smallFile?.height.toString() ?? '' });
+            for (const attachment of internalMainStatus.attachments) {
+                this.metaService.addTag({ property: 'og:image', content: attachment.smallFile?.url ?? '' });
+                this.metaService.addTag({ property: 'og:image:width', content: attachment.smallFile?.width?.toString() ?? '' });
+                this.metaService.addTag({ property: 'og:image:height', content: attachment.smallFile?.height?.toString() ?? '' });
+            }
         }
 
         // <meta name="twitter:card" content="summary_large_image">
         this.metaService.updateTag({ property: 'twitter:card', content: 'summary_large_image' });
+    }
+
+    private removeOgImageTags(): void {
+        const metaTags = this.document.querySelectorAll('meta[property="og:image"], meta[property="og:image:width"], meta[property="og:image:height"]');
+        metaTags.forEach((tag: Element) => tag.remove());
     }
 
     private browserSupportsHdr(): boolean {
