@@ -179,6 +179,14 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
                 this.loadingService.hideLoader();
                 this.isReady.set(true);
 
+                // Ensure selected image index is applied after gallery component is rendered.
+                setTimeout(() => {
+                    if ((this.images()?.length ?? 0) > 0) {
+                        const mainGallery = this.gallery.ref(this.mainGalleryId);
+                        mainGallery.set(this.currentIndex());
+                    }
+                }, 0);
+
                 if (!this.firstCanvasInitialization) {
                     setTimeout(() => {
                         this.drawCanvas();
@@ -879,7 +887,9 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
             this.mainStatus.set(downloadedStatus);
         }
 
-        this.currentIndex.set(this.getValidAttachmentIndex(requestedPhotoIndex));
+        const validAttachmentIndex = this.getValidAttachmentIndex(requestedPhotoIndex);
+        this.currentIndex.set(validAttachmentIndex);
+
         this.setBlurhash();
         this.setImageWidth();
         this.setImageHeight();
