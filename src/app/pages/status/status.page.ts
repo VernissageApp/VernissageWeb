@@ -144,6 +144,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
             .pipe(map(params => ({ routeParams: params[0], queryParams: params[1] })))
             .subscribe(async params => {
                 const statusId = params.routeParams['id'] as string;
+                const requestedPhotoIndex = this.getPhotoIndexFromQuery(params.queryParams.get('photo'));
 
                 if (params.queryParams.has('version')) {
                     const internalVersionId = params.queryParams.get('version');
@@ -162,12 +163,12 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
                 this.currentIndex.set(0);
 
                 // Load status information.
-                await this.loadPageData(statusId);
+                await this.loadPageData(statusId, requestedPhotoIndex);
 
                 // Load images to gallery (and reset gallery state).
                 const mainGallery = this.gallery.ref(this.mainGalleryId);
                 mainGallery.load(this.images() ?? []);
-                mainGallery.set(0);
+                mainGallery.set(this.currentIndex());
 
                 // Load images to popup gallery.
                 const popupGallery = this.gallery.ref(this.popupGalleryId);
@@ -866,7 +867,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         return undefined;
     }
 
-    private async loadPageData(statusId: string): Promise<void> {
+    private async loadPageData(statusId: string, requestedPhotoIndex: number): Promise<void> {
         const firstImageUrlBeforeLoad = this.getFirstImageUrl();
 
         const downloadedStatus = await this.getStatusData(statusId);
@@ -878,6 +879,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
             this.mainStatus.set(downloadedStatus);
         }
 
+        this.currentIndex.set(this.getValidAttachmentIndex(requestedPhotoIndex));
         this.setBlurhash();
         this.setImageWidth();
         this.setImageHeight();
@@ -1040,16 +1042,17 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         this.metaService.updateTag({ property: 'og:logo', content: `${this.windowService.getApplicationBaseUrl()}/assets/icons/icon-128x128.png` });
 
         if (internalMainStatus?.attachments && internalMainStatus?.attachments.length > 0) {
-            const firstImage = internalMainStatus?.attachments[0];
+            const imageIndex = this.getValidAttachmentIndex(this.currentIndex());
+            const selectedImage = internalMainStatus.attachments[imageIndex] ?? internalMainStatus.attachments[0];
 
             // <meta property="og:image" content="https://files.vernissage.xxx/media_attachments/files/112348.png">
-            this.metaService.updateTag({ property: 'og:image', content: firstImage.smallFile?.url ?? '' });
+            this.metaService.updateTag({ property: 'og:image', content: selectedImage.smallFile?.url ?? '' });
 
             // <meta property="og:image:width"" content="1532">
-            this.metaService.updateTag({ property: 'og:image:width', content: firstImage.smallFile?.width.toString() ?? '' });
+            this.metaService.updateTag({ property: 'og:image:width', content: selectedImage.smallFile?.width?.toString() ?? '' });
 
             // <meta property="og:image:height"" content="1416">
-            this.metaService.updateTag({ property: 'og:image:height', content: firstImage.smallFile?.height.toString() ?? '' });
+            this.metaService.updateTag({ property: 'og:image:height', content: selectedImage.smallFile?.height?.toString() ?? '' });
         }
 
         // <meta name="twitter:card" content="summary_large_image">
@@ -1112,6 +1115,32 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         }
 
         return undefined;
+    }
+
+    private getPhotoIndexFromQuery(photoQueryParam: string | null): number {
+        if (!photoQueryParam || !/^\d+$/.test(photoQueryParam)) {
+            return 0;
+        }
+
+        const photoNumber = Number.parseInt(photoQueryParam, 10);
+        if (photoNumber < 1) {
+            return 0;
+        }
+
+        return photoNumber - 1;
+    }
+
+    private getValidAttachmentIndex(index: number): number {
+        const attachmentsLength = this.mainStatus()?.attachments?.length ?? 0;
+        if (attachmentsLength === 0) {
+            return 0;
+        }
+
+        if (index < 0 || index >= attachmentsLength) {
+            return 0;
+        }
+
+        return index;
     }
 
     private parseSpecificDateString(stringDate: string): Date | undefined {
