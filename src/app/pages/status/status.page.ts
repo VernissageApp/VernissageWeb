@@ -94,6 +94,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     private routeNavigationEndSubscription?: Subscription;
     private readonly oneSecond = 1000;
     private readonly maxImagesInComments = 4;
+    private imageIndexForOpenGraph = 0;
     private firstCanvasInitialization = false;
     private urlToGallery?: string;
     private popupGalleryId = 'popupGalleryId';
@@ -168,24 +169,17 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
                 // Load images to gallery (and reset gallery state).
                 const mainGallery = this.gallery.ref(this.mainGalleryId);
                 mainGallery.load(this.images() ?? []);
-                mainGallery.set(this.currentIndex());
+                mainGallery.set(0);
 
                 // Load images to popup gallery.
                 const popupGallery = this.gallery.ref(this.popupGalleryId);
                 popupGallery.load(this.images() ?? []);
+                popupGallery.set(0);
 
                 this.setNoIndexMeta();
 
                 this.loadingService.hideLoader();
                 this.isReady.set(true);
-
-                // Ensure selected image index is applied after gallery component is rendered.
-                setTimeout(() => {
-                    if ((this.images()?.length ?? 0) > 0) {
-                        const mainGallery = this.gallery.ref(this.mainGalleryId);
-                        mainGallery.set(this.currentIndex());
-                    }
-                }, 0);
 
                 if (!this.firstCanvasInitialization) {
                     setTimeout(() => {
@@ -888,7 +882,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         }
 
         const validAttachmentIndex = this.getValidAttachmentIndex(requestedPhotoIndex);
-        this.currentIndex.set(validAttachmentIndex);
+        this.imageIndexForOpenGraph = validAttachmentIndex;
 
         this.setBlurhash();
         this.setImageWidth();
@@ -1052,8 +1046,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         this.metaService.updateTag({ property: 'og:logo', content: `${this.windowService.getApplicationBaseUrl()}/assets/icons/icon-128x128.png` });
 
         if (internalMainStatus?.attachments && internalMainStatus?.attachments.length > 0) {
-            const imageIndex = this.getValidAttachmentIndex(this.currentIndex());
-            const selectedImage = internalMainStatus.attachments[imageIndex] ?? internalMainStatus.attachments[0];
+            const selectedImage = internalMainStatus.attachments[this.imageIndexForOpenGraph] ?? internalMainStatus.attachments[0];
 
             // <meta property="og:image" content="https://files.vernissage.xxx/media_attachments/files/112348.png">
             this.metaService.updateTag({ property: 'og:image', content: selectedImage.smallFile?.url ?? '' });
