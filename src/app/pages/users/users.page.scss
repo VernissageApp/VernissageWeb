@@ -10,22 +10,19 @@ h1 {
     }
   }
 
-.user-name-link a {
-  width: 140px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.user-name-link a,
+.name,
+.email {
+  width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
   display: block;
 }
 
-.name {
-  width: 140px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: block;
+.mat-column-userName {
+  white-space: normal;
 }
-
 
 ::ng-deep .mat-mdc-form-field-subscript-wrapper {
   height: 0;

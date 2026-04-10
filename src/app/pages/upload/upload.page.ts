@@ -126,17 +126,40 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
         }
     }
 
-    protected async onPhotoSelected(event: any): Promise<void> {
-        const file = event.target.files[0];
-        if (!file) {
+    protected async onPhotoSelected(event: Event): Promise<void> {
+        const input = event.target as HTMLInputElement | null;
+        const files = input?.files ? Array.from(input.files) : [];
+
+        if (files.length === 0) {
             return;
         }
 
+        const availablePhotoSlots = this.maxMediaAttachments() - this.photos().length;
+        if (availablePhotoSlots <= 0) {
+            this.messageService.showError(`You can upload up to ${this.maxMediaAttachments()} images per post.`);
+            this.resetPhotoFileUpload();
+            return;
+        }
+
+        if (files.length > availablePhotoSlots) {
+            this.messageService.showError(`Too many files selected. You can add ${availablePhotoSlots} more image${availablePhotoSlots === 1 ? '' : 's'}.`);
+            this.resetPhotoFileUpload();
+            return;
+        }
+
+        for (const file of files) {
+            await this.processSelectedPhoto(file);
+        }
+
+        this.resetPhotoFileUpload();
+    }
+
+    private async processSelectedPhoto(file: File): Promise<void> {
         const fileExtension = file.name.split('.').pop()?.toLowerCase();
-        const isSupportedType = file.type === 'image/jpeg' || file.type === 'image/png' || fileExtension === 'jpg' || fileExtension === 'jpeg' || fileExtension === 'png';
+        const isSupportedType = file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/webp' || fileExtension === 'jpg' || fileExtension === 'jpeg' || fileExtension === 'png' || fileExtension === 'webp';
 
         if (!isSupportedType) {
-            this.messageService.showError('This file type is not supported. Please upload a JPG or PNG image.');
+            this.messageService.showError('This file type is not supported. Please upload a JPG, PNG or WEBP image.');
             return;
         }
 
@@ -700,6 +723,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
                 }
 
                 uploadPhoto.locationId = attachment.location?.id;
+                uploadPhoto.location = attachment.location;
                 uploadPhoto.licenseId = attachment.license?.id;
 
                 const internalExif = attachment.metadata?.exif;

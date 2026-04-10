@@ -1,13 +1,13 @@
 @if (user(); as userInternal) {
     <div class="flex-row flex-space-between padding-bottom-10 padding-top-10">
         <div class="flex-row gap-8">
-            <div>
+            <div class="user-avatar">
                 <app-avatar [user]="userInternal" [size]="avatarSize.huge"></app-avatar>
             </div>
             <div>
-                <div [ngClass]="{ 'flex-row': !isHandset(), 'flex-column': isHandset() }">
-                    <div><a [routerLink]="[ '/@' + userInternal.userName ]" class="margin-right-5 fw-600">{{ userDisplayService.displayName(userInternal) }}</a></div>
-                    <div class="fw-400 fs-90 text-muted">&#64;{{ userInternal.userName }}</div>
+                <div class="user-identity">
+                    <div><a [routerLink]="[ '/@' + userInternal.userName ]" class="fw-600 user-display-name">{{ userDisplayService.displayName(userInternal) }}</a></div>
+                    <div class="fw-400 fs-90 text-muted user-name">&#64;{{ userInternal.userName }}</div>
                 </div>
                 <div class="fw-300 fs-90">
                     <span class="margin-right-15"><span class="fw-500">{{ userInternal.photosCount }}</span> {{ userInternal.photosCount === 1 ? 'Photo' : 'Photos' }}</span>

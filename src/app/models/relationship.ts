@@ -13,6 +13,9 @@ export class Relationship {
     /// If signed in user has been requested by particular user (`source <- (request) <- target`).
     public requestedBy = false;
 
+    /// If signed in user blocked user.
+    public blocked = false;
+
     /// If signed in user muted user's statuses.
     public mutedStatuses = false;
     

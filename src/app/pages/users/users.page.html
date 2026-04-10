@@ -37,6 +37,9 @@
                                         <mat-checkbox name="isLocal" [disableRipple]="true" [(ngModel)]="onlyLocal">
                                             Only local
                                         </mat-checkbox>
+                                        <mat-checkbox name="isBlocked" [disableRipple]="true" [(ngModel)]="onlyBlocked">
+                                            Only blocked
+                                        </mat-checkbox>
                                         @if (!isHandset()) {
                                             <mat-radio-group name="sortDirection" class="margin-left-20" [(ngModel)]="sortDirection" aria-label="Sort direction">
                                                 <mat-radio-button value="ascending">Ascending</mat-radio-button>
@@ -68,7 +71,7 @@
                                             }
 
                                             @if (element.isBlocked === true) {
-                                                <mat-chip-option [disableRipple]="true" disabled>Disabled</mat-chip-option>
+                                                <mat-chip-option [disableRipple]="true" disabled>{{ element.isLocal ? 'Disabled' : 'Blocked' }}</mat-chip-option>
                                             }
                                         </mat-chip-set>
 
@@ -92,16 +95,9 @@
                                 <div class="name">
                                     {{ element.name }}
                                 </div>
-                            </td>
-                        </ng-container>
-
-                        <!-- Email Column -->
-                        <ng-container matColumnDef="email">
-                            <th mat-header-cell *matHeaderCellDef> Email </th>
-                            <td mat-cell *matCellDef="let element">
-                                <span>
+                                <div class="email text-muted fs-90">
                                     {{ element.email }}
-                                </span>
+                                </div>
                             </td>
                         </ng-container>
 
@@ -229,6 +225,18 @@
                                             </button>
                                         }
                                     } @else {
+                                        @if (element.isBlocked) {
+                                            <button (click)="onSetEnable(element)" mat-menu-item>
+                                                <mat-icon class="outline-symbol">person_check</mat-icon>
+                                                <span>Unblock</span>
+                                            </button>
+                                        } @else {
+                                            <button (click)="onSetDisable(element)" mat-menu-item>
+                                                <mat-icon class="outline-symbol">person_cancel</mat-icon>
+                                                <span>Block</span>
+                                            </button>
+                                        }
+
                                         <button (click)="onUserRefresh(element)" mat-menu-item>
                                             <mat-icon class="outline-symbol">sync</mat-icon>
                                             <span>Refresh</span>

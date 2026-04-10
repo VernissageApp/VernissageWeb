@@ -1,0 +1,14 @@
+.user-avatar {
+    margin-top: 6px;
+}
+
+.user-identity {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.user-display-name,
+.user-name {
+    overflow-wrap: anywhere;
+}

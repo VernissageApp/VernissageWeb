@@ -1,16 +1,18 @@
 @if (isReady()) {
     @if (mainStatus(); as mainStatusInternal) {
-        <div animate.enter="fade-in">
-            <div class="photo-margin-top">
-                @if (showBackArrow()) {
-                    <div class="back-container" (click)="onBackClick()" (keydown.enter)="onBackClick()" tabindex="0">
-                        <mat-icon>arrow_back</mat-icon>
-                        <span class="back-label">Back</span>
+        <div class="status-layout-root" [class.status-layout-mobile]="isHandset()" animate.enter="fade-in" [style.height]="isHandset() ? 'auto' : 'calc(100dvh - 64px)'" [style.overflow]="isHandset() ? 'visible' : 'hidden'">
+            <div class="status-main-layout flex-row flex-responsive gap-16" [class.status-main-layout-mobile]="isHandset()" [style.height]="isHandset() ? 'auto' : '100%'">
+                <div class="status-left-column flex-grow-3" [class.status-left-column-mobile]="isHandset()" [style.flex]="isHandset() ? '1 1 auto' : '1 1 calc(100% - 440px)'" [style.height]="isHandset() ? 'auto' : '100%'" style="min-width: 0; min-height: 0; display: flex; flex-direction: column;">
+                    <div class="photo-margin-top">
+                        @if (!isHandset()) {
+                            <div class="back-container" (click)="onBackClick()" (keydown.enter)="onBackClick()" tabindex="0">
+                                <mat-icon>arrow_back</mat-icon>
+                                <span class="back-label">Back</span>
+                            </div>
+                        }
                     </div>
-                }
-            </div>
 
-            <div class="photo-container photo-container-table">
+                    <div class="photo-container photo-container-table" [style.height]="isHandset() ? 'auto' : 'calc(100dvh - 109px)'">
                 @if (showContextArrows() && !isInVersionMode()) {
                     <div class="icon" (click)="onPrevClick()" (keydown.enter)="onPrevClick()" tabindex="0">
                         @if (!hideLeftArrow()) {
@@ -23,7 +25,7 @@
                     }
                 }
 
-                <div class="display-inline">
+                <div class="photo-content-cell">
                     @if (images(); as imagesInternally) {
 
                         @if (imagesInternally.length === 1 || !showSensitiveImage() || !isBrowser()) {
@@ -51,6 +53,7 @@
                                 id="mainGalleryId"
                                 class="custom-gallery"
                                 [ngClass]="{ 'custom-gallery-with-icons': showContextArrows() }"
+                                [style.width]="showContextArrows() ? 'calc(100% - 80px)' : '100%'"
                                 bullets
                                 bulletPosition="bottom"
                                 [bulletSize]="10"
@@ -77,38 +80,38 @@
                         <div class="icon-placeholder"></div>
                     }
                 }
-            </div>
-            <div class="photo-margin-bottom"></div>
+                    </div>
+                    <div class="photo-margin-bottom"></div>
 
-            @if (showBottomContextArrow()) {
-                <div class="flex-row flex-space-between padding-left-10 padding-right-10 padding-top-10">
-                    @if (!hideLeftArrow()) {
-                        <div>
-                            <button matButton="outlined" (click)="onPrevClick()" class="small-button context-left" aria-label="Previous image">
-                                <mat-icon>arrow_back_ios</mat-icon>
-                            </button>
-                        </div>
-                    } @else {
-                        <div></div>
-                    }
+                    @if (showBottomContextArrow()) {
+                        <div class="flex-row flex-space-between padding-left-10 padding-right-10 padding-top-10">
+                            @if (!hideLeftArrow()) {
+                                <div>
+                                    <button matButton="outlined" (click)="onPrevClick()" class="small-button context-left" aria-label="Previous image">
+                                        <mat-icon>arrow_back_ios</mat-icon>
+                                    </button>
+                                </div>
+                            } @else {
+                                <div></div>
+                            }
 
-                    @if (!hideRightArrow()) {
-                        <div>
-                            <button matButton="outlined" (click)="onNextClick()" class="small-button context-right" aria-label="Next image">
-                                <mat-icon iconPositionEnd>arrow_forward_ios</mat-icon>
-                            </button>
+                            @if (!hideRightArrow()) {
+                                <div>
+                                    <button matButton="outlined" (click)="onNextClick()" class="small-button context-right" aria-label="Next image">
+                                        <mat-icon iconPositionEnd>arrow_forward_ios</mat-icon>
+                                    </button>
+                                </div>
+                            } @else {
+                                <div></div>
+                            }
                         </div>
-                    } @else {
-                        <div></div>
                     }
                 </div>
-            }
 
-            <div [ngClass]="{ 'padding-left-30 padding-right-30 padding-top-30 padding-bottom-5': !isHandset(), 'padding-10': isHandset() }">
-                <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
+                <div class="status-right-column flex-grow-2" [class.status-right-column-mobile]="isHandset()" [style.flex]="isHandset() ? '1 1 auto' : '0 0 440px'" [style.height]="isHandset() ? 'auto' : '100%'" [style.overflow-y]="isHandset() ? 'visible' : 'auto'" [style.padding-left.px]="isHandset() ? 10 : 0" [style.padding-right.px]="isHandset() ? 10 : 16" [style.padding-top.px]="10" [style.padding-bottom.px]="isHandset() ? 10 : 5" style="min-width: 0;">
 
-                    <!-- Left main panel -->
-                    <mat-card class="flex-grow-3 height-100" appearance="outlined">
+                    <!-- Status data -->
+                    <mat-card class="status-details-card margin-bottom-20" appearance="outlined">
                         <mat-card-content>
 
                             <div class="flex-row flex-wrap flex-align-center">
@@ -218,15 +221,17 @@
                                     }
                                 }
 
-                                <div class="flex-spacer"></div>
-
-                                <!-- Reblog user card -->
-                                @if (status()?.reblog) {
-                                    @if (status()?.user; as userObject) {
-                                        <app-mini-user-card [user]="userObject"></app-mini-user-card>
-                                    }
-                                }
                             </div>
+
+                            <!-- Reblog user card -->
+                            @if (status()?.reblog) {
+                                @if (status()?.user; as userObject) {
+                                    <div class="reblog-user-row flex-row flex-align-center gap-8">
+                                        <mat-icon class="text-muted">repeat</mat-icon>
+                                        <app-mini-user-card [user]="userObject"></app-mini-user-card>
+                                    </div>
+                                }
+                            }
 
                             <!-- User card -->
                             <app-user-card [user]="mainStatusInternal.user"></app-user-card>
@@ -403,10 +408,8 @@
                         </mat-card-content>
                     </mat-card>
 
-                    <!-- Right panel -->
-                    <div class="flex-grow-2 height-100">
-                        <!-- Comments -->
-                        <mat-card class="margin-bottom-20" appearance="outlined">
+                    <!-- Comments -->
+                    <mat-card class="margin-bottom-20" appearance="outlined">
                             <mat-card-header>
                                 <mat-card-title>Comments</mat-card-title>
                             </mat-card-header>
@@ -511,27 +514,26 @@
                                 }
 
                             </mat-card-content>
-                        </mat-card>
+                    </mat-card>
 
-                        <!-- Versions -->
-                        @if (versions() && versions().length) {
-                            <mat-card appearance="outlined">
-                                <mat-card-content>
-                                    <div class="versions">
-                                        <mat-form-field appearance="outline">
-                                            <mat-label>Previous versions</mat-label>
-                                            <mat-select [(value)]="versionId" (selectionChange)="onVersionChange()">
-                                                <mat-option value="">Latest version</mat-option>
-                                                @for (version of versions(); track version.id) {
-                                                    <mat-option [value]="version.id">{{ version.orginalStatusUpdatedAt | date:'medium' }}</mat-option>
-                                                }
-                                            </mat-select>
-                                        </mat-form-field>
-                                    </div>
-                                </mat-card-content>
-                            </mat-card>
-                        }
-                    </div>
+                    <!-- Versions -->
+                    @if (versions() && versions().length) {
+                        <mat-card appearance="outlined">
+                            <mat-card-content>
+                                <div class="versions">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Previous versions</mat-label>
+                                        <mat-select [(value)]="versionId" (selectionChange)="onVersionChange()">
+                                            <mat-option value="">Latest version</mat-option>
+                                            @for (version of versions(); track version.id) {
+                                                <mat-option [value]="version.id">{{ version.orginalStatusUpdatedAt | date:'medium' }}</mat-option>
+                                            }
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+                    }
 
                 </div>
             </div>

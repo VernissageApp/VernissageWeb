@@ -21,6 +21,7 @@ import { UserBlockedDomainsService } from 'src/app/services/http/user-blocked-do
 import { ConfirmationDialog } from 'src/app/dialogs/confirmation-dialog/confirmation.dialog';
 import { UserBlockedDomainDialogEntity } from 'src/app/dialogs/user-blocked-domain-dialog/user-blocked-domain-dialog-entity';
 import { UnfollowAccountDialog } from 'src/app/dialogs/unfollow-account-dialog/unfollow-account.dialog';
+import { UserBlockedUserDialog } from 'src/app/dialogs/user-blocked-user-dialog/user-blocked-domain.dialog';
 
 @Component({
     selector: 'app-follow-buttons-section',
@@ -46,6 +47,8 @@ export class FollowButtonsSectionComponent implements OnInit, OnDestroy {
     protected showCopyProfileUrlButton = signal(false);
     protected showMuteButton = signal(false);
     protected showUnmuteButton = signal(false);
+    protected showBlockButton = signal(false);
+    protected showUnblockButton = signal(false);
     protected showUserBlockDomainButton = signal(false);
     protected showUserUnblockDomainButton = signal(false);
     protected showFeatureButton = signal(false);
@@ -142,21 +145,83 @@ export class FollowButtonsSectionComponent implements OnInit, OnDestroy {
     }
 
     protected async unmuteAccount(): Promise<void> {
-        try {
-            const internalUser = this.user();
+        const dialogRef = this.dialog.open(ConfirmationDialog, {
+            width: '500px',
+            data: 'Do you want to unmute user?'
+        });
 
-            if (internalUser.userName) {
-                const downloadedRelationship = await this.usersService.unmute(internalUser.userName);
-                this.relationshipAfterAction.set(downloadedRelationship);
-                this.recalculateRelationship();
+        dialogRef.afterClosed().subscribe(async (result) => {
+            if (result?.confirmed) {
+                try {
+                    const internalUser = this.user();
 
-                this.emitRelationChange();
-                this.messageService.showSuccess('Mute has been canceled.');
+                    if (internalUser.userName) {
+                        const downloadedRelationship = await this.usersService.unmute(internalUser.userName);
+                        this.relationshipAfterAction.set(downloadedRelationship);
+                        this.recalculateRelationship();
+
+                        this.emitRelationChange();
+                        this.messageService.showSuccess('Mute has been canceled.');
+                    }
+                } catch (error) {
+                    console.error(error);
+                    this.messageService.showServerError(error);
+                }
             }
-        } catch (error) {
-            console.error(error);
-            this.messageService.showServerError(error);
-        }
+        });
+    }
+
+    protected openBlockAccountDialog(): void {
+        const dialogRef = this.dialog.open(UserBlockedUserDialog, {
+            width: '500px'
+        });
+
+        dialogRef.afterClosed().subscribe(async (result) => {
+            if (result) {
+                try {
+                    const internalUser = this.user();
+
+                    if (internalUser.userName) {
+                        const downloadedRelationship = await this.usersService.block(internalUser.userName, result);
+                        this.relationshipAfterAction.set(downloadedRelationship);
+                        this.recalculateRelationship();
+
+                        this.emitRelationChange();
+                        this.messageService.showSuccess('User has been blocked.');
+                    }
+                } catch (error) {
+                    console.error(error);
+                    this.messageService.showServerError(error);
+                }
+            }
+        });
+    }
+
+    protected async unblockAccount(): Promise<void> {
+        const dialogRef = this.dialog.open(ConfirmationDialog, {
+            width: '500px',
+            data: 'Do you want to unblock user?'
+        });
+
+        dialogRef.afterClosed().subscribe(async (result) => {
+            if (result?.confirmed) {
+                try {
+                    const internalUser = this.user();
+
+                    if (internalUser.userName) {
+                        const downloadedRelationship = await this.usersService.unblock(internalUser.userName);
+                        this.relationshipAfterAction.set(downloadedRelationship);
+                        this.recalculateRelationship();
+
+                        this.emitRelationChange();
+                        this.messageService.showSuccess('User has been unblocked.');
+                    }
+                } catch (error) {
+                    console.error(error);
+                    this.messageService.showServerError(error);
+                }
+            }
+        });
     }
 
     protected async onReportDialog(): Promise<void> {
@@ -446,6 +511,32 @@ export class FollowButtonsSectionComponent implements OnInit, OnDestroy {
         return isMuted === true;
     }
 
+    private shouldShowBlockButton(): boolean {
+        if (!this.signedInUser) {
+            return false;
+        }
+
+        if (this.signedInUser.id === this.updatedUser().id) {
+            return false;
+        }
+
+        const isBlocked = this.updatedRelationship().blocked;
+        return isBlocked === null || isBlocked === false;
+    }
+
+    private shouldShowUnblockButton(): boolean {
+        if (!this.signedInUser) {
+            return false;
+        }
+
+        if (this.signedInUser.id === this.updatedUser().id) {
+            return false;
+        }
+
+        const isBlocked = this.updatedRelationship().blocked;
+        return isBlocked === true;
+    }
+
     private shouldShowUserBlockOrUnblockDomainButton(): boolean {
         if (!this.signedInUser) {
             return false;
@@ -514,6 +605,8 @@ export class FollowButtonsSectionComponent implements OnInit, OnDestroy {
         this.showCopyProfileUrlButton.set(this.shouldShowCopyProfileUrlButton());
         this.showMuteButton.set(this.shouldShowMuteButton());
         this.showUnmuteButton.set(this.shouldShowUnmuteButton());
+        this.showBlockButton.set(this.shouldShowBlockButton());
+        this.showUnblockButton.set(this.shouldShowUnblockButton());
         this.showFeatureButton.set(this.shouldShowFeatureButton());
         this.showUnfeatureButton.set(this.shouldShowUnfeatureButton());
         this.showReportButton.set(this.shouldShowReportButton());
