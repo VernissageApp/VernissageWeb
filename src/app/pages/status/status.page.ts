@@ -1021,10 +1021,10 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     private setCardMetatags(): void {
         const internalMainStatus = this.mainStatus();
 
-        const statusTitle = (internalMainStatus?.user?.name ?? '') + ` (@${internalMainStatus?.user?.userName ?? ''})`;
+        const statusTitle = this.getStatusTitle(internalMainStatus);
         const statusDescription = this.htmlToText(internalMainStatus?.note ?? '');
 
-        // <title>John Doe (@john@vernissage.xxx)</title>
+        // <title>Landscape by John Doe (@john)</title>
         this.titleService.setTitle(statusTitle);
 
         // <meta name="description" content="My suite of cool apps is coming together nicely. What would you like to see me build next?">
@@ -1036,7 +1036,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         // <meta property="og:type" content="website">
         this.metaService.updateTag({ property: 'og:type', content: 'website' });
 
-        // <meta property="og:title" content="John Doe (@john@vernissage.xxx)">
+        // <meta property="og:title" content="Landscape by John Doe (@john)">
         this.metaService.updateTag({ property: 'og:title', content: statusTitle });
 
         // <meta property="og:description" content="Something apps next?">
@@ -1060,6 +1060,22 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
 
         // <meta name="twitter:card" content="summary_large_image">
         this.metaService.updateTag({ property: 'twitter:card', content: 'summary_large_image' });
+    }
+
+    private getStatusTitle(status?: Status): string {
+        const author = (status?.user?.name ?? '') + ` (@${status?.user?.userName ?? ''})`;
+        const categoryName = status?.category?.name?.trim();
+
+        if (categoryName) {
+            return `${categoryName} by ${author}`;
+        }
+
+        const attachmentsCount = status?.attachments?.length ?? 0;
+        if (attachmentsCount <= 1) {
+            return `One image by ${author}`;
+        }
+
+        return `${attachmentsCount} images by ${author}`;
     }
 
     private browserSupportsHdr(): boolean {
