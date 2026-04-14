@@ -34,7 +34,6 @@ import { MatProgressBar } from '@angular/material/progress-bar';
 import { MatTabsModule } from '@angular/material/tabs';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { GalleryModule } from 'ng-gallery';
-import { SatPopoverModule } from '@ncstate/sat-popover';
 
 @NgModule({
     imports: [
@@ -73,7 +72,6 @@ import { SatPopoverModule } from '@ncstate/sat-popover';
         MatProgressBar,
         MatTabsModule,
         GalleryModule,
-        SatPopoverModule,
         DragDropModule
     ],
     exports: [
@@ -112,7 +110,6 @@ import { SatPopoverModule } from '@ncstate/sat-popover';
         MatProgressBar,
         MatTabsModule,
         GalleryModule,
-        SatPopoverModule,
         DragDropModule
     ]
 })

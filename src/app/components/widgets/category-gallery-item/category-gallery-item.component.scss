@@ -3,7 +3,6 @@
     height: 300px;
     overflow-x: auto;
     overflow-y: hidden;
-    font-size: 0.8em;
     margin-bottom: 20px;
 
     .image {
@@ -14,6 +13,10 @@
     .blurhash {
         height: 300px;
         padding-right: 6px;
+    }
+
+    ::ng-deep .avatar {
+        font-size: 0.85em;
     }
 }
 

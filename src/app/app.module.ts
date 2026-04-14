@@ -77,7 +77,7 @@ export const customTooltipDefaults: MatTooltipDefaultOptions = {
         },
         provideHttpClient(withFetch(), withInterceptorsFromDi()),
         provideClientHydration(withEventReplay()),
-        // The animations are required now only by sat-popover library.
+        // The animations are required now only by ng-gallery library.
         provideAnimations()
     ]
 })
