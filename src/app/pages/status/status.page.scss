@@ -398,6 +398,11 @@
 }
 
 .comments {
+    .comment-avatar {
+        display: inline-flex;
+        text-decoration: none;
+    }
+
     ::ng-deep p {
         margin: 0;
     }

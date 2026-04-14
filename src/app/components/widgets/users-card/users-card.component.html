@@ -1,9 +1,9 @@
 @for (user of users(); track user.id) {
     <div class="user-wrapper">
         <div class="user-display-name">
-            <div class="user-avatar">
+            <a [routerLink]="[ '/@' + user.userName ]" class="user-avatar" [attr.aria-label]="'Open profile @' + user.userName">
                 <app-avatar [user]="user" [size]="avatarSize.huge"></app-avatar>
-            </div>
+            </a>
     
             <div class="overflow-ellipsis width-100">
                 <div class="overflow-ellipsis">

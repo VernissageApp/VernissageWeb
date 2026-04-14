@@ -8,6 +8,11 @@ h1 {
     }
 }
 
+.user-avatar {
+    display: inline-flex;
+    text-decoration: none;
+}
+
 .action-button {
     min-width: 90px;
 }

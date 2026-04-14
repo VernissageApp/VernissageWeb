@@ -1,9 +1,9 @@
 @if (user(); as userInternal) {
     <div class="flex-row flex-space-between padding-bottom-10 padding-top-10">
         <div class="flex-row gap-8">
-            <div class="user-avatar">
+            <a [routerLink]="[ '/@' + userInternal.userName ]" class="user-avatar" [attr.aria-label]="'Open profile @' + userInternal.userName">
                 <app-avatar [user]="userInternal" [size]="avatarSize.huge"></app-avatar>
-            </div>
+            </a>
             <div>
                 <div class="user-identity">
                     <div><a [routerLink]="[ '/@' + userInternal.userName ]" class="fw-600 user-display-name">{{ userDisplayService.displayName(userInternal) }}</a></div>

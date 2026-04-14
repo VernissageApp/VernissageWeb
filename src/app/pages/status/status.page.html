@@ -422,9 +422,9 @@
                                     @for (comment of comments(); track comment.status.id) {
                                         <div class="padding-top-10 comments">
                                             <div class="flex-row gap-8" [ngClass]="{ 'replies': !comment.showDivider, 'padding-top-15': comment.showDivider }">
-                                                <div>
+                                                <a [routerLink]="[ '/@' + comment.status.user?.userName ]" class="comment-avatar" [attr.aria-label]="'Open profile @' + comment.status.user?.userName">
                                                     <app-avatar [user]="comment.status.user" [size]="avatarSize.medium"></app-avatar>
-                                                </div>
+                                                </a>
                                                 <div>
                                                     <div>
                                                         <a [routerLink]="[ '/@' + comment.status.user?.userName ]" class="margin-right-5 fw-600">{{ comment.status.user?.name }}</a>

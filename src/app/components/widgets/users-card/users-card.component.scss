@@ -12,7 +12,9 @@
         overflow: hidden;
 
         .user-avatar {
+            display: inline-flex;
             margin-top: 4px;
+            text-decoration: none;
         }
     }
 
