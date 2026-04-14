@@ -16,7 +16,13 @@
                 </div>
 
                 <app-popover [visible]="popoverVisible()">
-                    <div (mouseenter)="mouseenter.next()" (mouseleave)="mouseleave.next()" (click)="$event.preventDefault(); $event.stopPropagation()">
+                    <div
+                        tabindex="0"
+                        (mouseenter)="mouseenter.next()"
+                        (mouseleave)="mouseleave.next()"
+                        (click)="$event.preventDefault(); $event.stopPropagation()"
+                        (keydown.enter)="$event.preventDefault(); $event.stopPropagation()"
+                        (keydown.space)="$event.preventDefault(); $event.stopPropagation()">
                         <app-user-popover [user]="userObject" [relationship]="relationship()"></app-user-popover>
                     </div>
                 </app-popover>
