@@ -1,6 +1,6 @@
 .user-popover {
-    max-width: 640px;
-    margin-top: 6px;
+    max-width: min(640px, calc(100vw - 16px));
+    margin-top: 0;
 
     background-color: rgb(255, 255, 255, 0.95);
 }

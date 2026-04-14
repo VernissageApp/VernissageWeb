@@ -10,7 +10,6 @@ import { StatusesService } from 'src/app/services/http/statuses.service';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { isPlatformBrowser } from '@angular/common';
 import { delay, filter, of, Subject, Subscription, switchMap, takeUntil } from 'rxjs';
-import { SatPopoverComponent } from '@ncstate/sat-popover';
 import { NavigationStart, Router } from '@angular/router';
 import { Relationship } from 'src/app/models/relationship';
 import { RelationshipsService } from 'src/app/services/http/relationships.service';
@@ -43,6 +42,7 @@ export class ImageComponent implements OnInit, OnDestroy, AfterViewInit {
     protected showReblog = signal(false);
     protected showAvatar = signal(false);
     protected showCount = signal(true);
+    protected popoverVisible = signal(false);
     protected width = signal(0);
     protected height = signal(0);
     protected attachmentCount = computed(() => this.mainStatus()?.attachments?.length ?? 0);
@@ -54,7 +54,6 @@ export class ImageComponent implements OnInit, OnDestroy, AfterViewInit {
     protected imageCutHackLoaded = signal(false);
 
     private readonly imageCutHackTimeout = 100;
-    private popover = viewChild<SatPopoverComponent | undefined>('popover');
     private canvas = viewChild<ElementRef<HTMLCanvasElement> | undefined>('canvas');
 
     private routeNavigationStartSubscription?: Subscription;
@@ -108,13 +107,13 @@ export class ImageComponent implements OnInit, OnDestroy, AfterViewInit {
         this.routeNavigationStartSubscription = this.router.events
             .pipe(filter(event => event instanceof NavigationStart))  
             .subscribe(() => {
-                this.popover()?.close();
+                this.popoverVisible.set(false);
                 this.mouseleave.next();
             });
     }
 
     ngOnDestroy(): void {
-        this.popover()?.close();
+        this.popoverVisible.set(false);
         this.routeNavigationStartSubscription?.unsubscribe();
     }
 
@@ -124,7 +123,7 @@ export class ImageComponent implements OnInit, OnDestroy, AfterViewInit {
         this.mouseenter
             .pipe(switchMap(() => of(null).pipe(delay(500), takeUntil(this.mouseleave))))
             .subscribe(async () => {
-                this.popover()?.open();
+                this.popoverVisible.set(true);
 
                 const userInternal = this.user();
                 if (userInternal && userInternal.id && this.signedInUser()?.id !== userInternal.id) {
@@ -136,7 +135,7 @@ export class ImageComponent implements OnInit, OnDestroy, AfterViewInit {
         this.mouseleave
             .pipe(switchMap(() => of(null).pipe(delay(500), takeUntil(this.mouseenter))))
             .subscribe(() => {
-                this.popover()?.close();
+                this.popoverVisible.set(false);
             });
     }
 
@@ -255,4 +254,5 @@ export class ImageComponent implements OnInit, OnDestroy, AfterViewInit {
 
         return internalMainStatus.attachments[0];
     }
+
 }

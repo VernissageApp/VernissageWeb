@@ -37,15 +37,15 @@
     @if (imageIsLoaded()) {
         @if(showAvatar()) {
             @if (user(); as userObject) {
-                <div class="avatar" [satPopoverAnchor]="popover" (mouseenter)="mouseenter.next()" (mouseleave)="mouseleave.next()">
+                <div class="avatar" (mouseenter)="mouseenter.next()" (mouseleave)="mouseleave.next()">
                     <app-mini-user-card [user]="userObject" [showUserName]="false" [whiteLink]="true" [size]="avatarSize.verysmall"></app-mini-user-card>
                 </div>
 
-                <sat-popover #popover [autoFocus]="false" verticalAlign="below">
-                    <div class="popover" (mouseenter)="mouseenter.next()" (mouseleave)="mouseleave.next()">
+                <app-popover [visible]="popoverVisible()">
+                    <div (mouseenter)="mouseenter.next()" (mouseleave)="mouseleave.next()" (click)="$event.preventDefault(); $event.stopPropagation()">
                         <app-user-popover [user]="userObject" [relationship]="relationship()"></app-user-popover>
                     </div>
-                </sat-popover>
+                </app-popover>
             }
         }
 
