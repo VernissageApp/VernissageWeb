@@ -52,7 +52,11 @@ export class NotificationsPage extends ResponsiveComponent implements OnInit, On
 
         this.routeParamsSubscription = this.activatedRoute.queryParams.subscribe(async () => {
             this.loadingService.showLoader();
-            await this.onLoadMore();
+
+            this.minId.set(undefined);
+            this.maxId.set(undefined);
+            
+            await this.onLoadMore(true);
             
             const linkedNotifications = this.notifications();
             if (linkedNotifications?.length) {
@@ -70,10 +74,10 @@ export class NotificationsPage extends ResponsiveComponent implements OnInit, On
         this.routeParamsSubscription?.unsubscribe();
     }
 
-    protected async onLoadMore(): Promise<void> {
+    protected async onLoadMore(reload: boolean): Promise<void> {
         const internalNotifications = await this.notificationsService.get(undefined, this.maxId(), undefined);
 
-        if (this.notifications()) {
+        if (!reload && this.notifications()) {
             if (internalNotifications.data.length > 0) {
                 this.notifications.update(x => [...x, ...internalNotifications.data]);
                 this.minId.set(internalNotifications.minId);
