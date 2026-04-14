@@ -10,6 +10,11 @@ h1 {
     }
   }
 
+.user-avatar {
+  display: inline-flex;
+  text-decoration: none;
+}
+
 .user-name-link a,
 .name,
 .email {
