@@ -32,4 +32,9 @@ export class ReportsService {
         const event$ = this.httpClient.post<Report>(this.windowService.apiUrl() + `/api/v1/reports/${id}/restore`, null);
         return await firstValueFrom(event$);
     }
+
+    public async send(id: string): Promise<Report> {
+        const event$ = this.httpClient.post<Report>(this.windowService.apiUrl() + `/api/v1/reports/${id}/send`, null);
+        return await firstValueFrom(event$);
+    }
 }
