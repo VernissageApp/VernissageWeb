@@ -39,8 +39,8 @@ export class ActivityPubEventItemsPage extends ResponsiveComponent implements On
     private routeParamsSubscription?: Subscription;
     private readonly displayedColumnsHandsetPortrait: string[] = ['url', 'isSuccess', 'error'];
     private readonly displayedColumnsHandsetLandscape: string[] = ['url', 'isSuccess', 'error'];
-    private readonly displayedColumnsTablet: string[] = ['url', 'isSuccess', 'createdAt', 'startAt', 'error'];
-    private readonly displayedColumnsBrowser: string[] = ['url', 'isSuccess', 'createdAt', 'startAt', 'endAt', 'error'];
+    private readonly displayedColumnsTablet: string[] = ['url', 'isSuspended', 'isSuccess', 'createdAt', 'startAt', 'error'];
+    private readonly displayedColumnsBrowser: string[] = ['url', 'isSuspended', 'isSuccess', 'createdAt', 'startAt', 'endAt', 'error'];
 
     private statusActivityPubEventsService = inject(StatusActivityPubEventsService);
     private authorizationService = inject(AuthorizationService);
