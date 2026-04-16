@@ -21,6 +21,9 @@
                                 @if (!isHandset()) {
                                     <mat-chip-set aria-label="Type">
                                         <mat-chip-option [disableRipple]="true" disabled><span class="fs-90">{{ getReportType(element) }}</span></mat-chip-option>
+                                        @if (element.forward) {
+                                            <mat-chip-option [disableRipple]="true" disabled><span class="fs-90">Federated</span></mat-chip-option>
+                                        }
                                     </mat-chip-set>
                                 }
                             </td>
@@ -63,6 +66,15 @@
                                 <span>@if (element.status?.id || element.mainStatusId) {
                                     <a [routerLink]="['/statuses', element.mainStatusId ?? element.status?.id ]">Link</a>
                                 }</span>
+                            </td>
+                        </ng-container>
+
+                        <!-- Is Local Column -->
+                        <ng-container matColumnDef="isLocal">
+                            <th mat-header-cell *matHeaderCellDef> Local </th>
+                            <td mat-cell *matCellDef="let element">
+                                <mat-checkbox [disableRipple]="true" [ngModel]="element.isLocal" disabled>
+                                </mat-checkbox>
                             </td>
                         </ng-container>
 
@@ -142,7 +154,7 @@
                                                 <button
                                                     type="button"
                                                     mat-menu-item
-                                                    aria-label="Restore report"
+                                                    aria-label="Unlist status"
                                                     (click)="onUnlist(element)"
                                                     class="action-button">
                                                     <mat-icon>hide_image</mat-icon>
@@ -154,7 +166,7 @@
                                                 <button
                                                     type="button"
                                                     mat-menu-item
-                                                    aria-label="Restore report"
+                                                    aria-label="Delete status"
                                                     (click)="onDelete(element)"
                                                     class="action-button">
                                                     <mat-icon>delete</mat-icon>
@@ -166,11 +178,23 @@
                                                 <button
                                                     type="button"
                                                     mat-menu-item
-                                                    aria-label="Restore report"
+                                                    aria-label="Apply CW to status"
                                                     (click)="onApplyCW(element)"
                                                     class="action-button">
                                                     <mat-icon>warning</mat-icon>
                                                     <span>Apply CW to status</span>
+                                                </button>
+                                            }
+
+                                            @if (!element.reportedUser?.isLocal && !element.forward) {
+                                                <button
+                                                    type="button"
+                                                    mat-menu-item
+                                                    aria-label="Send to remote instance"
+                                                    (click)="onSend(element)"
+                                                    class="action-button">
+                                                    <mat-icon>public</mat-icon>
+                                                    <span>Send to remote instance</span>
                                                 </button>
                                             }
                                         </mat-menu>

@@ -9,6 +9,7 @@ export class Report {
     public mainStatusId?: string;
     public comment?: string;
     public forward = false;
+    public isLocal = true;
     public category?: string;
     public ruleIds?: number[];
     public considerationDate?: Date;
