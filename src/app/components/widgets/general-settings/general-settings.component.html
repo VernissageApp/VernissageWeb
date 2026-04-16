@@ -335,26 +335,66 @@
 
     <div class="margin-bottom-20">
         <div>
-            <mat-checkbox name="isOpenAIEnabled" [disableRipple]="true" [(ngModel)]="settings().isOpenAIEnabled">
-                Is OpenAPI enabled
+            <mat-checkbox name="isAIEnabled" [disableRipple]="true" [(ngModel)]="settings().isOpenAIEnabled">
+                Is AI enabled
             </mat-checkbox>
         </div>
     </div>
 
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
-            <mat-label>OpenAI secure key</mat-label>
-            <input type="text" matInput name="openAPIKey" #openAPIKey="ngModel" [(ngModel)]="settings().openAIKey"
-                placeholder="OpenAI key" aria-label="OpenAI key" />
+            <mat-label>AI provider name</mat-label>
+            <input type="text" matInput name="AIProviderName" #openAIProviderName="ngModel" [(ngModel)]="settings().openAIProviderName"
+                placeholder="AI provider name" aria-label="AI provider name" />
         </mat-form-field>
     </div>
 
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
-            <mat-label>OpenAI model</mat-label>
-            <input type="text" matInput name="openAPIModel" #openAPIModel="ngModel" [(ngModel)]="settings().openAIModel"
-                placeholder="OpenAI model" aria-label="OpenAI model" />
+            <mat-label>AI URL</mat-label>
+            <input type="text" matInput name="AIUrl" #openAIUrl="ngModel" [(ngModel)]="settings().openAIUrl"
+                placeholder="AI Url" aria-label="AI Url" />
         </mat-form-field>
+    </div>
+
+    <div class="margin-bottom-20">
+        <mat-form-field appearance="outline">
+            <mat-label>AI secret key</mat-label>
+            <input type="text" matInput name="AISecretKey" #openAPIKey="ngModel" [(ngModel)]="settings().openAIKey"
+                placeholder="AI secret key" aria-label="AI secret key" />
+        </mat-form-field>
+    </div>
+
+    <div class="margin-bottom-20">
+        <mat-form-field appearance="outline">
+            <mat-label>AI model</mat-label>
+            <input type="text" matInput name="AIModel" #openAPIModel="ngModel" [(ngModel)]="settings().openAIModel"
+                placeholder="AI model" aria-label="AI model" />
+        </mat-form-field>
+    </div>
+
+    <div class="margin-bottom-20">
+        <mat-form-field appearance="outline">
+            <mat-label>AI description prompt</mat-label>
+            <textarea matInput name="AIDescriptionPrompt" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4"
+                cdkAutosizeMaxRows="20" placeholder="AI description prompt" #openAIDescriptionPrompt="ngModel" [(ngModel)]="settings().openAIImageDescriptionPrompt"
+                aria-label="AI description prompt"></textarea>
+        </mat-form-field>
+        <div class="text-muted fs-90 margin-left-10 margin-top-5">
+            Used to generate an image description (alt text). Write clear instructions for accurate, objective, and accessible descriptions based only on visible content.
+        </div>
+    </div>
+
+    <div class="margin-bottom-20">
+        <mat-form-field appearance="outline">
+            <mat-label>AI hashtags prompt</mat-label>
+            <textarea matInput name="AIHashtagsPrompt" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4"
+                cdkAutosizeMaxRows="20" placeholder="AI hashtags prompt" #openAIHashtagsPrompt="ngModel" [(ngModel)]="settings().openAIImageHashtagsPrompt"
+                aria-label="AI hashtags prompt"></textarea>
+        </mat-form-field>
+        <div class="text-muted fs-90 margin-left-10 margin-top-5">
+            Used to generate hashtags for an status. Write instructions for relevant, concise, and social-media-friendly hashtags, and ask the model to return hashtags only.
+        </div>
     </div>
 
     <mat-divider></mat-divider>

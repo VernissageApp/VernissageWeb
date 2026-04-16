@@ -61,6 +61,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
     protected maxStatusLength = signal(0);
     protected maxMediaAttachments = signal(0);
     protected isOpenAIEnabled = signal(false);
+    protected openAIProviderName = signal('');
     protected hashtagsInProgress = signal(false);
     protected isEditMode = signal(false);
     protected maxFileSizeString = signal('');
@@ -106,6 +107,9 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
         this.maxStatusLength.set(this.instanceService.instance?.configuration?.statuses?.maxCharacters ?? this.defaultMaxCharacters);
         this.maxMediaAttachments.set(this.instanceService.instance?.configuration?.statuses?.maxMediaAttachments ?? this.defaultMaxMediaAttachments)
         this.isOpenAIEnabled.set(this.settingsService.publicSettings?.isOpenAIEnabled ?? false);
+
+        const internalOpenAIProviderName = this.settingsService.publicSettings?.openAIProviderName?.trim() || 'OpenAI';
+        this.openAIProviderName.set(internalOpenAIProviderName);
 
         const [internalCategories, internalLicenses, internalStatusTextTemplate, internalEmailHasBeenVerified] = await Promise.all([
             this.categoriesService.all(),

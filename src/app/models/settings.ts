@@ -43,6 +43,10 @@ export class Settings {
     public isOpenAIEnabled = false;
     public openAIKey = '';
     public openAIModel = '';
+    public openAIProviderName = '';
+    public openAIUrl = '';
+    public openAIImageDescriptionPrompt = '';
+    public openAIImageHashtagsPrompt = '';
 
     public isWebPushEnabled = false;
     public webPushEndpoint = '';

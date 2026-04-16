@@ -1,6 +1,7 @@
 export class PublicSettings {
     public maximumNumberOfInvitations = 0;
     public isOpenAIEnabled = false;
+    public openAIProviderName?: string;
     public webPushVapidPublicKey?: string;
     public imagesUrl?: string;
     public showNews = false;
