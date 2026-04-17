@@ -1,0 +1,68 @@
+<div class="status-autocomplete-wrapper margin-bottom-40">
+    <mat-form-field appearance="outline">
+        <mat-label>{{ label() }}</mat-label>
+        <textarea
+            matInput
+            [name]="name()"
+            cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4" cdkAutosizeMaxRows="10"
+            #statusInput="ngModel"
+            #textArea
+            [(ngModel)]="text"
+            (ngModelChange)="onTextChange()"
+            (keydown)="onTextKeydown($event)"
+            (keyup)="onTextCursorChange($event)"
+            (click)="onTextCursorChange()"
+            (blur)="onTextBlur()"
+            [required]="isRequired()"
+            aria-label="Status"
+            [appMaxLength]="maxLength().toString()">
+        </textarea>
+
+        @if (showPascalCaseHint()) {
+            <mat-hint class="text-muted" align="start">Use "PascalCase" for hashtags, capitalizing the first letter of each word, to improve readability and accessibility.</mat-hint>
+        }
+
+        <mat-hint class="text-muted" align="end">{{ text().length }}/{{ maxLength() }}</mat-hint>
+        @if (statusInput.invalid && statusInput.errors?.required) {
+            <mat-error>Enter status text.</mat-error>
+        }
+        @if (statusInput.invalid && statusInput.errors?.appMaxLength) {
+            <mat-error>Too long status.</mat-error>
+        }
+    </mat-form-field>
+
+    @if (autocompleteSuggestions().length > 0) {
+        <div #autocompletePanel class="status-autocomplete-panel" role="listbox" [attr.aria-label]="autocompleteType() === 'hashtags' ? 'Hashtag suggestions' : 'User suggestions'">
+            @for (suggestion of autocompleteSuggestions(); track suggestion.id; let i = $index) {
+                <div
+                    #autocompleteOption
+                    role="option"
+                    tabindex="-1"
+                    [attr.aria-selected]="autocompleteSelectedIndex() === i"
+                    class="status-autocomplete-option"
+                    [ngClass]="{ 'active': autocompleteSelectedIndex() === i }"
+                    (mousedown)="onAutocompleteSuggestionMouseDown($event, suggestion)"
+                    (mouseenter)="onAutocompleteSuggestionHover(i)">
+                    @if (suggestion.type === 'users') {
+                        @if (suggestion.user; as user) {
+                            <div class="user-option-content">
+                                <app-avatar [user]="user" [size]="avatarSize.small"></app-avatar>
+                                <div class="user-option-text">
+                                    <div class="user-option-name">{{ user.name || user.userName }}</div>
+                                    <div class="user-option-username">&#64;{{ user.userName }}</div>
+                                </div>
+                            </div>
+                        }
+                    } @else {
+                        <div class="hashtag-option-text">
+                            <span>{{ suggestion.value }}</span>
+                            @if (suggestion.hashtag?.amount !== undefined && suggestion.hashtag?.amount !== null) {
+                                <span class="hashtag-option-amount">({{ suggestion.hashtag?.amount }})</span>
+                            }
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    }
+</div>
