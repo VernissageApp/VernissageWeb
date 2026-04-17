@@ -14,7 +14,7 @@ import { MaxLengthValidatorDirective } from 'src/app/validators/directives/max-l
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { PersistenceBrowserService, PersistenceService } from 'src/app/services/persistance/persistance.service';
-import { provideZoneChangeDetection } from '@angular/core';
+import { NO_ERRORS_SCHEMA, provideZoneChangeDetection } from '@angular/core';
 
 describe('UploadPage', () => {
     let component: UploadPage;
@@ -23,6 +23,7 @@ describe('UploadPage', () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             declarations: [UploadPage, MaxLengthValidatorDirective],
+            schemas: [NO_ERRORS_SCHEMA],
             providers: [{
                 provide: ActivatedRoute,
                 useValue: {
