@@ -39,8 +39,8 @@ export class StatusEventItemsPage extends ResponsiveComponent implements OnInit,
     private routeParamsSubscription?: Subscription;
     private readonly displayedColumnsHandsetPortrait: string[] = ['url', 'isSuccess', 'error'];
     private readonly displayedColumnsHandsetLandscape: string[] = ['url', 'isSuccess', 'error'];
-    private readonly displayedColumnsTablet: string[] = ['url', 'isSuccess', 'createdAt', 'startAt', 'error'];
-    private readonly displayedColumnsBrowser: string[] = ['url', 'isSuccess', 'createdAt', 'startAt', 'endAt', 'error'];
+    private readonly displayedColumnsTablet: string[] = ['url', 'isSuspended', 'isSuccess', 'createdAt', 'startAt', 'error'];
+    private readonly displayedColumnsBrowser: string[] = ['url', 'isSuspended', 'isSuccess', 'createdAt', 'startAt', 'endAt', 'error'];
 
     private statusesService = inject(StatusesService);
     private authorizationService = inject(AuthorizationService);

@@ -17,6 +17,7 @@ import { AvatarSize } from 'src/app/components/widgets/avatar/avatar-size';
 import { StatusesService } from 'src/app/services/http/statuses.service';
 import { ContentWarningDialog } from 'src/app/dialogs/content-warning-dialog/content-warning.dialog';
 import { RandomGeneratorService } from 'src/app/services/common/random-generator.service';
+import { ConfirmationDialog } from 'src/app/dialogs/confirmation-dialog/confirmation.dialog';
 
 @Component({
     selector: 'app-reports',
@@ -36,7 +37,7 @@ export class ReportsPage extends ResponsiveComponent implements OnInit, OnDestro
     private readonly displayedColumnsHandsetPortrait: string[] = ['reportedUser', 'status'];
     private readonly displayedColumnsHandsetLandscape: string[] = ['reportedUser', 'status', 'actions'];
     private readonly displayedColumnsTablet: string[] = ['type', 'user', 'reportedUser', 'category', 'status', 'actions'];
-    private readonly displayedColumnsBrowser: string[] = ['type', 'user', 'reportedUser', 'status', 'category', 'considerationUser', 'considerationDate', 'actions'];
+    private readonly displayedColumnsBrowser: string[] = ['type', 'user', 'reportedUser', 'status', 'isLocal', 'category', 'considerationUser', 'considerationDate', 'actions'];
 
     private authorizationService = inject(AuthorizationService);
     private randomGeneratorService = inject(RandomGeneratorService);
@@ -145,6 +146,27 @@ export class ReportsPage extends ResponsiveComponent implements OnInit, OnDestro
             console.error(error);
             this.messageService.showServerError(error);
         }
+    }
+
+    protected async onSend(report: Report): Promise<void> {
+        const dialogRef = this.dialog.open(ConfirmationDialog, {
+            width: '500px',
+            data: 'Do you want to send report to remote instance?'
+        });
+
+        dialogRef.afterClosed().subscribe(async (result) => {
+            if (result?.confirmed) {
+                try {
+                    await this.reportsService.send(report.id);
+                    await this.refreshList();
+
+                    this.messageService.showSuccess('Report has been send to remote instance.');
+                } catch (error) {
+                    console.error(error);
+                    this.messageService.showServerError(error);
+                }
+            }
+        });
     }
 
     protected async onUnlist(report: Report): Promise<void> {

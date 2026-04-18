@@ -1,8 +1,13 @@
 .user-popover {
-    max-width: 640px;
-    margin-top: 6px;
+    max-width: min(640px, calc(100vw - 16px));
+    margin-top: 0;
 
     background-color: rgb(255, 255, 255, 0.95);
+}
+
+.user-avatar {
+    display: inline-flex;
+    text-decoration: none;
 }
 
 :host-context(.dark-theme) {

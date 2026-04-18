@@ -1,0 +1,10 @@
+@if (visible()) {
+    <div
+        #panel
+        class="popover-panel"
+        [style.transform]="'translateX(' + offsetX() + 'px)'"
+        [animate.enter]="enterAnimation()"
+        [animate.leave]="leaveAnimation()">
+        <ng-content></ng-content>
+    </div>
+}

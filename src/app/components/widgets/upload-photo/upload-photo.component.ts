@@ -39,6 +39,7 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
     protected currentCity = signal<Location | undefined>(undefined);
     protected hdrFileSizeString = signal('');
     protected maxFileSizeString = signal('');
+    protected openAIProviderName = signal('');
 
     private readonly defaultMaxHdrFileSize = 4194304;
     private readonly defaultMaxFileSize = 10485760;
@@ -64,6 +65,9 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
         this.isOpenAIEnabled.set(this.settingsService.publicSettings?.isOpenAIEnabled ?? false);
         this.allCountries = await this.countriesService.all();
         this.hdrFileSizeString.set(this.fileSizeService.getHumanFileSize(this.defaultMaxHdrFileSize, 0));
+
+        const internalOpenAIProviderName = this.settingsService.publicSettings?.openAIProviderName?.trim() || 'OpenAI';
+        this.openAIProviderName.set(internalOpenAIProviderName);
 
         const maxFileSize = this.instanceService.instance?.configuration?.attachments?.imageSizeLimit ?? this.defaultMaxFileSize;
         this.maxFileSizeString.set(this.fileSizeService.getHumanFileSize(maxFileSize, 0));

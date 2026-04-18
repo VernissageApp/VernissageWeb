@@ -36,7 +36,9 @@
                                                         <mat-icon class="fill-symbol">{{ getNotificationIcon(notification) }}</mat-icon>
                                                     </span>
                                                 }
-                                                <app-avatar [user]="notification.byUser" [size]="avatarSize.huge"></app-avatar>
+                                                <a [routerLink]="[ '/@' + notification.byUser?.userName ]" aria-label="Open user profile">
+                                                    <app-avatar [user]="notification.byUser" [size]="avatarSize.huge"></app-avatar>
+                                                </a>
                                             </div>
                                             <div class="overflow-ellipsis">
                                                 <span class="text-muted fs-80">{{ notification.createdAt | ago }}</span>
@@ -77,7 +79,7 @@
 
                                 @if(showLoadMore()) {
                                     <div class="flex-row flex-space-around">
-                                        <button matButton="text" (click)="onLoadMore()">Load more...</button>
+                                        <button matButton="text" (click)="onLoadMore(false)">Load more...</button>
                                     </div>
                                 }
                             </mat-card-content>

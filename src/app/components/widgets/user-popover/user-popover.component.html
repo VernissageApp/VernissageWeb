@@ -3,12 +3,12 @@
         <mat-card-content>
             <div class="flex-row flex-space-between gap-16">
                 <div class="flex-row gap-8">
-                    <div>
+                    <a [routerLink]="[ '/@' + userObject.userName ]" class="user-avatar" [attr.aria-label]="'Open profile @' + userObject.userName">
                         <app-avatar [user]="userObject" [size]="avatarSize.huge"></app-avatar>
-                    </div>
+                    </a>
                     <div>
-                        <div [ngClass]="{ 'flex-row': !isHandset(), 'flex-column': isHandset() }">
-                            <div><a [routerLink]="[ '/@' + userObject.userName ]" class="margin-right-5 fw-600">{{ userDisplayService.displayName(userObject) }}</a></div>
+                        <div class="flex-column gap-2">
+                            <div><a [routerLink]="[ '/@' + userObject.userName ]" class="fw-600">{{ userDisplayService.displayName(userObject) }}</a></div>
                             <div class="fw-400 fs-90 text-muted">&#64;{{ userObject.userName }}</div>
 
                             @if (userDisplayService.verifiedUrl(userObject)) {

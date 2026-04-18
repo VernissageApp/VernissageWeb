@@ -97,38 +97,20 @@
                                                 </button>
                                             </div>
                                             <div class="text-right text-muted fs-80 margin-bottom-10">
-                                                Feature powered by OpenAI.
+                                                Feature powered by {{ openAIProviderName() }}.
                                             </div>
                                         }
                                     </div>
                                 </div>
 
-                                <mat-form-field appearance="outline" class="margin-bottom-20">
-                                    <mat-label>Text</mat-label>
-                                    <textarea
-                                        matInput
-                                        name="statusText"
-                                        cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4" cdkAutosizeMaxRows="10"
-                                        #statusInput="ngModel"
-                                        [(ngModel)]="statusText"
-                                        (ngModelChange)="onStatusTextChange()"
-                                        required
-                                        aria-label="Status"
-                                        [appMaxLength]="maxStatusLength().toString()">
-                                    </textarea>
-
-                                    @if (!isHandset()) {
-                                        <mat-hint class="text-muted" align="start">Use “CamelCase” for hashtags, capitalizing the first letter of each word.</mat-hint>
-                                    }
-
-                                    <mat-hint class="text-muted" align="end">{{ statusText().length }}/{{ maxStatusLength() }}</mat-hint>
-                                    @if (statusInput.invalid && statusInput.errors?.required) {
-                                        <mat-error>Enter status text.</mat-error>
-                                    }
-                                    @if (statusInput.invalid && statusInput.errors?.appMaxLength) {
-                                        <mat-error>Too long status.</mat-error>
-                                    }
-                                </mat-form-field>
+                                <app-status-text-autocomplete
+                                    name="statusText"
+                                    [(text)]="statusText"
+                                    (textChange)="onStatusTextChange()"
+                                    [isRequired]="true"
+                                    [maxLength]="maxStatusLength()"
+                                    [showPascalCaseHint]="!isHandset()">
+                                </app-status-text-autocomplete>
 
                                 <mat-form-field appearance="outline" class=" margin-bottom-20">
                                     <mat-label>Category</mat-label>

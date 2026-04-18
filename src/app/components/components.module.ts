@@ -42,6 +42,8 @@ import { ArticleInlineComponent } from './widgets/article-inline/article-inline.
 import { BusinessCardComponent } from './widgets/business-card/business-card.component';
 import { LicenseListComponent } from './widgets/license-list/license-list.component';
 import { HomeCardsComponent } from './widgets/home-cards/home-cards.component';
+import { PopoverComponent } from './widgets/popover/popover.component';
+import { StatusTextAutocompleteComponent } from './widgets/status-text-autocomplete/status-text-autocomplete.component';
 
 @NgModule({
     declarations: [
@@ -78,7 +80,9 @@ import { HomeCardsComponent } from './widgets/home-cards/home-cards.component';
         ArticleInlineComponent,
         BusinessCardComponent,
         LicenseListComponent,
-        HomeCardsComponent
+        HomeCardsComponent,
+        PopoverComponent,
+        StatusTextAutocompleteComponent
     ],
     exports: [
         BrowserModule,
@@ -119,6 +123,8 @@ import { HomeCardsComponent } from './widgets/home-cards/home-cards.component';
         BusinessCardComponent,
         LicenseListComponent,
         HomeCardsComponent,
+        PopoverComponent,
+        StatusTextAutocompleteComponent,
         DirectivesModule
     ],
     imports: [
