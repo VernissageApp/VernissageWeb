@@ -9,8 +9,8 @@
         }
     </h1>
 
-    <div class="flex-row flex-responsive flex-stretch gap-10">
-        @if (emailHasBeenVerified()) {
+    <div class="flex-row flex-responsive flex-stretch gap-10">        
+        @if (emailHasBeenVerified() && !accountHasBeenMoved()) {
             <div class="padding-bottom-10">
                 <div class="flex-row flex-wrap gap-10">
                     <div cdkDropList class="example-list" cdkDropListOrientation="mixed" (cdkDropListDropped)="drop($event)">
@@ -30,12 +30,17 @@
                     }
                 </div>
             </div>
-        } @else {
+        } @else if (!emailHasBeenVerified()) {
             <div class="text-center margin-20">
                 To upload photos, please verify your email address. You can resend the confirmation email
                 from your <a routerLink="/account">Account</a> page if you haven't received it yet.
                 Requiring email verification helps ensure that only legitimate accounts can upload content,
                 which improves both security and the overall quality of shared materials.
+            </div>
+        } @else if (accountHasBeenMoved()) {
+            <div class="text-center margin-20">
+                This account has been moved to another account, so you can no longer add new photos
+                or publish new content here. To continue posting, please use your new account.
             </div>
         }
 
@@ -141,7 +146,7 @@
                             <div class="flex-row flex-space-between">
                                 <div>
                                     <button class="margin-right-10" matButton="text" matStepperPrevious>Back</button>
-                                    <button matButton="filled" [disabled]="!allPhotosUploaded()" matStepperNext>
+                                    <button matButton="filled" [disabled]="!allPhotosUploaded() || photos().length === 0" matStepperNext>
                                         {{ isEditMode() ? 'Update' : 'Upload' }}
                                     </button>
                                 </div>

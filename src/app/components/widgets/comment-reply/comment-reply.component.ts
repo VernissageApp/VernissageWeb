@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, computed, effect, inject, input, model, OnInit, output, signal, viewChild } from '@angular/core';
 import { Status } from 'src/app/models/status';
 import { StatusRequest } from 'src/app/models/status-request';
-import { User } from 'src/app/models/user';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { StatusesService } from 'src/app/services/http/statuses.service';
 import { AvatarSize } from '../avatar/avatar-size';
 import { NgForm } from '@angular/forms';
 import { InstanceService } from 'src/app/services/http/instance.service';
+import { UserPayload } from 'src/app/models/user-payload';
 
 @Component({
     selector: 'app-comment-reply',
@@ -16,7 +16,7 @@ import { InstanceService } from 'src/app/services/http/instance.service';
     standalone: false
 })
 export class CommentReplyComponent implements OnInit {
-    public signedInUser = input.required<User>();
+    public signedInUser = input.required<UserPayload>();
     public status = input.required<Status>();
     public showCancel = input(false);
     public disabled = input(false);

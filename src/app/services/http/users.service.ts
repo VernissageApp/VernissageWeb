@@ -10,6 +10,8 @@ import { UserMuteRequest } from 'src/app/models/user-mute-request';
 import { PagedResult } from 'src/app/models/paged-result';
 import { UnfollowRequest } from 'src/app/models/unfollow-request';
 import { UserBlockRequest } from 'src/app/models/user-block-request';
+import { UserMove } from 'src/app/models/user-move';
+import { UserUnmove } from 'src/app/models/user-unmove';
 
 @Injectable({
     providedIn: 'root'
@@ -130,6 +132,16 @@ export class UsersService {
 
     public async reject(userName: string): Promise<void> {
         const event$ = this.httpClient.post(this.windowService.apiUrl() + '/api/v1/users/@' + userName + '/reject', null);
+        await firstValueFrom(event$);
+    }
+
+    public async move(userName: string, account: string, password: string): Promise<void> {
+        const event$ = this.httpClient.post(this.windowService.apiUrl() + '/api/v1/users/@' + userName + '/move', new UserMove(account, password));
+        await firstValueFrom(event$);
+    }
+
+    public async unmove(userName: string, password: string): Promise<void> {
+        const event$ = this.httpClient.post(this.windowService.apiUrl() + '/api/v1/users/@' + userName + '/unmove', new UserUnmove(password));
         await firstValueFrom(event$);
     }
 

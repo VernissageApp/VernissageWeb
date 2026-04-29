@@ -37,6 +37,8 @@ import { HomeCardDialog } from './home-card-dialog/home-card.dialog';
 import { UserBlockedDomainDialog } from './user-blocked-domain-dialog/user-blocked-domain.dialog';
 import { UnfollowAccountDialog } from './unfollow-account-dialog/unfollow-account.dialog';
 import { UserBlockedUserDialog } from './user-blocked-user-dialog/user-blocked-domain.dialog';
+import { MoveAccountDialog } from './move-account-dialog/move-account.dialog';
+import { RestoreAccountDialog } from './restore-account-dialog/restore-account.dialog';
 
 @NgModule({
     declarations: [
@@ -70,6 +72,8 @@ import { UserBlockedUserDialog } from './user-blocked-user-dialog/user-blocked-d
         HomeCardDialog,
         UnfollowAccountDialog,
         UserBlockedUserDialog,
+        MoveAccountDialog,
+        RestoreAccountDialog,
         CategoryHashtagItemComponent
     ],
     exports: [
@@ -102,7 +106,9 @@ import { UserBlockedUserDialog } from './user-blocked-user-dialog/user-blocked-d
         LicenseDialog,
         HomeCardDialog,
         UnfollowAccountDialog,
-        UserBlockedUserDialog
+        UserBlockedUserDialog,
+        MoveAccountDialog,
+        RestoreAccountDialog
     ], 
     imports: [
         BrowserModule,

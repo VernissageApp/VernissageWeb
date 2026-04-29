@@ -40,6 +40,7 @@ export class User {
     public isSupporterFlagEnabled = false;
     public lastLoginDate = '';
     public publishedAt?: string;
+    public movedTo?: User;
     public createdAt = '';
     public updatedAt = '';
 }

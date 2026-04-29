@@ -42,6 +42,10 @@
                         <div class="bio" [innerHTML]="userInternal.bioHtml"></div>
                     </div>
 
+                    @if (userInternal.movedTo; as movedToUser) {
+                        <div class="text-center text-muted padding-top-10">This account has moved to <strong>{{ movedToUser.account }}</strong>. <br />Future updates will be published from the new account.</div>
+                    }
+
                     @if (userInternal.isLocal && createdAt()) {
                         <div class="text-center text-muted padding-top-10">
                             Joined {{ createdAt() | date:'longDate' }}

@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { User } from 'src/app/models/user';
+import { UserPayload } from 'src/app/models/user-payload';
 
 @Injectable({
     providedIn: 'root'
 })
 export class UserDisplayService {
 
-    displayName(user: User | undefined): string {
+    displayName(user: User | UserPayload | undefined): string {
         if(!user) {
             return '';
         }

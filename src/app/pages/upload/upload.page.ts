@@ -56,6 +56,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
     protected selectedIndex = model(0);
     protected isCanceling = signal(false);
     protected emailHasBeenVerified = signal(false);
+    protected accountHasBeenMoved = signal(false);
 
     protected statusTextTemplate = signal<string | undefined>(undefined);
     protected maxStatusLength = signal(0);
@@ -122,6 +123,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
         this.licenses.set(internalLicenses);
         this.statusTextTemplate.set(internalStatusTextTemplate?.value);
         this.emailHasBeenVerified.set(internalEmailHasBeenVerified.result);
+        this.accountHasBeenMoved.set(this.authorizationService.getUser()?.isMovedTo === true);
 
         if (this.router.routerState.snapshot.url.includes('edit')) {
             this.loadingService.showLoader();
@@ -298,6 +300,16 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
     }
 
     protected async onSubmit(): Promise<void> {
+        if (!this.emailHasBeenVerified()) {
+            this.messageService.showError('To publish a status, please verify your email address first.');
+            return;
+        }
+
+        if (this.accountHasBeenMoved()) {
+            this.messageService.showError('This account has been moved, so publishing new content is not available.');
+            return;
+        }
+
         try {
             const internalPhotos = this.photos();
 

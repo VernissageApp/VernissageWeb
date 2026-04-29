@@ -1,0 +1,30 @@
+<form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+    <div mat-dialog-title>Restore account</div>
+    <div mat-dialog-content>
+
+        <div class="padding-top-5 text-muted fs-90">
+            <p>
+                This action will reactivate your current account and remove the migration notice from your profile.
+            </p>
+            <p>
+                Please note that this does not automatically restore any data or relationships changed during the move,
+                including followers who may have already started following your new account.
+            </p>
+        </div>
+
+        <div class="margin-bottom-10 padding-top-5">
+            <mat-form-field class="width-100" appearance="outline">
+                <mat-label>Password</mat-label>
+                <input type="password" matInput name="password" [(ngModel)]="password" #passwordInput="ngModel" aria-label="Password" required />
+
+                @if (passwordInput.invalid && passwordInput.errors?.required) {
+                    <mat-error>Enter password.</mat-error>
+                }
+            </mat-form-field>
+        </div>
+    </div>
+    <div mat-dialog-actions>
+        <button matButton="text" type="button" (click)="onNoClick()">Cancel</button>
+        <button matButton="filled" type="submit" cdkFocusInitial>Restore</button>
+    </div>
+</form>
