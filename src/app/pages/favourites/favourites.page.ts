@@ -6,8 +6,8 @@ import { ContextTimeline } from 'src/app/models/context-timeline';
 import { FavouritesService } from 'src/app/services/http/favourites.service';
 import { UserDisplayService } from 'src/app/services/common/user-display.service';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
-import { User } from 'src/app/models/user';
 import { ReusableGalleryPageComponent } from 'src/app/common/reusable-gallery-page';
+import { UserPayload } from 'src/app/models/user-payload';
 
 @Component({
     selector: 'app-favourites',
@@ -18,7 +18,7 @@ import { ReusableGalleryPageComponent } from 'src/app/common/reusable-gallery-pa
 })
 export class FavouritesPage extends ReusableGalleryPageComponent implements OnInit, OnDestroy {
     protected isReady = signal(false);
-    protected user = signal<User | undefined>(undefined);
+    protected user = signal<UserPayload | undefined>(undefined);
     protected fullName = signal('');
 
     private routeParamsSubscription?: Subscription;

@@ -13,6 +13,7 @@ import { delay, filter, of, Subject, Subscription, switchMap, takeUntil } from '
 import { NavigationStart, Router } from '@angular/router';
 import { Relationship } from 'src/app/models/relationship';
 import { RelationshipsService } from 'src/app/services/http/relationships.service';
+import { UserPayload } from 'src/app/models/user-payload';
 
 @Component({
     selector: 'app-blurhash-image',
@@ -36,7 +37,7 @@ export class BlurhashImageComponent implements AfterViewInit, OnInit, OnDestroy 
     protected user = signal<User | undefined>(undefined);
     protected relationship = signal<Relationship | undefined>(undefined);
     protected contentWarning = signal<string | undefined>(undefined);
-    protected signedInUser = signal<User | undefined>(undefined);
+    protected signedInUser = signal<UserPayload | undefined>(undefined);
     protected showAltIcon = signal(false);
     protected showFavourites = signal(false);
     protected showReblog = signal(false);

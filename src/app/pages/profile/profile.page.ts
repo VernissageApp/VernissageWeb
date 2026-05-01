@@ -26,6 +26,7 @@ import { SettingsService } from 'src/app/services/http/settings.service';
 import { ConfirmationDialog } from 'src/app/dialogs/confirmation-dialog/confirmation.dialog';
 import { UserType } from 'src/app/models/user-type';
 import { Role } from 'src/app/models/role';
+import { UserPayload } from 'src/app/models/user-payload';
 
 @Component({
     selector: 'app-profile',
@@ -46,7 +47,7 @@ export class ProfilePage extends ReusableGalleryPageComponent implements OnInit,
     protected squareImages = signal(false);
     protected selectedProfilePageTab = signal(ProfilePageTab.Statuses);
     protected createdAt = signal<Date | undefined>(undefined);
-    protected signedInUser = signal<User | undefined>(undefined);
+    protected signedInUser = signal<UserPayload | undefined>(undefined);
     protected user = signal<User | undefined>(undefined);
     protected relationship = signal<Relationship | undefined>(undefined);
 

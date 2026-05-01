@@ -368,7 +368,40 @@
                     }
                 </div>
                 <div class="text-right">
-                    <button type="button" (click)="openCreateAccountDialog()" matButton="elevated" aria-label="Create account">Create alias</button>
+                    <button type="button" (click)="openCreateAliasDialog()" matButton="elevated" aria-label="Create account">Create alias</button>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card class="margin-bottom-20" appearance="outlined">
+        <mat-card-header>
+            <mat-card-title>
+                Moving to a different account
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
+                <div>
+                    <p>
+                        Move your account to another server and notify your followers about the new location.
+                        If their servers support account migration, they will be automatically redirected to follow your new account.
+                    </p>
+                    <p>
+                        Only followers are moved automatically. Your posts, media, follows, blocks, bookmarks,
+                        and other account data will not be transferred.
+                    </p>
+
+                    @if (user().movedTo; as userMovedTo) {
+                        The account you are moving to is available at <strong>{{ userMovedTo.account }}</strong>.
+                    }
+                </div>
+                <div class="text-right">
+                    @if (user().movedTo; as userMovedTo) {
+                        <button type="button" (click)="openRestoreAccountDialog()" matButton="elevated" aria-label="Restore account">Restore account</button>
+                    } @else {
+                        <button type="button" (click)="openMoveAccountDialog()" matButton="elevated" aria-label="Migrate account">Migrate account</button>
+                    }
                 </div>
             </div>
         </mat-card-content>

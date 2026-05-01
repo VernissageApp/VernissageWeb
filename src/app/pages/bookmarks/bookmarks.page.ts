@@ -4,10 +4,10 @@ import { Subscription } from 'rxjs';
 import { LoadingService } from 'src/app/services/common/loading.service';
 import { ContextTimeline } from 'src/app/models/context-timeline';
 import { BookmarksService } from 'src/app/services/http/bookmarks.service';
-import { User } from 'src/app/models/user';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 import { UserDisplayService } from 'src/app/services/common/user-display.service';
 import { ReusableGalleryPageComponent } from 'src/app/common/reusable-gallery-page';
+import { UserPayload } from 'src/app/models/user-payload';
 
 @Component({
     selector: 'app-bookmarks',
@@ -19,7 +19,7 @@ import { ReusableGalleryPageComponent } from 'src/app/common/reusable-gallery-pa
 export class BookmarksPage extends ReusableGalleryPageComponent implements OnInit, OnDestroy {
     protected isReady = signal(false);
 
-    protected user = signal<User | undefined>(undefined);
+    protected user = signal<UserPayload | undefined>(undefined);
     protected fullName = signal('');
 
     private routeParamsSubscription?: Subscription;
