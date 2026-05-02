@@ -79,6 +79,7 @@ export class Settings {
 
     /// Enabled scheduled jobs.
     public clearAttachmentsJobEnabled = false;
+    public clearDeletedUsersJobEnabled = false;
     public clearErrorItemsJobEnabled = false;
     public clearFailedLoginsJobEnabled = false;
     public clearQuickCaptchasJobEnabled = false;
