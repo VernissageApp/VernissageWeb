@@ -552,6 +552,11 @@
             </mat-checkbox>
         </div>
         <div>
+            <mat-checkbox name="clearDeletedUsersJobEnabled" [disableRipple]="true" [(ngModel)]="settings().clearDeletedUsersJobEnabled">
+                Clear deleted users job
+            </mat-checkbox>
+        </div>
+        <div>
             <mat-checkbox name="clearErrorItemsJobEnabled" [disableRipple]="true" [(ngModel)]="settings().clearErrorItemsJobEnabled">
                 Clear old errors job
             </mat-checkbox>
