@@ -22,6 +22,7 @@ import { ConfirmationDialog } from 'src/app/dialogs/confirmation-dialog/confirma
 import { UserBlockedDomainDialogEntity } from 'src/app/dialogs/user-blocked-domain-dialog/user-blocked-domain-dialog-entity';
 import { UnfollowAccountDialog } from 'src/app/dialogs/unfollow-account-dialog/unfollow-account.dialog';
 import { UserBlockedUserDialog } from 'src/app/dialogs/user-blocked-user-dialog/user-blocked-domain.dialog';
+import { UserPayload } from 'src/app/models/user-payload';
 
 @Component({
     selector: 'app-follow-buttons-section',
@@ -55,7 +56,7 @@ export class FollowButtonsSectionComponent implements OnInit, OnDestroy {
     protected showUnfeatureButton = signal(false);
     protected showReportButton = signal(false);
 
-    private signedInUser?: User;
+    private signedInUser?: UserPayload;
     private relationshipAfterAction = signal<Relationship | undefined>(undefined);
     private userAfterAction = signal<User | undefined>(undefined);
     private userBlockedDomain = signal<UserBlockedDomain | undefined>(undefined);
@@ -435,6 +436,14 @@ export class FollowButtonsSectionComponent implements OnInit, OnDestroy {
         }
 
         if (this.signedInUser.id === this.updatedUser().id) {
+            return false;
+        }
+
+        if (this.signedInUser.isMovedTo) {
+            return false;
+        }
+
+        if (this.updatedUser().movedTo) {
             return false;
         }
 

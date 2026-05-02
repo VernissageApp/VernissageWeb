@@ -1,18 +1,18 @@
 import { inject, Injectable, NgZone, PLATFORM_ID } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { User } from 'src/app/models/user';
 import { AccountService } from '../http/account.service';
 import { UserPayloadToken } from '../../models/user-payload-token';
 import { Role } from 'src/app/models/role';
 import { ServerRefreshTokenNotExistsError } from 'src/app/errors/server-refresh-token-not-exists-error';
 import { isPlatformBrowser } from '@angular/common';
 import { PersistenceService } from '../persistance/persistance.service';
+import { UserPayload } from 'src/app/models/user-payload';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthorizationService {
-    public changes = new BehaviorSubject<User | undefined>(this.getUser());
+    public changes = new BehaviorSubject<UserPayload | undefined>(this.getUser());
     private sessionTimeout?: NodeJS.Timeout;
     private tokenProcessingTime = 120;
     private oneSecond = 1000;
@@ -48,7 +48,7 @@ export class AuthorizationService {
         return true;
     }
 
-    getUser(): User | undefined {
+    getUser(): UserPayload | undefined {
         if (!this.userPayloadToken) {
             return undefined;
         }

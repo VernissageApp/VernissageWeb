@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, input, OnInit, signal } fro
 import { User } from 'src/app/models/user';
 import { AvatarSize } from './avatar-size';
 import { PreferencesService } from 'src/app/services/common/preferences.service';
+import { UserPayload } from 'src/app/models/user-payload';
 
 @Component({
     selector: 'app-avatar',
@@ -11,7 +12,7 @@ import { PreferencesService } from 'src/app/services/common/preferences.service'
     standalone: false
 })
 export class AvatarComponent implements OnInit {
-    public user = input.required<User | undefined>();
+    public user = input.required<User | UserPayload | undefined>();
     public size = input<AvatarSize>(AvatarSize.huge);
 
     protected readonly avatarSize = AvatarSize;

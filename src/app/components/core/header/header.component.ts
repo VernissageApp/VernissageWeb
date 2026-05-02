@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy, Renderer2, signal, computed, ChangeDetect
 import { NavigationEnd, RouteReuseStrategy, Router } from '@angular/router';
 import { filter, Subscription } from 'rxjs';
 
-import { User } from 'src/app/models/user';
 import { InstanceService } from 'src/app/services/http/instance.service';
 import { AuthorizationService } from '../../../services/authorization/authorization.service';
 import { Role } from 'src/app/models/role';
@@ -13,6 +12,7 @@ import { SwPush } from '@angular/service-worker';
 import { UserDisplayService } from 'src/app/services/common/user-display.service';
 import { SettingsService } from 'src/app/services/http/settings.service';
 import { PreferencesService } from 'src/app/services/common/preferences.service';
+import { UserPayload } from 'src/app/models/user-payload';
 
 @Component({
     selector: 'app-header',
@@ -24,7 +24,7 @@ import { PreferencesService } from 'src/app/services/common/preferences.service'
 export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDestroy {
     protected readonly resolution = Resolution;
     protected notificationCounter = signal(0);
-    protected user = signal<User | undefined>(undefined);
+    protected user = signal<UserPayload | undefined>(undefined);
     protected avatarUrl = computed(() => this.user()?.avatarUrl ?? 'assets/avatar.svg');
     protected fullName = computed(() => this.userDisplayService.displayName(this.user()));
     protected isLoggedIn = signal(false);

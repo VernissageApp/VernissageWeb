@@ -40,6 +40,8 @@ import { UserBlockedDomain } from 'src/app/models/user-blocked-domain';
 import { UserBlockedDomainsService } from 'src/app/services/http/user-blocked-domains.service';
 import { UserBlockedDomainDialog } from 'src/app/dialogs/user-blocked-domain-dialog/user-blocked-domain.dialog';
 import { UserBlockedDomainDialogEntity } from 'src/app/dialogs/user-blocked-domain-dialog/user-blocked-domain-dialog-entity';
+import { MoveAccountDialog } from 'src/app/dialogs/move-account-dialog/move-account.dialog';
+import { RestoreAccountDialog } from 'src/app/dialogs/restore-account-dialog/restore-account.dialog';
 
 @Component({
     selector: 'app-account',
@@ -369,7 +371,7 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
         });
     }
 
-    protected openCreateAccountDialog(): void {
+    protected openCreateAliasDialog(): void {
         const dialogRef = this.dialog.open(CreateAliasDialog, {
             data: this.user()
         });
@@ -396,6 +398,30 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
                     console.error(error);
                     this.messageService.showServerError(error);
                 }
+            }
+        });
+    }
+
+    protected openMoveAccountDialog(): void {
+        const dialogRef = this.dialog.open(MoveAccountDialog, {
+            data: this.userName
+        });
+
+        dialogRef.afterClosed().subscribe(async (result) => {
+            if (result) {
+                await this.loadUserData();
+            }
+        });
+    }
+
+    protected openRestoreAccountDialog(): void {
+        const dialogRef = this.dialog.open(RestoreAccountDialog, {
+            data: this.userName
+        });
+
+        dialogRef.afterClosed().subscribe(async (result) => {
+            if (result) {
+                await this.loadUserData();
             }
         });
     }

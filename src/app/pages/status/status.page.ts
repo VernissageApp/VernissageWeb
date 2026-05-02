@@ -10,7 +10,6 @@ import { Location } from 'src/app/models/location';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 import { ResponsiveComponent } from 'src/app/common/responsive';
-import { User } from 'src/app/models/user';
 import { StatusComment } from 'src/app/models/status-comment';
 import { AvatarSize } from 'src/app/components/widgets/avatar/avatar-size';
 import { ReportDialog } from 'src/app/dialogs/report-dialog/report.dialog';
@@ -36,6 +35,7 @@ import { FocusTrackerService } from 'src/app/services/common/focus-tracker.servi
 import { PageNotFoundError } from 'src/app/errors/page-not-found-error';
 import { StatusVisibility } from 'src/app/models/status-visibility';
 import { Attachment } from 'src/app/models/attachment';
+import { UserPayload } from 'src/app/models/user-payload';
 
 @Component({
     selector: 'app-status',
@@ -50,7 +50,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     protected status = signal<Status | undefined>(undefined);
     protected mainStatus = signal<Status | undefined>(undefined);
     protected comments = signal<StatusComment[] | undefined>(undefined);
-    protected signedInUser = signal<User | undefined>(undefined);
+    protected signedInUser = signal<UserPayload | undefined>(undefined);
     protected replyStatus =  signal<Status | undefined>(undefined);
     protected images = signal<GalleryItem[] | undefined>(undefined);
     protected imageIsLoaded = signal(false);
