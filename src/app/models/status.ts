@@ -21,6 +21,7 @@ export class Status {
     public activityPubId = '';
     public activityPubUrl = '';
     public publishedAt?: string;
+    public pinnedAt?: string;
 
     public repliesCount = 0;
     public reblogsCount = 0;

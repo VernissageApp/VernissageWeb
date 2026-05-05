@@ -36,7 +36,40 @@
     }
 
     .gallery-item {
+        position: relative;
         width: 100%;
+        overflow: hidden;
+        box-sizing: border-box;
+    }
+
+    .pinned-tag {
+        position: absolute;
+        top: 4px;
+        left: 4px;
+        z-index: 104;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        background-color: rgba(0, 0, 0, 0.6);
+        color: rgba(255, 255, 255, 0.6);
+        padding-top: 6px;
+        padding-right: 10px;
+        padding-bottom: 6px;
+        padding-left: 10px;
+        border-radius: 25px;
+
+        mat-icon {
+            width: 16px;
+            height: 16px;
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        span {
+            font-size: 0.8rem;
+            line-height: 1;
+            font-weight: 500;
+        }
     }
 
     .gallery-link {

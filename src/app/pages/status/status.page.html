@@ -191,6 +191,19 @@
                                             <mat-icon class="fill-symbol">file_copy</mat-icon>
                                             <span>Copy link to post</span>
                                         </button>
+                                        @if (shouldDisplayPinButton()) {
+                                            @if (!mainStatusInternal.pinnedAt) {
+                                                <button mat-menu-item [disabled]="isDuringPinProcessing() || isInVersionMode()" (click)="pin()">
+                                                    <mat-icon class="outline-symbol">keep</mat-icon>
+                                                    <span>Pin</span>
+                                                </button>
+                                            } @else {
+                                                <button mat-menu-item [disabled]="isDuringPinProcessing() || isInVersionMode()" (click)="unpin()">
+                                                    <mat-icon class="outline-symbol">keep_off</mat-icon>
+                                                    <span>Unpin</span>
+                                                </button>
+                                            }
+                                        }
                                         <mat-divider></mat-divider>
                                         <button mat-menu-item (click)="onReportDialog(mainStatusInternal)">
                                             <mat-icon class="outline-symbol">report</mat-icon>
@@ -216,7 +229,7 @@
                                         }
                                     </mat-menu>
 
-                                    @if (isDuringBoostProcessing() || isDuringFavouriteProcessing() || isDuringBookmarkProcessing() || isDuringFeatureProcessing()) {
+                                    @if (isDuringBoostProcessing() || isDuringFavouriteProcessing() || isDuringBookmarkProcessing() || isDuringFeatureProcessing() || isDuringPinProcessing()) {
                                         <mat-spinner class="display-inline-block" [diameter]="18"></mat-spinner>
                                     }
                                 }

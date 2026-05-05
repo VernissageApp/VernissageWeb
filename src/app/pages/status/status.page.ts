@@ -77,6 +77,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     protected isDuringFavouriteProcessing = signal(false);
     protected isDuringBookmarkProcessing = signal(false);
     protected isDuringFeatureProcessing = signal(false);
+    protected isDuringPinProcessing = signal(false);
 
     protected altStatus = computed(() => this.getAltStatus(this.currentIndex()));
     protected location = computed(() => this.getLocation(this.currentIndex()));
@@ -449,6 +450,10 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         return this.authorizationService.hasRole(Role.Administrator) || this.authorizationService.hasRole(Role.Moderator);
     }
 
+    protected shouldDisplayPinButton(): boolean {
+        return this.isStatusOwner();
+    }
+
     protected shouldDisplayDeleteCommentButton(comment: Status): boolean {
         return comment.user?.id === this.signedInUser()?.id;
     }
@@ -633,6 +638,40 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
             this.messageService.showServerError(error);
         } finally {
             this.isDuringFeatureProcessing.set(false);
+        }
+    }
+
+    protected async pin(): Promise<void> {
+        try {
+            this.isDuringPinProcessing.set(true);
+            const internalMainStatus = this.mainStatus();
+            if (internalMainStatus) {
+                const downloadedMainStatus = await this.statusesService.pin(internalMainStatus.id);
+                this.mainStatus.set(downloadedMainStatus);
+                this.messageService.showSuccess('Status pinned.');
+            }
+        } catch (error) {
+            console.error(error);
+            this.messageService.showServerError(error);
+        } finally {
+            this.isDuringPinProcessing.set(false);
+        }
+    }
+
+    protected async unpin(): Promise<void> {
+        try {
+            this.isDuringPinProcessing.set(true);
+            const internalMainStatus = this.mainStatus();
+            if (internalMainStatus) {
+                const downloadedMainStatus = await this.statusesService.unpin(internalMainStatus.id);
+                this.mainStatus.set(downloadedMainStatus);
+                this.messageService.showSuccess('Status unpinned.');
+            }
+        } catch (error) {
+            console.error(error);
+            this.messageService.showServerError(error);
+        } finally {
+            this.isDuringPinProcessing.set(false);
         }
     }
 
