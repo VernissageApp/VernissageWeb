@@ -148,7 +148,6 @@ export enum EventType {
     TimelinesCategories = 'timelinesCategories',
     TimelinesHashtags = 'timelinesHashtags',
     TimelinesFeaturedStatuses = 'timelinesFeaturedStatuses',
-    TimelinesFeatured = 'timelinesFeaturedStatuses',
     TimelinesFeaturedUsers = 'timelinesFeaturedUsers',
     TimelinesHome = 'timelinesHome',
     
