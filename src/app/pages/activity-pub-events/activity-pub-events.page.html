@@ -31,6 +31,8 @@
                                                         <mat-option value="unlike">Undo like</mat-option>
                                                         <mat-option value="announce">Announce</mat-option>
                                                         <mat-option value="unannounce">Undo announce</mat-option>
+                                                        <mat-option value="pin">Pin status</mat-option>
+                                                        <mat-option value="unpin">Unpin status</mat-option>
                                                     </mat-select>
                                                 </mat-form-field>
                                             }
@@ -98,6 +100,12 @@
                                     }
                                     @case ('unannounce') {
                                         <span>Undo announce</span>
+                                    }
+                                    @case ('pin') {
+                                        <span>Pin status</span>
+                                    }
+                                    @case ('unpin') {
+                                        <span>Unpin status</span>
                                     }
                                 }
                             </td>
