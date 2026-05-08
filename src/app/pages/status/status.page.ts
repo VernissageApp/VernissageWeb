@@ -27,7 +27,7 @@ import { UsersDialogContext, UsersListType } from 'src/app/dialogs/users-dialog/
 import { License } from 'src/app/models/license';
 import { WindowService } from 'src/app/services/common/window.service';
 import { RoutingStateService } from 'src/app/services/common/routing-state.service';
-import { isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser, Location as NgLocation } from '@angular/common';
 import { Meta, SafeHtml, Title } from '@angular/platform-browser';
 import { LoadingService } from 'src/app/services/common/loading.service';
 import { DeviceDetectorService } from 'ngx-device-detector';
@@ -58,6 +58,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     protected showSensitiveCanvas = signal(false);
     protected galleryAutoheight = signal(false);
     protected currentIndex = signal(0);
+    protected contextStatusIndex = signal<number | undefined>(undefined);
     protected hideLeftArrow = signal(false);
     protected hideRightArrow = signal(false);
     protected showAlternativeText = signal(false);
@@ -118,6 +119,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     private gallery = inject(Gallery);
     private lightbox = inject(Lightbox);
     private windowService = inject(WindowService);
+    private locationService = inject(NgLocation);
     private titleService = inject(Title);
     private loadingService = inject(LoadingService);
     private metaService = inject(Meta);
@@ -147,6 +149,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
             .subscribe(async params => {
                 const statusId = params.routeParams['id'] as string;
                 const requestedPhotoIndex = this.getPhotoIndexFromQuery(params.queryParams.get('photo'));
+                const contextStatusIndex = this.getContextStatusIndexFromState();
 
                 if (params.queryParams.has('version')) {
                     const internalVersionId = params.queryParams.get('version');
@@ -163,6 +166,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
                 this.signedInUser.set(signedInUserInternal);
                 this.isLoggedIn.set(isLoggedInInternal);
                 this.currentIndex.set(0);
+                this.contextStatusIndex.set(contextStatusIndex);
 
                 // Load status information.
                 await this.loadPageData(statusId, requestedPhotoIndex);
@@ -247,40 +251,46 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     }
 
     protected async onPrevClick(): Promise<void> {
-        const internalStatus = this.status();
+        const contextStatusIndex = this.contextStatusIndex();
+        if (contextStatusIndex === undefined) {
+            this.hideLeftArrow.set(true);
+            this.hideRightArrow.set(true);
+            return;
+        }
 
-        if (internalStatus?.id) {
-            const previousStatus = await this.contextStatusesService.getPrevious(internalStatus.id);
-            if (previousStatus) {
-                if (this.isHandset()) {
-                    this.loadingService.showLoader();
-                }
-
-                await this.router.navigate(['/statuses', previousStatus.id], { replaceUrl: true });
-                this.hideRightArrow.set(false);
-                this.windowService.scrollToTop();
-            } else {
-                this.hideLeftArrow.set(true);
+        const previousContextStatus = await this.contextStatusesService.getPreviousByIndex(contextStatusIndex);
+        if (previousContextStatus) {
+            if (this.isHandset()) {
+                this.loadingService.showLoader();
             }
+
+            await this.router.navigate(['/statuses', previousContextStatus.status.id], { state: { ci: previousContextStatus.index }, replaceUrl: true });
+            this.hideRightArrow.set(false);
+            this.windowService.scrollToTop();
+        } else {
+            this.hideLeftArrow.set(true);
         }
     }
 
     protected async onNextClick(): Promise<void> {
-        const internalStatus = this.status();
+        const contextStatusIndex = this.contextStatusIndex();
+        if (contextStatusIndex === undefined) {
+            this.hideLeftArrow.set(true);
+            this.hideRightArrow.set(true);
+            return;
+        }
 
-        if (internalStatus?.id) {
-            const nextStatus = await this.contextStatusesService.getNext(internalStatus.id);
-            if (nextStatus) {
-                if (this.isHandset()) {
-                    this.loadingService.showLoader();
-                }
-
-                await this.router.navigate(['/statuses', nextStatus.id], { replaceUrl: true });
-                this.hideLeftArrow.set(false);
-                this.windowService.scrollToTop();
-            } else {
-                this.hideRightArrow.set(true);
+        const nextContextStatus = await this.contextStatusesService.getNextByIndex(contextStatusIndex);
+        if (nextContextStatus) {
+            if (this.isHandset()) {
+                this.loadingService.showLoader();
             }
+
+            await this.router.navigate(['/statuses', nextContextStatus.status.id], { state: { ci: nextContextStatus.index }, replaceUrl: true });
+            this.hideLeftArrow.set(false);
+            this.windowService.scrollToTop();
+        } else {
+            this.hideRightArrow.set(true);
         }
     }
 
@@ -427,11 +437,11 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     }
 
     protected showContextArrows(): boolean {
-        return this.contextStatusesService.hasContextStatuses() && !this.isHandset();
+        return this.contextStatusIndex() !== undefined && this.contextStatusesService.hasContextStatuses() && !this.isHandset();
     }
 
     protected showBottomContextArrow(): boolean {
-        return this.contextStatusesService.hasContextStatuses() && this.isHandset();
+        return this.contextStatusIndex() !== undefined && this.contextStatusesService.hasContextStatuses() && this.isHandset();
     }
 
     protected shouldDisplayDeleteButton(): boolean {
@@ -1186,6 +1196,20 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         }
 
         return photoNumber - 1;
+    }
+
+    private getContextStatusIndexFromState(): number | undefined {
+        const navigationState = this.locationService.getState() as { ci?: unknown };
+        if (typeof navigationState.ci !== 'number' || !Number.isInteger(navigationState.ci)) {
+            return undefined;
+        }
+
+        const contextStatusIndex = navigationState.ci;
+        if (contextStatusIndex < 0) {
+            return undefined;
+        }
+
+        return contextStatusIndex;
     }
 
     private getValidAttachmentIndex(index: number): number {

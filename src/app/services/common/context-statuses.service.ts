@@ -57,52 +57,56 @@ export class ContextStatusesService {
         return await this.loadPreviousStatuses();
     }
 
-    public async getNext(id: string): Promise<Status | null> {
+    public async getNextByIndex(index: number): Promise<{ status: Status; index: number } | null> {
         if (!this.statuses || this.statuses.data.length === 0) {
             return null;
         }
 
-        const currentIndex = this.statuses.data.findIndex(x => x.id === id);
-        if (currentIndex < 0) {
-            this.clearContextStatuses();
+        if (index < 0 || index >= this.statuses.data.length) {
             return null;
         }
 
-        if (currentIndex >= (this.statuses.data.length - 1)) {
+        if (index >= (this.statuses.data.length - 1)) {
             const loaded = await this.loadNextStatuses();
             if (!loaded) {
                 return null;
             }
         }
 
-        return this.statuses.data[currentIndex + 1];
+        const nextIndex = index + 1;
+        const nextStatus = this.statuses.data[nextIndex];
+        if (!nextStatus) {
+            return null;
+        }
+
+        return { status: nextStatus, index: nextIndex };
     }
 
-    public async getPrevious(id: string): Promise<Status | null> {
+    public async getPreviousByIndex(index: number): Promise<{ status: Status; index: number } | null> {
         if (!this.statuses || this.statuses.data.length === 0) {
             return null;
         }
 
-        let currentIndex = this.statuses.data.findIndex(x => x.id === id);
-        if (currentIndex < 0) {
-            this.clearContextStatuses();
+        if (index < 0 || index >= this.statuses.data.length) {
             return null;
         }
 
-        if (currentIndex === 0) {
+        if (index === 0) {
             const loaded = await this.loadPreviousStatuses();
             if (!loaded) {
                 return null;
             }
 
-            currentIndex = this.statuses.data.findIndex(x => x.id === id);
-            if (currentIndex < 0) {
-                this.clearContextStatuses();
-                return null;
-            }
+            index = index + loaded.data.length;
         }
 
-        return this.statuses.data[currentIndex - 1];
+        const previousIndex = index - 1;
+        const previousStatus = this.statuses.data[previousIndex];
+        if (!previousStatus) {
+            return null;
+        }
+
+        return { status: previousStatus, index: previousIndex };
     }
 
     private async loadNextStatuses(): Promise<LinkableResult<Status> | null> {
