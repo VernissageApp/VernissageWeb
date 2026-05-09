@@ -150,8 +150,8 @@ export class UsersService {
         await firstValueFrom(event$);
     }
 
-    public async statuses(userName: string, minId?: string, maxId?: string, sinceId?: string, limit?: number): Promise<LinkableResult<Status>> {
-        const event$ = this.httpClient.get<LinkableResult<Status>>(this.windowService.apiUrl() +  '/api/v1/users/' + userName + `/statuses?minId=${minId ?? ''}&maxId=${maxId ?? ''}&sinceId=${sinceId ?? ''}&limit=${limit ?? ''}`);
+    public async statuses(userName: string, minId?: string, maxId?: string, sinceId?: string, limit?: number, onlyPinned = false): Promise<LinkableResult<Status>> {
+        const event$ = this.httpClient.get<LinkableResult<Status>>(this.windowService.apiUrl() +  '/api/v1/users/' + userName + `/statuses?minId=${minId ?? ''}&maxId=${maxId ?? ''}&sinceId=${sinceId ?? ''}&limit=${limit ?? ''}&onlyPinned=${onlyPinned}`);
         return await firstValueFrom(event$);
     }
 }
