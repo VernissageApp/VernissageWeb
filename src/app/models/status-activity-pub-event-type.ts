@@ -4,5 +4,7 @@ export enum StatusActivityPubEventType {
     Like = 'like',
     Unlike = 'unlike',
     Announce = 'announce',
-    Unannounce = 'unannounce'
+    Unannounce = 'unannounce',
+    Pin = 'pin',
+    Unpin = 'unpin'
 }

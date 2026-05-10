@@ -352,9 +352,14 @@ export class ProfilePage extends ReusableGalleryPageComponent implements OnInit,
     }
 
     private async loadFirstStatusesSet(): Promise<void> {
-        const statuses = await this.usersService.statuses(this.userName);
+        const [pinnedStatuses, statuses] = await Promise.all([
+            this.usersService.statuses(this.userName, undefined, undefined, undefined, undefined, true),
+            this.usersService.statuses(this.userName)
+        ]);
+
         statuses.context = ContextTimeline.user;
         statuses.user = this.user()?.userName;
+        statuses.data = [...pinnedStatuses.data, ...statuses.data];
 
         this.statuses.set(statuses);
     }

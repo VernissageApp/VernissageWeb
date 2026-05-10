@@ -25,6 +25,7 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
     public startUrl = input.required<string>();
     public squareImages = input(false);
     public hideAvatars = input(false);
+    public highlightPinnedStatuses = input(false);
 
     protected galleryColumns = signal<GalleryColumn[]>([]);
     protected alwaysShowNSFW = signal(false);
@@ -177,9 +178,10 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
             const imageHeight = this.getImageConstraintHeight(status);
             const smallerColumnIndex = this.getSmallerColumnIndex(columns, imageHeight);
             const aspectRatio = this.getSmallAttachmentAspectRatio(status);
+            const contextIndex = index;
 
             columns[smallerColumnIndex].size = columns[smallerColumnIndex].size + imageHeight;
-            columns[smallerColumnIndex].statuses.push(new GalleryStatus(status, index < this.amountOfPriorityImages, aspectRatio));
+            columns[smallerColumnIndex].statuses.push(new GalleryStatus(status, contextIndex, index < this.amountOfPriorityImages, aspectRatio));
         }
 
         this.galleryColumns.set(columns);
@@ -201,8 +203,11 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
             internalColumns.push(galleryColumn);
         }
         
+        const fullContextLength = this.contextStatusesService.statuses?.data.length ?? 0;
+        const startIndex = Math.max(fullContextLength - statusesArray.data.length, 0);
+
         // Append new statuses to temporary array.
-        for (const status of statusesArray.data) {
+        for (const [index, status] of statusesArray.data.entries()) {
             const mainStatusAttachment = this.getMainAttachment(status);
             if (!mainStatusAttachment) {
                 continue;
@@ -211,9 +216,10 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
             const imageHeight = this.getImageConstraintHeight(status);
             const smallerColumnIndex = this.getSmallerColumnIndex(internalColumns, imageHeight);
             const aspectRatio = this.getSmallAttachmentAspectRatio(status);
+            const contextIndex = startIndex + index;
 
             internalColumns[smallerColumnIndex].size = internalColumns[smallerColumnIndex].size + imageHeight;
-            internalColumns[smallerColumnIndex].statuses.push(new GalleryStatus(status, false, aspectRatio));
+            internalColumns[smallerColumnIndex].statuses.push(new GalleryStatus(status, contextIndex, false, aspectRatio));
         }
 
         // Update internal list of statuses (used to rebuild when size of screen is changed).

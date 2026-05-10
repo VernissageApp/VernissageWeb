@@ -101,6 +101,16 @@ export class StatusesService {
         return await firstValueFrom(event$);
     }
 
+    public async pin(id: string): Promise<Status> {
+        const event$ = this.httpClient.post<Status>(this.windowService.apiUrl() + '/api/v1/statuses/' + id + '/pin', null);
+        return await firstValueFrom(event$);
+    }
+
+    public async unpin(id: string): Promise<Status> {
+        const event$ = this.httpClient.post<Status>(this.windowService.apiUrl() + '/api/v1/statuses/' + id + '/unpin', null);
+        return await firstValueFrom(event$);
+    }
+
     public async context(id: string): Promise<StatusContext> {
         const event$ = this.httpClient.get<StatusContext>(this.windowService.apiUrl() + '/api/v1/statuses/' + id + '/context');
         return await firstValueFrom(event$);
