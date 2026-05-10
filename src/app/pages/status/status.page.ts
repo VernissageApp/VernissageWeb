@@ -1199,7 +1199,11 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     }
 
     private getContextStatusIndexFromState(): number | undefined {
-        const navigationState = this.locationService.getState() as { ci?: unknown };
+        const navigationState = this.locationService.getState() as { ci?: unknown } | undefined;
+        if (!navigationState) {
+            return undefined;
+        }
+
         if (typeof navigationState.ci !== 'number' || !Number.isInteger(navigationState.ci)) {
             return undefined;
         }
