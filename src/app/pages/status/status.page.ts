@@ -1,7 +1,7 @@
-import { Component, HostListener, ElementRef, OnInit, OnDestroy, PLATFORM_ID, signal, viewChild, computed, ChangeDetectionStrategy, inject, model, DOCUMENT } from '@angular/core';
+import { Component, HostListener, ElementRef, OnInit, OnDestroy, PLATFORM_ID, signal, viewChild, computed, ChangeDetectionStrategy, inject, model, DOCUMENT, viewChildren } from '@angular/core';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { decode } from 'blurhash';
-import { combineLatest, map, Subscription } from 'rxjs';
+import { combineLatest, firstValueFrom, map, Subscription } from 'rxjs';
 import { StatusesService } from 'src/app/services/http/statuses.service';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { Status } from 'src/app/models/status';
@@ -36,6 +36,8 @@ import { PageNotFoundError } from 'src/app/errors/page-not-found-error';
 import { StatusVisibility } from 'src/app/models/status-visibility';
 import { Attachment } from 'src/app/models/attachment';
 import { UserPayload } from 'src/app/models/user-payload';
+import { ConfirmationDialog } from 'src/app/dialogs/confirmation-dialog/confirmation.dialog';
+import { CommentReplyComponent } from 'src/app/components/widgets/comment-reply/comment-reply.component';
 
 @Component({
     selector: 'app-status',
@@ -92,6 +94,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     protected isBrowser = signal(false);
 
     private canvas = viewChild<ElementRef<HTMLCanvasElement> | undefined>('canvas');
+    private commentReplies = viewChildren(CommentReplyComponent);
     private routeParamsSubscription?: Subscription;
     private routeNavigationEndSubscription?: Subscription;
     private readonly oneSecond = 1000;
@@ -251,6 +254,10 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     }
 
     protected async onPrevClick(): Promise<void> {
+        if (!await this.canChangeStatus()) {
+            return;
+        }
+
         const contextStatusIndex = this.contextStatusIndex();
         if (contextStatusIndex === undefined) {
             this.hideLeftArrow.set(true);
@@ -273,6 +280,10 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     }
 
     protected async onNextClick(): Promise<void> {
+        if (!await this.canChangeStatus()) {
+            return;
+        }
+
         const contextStatusIndex = this.contextStatusIndex();
         if (contextStatusIndex === undefined) {
             this.hideLeftArrow.set(true);
@@ -797,6 +808,24 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         return undefined;
     }
 
+    private hasEnteredComment(): boolean {
+        return this.commentReplies().some(commentReply => commentReply.commentEntered());
+    }
+
+    private async canChangeStatus(): Promise<boolean> {
+        if (!this.hasEnteredComment()) {
+            return true;
+        }
+
+        const dialogRef = this.dialog.open(ConfirmationDialog, {
+            width: '500px',
+            data: 'You have entered a comment. Do you want to change status anyway?'
+        });
+
+        const result = await firstValueFrom(dialogRef.afterClosed());
+        return result?.confirmed === true;
+    }
+
     private getExif(index: number): Exif | undefined {
         const attachment = this.mainStatus()?.attachments?.at(index);
         if (attachment) {
@@ -923,6 +952,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
 
         const downloadedStatus = await this.getStatusData(statusId);
         this.status.set(downloadedStatus);
+        this.replyStatus.set(undefined);
 
         if (downloadedStatus.reblog) {
             this.mainStatus.set(downloadedStatus.reblog);
