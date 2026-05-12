@@ -4,10 +4,10 @@ import { ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs/internal/Subscription";
 import { ReusableGalleryPageComponent } from "src/app/common/reusable-gallery-page";
 import { ContextTimeline } from "src/app/models/context-timeline";
-import { Hashtag } from "src/app/models/hashtag";
 import { AuthorizationService } from "src/app/services/authorization/authorization.service";
 import { LoadingService } from "src/app/services/common/loading.service";
 import { MessagesService } from "src/app/services/common/messages.service";
+import { StatusHashtagsService } from "src/app/services/common/status-hashtags.service";
 import { HashtagsService } from "src/app/services/http/hashtags.service";
 import { TimelineService } from "src/app/services/http/timeline.service";
 
@@ -29,6 +29,7 @@ export class HashtagPage extends ReusableGalleryPageComponent implements OnInit,
 
     private document = inject(DOCUMENT);
     private timelineService = inject(TimelineService);
+    private statusHashtagsService = inject(StatusHashtagsService);
     private hashtagsService = inject(HashtagsService);
     private loadingService = inject(LoadingService);
     private authorizationService = inject(AuthorizationService);
@@ -74,13 +75,15 @@ export class HashtagPage extends ReusableGalleryPageComponent implements OnInit,
         try {
             if (this.isFollowed()) {
                 await this.hashtagsService.unfollow(normalizedHashtagName);
-                this.isFollowed.set(false);
+                await this.statusHashtagsService.refreshFollowedHashtags();
                 this.messagesService.showSuccess('Hashtag has been unfollowed.');
             } else {
                 await this.hashtagsService.follow(normalizedHashtagName);
-                this.isFollowed.set(true);
+                await this.statusHashtagsService.refreshFollowedHashtags();
                 this.messagesService.showSuccess('Hashtag has been followed.');
             }
+
+            await this.loadHashtagFollowingState();
         } catch (error) {
             console.error(error);
             this.messagesService.showServerError(error);
@@ -104,11 +107,8 @@ export class HashtagPage extends ReusableGalleryPageComponent implements OnInit,
         }
 
         try {
-            const followedHashtags = await this.hashtagsService.followed();
-            const normalizedHashtagName = this.normalizeHashtagName(this.hashtag()).toUpperCase();
-            const followed = followedHashtags.some((item: Hashtag) => this.normalizeHashtagName(item.name).toUpperCase() === normalizedHashtagName);
-
-            this.isFollowed.set(followed);
+            await this.statusHashtagsService.ensureFollowedHashtagsLoaded();
+            this.isFollowed.set(this.statusHashtagsService.isFollowed(this.hashtag()));
         } catch (error) {
             console.error(error);
             this.isFollowed.set(false);
@@ -158,6 +158,6 @@ export class HashtagPage extends ReusableGalleryPageComponent implements OnInit,
     }
 
     private normalizeHashtagName(name: string): string {
-        return name.replaceAll('#', '').trim();
+        return this.statusHashtagsService.normalizeHashtagName(name);
     }
 }

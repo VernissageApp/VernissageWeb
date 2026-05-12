@@ -38,6 +38,7 @@ import { Attachment } from 'src/app/models/attachment';
 import { UserPayload } from 'src/app/models/user-payload';
 import { ConfirmationDialog } from 'src/app/dialogs/confirmation-dialog/confirmation.dialog';
 import { CommentReplyComponent } from 'src/app/components/widgets/comment-reply/comment-reply.component';
+import { StatusHashtagsService } from 'src/app/services/common/status-hashtags.service';
 
 @Component({
     selector: 'app-status',
@@ -92,6 +93,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     protected hasGpsCoordinations = computed<boolean>(() => !!this.getGpsLatitude(this.currentIndex()) && !!this.getGpsLongitude(this.currentIndex()));
     protected hasHdrVersion = computed<boolean>(() => this.showHdrIcon(this.currentIndex()));
     protected isBrowser = signal(false);
+    protected sharedFollowedHashtags = computed(() => this.statusHashtagsService.getSharedFollowedHashtags(this.mainStatus()));
 
     private canvas = viewChild<ElementRef<HTMLCanvasElement> | undefined>('canvas');
     private commentReplies = viewChildren(CommentReplyComponent);
@@ -129,6 +131,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     private deviceDetectorService = inject(DeviceDetectorService);
     private clipboard = inject(Clipboard);
     private focusTrackerService = inject(FocusTrackerService);
+    private statusHashtagsService = inject(StatusHashtagsService);
 
     constructor() {
         super();
@@ -170,6 +173,10 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
                 this.isLoggedIn.set(isLoggedInInternal);
                 this.currentIndex.set(0);
                 this.contextStatusIndex.set(contextStatusIndex);
+
+                if (isLoggedInInternal) {
+                    await this.statusHashtagsService.ensureFollowedHashtagsLoaded();
+                }
 
                 // Load status information.
                 await this.loadPageData(statusId, requestedPhotoIndex);
