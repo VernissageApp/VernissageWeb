@@ -28,8 +28,8 @@ export class CommentReplyComponent implements OnInit {
     protected comment = model<string | undefined>('');
     protected isDuringSave = signal(false);
 
-    protected commentEntered = computed(() => {
-        const internalComment =this.comment() ?? '';
+    public commentEntered = computed(() => {
+        const internalComment = this.comment() ?? '';
         const userName = this.status()?.user?.userName ?? '';
         const commentWithoutUsername = internalComment.trim().replace(`@${userName}`, '');
 
