@@ -44,6 +44,7 @@ import { LicenseListComponent } from './widgets/license-list/license-list.compon
 import { HomeCardsComponent } from './widgets/home-cards/home-cards.component';
 import { PopoverComponent } from './widgets/popover/popover.component';
 import { StatusTextAutocompleteComponent } from './widgets/status-text-autocomplete/status-text-autocomplete.component';
+import { TagComponent } from './widgets/tag/tag.component';
 
 @NgModule({
     declarations: [
@@ -82,7 +83,8 @@ import { StatusTextAutocompleteComponent } from './widgets/status-text-autocompl
         LicenseListComponent,
         HomeCardsComponent,
         PopoverComponent,
-        StatusTextAutocompleteComponent
+        StatusTextAutocompleteComponent,
+        TagComponent
     ],
     exports: [
         BrowserModule,
@@ -125,6 +127,7 @@ import { StatusTextAutocompleteComponent } from './widgets/status-text-autocompl
         HomeCardsComponent,
         PopoverComponent,
         StatusTextAutocompleteComponent,
+        TagComponent,
         DirectivesModule
     ],
     imports: [
