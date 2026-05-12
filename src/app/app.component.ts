@@ -12,7 +12,6 @@ import { FocusTrackerService } from './services/common/focus-tracker.service';
 import { Router, RouteReuseStrategy } from '@angular/router';
 import { CustomReuseStrategy } from './common/custom-reuse-strategy';
 import { AuthorizationService } from './services/authorization/authorization.service';
-import { StatusHashtagsService } from './services/common/status-hashtags.service';
 
 @Component({
     selector: 'app-root',
@@ -39,10 +38,8 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     private router = inject(Router);
     private routeReuseStrategy = inject(RouteReuseStrategy);
     private authorizationService = inject(AuthorizationService);
-    private statusHashtagsService = inject(StatusHashtagsService);
 
     ngOnInit(): void {
-        this.statusHashtagsService.initialize();
         this.routingStateService.startRoutingListener();
 
         const isLightTheme = (this.cookieService.get('isLightTheme') ?? 'true') === 'true';

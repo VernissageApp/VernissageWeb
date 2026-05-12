@@ -13,7 +13,8 @@ export class HashtagsService {
 
     public async followed(): Promise<Hashtag[]> {
         const event$ = this.httpClient.get<Hashtag[]>(this.windowService.apiUrl() + '/api/v1/hashtags/followed');
-        return await firstValueFrom(event$);
+        const followedHashtags = await firstValueFrom(event$, { defaultValue: [] as Hashtag[] });
+        return followedHashtags ?? [];
     }
 
     public async follow(name: string): Promise<void> {

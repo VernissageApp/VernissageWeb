@@ -46,7 +46,6 @@ export class HashtagPage extends ReusableGalleryPageComponent implements OnInit,
 
             this.statuses.set(undefined);
             await this.loadFirstStatusesSet();
-            await this.loadHashtagFollowingState();
             this.setFeedLinks();
 
             this.isReady.set(true);
@@ -75,15 +74,17 @@ export class HashtagPage extends ReusableGalleryPageComponent implements OnInit,
         try {
             if (this.isFollowed()) {
                 await this.hashtagsService.unfollow(normalizedHashtagName);
-                await this.statusHashtagsService.refreshFollowedHashtags();
+                await this.statusHashtagsService.reloadFollowedHashtags();
+
+                this.isFollowed.set(false);
                 this.messagesService.showSuccess('Hashtag has been unfollowed.');
             } else {
                 await this.hashtagsService.follow(normalizedHashtagName);
-                await this.statusHashtagsService.refreshFollowedHashtags();
+                await this.statusHashtagsService.reloadFollowedHashtags();
+
+                this.isFollowed.set(true);
                 this.messagesService.showSuccess('Hashtag has been followed.');
             }
-
-            await this.loadHashtagFollowingState();
         } catch (error) {
             console.error(error);
             this.messagesService.showServerError(error);
@@ -98,21 +99,6 @@ export class HashtagPage extends ReusableGalleryPageComponent implements OnInit,
         downloadStatuses.hashtag = this.hashtag();
 
         this.statuses.set(downloadStatuses);
-    }
-
-    private async loadHashtagFollowingState(): Promise<void> {
-        if (!this.signedInUser()) {
-            this.isFollowed.set(false);
-            return;
-        }
-
-        try {
-            await this.statusHashtagsService.ensureFollowedHashtagsLoaded();
-            this.isFollowed.set(this.statusHashtagsService.isFollowed(this.hashtag()));
-        } catch (error) {
-            console.error(error);
-            this.isFollowed.set(false);
-        }
     }
 
     private setFeedLinks(): void {

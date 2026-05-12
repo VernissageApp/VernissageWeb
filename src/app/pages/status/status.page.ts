@@ -93,7 +93,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     protected hasGpsCoordinations = computed<boolean>(() => !!this.getGpsLatitude(this.currentIndex()) && !!this.getGpsLongitude(this.currentIndex()));
     protected hasHdrVersion = computed<boolean>(() => this.showHdrIcon(this.currentIndex()));
     protected isBrowser = signal(false);
-    protected sharedFollowedHashtags = computed(() => this.statusHashtagsService.getSharedFollowedHashtags(this.mainStatus()));
+    protected sharedFollowedHashtags = signal<string[]>([]);
 
     private canvas = viewChild<ElementRef<HTMLCanvasElement> | undefined>('canvas');
     private commentReplies = viewChildren(CommentReplyComponent);
@@ -173,10 +173,6 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
                 this.isLoggedIn.set(isLoggedInInternal);
                 this.currentIndex.set(0);
                 this.contextStatusIndex.set(contextStatusIndex);
-
-                if (isLoggedInInternal) {
-                    await this.statusHashtagsService.ensureFollowedHashtagsLoaded();
-                }
 
                 // Load status information.
                 await this.loadPageData(statusId, requestedPhotoIndex);
@@ -957,15 +953,23 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     private async loadPageData(statusId: string, requestedPhotoIndex: number): Promise<void> {
         const firstImageUrlBeforeLoad = this.getFirstImageUrl();
 
+        // Load status data.
         const downloadedStatus = await this.getStatusData(statusId);
+
+        // Load information about followed statuses by the user (and store them in the service).
+        await this.statusHashtagsService.ensureFollowedHashtagsLoaded();
+
+        // Set main status data.
         this.status.set(downloadedStatus);
         this.replyStatus.set(undefined);
 
-        if (downloadedStatus.reblog) {
-            this.mainStatus.set(downloadedStatus.reblog);
-        } else {
-            this.mainStatus.set(downloadedStatus);
-        }
+        // Calculate main status (for reblogs).
+        const internalMainStatus = downloadedStatus.reblog ? downloadedStatus.reblog : downloadedStatus;
+        this.mainStatus.set(internalMainStatus);
+
+        // Calculate shared followed hashtags.
+        const internalSharedFollowedHashtags = this.statusHashtagsService.getSharedFollowedHashtags(internalMainStatus)
+        this.sharedFollowedHashtags.set(internalSharedFollowedHashtags);
 
         const validAttachmentIndex = this.getValidAttachmentIndex(requestedPhotoIndex);
         this.imageIndexForOpenGraph = validAttachmentIndex;
@@ -1204,7 +1208,8 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
 
             return version;
         } else {
-            return await this.statusesService.get(statusId);
+            const internalStatus = await this.statusesService.get(statusId);
+            return internalStatus;
         }
     }
 
