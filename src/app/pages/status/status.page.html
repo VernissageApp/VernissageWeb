@@ -256,9 +256,10 @@
 
                             <!-- Followed hashtags -->
                             @if (sharedFollowedHashtags().length > 0) {
+                                <div class="text-muted fs-90">Followed tags in this status</div>
                                 <div class="followed-hashtags" aria-label="Hashtags">
                                     @for (hashtagName of sharedFollowedHashtags(); track hashtagName) {
-                                        <app-tag matTooltip="Common followed tag">{{ hashtagName }}</app-tag>
+                                        <app-tag>{{ "#" + hashtagName }}</app-tag>
                                     }
                                 </div>
                             }
