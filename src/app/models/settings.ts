@@ -39,6 +39,8 @@ export class Settings {
     public showNews = false;
     public showNewsForAnonymous = false;
     public showSharedBusinessCards = false;
+    public minimumSecondsBetweenRegularStatuses = 0;
+    public minimumSecondsBetweenSilentStatuses = 0;
 
     public isOpenAIEnabled = false;
     public openAIKey = '';
