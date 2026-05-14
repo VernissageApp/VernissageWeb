@@ -101,6 +101,22 @@
 
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
+            <mat-label>Minimum interval between adding statuses (seconds)</mat-label>
+            <input type="number" matInput name="minimumSecondsBetweenRegularStatuses" #statusPurgeAfterDays="ngModel" [(ngModel)]="settings().minimumSecondsBetweenRegularStatuses"
+                placeholder="Minimum interval between adding statuses (seconds)" aria-label="Minimum interval between adding statuses (seconds)" />
+        </mat-form-field>
+    </div>
+
+    <div class="margin-bottom-20">
+        <mat-form-field appearance="outline">
+            <mat-label>Minimum interval between adding silent statuses (seconds)</mat-label>
+            <input type="number" matInput name="minimumSecondsBetweenSilentStatuses" #statusPurgeAfterDays="ngModel" [(ngModel)]="settings().minimumSecondsBetweenSilentStatuses"
+                placeholder="Minimum interval between adding silent statuses (seconds)" aria-label="Minimum interval between adding silent statuses (seconds)" />
+        </mat-form-field>
+    </div>
+
+    <div class="margin-bottom-20">
+        <mat-form-field appearance="outline">
             <mat-label>Patreon url</mat-label>
             <input type="text" matInput name="patreonUrl" #patreonUrl="ngModel" [(ngModel)]="settings().patreonUrl"
                 placeholder="Patreon url" aria-label="Patreon url" />
