@@ -1,7 +1,21 @@
 @if (isReady()) {
     <div animate.enter="fade-in">
         <section [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
-            <h1><mat-icon>tag</mat-icon> {{ hashtag() }}</h1>
+            <div class="hashtag-header">
+                <h1><mat-icon>tag</mat-icon> {{ hashtag() }}</h1>
+
+                @if (signedInUser()) {
+                    @if (isFollowActionInProgress()) {
+                        <button type="button" matButton="text" aria-label="Hashtag follow action in progress" disabled="disabled">Processing...</button>
+                    } @else {
+                        @if (isFollowed()) {
+                            <button type="button" (click)="onToggleHashtagFollow()" matButton="tonal" aria-label="Unfollow hashtag">Unfollow</button>
+                        } @else {
+                            <button type="button" (click)="onToggleHashtagFollow()" matButton="filled" aria-label="Follow hashtag">Follow</button>
+                        }
+                    }
+                }
+            </div>
         </section>
 
         @if (statuses(); as statusesArray) {

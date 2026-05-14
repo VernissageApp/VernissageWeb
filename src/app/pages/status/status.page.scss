@@ -304,9 +304,13 @@
     }
 }
 
-.reblog-user-row {
+.followed-hashtags {
     margin-top: 8px;
-    margin-bottom: 4px;
+    margin-bottom: 12px;
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
 .category {

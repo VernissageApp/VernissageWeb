@@ -4,7 +4,11 @@ import { ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs/internal/Subscription";
 import { ReusableGalleryPageComponent } from "src/app/common/reusable-gallery-page";
 import { ContextTimeline } from "src/app/models/context-timeline";
+import { AuthorizationService } from "src/app/services/authorization/authorization.service";
 import { LoadingService } from "src/app/services/common/loading.service";
+import { MessagesService } from "src/app/services/common/messages.service";
+import { StatusHashtagsService } from "src/app/services/common/status-hashtags.service";
+import { HashtagsService } from "src/app/services/http/hashtags.service";
 import { TimelineService } from "src/app/services/http/timeline.service";
 
 @Component({
@@ -17,12 +21,19 @@ import { TimelineService } from "src/app/services/http/timeline.service";
 export class HashtagPage extends ReusableGalleryPageComponent implements OnInit, OnDestroy {
     protected isReady = signal(false);
     protected hashtag = signal('');
+    protected signedInUser = signal(false);
+    protected isFollowed = signal(false);
+    protected isFollowActionInProgress = signal(false);
 
     private routeParamsSubscription?: Subscription;
 
     private document = inject(DOCUMENT);
     private timelineService = inject(TimelineService);
+    private statusHashtagsService = inject(StatusHashtagsService);
+    private hashtagsService = inject(HashtagsService);
     private loadingService = inject(LoadingService);
+    private authorizationService = inject(AuthorizationService);
+    private messagesService = inject(MessagesService);
     private activatedRoute = inject(ActivatedRoute);
 
     override async ngOnInit(): Promise<void> {
@@ -31,6 +42,7 @@ export class HashtagPage extends ReusableGalleryPageComponent implements OnInit,
         this.routeParamsSubscription = this.activatedRoute.params.subscribe(async (params) => {
             this.loadingService.showLoader();
             this.hashtag.set(params['tag'] as string);
+            this.signedInUser.set(this.authorizationService.getUser() !== undefined);
 
             this.statuses.set(undefined);
             await this.loadFirstStatusesSet();
@@ -46,6 +58,39 @@ export class HashtagPage extends ReusableGalleryPageComponent implements OnInit,
 
         this.removeFeedLinks();
         this.routeParamsSubscription?.unsubscribe();
+    }
+
+    protected async onToggleHashtagFollow(): Promise<void> {
+        if (this.isFollowActionInProgress()) {
+            return;
+        }
+
+        const normalizedHashtagName = this.normalizeHashtagName(this.hashtag());
+        if (!normalizedHashtagName) {
+            return;
+        }
+
+        this.isFollowActionInProgress.set(true);
+        try {
+            if (this.isFollowed()) {
+                await this.hashtagsService.unfollow(normalizedHashtagName);
+                await this.statusHashtagsService.reloadFollowedHashtags();
+
+                this.isFollowed.set(false);
+                this.messagesService.showSuccess('Hashtag has been unfollowed.');
+            } else {
+                await this.hashtagsService.follow(normalizedHashtagName);
+                await this.statusHashtagsService.reloadFollowedHashtags();
+
+                this.isFollowed.set(true);
+                this.messagesService.showSuccess('Hashtag has been followed.');
+            }
+        } catch (error) {
+            console.error(error);
+            this.messagesService.showServerError(error);
+        } finally {
+            this.isFollowActionInProgress.set(false);
+        }
     }
 
     private async loadFirstStatusesSet(): Promise<void> {
@@ -96,5 +141,9 @@ export class HashtagPage extends ReusableGalleryPageComponent implements OnInit,
         if (existingAtomLink) {
             this.document.head.removeChild(existingAtomLink);
         }
+    }
+
+    private normalizeHashtagName(name: string): string {
+        return this.statusHashtagsService.normalizeHashtagName(name);
     }
 }

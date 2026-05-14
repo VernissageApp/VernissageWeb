@@ -251,8 +251,18 @@
 
                             <!-- Note -->
                             <div appHrefToRouterLink>
-                                <div id="note" class="note margin-top-10 margin-bottom-20" appNoteProcessor [innerHTML]="rendered()"></div>
+                                <div id="note" class="note margin-top-10 margin-bottom-10" appNoteProcessor [innerHTML]="rendered()"></div>
                             </div>
+
+                            <!-- Followed hashtags -->
+                            @if (sharedFollowedHashtags().length > 0) {
+                                <div class="text-muted fs-90">Followed tags in this status</div>
+                                <div class="followed-hashtags" aria-label="Hashtags">
+                                    @for (hashtagName of sharedFollowedHashtags(); track hashtagName) {
+                                        <app-tag>{{ "#" + hashtagName }}</app-tag>
+                                    }
+                                </div>
+                            }
 
                             <!-- Alt text -->
                             @if (showAlternativeText() && altStatus()) {
