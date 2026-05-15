@@ -170,36 +170,54 @@ export class ReportsPage extends ResponsiveComponent implements OnInit, OnDestro
     }
 
     protected async onUnlist(report: Report): Promise<void> {
-        try {
-            if (!report.status) {
-                return;
+        const dialogRef = this.dialog.open(ConfirmationDialog, {
+            width: '500px',
+            data: 'Do you want to unlist status?'
+        });
+
+        dialogRef.afterClosed().subscribe(async (result) => {
+            if (result?.confirmed) {
+                try {
+                    if (!report.status) {
+                        return;
+                    }
+        
+                    await this.statusesService.unlist(report.status.id);
+                    await this.reportsService.close(report.id);
+                    await this.refreshList();
+        
+                    this.messageService.showSuccess('Status has been unlisted.');
+                } catch (error) {
+                    console.error(error);
+                    this.messageService.showServerError(error);
+                }
             }
-
-            await this.statusesService.unlist(report.status.id);
-            await this.reportsService.close(report.id);
-            await this.refreshList();
-
-            this.messageService.showSuccess('Status has been unlisted.');
-        } catch (error) {
-            console.error(error);
-            this.messageService.showServerError(error);
-        }
+        });
     }
 
     protected async onDelete(report: Report): Promise<void> {
-        try {
-            if (!report.status) {
-                return;
+        const dialogRef = this.dialog.open(ConfirmationDialog, {
+            width: '500px',
+            data: 'Do you want to delete status?'
+        });
+
+        dialogRef.afterClosed().subscribe(async (result) => {
+            if (result?.confirmed) {
+                try {
+                    if (!report.status) {
+                        return;
+                    }
+        
+                    await this.statusesService.delete(report.status.id);
+                    await this.refreshList();
+        
+                    this.messageService.showSuccess('Status has been deleted.');
+                } catch (error) {
+                    console.error(error);
+                    this.messageService.showServerError(error);
+                }
             }
-
-            await this.statusesService.delete(report.status.id);
-            await this.refreshList();
-
-            this.messageService.showSuccess('Status has been deleted.');
-        } catch (error) {
-            console.error(error);
-            this.messageService.showServerError(error);
-        }
+        });
     }
 
     protected async onApplyCW(report: Report): Promise<void> {

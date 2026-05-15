@@ -126,13 +126,33 @@
                                     </mat-select>
                                 </mat-form-field>
 
-                                <mat-form-field appearance="outline">
+                                <mat-form-field appearance="outline" class="margin-bottom-15">
                                     <mat-label>Visibility</mat-label>
                                     <mat-select required [(value)]="visibility">
                                         <mat-option [value]="statusVisibility.Public">Everyone</mat-option>
+                                        <mat-option [value]="statusVisibility.QuietPublic">Everyone (quiet)</mat-option>
                                         <mat-option [value]="statusVisibility.Followers">Followers only</mat-option>
                                         <mat-option [value]="statusVisibility.Mentioned">Mentioned people only</mat-option>
                                     </mat-select>
+                                    <mat-hint class="text-muted">
+                                        @if (!isHandsetPortrait()) {
+                                            @switch (visibility()) {
+                                                @case (statusVisibility.Public) {
+                                                    <span>Visible to everyone and may appear in public timelines.</span>
+                                                }
+                                                @case (statusVisibility.QuietPublic) {
+                                                    <span>Visible to everyone, but excluded from public timelines.</span>
+                                                }
+                                                @case (statusVisibility.Followers) {
+                                                    <span>Visible only to your followers and anyone mentioned in the post.</span>
+                                                }
+                                                @case (statusVisibility.Mentioned) {
+                                                    <span>Visible only to people explicitly mentioned in the post.</span>
+                                                }
+                                            }
+                                        }
+                                    </mat-hint>
+                                    
                                 </mat-form-field>
 
                                 <mat-checkbox name="commentsDisabled" [disableRipple]="true" [(ngModel)]="commentsDisabled">Disable comments</mat-checkbox>
