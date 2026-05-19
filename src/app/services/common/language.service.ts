@@ -2,7 +2,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { firstValueFrom } from 'rxjs';
-import { Request } from 'express';
+import type { Request } from 'express';
 import { REQUEST } from 'express.tokens';
 import { PreferencesService } from './preferences.service';
 

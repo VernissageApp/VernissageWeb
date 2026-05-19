@@ -1,7 +1,7 @@
 import { inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Location, isPlatformServer } from '@angular/common';
 import { getWindow } from 'ssr-window';
-import { Request } from "express";
+import type { Request } from "express";
 import { REQUEST } from 'express.tokens';
 
 @Injectable({

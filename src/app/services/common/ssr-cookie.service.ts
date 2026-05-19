@@ -1,4 +1,4 @@
-import { Request } from 'express';
+import type { Request } from 'express';
 import { inject, Injectable, PLATFORM_ID, DOCUMENT } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { REQUEST } from 'express.tokens';
