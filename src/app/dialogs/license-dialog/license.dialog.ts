@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, model, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { License } from 'src/app/models/license';
 import { MessagesService } from 'src/app/services/common/messages.service';
@@ -21,6 +22,7 @@ export class LicenseDialog implements OnInit {
     private licensesService = inject(LicensesService);
     private dialogRef = inject(MatDialogRef<LicenseDialog>);
     private data?: License = inject(MAT_DIALOG_DATA);
+    private translateService = inject(TranslateService);
 
     public ngOnInit(): void {
         if (this.data) {
@@ -44,7 +46,7 @@ export class LicenseDialog implements OnInit {
                 this.data.url = this.url();
 
                 await this.licensesService.update(this.data?.id, this.data);
-                this.messageService.showSuccess('License has been updated.');
+                this.messageService.showSuccess(this.translateService.instant('dialogs.license.messages.licenseHasBeenUpdated'));
             } else {
                 const newLicense = new License();
                 newLicense.name = this.name();
@@ -53,7 +55,7 @@ export class LicenseDialog implements OnInit {
                 newLicense.url = this.url();
 
                 await this.licensesService.create(newLicense);
-                this.messageService.showSuccess('New license has been created.');
+                this.messageService.showSuccess(this.translateService.instant('dialogs.license.messages.newLicenseHasBeenCreated'));
             }
 
             this.dialogRef.close({ confirmed: true});

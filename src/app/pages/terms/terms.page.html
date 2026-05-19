@@ -5,8 +5,8 @@
             <div class="terms-container width-100">
 
                 <div class="flex-row flex-align-center flex-space-between margin-bottom-10">
-                    <h1>Terms of Service</h1>
-                    <div>Last update: {{ termsOfServiceUpdatedAt() }}</div>
+                    <h1>{{ 'common.labels.termsOfService' | translate }}</h1>
+                    <div>{{ 'common.labels.lastUpdate' | translate }}: {{ termsOfServiceUpdatedAt() }}</div>
                 </div>
 
                 <div [innerHTML]="termsOfServiceContent()"></div>

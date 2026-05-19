@@ -5,9 +5,9 @@
                 <div class="width-100">
                     <section class="flex-row flex-space-between flex-align-center margin-bottom-20" [ngClass]="{ 'flex-row': !isHandset(), 'flex-column': isHandset() }">
                         <h1>
-                            <div>Users</div>
+                            <div>{{ 'pages.users.title' | translate }}</div>
                             @if (!isHandset()) {
-                                <div class="fs-60 text-muted">List of users registered in the system.</div>
+                                <div class="fs-60 text-muted">{{ 'pages.users.subtitle' | translate }}</div>
                             }
                         </h1>
                     </section>
@@ -18,32 +18,32 @@
                                 <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
                                     <div class="flex-row flex-align-center gap-16">
                                         <mat-form-field appearance="outline" class="width-100">
-                                            <input type="text" #queryInput matInput name="query" [(ngModel)]="search" cdkFocusInitial aria-label="Query" />
+                                            <input type="text" #queryInput matInput name="query" [(ngModel)]="search" cdkFocusInitial [attr.aria-label]="'common.labels.query' | translate" />
                                         </mat-form-field>
                                         @if (!isHandset()) {
                                             <mat-form-field appearance="outline">
-                                                <mat-label>Sorting</mat-label>
+                                                <mat-label>{{ 'pages.activityPubEvents.filters.sorting.label' | translate }}</mat-label>
                                                 <mat-select [(value)]="sortColumn">
-                                                    <mat-option value="userName">Username</mat-option>
-                                                    <mat-option value="lastLoginDate">Last login</mat-option>
-                                                    <mat-option value="createdAt">Created date</mat-option>
-                                                    <mat-option value="statusesCount">Statuses</mat-option>
+                                                    <mat-option value="userName">{{ 'common.labels.userName' | translate }}</mat-option>
+                                                    <mat-option value="lastLoginDate">{{ 'pages.users.table.lastLogin' | translate }}</mat-option>
+                                                    <mat-option value="createdAt">{{ 'common.dates.createdDate' | translate }}</mat-option>
+                                                    <mat-option value="statusesCount">{{ 'pages.users.table.statuses' | translate }}</mat-option>
                                                 </mat-select>
                                             </mat-form-field>
                                         }
-                                        <button matButton="outlined">Search</button>
+                                        <button matButton="outlined">{{ 'common.actions.search' | translate }}</button>
                                     </div>
                                     <div class="margin-top-5">
                                         <mat-checkbox name="isLocal" [disableRipple]="true" [(ngModel)]="onlyLocal">
-                                            Only local
+                                            {{ 'pages.users.filters.onlyLocal' | translate }}
                                         </mat-checkbox>
                                         <mat-checkbox name="isBlocked" [disableRipple]="true" [(ngModel)]="onlyBlocked">
-                                            Only blocked
+                                            {{ 'pages.users.filters.onlyBlocked' | translate }}
                                         </mat-checkbox>
                                         @if (!isHandset()) {
-                                            <mat-radio-group name="sortDirection" class="margin-left-20" [(ngModel)]="sortDirection" aria-label="Sort direction">
-                                                <mat-radio-button value="ascending">Ascending</mat-radio-button>
-                                                <mat-radio-button value="descending">Descending</mat-radio-button>
+                                            <mat-radio-group name="sortDirection" class="margin-left-20" [(ngModel)]="sortDirection" [attr.aria-label]="'pages.activityPubEvents.filters.sortDirection.label' | translate">
+                                                <mat-radio-button value="ascending">{{ 'common.sort.ascending' | translate }}</mat-radio-button>
+                                                <mat-radio-button value="descending">{{ 'common.sort.descending' | translate }}</mat-radio-button>
                                             </mat-radio-group>
                                         }
                                     </div>
@@ -59,11 +59,11 @@
                             <th mat-header-cell *matHeaderCellDef></th>
                             <td mat-cell *matCellDef="let element">
                                 <div class="flex-row gap-8 flex-align-center">
-                                    <a [routerLink]="['/@' + element.userName ]" class="user-avatar" [attr.aria-label]="'Open profile @' + element.userName">
+                                    <a [routerLink]="['/@' + element.userName ]" class="user-avatar" [attr.aria-label]="'pages.users.actions.openProfileAriaLabel' | translate:{ userName: element.userName }">
                                         <app-avatar [user]="element" [size]="avatarSize.medium"></app-avatar>
                                     </a>
                                     @if (!isHandset()) {
-                                        <mat-chip-set aria-label="Roles">
+                                        <mat-chip-set [attr.aria-label]="'pages.users.rolesAriaLabel' | translate">
                                             @if (element.roles?.includes(role.Administrator)) {
                                                 <mat-chip-option [disableRipple]="true" disabled>A</mat-chip-option>
                                             }
@@ -73,7 +73,7 @@
                                             }
 
                                             @if (element.isBlocked === true) {
-                                                <mat-chip-option [disableRipple]="true" disabled>{{ element.isLocal ? 'Disabled' : 'Blocked' }}</mat-chip-option>
+                                                <mat-chip-option [disableRipple]="true" disabled>{{ element.isLocal ? ('common.actions.disable' | translate) : ('common.actions.block' | translate) }}</mat-chip-option>
                                             }
                                         </mat-chip-set>
 
@@ -87,7 +87,7 @@
 
                         <!-- User Name Column -->
                         <ng-container matColumnDef="userName">
-                            <th mat-header-cell *matHeaderCellDef> Name </th>
+                            <th mat-header-cell *matHeaderCellDef>{{ 'common.labels.name' | translate }}</th>
                             <td mat-cell *matCellDef="let element">
                                 <div class="user-name-link">
                                     <a [routerLink]="['/@' + element.userName ]">
@@ -105,7 +105,7 @@
 
                         <!-- Is Local Column -->
                         <ng-container matColumnDef="isLocal">
-                            <th mat-header-cell *matHeaderCellDef> Local </th>
+                            <th mat-header-cell *matHeaderCellDef>{{ 'common.labels.local' | translate }}</th>
                             <td mat-cell *matCellDef="let element">
                                 <mat-checkbox [disableRipple]="true" [ngModel]="element.isLocal" disabled>
                                 </mat-checkbox>
@@ -114,7 +114,7 @@
 
                         <!-- Is Approved Column -->
                         <ng-container matColumnDef="isApproved">
-                            <th mat-header-cell *matHeaderCellDef> Approved </th>
+                            <th mat-header-cell *matHeaderCellDef>{{ 'common.labels.approved' | translate }}</th>
                             <td mat-cell *matCellDef="let element">
                                 <div class="flex-row flex-align-center">
                                     @if (element.isLocal) {
@@ -130,7 +130,7 @@
 
                         <!-- Email was confirmed Column -->
                         <ng-container matColumnDef="emailWasConfirmed">
-                            <th mat-header-cell *matHeaderCellDef> Email confirmed </th>
+                            <th mat-header-cell *matHeaderCellDef>{{ 'common.labels.emailConfirmed' | translate }}</th>
                             <td mat-cell *matCellDef="let element">
                                 @if (element.isLocal) {
                                     <mat-checkbox [disableRipple]="true" [ngModel]="element.emailWasConfirmed" disabled>
@@ -141,7 +141,7 @@
 
                         <!-- Statuses Column -->
                         <ng-container matColumnDef="statuses">
-                            <th mat-header-cell *matHeaderCellDef> Statuses </th>
+                            <th mat-header-cell *matHeaderCellDef>{{ 'pages.users.table.statuses' | translate }}</th>
                             <td mat-cell *matCellDef="let element">
                                 {{ element.statusesCount }}
                             </td>
@@ -149,7 +149,7 @@
 
                         <!-- Last login Column -->
                         <ng-container matColumnDef="lastLoginDate">
-                            <th mat-header-cell *matHeaderCellDef> Last login </th>
+                            <th mat-header-cell *matHeaderCellDef>{{ 'pages.users.table.lastLogin' | translate }}</th>
                             <td mat-cell *matCellDef="let element">
                                 @if (element.lastLoginDate) {
                                     <span>
@@ -161,7 +161,7 @@
 
                         <!-- Created Date Column -->
                         <ng-container matColumnDef="createdAt">
-                            <th mat-header-cell *matHeaderCellDef> Created date </th>
+                            <th mat-header-cell *matHeaderCellDef>{{ 'common.dates.createdDate' | translate }}</th>
                             <td mat-cell *matCellDef="let element">
                                 @if (element.createdAt) {
                                     <span>
@@ -175,78 +175,78 @@
                         <ng-container matColumnDef="actions">
                             <th mat-header-cell *matHeaderCellDef></th>
                             <td mat-cell *matCellDef="let element" class="text-right">
-                                <button class="more-button" matIconButton [matMenuTriggerFor]="dropdownMenuOne2" aria-label="More options">
+                                <button class="more-button" matIconButton [matMenuTriggerFor]="dropdownMenuOne2" [attr.aria-label]="'common.labels.moreOptions' | translate">
                                     <mat-icon>more_vert</mat-icon>
                                 </button>
                                 <mat-menu #dropdownMenuOne2="matMenu" xPosition="before">
                                     @if (element.isLocal) {
                                         <button (click)="onSetRoles(element)" mat-menu-item>
                                             <mat-icon class="outline-symbol">key</mat-icon>
-                                            <span>Assign roles</span>
+                                            <span>{{ 'common.actions.assignRoles' | translate }}</span>
                                         </button>
 
                                         @if (element.isBlocked) {
                                             <button (click)="onSetEnable(element)" mat-menu-item>
                                                 <mat-icon class="outline-symbol">person_check</mat-icon>
-                                                <span>Enable</span>
+                                                <span>{{ 'common.actions.enable' | translate }}</span>
                                             </button>
                                         } @else {
                                             <button (click)="onSetDisable(element)" mat-menu-item>
                                                 <mat-icon class="outline-symbol">person_cancel</mat-icon>
-                                                <span>Disable</span>
+                                                <span>{{ 'common.actions.disable' | translate }}</span>
                                             </button>
                                         }
 
                                         @if (element.isSupporter) {
                                             <button (click)="onSetNotSupporter(element)" mat-menu-item>
                                                 <mat-icon class="outline-symbol">diamond_shine</mat-icon>
-                                                <span>Not supporter</span>
+                                                <span>{{ 'pages.users.actions.notSupporter' | translate }}</span>
                                             </button>
                                         } @else {
                                             <button (click)="onSetSupporter(element)" mat-menu-item>
                                                 <mat-icon class="outline-symbol">diamond_shine</mat-icon>
-                                                <span>Supporter</span>
+                                                <span>{{ 'common.labels.supporter' | translate }}</span>
                                             </button>
                                         }
 
                                         @if (!element.isApproved) {
                                             <button (click)="onApprove(element)" mat-menu-item>
                                                 <mat-icon class="outline-symbol">check_circle</mat-icon>
-                                                <span>Approve</span>
+                                                <span>{{ 'common.actions.approve' | translate }}</span>
                                             </button>
                                             <button (click)="onReject(element)" mat-menu-item>
                                                 <mat-icon class="outline-symbol">unpublished</mat-icon>
-                                                <span>Reject</span>
+                                                <span>{{ 'common.actions.reject' | translate }}</span>
                                             </button>
                                         }
 
                                         @if (element.twoFactorEnabled) {
                                             <button (click)="onDisableTwoFactor(element)" mat-menu-item>
                                                 <mat-icon class="outline-symbol">safety_check_off</mat-icon>
-                                                <span>Disable 2FA</span>
+                                                <span>{{ 'pages.users.actions.disable2fa' | translate }}</span>
                                             </button>
                                         }
                                     } @else {
                                         @if (element.isBlocked) {
                                             <button (click)="onSetEnable(element)" mat-menu-item>
                                                 <mat-icon class="outline-symbol">person_check</mat-icon>
-                                                <span>Unblock</span>
+                                                <span>{{ 'common.actions.unblock' | translate }}</span>
                                             </button>
                                         } @else {
                                             <button (click)="onSetDisable(element)" mat-menu-item>
                                                 <mat-icon class="outline-symbol">person_cancel</mat-icon>
-                                                <span>Block</span>
+                                                <span>{{ 'common.actions.block' | translate }}</span>
                                             </button>
                                         }
 
                                         <button (click)="onUserRefresh(element)" mat-menu-item>
                                             <mat-icon class="outline-symbol">sync</mat-icon>
-                                            <span>Refresh</span>
+                                            <span>{{ 'common.actions.refresh' | translate }}</span>
                                         </button>
                                     }
                                     <button (click)="onDelete(element)" mat-menu-item>
                                         <mat-icon class="outline-symbol">delete</mat-icon>
-                                        <span>Delete</span>
+                                        <span>{{ 'common.actions.delete' | translate }}</span>
                                     </button>
                                 </mat-menu>
                             </td>
@@ -261,7 +261,7 @@
                         [pageIndex]="pageIndex()"
                         [pageSize]="10"
                         [pageSizeOptions]="[10, 25, 100]"
-                        aria-label="Select page">
+                        [attr.aria-label]="'common.paginator.selectPage' | translate">
                     </mat-paginator>
                 </div>
             </div>

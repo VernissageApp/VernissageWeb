@@ -13,6 +13,7 @@ import { WindowService } from 'src/app/services/common/window.service';
 import { CustomReuseStrategy } from 'src/app/common/custom-reuse-strategy';
 import { AlwaysErrorStateMatcher } from 'src/app/common/always-error-state-mather';
 import { PushSubscriptionsService } from 'src/app/services/http/push-subscriptions.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-login',
@@ -57,6 +58,7 @@ export class LoginPage implements OnInit {
     private windowService = inject(WindowService);
     private pushSubscriptionsService = inject(PushSubscriptionsService);
     private authClientsService = inject(AuthClientsService);
+    private translateService = inject(TranslateService);
 
     async ngOnInit(): Promise<void> {
         this.route.queryParams.subscribe(async (params) => {
@@ -107,20 +109,20 @@ export class LoginPage implements OnInit {
             this.errorMessage.set(undefined);
 
             if (error.error.code === 'twoFactorTokenNotFound') {
-                this.tokenMessage.set('Enter token from authentication app.');
+                this.tokenMessage.set(this.translateService.instant('pages.login.errors.enterTwoFactorToken'));
                 this.loginPageMode.set(LoginMode.TwoFactorToken);
             } else if (error.error.code === 'tokenNotValid') {
-                this.tokenMessage.set('Token is not valid. Please enter new token.');
+                this.tokenMessage.set(this.translateService.instant('pages.login.errors.twoFactorTokenNotValid'));
             } else if (error.error.code === 'invalidLoginCredentials') {
-                this.errorMessage.set('Invalid credentials.');
+                this.errorMessage.set(this.translateService.instant('pages.login.errors.invalidCredentials'));
             } else if (error.error.code === 'loginAttemptsExceeded') {
-                this.errorMessage.set('Too many failed logins. Please try again in 5 minutes.');
+                this.errorMessage.set(this.translateService.instant('pages.login.errors.loginAttemptsExceeded'));
             } else if (error.error.code === 'userAccountIsBlocked') {
-                this.errorMessage.set('Your account is blocked. Contact with our support.');
+                this.errorMessage.set(this.translateService.instant('pages.login.errors.accountBlocked'));
             } else if (error.error.code === 'userAccountIsNotApproved') {
-                this.errorMessage.set('Your account is not approved yet.');
+                this.errorMessage.set(this.translateService.instant('pages.login.errors.accountNotApproved'));
             } else {
-                this.errorMessage.set('Unknown login error. Try again later.');
+                this.errorMessage.set(this.translateService.instant('pages.login.errors.unknownLoginError'));
             }
         } finally {
             this.isSubmitting.set(false);

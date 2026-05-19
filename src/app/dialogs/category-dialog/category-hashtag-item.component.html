@@ -1,17 +1,17 @@
 <div class="margin-bottom-5">
     <mat-form-field class="width-100" appearance="outline">
-        <mat-label>Name</mat-label>
-        <input type="text" matInput [name]="'hashtagName-' + index()" [ngModel]="hashtag().hashtag" (ngModelChange)="onHashtagNameChange($event)" #hashtagNameInput="ngModel" aria-label="Hashtag name" required appMaxLength="100" />
+        <mat-label>{{ 'common.labels.name' | translate }}</mat-label>
+        <input type="text" matInput [name]="'hashtagName-' + index()" [ngModel]="hashtag().hashtag" (ngModelChange)="onHashtagNameChange($event)" #hashtagNameInput="ngModel" [attr.aria-label]="'dialogs.category.attrs.hashtagName' | translate" required appMaxLength="100" />
 
         @if (hashtagNameInput.invalid && hashtagNameInput.errors?.required) {
-            <mat-error>Enter hashtag name.</mat-error>
+            <mat-error>{{ 'dialogs.category.texts.enterHashtagName' | translate }}</mat-error>
         }
 
         @if (hashtagNameInput.invalid && hashtagNameInput.errors?.appMaxLength) {
-            <mat-error>Name is too long.</mat-error>
+            <mat-error>{{ 'dialogs.category.texts.nameIsTooLong' | translate }}</mat-error>
         }
 
-        <button matSuffix type="button" matIconButton aria-label="Delete" (click)="onDelete()">
+        <button matSuffix type="button" matIconButton [attr.aria-label]="'dialogs.category.attrs.delete' | translate" (click)="onDelete()">
             <mat-icon>delete</mat-icon>
         </button>
     </mat-form-field>

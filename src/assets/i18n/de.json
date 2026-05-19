@@ -1,0 +1,2642 @@
+{
+  "common": {
+    "actions": {
+      "addField": "Feld hinzufügen",
+      "approve": "Genehmigen",
+      "assignRoles": "Rollen zuweisen",
+      "back": "Zurück",
+      "block": "Blockieren",
+      "cancel": "Abbrechen",
+      "chooseFile": "Datei auswählen",
+      "clear": "Klar",
+      "close": "Schließen",
+      "copy": "Kopieren",
+      "delete": "Löschen",
+      "disable": "Deaktivieren",
+      "dismiss": "Entlassen",
+      "download": "Herunterladen",
+      "edit": "Bearbeiten",
+      "enable": "Aktivieren",
+      "follow": "Folgen Sie",
+      "forgotPassword": "Passwort vergessen?",
+      "import": "Importieren",
+      "loadMore": "Mehr laden",
+      "loadMoreEllipsis": "Mehr laden...",
+      "login": "Anmelden",
+      "next": "Als nächstes",
+      "ok": "OK",
+      "open": "Offen",
+      "openProfileWithUserName": "Öffnen Sie das Profil @{{userName}}",
+      "refresh": "Aktualisieren",
+      "register": "Registrieren",
+      "reject": "Ablehnen",
+      "reload": "Neu laden",
+      "remove": "Entfernen",
+      "report": "Bericht",
+      "restore": "Wiederherstellen",
+      "save": "Speichern",
+      "search": "Suchen",
+      "send": "Senden",
+      "settings": "Einstellungen",
+      "show": "Zeigen",
+      "signOut": "Abmelden",
+      "signUp": "Melden Sie sich an",
+      "tryAgain": "wieder",
+      "unblock": "Entsperren",
+      "unfollow": "Nicht mehr folgen",
+      "update": "Aktualisieren",
+      "upload": "Hochladen"
+    },
+    "articleVisibility": {
+      "homeSignIn": "Startseite – Anmelden",
+      "homeSignOut": "Startseite – Abmelden",
+      "newsSignIn": "Neuigkeiten – anmelden",
+      "newsSignOut": "Neuigkeiten – Abmelden"
+    },
+    "dates": {
+      "createdAt": "Erstellt bei",
+      "createdDate": "Erstellungsdatum"
+    },
+    "errors": {
+      "goBackLink": "Homepage",
+      "goBackPrefix": "Bitte gehen Sie zurück zum",
+      "goBackSuffix": "oder wenden Sie sich an den Systemadministrator."
+    },
+    "labels": {
+      "account": "Konto",
+      "accountLink": "Kontoverknüpfung",
+      "administrator": "Administrator",
+      "alias": "Alias",
+      "all": "Alle",
+      "approved": "Genehmigt",
+      "artists": "Künstler",
+      "authenticating": "Authentifizierung",
+      "automated": "Automatisiert",
+      "avatar": "Avatar",
+      "bio": "Bio",
+      "body": "Körper",
+      "category": "Kategorie",
+      "client": "Kunde",
+      "clientVersion": "Client-Version",
+      "code": "Code",
+      "comment": "Kommentar",
+      "description": "Beschreibung",
+      "details": "Details",
+      "domain": "Domäne",
+      "email": "E-Mail",
+      "emailConfirmed": "E-Mail bestätigt",
+      "enabled": "Aktiviert",
+      "errorMessage": "Fehlermeldung",
+      "exception": "Ausnahme",
+      "fields": "Felder",
+      "followers": "Anhänger",
+      "following": "Nachfolgend",
+      "frequentlyAskedQuestions": "Häufig gestellte Fragen",
+      "hashtags": "Hashtags",
+      "header": "Kopfzeile",
+      "homePage": "Startseite",
+      "key": "Schlüssel",
+      "language": "Sprache",
+      "lastUpdate": "Letztes Update",
+      "link": "Link",
+      "local": "Lokal",
+      "member": "Mitglied",
+      "message": "Nachricht",
+      "moderator": "Moderator",
+      "moreOptions": "Weitere Optionen",
+      "name": "Name",
+      "noResultsFound": "Keine Ergebnisse gefunden.",
+      "note": "Notiz",
+      "order": "Bestellen",
+      "password": "Passwort",
+      "photo": "Foto",
+      "photos": "Fotos",
+      "priority": "Priorität",
+      "private": "Privat",
+      "processing": "Verarbeitung",
+      "profilePage": "Profilseite",
+      "qrCode": "QR-Code",
+      "query": "Abfrage",
+      "reason": "Grund",
+      "reports": "Berichte",
+      "server": "Server",
+      "serverVersion": "Serverversion",
+      "status": "Status",
+      "statusImage": "Statusbild",
+      "subtitle": "Untertitel",
+      "support": "Unterstützung",
+      "supporter": "Unterstützer",
+      "telephone": "Telefon",
+      "template": "Vorlage",
+      "termsOfService": "Nutzungsbedingungen",
+      "text": "Text",
+      "title": "Titel",
+      "token": "Token",
+      "twoFactorToken": "Zwei-Faktor-Token",
+      "type": "Typ",
+      "url": "URL",
+      "user": "Benutzer",
+      "userName": "Benutzername",
+      "userNameOrEmail": "Benutzername oder E-Mail",
+      "value": "Wert",
+      "verified": "Verifiziert",
+      "visibility": "Sichtbarkeit",
+      "website": "Website"
+    },
+    "messages": {
+      "newVersionAvailable": "Eine neue Version vonVernissageist verfügbar. Bitte aktualisieren Sie die Seite, um die neueste Version zu erhalten.",
+      "unknownError": "Unbekannter Fehler.",
+      "unrecoverableState": "Es ist ein Fehler aufgetreten und der Anwendungsstatus kann nicht wiederhergestellt werden. Bitte laden Sie die Seite neu."
+    },
+    "pageTitles": {
+      "accessForbidden": "Vernissage - Zugriff verboten",
+      "account": "Vernissage - Konto",
+      "activityPubEventRecipients": "Vernissage - ActivityPub-Ereignisempfänger",
+      "activityPubEvents": "Vernissage - ActivityPub-Ereignisse",
+      "articles": "Vernissage - Artikel",
+      "bookmarks": "Vernissage - Lesezeichen",
+      "categories": "Vernissage - Kategorien",
+      "confirmEmail": "Vernissage - E-Mail bestätigen",
+      "connectionLost": "Vernissage - Verbindung verloren",
+      "createArticle": "Vernissage - Artikel erstellen",
+      "editArticle": "Vernissage - Artikel bearbeiten",
+      "editorsChoice": "Vernissage - Wahl des Herausgebers",
+      "editUsersBusinessCard": "Vernissage - Visitenkarte des Benutzers bearbeiten",
+      "errors": "Vernissage - Fehler",
+      "eventRecipients": "Vernissage - Ereignisempfänger",
+      "favourites": "Vernissage - Favoriten",
+      "forgotPassword": "Vernissage - Passwort vergessen",
+      "frequentlyAskedQuestions": "Vernissage - Häufig gestellte Fragen",
+      "homeTimeline": "Vernissage - Home-Timeline",
+      "invitations": "Vernissage - Einladungen",
+      "login": "Vernissage - Anmelden",
+      "news": "Vernissage - Neuigkeiten",
+      "notifications": "Vernissage - Benachrichtigungen",
+      "pageNotFound": "Vernissage - Seite nicht gefunden",
+      "preferences": "Vernissage - Einstellungen",
+      "privacy": "Vernissage - Datenschutz",
+      "register": "Vernissage - Registrieren",
+      "reports": "Vernissage - Berichte",
+      "resetPassword": "Vernissage - Passwort zurücksetzen",
+      "search": "Vernissage - Suche",
+      "settings": "Vernissage - Einstellungen",
+      "sharedBusinessCard": "Vernissage - Geteilte Visitenkarte",
+      "sharedBusinessCards": "Vernissage - Geteilte Visitenkarten",
+      "statusEvents": "Vernissage - Statusereignisse",
+      "support": "Vernissage - Unterstützung",
+      "tags": "Vernissage - Tags",
+      "terms": "Vernissage - Bedingungen",
+      "trending": "Vernissage - Im Trend",
+      "unexpectedError": "Vernissage - Unerwarteter Fehler",
+      "uploadImages": "Vernissage - Bilder hochladen",
+      "users": "Vernissage - Benutzer"
+    },
+    "paginator": {
+      "selectPage": "Seite auswählen"
+    },
+    "sort": {
+      "ascending": "Aufsteigend",
+      "descending": "Absteigend"
+    },
+    "statuses": {
+      "error": "Fehler",
+      "expired": "Abgelaufen",
+      "finished": "Fertig",
+      "new": "Neu",
+      "processing": "Verarbeitung",
+      "ready": "Bereit"
+    },
+    "timeAgo": {
+      "fewSecondsAgo": "vor ein paar Sekunden"
+    }
+  },
+  "components": {
+    "avatar": {
+      "attrs": {
+        "avatar": "Avatar"
+      }
+    },
+    "blurhashImage": {
+      "messages": {
+        "statusBoosted": "Status gestärkt.",
+        "statusFavourited": "Status Favorit.",
+        "yourBoostHasBeenUndone": "Dein Boost wurde rückgängig gemacht.",
+        "yourLikeHasBeenUndone": "Dein Like wurde rückgängig gemacht."
+      }
+    },
+    "businessCard": {
+      "attrs": {
+        "avatarProfile": "Avatar-Profil"
+      },
+      "texts": {
+        "importContact": "Kontakt importieren"
+      }
+    },
+    "categoryGallery": {
+      "texts": {
+        "sadlyThereSNothingToSeeHere": "Leider gibt es hier noch nichts zu sehen."
+      }
+    },
+    "categoryList": {
+      "messages": {
+        "categoryHasBeenDeleted": "Kategorie wurde gelöscht.",
+        "categoryHasBeenDisabled": "Die Kategorie wurde deaktiviert.",
+        "categoryHasBeenEnabled": "Kategorie wurde aktiviert.",
+        "doYouWantToDeleteCategory": "Möchten Sie die Kategorie löschen?"
+      },
+      "texts": {
+        "categoryName": "Kategoriename",
+        "newCategory": "Neue Kategorie"
+      }
+    },
+    "commentReply": {
+      "attrs": {
+        "leaveAComment": "Hinterlassen Sie einen Kommentar"
+      },
+      "messages": {
+        "commentHasBeenAdded": "Kommentar wurde hinzugefügt."
+      }
+    },
+    "dialogCommon": {
+      "actions": {
+        "change": "Veränderung",
+        "move": "Bewegen",
+        "mute": "Stumm",
+        "no": "Nein",
+        "share": "Teilen",
+        "yes": "Ja"
+      },
+      "labels": {
+        "end": "Ende",
+        "start": "Starten"
+      }
+    },
+    "domainBlocks": {
+      "messages": {
+        "doYouWantToDeleteInstanceBlockedDomain": "Möchten Sie die durch die Instanz blockierte Domäne löschen?",
+        "domainHasBeenDeleted": "Domain wurde gelöscht."
+      },
+      "texts": {
+        "newDomain": "Neue Domäne"
+      }
+    },
+    "followButtons": {
+      "actions": {
+        "approveFollow": "Genehmigen Sie das Folgen",
+        "blockDomain": "Domain blockieren",
+        "blockUser": "Benutzer blockieren",
+        "cancelRequest": "Anfrage abbrechen",
+        "copyProfileLink": "Link zum Profil kopieren",
+        "feature": "Funktion",
+        "followBack": "Folgen Sie zurück",
+        "mute": "Stumm",
+        "openOriginalProfile": "Originalprofil öffnen",
+        "rejectFollow": "Ablehnen folgen",
+        "unblockDomain": "Domain entsperren",
+        "unblockUser": "Benutzer entsperren",
+        "undoFeature": "Rückgängig-Funktion",
+        "unmute": "Stummschaltung aufheben"
+      },
+      "messages": {
+        "youHaveAcceptedTheUserSFollowRequest": "Sie haben die Folgeanfrage des Benutzers angenommen.",
+        "youHaveDeclinedTheUserSFollowRequest": "Sie haben die Folgeanfrage des Benutzers abgelehnt"
+      }
+    },
+    "followButtonsSection": {
+      "messages": {
+        "blockedDomainHasBeenDeleted": "Gesperrte Domain wurde gelöscht.",
+        "doYouWantToDeleteBlockedDomain": "Möchten Sie die blockierte Domain löschen?",
+        "doYouWantToUnblockUser": "Möchten Sie den Benutzer entsperren?",
+        "doYouWantToUnmuteUser": "Möchten Sie die Stummschaltung des Benutzers aufheben?",
+        "muteHasBeenCanceled": "Die Stummschaltung wurde aufgehoben.",
+        "muteHasBeenSaved": "Stummschaltung wurde gespeichert.",
+        "reportHasBeenSaved": "Bericht wurde gespeichert.",
+        "theFollowRequestHasBeenSent": "Die Folgeanfrage wurde gesendet.",
+        "userHasBeenBlocked": "Der Benutzer wurde blockiert.",
+        "userHasBeenUnblocked": "Der Benutzer wurde entsperrt.",
+        "youAreFollowingTheUser": "Sie folgen dem Benutzer.",
+        "youHaveFeaturedTheUser": "Sie haben den Benutzer vorgestellt.",
+        "youHaveRemovedTheUserFromFeatured": "Sie haben den Benutzer aus „Featured“ entfernt.",
+        "youHaveUnfollowedTheUser": "Sie haben dem Benutzer entfolgt.",
+        "yourFollowRequestHasBeenAccepted": "Ihre Follow-Anfrage wurde angenommen."
+      }
+    },
+    "footer": {
+      "links": {
+        "privacyPolicy": "Datenschutzrichtlinie",
+        "support": "Unterstützung",
+        "termsOfService": "Nutzungsbedingungen"
+      },
+      "poweredBy": "Unterstützt vonVernissage"
+    },
+    "gallery": {
+      "pinned": "Angepinnt",
+      "texts": {
+        "sadlyThereSNothingToSeeHere": "Leider gibt es hier noch nichts zu sehen."
+      }
+    },
+    "generalSettings": {
+      "attrs": {
+        "aiDescriptionPrompt": "AI-Beschreibungsaufforderung",
+        "aiHashtagsPrompt": "AI-Hashtags-Eingabeaufforderung",
+        "aiModel": "AI-Modell",
+        "aiProviderName": "AI-Anbietername",
+        "aiSecretKey": "AIgeheimer Schlüssel",
+        "aiUrl": "AIURL",
+        "corsOrgins": "CORS-Ursprünge",
+        "deleteStatusesOlderThanDays": "Status löschen, die älter sind als (Tage)",
+        "emailFromAddress": "E-Mail-Absenderadresse",
+        "emailFromName": "E-Mail von Name",
+        "emailHostname": "E-Mail-Hostname",
+        "emailPassword": "E-Mail-Passwort",
+        "emailPort": "E-Mail-Port",
+        "emailUsername": "E-Mail-Benutzername",
+        "httpPathToCustomCssFile": "HTTP-Pfad zur benutzerdefiniertenCSS-Datei",
+        "httpPathToCustomJavascriptFile": "HTTP-Pfad zur benutzerdefiniertenJavaScript-Datei",
+        "imagesQuality": "Bildqualität",
+        "imagesUrl": "Bilder-URL",
+        "inlineCustomCssStyles": "Benutzerdefinierte Inline-CSS-Stile",
+        "inlineCustomJavascript": "Inline-kundenspezifischesJavaScript",
+        "mastodonUrl": "Mastodon-URL",
+        "maximumFileSize": "Maximale Dateigröße",
+        "maximumNumberOfAttachments": "Maximale Anzahl von Anhängen",
+        "maximumNumberOfCharactersInStatus": "Maximale Anzahl von Zeichen im Status",
+        "maximumNumberOfInvitations": "Maximale Anzahl an Einladungen",
+        "minimumIntervalBetweenAddingSilentStatusesSeconds": "Mindestintervall zwischen dem Hinzufügen stiller Status (Sekunden)",
+        "minimumIntervalBetweenAddingStatusesSeconds": "Mindestintervall zwischen dem Hinzufügen von Status (Sekunden)",
+        "patreonUrl": "Patreon-URL",
+        "privacyPolicyContent": "Inhalt der Datenschutzrichtlinie",
+        "privacyPolicyUpdateDate": "Datum der Aktualisierung der Datenschutzrichtlinie",
+        "termsOfServiceContent": "Inhalt der Nutzungsbedingungen",
+        "termsOfServiceUpdateDate": "Aktualisierungsdatum der Nutzungsbedingungen",
+        "totalCost": "Gesamtkosten",
+        "usersSupport": "Benutzerunterstützung",
+        "webDescription": "Webbeschreibung",
+        "webEmail": "Web-E-Mail",
+        "webLanguages": "Websprachen",
+        "webLongDescription": "Web-Langbeschreibung",
+        "webThumbnailUr": "Web-Thumbnail ur",
+        "webTitle": "Webtitel",
+        "webpushServiceEndpoint": "WebPush-Dienstendpunkt",
+        "webpushServiceSecretKey": "Geheimer Schlüssel desWebPush-Dienstes",
+        "webpushVapidPriavteKey": "WebPushVapid-Privatschlüssel",
+        "webpushVapidPublicKey": "WebPushVapid öffentlicher Schlüssel",
+        "webpushVapidSubject": "WebPushBlödsinniges Thema"
+      },
+      "captcha": "Captcha",
+      "help": {
+        "aiDescriptionPrompt": "Wird zum Generieren einer Bildbeschreibung (Alt-Text) verwendet. Schreiben Sie klare Anweisungen für genaue, objektive und verständliche Beschreibungen, die nur auf sichtbaren Inhalten basieren.",
+        "aiHashtagsPrompt": "Wird verwendet, um Hashtags für einen Status zu generieren. Schreiben Sie Anweisungen für relevante, prägnante und Social-Media-freundliche Hashtags und bitten Sie das Model, nur Hashtags zurückzugeben.",
+        "cdn": "Wenn Sie ein CDN konfiguriert haben, können Sie das Standard-ImageURLüberschreiben, das basierend auf dem Namen und der Adresse des S3-Buckets generiert wird.",
+        "eventsToLog": "Ausgewählte Ereignisse werden in der Datenbank gespeichert. Sie sollten nur beim Debuggen eines Problems aktiviert werden, da sie sich sowohl auf die Anwendungsleistung als auch auf die Datenbankgröße auswirken, da ihr Umfang erheblich sein kann.",
+        "imageQuality": "Bestimmt die Qualität der Bilder, die nach dem Hochladen gespeichert und vom System verarbeitet werden (z. B. für die Erstellung von Miniaturansichten). Empfohlener Wert: 85.",
+        "markdownMacros": "DieMarkdown-Syntax wird unterstützt und Sie können drei Makros verwenden, die auf der Seite ersetzt werden:",
+        "mastodon": "Wenn die Instanz ihr offizielles Konto aufMastodonhat, können Sie hier ihre Adresse definieren. Wenn dieVernissage-Instanzadresse auch aufMastodonangegeben ist, gibt es Informationen darüber, dass das Konto vonMastodonüberprüft wurde.",
+        "quickCaptcha": "Dieses CAPTCHA wird intern implementiert und kommuniziert nicht mit externen Diensten, wodurch vollständige Privatsphäre für Benutzer gewährleistet ist. Captcha wird nur angezeigt, wenn die Registrierung für alle neuen Benutzer geöffnet ist.",
+        "registrationMode": "Die Registrierung auf Einladung und die Registrierung per Genehmigung funktionieren nur, wenn die Registrierung für alle Benutzer deaktiviert ist.",
+        "regularStatusesInterval": "Definiert die Mindestzeit (in Sekunden), die ein Benutzer warten muss, bevor er einen weiteren regulären Status veröffentlicht. Dadurch wird die Instanz vor Spam-ähnlichen Posting-Bursts geschützt, Timeline-Rauschen reduziert und unnötiger Verbundverkehr zu Remote-Servern begrenzt.",
+        "sameDomainCors": "Die Datei sollte sich in derselben Domäne befinden wie die gehostete Anwendung; Andernfalls kann es aufgrund von CORS-Sicherheitseinschränkungen blockiert werden.",
+        "silentStatusesInterval": "Definiert die Mindestzeit (in Sekunden), die ein Benutzer warten muss, bevor er einen weiteren stillen Status veröffentlicht. Stille Status sind für Import-/Synchronisierungsszenarien gedacht (z. B. von externen Apps). Diese Beiträge werden nicht an die Chronik der Benutzer gesendet und nicht überActivityPubzusammengefasst."
+      },
+      "jobs": {
+        "calculateLongTrending": "Berechnen Sie den Trendjob über einen längeren Zeitraum",
+        "calculateShortTrending": "Berechnen Sie den kurzfristigen Trendjob",
+        "clearAttachments": "Anhänge löschen, die nicht mit dem Statusjob verbunden sind",
+        "clearCaptchaTokens": "Job mit alten Captcha-Tokens löschen",
+        "clearDeletedUsers": "Löschen Sie den Job gelöschter Benutzer",
+        "clearFailedLogins": "Löschen Sie den Job mit den Protokollen alter fehlgeschlagener Anmeldungen",
+        "clearOldErrors": "Alte Fehler löschen",
+        "createArchives": "Archivjob erstellen",
+        "deleteOldArchives": "Alten Archivauftrag löschen",
+        "fillLocationsTable": "Auftrag zum Füllen der Ortstabelle",
+        "purgeOldStatuses": "Job zum Löschen alter Status",
+        "rescheduleFailedActivityPub": "Fehlgeschlagenen Job fürActivityPub-Ereignisse neu planen"
+      },
+      "labels": {
+        "systemDefaultUserId": "Standard-Systembenutzer-ID",
+        "webContactUserId": "Benutzer-ID des Webkontakts"
+      },
+      "messages": {
+        "settingsWasSaved": "Einstellungen wurden gespeichert."
+      },
+      "none": "Keine",
+      "registration": "Anmeldungen",
+      "ssl": "SSL",
+      "texts": {
+        "aiDescriptionPrompt": "AI-Beschreibungsaufforderung",
+        "aiHashtagsPrompt": "AI-Hashtags-Eingabeaufforderung",
+        "aiModel": "AI-Modell",
+        "aiProviderName": "AI-Anbietername",
+        "aiSecretKey": "AIgeheimer Schlüssel",
+        "aiUrl": "AIURL",
+        "anonymousAccess": "Anonymer Zugriff",
+        "antiFloodSettings": "Anti-Überschwemmungs-Einstellungen",
+        "artificialInteligence": "Künstliche Intelligenz",
+        "corsOrgins": "CORS-Ursprünge",
+        "customJavascript": "BenutzerdefinierteJavaScript",
+        "customStyles": "Benutzerdefinierte Stile",
+        "databaseLoggedEvents": "Datenbankprotokollierte Ereignisse",
+        "defaultAccounts": "Standardkonten",
+        "deleteStatusesOlderThanDays": "Status löschen, die älter sind als (Tage)",
+        "emailFromAddress": "E-Mail-Absenderadresse",
+        "emailFromName": "E-Mail von Name",
+        "emailHostname": "E-Mail-Hostname",
+        "emailPassword": "E-Mail-Passwort",
+        "emailPort": "E-Mail-Port",
+        "emailSecureMethod": "E-Mail-sichere Methode",
+        "emailServer": "E-Mail-Server",
+        "emailUsername": "E-Mail-Benutzername",
+        "eventsToLog": "Zu protokollierende Ereignisse",
+        "financialSupport": "Finanzielle Unterstützung",
+        "httpPathToCustomCssFile": "HTTP-Pfad zur benutzerdefiniertenCSS-Datei",
+        "httpPathToCustomJavascriptFile": "HTTP-Pfad zur benutzerdefiniertenJavaScript-Datei",
+        "imagesQuality": "Bildqualität",
+        "imagesUrl": "Bilder-URL",
+        "inlineCustomCssStyles": "Benutzerdefinierte Inline-CSS-Stile",
+        "inlineCustomJavascript": "Inline-kundenspezifischesJavaScript",
+        "mainServerSettings": "Hauptservereinstellungen",
+        "mastodonUrl": "Mastodon-URL",
+        "maximumFileSize": "Maximale Dateigröße",
+        "maximumNumberOfAttachments": "Maximale Anzahl von Anhängen",
+        "maximumNumberOfCharactersInStatus": "Maximale Anzahl von Zeichen im Status",
+        "maximumNumberOfInvitationsPerUser": "Maximale Anzahl Einladungen pro Benutzer",
+        "minimumIntervalBetweenAddingSilentStatusesSeconds": "Mindestintervall zwischen dem Hinzufügen stiller Status (Sekunden)",
+        "minimumIntervalBetweenAddingStatusesSeconds": "Mindestintervall zwischen dem Hinzufügen von Status (Sekunden)",
+        "patreonUrl": "Patreon-URL",
+        "privacyPolicy": "Datenschutzrichtlinie",
+        "privacyPolicyContent": "Inhalt der Datenschutzrichtlinie",
+        "privacyPolicyUpdateDate": "Datum der Aktualisierung der Datenschutzrichtlinie",
+        "scheduledJobs": "Geplante Jobs",
+        "startTls": "Starten Sie TLS",
+        "startTlsWhenAvailable": "Starten Sie TLS, sofern verfügbar",
+        "termsOfService": "Nutzungsbedingungen",
+        "termsOfServiceContent": "Inhalt der Nutzungsbedingungen",
+        "termsOfServiceUpdateDate": "Aktualisierungsdatum der Nutzungsbedingungen",
+        "totalCost": "Gesamtkosten",
+        "usersSupport": "Benutzerunterstützung",
+        "webDescription": "Webbeschreibung",
+        "webEmail": "Web-E-Mail",
+        "webLanguages": "Websprachen",
+        "webLongDescription": "Web-Langbeschreibung",
+        "webThumbnailUrl": "Web-Thumbnail-URL",
+        "webTitle": "Webtitel",
+        "webpushNotifications": "WebPush-Benachrichtigungen",
+        "webpushServiceEndpoint": "WebPush-Dienstendpunkt",
+        "webpushServiceSecretKey": "Geheimer Schlüssel desWebPush-Dienstes",
+        "webpushVapidPrivateKey": "WebPushVapid privater Schlüssel",
+        "webpushVapidPublicKey": "WebPushVapid öffentlicher Schlüssel",
+        "webpushVapidSubject": "WebPushBlödsinniges Thema"
+      },
+      "toggles": {
+        "isAiEnabled": "IstAIaktiviert?",
+        "isQuickCaptchaEnabled": "Ist QuickCaptcha aktiviert (internes Captcha)?",
+        "isRegistrationByApprovalOpened": "Ist die Registrierung per Genehmigung geöffnet?",
+        "isRegistrationByInvitationsOpened": "Ist die Registrierung per Einladung geöffnet?",
+        "isRegistrationOpened": "Ist die Registrierung geöffnet?",
+        "isWebPushEnabled": "SindWebPush-Benachrichtigungen aktiviert?",
+        "showCategoriesForAnonymous": "Kategorien für anonyme Benutzer anzeigen",
+        "showEditorsStatusesChoiceForAnonymous": "Statusauswahl des Editors für anonyme Benutzer anzeigen",
+        "showEditorsUsersChoiceForAnonymous": "Benutzerauswahl des Editors für anonyme Benutzer anzeigen",
+        "showHashtagsForAnonymous": "Hashtags für anonyme Benutzer anzeigen",
+        "showLocalTimelineForAnonymous": "Lokale Zeitleiste für anonymen Benutzer anzeigen",
+        "showNewsForAnonymous": "Menüpunkt „News“ für anonyme Benutzer anzeigen",
+        "showNewsForSignedIn": "Menüpunkt „Neuigkeiten“ für angemeldete Benutzer anzeigen",
+        "showSharedBusinessCards": "Menüpunkt „Geteilte Visitenkarten“ anzeigen",
+        "showTrendingForAnonymous": "Trends für anonyme Benutzer anzeigen"
+      }
+    },
+    "hashtagGallery": {
+      "texts": {
+        "sadlyThereSNothingToSeeHere": "Leider gibt es hier noch nichts zu sehen."
+      }
+    },
+    "header": {
+      "applicationLogo": "Anwendungslogo",
+      "menuWithActions": "Menü mit Aktionen",
+      "navigation": {
+        "account": "Konto",
+        "articles": "Artikel",
+        "categories": "Kategorien",
+        "editorsChoice": "Wahl des Herausgebers",
+        "errors": "Fehler",
+        "events": "Veranstaltungen",
+        "home": "Zuhause",
+        "invitations": "Einladungen",
+        "news": "Nachrichten",
+        "notifications": "Benachrichtigungen",
+        "preferences": "Präferenzen",
+        "reports": "Berichte",
+        "sharedBusinessCards": "Geteilte Visitenkarten",
+        "support": "Unterstützung",
+        "trending": "Im Trend",
+        "users": "Benutzer"
+      },
+      "signedInAs": "Angemeldet als",
+      "switchTheme": "Thema wechseln"
+    },
+    "homeCards": {
+      "messages": {
+        "doYouWantToDeleteHomeCard": "Möchten Sie die Heimatkarte löschen?",
+        "homeCardHasBeenDeleted": "Die Heimatkarte wurde gelöscht."
+      },
+      "texts": {
+        "newHomeCard": "Neue Heimatkarte"
+      }
+    },
+    "homeSignin": {
+      "attrs": {
+        "refreshCurrentTimeline": "Aktuelle Zeitleiste aktualisieren",
+        "timelineType": "Zeitleistentyp"
+      },
+      "texts": {
+        "localCollectionOfPhotos": "Eine Sammlung von Fotos, die aus allen Beiträgen erstellt wurden, die von Benutzern auf diesem Server veröffentlicht wurden.",
+        "federatedCollectionOfPhotos": "Eine Sammlung von Fotos, die aus allen vom Benutzer hochgeladenen Bildern erstellt wurden, die diesen Server erreicht haben.",
+        "privateCollectionOfPhotos": "Ihre persönliche Fotosammlung, erstellt basierend auf Beiträgen von Benutzern, denen Sie folgen."
+      },
+      "timeline": "Zeitleiste"
+    },
+    "homeSignout": {
+      "mastodon": "Mastodon",
+      "texts": {
+        "apiDocumentation": "API-Dokumentation",
+        "editorSChoiceAcrossWholeFediverse": "Wahl des Herausgebers für das gesamteFediverse",
+        "itSAdFreeAndFocusedOn": "Es ist werbefrei und konzentriert sich auf Community und Kreativität, nicht auf Algorithmen.",
+        "privacyPolicy": "Datenschutzrichtlinie",
+        "rediscoverTheBeautyOfPhotography": "Redisdecken Sie die Schönheit der Fotografie ab",
+        "sourceCode": "Quellcode",
+        "termsOfService": "Nutzungsbedingungen",
+        "vernissageIsAFreePlatformDesignedFor": "Vernissageist eine kostenlose Plattform für Fotografen."
+      }
+    },
+    "image": {
+      "altLabel": "ALT",
+      "messages": {
+        "statusBoosted": "Status gestärkt.",
+        "statusFavourited": "Status Favorit.",
+        "yourBoostHasBeenUndone": "Dein Boost wurde rückgängig gemacht.",
+        "yourLikeHasBeenUndone": "Dein Like wurde rückgängig gemacht."
+      }
+    },
+    "instanceRules": {
+      "messages": {
+        "doYouWantToDeleteInstanceRule": "Möchten Sie die Instanzregel löschen?",
+        "ruleHasBeenDeleted": "Regel wurde gelöscht."
+      },
+      "texts": {
+        "newRule": "Neue Regel"
+      }
+    },
+    "licenseList": {
+      "messages": {
+        "doYouWantToDeleteLicense": "Möchten Sie die Lizenz löschen?",
+        "licenseHasBeenDeleted": "Die Lizenz wurde gelöscht."
+      },
+      "texts": {
+        "newLicense": "Neue Lizenz"
+      }
+    },
+    "password": {
+      "attrs": {
+        "password": "Passwort",
+        "togglePasswordVisibility": "Passwortsichtbarkeit umschalten"
+      },
+      "texts": {
+        "between8And32CharactersLong": "Zwischen 8 und 32 Zeichen lang",
+        "numberOrSymbol": "Zahl oder Symbol",
+        "oneLowercaseLetter": "Ein Kleinbuchstabe",
+        "oneUppercaseLetter": "Ein Großbuchstabe",
+        "yourPasswordHaveToFullfilBelowRequirements": "Ihr Passwort muss die folgenden Anforderungen erfüllen."
+      }
+    },
+    "statusProperties": {
+      "attrs": {
+        "application": "Bewerbung",
+        "followers": "Anhänger",
+        "mentioned": "Erwähnt",
+        "numberOfBoosts": "Anzahl der Boosts",
+        "numberOfLikes": "Anzahl der Likes",
+        "public": "Öffentlich",
+        "publishedDate": "Veröffentlichungsdatum",
+        "quietpublic": "QuietPublic"
+      }
+    },
+    "statusTextAutocomplete": {
+      "attrs": {
+        "hashtagSuggestions": "Hashtag-Vorschläge",
+        "status": "Status",
+        "userSuggestions": "Benutzervorschläge"
+      },
+      "texts": {
+        "enterStatusText": "Geben Sie den Statustext ein.",
+        "tooLongStatus": "Zu langer Status.",
+        "usePascalcaseForHashtagsCapitalizingTheFirst": "Verwenden Sie „PascalCase“ für Hashtags und schreiben Sie den ersten Buchstaben jedes Wortes groß, um die Lesbarkeit und Zugänglichkeit zu verbessern."
+      }
+    },
+    "uploadPhoto": {
+      "attrs": {
+        "altText": "Alt-Text",
+        "aperture": "Blende",
+        "chemistry": "Chemie",
+        "createDate": "Datum erstellen",
+        "createTime": "Zeit schaffen",
+        "enterLocation": "Geben Sie den Standort ein",
+        "exposureTime": "Belichtungszeit",
+        "film": "Film",
+        "flash": "Blitz",
+        "focalLength": "Brennweite",
+        "focalLengthIn35mmFilmEquivalent": "Brennweite im 35-mm-Filmäquivalent",
+        "gpsLatitude": "GPSBreitengrad",
+        "gpsLongitude": "GPSLängengrad",
+        "iso": "ISO",
+        "lens": "Objektiv",
+        "manufacturer": "Hersteller",
+        "model": "Modell",
+        "number": "Nummer",
+        "scanner": "Scanner",
+        "software": "Software",
+        "uploadedPhoto": "Foto hochgeladen"
+      },
+      "labels": {
+        "city": "Stadt",
+        "country": "Land",
+        "date": "Datum",
+        "license": "Lizenz",
+        "location": "Standort",
+        "time": "Zeit"
+      },
+      "messages": {
+        "uploadedFileTooLarge": "Die hochgeladene Datei ist zu groß. Die maximale Größe ist{{size}}."
+      },
+      "texts": {
+        "altText": "Alt-Text",
+        "aperture": "Blende:",
+        "chemistry": "Chemie:",
+        "createDate": "Erstellungsdatum:",
+        "deleteHdrVersion": "HDR-Version löschen",
+        "exifMetadata": "Exif-Metadaten",
+        "exposureTime": "Belichtungszeit:",
+        "f": "f/",
+        "featurePoweredBy": "Funktion bereitgestellt von{{providerName}}.",
+        "film": "Film:",
+        "flash": "Blitz:",
+        "focalLength": "Brennweite:",
+        "fullFrameEquivalent": "Vollbildäquivalent",
+        "generate": "Generieren",
+        "geolocationDisclosureWarning": "Durch die Weitergabe der Geolokalisierungsdaten Ihres Fotos geben Sie den genauen Ort bekannt, an dem das Foto aufgenommen wurde.",
+        "gpsCoordinates": "GPS-Koordinaten:",
+        "imageExceededLimitAndWasResized": "Ihr Bild hat das{{maxFileSize}}-Limit überschritten, daher wurde die Größe an der längeren Kante automatisch auf 4096 Pixel geändert.",
+        "information": "Informationen:",
+        "iso": "ISO:",
+        "lens": "Objektiv:",
+        "manufacturer": "Hersteller:",
+        "mm": "mm",
+        "model": "Modell:",
+        "originalFilePreservedWarning": "Das hochgeladene Bild bleibt ohne Änderungen als Originaldatei erhalten.",
+        "scanner": "Scanner:",
+        "sec": "Sek",
+        "software": "Software:",
+        "tooLongAltText": "Zu langer Alternativtext.",
+        "uploading": "Hochladen...",
+        "warning": "Warnung:",
+        "withoutALicense": "Ohne Lizenz"
+      }
+    },
+    "userSelector": {
+      "texts": {
+        "choseUser": "Benutzer ausgewählt.",
+        "choseUserFromList": "Benutzer aus Liste auswählen."
+      }
+    },
+    "usersGallery": {
+      "texts": {
+        "sadlyThereSNothingToSeeHere": "Leider gibt es hier noch nichts zu sehen."
+      }
+    }
+  },
+  "dialogs": {
+    "category": {
+      "attrs": {
+        "categoryName": "Kategoriename",
+        "delete": "Löschen",
+        "hashtagName": "Hashtag-Name",
+        "priority": "Priorität"
+      },
+      "messages": {
+        "categoryHasBeenUpdated": "Kategorie wurde aktualisiert.",
+        "newCategoryHasBeenCreated": "Neue Kategorie wurde erstellt."
+      },
+      "texts": {
+        "categoryName": "Kategoriename",
+        "enterCategoryName": "Geben Sie den Kategorienamen ein.",
+        "enterHashtagName": "Geben Sie den Hashtag-Namen ein.",
+        "enterPriority": "Geben Sie die Priorität ein.",
+        "nameIsTooLong": "Der Name ist zu lang.",
+        "newHashtag": "Neuer Hashtag"
+      }
+    },
+    "changeEmail": {
+      "attrs": {
+        "email": "E-Mail"
+      },
+      "messages": {
+        "emailHasBeenChanged": "E-Mail wurde geändert."
+      },
+      "texts": {
+        "changeEmail": "E-Mail ändern",
+        "chooseOtherEmailThisOneIsAlready": "Wählen Sie eine andere E-Mail-Adresse. Diese ist bereits mit einem anderen Konto verbunden.",
+        "enterEmail": "Geben Sie Ihre E-Mail-Adresse ein.",
+        "privacyNote": "Mach dir keine Sorge. Diese Informationen sind für uns heilig. Wir werden es niemals zeigen, verkaufen oder missbrauchen.",
+        "verifyThatYouVeEnteredProperEmail": "Stellen Sie sicher, dass Sie die richtige E-Mail-Adresse eingegeben haben."
+      }
+    },
+    "changePassword": {
+      "attrs": {
+        "oldPassword": "Altes Passwort"
+      },
+      "messages": {
+        "passwordHasBeenChanged": "Das Passwort wurde geändert."
+      },
+      "texts": {
+        "changePassword": "Passwort ändern",
+        "enterPassword": "Passwort eingeben.",
+        "oldPassword": "Altes Passwort",
+        "passwordIsTooLong": "Das Passwort ist zu lang."
+      }
+    },
+    "contentWarning": {
+      "attrs": {
+        "contentWarning": "Inhaltswarnung"
+      },
+      "texts": {
+        "contentWarning": "Inhaltswarnung"
+      }
+    },
+    "createAlias": {
+      "attrs": {
+        "alias": "Alias"
+      },
+      "messages": {
+        "newAccountAliasHasBeenCreated": "Neuer Kontoalias wurde erstellt."
+      },
+      "texts": {
+        "accountAlias": "Kontoalias",
+        "accountAliasIsTooLong": "Der Kontoalias ist zu lang.",
+        "createAccountAlias": "Kontoalias erstellen",
+        "enterAccountAlias": "Geben Sie den Kontoalias ein."
+      }
+    },
+    "deleteAccount": {
+      "attrs": {
+        "email": "E-Mail"
+      },
+      "texts": {
+        "contentThatHasBeenCachedByOther": "Inhalte, die von anderen Servern zwischengespeichert wurden, bleiben möglicherweise bestehen",
+        "deleteAccount": "Konto löschen",
+        "youWillNotBeAbleToRestore": "Sie können Ihr Konto nicht wiederherstellen oder reaktivieren",
+        "yourPostsAndOtherDataWillBe": "Ihre Beiträge und andere Daten werden dauerhaft entfernt",
+        "yourUsernameWillRemainUnavailable": "Ihr Benutzername bleibt weiterhin nicht verfügbar"
+      }
+    },
+    "deleteStatus": {
+      "texts": {
+        "deleteStatus": "Status löschen?"
+      }
+    },
+    "disableTwoFactorToken": {
+      "attrs": {
+        "code": "Code"
+      },
+      "messages": {
+        "twoFactorAuthenticationDisabled": "Zwei-Faktor-Authentifizierung deaktiviert."
+      },
+      "texts": {
+        "disableTwoFactorAuthentication2fa": "Zwei-Faktor-Authentifizierung deaktivieren (2FA)"
+      }
+    },
+    "enableTwoFactorToken": {
+      "attrs": {
+        "code": "Code"
+      },
+      "messages": {
+        "twoFactorAuthenticationEnabled": "Zwei-Faktor-Authentifizierung aktiviert."
+      },
+      "texts": {
+        "backupCodes": "Backup-Codes",
+        "enableTwoFactorAuthentication2fa": "Zwei-Faktor-Authentifizierung aktivieren (2FA)",
+        "keepBackupCodes": "Bewahren Sie diese Codes auf, falls Sie nicht auf die Authentifizierungs-App zugreifen können.",
+        "scanQrCodeWith2faApplication": "Scannen Sie denQR-Code mit einer2FA-Anwendung, z. B.AuthyoderGoogle Authenticator.",
+        "tokenIsRequired": "Token ist erforderlich."
+      }
+    },
+    "errorItem": {
+      "attrs": {
+        "code": "Code",
+        "exception": "Ausnahme",
+        "message": "Nachricht"
+      },
+      "texts": {
+        "errorData": "Fehlerdaten"
+      }
+    },
+    "followingImportAccounts": {
+      "attrs": {
+        "status": "Status"
+      },
+      "texts": {
+        "followingImportAccounts": "Folgende Importkonten",
+        "notProcessed": "Nicht verarbeitet",
+        "requestSent": "Anfrage gesendet"
+      }
+    },
+    "homeCard": {
+      "attrs": {
+        "homeCardTitle": "Titel der Heimkarte",
+        "licenseDescription": "Lizenzbeschreibung",
+        "order": "Bestellen"
+      },
+      "messages": {
+        "homeCardHasBeenUpdated": "Die Heimkarte wurde aktualisiert.",
+        "newHomeCardHasBeenCreated": "Neue Heimkarte wurde erstellt."
+      },
+      "texts": {
+        "bodyIsTooLong": "Der Körper ist zu lang.",
+        "enterHomeCardBody": "Geben Sie den Hauptkartenkörper ein.",
+        "enterHomeCardOrder": "Geben Sie die Bestellung für die Heimkarte ein.",
+        "enterHomeCardTitle": "Geben Sie den Titel der Heimkarte ein.",
+        "homeCard": "Heimkarte",
+        "titleIsTooLong": "Der Titel ist zu lang."
+      }
+    },
+    "instanceBlockedDomain": {
+      "attrs": {
+        "domain": "Domain",
+        "reason": "Grund"
+      },
+      "messages": {
+        "domainHasBeenUpdated": "Die Domain wurde aktualisiert.",
+        "newDomainHasBeenCreated": "Neue Domain wurde erstellt."
+      },
+      "texts": {
+        "domainIsTooLong": "Domain ist zu lang.",
+        "enterDomain": "Domain eingeben.",
+        "instanceBlockedDomain": "Instanz blockierte Domäne",
+        "reasonIsTooLong": "Der Grund ist zu lang."
+      }
+    },
+    "instanceRule": {
+      "attrs": {
+        "order": "Reihenfolge",
+        "rule": "Regel"
+      },
+      "messages": {
+        "newRuleHasBeenCreated": "Neue Regel wurde erstellt.",
+        "ruleHasBeenUpdated": "Regel wurde aktualisiert."
+      },
+      "texts": {
+        "enterOrder": "Auftrag eingeben.",
+        "enterRule": "Regel eingeben.",
+        "instanceRule": "Instanzregel",
+        "rule": "Regel",
+        "ruleIsTooLong": "Die Regel ist zu lang."
+      }
+    },
+    "license": {
+      "attrs": {
+        "licenseCode": "Lizenzcode",
+        "licenseDescription": "Lizenzbeschreibung",
+        "licenseName": "Lizenzname",
+        "url": "URL"
+      },
+      "messages": {
+        "licenseHasBeenUpdated": "Die Lizenz wurde aktualisiert.",
+        "newLicenseHasBeenCreated": "Neue Lizenz wurde erstellt."
+      },
+      "texts": {
+        "codeIsTooLong": "Code ist zu lang.",
+        "descriptionIsTooLong": "Beschreibung ist zu lang.",
+        "enterLicenseName": "Geben Sie den Lizenznamen ein.",
+        "nameIsTooLong": "Der Name ist zu lang.",
+        "urlIsTooLong": "URL ist zu lang."
+      }
+    },
+    "moveAccount": {
+      "attrs": {
+        "account": "Konto",
+        "password": "Passwort"
+      },
+      "messages": {
+        "informationAboutNewAccountHasBeenSaved": "Informationen zum neuen Konto wurden gespeichert."
+      },
+      "texts": {
+        "afterMovingThereMayBeAWaiting": "Nach dem Umzug kann es zu einer Wartezeit kommen, bevor Sie erneut umziehen können.",
+        "enterNewAccount": "Geben Sie ein neues Konto ein.",
+        "enterPassword": "Passwort eingeben.",
+        "moveAccount": "Konto verschieben",
+        "onlyYourFollowersWillBeMovedAutomatically": "Nur Ihre Follower werden automatisch verschoben.",
+        "theNewAccountMustFirstBeConfigured": "Das neue Konto muss zunächst so konfiguriert werden, dass es auf dieses Konto als Alias ​​oder vorheriges Konto verweist.",
+        "youShouldExportYourDataBeforeContinuing": "Sie sollten Ihre Daten exportieren, bevor Sie fortfahren, insbesondere wenn Sie eine Kopie Ihres Inhalts behalten oder verfolgte Konten woanders importieren möchten.",
+        "yourCurrentAccountMayNoLongerBe": "Ihr aktuelles Konto ist nach der Migration möglicherweise nicht mehr vollständig nutzbar.",
+        "yourCurrentProfileWillBeMarkedAs": "Ihr aktuelles Profil wird als verschoben markiert und zeigt einen Weiterleitungshinweis an, der auf das neue Konto verweist.",
+        "yourPostsPhotosCommentsLikesBookmarksFollowed": "Ihre Beiträge, Fotos, Kommentare, Likes, Lesezeichen, verfolgten Konten, Sperren, Stummschaltungen und andere Kontodaten werden nicht übertragen."
+      }
+    },
+    "muteAccount": {
+      "texts": {
+        "muteAccount": "Konto stummschalten",
+        "muteEndDate": "Enddatum stummschalten",
+        "optionalDateWhenMutingWillEnd": "Optionales Datum, an dem die Stummschaltung endet."
+      }
+    },
+    "notificationSettings": {
+      "messages": {
+        "errorDuringGeneratingEncryptionKeysForWebPush": "Fehler beim Generieren von Verschlüsselungsschlüsseln für Web Push.",
+        "notificationSettingsHasBeenSaved": "Benachrichtigungseinstellungen wurden gespeichert.",
+        "unexpectedErrorDuringGeneratingWebPushSubscription": "Unerwarteter Fehler beim Generieren des Web-Push-Abonnements.",
+        "webPushNotificationsForTheWebsiteAreDisabledInTheBrowser": "Web-Push-Benachrichtigungen für die Website sind im Browser deaktiviert.",
+        "webPushPublicKeyIsNotSet": "Der öffentliche Web-Push-Schlüssel ist nicht festgelegt."
+      },
+      "texts": {
+        "boostedStatus": "Erhöhter Status",
+        "newCommentAdded": "Neuer Kommentar hinzugefügt",
+        "newFollowRequest": "Neue Folgeanfrage",
+        "newFollower": "Neuer Follower",
+        "newLike": "Neu wie",
+        "newReport": "Neuer Bericht",
+        "newUser": "Neuer Benutzer",
+        "notificationsDisabledInBrowser": "Benachrichtigungen sind in Ihrem Browser deaktiviert. Sie müssen Ihre Browsereinstellungen ändern.",
+        "notificationsSettings": "Benachrichtigungseinstellungen",
+        "statusUpdated": "Status aktualisiert",
+        "youHaveBeenMentioned": "Sie wurden erwähnt"
+      }
+    },
+    "report": {
+      "attrs": {
+        "comment": "Kommentar"
+      },
+      "categories": {
+        "abusive": "Beleidigend",
+        "copyright": "Urheberrecht",
+        "impersonation": "Identitätswechsel",
+        "scam": "Betrug",
+        "sensitive": "Empfindlich",
+        "spam": "Spam",
+        "terrorism": "Terrorismus",
+        "underage": "Minderjährig",
+        "violence": "Gewalt"
+      },
+      "texts": {
+        "forwardToRemoteAdmin": "Soll der Bericht an den Remote-Administrator weitergeleitet werden?",
+        "serverRules": "Serverregeln",
+        "tooLongComment": "Zu langer Kommentar."
+      }
+    },
+    "reportDetails": {
+      "attrs": {
+        "comment": "Kommentar"
+      },
+      "texts": {
+        "serverRules": "Serverregeln"
+      }
+    },
+    "restoreAccount": {
+      "attrs": {
+        "password": "Passwort"
+      },
+      "messages": {
+        "accountHasBeenRestored": "Das Konto wurde wiederhergestellt."
+      },
+      "texts": {
+        "enterPassword": "Passwort eingeben.",
+        "restoreAccount": "Konto wiederherstellen"
+      }
+    },
+    "shareBusinessCard": {
+      "attrs": {
+        "comment": "Kommentar",
+        "title": "Titel"
+      },
+      "texts": {
+        "enterTitle": "Titel eingeben.",
+        "shareBusinessCard": "Visitenkarte teilen",
+        "tooLongNote": "Zu lange Notiz.",
+        "tooLongTitle": "Zu langer Titel."
+      }
+    },
+    "statusEventErrorMessage": {
+      "attrs": {
+        "errorMessage": "Fehlermeldung",
+        "message": "Nachricht"
+      },
+      "texts": {
+        "errorMessage": "Fehlermeldung"
+      }
+    },
+    "statusTextTemplate": {
+      "attrs": {
+        "comment": "Kommentar",
+        "template": "Vorlage"
+      },
+      "messages": {
+        "statusTextTemplateHasBeenUpdated": "Die Statustextvorlage wurde aktualisiert."
+      },
+      "texts": {
+        "statusTextTemplate": "Statustextvorlage",
+        "tooLongTemplate": "Zu lange Vorlage."
+      }
+    },
+    "unfollowAccount": {
+      "texts": {
+        "unfollowAccount": "Konto nicht mehr folgen"
+      }
+    },
+    "updateSharedBusinessCard": {
+      "attrs": {
+        "yourEmail": "Ihre E-Mail",
+        "yourName": "Dein Name"
+      },
+      "texts": {
+        "enterYourName": "Geben Sie Ihren Namen ein.",
+        "shareYourPersonalInfo": "Teilen Sie Ihre persönlichen Daten",
+        "tooLongEmail": "Zu lange E-Mail.",
+        "tooLongName": "Zu langer Name.",
+        "verifyThatYouVeEnteredProperEmail": "Stellen Sie sicher, dass Sie die richtige E-Mail-Adresse eingegeben haben.",
+        "yourEmail": "Ihre E-Mail",
+        "yourName": "Dein Name"
+      }
+    },
+    "userBlockedDomain": {
+      "attrs": {
+        "domain": "Domain",
+        "reason": "Grund"
+      },
+      "messages": {
+        "blockedDomainHasBeenUpdated": "Die blockierte Domain wurde aktualisiert.",
+        "domainHasBeenBlocked": "Domain wurde blockiert."
+      },
+      "texts": {
+        "blockDomain": "Domain blockieren",
+        "blockDomainLegend": "Benutzer aus dieser Domain können Ihnen nicht folgen. Ihre Beiträge werden nicht in Ihrer lokalen Chronik angezeigt und Ihre Beiträge werden ihnen nicht direkt zugestellt. Allerdings können sie Ihre Beiträge weiterhin sehen, wenn ein Dritter, dem sie folgen, sie fördert.",
+        "domainIsTooLong": "Domain ist zu lang.",
+        "enterDomain": "Domain eingeben.",
+        "reasonIsTooLong": "Der Grund ist zu lang."
+      }
+    },
+    "userBlockedUser": {
+      "attrs": {
+        "email": "E-Mail"
+      },
+      "texts": {
+        "blockUser": "Benutzer blockieren",
+        "reasonIsTooLong": "Der Grund ist zu lang."
+      }
+    },
+    "userRoles": {
+      "messages": {
+        "roleHasBeenConnected": "Rolle wurde verbunden.",
+        "roleHasBeenDisconnected": "Die Rolle wurde getrennt."
+      },
+      "texts": {
+        "userRoles": "Benutzerrollen"
+      }
+    },
+    "users": {
+      "texts": {
+        "sadlyThereAreNoUsersToDisplay": "Leider sind noch keine Benutzer zum Anzeigen vorhanden."
+      }
+    }
+  },
+  "errors": {
+    "account": {
+      "emailIsAlreadyConfirmed": "E-Mail ist bereits bestätigt.",
+      "userNameIsRequired": "Benutzername ist erforderlich.",
+      "userHaveToBeAuthenticated": "Der Benutzer muss authentifiziert sein.",
+      "userIsNotSupporter": "Der Benutzer ist kein Unterstützer."
+    },
+    "accountMigration": {
+      "targetAccountNotFound": "Zielkonto kann nicht gefunden werden.",
+      "cannotMoveToTheSameAccount": "Das Zielkonto darf nicht mit dem Quellkonto identisch sein.",
+      "targetAccountIsNotAlias": "Das Zielkonto ist kein Alias ​​dieses Kontos.",
+      "onlyLocalAccountsCanBeMoved": "Es können nur lokale Konten verschoben werden."
+    },
+    "actionsForbidden": {
+      "localTimelineForbidden": "Der Zugriff auf die lokale Zeitleiste ist verboten.",
+      "trendingForbidden": "Der Zugriff auf Trends ist verboten.",
+      "editorsStatusesChoiceForbidden": "Der Zugriff auf die Statusauswahl des Herausgebers ist verboten.",
+      "editorsUsersChoiceForbidden": "Der Zugriff auf die Benutzerauswahl des Herausgebers ist verboten.",
+      "hashtagsForbidden": "Der Zugriff auf Hashtags ist verboten.",
+      "categoriesForbidden": "Der Zugriff auf Kategorien ist verboten."
+    },
+    "activityPub": {
+      "missingSignatureHeader": "Der ActivityPub-Anfrage- 'Signature' -Header fehlt.",
+      "missingSignedHeadersList": "Die Liste der signierten Header aus der ActivityPub-Anfrage kann nicht gelesen werden.",
+      "missingSignatureInHeader": "Die Signatur im Header der ActivityPub-Anfrage kann nicht gelesen werden.",
+      "missingKeyIdInHeader": "keyId kann nicht aus dem Signaturheader in der ActivityPub-Anfrage gelesen werden.",
+      "missingActivityPubProfileInKeyId": "Das Schauspielerprofil konnte in keyId {{keyIdValue}} nicht gefunden werden.",
+      "missingSignedHeader": "Der Header '{{headerName}}', der zum Erstellen der Signatur in der ActivityPub-Anfrage verwendet wurde, wurde nicht gefunden.",
+      "signatureIsNotValid": "Die ActivityPub-Anforderungssignatur ist ungültig.",
+      "userNameIsRequired": "Benutzername ist erforderlich.",
+      "statusIdIsRequired": "Status-ID ist erforderlich.",
+      "incorrectStatusIdFormat": "Die Status-ID '{{statusId}}' hat nicht das richtige Format.",
+      "userNotExistsInDatabase": "Der Benutzer '{{activityPubProfile}}' wurde in der lokalen Datenbank nicht gefunden.",
+      "privateKeyNotExists": "Der private Schlüssel für Benutzer '{{activityPubProfile}}' wurde in der lokalen Datenbank nicht gefunden.",
+      "publicKeyNotExists": "Der öffentliche Schlüssel für Benutzer '{{activityPubProfile}}' wurde in der lokalen Datenbank nicht gefunden.",
+      "signatureDataNotCreated": "Signature-Daten können nicht basierend auf Headern aus der Anfrage erstellt werden.",
+      "missingDateHeader": "Bei der ActivityPub-Anfrage fehlt der 'Date' -Header.",
+      "incorrectDateFormat": "Falsches Datumsformat in der ActivityPub-Anfrage: {{date}}.",
+      "badTimeWindow": "Das Datum der signierten ActivityPub-Anfrage '{{date}}' liegt außerhalb des zulässigen Zeitfensters.",
+      "followTypeNotSupported": "Following-Objekttyp: {{type}} wird nicht unterstützt.",
+      "acceptTypeNotSupported": "Accepting-Objekttyp: {{type}} wird nicht unterstützt.",
+      "rejectTypeNotSupported": "Rejecting-Objekttyp: {{type}} wird nicht unterstützt.",
+      "algorithmNotSupported": "Algorithmus: {{type}} wird nicht unterstützt.",
+      "algorithmNotSpecified": "Der Algorithmus ist nicht angegeben.",
+      "missingUserInboxUrl": "Der Benutzer-Posteingang für Benutzer '{{activityPubProfile}}' fehlt in der lokalen Datenbank.",
+      "missingSharedInboxUrl": "Der geteilte Posteingang für Benutzer '{{activityPubProfile}}' fehlt in der lokalen Datenbank.",
+      "statusHasNotBeenDownloaded": "Der heruntergeladene Status ist leer: {{statusActivityPubUrl}}. Fehler: {{errorDescription}}",
+      "statusCannotBeProcessed": "Heruntergeladener Status kann nicht verarbeitet werden: {{statusActivityPubUrl}}. Fehler: {{errorDescription}}",
+      "missingSupportedImageAttachments": "Der heruntergeladene Status enthält keine Bildanhänge: {{statusActivityPubUrl}}.",
+      "actorNotDownloaded": "Fehler beim Herunterladen des Akteurs vom Remote-Server: {{statusActivityPubUrl}}.",
+      "invalidNoteUrl": "Ungültiger URL für Status: {{statusActivityPubUrl}}.",
+      "entityCaseError": "Die Umwandlung in '{{entityName}}' ist fehlgeschlagen.",
+      "missingInstanceAdminAccount": "Fehlendes Administratorkonto in der lokalen Instanz.",
+      "missingInstanceAdminPrivateKey": "Fehlender privater Schlüssel für das Administratorkonto in der lokalen Instanz.",
+      "unrecognizedActivityPubProfileUrl": "Unbekanntes ActivityPub-Profil URL.",
+      "domainIsBlockedByInstance": "Die Domain des Benutzers '{{activityPubProfile}}' wird von der Instanz blockiert.",
+      "actorIsBlockedByInstance": "Der Akteur '{{activityPubProfile}}' wird von der Instanz blockiert.",
+      "signatureActorDoesNotMatchPayloadActor": "Der Signatur-Akteur '{{signatureActor}}' stimmt nicht mit dem Payload-Akteur '{{payloadActor}}' überein."
+    },
+    "archives": {
+      "requestWaitingForProcessing": "Es liegt bereits eine Anfrage vor, die auf Bearbeitung wartet.",
+      "processedRequestsAlreadyExist": "Die verarbeitete Anfrage ist bereits vorhanden.",
+      "missingEmail": "Fehlende Benutzer-E-Mail.",
+      "missingFileName": "Fehlender Archivdateiname."
+    },
+    "article": {
+      "incorrectArticleId": "Falsche Artikel-ID.",
+      "incorrectArticleFileId": "Falsche Artikeldatei-ID.",
+      "missingFile": "Die Datei fehlt.",
+      "imageTooLarge": "Bild ist zu groß.",
+      "fileTypeNotSupported": "Der Dateityp wird nicht unterstützt.",
+      "fileConnectedWithDifferentArticle": "Die Datei ist mit einem anderen Artikel verknüpft."
+    },
+    "atom": {
+      "userNameIsRequired": "Benutzername ist erforderlich.",
+      "categoryNameIsRequired": "Kategoriename ist erforderlich.",
+      "hashtagNameIsRequired": "Hashtag-Name ist erforderlich."
+    },
+    "attachment": {
+      "missingImage": "Das Bild ist der Anfrage nicht beigefügt.",
+      "createResizedImageFailed": "Bild zur Größenänderung kann nicht erstellt werden.",
+      "imageRotationFailed": "Bild kann nicht gedreht werden.",
+      "imageResizeFailed": "Die Bildgröße kann nicht geändert werden.",
+      "attachmentAlreadyConnectedToStatus": "Anhang ist bereits mit dem Status verbunden.",
+      "imageTooLarge": "Die Bilddatei ist zu groß.",
+      "onlyAvifHdrFilesAreSupported": "Es werden nur AVIF HDR-Dateien unterstützt.",
+      "emailNotVerified": "Die E-Mail-Adresse des Benutzers wurde nicht überprüft.",
+      "attachmentIdIsRequired": "Anhang-ID ist erforderlich.",
+      "incorrectRequestFormat": "Falsches Anfrageformat."
+    },
+    "authClient": {
+      "authClientWithUriExists": "Der Authentifizierungsclient mit der angegebenen URI ist bereits vorhanden.",
+      "incorrectAuthClientId": "Die Authentifizierungs-Client-ID ist falsch."
+    },
+    "avatar": {
+      "missingImage": "Das Bild ist der Anfrage nicht beigefügt.",
+      "notFound": "Der Benutzer hat keinen Avatar.",
+      "createResizedImageFailed": "Bild zur Größenänderung kann nicht erstellt werden.",
+      "resizedImageFailed": "Die Bildgröße kann nicht geändert werden.",
+      "userNameIsRequired": "Benutzername ist erforderlich."
+    },
+    "businessCard": {
+      "businessCardAlreadyExists": "Visitenkarte existiert bereits."
+    },
+    "category": {
+      "categoryExists": "Kategorie existiert bereits.",
+      "incorrectCategoryId": "Falsche Kategorie-ID.",
+      "categoryCannotBeDeletedBecauseItIsInUse": "Die Kategorie kann nicht gelöscht werden, da sie verwendet wird."
+    },
+    "changePassword": {
+      "userNotFound": "Der signierte Benutzer wurde in der Datenbank nicht gefunden.",
+      "invalidOldPassword": "Das angegebene alte Passwort ist ungültig.",
+      "userAccountIsBlocked": "Benutzerkonto ist gesperrt. Der Benutzer kann sich derzeit nicht am System anmelden.",
+      "emailNotConfirmed": "Die E-Mail-Adresse des Benutzers wurde nicht bestätigt. Der Benutzer muss zuerst seine E-Mail bestätigen.",
+      "saltCorrupted": "Das Passwort wurde beschädigt. Bitte wenden Sie sich an den Portaladministrator."
+    },
+    "confirmEmail": {
+      "invalidIdOrToken": "Ungültige Benutzer-ID oder ungültiges Token. E-Mail kann nicht genehmigt werden."
+    },
+    "crypto": {
+      "privateKeyNotGenerated": "Der kryptografische private Schlüssel wurde nicht generiert.",
+      "publicKeyNotGenerated": "Der kryptografische öffentliche Schlüssel wurde nicht generiert.",
+      "externalPrivateKeyNotGenerated": "Der kryptografische externe private Schlüssel wurde nicht generiert.",
+      "externalPublicKeyNotGenerated": "Der kryptografische externe öffentliche Schlüssel wurde nicht generiert.",
+      "base64PrivateKeyNotGenerated": "Der kryptografische private Base64-Schlüssel wurde nicht generiert.",
+      "base64PublicKeyNotGenerated": "Der öffentliche kryptografische Base64-Schlüssel wurde nicht generiert."
+    },
+    "entityForbidden": {
+      "userForbidden": "Der Zugriff auf den angegebenen Benutzer ist verboten.",
+      "refreshTokenForbidden": "Der Zugriff auf das angegebene Aktualisierungstoken ist verboten.",
+      "attachmentForbidden": "Der Zugriff auf den Anhang ist verboten.",
+      "statusForbidden": "Der Zugriff auf den angegebenen Status ist verboten.",
+      "userDomainBlockedForbidden": "Der Zugriff auf den angegebenen Benutzerdomänenblock ist verboten."
+    },
+    "entityNotFound": {
+      "userNotFound": "Benutzer existiert nicht.",
+      "refreshTokenNotFound": "Aktualisierungstoken existiert nicht.",
+      "roleNotFound": "Rolle existiert nicht.",
+      "authClientNotFound": "Der Authentifizierungsclient ist nicht vorhanden.",
+      "attachmentNotFound": "Anhang existiert nicht.",
+      "statusNotFound": "Status existiert nicht.",
+      "notificationNotFound": "Benachrichtigung existiert nicht.",
+      "licenseNotFound": "Lizenz existiert nicht.",
+      "homeCardNotFound": "Heimatkarte existiert nicht.",
+      "locationNotFound": "Standort existiert nicht.",
+      "invitationNotFound": "Einladung existiert nicht.",
+      "reportNotFound": "Bericht existiert nicht.",
+      "twoFactorTokenNotFound": "Zwei-Faktor-Token existiert nicht.",
+      "instanceBlockedDomainNotFound": "Die blockierte Instanzdomäne ist nicht vorhanden.",
+      "userBlockedDomainNotFound": "Vom Benutzer blockierte Domäne existiert nicht.",
+      "pushSubscriptionNotFound": "Push-Abonnement existiert nicht.",
+      "ruleNotFound": "Regel existiert nicht.",
+      "errorItemNotFound": "Fehlerelement existiert nicht.",
+      "userAliasNotFound": "Benutzeralias existiert nicht.",
+      "archiveNotFound": "Archiv existiert nicht.",
+      "userSettingNotFound": "Benutzereinstellung existiert nicht.",
+      "categoryNotFound": "Kategorie existiert nicht.",
+      "followingImportNotFound": "Following-Import existiert nicht.",
+      "articleNotFound": "Artikel existiert nicht.",
+      "articleFileInfoNotFound": "Artikeldatei existiert nicht.",
+      "businessCardNotFound": "Visitenkarte existiert nicht.",
+      "sharedBusinessCardNotFound": "Die freigegebene Visitenkarte ist nicht vorhanden.",
+      "statusActivityPubEventNotFound": "Status-ActivityPub-Ereignis nicht vorhanden."
+    },
+    "errorItem": {
+      "incorrectErrorItemId": "Die Fehlerelement-ID ist falsch."
+    },
+    "exports": {
+      "cannotConvertToData": "Einladung kann nicht in Daten umgewandelt werden."
+    },
+    "followImports": {
+      "missingFile": "Fehlende Datei mit Konten.",
+      "emptyFile": "Die Datei mit den Konten ist leer.",
+      "accountNotFound": "Konto nicht gefunden."
+    },
+    "followRequest": {
+      "missingFollowEntity": "Die Follow-Entität (sourceUserId: '{{sourceUserId}}', targetUserId: '{{targetUserId}}') existiert nicht in der lokalen Datenbank.",
+      "missingSourceUser": "Der Quellbenutzer '{{userId}}' fehlt in der Datenbank.",
+      "missingTargetUser": "Der Zielbenutzer '{{userId}}' fehlt in der Datenbank.",
+      "missingActivityPubActionId": "DieActivity Pub-Aktions-ID in der Folgeanforderung fehlt.",
+      "missingPrivateKey": "Der private Schlüssel für den Benutzer {{userName}} ist in der lokalen Datenbank nicht vorhanden.",
+      "accountHasBeenMoved": "Das Zielkonto wurde verschoben und kann keine neuen Follower akzeptieren.",
+      "incorrectId": "Falsche ID in der Folgeanfrage."
+    },
+    "forgotPassword": {
+      "userAccountIsBlocked": "Benutzerkonto ist gesperrt. Sie können das Passwort derzeit nicht ändern.",
+      "tokenNotGenerated": "Der Token zum Zurücksetzen des Passworts wurde nicht erzeugt. Das ist ungewöhnlich.",
+      "tokenExpired": "Token, mit dem das Passwort geändert werden kann, ist abgelaufen. Der Benutzer muss den Vorgang „Passwort vergessen“ wiederholen.",
+      "passwordNotHashed": "Das Passwort wurde nicht erfolgreich gehasht.",
+      "saltCorrupted": "Das Passwort wurde beschädigt. Bitte wenden Sie sich an den Portaladministrator.",
+      "emailIsEmpty": "Die E-Mail-Adresse des Benutzers ist leer. E-Mail mit Token kann nicht gesendet werden."
+    },
+    "hashtag": {
+      "hashtagNameIsRequired": "Hashtag-Name ist erforderlich.",
+      "hashtagNameIsTooLong": "Hashtag-Name ist zu lang."
+    },
+    "header": {
+      "missingImage": "Das Bild ist der Anfrage nicht beigefügt.",
+      "notFound": "Der Benutzer hat keinen Header.",
+      "createResizedImageFailed": "Bild zur Größenänderung kann nicht erstellt werden.",
+      "resizedImageFailed": "Die Bildgröße kann nicht geändert werden.",
+      "userNameIsRqeired": "Benutzername ist erforderlich."
+    },
+    "homeCard": {
+      "incorrectHomeCardId": "Die ID der Home-Karte ist falsch."
+    },
+    "instanceBlockedDomain": {
+      "incorrectId": "Falsche ID."
+    },
+    "invitation": {
+      "maximumNumberOfInvitationsGenerated": "Die maximale Anzahl an Einladungen wurde bereits generiert.",
+      "cannotDeleteUsedInvitation": "Eine bereits verwendete Einladung kann nicht gelöscht werden.",
+      "invalidId": "Ungültige Einladungs-ID."
+    },
+    "license": {
+      "incorrectLicenseId": "Die Lizenz-ID ist falsch.",
+      "licenseAlreadyInUse": "Die Lizenz wird bereits verwendet."
+    },
+    "location": {
+      "incorrectLocationId": "Die Standort-ID ist falsch.",
+      "queryIsRequired": "Abfrage ist erforderlich."
+    },
+    "login": {
+      "invalidLoginCredentials": "Der angegebene Benutzername oder das angegebene Passwort sind ungültig.",
+      "userAccountIsBlocked": "Benutzerkonto ist gesperrt. Der Benutzer kann sich derzeit nicht am System anmelden.",
+      "userAccountIsNotApproved": "Das Benutzerkonto ist noch nicht genehmigt. Der Benutzer kann sich derzeit nicht am System anmelden.",
+      "saltCorrupted": "Das Passwort wurde beschädigt. Bitte wenden Sie sich an den Portaladministrator.",
+      "twoFactorTokenNotFound": "Es ist ein Token für die Zwei-Faktor-Authentifizierung erforderlich.",
+      "loginAttemptsExceeded": "Zu viele fehlgeschlagene Anmeldungen. Bitte versuchen Sie es in 5 Minuten erneut."
+    },
+    "notification": {
+      "incorrectId": "Falsche ID."
+    },
+    "openAI": {
+      "incorrectOpenAIUrl": "Falsche OpenAI-URL.",
+      "cannotChangeResponseToString": "Die Antwort auf die Zeichenfolge kann nicht geändert werden.",
+      "incorrectJsonFormat": "Falsches JSON-Format.",
+      "openAIIsNotEnabled": "OpenAI ist nicht aktiviert.",
+      "openAIIsNotConfigured": "OpenAI ist nicht konfiguriert. {{message}}"
+    },
+    "openidConnect": {
+      "invalidClientName": "Der Clientname muss im URL angegeben werden.",
+      "clientNotFound": "Der Kunde mit dem angegebenen Namen wurde nicht gefunden.",
+      "codeTokenNotFound": "Code-Token wurde nicht gefunden.",
+      "invalidAuthenticateToken": "Das Authentifizierungstoken ist ungültig.",
+      "authenticateTokenExpirationDateNotFound": "Das Authentifizierungstoken hat kein Ablaufdatum.",
+      "autheticateTokenExpired": "Authentifizierungstoken ist abgelaufen.",
+      "userAccountIsBlocked": "Benutzerkonto ist gesperrt. Der Benutzer kann sich derzeit nicht am System anmelden."
+    },
+    "pushSubscription": {
+      "incorrectPushSubscriptionId": "Die Push-Abonnement-ID ist falsch."
+    },
+    "quickCaptcha": {
+      "keyLengthIsIncorrect": "Die Schlüssellänge ist falsch und sollte 16 Zeichen betragen."
+    },
+    "refreshToken": {
+      "refreshTokenNotExists": "Das Aktualisierungstoken existiert nicht oder ist abgelaufen.",
+      "userIdNotSpecified": "Für das Aktualisierungstoken muss eine Benutzer-ID angegeben werden.",
+      "refreshTokenRevoked": "Das Aktualisierungstoken wurde widerrufen.",
+      "refreshTokenExpired": "Das Aktualisierungstoken ist abgelaufen."
+    },
+    "register": {
+      "securityTokenIsMandatory": "Sicherheitstoken (Captcha) ist obligatorisch.",
+      "securityTokenIsInvalid": "Sicherheitstoken (Captcha) ist ungültig.",
+      "userNameIsAlreadyTaken": "Der Benutzer mit dem angegebenen Benutzernamen ist bereits im System vorhanden.",
+      "userIdNotExists": "Benutzer-ID existiert nicht. Wahrscheinlich ist das Speichern der Benutzerentität fehlgeschlagen.",
+      "emailIsAlreadyConnected": "E-Mail ist bereits mit einem anderen Konto verknüpft.",
+      "registrationIsDisabled": "Die Registrierung ist deaktiviert.",
+      "missingEmail": "E-Mail wurde nicht angegeben, ist aber obligatorisch.",
+      "missingEmailConfirmationGuid": "E-Mail-Bestätigungsleitfaden wurde nicht generiert.",
+      "userHaveToAcceptAgreement": "Der Benutzer muss die Vereinbarung akzeptieren.",
+      "reasonIsMandatory": "Der Grund ist zwingend erforderlich, wenn nur die Registrierung durch Genehmigung aktiviert ist.",
+      "invitationTokenIsInvalid": "Das Einladungstoken ist ungültig.",
+      "invitationTokenHasBeenUsed": "Einladungstoken wurde verwendet.",
+      "disposableEmailCannotBeUsed": "Einweg-E-Mails können nicht verwendet werden.",
+      "userNameIsRequired": "Benutzername ist erforderlich.",
+      "emailIsRequired": "E-Mail ist erforderlich."
+    },
+    "report": {
+      "incorrectId": "Falsche ID."
+    },
+    "role": {
+      "incorrectRoleId": "Rollen-ID ist falsch."
+    },
+    "rss": {
+      "userNameIsRequired": "Benutzername ist erforderlich.",
+      "categoryNameIsRequired": "Kategoriename ist erforderlich.",
+      "hashtagNameIsRequired": "Hashtag-Name ist erforderlich."
+    },
+    "rule": {
+      "incorrectRuleId": "Die Regel-ID ist falsch."
+    },
+    "search": {
+      "queryIsRequired": "Abfrage ist erforderlich."
+    },
+    "setting": {
+      "incorrectSettingId": "Die Einstellungs-ID ist falsch.",
+      "settingsKeyCannotBeChanged": "Der Einstellungsschlüssel kann nicht geändert werden."
+    },
+    "sharedBusinessCard": {
+      "incorrectSharedBusinessCardId": "Falsche geteilte Visitenkarten-ID.",
+      "incorrectCode": "Falscher Code.",
+      "businessCardNotFound": "Visitenkarte nicht gefunden.",
+      "missingEmail": "Fehlende E-Mail."
+    },
+    "statusActivityPubEvent": {
+      "sortColumnNotSupported": "Sortierspalte wird nicht unterstützt.",
+      "incorrectStatusEventId": "Falsche Statusereignis-ID."
+    },
+    "status": {
+      "incorrectStatusId": "Die Status-ID ist falsch.",
+      "attachmentsAreRequired": "Anhänge fehlen.",
+      "incorrectAttachmentId": "Falsche Anhang-ID.",
+      "emailNotVerified": "Die E-Mail-Adresse des Benutzers wurde nicht überprüft.",
+      "accountHasBeenMoved": "Das Konto wurde verschoben und kann keine neuen Status erstellen.",
+      "cannotReblogMentionedStatus": "Der Status kann mit der genannten Sichtbarkeit nicht erneut gebloggt werden.",
+      "cannotReblogComments": "Kommentare können nicht rebloggt werden.",
+      "cannotAddCommentWithoutCommentedStatus": "Ohne Kommentarstatus kann kein Kommentar hinzugefügt werden.",
+      "cannotDeleteStatus": "Beim Löschen des Status ist ein Fehler aufgetreten.",
+      "cannotUpdateOtherUserStatus": "Der Status anderer Benutzer kann nicht aktualisiert werden.",
+      "cannotPinNonPublicStatus": "Der nichtöffentliche Status kann nicht angeheftet werden.",
+      "cannotPinComment": "Kommentare können nicht angeheftet werden.",
+      "cannotPinReblog": "Reblogs können nicht angeheftet werden.",
+      "sortColumnNotSupported": "Sortierspalte wird nicht unterstützt.",
+      "incorrectStatusEventId": "Falsche Statusereignis-ID.",
+      "maxLimitOfAttachmentsExceeded": "Maximale Anzahl an Anhängen überschritten",
+      "statusCreationTooFrequent": "Neuer Status kann noch nicht erstellt werden. Bitte warten Sie {{waitSeconds}} Sekunden, bevor Sie einen weiteren hinzufügen."
+    },
+    "storage": {
+      "downloadRemoteResourceFailed": "Es handelt sich um einen Fehler, der vom Remote-Instanzserver zurückgegeben wurde.",
+      "notSupportedStorage": "Das Speichersystem wird noch nicht unterstützt.",
+      "emptyBody": "Das externe System hat einen leeren Text zurückgegeben.",
+      "emptyPublicFolderPath": "Der Name des öffentlichen Ordners wurde nicht angegeben.",
+      "unknownError": "Die Antwort enthält keine Informationen zum Anforderungsstatus.",
+      "s3StorageNotConfigured": "Der S3-Objektspeicher ist nicht konfiguriert.",
+      "fileReadError": "Die Datei '{{fileName}}' kann nicht aus dem Speicher gelesen werden."
+    },
+    "temporaryFile": {
+      "temporaryUrlFailed": "Temporäres URL kann nicht erstellt werden.",
+      "notImplemented": "Nicht implementiert."
+    },
+    "timeline": {
+      "categoryNameIsRequired": "Kategoriename ist erforderlich.",
+      "hashtagNameIsRequired": "Hashtag-Name ist erforderlich."
+    },
+    "towFactorTokens": {
+      "cannotEncodeKey": "Schlüssel für Base32-Daten kann nicht codiert werden.",
+      "headerNotExists": "Header X-Auth-2FA mit Code existiert nicht.",
+      "tokenNotValid": "Token ist ungültig."
+    },
+    "userAlias": {
+      "incorrectUserAliasId": "Die Benutzeralias-ID ist falsch.",
+      "userAliasAlreadyExist": "Benutzeralias existiert bereits.",
+      "cannotVerifyRemoteAccount": "Das Remote-Konto kann nicht überprüft werden."
+    },
+    "userBlockedDomain": {
+      "incorrectId": "Falsche ID."
+    },
+    "user": {
+      "userAlreadyApproved": "Das Benutzerkonto ist bereits genehmigt.",
+      "sortColumnNotSupported": "Sortierspalte wird nicht unterstützt.",
+      "userNameIsRequired": "Benutzername ist erforderlich.",
+      "roleIsRequired": "Benutzerrolle ist erforderlich."
+    },
+    "userSetting": {
+      "keyIsRequired": "Schlüssel ist erforderlich."
+    },
+    "xsrfValidation": {
+      "xsrfTokenNotExistsInHeader": "XSRF-Token (X-XSRF-TOKEN) ist im Anforderungsheader nicht vorhanden.",
+      "xsrfTokenNotExistsInCookie": "Das XSRF-Token (xsrf-token) ist im Cookie nicht vorhanden.",
+      "xsrfTokensAreDifferent": "XSRF-Token unterscheiden sich im Cookie und im Header."
+    }
+  },
+  "pages": {
+    "account": {
+      "avatar": {
+        "removeAriaLabel": "Avatar entfernen",
+        "subtitle": "PNG,GIFoderJPG. Höchstens{{maxPictureFileSize}}. Wird auf 600 x 600 Pixel verkleinert"
+      },
+      "blockedDomains": {
+        "description": "Liste der von Ihnen blockierten Domains. Benutzer aus diesen Domains können Ihnen nicht folgen. Ihre Beiträge werden nicht in Ihrer lokalen Chronik angezeigt und Ihre Beiträge werden ihnen nicht direkt zugestellt. Allerdings können sie Ihre Beiträge weiterhin sehen, wenn ein Dritter, dem sie folgen, sie fördert.",
+        "title": "Blockierte Domänen"
+      },
+      "changeEmail": {
+        "changeEmail": "E-Mail ändern",
+        "changeEmailAriaLabel": "E-Mail ändern",
+        "currentEmailPrefix": "Ihre aktuelle E-Mail:",
+        "notConfirmed": "nicht bestätigt",
+        "resendConfirmationEmail": "Bestätigungs-E-Mail erneut senden",
+        "resendConfirmationEmailAriaLabel": "Bestätigungs-E-Mail erneut senden",
+        "title": "E-Mail ändern"
+      },
+      "changePassword": {
+        "changePassword": "Passwort ändern",
+        "changePasswordAriaLabel": "Passwort ändern",
+        "description": "Legen Sie ein sicheres Passwort fest und verwenden Sie es nicht für andere Konten wieder.",
+        "title": "Passwort ändern"
+      },
+      "confirmations": {
+        "deleteBlockedDomain": "Möchten Sie die blockierte Domain löschen?",
+        "deleteUserAccountAlias": "Möchten Sie den Alias ​​des Benutzerkontos löschen?"
+      },
+      "deleteAccount": {
+        "deleteAccount": "Konto löschen",
+        "deleteAccountAriaLabel": "Konto löschen",
+        "description": "Sie können Ihr Konto löschen. Dieser Vorgang kann nicht rückgängig gemacht werden. Beachten Sie, dass Sie Ihr Konto nicht reaktivieren oder die von Ihnen hinzugefügten Inhalte oder Informationen nicht mehr abrufen können.",
+        "title": "Konto löschen"
+      },
+      "export": {
+        "description": "Sie können ein Archiv mit Ihren Beiträgen und hochgeladenen Medien anfordern. Die exportierten Daten werden imActivityPub-Format bereitgestellt, um die Kompatibilität mit jeder kompatiblen Software sicherzustellen. Archive können alle 30 Tage einmal angefordert werden. Archive werden einmal täglich erstellt und Sie werden per E-Mail benachrichtigt, sobald Ihr Archiv fertig ist.",
+        "downloadDataFiles": {
+          "description": "Einige der Daten aus dem System können direkt heruntergeladen werden, ohne auf die Erstellung des Archivs warten zu müssen. Die Dateien werden im Textformat (CSV) erstellt und können auch zum Import in andere Instanzen verwendet werden.",
+          "items": {
+            "follows": "Folgt"
+          },
+          "title": "Datendateien herunterladen"
+        },
+        "requestArchive": "Archiv anfordern",
+        "requestArchiveAriaLabel": "Archiv anfordern",
+        "table": {
+          "downloadYourArchive": "Laden Sie Ihr Archiv herunter",
+          "endProcessingDate": "Endbearbeitungsdatum",
+          "requestDate": "Datum anfordern",
+          "startProcessingDate": "Beginn der Bearbeitung"
+        },
+        "title": "Exportieren"
+      },
+      "header": {
+        "removeAriaLabel": "Kopfzeile entfernen",
+        "subtitle": "PNG,GIFoderJPG. Höchstens{{maxPictureFileSize}}. Wird auf 1500 x 500 Pixel verkleinert"
+      },
+      "import": {
+        "description": "Sie können Daten importieren, die zuvor von einem anderen Server exportiert wurden, beispielsweise eine Liste der Konten, denen Sie folgen. Importierte Konten werden mit denen zusammengeführt, denen Sie bereits folgen. Derzeit werden nurCSV-Dateien unterstützt. Die maximale Dateigröße beträgt{{maxImportFileSize}}.",
+        "importAriaLabel": "Importieren",
+        "table": {
+          "endProcessingDate": "Endbearbeitungsdatum",
+          "showAccounts": "Konten anzeigen",
+          "showAccountsAriaLabel": "Konten anzeigen",
+          "startProcessingDate": "Beginn der Bearbeitung"
+        },
+        "title": "Importieren"
+      },
+      "messages": {
+        "accountAliasDeleted": "Der Kontoalias wurde gelöscht.",
+        "accountDetailsSaved": "Die Kontodaten wurden erfolgreich gespeichert.",
+        "archiveRequested": "Archiv wurde angefordert.",
+        "avatarDeleted": "Avatar wurde gelöscht.",
+        "avatarSaved": "Avatar wurde gespeichert.",
+        "blockedDomainDeleted": "Gesperrte Domain wurde gelöscht.",
+        "cannotReadUserNameFromToken": "Benutzername kann nicht vom Token gelesen werden.",
+        "confirmationEmailSent": "Die E-Mail wurde gesendet und sollte in Kürze in Ihrem Posteingang eintreffen.",
+        "errorDuringDownloadingAccountData": "Fehler beim Herunterladen der Kontodaten.",
+        "headerDeleted": "Kopfzeile wurde gelöscht.",
+        "headerSaved": "Kopfzeile wurde gespeichert.",
+        "importFileTooLarge": "Die hochgeladene Datei ist zu groß. Die maximale Größe ist{{maxImportFileSize}}.",
+        "supporterFlagDisabled": "Die Unterstützerflagge wurde deaktiviert.",
+        "supporterFlagEnabled": "Die Unterstützerflagge wurde aktiviert.",
+        "verificationCodeCopied": "Der Bestätigungscode wurde in die Zwischenablage kopiert."
+      },
+      "moveFromDifferentAccount": {
+        "createAlias": "Alias erstellen",
+        "createAliasAriaLabel": "Alias erstellen",
+        "description": "Wenn Sie von einem anderen Konto zu diesem wechseln möchten, können Sie hier einen Alias erstellen, der erforderlich ist, bevor Sie mit dem Verschieben von Followern vom alten Konto zu diesem fortfahren können. Diese Aktion an sich ist harmlos und reversibel. Die Kontomigration wird vom alten Konto initiiert.",
+        "title": "Umzug von einem anderen Konto"
+      },
+      "moveToDifferentAccount": {
+        "descriptionOne": "Verschieben Sie Ihr Konto auf einen anderen Server und benachrichtigen Sie Ihre Follower über den neuen Standort. Wenn ihre Server die Kontomigration unterstützen, werden sie automatisch weitergeleitet, um Ihrem neuen Konto zu folgen.",
+        "descriptionTwo": "Nur Follower werden automatisch verschoben. Ihre Beiträge, Medien, Follower, Blockierungen, Lesezeichen und andere Kontodaten werden nicht übertragen.",
+        "migrateAccount": "Konto migrieren",
+        "migrateAccountAriaLabel": "Konto migrieren",
+        "movedToPrefix": "Das Konto, zu dem Sie wechseln, ist unter verfügbar",
+        "restoreAccount": "Konto wiederherstellen",
+        "restoreAccountAriaLabel": "Konto wiederherstellen",
+        "title": "Wechsel zu einem anderen Konto"
+      },
+      "personalInformation": {
+        "errors": {
+          "bioTooLong": "Zu lange Biografie.",
+          "keyTooLong": "Zu langer Schlüssel.",
+          "nameTooLong": "Zu langer Name.",
+          "valueTooLong": "Zu langer Wert."
+        },
+        "language": {
+          "english": "Englisch (English)",
+          "finnish": "Finnisch (suomi)",
+          "french": "Französisch (français)",
+          "german": "Deutsch (Deutsch)",
+          "italian": "Italienisch (italiano)",
+          "norwegian": "Norwegisch (norsk)",
+          "polish": "Polnisch (polski)",
+          "spanish": "Spanisch (español)",
+          "swedish": "Schwedisch (svenska)"
+        },
+        "title": "Ihre persönlichen Daten"
+      },
+      "privacy": {
+        "includeProfilePageInSearchEngines": {
+          "hint": "Ermöglichen Sie die Anzeige Ihrer Profilseite in Ergebnissen externer Suchmaschinen, sodass Ihr Profil über dieVernissage-Plattform hinaus auffindbar ist.",
+          "label": "Profilseite in Suchmaschinen einbinden"
+        },
+        "includePublicPostsInSearchEngines": {
+          "hint": "Ermöglichen Sie die Indexierung und Anzeige Ihrer öffentlichen Beiträge in externen Suchmaschinen wie Google oder Bing. Dadurch werden Ihre Inhalte möglicherweise außerhalb vonVernissageerkennbar.",
+          "label": "Fügen Sie öffentliche Beiträge in Suchmaschinen ein"
+        },
+        "manuallyApprovesFollowers": {
+          "hint": "Die Leute müssen warten, bis Sie ihre Follow-Anfrage annehmen. Aktivieren Sie diese Option, wenn Sie Follow-Anfragen lieber manuell überprüfen und entscheiden möchten, ob neue Follower akzeptiert oder abgelehnt werden sollen, oder deaktivieren Sie sie, damit andere Ihnen folgen können, ohne dass eine Genehmigung erforderlich ist.",
+          "label": "Akzeptieren Sie neue Follower manuell"
+        }
+      },
+      "support": {
+        "descriptionOne": "Vielen Dank für die Unterstützung vonVernissage! Als Zeichen der Wertschätzung und um andere zu inspirieren, sich unserer Unterstützergemeinschaft anzuschließen, können Sie auf Ihrem Profil ein kleines Abzeichen anzeigen.",
+        "descriptionThree": "Das Abzeichen ist optional – Sie entscheiden, ob Sie es zeigen oder Ihre Unterstützung geheim halten möchten.",
+        "descriptionTwo": "Diese Option steht nur Benutzern zur Verfügung, dieVernissageunterstützen. Wenn Sie ein Unterstützer sind, diese Option jedoch nicht angezeigt wird, wenden Sie sich bitte an Ihren Instanzadministrator.",
+        "showBadgeOnProfile": "Abzeichen in Ihrem Profil anzeigen",
+        "title": "Zeigen Sie Ihre Unterstützung"
+      },
+      "title": "Konto",
+      "twoFactor": {
+        "description": "Schützen Sie den Zugriff auf Ihr Konto durch den Zwei-Faktor-Authentifizierungsprozess (2FA).",
+        "disableAriaLabel": "Deaktivieren Sie die Zwei-Faktor-Authentifizierung",
+        "enableAriaLabel": "Aktivieren Sie die Zwei-Faktor-Authentifizierung",
+        "title": "Zwei-Faktor-Authentifizierung (2FA)"
+      },
+      "userBlockedDomains": {
+        "editBlockedDomain": "Gesperrte Domain bearbeiten"
+      },
+      "verification": {
+        "copyAriaLabel": "Überprüfung der Kopie",
+        "description": "Sie können Felder verwenden, um Ihre Identität zu überprüfen. Alles, was Sie brauchen, ist eine persönliche Website, die andere als Ihre erkennen. Indem wir von Ihrem Profil aus auf diese Website verlinken, überprüfen wir, ob die Website auf Ihr Profil verweist, und zeigen zur Bestätigung einen visuellen Hinweis an. Kopieren Sie einfach den unten bereitgestellten Code und fügen Sie ihn in den HTML-Code Ihrer Website ein. Fügen Sie dann die Adresse Ihrer Website in eines der zusätzlichen Felder oben ein.",
+        "exampleAriaLabel": "Verifizierungsbeispiel",
+        "tip": "Tipp: Der Link auf Ihrer Website kann unsichtbar sein. Der wichtige Teil ist rel=\"me\", der Identitätsdiebstahl auf Websites mit benutzergenerierten Inhalten verhindert.",
+        "title": "Selbstverifizierung des Kontos"
+      }
+    },
+    "activityPubEventItems": {
+      "filters": {
+        "onlyErrors": "Nur Fehler",
+        "sortDirection": {
+          "label": "Sortierrichtung"
+        },
+        "sorting": {
+          "endDate": "Enddatum",
+          "label": "Sortieren",
+          "startDate": "Startdatum",
+          "updatedDate": "Aktualisiertes Datum"
+        }
+      },
+      "paginator": {
+        "selectPage": "Seite auswählen"
+      },
+      "subtitle": "Liste derFediverse-Server, an die das Ereignis gesendet wurde.",
+      "table": {
+        "endDate": "Enddatum",
+        "error": "Fehler",
+        "hostSuspended": "Gastgeber suspendiert",
+        "inboxUrl": "PosteingangURL",
+        "isSuccess": "Ist Erfolg",
+        "open": "Offen",
+        "startDate": "Startdatum"
+      },
+      "title": "ActivityPub-Ereignisempfänger"
+    },
+    "activityPubEvents": {
+      "action": {
+        "announce": "Ankündigen",
+        "create": "Erstellen",
+        "like": "Wie",
+        "pinStatus": "Pin-Status",
+        "undoAnnounce": "Ankündigung rückgängig machen",
+        "undoLike": "Like rückgängig machen",
+        "unpinStatus": "Status lösen",
+        "update": "Aktualisieren"
+      },
+      "common": {
+        "all": "Alle"
+      },
+      "filters": {
+        "action": {
+          "label": "Aktion"
+        },
+        "result": {
+          "label": "Ergebnis"
+        },
+        "sortDirection": {
+          "label": "Sortierrichtung"
+        },
+        "sorting": {
+          "endDate": "Enddatum",
+          "label": "Sortieren",
+          "startDate": "Startdatum",
+          "updatedDate": "Aktualisiertes Datum"
+        }
+      },
+      "paginator": {
+        "selectPage": "Seite auswählen"
+      },
+      "result": {
+        "failed": "Fehlgeschlagen",
+        "finished": "Fertig",
+        "finishedWithErrors": "Mit Fehlern abgeschlossen",
+        "finishedWithErrorsInParens": "Fertig (mit Fehlern)",
+        "processing": "Verarbeitung",
+        "waiting": "Warten"
+      },
+      "subtitle": "Liste der Ereignisse, die das System über dasActivityPub-Protokoll an andereFediverse-Instanzen sendet.",
+      "table": {
+        "action": "Aktion",
+        "attempts": "Versuche",
+        "endDate": "Enddatum",
+        "errorMessage": "Fehlermeldung",
+        "result": "Ergebnis",
+        "startDate": "Startdatum",
+        "user": "Benutzer"
+      },
+      "title": "AusgehendeActivityPub-Ereignisse"
+    },
+    "articleEdit": {
+      "files": {
+        "copy": "Kopieren",
+        "copyMarkdownAriaLabel": "Markdown kopieren",
+        "delete": "Löschen",
+        "deleteAriaLabel": "Datei löschen",
+        "fileAlt": "Artikeldatei",
+        "mainFile": "Hauptdatei",
+        "markAsMain": "Als Haupt markieren",
+        "markAsMainAriaLabel": "Datei löschen",
+        "title": "Dateien",
+        "upload": "Hochladen",
+        "uploadAriaLabel": "Datei hochladen"
+      },
+      "form": {
+        "alternativeAuthor": {
+          "ariaLabel": "Alternativer Autor",
+          "errors": {
+            "tooLong": "Zu langer Benutzername."
+          },
+          "hint": "Sie können imFediverseein alternatives Handle für das Konto eines Benutzers festlegen. Er wird als Autor in Miniaturansichten angezeigt, die auf Basis von OpenGraph-Tags generiert wurden.",
+          "label": "Alternativer Autor",
+          "placeholder": "Farbe"
+        },
+        "body": {
+          "ariaLabel": "Artikeltext",
+          "errors": {
+            "required": "Geben Sie den Artikeltext ein.",
+            "tooLong": "Zu langer Artikeltext."
+          },
+          "hint": "Dieses Feld unterstützt dieMarkdown-Formatierung.",
+          "label": "Artikeltext",
+          "placeholder": "Artikeltext"
+        },
+        "color": {
+          "ariaLabel": "Farbe",
+          "errors": {
+            "tooLong": "Zu lange Farbe."
+          },
+          "hint": "Sie können hierCSS-kompatible Farben verwenden, z. B. #00ff0020.",
+          "label": "Farbe",
+          "placeholder": "Farbe"
+        },
+        "title": {
+          "ariaLabel": "Titel",
+          "errors": {
+            "tooLong": "Zu langer Titel."
+          },
+          "label": "Titel",
+          "placeholder": "Titel"
+        }
+      },
+      "messages": {
+        "fileTooLarge": "Die hochgeladene Datei ist zu groß. Die maximale Größe ist{{maxArticleFileSize}}.",
+        "markdownCopied": "DerMarkdown-Code wurde in die Zwischenablage kopiert.",
+        "saved": "Der Artikel wurde gespeichert.",
+        "updated": "Der Artikel wurde aktualisiert."
+      },
+      "title": "Artikelinhalt",
+      "visibilities": {
+        "title": "Sichtbarkeiten"
+      }
+    },
+    "articles": {
+      "confirmations": {
+        "deleteArticle": "Möchten Sie den Artikel löschen?"
+      },
+      "createArticle": "Artikel erstellen",
+      "createArticleAriaLabel": "Artikel erstellen",
+      "messages": {
+        "deleted": "Artikel wurde gelöscht."
+      },
+      "subtitle": "Liste der im System erstellten Artikel.",
+      "title": "Artikel"
+    },
+    "bookmarks": {
+      "title": "Lesezeichen"
+    },
+    "categories": {
+      "subtitle": "Eine Liste der Kategorien auf dem Server zusammen mit den ihnen zugeordneten Fotos.",
+      "title": "Kategorien"
+    },
+    "confirmEmail": {
+      "error": {
+        "descriptionMiddle": "Wenn der Fehler weiterhin auftritt, können Sie es versuchen",
+        "descriptionPrefix": "Beim Bestätigen der E-Mail ist ein unerwarteter Fehler aufgetreten. Bitte versuchen Sie es später noch einmal.",
+        "descriptionSuffix": "(Dadurch wird auch Ihr Konto aktiviert) oder kontaktieren Sie uns.",
+        "resetPasswordLink": "Setzen Sie Ihr Passwort zurück",
+        "title": "Fehler!"
+      },
+      "success": {
+        "congratulations": "Glückwunsch!",
+        "description": "Ihre E-Mail wurde bestätigt. Ihr Konto wurde erfolgreich erstellt und alle Funktionen wurden aktiviert.",
+        "loginLink": "Anmelden",
+        "loginPromptPrefix": "Sie können zum gehen",
+        "loginPromptSuffix": "Seite und melden Sie sich mit Ihren Anmeldeinformationen beim System an. Danke schön!",
+        "title": "E-Mail bestätigt"
+      },
+      "validating": {
+        "description": "Das System validiert jetzt Ihre E-Mail. Bitte haben Sie etwas Geduld. Der Vorgang sollte einige Sekunden dauern.",
+        "title": "E-Mail-Validierung..."
+      }
+    },
+    "editBusinessCard": {
+      "colors": {
+        "bottomAriaLabel": "Untere Farbe",
+        "textAriaLabel": "Textfarbe",
+        "topAriaLabel": "Top Farbe"
+      },
+      "form": {
+        "email": {
+          "errors": {
+            "tooLong": "Zu lange E-Mail."
+          }
+        },
+        "fields": {
+          "key": {
+            "errors": {
+              "tooLong": "Zu langer Schlüssel."
+            }
+          },
+          "value": {
+            "errors": {
+              "tooLong": "Zu langer Wert."
+            }
+          }
+        },
+        "note": {
+          "errors": {
+            "tooLong": "Zu lange Notiz."
+          }
+        },
+        "subtitle": {
+          "errors": {
+            "tooLong": "Zu langer Untertitel."
+          }
+        },
+        "telephone": {
+          "errors": {
+            "tooLong": "Zu langes Telefon."
+          }
+        },
+        "title": {
+          "errors": {
+            "required": "Titel eingeben.",
+            "tooLong": "Zu langer Titel."
+          }
+        },
+        "website": {
+          "errors": {
+            "tooLong": "Zu lange Website."
+          }
+        }
+      },
+      "messages": {
+        "saved": "Visitenkarte wurde gespeichert.",
+        "updated": "Visitenkarte wurde aktualisiert."
+      },
+      "subtitle": "Hier können Sie Ihre Visitenkarte erstellen und sicher mit Personen teilen, die kein Konto haben. Ihre Karte ist nur für diejenigen sichtbar, die über den einzigartigen, schwer zu erratenden Link verfügen, den Sie generieren. Mit jeder Freigabe wird ein neuer Link erstellt, den Sie jederzeit entfernen können.",
+      "title": "Visitenkarte"
+    },
+    "editors": {
+      "subtitles": {
+        "statuses": "Eine Sammlung von Fotos, die von Kuratoren auf diesem Server vorgestellt wurden.",
+        "users": "Eine Sammlung von Künstlern, die von Kuratoren auf diesem Server vorgestellt wurden."
+      },
+      "tabAriaLabel": "Trendtyp",
+      "title": "Wahl des Herausgebers"
+    },
+    "errorItems": {
+      "confirmations": {
+        "deleteError": "Möchten Sie den Fehler löschen?"
+      },
+      "messages": {
+        "deleted": "Fehler wurde gelöscht."
+      },
+      "subtitle": "Liste der im System ausgegebenen Fehler.",
+      "title": "Fehler"
+    },
+    "errors": {
+      "accessForbidden": {
+        "description": "Es tut uns leid, Sie haben keinen Zugriff auf die Seite.",
+        "title": "Zutritt verboten"
+      },
+      "connectionLost": {
+        "description": "Es tut uns leid, die Verbindung ist unterbrochen.",
+        "title": "Verbindung verloren"
+      },
+      "pageNotFound": {
+        "description": "Es tut uns leid, die von Ihnen angeforderte Seite konnte nicht gefunden werden.",
+        "title": "Seite nicht gefunden"
+      },
+      "unexpectedError": {
+        "description": "Es tut uns leid, es ist ein unerwarteter Fehler aufgetreten.",
+        "errorCodeLabel": "Fehlercode:",
+        "errorInformationTitle": "Fehlerinformationen",
+        "title": "Unerwarteter Fehler"
+      }
+    },
+    "favourites": {
+      "title": "Favoriten"
+    },
+    "forgotPassword": {
+      "errors": {
+        "unexpectedResetError": "Unerwarteter Fehler beim Zurücksetzen Ihres Passworts. Bitte versuchen Sie es erneut."
+      },
+      "form": {
+        "errors": {
+          "emailInvalid": "Stellen Sie sicher, dass Sie die richtige E-Mail-Adresse eingegeben haben.",
+          "emailRequired": "Geben Sie Ihre E-Mail-Adresse ein."
+        },
+        "subtitle": "Geben Sie die mit Ihrem Konto verknüpfte E-Mail-Adresse ein und wir senden Ihnen per E-Mail einen Link zum Zurücksetzen Ihres Passworts.",
+        "title": "Setzen Sie Ihr Passwort zurück"
+      },
+      "success": {
+        "description": "Wir haben Ihnen einen Link zum Zurücksetzen Ihres Passworts gesendet. Bitte überprüfen Sie Ihren Posteingang. Es kann bis zu 10 Minuten dauern, bis die E-Mail in Ihrem Posteingang erscheint.",
+        "title": "Überprüfen Sie Ihre E-Mails"
+      },
+      "userNotExists": {
+        "descriptionMiddle": "Überprüfen Sie, ob Sie die richtige Adresse eingegeben haben.",
+        "descriptionPrefix": "Sind Sie sicher, dass Sie unter der angegebenen Adresse ein Konto erstellt haben?",
+        "descriptionSuffixPrefix": "Du kannst es versuchen",
+        "title": "Benutzer existiert nicht"
+      }
+    },
+    "frequentlyAskedQuestions": {
+      "header": {
+        "subtitle": "Hier finden Sie Antworten auf die häufigsten Fragen zuVernissage."
+      },
+      "imageResolution": {
+        "description": "Vernissageschränkt die Bildauflösung nicht ein – nur die Dateigröße zählt. Es steht Ihnen frei, hochauflösende Bilder hochzuladen, solange die Datei innerhalb der zulässigen Upload-Größe bleibt.",
+        "footer": "Für die beste Sichtbarkeit und Interoperabilität sollten Sie 4K oder weniger verwenden.",
+        "noteLabel": "Hinweis:",
+        "notes": {
+          "mastodon": "zeigt das Bild möglicherweise als Platzhalterlink an, anstatt es inline zu rendern.",
+          "pixelfed": "kann das Bild vollständig ablehnen, wenn es auf einer Seite 5000 Pixel überschreitet."
+        },
+        "recommendation": "Um jedoch optimale Qualität und Kompatibilität mit demFediversezu gewährleisten, empfehlen wir das Hochladen von Bildern mit einer Auflösung von bis zu 4K (ca. 3840 x 2160 Pixel). Dies stellt ein Gleichgewicht zwischen Bildklarheit und Leistung her und wird von Plattformen wieMastodonundPixelfedvollständig unterstützt.",
+        "title": "2. Welche Auflösung wird für hochgeladene Bilder empfohlen?"
+      },
+      "intro": {
+        "description": "Willkommen bei denVernissage-FAQ – einem kuratierten Bereich, der Ihnen hilft, das Beste aus Ihrem Foto-Sharing-Erlebnis herauszuholen."
+      },
+      "keyboardSupport": {
+        "description": "Ja.Vernissagebietet Benutzern eine umfassende Tastaturnavigation, damit Sie schnell zwischen Seiten, Zeitleisten und Aktionen wechseln können.",
+        "footer": "Diese Verknüpfungen sollen die Zugänglichkeit verbessern und das Surfen beschleunigen – besonders hilfreich für Benutzer, die sich auf die Tastatur konzentrieren.",
+        "globalShortcuts": {
+          "categories": "Kategorien anzeigen",
+          "editorsChoice": "Öffnen Sie die Editor's Choice-Timeline",
+          "faq": "Öffnen Sie diese FAQ-Seite",
+          "home": "Gehen Sie zur Home-Timeline",
+          "news": "Nachrichten anzeigen",
+          "profile": "Gehen Sie zu Ihrem Profil",
+          "trending": "Öffnen Sie die Trend-Timeline",
+          "upload": "Laden Sie ein neues Foto hoch"
+        },
+        "globalShortcutsTitle": "Globale Verknüpfungen (in der gesamten App verfügbar, für angemeldete Benutzer):",
+        "statusDetailShortcuts": {
+          "bookmark": "Speichern Sie den Status in den Lesezeichen",
+          "boost": "Steigern Sie den Status",
+          "like": "Wie der Status",
+          "nextStatus": "Den nächsten Status anzeigen",
+          "previousStatus": "Den vorherigen Status anzeigen"
+        },
+        "statusDetailShortcutsTitle": "Auf einer Statusdetailseite:",
+        "tabsDescription": "Wenn die aktuelle Seite mehrere Registerkarten enthält (z. B. „Startseite“, „Trends“ oder „Auswahl des Herausgebers“), können Sie durch Drücken der Zifferntasten zwischen ihnen wechseln:",
+        "tabShortcuts": {
+          "first": "Wechseln Sie zur ersten Registerkarte",
+          "second": "Wechseln Sie zur zweiten Registerkarte",
+          "third": "Wechseln Sie zur dritten Registerkarte"
+        },
+        "title": "1. UnterstütztVernissageTastaturkürzel?"
+      }
+    },
+    "hashtag": {
+      "actions": {
+        "followActionInProgressAriaLabel": "Hashtag folgt der laufenden Aktion",
+        "followAriaLabel": "Folgen Sie dem Hashtag",
+        "unfollowAriaLabel": "Hashtag nicht mehr folgen"
+      },
+      "feed": {
+        "atomTitle": "Hashtag{{hashtag}}-Feed (Atom)",
+        "rssTitle": "Hashtag{{hashtag}}-Feed (RSS)"
+      },
+      "messages": {
+        "followed": "Hashtag wurde verfolgt.",
+        "unfollowed": "Hashtag wurde nicht mehr verfolgt."
+      }
+    },
+    "invitations": {
+      "actions": {
+        "deleteInvitationAriaLabel": "Einladung löschen",
+        "generateCode": "Code generieren",
+        "generateInvitationAriaLabel": "Einladung generieren"
+      },
+      "messages": {
+        "copied": "Code wurde in die Zwischenablage kopiert.",
+        "deleted": "Der Einladungscode wurde gelöscht.",
+        "generated": "Der Einladungscode wurde generiert."
+      },
+      "subtitle": "Generieren Sie Einladungscodes und teilen Sie sie mit anderen, um Zugriff auf diesen Server zu gewähren.",
+      "table": {
+        "invitedUser": "Eingeladener Benutzer"
+      },
+      "title": "Einladungen"
+    },
+    "login": {
+      "errors": {
+        "accountBlocked": "Ihr Konto ist gesperrt. Kontaktieren Sie unseren Support.",
+        "accountNotApproved": "Ihr Konto ist noch nicht genehmigt.",
+        "enterTwoFactorToken": "Geben Sie das Token aus der Authentifizierungs-App ein.",
+        "invalidCredentials": "Ungültige Anmeldeinformationen.",
+        "loginAttemptsExceeded": "Zu viele fehlgeschlagene Anmeldungen. Bitte versuchen Sie es in 5 Minuten erneut.",
+        "twoFactorTokenNotValid": "Token ist ungültig. Bitte geben Sie ein neues Token ein.",
+        "unknownLoginError": "Unbekannter Anmeldefehler. Versuchen Sie es später noch einmal."
+      },
+      "form": {
+        "errors": {
+          "passwordRequired": "Passwort eingeben.",
+          "userNameOrEmailRequired": "Geben Sie den Benutzernamen oder die E-Mail-Adresse ein."
+        },
+        "subtitle": "Geben Sie Ihre Zugangsdaten ein, um sich beim System anzumelden",
+        "title": "Melden Sie sich beiVernissagean"
+      },
+      "registration": {
+        "noAccountPrefix": "Sie haben noch kein Konto?",
+        "noAccountSuffix": "."
+      },
+      "social": {
+        "separator": "Oder über ein soziales Konto"
+      },
+      "twoFactor": {
+        "trustMachine": "Vertrauen Sie dieser Maschine die nächsten 30 Tage."
+      }
+    },
+    "loginCallback": {
+      "errors": {
+        "emailNotConfirmed": "Ihre E-Mail-Adresse wurde nicht bestätigt. Überprüfen Sie Ihren Posteingang oder setzen Sie Ihr Passwort zurück."
+      }
+    },
+    "news": {
+      "empty": {
+        "noItems": "Leider gibt es hier noch nichts zu sehen."
+      },
+      "subtitle": "Bleiben Sie mit unseren neuesten Beiträgen auf dem Laufenden.",
+      "title": "Nachrichten"
+    },
+    "notifications": {
+      "actions": {
+        "openUserProfileAriaLabel": "Benutzerprofil öffnen",
+        "refreshCurrentTimelineAriaLabel": "Aktuelle Zeitleiste aktualisieren"
+      },
+      "title": "Benachrichtigungen",
+      "types": {
+        "adminReport": "wurde gemeldet",
+        "adminSignUp": "ist ein neuer Benutzer",
+        "favouriteComment": "habe deinen Kommentar favorisiert",
+        "favouriteStatus": "habe dein Foto zu deinen Favoriten hinzugefügt",
+        "follow": "bin dir gefolgt",
+        "followRequest": "will dir folgen",
+        "mention": "habe dich erwähnt",
+        "newComment": "hat einen neuen Kommentar geschrieben",
+        "reblog": "habe dein Foto geboostet",
+        "status": "veröffentlichtes Foto",
+        "update": "bearbeitetes Foto"
+      }
+    },
+    "preferences": {
+      "avatar": {
+        "circle": "Kreis",
+        "roundedRectangle": "Abgerundetes Rechteck",
+        "select": "Avatar auswählen",
+        "title": "Avatar"
+      },
+      "gallery": {
+        "originalRatio": "Originalverhältnis",
+        "select": "Bildansicht auswählen",
+        "squareImages": "Quadratische Bilder",
+        "title": "Profilgalerie des Benutzers"
+      },
+      "media": {
+        "alwaysShowNsfw": {
+          "description": "Erzwingen Sie die Anzeige aller (sensiblen) NSFW-Medien ohne Warnungen.",
+          "title": "Zeigen Sie immer NSFW an"
+        },
+        "alwaysShowSdrPhoto": {
+          "description": "Anstelle derHDR-Version des Fotos wird immer dieSDR-Version angezeigt.",
+          "title": "Zeigen Sie immer dasSDR-Foto an"
+        },
+        "autoScrollGalleryImages": {
+          "description": "Wechselt automatisch alle 6 Sekunden durch die Statusbilder.",
+          "title": "Bilder in der Statusgalerie automatisch scrollen"
+        },
+        "showAlternativeText": {
+          "description": "Alternativtext anzeigen, falls vorhanden, auf dem Bildschirm mit den Statusdetails.",
+          "title": "Alternativtext anzeigen"
+        },
+        "showAltIcon": {
+          "description": "DasALT-Symbol wird auf Zeitleisten angezeigt.",
+          "title": "ALT-Symbol anzeigen"
+        },
+        "showAvatars": {
+          "description": "Avatare werden auf Zeitleisten angezeigt.",
+          "title": "Avatare anzeigen"
+        },
+        "showBoost": {
+          "description": "Das Boost-Symbol wird auf den Zeitleisten angezeigt.",
+          "title": "Boost anzeigen"
+        },
+        "showCounts": {
+          "description": "Bildanzahl für Status mit mehreren Bildern anzeigen.",
+          "title": "Bildanzahl anzeigen"
+        },
+        "showFavourites": {
+          "description": "Das Favoritensymbol wird auf Zeitleisten angezeigt.",
+          "title": "Favoriten anzeigen"
+        },
+        "title": "Medieneinstellungen"
+      },
+      "theme": {
+        "dark": "Dunkel",
+        "light": "Licht",
+        "select": "Thema auswählen",
+        "title": "Thema"
+      },
+      "title": "Präferenzen"
+    },
+    "privacy": {
+      "title": "Datenschutzrichtlinie"
+    },
+    "profile": {
+      "actions": {
+        "profileQrCodeAriaLabel": "ProfilQR-Code",
+        "shareBusinessCardAriaLabel": "Visitenkarte teilen"
+      },
+      "confirmations": {
+        "createBusinessCard": "Sie haben noch keine Visitenkarte erstellt. Möchten Sie es jetzt erstellen?"
+      },
+      "images": {
+        "avatarAlt": "Avatar-Profil",
+        "headerAlt": "Header-Profil"
+      },
+      "joined": "Beigetreten{{date}}",
+      "latestFollowers": {
+        "title": "NEUESTE FOLLOWER"
+      },
+      "messages": {
+        "businessCardShared": "Visitenkarte wurde geteilt."
+      },
+      "movedTo": {
+        "prefix": "Dieses Konto wurde verschoben",
+        "suffix": "Zukünftige Updates werden über das neue Konto veröffentlicht."
+      },
+      "noData": {
+        "local": "Hier gibt es noch nichts zu lesen.",
+        "remote": {
+          "checkOriginalPrefix": "Überprüfen Sie das Original des Benutzers",
+          "description": "Wir haben diese Informationen nicht im System."
+        }
+      },
+      "remoteStatuses": {
+        "missingPosts": "Möglicherweise fehlen einige Beiträge in diesem Profil.",
+        "seeMorePrefix": "Weitere Beiträge zum Original des Benutzers anzeigen"
+      }
+    },
+    "register": {
+      "captcha": {
+        "imageAlt": "Captcha",
+        "refreshAriaLabel": "Captcha aktualisieren",
+        "textAriaLabel": "Captcha-Text",
+        "textLabel": "Captcha-Text",
+        "title": "Lösen Sie das Captcha"
+      },
+      "displayName": {
+        "label": "Anzeigename"
+      },
+      "emailHint": "Mach dir keine Sorge. Diese Informationen sind für uns heilig. Wir werden es niemals zeigen, verkaufen oder missbrauchen.",
+      "errors": {
+        "captchaTextRequired": "Geben Sie den Captcha-Text ein.",
+        "captchaTextTooLong": "Der Captcha-Text ist zu lang.",
+        "disposableEmailNotAllowed": "Einweg-E-Mails können nicht verwendet werden.",
+        "emailAlreadyConnected": "Die angegebene E-Mail-Adresse ist bereits mit einem anderen Konto verknüpft.",
+        "emailInvalid": "Stellen Sie sicher, dass Sie die richtige E-Mail-Adresse eingegeben haben.",
+        "emailRequired": "Geben Sie Ihre E-Mail-Adresse ein.",
+        "emailTaken": "Wählen Sie eine andere E-Mail-Adresse. Diese ist bereits mit einem anderen Konto verbunden.",
+        "invalidCaptchaCode": "Der Captcha-Code ist ungültig. Bitte versuchen Sie es erneut.",
+        "invitationCodeRequired": "Geben Sie den Einladungscode ein.",
+        "invitationCodeTooLong": "Der Einladungscode ist zu lang.",
+        "invitationTokenInvalid": "Das Einladungstoken ist ungültig.",
+        "invitationTokenUsed": "Einladungstoken wurde verwendet.",
+        "mustAcceptRules": "Sie müssen die Serverregeln akzeptieren.",
+        "nameRequired": "Namen eingeben.",
+        "nameTooLong": "Der Name ist zu lang.",
+        "reasonRequired": "Geben Sie den Grund ein.",
+        "reasonTooLong": "Der Grund ist zu lang.",
+        "unexpectedError": "Es ist ein unerwarteter Fehler aufgetreten. Bitte versuchen Sie es erneut.",
+        "userNameAlreadyTaken": "Der Benutzername ist bereits vergeben. Bitte wählen Sie ein anderes aus.",
+        "userNamePattern": "Im Benutzernamen sind nur alphanumerische Zeichen zulässig.",
+        "userNameRequired": "Geben Sie den Benutzernamen ein.",
+        "userNameTaken": "Wählen Sie einen anderen Benutzernamen, dieser ist bereits vergeben.",
+        "userNameTooLong": "Wählen Sie einen anderen Benutzernamen, dieser ist zu lang."
+      },
+      "invitationCode": {
+        "ariaLabel": "Einladungstoken",
+        "label": "Einladungscode"
+      },
+      "language": {
+        "english": "Englisch (Englisch)",
+        "polish": "Polnisch (polski)"
+      },
+      "messages": {
+        "accountCreated": "Ihr Konto wurde erstellt."
+      },
+      "reason": {
+        "ariaLabel": "Grund",
+        "label": "Grund"
+      },
+      "serverRules": {
+        "acceptance": "Ich akzeptiere alle Serverregeln.",
+        "title": "Serverregeln"
+      },
+      "title": "Neues Konto erstellen"
+    },
+    "reports": {
+      "actions": {
+        "applyCWToStatus": "Wenden SieCWauf den Status an",
+        "applyCWToStatusAriaLabel": "Wenden SieCWauf den Status an",
+        "closeReportAriaLabel": "Bericht schließen",
+        "deleteStatus": "Status löschen",
+        "deleteStatusAriaLabel": "Status löschen",
+        "openProfileAriaLabel": "Öffnen Sie das Profil @{{userName}}",
+        "reportActionsAriaLabel": "Aktionen melden",
+        "restoreReportAriaLabel": "Bericht wiederherstellen",
+        "sendToRemoteInstance": "An Remote-Instanz senden",
+        "sendToRemoteInstanceAriaLabel": "An Remote-Instanz senden",
+        "showReportDetailsAriaLabel": "Berichtsdetails anzeigen",
+        "unlistStatus": "Nicht gelisteter Status",
+        "unlistStatusAriaLabel": "Nicht gelisteter Status"
+      },
+      "confirmations": {
+        "deleteStatus": "Möchten Sie den Status löschen?",
+        "sendToRemoteInstance": "Möchten Sie einen Bericht an eine Remote-Instanz senden?",
+        "unlistStatus": "Möchten Sie den Status „Unlisting“ aufheben?"
+      },
+      "messages": {
+        "closed": "Der Bericht wurde geschlossen.",
+        "contentWarningAdded": "Inhaltswarnung wurde hinzugefügt.",
+        "restored": "Der Bericht wurde wiederhergestellt.",
+        "sentToRemoteInstance": "Der Bericht wurde an die Remote-Instanz gesendet.",
+        "statusDeleted": "Status wurde gelöscht.",
+        "statusUnlisted": "Der Status wurde nicht gelistet."
+      },
+      "subtitle": "Von anderen Systembenutzern gemeldete Probleme.",
+      "table": {
+        "considerationDate": "Berücksichtigungsdatum",
+        "considerationUser": "Rücksichtnahme Benutzer",
+        "federated": "Verbunden",
+        "reportedUser": "Gemeldeter Benutzer"
+      },
+      "types": {
+        "comment": "Kommentar",
+        "profile": "Profil",
+        "status": "Status"
+      }
+    },
+    "resetPassword": {
+      "errors": {
+        "unexpectedResetError": "Unerwarteter Fehler beim Zurücksetzen Ihres Passworts. Bitte versuchen Sie es erneut."
+      },
+      "form": {
+        "subtitle": "Geben Sie das neue Passwort für Ihr Konto ein. Diese Seite steht Ihnen nur 10 Minuten lang zur Verfügung.",
+        "title": "Neues Passwort festlegen"
+      },
+      "missingToken": {
+        "description": "Es fehlen obligatorische Informationen. Sind Sie sicher, dass Sie die Seite über die E-Mail geöffnet haben, die wir Ihnen gesendet haben?",
+        "title": "Fehler!"
+      },
+      "success": {
+        "descriptionMiddle": "Du kannst es versuchen",
+        "descriptionPrefix": "Ihr Passwort wurde geändert.",
+        "descriptionSuffix": "jetzt in das System einbinden.",
+        "loginLink": "Anmelden",
+        "title": "Das Passwort wurde geändert"
+      }
+    },
+    "search": {
+      "empty": {
+        "hashtags": "Keine Hashtags gefunden.",
+        "statuses": "Keine Status gefunden.",
+        "users": "Keine Benutzer gefunden."
+      },
+      "hint": "Suchen Sie nach einem Benutzer, Status oder Hashtag oder fügen Sie einenURLin einen Status oder ein Benutzerprofil ein.",
+      "tabs": {
+        "hashtags": "Hashtags",
+        "statuses": "Status",
+        "users": "Benutzer"
+      }
+    },
+    "settings": {
+      "panels": {
+        "categories": {
+          "description": "Hier können Sie Kategorien und Hashtags verwalten.",
+          "title": "Kategorien"
+        },
+        "domainBlocks": {
+          "description": "Hier können Sie nach Instanzen blockierte Domains verwalten.",
+          "title": "Instanzdomänenblöcke"
+        },
+        "general": {
+          "description": "Hier können Sie allgemeine Anwendungseinstellungen vornehmen.",
+          "title": "Allgemeine Einstellungen"
+        },
+        "homeCards": {
+          "description": "Hier können Sie die Karten Ihres Zuhauses verwalten.",
+          "title": "Heimkarten"
+        },
+        "instanceRules": {
+          "description": "Hier können Sie Instanzregeln verwalten.",
+          "title": "Instanzregeln"
+        },
+        "licenses": {
+          "description": "Hier können Sie die Fotolizenzen verwalten.",
+          "title": "Lizenzen"
+        }
+      },
+      "title": "Einstellungen"
+    },
+    "sharedCard": {
+      "form": {
+        "messagePlaceholder": "Nachricht senden..."
+      },
+      "messages": {
+        "personalDataSaved": "Ihre persönlichen Daten wurden gespeichert."
+      }
+    },
+    "sharedCardPublic": {
+      "messages": {
+        "personalDataSaved": "Ihre persönlichen Daten wurden gespeichert."
+      }
+    },
+    "sharedCards": {
+      "actions": {
+        "shareBusinessCard": "Visitenkarte teilen",
+        "yourBusinessCard": "Ihre Visitenkarte"
+      },
+      "confirmations": {
+        "deleteSharedBusinessCard": "Möchten Sie die freigegebene Visitenkarte löschen?"
+      },
+      "messages": {
+        "businessCardShared": "Visitenkarte wurde geteilt.",
+        "businessCardUpdated": "Visitenkarte wurde aktualisiert.",
+        "createBusinessCardFirst": "Sie müssen zuerst eine Visitenkarte erstellen.",
+        "sharedBusinessCardDeleted": "Die freigegebene Visitenkarte wurde gelöscht.",
+        "sharedBusinessCardEnabled": "Die gemeinsame Visitenkarte wurde aktiviert.",
+        "sharedBusinessCardRevoked": "Die freigegebene Visitenkarte wurde widerrufen."
+      },
+      "subtitle": "Hier können Sie alle öffentlichen Links einsehen und verwalten, über die Ihre Visitenkarte geteilt wurde.",
+      "title": "Geteilte Visitenkarten"
+    },
+    "status": {
+      "actions": {
+        "bookmark": "Lesezeichen",
+        "boost": "Boost",
+        "feature": "Funktion",
+        "like": "Wie",
+        "openProfileAriaLabel": "Öffnen Sie das Profil @{{userName}}",
+        "unbookmark": "Lesezeichen aufheben",
+        "unboost": "Unboost",
+        "unfeature": "Unfeature",
+        "unlike": "Anders als"
+      },
+      "back": "Zurück",
+      "comments": {
+        "actions": {
+          "like": "Wie",
+          "reply": "Antwort",
+          "report": "Bericht",
+          "unlike": "Anders als"
+        },
+        "likedByPrefix": "Kommentar gemocht von",
+        "noComments": "Hier gibt es noch nichts zu lesen.",
+        "people": "Menschen",
+        "person": "Person",
+        "title": "Kommentare"
+      },
+      "confirmations": {
+        "changeStatusWithEnteredComment": "Sie haben einen Kommentar eingegeben. Möchten Sie den Status trotzdem ändern?"
+      },
+      "followedTagsInThisStatus": "Gefolgte Tags in diesem Status",
+      "hashtagsAriaLabel": "Hashtags",
+      "hdr": {
+        "displayed": "(angezeigt)",
+        "highDynamicRange": "Hoher Dynamikbereich",
+        "notDisplayed": "(nicht angezeigt)",
+        "notSupportedByBrowser": "Wird vom Browser nicht unterstützt",
+        "supportedByBrowser": "Unterstützt vom Browser"
+      },
+      "menu": {
+        "boostedBy": "Gesteigert durch",
+        "copyLinkToPost": "Link zum Beitrag kopieren",
+        "events": "Veranstaltungen",
+        "favouritedBy": "Favorit von",
+        "openOriginalPage": "Originalseite öffnen",
+        "pin": "Pin",
+        "report": "Bericht",
+        "unpin": "Lösen"
+      },
+      "messages": {
+        "bookmarked": "Status als Lesezeichen gespeichert.",
+        "boosted": "Status gestärkt.",
+        "commentFavourited": "Kommentar favorisiert.",
+        "favourited": "Status Favorit.",
+        "featured": "Status hervorgehoben.",
+        "likeUndone": "Dein Like wurde rückgängig gemacht.",
+        "pinned": "Status angepinnt.",
+        "reportSaved": "Bericht wurde gespeichert.",
+        "statusDeleted": "Status wurde gelöscht.",
+        "unbookmarked": "Status ohne Lesezeichen.",
+        "unboosted": "Status ungeboostet.",
+        "unfeatured": "Status nicht vorgestellt.",
+        "unpinned": "Status nicht angepinnt."
+      },
+      "navigation": {
+        "nextImageAriaLabel": "Nächstes Bild",
+        "previousImageAriaLabel": "Vorheriges Bild"
+      },
+      "openMap": "Karte öffnen",
+      "showImage": "Bild anzeigen",
+      "tooltips": {
+        "alt": "Alt",
+        "camera": "Kamera",
+        "cameraRoll": "Kamerarolle",
+        "category": "Kategorie",
+        "developChemistry": "Chemie entwickeln",
+        "equivalentLens": "Äquivalent zum Vollformatobjektiv{{focalLength}}mm.",
+        "exposure": "Belichtung",
+        "flash": "Blitz",
+        "fullFrameLens": "Vollformatobjektiv.",
+        "hdr": "HDR",
+        "lens": "Objektiv",
+        "license": "Lizenz",
+        "photoCreatedDate": "Erstellungsdatum des Fotos",
+        "place": "Platz",
+        "scanner": "Scanner",
+        "software": "Software"
+      },
+      "versions": {
+        "latestVersion": "Neueste Version",
+        "previousVersions": "Frühere Versionen"
+      }
+    },
+    "statusEventItems": {
+      "otherEvents": "andere Veranstaltungen",
+      "subtitleMiddle": "wurde gesendet",
+      "subtitlePrefix": "Liste derFediverse-Server, denen das Ereignis zugeordnet ist",
+      "title": "Empfänger der Veranstaltung"
+    },
+    "statusEvents": {
+      "statusLink": "Status",
+      "subtitlePrefix": "Liste der Ereignisse, die vom System über dasActivityPub-Protokoll an andere mit dem verknüpfteFediverse-Instanzen gesendet werden",
+      "subtitleSuffix": ".",
+      "title": "Statusereignisse"
+    },
+    "support": {
+      "actions": {
+        "supportUs": "Unterstützen Sie uns"
+      },
+      "financial": {
+        "communitySupport": "Community-Unterstützung",
+        "perMonth": "/ Monat",
+        "totalCost": "Gesamtkosten"
+      },
+      "health": {
+        "checking": "prüfen...",
+        "database": "Datenbank",
+        "error": "Fehler",
+        "ok": "ok",
+        "redisQueues": "Redis-Warteschlangen",
+        "storage": "Lagerung",
+        "webPushService": "Web-Push-Dienst"
+      },
+      "instance": {
+        "apiVersion": "API-Version",
+        "contactAccount": "Kontaktkonto",
+        "description": "Beschreibung",
+        "imageSizeLimit": "Beschränkung der Bildgröße",
+        "languages": "Sprachen",
+        "maxMediaAttachments": "Max. Medienanhänge",
+        "maxStatusCharacters": "Maximale Statuszeichen",
+        "webVersion": "WEB-Version"
+      },
+      "links": {
+        "apiDocumentation": "API-Dokumentation",
+        "mastodon": "Mastodon",
+        "privacyPolicy": "Datenschutzrichtlinie",
+        "reportBug": "Melden Sie einen Fehler",
+        "sourceCode": "Quellcode",
+        "termsOfService": "Nutzungsbedingungen"
+      },
+      "messages": {
+        "healthStatusDownloadError": "Fehler beim Herunterladen des Systemzustands."
+      },
+      "sections": {
+        "financialSupport": "Finanzielle Unterstützung",
+        "healthStatus": "Gesundheitszustand",
+        "helpfulLinks": "Hilfreiche Links",
+        "instanceInformation": "Instanzinformationen"
+      },
+      "title": "Unterstützung"
+    },
+    "trending": {
+      "period": {
+        "ariaLabel": "Zeitraum auswählen",
+        "daily": "Täglich",
+        "monthly": "Monatlich",
+        "yearly": "Jährlich"
+      },
+      "subtitles": {
+        "hashtags": "Eine Sammlung von Hashtags, die Fotos zugewiesen sind, die innerhalb eines bestimmten Zeitraums die meisten Likes erhalten haben.",
+        "statuses": "Eine Sammlung von Fotos, die innerhalb eines bestimmten Zeitraums die meisten Likes erhalten haben.",
+        "users": "Eine Sammlung von Künstlern, die innerhalb eines bestimmten Zeitraums die meisten Likes für ihre Fotos erhalten haben."
+      },
+      "tabAriaLabel": "Trendtyp",
+      "tabs": {
+        "tags": "Schlagworte"
+      },
+      "title": "Im Trend"
+    },
+    "upload": {
+      "accountMoved": "Dieses Konto wurde auf ein anderes Konto verschoben, sodass Sie hier keine neuen Fotos mehr hinzufügen oder neue Inhalte veröffentlichen können. Um mit dem Posten fortzufahren, verwenden Sie bitte Ihr neues Konto.",
+      "actions": {
+        "featurePoweredBy": "Funktion bereitgestellt von{{provider}}.",
+        "hashtags": "Hashtags",
+        "useTemplate": "Vorlage verwenden"
+      },
+      "emailVerificationRequired": {
+        "prefix": "Um Fotos hochzuladen, bestätigen Sie bitte Ihre E-Mail-Adresse. Sie können die Bestätigungs-E-Mail von Ihrem erneut senden",
+        "securityNote": "Durch die Anforderung einer E-Mail-Verifizierung wird sichergestellt, dass nur legitime Konten Inhalte hochladen können, was sowohl die Sicherheit als auch die Gesamtqualität der freigegebenen Materialien verbessert.",
+        "suffix": "Seite, falls Sie es noch nicht erhalten haben."
+      },
+      "form": {
+        "contentWarning": "Inhaltswarnung",
+        "disableComments": "Kommentare deaktivieren",
+        "sensitiveMedia": "Sensible/NSFW-Medien"
+      },
+      "messages": {
+        "accountMovedPublishingUnavailable": "Dieses Konto wurde verschoben, sodass die Veröffentlichung neuer Inhalte nicht möglich ist.",
+        "fileTooLarge": "Die hochgeladene Datei ist zu groß. Die maximale Größe ist{{maxFileSize}}.",
+        "maxImagesPerPost": "Sie können bis zu{{count}}-Bilder pro Beitrag hochladen.",
+        "statusSaved": "Status wurde gespeichert.",
+        "statusUpdated": "Der Status wurde aktualisiert.",
+        "tooManyFilesSelected": "Zu viele Dateien ausgewählt. Sie können{{count}}und mehr image{{suffix}}hinzufügen.",
+        "unableToResize": "Die Bildgröße kann vor dem Hochladen nicht geändert werden.",
+        "unsupportedFileType": "Dieser Dateityp wird nicht unterstützt. Bitte laden Sie einJPG-,PNG- oder WEBP-Bild hoch.",
+        "verifyEmailBeforePublish": "Um einen Status zu veröffentlichen, überprüfen Sie bitte zunächst Ihre E-Mail-Adresse."
+      },
+      "photoAlt": "Foto hochgeladen",
+      "statusDetails": "Statusdetails",
+      "stepper": {
+        "imageData": "Bilddaten #{{index}}"
+      },
+      "subtitle": {
+        "interoperabilityHint": "Um die Interoperabilität zwischen verschiedenen Systemen zu verbessern, verwenden Sie Bilder, deren längere Kante auf 4096 Pixel eingestellt ist.",
+        "maxFileSize": "Sie könnenJPEG-,PNG- und WEBP-Dateien bis{{maxFileSize}}hochladen."
+      },
+      "titles": {
+        "editStatus": "Status bearbeiten",
+        "uploadPhotos": "Fotos hochladen"
+      },
+      "visibility": {
+        "followers": "Nur Follower",
+        "mentioned": "Nur erwähnte Personen",
+        "public": "Jeder",
+        "quietPublic": "Alle (ruhig)"
+      },
+      "visibilityHints": {
+        "followers": "Nur für Ihre Follower und alle im Beitrag erwähnten Personen sichtbar.",
+        "mentioned": "Nur für Personen sichtbar, die im Beitrag ausdrücklich erwähnt werden.",
+        "public": "Für alle sichtbar und kann in öffentlichen Zeitleisten erscheinen.",
+        "quietPublic": "Für alle sichtbar, aber von öffentlichen Timelines ausgeschlossen."
+      }
+    },
+    "users": {
+      "actions": {
+        "disable2fa": "Deaktivieren Sie2FA",
+        "notSupporter": "Kein Unterstützer",
+        "openProfileAriaLabel": "Öffnen Sie das Profil @{{userName}}"
+      },
+      "confirmations": {
+        "deleteUserAccount": "Möchten Sie das Benutzerkonto löschen?",
+        "disableUserTwoFactor": "Möchten Sie2FAdes Benutzers deaktivieren?"
+      },
+      "filters": {
+        "onlyBlocked": "Nur blockiert",
+        "onlyLocal": "Nur lokal"
+      },
+      "messages": {
+        "accountApproved": "Das Konto wurde genehmigt.",
+        "accountDeleted": "Konto wurde gelöscht.",
+        "accountDisabled": "Das Konto wurde deaktiviert.",
+        "accountEnabled": "Das Konto wurde aktiviert.",
+        "accountMarkedAsNotSupporter": "Das Konto wurde als „Kein Unterstützer“ markiert.",
+        "accountMarkedAsSupporter": "Das Konto wurde als Unterstützer markiert.",
+        "accountRefreshed": "Das Konto wurde aktualisiert.",
+        "accountRejected": "Konto wurde abgelehnt.",
+        "twoFactorDisabled": "2FAwurde deaktiviert.",
+        "userBlocked": "Der Benutzer wurde blockiert.",
+        "userUnblocked": "Der Benutzer wurde entsperrt."
+      },
+      "rolesAriaLabel": "Rollen",
+      "subtitle": "Liste der im System registrierten Benutzer.",
+      "table": {
+        "lastLogin": "Letzter Login",
+        "statuses": "Status"
+      },
+      "title": "Benutzer"
+    }
+  }
+}

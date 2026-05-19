@@ -1,9 +1,9 @@
 <div animate.enter="fade-in" class="flex-row flex-center padding-top-30">
     <div class="error-container margin-left-10 margin-right-10">
-        <h1><mat-icon [inline]="true" class="text-muted vertical-align-bottom">pan_tool</mat-icon> Access forbidden</h1>
+        <h1><mat-icon [inline]="true" class="text-muted vertical-align-bottom">pan_tool</mat-icon> {{ 'pages.errors.accessForbidden.title' | translate }}</h1>
         <p>
-            We're sorry, you don't have access to the page.
-            Please go back to the <a routerLink="/home" aria-label="Home page">homepage</a> or contact with system administrator.
+            {{ 'pages.errors.accessForbidden.description' | translate }}
+            {{ 'common.errors.goBackPrefix' | translate }}<a routerLink="/home" [attr.aria-label]="'common.labels.homePage' | translate">{{ 'common.errors.goBackLink' | translate }}</a>{{ 'common.errors.goBackSuffix' | translate }}
         </p>
         <mat-progress-bar mode="determinate" [value]="value()"></mat-progress-bar>
     </div>

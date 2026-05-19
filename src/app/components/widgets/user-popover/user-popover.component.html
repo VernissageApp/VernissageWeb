@@ -3,7 +3,7 @@
         <mat-card-content>
             <div class="flex-row flex-space-between gap-16">
                 <div class="flex-row gap-8">
-                    <a [routerLink]="[ '/@' + userObject.userName ]" class="user-avatar" [attr.aria-label]="'Open profile @' + userObject.userName">
+                    <a [routerLink]="[ '/@' + userObject.userName ]" class="user-avatar" [attr.aria-label]="'common.actions.openProfileWithUserName' | translate: { userName: userObject.userName }">
                         <app-avatar [user]="userObject" [size]="avatarSize.huge"></app-avatar>
                     </a>
                     <div>
@@ -21,9 +21,9 @@
 
                         <div class="bio" [innerHTML]="userObject.bioHtml"></div>
                         <div class="fw-300 fs-90">
-                            <span class="margin-right-15"><span class="fw-500">{{ userObject.photosCount }}</span> {{ userObject.photosCount === 1 ? 'Photo' : 'Photos' }}</span>
-                            <span class="margin-right-15"><span class="fw-500">{{ userObject.followersCount }}</span> Followers</span>
-                            <span><span class="fw-500">{{ userObject.followingCount }}</span> Following</span>
+                            <span class="margin-right-15"><span class="fw-500">{{ userObject.photosCount }}</span> {{ (userObject.photosCount === 1 ? 'common.labels.photo' : 'common.labels.photos') | translate }}</span>
+                            <span class="margin-right-15"><span class="fw-500">{{ userObject.followersCount }}</span> {{ 'common.labels.followers' | translate }}</span>
+                            <span><span class="fw-500">{{ userObject.followingCount }}</span> {{ 'common.labels.following' | translate }}</span>
                         </div>
                     </div>
                 </div>

@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, model } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ChangeEmail } from 'src/app/models/change-email';
 import { MessagesService } from 'src/app/services/common/messages.service';
@@ -18,6 +19,7 @@ export class ChangeEmailDialog {
     private messagesService = inject(MessagesService);
     private windowService = inject(WindowService);
     private dialogRef = inject(MatDialogRef<ChangeEmailDialog>);
+    private translateService = inject(TranslateService);
 
     protected onNoClick(): void {
         this.dialogRef.close();
@@ -31,7 +33,7 @@ export class ChangeEmailDialog {
 
             await this.accountService.changeEmail(changeEmail);
 
-            this.messagesService.showSuccess('Email has been changed.');
+            this.messagesService.showSuccess(this.translateService.instant('dialogs.changeEmail.messages.emailHasBeenChanged'));
             this.dialogRef.close();
         } catch (error) {
             console.error(error);

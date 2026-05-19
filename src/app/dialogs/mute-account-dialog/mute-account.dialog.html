@@ -1,5 +1,5 @@
 <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
-    <div mat-dialog-title>Mute account</div>
+    <div mat-dialog-title>{{ 'dialogs.muteAccount.texts.muteAccount' | translate }}</div>
     <div mat-dialog-content>
 
         <div class="padding-top-5 text-muted fs-90">
@@ -43,9 +43,9 @@
 
             <div class="padding-top-20">
                 <mat-form-field>
-                    <mat-label>Mute end date</mat-label>
+                    <mat-label>{{ 'dialogs.muteAccount.texts.muteEndDate' | translate }}</mat-label>
                     <input type="text" name="muteEnd"  matInput [matDatepicker]="picker" [(ngModel)]="muteEnd" [disabled]="!(muteStatuses() || muteReblogs() ||muteNotifications())">
-                    <mat-hint>Optional date when muting will end.</mat-hint>
+                    <mat-hint>{{ 'dialogs.muteAccount.texts.optionalDateWhenMutingWillEnd' | translate }}</mat-hint>
                     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                   </mat-form-field>
@@ -53,7 +53,7 @@
         </div>
     </div>
     <div mat-dialog-actions>
-        <button matButton="text" type="button" (click)="onNoClick()">Cancel</button>
-        <button matButton="filled" type="submit" cdkFocusInitial>Mute</button>
+        <button matButton="text" type="button" (click)="onNoClick()">{{ 'common.actions.cancel' | translate }}</button>
+        <button matButton="filled" type="submit" cdkFocusInitial>{{ 'components.dialogCommon.actions.mute' | translate }}</button>
     </div>
 </form>

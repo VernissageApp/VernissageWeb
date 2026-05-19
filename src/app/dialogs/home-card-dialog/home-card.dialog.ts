@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, model, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { HomeCard } from 'src/app/models/home-card';
 import { MessagesService } from 'src/app/services/common/messages.service';
@@ -20,6 +21,7 @@ export class HomeCardDialog implements OnInit {
     private homeCardsService = inject(HomeCardsService);
     private dialogRef = inject(MatDialogRef<HomeCardDialog>);
     private data?: HomeCard = inject(MAT_DIALOG_DATA);
+    private translateService = inject(TranslateService);
 
     public ngOnInit(): void {
         if (this.data) {
@@ -41,7 +43,7 @@ export class HomeCardDialog implements OnInit {
                 this.data.order = this.order();
 
                 await this.homeCardsService.update(this.data?.id, this.data);
-                this.messageService.showSuccess('Home card has been updated.');
+                this.messageService.showSuccess(this.translateService.instant('dialogs.homeCard.messages.homeCardHasBeenUpdated'));
             } else {
                 const newHomeCard = new HomeCard();
                 newHomeCard.title = this.title();
@@ -49,7 +51,7 @@ export class HomeCardDialog implements OnInit {
                 newHomeCard.order = this.order();
 
                 await this.homeCardsService.create(newHomeCard);
-                this.messageService.showSuccess('New home card has been created.');
+                this.messageService.showSuccess(this.translateService.instant('dialogs.homeCard.messages.newHomeCardHasBeenCreated'));
             }
 
             this.dialogRef.close({ confirmed: true});

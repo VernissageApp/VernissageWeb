@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, effect, inject, input, model, OnInit, output, signal, viewChild } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { Status } from 'src/app/models/status';
 import { StatusRequest } from 'src/app/models/status-request';
 import { MessagesService } from 'src/app/services/common/messages.service';
@@ -41,6 +42,7 @@ export class CommentReplyComponent implements OnInit {
     private statusesService = inject(StatusesService);
     private instanceService = inject(InstanceService);
     private messageService = inject(MessagesService);
+    private translateService = inject(TranslateService);
 
     constructor() {
         effect(() => this.fillUserName(this.status()));
@@ -68,7 +70,7 @@ export class CommentReplyComponent implements OnInit {
                     this.fillUserName(this.status());
                 });
 
-                this.messageService.showSuccess('Comment has been added.');
+                this.messageService.showSuccess(this.translateService.instant('components.commentReply.messages.commentHasBeenAdded'));
                 this.added.emit();
             }
         } catch (error) {

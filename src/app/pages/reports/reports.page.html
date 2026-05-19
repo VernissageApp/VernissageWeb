@@ -5,9 +5,9 @@
                 <div class="width-100">
                     <section class="flex-row flex-space-between flex-align-center margin-bottom-20" [ngClass]="{ 'flex-row': !isHandset(), 'flex-column': isHandset() }">
                         <h1>
-                            <div>Reports</div>
+                            <div>{{ 'common.labels.reports' | translate }}</div>
                             @if (!isHandset()) {
-                                <div class="fs-60 text-muted">Issues reported by other system users.</div>
+                                <div class="fs-60 text-muted">{{ 'pages.reports.subtitle' | translate }}</div>
                             }
                         </h1>
                     </section>
@@ -19,10 +19,10 @@
                             <th mat-header-cell *matHeaderCellDef> </th>
                             <td mat-cell *matCellDef="let element">
                                 @if (!isHandset()) {
-                                    <mat-chip-set aria-label="Type">
+                                    <mat-chip-set [attr.aria-label]="'common.labels.type' | translate">
                                         <mat-chip-option [disableRipple]="true" disabled><span class="fs-90">{{ getReportType(element) }}</span></mat-chip-option>
                                         @if (element.forward) {
-                                            <mat-chip-option [disableRipple]="true" disabled><span class="fs-90">Federated</span></mat-chip-option>
+                                            <mat-chip-option [disableRipple]="true" disabled><span class="fs-90">{{ 'pages.reports.table.federated' | translate }}</span></mat-chip-option>
                                         }
                                     </mat-chip-set>
                                 }
@@ -31,10 +31,10 @@
 
                         <!-- User Column -->
                         <ng-container matColumnDef="user">
-                            <th mat-header-cell *matHeaderCellDef> User </th>
+                            <th mat-header-cell *matHeaderCellDef>{{ 'common.labels.user' | translate }}</th>
                             <td mat-cell *matCellDef="let element">
                                 <div class="flex-row gap-8 flex-align-center">
-                                    <a [routerLink]="['/@' + element.user?.userName ]" class="user-avatar" [attr.aria-label]="'Open profile @' + element.user?.userName">
+                                    <a [routerLink]="['/@' + element.user?.userName ]" class="user-avatar" [attr.aria-label]="'pages.reports.actions.openProfileAriaLabel' | translate:{ userName: element.user?.userName }">
                                         <app-avatar [user]="element.user" [size]="avatarSize.medium"></app-avatar>
                                     </a>
                                     <div>
@@ -46,10 +46,10 @@
 
                         <!-- Reported User Column -->
                         <ng-container matColumnDef="reportedUser">
-                            <th mat-header-cell *matHeaderCellDef> Reported user </th>
+                            <th mat-header-cell *matHeaderCellDef>{{ 'pages.reports.table.reportedUser' | translate }}</th>
                             <td mat-cell *matCellDef="let element">
                                 <div class="flex-row gap-8 flex-align-center">
-                                    <a [routerLink]="['/@' + element.reportedUser?.userName ]" class="user-avatar" [attr.aria-label]="'Open profile @' + element.reportedUser?.userName">
+                                    <a [routerLink]="['/@' + element.reportedUser?.userName ]" class="user-avatar" [attr.aria-label]="'pages.reports.actions.openProfileAriaLabel' | translate:{ userName: element.reportedUser?.userName }">
                                         <app-avatar [user]="element.reportedUser" [size]="avatarSize.medium"></app-avatar>
                                     </a>
                                     <div>
@@ -61,17 +61,17 @@
 
                         <!-- Status Column -->
                         <ng-container matColumnDef="status">
-                            <th mat-header-cell *matHeaderCellDef> Status </th>
+                            <th mat-header-cell *matHeaderCellDef>{{ 'common.labels.status' | translate }}</th>
                             <td mat-cell *matCellDef="let element">
                                 <span>@if (element.status?.id || element.mainStatusId) {
-                                    <a [routerLink]="['/statuses', element.mainStatusId ?? element.status?.id ]">Link</a>
+                                    <a [routerLink]="['/statuses', element.mainStatusId ?? element.status?.id ]">{{ 'common.labels.link' | translate }}</a>
                                 }</span>
                             </td>
                         </ng-container>
 
                         <!-- Is Local Column -->
                         <ng-container matColumnDef="isLocal">
-                            <th mat-header-cell *matHeaderCellDef> Local </th>
+                            <th mat-header-cell *matHeaderCellDef>{{ 'common.labels.local' | translate }}</th>
                             <td mat-cell *matCellDef="let element">
                                 <mat-checkbox [disableRipple]="true" [ngModel]="element.isLocal" disabled>
                                 </mat-checkbox>
@@ -80,13 +80,13 @@
 
                         <!-- Category Column -->
                         <ng-container matColumnDef="category">
-                            <th mat-header-cell *matHeaderCellDef> Category </th>
+                            <th mat-header-cell *matHeaderCellDef>{{ 'common.labels.category' | translate }}</th>
                             <td mat-cell *matCellDef="let element"> {{ element.category }} </td>
                         </ng-container>
 
                         <!-- Consideration User Column -->
                         <ng-container matColumnDef="considerationUser">
-                            <th mat-header-cell *matHeaderCellDef> Consideration user </th>
+                            <th mat-header-cell *matHeaderCellDef>{{ 'pages.reports.table.considerationUser' | translate }}</th>
                             <td mat-cell *matCellDef="let element">
                                 @if (element.considerationUser) {
                                     <span>
@@ -98,7 +98,7 @@
 
                         <!-- Consideration Date Column -->
                         <ng-container matColumnDef="considerationDate">
-                            <th mat-header-cell *matHeaderCellDef> Consideration date </th>
+                            <th mat-header-cell *matHeaderCellDef>{{ 'pages.reports.table.considerationDate' | translate }}</th>
                             <td mat-cell *matCellDef="let element">
                                 @if (element.considerationDate) {
                                     <span>
@@ -113,17 +113,17 @@
                             <th mat-header-cell *matHeaderCellDef></th>
                             <td mat-cell *matCellDef="let element" class="text-right">
                                 <div class="flex-row flex-end">
-                                    <button type="button" matButton="outlined" aria-label="Show report details" (click)="onOpen(element)" class="action-button margin-right-10">Show</button>
+                                    <button type="button" matButton="outlined" [attr.aria-label]="'pages.reports.actions.showReportDetailsAriaLabel' | translate" (click)="onOpen(element)" class="action-button margin-right-10">{{ 'common.actions.show' | translate }}</button>
 
                                     @if (!element.status || element.considerationDate) {
                                         @if (!element.considerationDate) {
-                                            <button type="button" matButton="outlined" aria-label="Close report" (click)="onClose(element)" class="action-button">Close</button>
+                                            <button type="button" matButton="outlined" [attr.aria-label]="'pages.reports.actions.closeReportAriaLabel' | translate" (click)="onClose(element)" class="action-button">{{ 'common.actions.close' | translate }}</button>
                                         }
                                         @if (element.considerationDate) {
-                                            <button type="button" matButton="outlined" aria-label="Restore report" (click)="onRestore(element)" class="action-button">Restore</button>
+                                            <button type="button" matButton="outlined" [attr.aria-label]="'pages.reports.actions.restoreReportAriaLabel' | translate" (click)="onRestore(element)" class="action-button">{{ 'common.actions.restore' | translate }}</button>
                                         }
                                     } @else {
-                                        <button matIconButton [matMenuTriggerFor]="menu" class="submenu" aria-label="Report actions">
+                                        <button matIconButton [matMenuTriggerFor]="menu" class="submenu" [attr.aria-label]="'pages.reports.actions.reportActionsAriaLabel' | translate">
                                             <mat-icon>more_vert</mat-icon>
                                         </button>
                                         <mat-menu #menu="matMenu">
@@ -131,22 +131,22 @@
                                                 <button
                                                     type="button"
                                                     mat-menu-item
-                                                    aria-label="Close report"
+                                                    [attr.aria-label]="'pages.reports.actions.closeReportAriaLabel' | translate"
                                                     (click)="onClose(element)"
                                                     class="action-button">
                                                     <mat-icon>cancel</mat-icon>
-                                                    <span>Close</span>
+                                                    <span>{{ 'common.actions.close' | translate }}</span>
                                                 </button>
                                             }
                                             @if (element.considerationDate) {
                                                 <button
                                                     type="button"
                                                     mat-menu-item
-                                                    aria-label="Restore report"
+                                                    [attr.aria-label]="'pages.reports.actions.restoreReportAriaLabel' | translate"
                                                     (click)="onRestore(element)"
                                                     class="action-button">
                                                     <mat-icon>settings_backup_restore</mat-icon>
-                                                    <span>Restore</span>
+                                                    <span>{{ 'common.actions.restore' | translate }}</span>
                                                 </button>
                                             }
 
@@ -154,11 +154,11 @@
                                                 <button
                                                     type="button"
                                                     mat-menu-item
-                                                    aria-label="Unlist status"
+                                                    [attr.aria-label]="'pages.reports.actions.unlistStatusAriaLabel' | translate"
                                                     (click)="onUnlist(element)"
                                                     class="action-button">
                                                     <mat-icon>hide_image</mat-icon>
-                                                    <span>Unlist status</span>
+                                                    <span>{{ 'pages.reports.actions.unlistStatus' | translate }}</span>
                                                 </button>
                                             }
 
@@ -166,11 +166,11 @@
                                                 <button
                                                     type="button"
                                                     mat-menu-item
-                                                    aria-label="Delete status"
+                                                    [attr.aria-label]="'pages.reports.actions.deleteStatusAriaLabel' | translate"
                                                     (click)="onDelete(element)"
                                                     class="action-button">
                                                     <mat-icon>delete</mat-icon>
-                                                    <span>Delete status</span>
+                                                    <span>{{ 'pages.reports.actions.deleteStatus' | translate }}</span>
                                                 </button>
                                             }
 
@@ -178,11 +178,11 @@
                                                 <button
                                                     type="button"
                                                     mat-menu-item
-                                                    aria-label="Apply CW to status"
+                                                    [attr.aria-label]="'pages.reports.actions.applyCWToStatusAriaLabel' | translate"
                                                     (click)="onApplyCW(element)"
                                                     class="action-button">
                                                     <mat-icon>warning</mat-icon>
-                                                    <span>Apply CW to status</span>
+                                                    <span>{{ 'pages.reports.actions.applyCWToStatus' | translate }}</span>
                                                 </button>
                                             }
 
@@ -190,11 +190,11 @@
                                                 <button
                                                     type="button"
                                                     mat-menu-item
-                                                    aria-label="Send to remote instance"
+                                                    [attr.aria-label]="'pages.reports.actions.sendToRemoteInstanceAriaLabel' | translate"
                                                     (click)="onSend(element)"
                                                     class="action-button">
                                                     <mat-icon>public</mat-icon>
-                                                    <span>Send to remote instance</span>
+                                                    <span>{{ 'pages.reports.actions.sendToRemoteInstance' | translate }}</span>
                                                 </button>
                                             }
                                         </mat-menu>
@@ -212,7 +212,7 @@
                         [pageIndex]="pageIndex()"
                         [pageSize]="10"
                         [pageSizeOptions]="[10, 25, 100]"
-                        aria-label="Select page">
+                        [attr.aria-label]="'common.paginator.selectPage' | translate">
                     </mat-paginator>
                 </div>
             </div>

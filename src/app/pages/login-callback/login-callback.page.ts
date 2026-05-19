@@ -3,6 +3,7 @@ import { IdentityService } from 'src/app/services/http/identity.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IdentityToken } from 'src/app/models/identity-token';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-login-callback',
@@ -18,6 +19,7 @@ export class LoginCallbackPage implements OnInit {
     private route = inject(ActivatedRoute);
     private authorizationService = inject(AuthorizationService);
     private router = inject(Router);
+    private translateService = inject(TranslateService);
 
     async ngOnInit(): Promise<void> {
         const authenticateToken = this.route.snapshot.queryParams.authenticateToken;
@@ -29,13 +31,13 @@ export class LoginCallbackPage implements OnInit {
         } catch (error: any) {
 
             if (error.error.code === 'invalidLoginCredentials') {
-                this.errorMessage.set('Invalid credentials.');
+                this.errorMessage.set(this.translateService.instant('pages.login.errors.invalidCredentials'));
             } else if (error.error.code === 'emailNotConfirmed') {
-                this.errorMessage.set('Your email is not confirmed. Check your inbox or reset your password.');
+                this.errorMessage.set(this.translateService.instant('pages.loginCallback.errors.emailNotConfirmed'));
             } else if (error.error.code === 'userAccountIsBlocked') {
-                this.errorMessage.set('Your account is blocked. Contact with our support.');
+                this.errorMessage.set(this.translateService.instant('pages.login.errors.accountBlocked'));
             } else {
-                this.errorMessage.set('Unknown login error. Try again later.');
+                this.errorMessage.set(this.translateService.instant('pages.login.errors.unknownLoginError'));
             }
         }
     }

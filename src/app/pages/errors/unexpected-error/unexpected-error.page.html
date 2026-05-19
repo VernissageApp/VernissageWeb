@@ -1,12 +1,12 @@
 <div animate.enter="fade-in" class="flex-row flex-center padding-top-30">
     <div class="error-container margin-left-10 margin-right-10">
-        <h1><mat-icon [inline]="true" class="text-muted vertical-align-bottom">bug_report</mat-icon> Unexpected error</h1>
+        <h1><mat-icon [inline]="true" class="text-muted vertical-align-bottom">bug_report</mat-icon> {{ 'pages.errors.unexpectedError.title' | translate }}</h1>
         <p>
-            We're sorry, unexpected error occurred.
-            Please go back to the <a routerLink="/home" aria-label="Home page">homepage</a> or contact with system administrator.
+            {{ 'pages.errors.unexpectedError.description' | translate }}
+            {{ 'common.errors.goBackPrefix' | translate }}<a routerLink="/home" [attr.aria-label]="'common.labels.homePage' | translate">{{ 'common.errors.goBackLink' | translate }}</a>{{ 'common.errors.goBackSuffix' | translate }}
 
             @if (code(); as codeString) {
-                <span>Error code: <code>{{ codeString }}</code>.</span>
+                <span>{{ 'pages.errors.unexpectedError.errorCodeLabel' | translate }} <code>{{ codeString }}</code>.</span>
             }
         </p>
         <mat-progress-bar mode="determinate" [value]="value()"></mat-progress-bar>
@@ -15,11 +15,11 @@
             <div class="margin-top-20">
                 <mat-expansion-panel [expanded]="false" (afterExpand)="onAfterExpand()">
                     <mat-expansion-panel-header>
-                        <mat-panel-title> Error information </mat-panel-title>
+                        <mat-panel-title>{{ 'pages.errors.unexpectedError.errorInformationTitle' | translate }}</mat-panel-title>
                     </mat-expansion-panel-header>
                     <ng-template matExpansionPanelContent>
                         <mat-form-field appearance="outline" class="width-100">
-                            <textarea matInput rows="10" aria-label="Error message" [disabled]="true">{{ errorMessageInternal }}</textarea>
+                            <textarea matInput rows="10" [attr.aria-label]="'common.labels.errorMessage' | translate" [disabled]="true">{{ errorMessageInternal }}</textarea>
                         </mat-form-field>
                     </ng-template>
                 </mat-expansion-panel>

@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { ResponsiveComponent } from 'src/app/common/responsive';
@@ -30,6 +31,7 @@ export class InstanceRulesComponent extends ResponsiveComponent implements OnIni
     private rulesService = inject(RulesService);
     private messageService = inject(MessagesService);
     private dialog = inject(MatDialog);
+    private translateService = inject(TranslateService);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
@@ -49,14 +51,14 @@ export class InstanceRulesComponent extends ResponsiveComponent implements OnIni
     protected async onDelete(rule: Rule): Promise<void> {
         const dialogRef = this.dialog.open(ConfirmationDialog, {
             width: '500px',
-            data: 'Do you want to delete instance rule?'
+            data: this.translateService.instant('components.instanceRules.messages.doYouWantToDeleteInstanceRule')
         });
 
         dialogRef.afterClosed().subscribe(async (result) => {
             if (result?.confirmed) {
                 try {
                     await this.rulesService.delete(rule.id);
-                    this.messageService.showSuccess('Rule has been deleted.');
+                    this.messageService.showSuccess(this.translateService.instant('components.instanceRules.messages.ruleHasBeenDeleted'));
 
                     const downloadedRules = await this.rulesService.get(this.pageIndex() + 1, this.pageSize);
                     this.rules.set(downloadedRules);

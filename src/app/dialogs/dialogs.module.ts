@@ -39,6 +39,7 @@ import { UnfollowAccountDialog } from './unfollow-account-dialog/unfollow-accoun
 import { UserBlockedUserDialog } from './user-blocked-user-dialog/user-blocked-domain.dialog';
 import { MoveAccountDialog } from './move-account-dialog/move-account.dialog';
 import { RestoreAccountDialog } from './restore-account-dialog/restore-account.dialog';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
     declarations: [
@@ -116,7 +117,8 @@ import { RestoreAccountDialog } from './restore-account-dialog/restore-account.d
         ReactiveFormsModule,
         RouterModule,
         ValidationsModule,
-        ComponentsModule
+        ComponentsModule,
+        TranslateModule
     ],
     providers: [
         provideHttpClient(withFetch(), withInterceptorsFromDi()),

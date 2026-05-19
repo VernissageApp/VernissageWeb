@@ -1,26 +1,26 @@
 <div [hidden]="!isReady()" animate.enter="fade-in" [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
     <section>
-        <h1>Account</h1>
+        <h1>{{ 'pages.account.title' | translate }}</h1>
     </section>
 
     <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
         <mat-card class="margin-bottom-20" appearance="outlined">
             <mat-card-header>
                 <mat-card-title>
-                    Your personal information
+                    {{ 'pages.account.personalInformation.title' | translate }}
                 </mat-card-title>
             </mat-card-header>
 
             <mat-card-content>
                 <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
                     <mat-form-field appearance="outline">
-                        <mat-label>Name</mat-label>
+                        <mat-label>{{ 'common.labels.name' | translate }}</mat-label>
                         <input type="text" matInput name="userName" #userName="ngModel" [(ngModel)]="user().name"
-                            placeholder="Name" aria-label="Name" appMaxLength="100" />
+                            [placeholder]="'common.labels.name' | translate" [attr.aria-label]="'common.labels.name' | translate" appMaxLength="100" />
 
                         @if (userName.invalid && userName.errors?.appMaxLength) {
                             <mat-error>
-                                Too long name.
+                                {{ 'pages.account.personalInformation.errors.nameTooLong' | translate }}
                             </mat-error>
                         }
                     </mat-form-field>
@@ -29,13 +29,13 @@
 
                 <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
                     <mat-form-field appearance="outline">
-                        <mat-label>Bio</mat-label>
+                        <mat-label>{{ 'common.labels.bio' | translate }}</mat-label>
                         <textarea matInput name="bio" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4"
-                            cdkAutosizeMaxRows="10" placeholder="Bio" #bio="ngModel" [(ngModel)]="user().bio"
-                            aria-label="Bio" appMaxLength="500"></textarea>
+                            cdkAutosizeMaxRows="10" [placeholder]="'common.labels.bio' | translate" #bio="ngModel" [(ngModel)]="user().bio"
+                            [attr.aria-label]="'common.labels.bio' | translate" appMaxLength="500"></textarea>
 
                         @if (bio.invalid && bio.errors?.appMaxLength) {
-                            <mat-error>Too long bio.</mat-error>
+                            <mat-error>{{ 'pages.account.personalInformation.errors.bioTooLong' | translate }}</mat-error>
                         }
                     </mat-form-field>
                     <div></div>
@@ -43,10 +43,23 @@
 
                 <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-10">
                     <mat-form-field appearance="outline">
-                        <mat-label>Language</mat-label>
-                        <mat-select [(value)]="user().locale">
-                            <mat-option value="en_US">English (English)</mat-option>
-                            <mat-option value="pl_PL">Polish (polski)</mat-option>
+                        <mat-label>{{ 'common.labels.language' | translate }}</mat-label>
+                        <mat-select [(value)]="user().locale" (selectionChange)="onLocaleChange($event.value)">
+                            <mat-select-trigger>
+                                <span class="language-option">
+                                    <img class="language-flag" [src]="'assets/flags/' + selectedLanguage().flag + '.svg'" [alt]="selectedLanguage().labelKey | translate" />
+                                    <span>{{ selectedLanguage().labelKey | translate }}</span>
+                                </span>
+                            </mat-select-trigger>
+
+                            @for (language of languages; track language.locale) {
+                                <mat-option [value]="language.locale">
+                                    <span class="language-option">
+                                        <img class="language-flag" [src]="'assets/flags/' + language.flag + '.svg'" [alt]="language.labelKey | translate" />
+                                        <span>{{ language.labelKey | translate }}</span>
+                                    </span>
+                                </mat-option>
+                            }
                         </mat-select>
                     </mat-form-field>
                     <div></div>
@@ -54,9 +67,9 @@
 
                 <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
                     <div>
-                        <mat-checkbox name="manuallyApprovesFollowers" [disableRipple]="true" [(ngModel)]="user().manuallyApprovesFollowers">Manually accept new followers</mat-checkbox>
+                        <mat-checkbox name="manuallyApprovesFollowers" [disableRipple]="true" [(ngModel)]="user().manuallyApprovesFollowers">{{ 'pages.account.privacy.manuallyApprovesFollowers.label' | translate }}</mat-checkbox>
                         <div class="text-muted checkbox-hint">
-                            People will need to wait for you to accept their follow request. Check this option if you prefer to manually review follow requests and decide whether to accept or reject new followers, or uncheck it to allow people to follow you without requiring approval.
+                            {{ 'pages.account.privacy.manuallyApprovesFollowers.hint' | translate }}
                         </div>
                     </div>
                     <div></div>
@@ -64,9 +77,9 @@
 
                 <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
                     <div>
-                        <mat-checkbox name="includePublicPostsInSearchEngines" [disableRipple]="true" [(ngModel)]="user().includePublicPostsInSearchEngines">Include public posts in search engines</mat-checkbox>
+                        <mat-checkbox name="includePublicPostsInSearchEngines" [disableRipple]="true" [(ngModel)]="user().includePublicPostsInSearchEngines">{{ 'pages.account.privacy.includePublicPostsInSearchEngines.label' | translate }}</mat-checkbox>
                         <div class="text-muted checkbox-hint">
-                            Allow your public posts to be indexed and displayed in external search engines such as Google or Bing. This may make your content discoverable outside of Vernissage.
+                            {{ 'pages.account.privacy.includePublicPostsInSearchEngines.hint' | translate }}
                         </div>
                     </div>
                     <div></div>
@@ -74,9 +87,9 @@
 
                 <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
                     <div>
-                        <mat-checkbox name="includeProfilePageInSearchEngines" [disableRipple]="true" [(ngModel)]="user().includeProfilePageInSearchEngines">Include profile page in search engines</mat-checkbox>
+                        <mat-checkbox name="includeProfilePageInSearchEngines" [disableRipple]="true" [(ngModel)]="user().includeProfilePageInSearchEngines">{{ 'pages.account.privacy.includeProfilePageInSearchEngines.label' | translate }}</mat-checkbox>
                         <div class="text-muted checkbox-hint">
-                            Allow your profile page to appear in results from external search engines, making your profile discoverable beyond the Vernissage platform.
+                            {{ 'pages.account.privacy.includeProfilePageInSearchEngines.hint' | translate }}
                         </div>
                     </div>
                     <div></div>
@@ -89,9 +102,9 @@
 
                 <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20 padding-top-20">
                     <div class="flex-row flex-stretch flex-space-between">
-                        <h3>Fields</h3>
+                        <h3>{{ 'common.labels.fields' | translate }}</h3>
                         <div class="text-right">
-                            <button matButton="outlined" type="button" (click)="onAddField()">Add field</button>
+                            <button matButton="outlined" type="button" (click)="onAddField()">{{ 'common.actions.addField' | translate }}</button>
                         </div>
                     </div>
                     <div></div>
@@ -101,11 +114,11 @@
                     <div>
                         <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
                             <mat-form-field appearance="outline">
-                                <mat-label>Key</mat-label>
-                                <input type="text" matInput [name]="'key-' + i" #key="ngModel" [(ngModel)]="field.key" placeholder="Key" aria-label="Key" appMaxLength="500" />
+                                <mat-label>{{ 'common.labels.key' | translate }}</mat-label>
+                                <input type="text" matInput [name]="'key-' + i" #key="ngModel" [(ngModel)]="field.key" [placeholder]="'common.labels.key' | translate" [attr.aria-label]="'common.labels.key' | translate" appMaxLength="500" />
 
                                 @if (key.invalid && key.errors?.appMaxLength) {
-                                    <mat-error>Too long key.</mat-error>
+                                    <mat-error>{{ 'pages.account.personalInformation.errors.keyTooLong' | translate }}</mat-error>
                                 }
                             </mat-form-field>
                             <div></div>
@@ -113,11 +126,11 @@
 
                         <div class="flex-row flex-responsive flex-stretch gap-16">
                             <mat-form-field appearance="outline">
-                                <mat-label>Value</mat-label>
-                                <input type="text" matInput [name]="'value-' + i" #value="ngModel" [(ngModel)]="field.value" placeholder="Value" aria-label="Value" appMaxLength="500" />
+                                <mat-label>{{ 'common.labels.value' | translate }}</mat-label>
+                                <input type="text" matInput [name]="'value-' + i" #value="ngModel" [(ngModel)]="field.value" [placeholder]="'common.labels.value' | translate" [attr.aria-label]="'common.labels.value' | translate" appMaxLength="500" />
 
                                 @if (value.invalid && value.errors?.appMaxLength) {
-                                    <mat-error>Too long value.</mat-error>
+                                    <mat-error>{{ 'pages.account.personalInformation.errors.valueTooLong' | translate }}</mat-error>
                                 }
                             </mat-form-field>
                             <div></div>
@@ -125,7 +138,7 @@
 
                         <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
                             <div class="text-right">
-                                <button matButton="outlined" type="button" (click)="onDeleteField(field)">Delete</button>
+                                <button matButton="outlined" type="button" (click)="onDeleteField(field)">{{ 'common.actions.delete' | translate }}</button>
                             </div>
                             <div></div>
                         </div>
@@ -134,23 +147,19 @@
 
                 <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20 padding-top-20">
                     <div>
-                        <div class="fw-400 margin-bottom-5">Self-verification of the account</div>
+                        <div class="fw-400 margin-bottom-5">{{ 'pages.account.verification.title' | translate }}</div>
                         <div class="text-muted">
                             <p>
-                                You can use Fields to verify your identity. All you need is a personal website that others recognize as yours.
-                                By linking to this website from your profile, we will verify that the website links back to your profile and
-                                display a visual indicator to confirm this. Simply copy and paste the code provided below into the HTML of your
-                                website, then add your website's address into one of the extra fields above.
+                                {{ 'pages.account.verification.description' | translate }}
                             </p>
 
                             <mat-form-field class="width-100" appearance="outline">
-                                <input type="text" matInput name="verification" [ngModel]="verification()" aria-label="Verification example" [readonly]="true">
-                                <button matSuffix matButton="outlined" type="button" class="margin-right-10" (click)="onCopyVerification()" aria-label="Copy verification">Copy</button>
+                                <input type="text" matInput name="verification" [ngModel]="verification()" [attr.aria-label]="'pages.account.verification.exampleAriaLabel' | translate" [readonly]="true">
+                                <button matSuffix matButton="outlined" type="button" class="margin-right-10" (click)="onCopyVerification()" [attr.aria-label]="'pages.account.verification.copyAriaLabel' | translate">{{ 'common.actions.copy' | translate }}</button>
                             </mat-form-field>
 
                             <p>
-                                Tip: The link on your website can be invisible. The important part is rel="me" which prevents impersonation on websites
-                                with user-generated content.
+                                {{ 'pages.account.verification.tip' | translate }}
                             </p>
                         </div>
                     </div>
@@ -161,7 +170,7 @@
 
             <mat-card-actions>
                 <div class="account-actions padding-top-20">
-                    <button type="submit" matButton="filled" aria-label="Save">Save</button>
+                    <button type="submit" matButton="filled" [attr.aria-label]="'common.actions.save' | translate">{{ 'common.actions.save' | translate }}</button>
                 </div>
             </mat-card-actions>
 
@@ -171,26 +180,26 @@
     <form name="avatarForm" (ngSubmit)="avatarForm.form.valid && onAvatarFormSubmit()" #avatarForm="ngForm" novalidate>
         <mat-card class="margin-bottom-20" appearance="outlined">
             <mat-card-header>
-                <mat-card-title>Avatar</mat-card-title>
-                <mat-card-subtitle>PNG, GIF or JPG. At most {{ maxPictureFileSizeString() }}. Will be downscaled to 600x600px</mat-card-subtitle>
+                <mat-card-title>{{ 'common.labels.avatar' | translate }}</mat-card-title>
+                <mat-card-subtitle>{{ 'pages.account.avatar.subtitle' | translate: { maxPictureFileSize: maxPictureFileSizeString() } }}</mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>
                 <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
                     <div>
-                        <button type="button" matButton="outlined" (click)="avatarFileUpload.click()" class="margin-right-20">Choose file</button>
+                        <button type="button" matButton="outlined" (click)="avatarFileUpload.click()" class="margin-right-20">{{ 'common.actions.chooseFile' | translate }}</button>
                         <input type="file" hidden name="avatar" #avatarFileUpload accept="image/*" (change)="onAvatarSelected($event)">
                     </div>
 
                     <div>
-                        <img id="avatarImage" [src]="avatarSrc()" width="200" height="200" alt="Avatar" />
+                        <img id="avatarImage" [src]="avatarSrc()" width="200" height="200" [alt]="'common.labels.avatar' | translate" />
                     </div>
                 </div>
             </mat-card-content>
 
             <mat-card-actions>
                 <div class="account-actions">
-                    <button type="submit" matButton="filled" aria-label="Save" class="margin-right-10" [disabled]="!avatarFileSelected() || uploadingAvatarFile()">Save</button>
-                    <button type="button" matButton="elevated" aria-label="Remove avatar" (click)="onRemoveAvatar()" [disabled]="!avatarFileAlreadySet()">Remove</button>
+                    <button type="submit" matButton="filled" [attr.aria-label]="'common.actions.save' | translate" class="margin-right-10" [disabled]="!avatarFileSelected() || uploadingAvatarFile()">{{ 'common.actions.save' | translate }}</button>
+                    <button type="button" matButton="elevated" [attr.aria-label]="'pages.account.avatar.removeAriaLabel' | translate" (click)="onRemoveAvatar()" [disabled]="!avatarFileAlreadySet()">{{ 'common.actions.remove' | translate }}</button>
                     @if (uploadingAvatarFile()) {
                         <mat-spinner class="display-inline-block vertical-align-middle margin-left-20 margin-top-5" [diameter]="18"></mat-spinner>
                     }
@@ -202,26 +211,26 @@
     <form name="avatarForm" (ngSubmit)="headerForm.form.valid && onHeaderFormSubmit()" #headerForm="ngForm" novalidate>
         <mat-card class="margin-bottom-20" appearance="outlined">
             <mat-card-header>
-                <mat-card-title>Header</mat-card-title>
-                <mat-card-subtitle>PNG, GIF or JPG. At most {{ maxPictureFileSizeString() }}. Will be downscaled to 1500x500px</mat-card-subtitle>
+                <mat-card-title>{{ 'common.labels.header' | translate }}</mat-card-title>
+                <mat-card-subtitle>{{ 'pages.account.header.subtitle' | translate: { maxPictureFileSize: maxPictureFileSizeString() } }}</mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>
                 <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
                     <div>
-                        <button type="button"matButton="outlined" (click)="headerFileUpload.click()" class="margin-right-20">Choose file</button>
+                        <button type="button"matButton="outlined" (click)="headerFileUpload.click()" class="margin-right-20">{{ 'common.actions.chooseFile' | translate }}</button>
                         <input type="file" hidden name="header" #headerFileUpload accept="image/*" (change)="onHeaderSelected($event)">
                     </div>
 
                     <div>
-                        <img id="headerImage" [src]="headerSrc()" alt="Header" />
+                        <img id="headerImage" [src]="headerSrc()" [alt]="'common.labels.header' | translate" />
                     </div>
                 </div>
             </mat-card-content>
 
             <mat-card-actions>
                 <div class="account-actions">
-                    <button type="submit" matButton="filled" aria-label="Save" class="margin-right-10" [disabled]="!headerFileSelected() || uploadingHeaderFile()">Save</button>
-                    <button type="button" matButton="elevated" aria-label="Remove header" (click)="onRemoveHeader()" [disabled]="!headerFileAlreadySet()">Remove</button>
+                    <button type="submit" matButton="filled" [attr.aria-label]="'common.actions.save' | translate" class="margin-right-10" [disabled]="!headerFileSelected() || uploadingHeaderFile()">{{ 'common.actions.save' | translate }}</button>
+                    <button type="button" matButton="elevated" [attr.aria-label]="'pages.account.header.removeAriaLabel' | translate" (click)="onRemoveHeader()" [disabled]="!headerFileAlreadySet()">{{ 'common.actions.remove' | translate }}</button>
                     @if (uploadingHeaderFile()) {
                         <mat-spinner class="display-inline-block vertical-align-middle margin-left-20 margin-top-5" [diameter]="18"></mat-spinner>
                     }
@@ -233,29 +242,27 @@
     <mat-card class="margin-bottom-20" appearance="outlined">
         <mat-card-header>
             <mat-card-title>
-                Show your support
+                {{ 'pages.account.support.title' | translate }}
             </mat-card-title>
         </mat-card-header>
         <mat-card-content>
             <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
                 <div>
                     <p>
-                        Thank you for supporting Vernissage! You can choose to display a small badge on your
-                        profile as a token of appreciation and to inspire others to join our community of supporters.
+                        {{ 'pages.account.support.descriptionOne' | translate }}
                     </p>
                     <p>
-                        This option is available only to users who support Vernissage.
-                        If you're a supporter but don't see this option, please contact your instance administrator.
+                        {{ 'pages.account.support.descriptionTwo' | translate }}
                     </p>
 
                     <p>
-                        The badge is optional - you decide whether to show it or keep your support private.
+                        {{ 'pages.account.support.descriptionThree' | translate }}
                     </p>
                 </div>
                 <div class="text-right">
                     <div class="margin-bottom-20">
                         <mat-slide-toggle name="isSupporterFlagEnabled" [(ngModel)]="isSupporterFlagEnabled" (ngModelChange)="onIsSupporterFlagChange()" [disabled]="!user().isSupporter">
-                            Show badge on your profile
+                            {{ 'pages.account.support.showBadgeOnProfile' | translate }}
                         </mat-slide-toggle>
                     </div>
                 </div>
@@ -266,20 +273,20 @@
     <mat-card class="margin-bottom-20" appearance="outlined">
         <mat-card-header>
             <mat-card-title>
-                Two factor authentication (2FA)
+                {{ 'pages.account.twoFactor.title' | translate }}
             </mat-card-title>
         </mat-card-header>
         <mat-card-content>
             <div class="flex-row flex-responsive flex-space-between gap-16 margin-bottom-20">
                 <div>
-                    Protect access to your account by two factor authentication (2FA) process.
+                    {{ 'pages.account.twoFactor.description' | translate }}
                 </div>
                 <div>
                     @if (!user().twoFactorEnabled) {
-                        <button type="button" (click)="openEnableTwoFactorTokenDialog()" matButton="elevated" aria-label="Enable two factor authentication">Enable</button>
+                        <button type="button" (click)="openEnableTwoFactorTokenDialog()" matButton="elevated" [attr.aria-label]="'pages.account.twoFactor.enableAriaLabel' | translate">{{ 'common.actions.enable' | translate }}</button>
                     }
                     @if (user().twoFactorEnabled) {
-                        <button type="button" (click)="openDisableTwoFactorTokenDialog()" matButton="elevated" aria-label="Disable two factor authentication">Disable</button>
+                        <button type="button" (click)="openDisableTwoFactorTokenDialog()" matButton="elevated" [attr.aria-label]="'pages.account.twoFactor.disableAriaLabel' | translate">{{ 'common.actions.disable' | translate }}</button>
                     }
                 </div>
             </div>
@@ -289,22 +296,22 @@
     <mat-card class="margin-bottom-20" appearance="outlined">
         <mat-card-header>
             <mat-card-title>
-                Change email
+                {{ 'pages.account.changeEmail.title' | translate }}
             </mat-card-title>
         </mat-card-header>
         <mat-card-content>
             <div class="flex-row flex-responsive flex-space-between gap-16 margin-bottom-20">
                 <div>
-                    Your current email: <strong>{{ user().email }}</strong>
+                    {{ 'pages.account.changeEmail.currentEmailPrefix' | translate }} <strong>{{ user().email }}</strong>
                     @if (!user().emailWasConfirmed) {
-                        <span class="text-error margin-left-5">(not confirmed)</span>
+                        <span class="text-error margin-left-5">({{ 'pages.account.changeEmail.notConfirmed' | translate }})</span>
                     }
                 </div>
                 <div>
                     @if (!user().emailWasConfirmed) {
-                        <button type="button" (click)="resentConfirmationEmail()" matButton="elevated" class="margin-right-10" aria-label="Resend confirmation email">Resend confirmation email</button>
+                        <button type="button" (click)="resentConfirmationEmail()" matButton="elevated" class="margin-right-10" [attr.aria-label]="'pages.account.changeEmail.resendConfirmationEmailAriaLabel' | translate">{{ 'pages.account.changeEmail.resendConfirmationEmail' | translate }}</button>
                     }
-                    <button type="button" (click)="openChangeEmailDialog()" matButton="elevated" aria-label="Change email">Change email</button>
+                    <button type="button" (click)="openChangeEmailDialog()" matButton="elevated" [attr.aria-label]="'pages.account.changeEmail.changeEmailAriaLabel' | translate">{{ 'pages.account.changeEmail.changeEmail' | translate }}</button>
                 </div>
             </div>
         </mat-card-content>
@@ -313,16 +320,16 @@
     <mat-card class="margin-bottom-20" appearance="outlined">
         <mat-card-header>
             <mat-card-title>
-                Change password
+                {{ 'pages.account.changePassword.title' | translate }}
             </mat-card-title>
         </mat-card-header>
         <mat-card-content>
             <div class="flex-row flex-responsive flex-space-between gap-16 margin-bottom-20">
                 <div>
-                    Set a strong password and don't reuse it for other accounts.
+                    {{ 'pages.account.changePassword.description' | translate }}
                 </div>
                 <div>
-                    <button type="button" (click)="openChangePasswordDialog()" matButton="elevated" aria-label="Change password">Change password</button>
+                    <button type="button" (click)="openChangePasswordDialog()" matButton="elevated" [attr.aria-label]="'pages.account.changePassword.changePasswordAriaLabel' | translate">{{ 'pages.account.changePassword.changePassword' | translate }}</button>
                 </div>
             </div>
         </mat-card-content>
@@ -331,15 +338,13 @@
     <mat-card class="margin-bottom-20" appearance="outlined">
         <mat-card-header>
             <mat-card-title>
-                Moving from a different account
+                {{ 'pages.account.moveFromDifferentAccount.title' | translate }}
             </mat-card-title>
         </mat-card-header>
         <mat-card-content>
             <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
                 <div>
-                    If you want to move from another account to this one, here you can create an alias,
-                    which is required before you can proceed with moving followers from the old account to this one.
-                    This action by itself is harmless and reversible. The account migration is initiated from the old account.
+                    {{ 'pages.account.moveFromDifferentAccount.description' | translate }}
 
                     @if (userAliases(); as userAliasesArray) {
                         @if (userAliasesArray.length > 0) {
@@ -347,7 +352,7 @@
 
                                 <!-- Alias Column -->
                                 <ng-container matColumnDef="alias">
-                                    <th mat-header-cell *matHeaderCellDef> Alias </th>
+                                    <th mat-header-cell *matHeaderCellDef>{{ 'common.labels.alias' | translate }}</th>
                                     <td mat-cell *matCellDef="let element">
                                         {{ element.alias }}
                                     </td>
@@ -357,7 +362,7 @@
                                 <ng-container matColumnDef="actions">
                                     <th mat-header-cell *matHeaderCellDef></th>
                                     <td mat-cell *matCellDef="let element" class="text-right actions">
-                                        <button matButton="outlined" (click)="onUserAliasDelete(element)">Delete</button>
+                                        <button matButton="outlined" (click)="onUserAliasDelete(element)">{{ 'common.actions.delete' | translate }}</button>
                                     </td>
                                 </ng-container>
 
@@ -368,7 +373,7 @@
                     }
                 </div>
                 <div class="text-right">
-                    <button type="button" (click)="openCreateAliasDialog()" matButton="elevated" aria-label="Create account">Create alias</button>
+                    <button type="button" (click)="openCreateAliasDialog()" matButton="elevated" [attr.aria-label]="'pages.account.moveFromDifferentAccount.createAliasAriaLabel' | translate">{{ 'pages.account.moveFromDifferentAccount.createAlias' | translate }}</button>
                 </div>
             </div>
         </mat-card-content>
@@ -377,30 +382,28 @@
     <mat-card class="margin-bottom-20" appearance="outlined">
         <mat-card-header>
             <mat-card-title>
-                Moving to a different account
+                {{ 'pages.account.moveToDifferentAccount.title' | translate }}
             </mat-card-title>
         </mat-card-header>
         <mat-card-content>
             <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
                 <div>
                     <p>
-                        Move your account to another server and notify your followers about the new location.
-                        If their servers support account migration, they will be automatically redirected to follow your new account.
+                        {{ 'pages.account.moveToDifferentAccount.descriptionOne' | translate }}
                     </p>
                     <p>
-                        Only followers are moved automatically. Your posts, media, follows, blocks, bookmarks,
-                        and other account data will not be transferred.
+                        {{ 'pages.account.moveToDifferentAccount.descriptionTwo' | translate }}
                     </p>
 
                     @if (user().movedTo; as userMovedTo) {
-                        The account you are moving to is available at <strong>{{ userMovedTo.account }}</strong>.
+                        {{ 'pages.account.moveToDifferentAccount.movedToPrefix' | translate }} <strong>{{ userMovedTo.account }}</strong>.
                     }
                 </div>
                 <div class="text-right">
                     @if (user().movedTo; as userMovedTo) {
-                        <button type="button" (click)="openRestoreAccountDialog()" matButton="elevated" aria-label="Restore account">Restore account</button>
+                        <button type="button" (click)="openRestoreAccountDialog()" matButton="elevated" [attr.aria-label]="'pages.account.moveToDifferentAccount.restoreAccountAriaLabel' | translate">{{ 'pages.account.moveToDifferentAccount.restoreAccount' | translate }}</button>
                     } @else {
-                        <button type="button" (click)="openMoveAccountDialog()" matButton="elevated" aria-label="Migrate account">Migrate account</button>
+                        <button type="button" (click)="openMoveAccountDialog()" matButton="elevated" [attr.aria-label]="'pages.account.moveToDifferentAccount.migrateAccountAriaLabel' | translate">{{ 'pages.account.moveToDifferentAccount.migrateAccount' | translate }}</button>
                     }
                 </div>
             </div>
@@ -410,20 +413,17 @@
     <mat-card class="margin-bottom-20" appearance="outlined">
         <mat-card-header>
             <mat-card-title>
-                Export
+                {{ 'pages.account.export.title' | translate }}
             </mat-card-title>
         </mat-card-header>
         <mat-card-content>
             <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
                 <div>
-                    You can request an archive containing your posts and uploaded media. The exported data will be provided
-                    in the ActivityPub format, ensuring compatibility with any compliant software. Archives may be requested
-                    once every 30 days. Archives are generated once a day, and you will be notified via email once your
-                    archive is ready.
+                    {{ 'pages.account.export.description' | translate }}
                 </div>
                 <div class="text-right">
                     @if (showRequestArchiveButton()) {
-                        <button type="button" matButton="elevated" aria-label="Request archive" (click)="onRequestArchive()">Request archive</button>
+                        <button type="button" matButton="elevated" [attr.aria-label]="'pages.account.export.requestArchiveAriaLabel' | translate" (click)="onRequestArchive()">{{ 'pages.account.export.requestArchive' | translate }}</button>
                     }
                 </div>
             </div>
@@ -434,7 +434,7 @@
 
                         <!-- RequestDate Column -->
                         <ng-container matColumnDef="requestDate">
-                            <th mat-header-cell *matHeaderCellDef> Request date </th>
+                            <th mat-header-cell *matHeaderCellDef>{{ 'pages.account.export.table.requestDate' | translate }}</th>
                             <td mat-cell *matCellDef="let element">
                                 {{ element.requestDate | date: 'short' }}
                             </td>
@@ -442,7 +442,7 @@
 
                         <!-- Request StartDate Column -->
                         <ng-container matColumnDef="startDate">
-                            <th mat-header-cell *matHeaderCellDef> Start processing date </th>
+                            <th mat-header-cell *matHeaderCellDef>{{ 'pages.account.export.table.startProcessingDate' | translate }}</th>
                             <td mat-cell *matCellDef="let element">
                                 @if (element.startDate) {
                                     {{ element.startDate | date: 'short' }}
@@ -452,7 +452,7 @@
 
                         <!-- Request EndDate Column -->
                         <ng-container matColumnDef="endDate">
-                            <th mat-header-cell *matHeaderCellDef> End processing date </th>
+                            <th mat-header-cell *matHeaderCellDef>{{ 'pages.account.export.table.endProcessingDate' | translate }}</th>
                             <td mat-cell *matCellDef="let element">
                                 @if (element.endDate) {
                                     {{ element.endDate | date: 'short' }}
@@ -462,24 +462,24 @@
 
                         <!-- Status Column -->
                         <ng-container matColumnDef="status">
-                            <th mat-header-cell *matHeaderCellDef> Status </th>
+                            <th mat-header-cell *matHeaderCellDef>{{ 'common.labels.status' | translate }}</th>
                             <td mat-cell *matCellDef="let element">
-                                <mat-chip-set aria-label="Status">
+                                <mat-chip-set [attr.aria-label]="'common.labels.status' | translate">
                                     @switch (element.status) {
                                         @case (archiveStatus.New) {
-                                            <mat-chip [disableRipple]="true">New</mat-chip>
+                                            <mat-chip [disableRipple]="true">{{ 'common.statuses.new' | translate }}</mat-chip>
                                         }
                                         @case (archiveStatus.Processing) {
-                                            <mat-chip [disableRipple]="true">Processing...</mat-chip>
+                                            <mat-chip [disableRipple]="true">{{ 'common.statuses.processing' | translate }}...</mat-chip>
                                         }
                                         @case (archiveStatus.Ready) {
-                                            <mat-chip [disableRipple]="true">Ready</mat-chip>
+                                            <mat-chip [disableRipple]="true">{{ 'common.statuses.ready' | translate }}</mat-chip>
                                         }
                                         @case (archiveStatus.Expired) {
-                                            <mat-chip [disableRipple]="true">Expired</mat-chip>
+                                            <mat-chip [disableRipple]="true">{{ 'common.statuses.expired' | translate }}</mat-chip>
                                         }
                                         @case (archiveStatus.Error) {
-                                            <mat-chip [disableRipple]="true">Error</mat-chip>
+                                            <mat-chip [disableRipple]="true">{{ 'common.statuses.error' | translate }}</mat-chip>
                                         }
                                     }
                                 </mat-chip-set>
@@ -491,7 +491,7 @@
                             <th mat-header-cell *matHeaderCellDef></th>
                             <td mat-cell *matCellDef="let element">
                                 @if (element.status === archiveStatus.Ready) {
-                                    <a [href]="element.fileName" target="_blank">Download your archive</a>
+                                    <a [href]="element.fileName" target="_blank">{{ 'pages.account.export.table.downloadYourArchive' | translate }}</a>
                                 }
                             </td>
                         </ng-container>
@@ -502,12 +502,11 @@
                 }
             }
 
-            <h3>Download data files</h3>
+            <h3>{{ 'pages.account.export.downloadDataFiles.title' | translate }}</h3>
 
             <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
                 <div>
-                    Some of the data from the system can be downloaded directly without waiting for the archive to be generated.
-                    The files are created in text format (CSV) and can also be used for importing to other instances.
+                    {{ 'pages.account.export.downloadDataFiles.description' | translate }}
                 </div>
                 <div class="text-right">
                 </div>
@@ -515,15 +514,15 @@
 
             <div class="download-data">
                 <div class="flex-row flex-space-between gap-16">
-                    <div>Follows</div>
+                    <div>{{ 'pages.account.export.downloadDataFiles.items.follows' | translate }}</div>
                     <div>
-                        <a href="javascript:void(0)" (click)="onDownloadFollowing()"><mat-icon>download</mat-icon><span class="margin-left-10">Download</span></a>
+                        <a href="javascript:void(0)" (click)="onDownloadFollowing()"><mat-icon>download</mat-icon><span class="margin-left-10">{{ 'common.actions.download' | translate }}</span></a>
                     </div>
                 </div>
                 <div class="flex-row flex-space-between gap-16">
-                    <div>Bookmarks</div>
+                    <div>{{ 'pages.bookmarks.title' | translate }}</div>
                     <div>
-                        <a href="javascript:void(0)" (click)="onDownloadBookmarks()"><mat-icon>download</mat-icon><span class="margin-left-10">Download</span></a>
+                        <a href="javascript:void(0)" (click)="onDownloadBookmarks()"><mat-icon>download</mat-icon><span class="margin-left-10">{{ 'common.actions.download' | translate }}</span></a>
                     </div>
                 </div>
             </div>
@@ -534,19 +533,17 @@
     <mat-card class="margin-bottom-20" appearance="outlined">
         <mat-card-header>
             <mat-card-title>
-                Import
+                {{ 'pages.account.import.title' | translate }}
             </mat-card-title>
         </mat-card-header>
         <mat-card-content>
             <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
                 <div>
-                    You can import data previously exported from another server, such as a list of accounts you are following.
-                    Imported accounts will be merged with the ones you are already following. Only CSV files are currently supported.
-                    Max file size is {{ maxImportFileSizeString() }}.
+                    {{ 'pages.account.import.description' | translate: { maxImportFileSize: maxImportFileSizeString() } }}
                 </div>
                 <div class="text-right">
                     <input type="file" hidden (change)="onFileSelected($event)" #fileInput id="file">
-                    <button type="button" matButton="elevated" aria-label="Request archive" (click)="fileInput.click()">Import</button>
+                    <button type="button" matButton="elevated" [attr.aria-label]="'pages.account.import.importAriaLabel' | translate" (click)="fileInput.click()">{{ 'common.actions.import' | translate }}</button>
                 </div>
             </div>
 
@@ -556,7 +553,7 @@
 
                         <!-- RequestDate Column -->
                         <ng-container matColumnDef="createdAt">
-                            <th mat-header-cell *matHeaderCellDef> Created date </th>
+                            <th mat-header-cell *matHeaderCellDef>{{ 'common.dates.createdDate' | translate }}</th>
                             <td mat-cell *matCellDef="let element">
                                 {{ element.createdAt | date: 'short' }}
                             </td>
@@ -564,7 +561,7 @@
 
                         <!-- Request StartDate Column -->
                         <ng-container matColumnDef="startedAt">
-                            <th mat-header-cell *matHeaderCellDef> Start processing date </th>
+                            <th mat-header-cell *matHeaderCellDef>{{ 'pages.account.import.table.startProcessingDate' | translate }}</th>
                             <td mat-cell *matCellDef="let element">
                                 @if (element.startedAt) {
                                     {{ element.startedAt | date: 'short' }}
@@ -574,7 +571,7 @@
 
                         <!-- Request EndDate Column -->
                         <ng-container matColumnDef="endedAt">
-                            <th mat-header-cell *matHeaderCellDef> End processing date </th>
+                            <th mat-header-cell *matHeaderCellDef>{{ 'pages.account.import.table.endProcessingDate' | translate }}</th>
                             <td mat-cell *matCellDef="let element">
                                 @if (element.endedAt) {
                                     {{ element.endedAt | date: 'short' }}
@@ -584,18 +581,18 @@
 
                         <!-- Status Column -->
                         <ng-container matColumnDef="status">
-                            <th mat-header-cell *matHeaderCellDef> Status </th>
+                            <th mat-header-cell *matHeaderCellDef>{{ 'common.labels.status' | translate }}</th>
                             <td mat-cell *matCellDef="let element">
-                                <mat-chip-set aria-label="Status">
+                                <mat-chip-set [attr.aria-label]="'common.labels.status' | translate">
                                     @switch (element.status) {
                                         @case (followingImportStatus.New) {
-                                            <mat-chip [disableRipple]="true">New</mat-chip>
+                                            <mat-chip [disableRipple]="true">{{ 'common.statuses.new' | translate }}</mat-chip>
                                         }
                                         @case (followingImportStatus.Processing) {
-                                            <mat-chip [disableRipple]="true">Processing...</mat-chip>
+                                            <mat-chip [disableRipple]="true">{{ 'common.statuses.processing' | translate }}...</mat-chip>
                                         }
                                         @case (followingImportStatus.Finished) {
-                                            <mat-chip [disableRipple]="true">Finished</mat-chip>
+                                            <mat-chip [disableRipple]="true">{{ 'common.statuses.finished' | translate }}</mat-chip>
                                         }
                                     }
                                 </mat-chip-set>
@@ -606,7 +603,7 @@
                         <ng-container matColumnDef="action">
                             <th mat-header-cell *matHeaderCellDef></th>
                             <td mat-cell *matCellDef="let element">
-                                <a [routerLink]="[]" (click)="openShowAccountsDialog(element)" aria-label="Show accounts">Show accounts</a>
+                                <a [routerLink]="[]" (click)="openShowAccountsDialog(element)" [attr.aria-label]="'pages.account.import.table.showAccountsAriaLabel' | translate">{{ 'pages.account.import.table.showAccounts' | translate }}</a>
                             </td>
                         </ng-container>
 
@@ -619,7 +616,7 @@
                         [pageIndex]="followingImportsPageIndex()"
                         [pageSize]="followingImportsPageSize()"
                         [pageSizeOptions]="[10, 25, 100]"
-                        aria-label="Select page">
+                        [attr.aria-label]="'common.paginator.selectPage' | translate">
                     </mat-paginator>
                 }
             }
@@ -630,15 +627,13 @@
     <mat-card class="margin-bottom-20" appearance="outlined">
         <mat-card-header>
             <mat-card-title>
-                Blocked domains
+                {{ 'pages.account.blockedDomains.title' | translate }}
             </mat-card-title>
         </mat-card-header>
         <mat-card-content>
             <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
                 <div>
-                    List of domains you have blocked. Users from these domains cannot follow you.
-                    Their posts will not appear in your local timeline, and your posts are not delivered
-                    directly to them. However, they may still see your posts if a third party they follow boosts them.
+                    {{ 'pages.account.blockedDomains.description' | translate }}
                 </div>
                 <div class="text-right"></div>
             </div>
@@ -649,7 +644,7 @@
 
                         <!-- Domain Column -->
                         <ng-container matColumnDef="domain">
-                            <th mat-header-cell *matHeaderCellDef> Domain </th>
+                            <th mat-header-cell *matHeaderCellDef>{{ 'common.labels.domain' | translate }}</th>
                             <td mat-cell *matCellDef="let element">
                                 {{ element.domain }}
                                 <div class="text-muted">
@@ -662,7 +657,7 @@
 
                         <!-- Created at Column -->
                         <ng-container matColumnDef="createdAt">
-                            <th mat-header-cell *matHeaderCellDef> Created at </th>
+                            <th mat-header-cell *matHeaderCellDef>{{ 'common.dates.createdAt' | translate }}</th>
                             <td mat-cell *matCellDef="let element">
                                 @if (element.createdAt) {
                                     {{ element.createdAt | date: 'short' }}
@@ -692,7 +687,7 @@
                         [pageIndex]="userBlockedDomainsPageIndex()"
                         [pageSize]="userBlockedDomainsPageSize()"
                         [pageSizeOptions]="[10, 25, 100]"
-                        aria-label="Select page">
+                        [attr.aria-label]="'common.paginator.selectPage' | translate">
                     </mat-paginator>
                 }
             }
@@ -703,22 +698,19 @@
     <mat-card class="margin-bottom-20" appearance="outlined">
         <mat-card-header>
             <mat-card-title>
-                Delete account
+                {{ 'pages.account.deleteAccount.title' | translate }}
             </mat-card-title>
         </mat-card-header>
         <mat-card-content>
             <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
                 <div>
-                    You can delete your account, this operation is irreversible. Keep in mind that you will
-                    not be able to reactivate your account or retrieve any of the content or information
-                    you have added.
+                    {{ 'pages.account.deleteAccount.description' | translate }}
                 </div>
                 <div class="text-right">
-                    <button type="button" matButton="elevated" aria-label="Delete account" (click)="openDeleteAccountDialog()">Delete account</button>
+                    <button type="button" matButton="elevated" [attr.aria-label]="'pages.account.deleteAccount.deleteAccountAriaLabel' | translate" (click)="openDeleteAccountDialog()">{{ 'pages.account.deleteAccount.deleteAccount' | translate }}</button>
                 </div>
             </div>
         </mat-card-content>
     </mat-card>
 
 </div>
-

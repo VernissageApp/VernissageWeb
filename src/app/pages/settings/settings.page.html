@@ -4,7 +4,7 @@
             <div class="flex-row flex-space-around">
                 <div class="settings-container width-100">
                     <section>
-                        <h1>Settings</h1>
+                        <h1>{{ 'pages.settings.title' | translate }}</h1>
                     </section>
 
                     <mat-accordion class="settings-headers-align">
@@ -13,11 +13,11 @@
                         <mat-expansion-panel [expanded]="true">
                             <mat-expansion-panel-header>
                                 <mat-panel-title>
-                                    General settings
+                                    {{ 'pages.settings.panels.general.title' | translate }}
                                 </mat-panel-title>
                                 @if (!isHandset()) {
                                     <mat-panel-description>
-                                        Here you can set up general application settings.
+                                        {{ 'pages.settings.panels.general.description' | translate }}
                                         <mat-icon>dns</mat-icon>
                                     </mat-panel-description>
                                 }
@@ -29,11 +29,11 @@
                         <mat-expansion-panel>
                             <mat-expansion-panel-header>
                                 <mat-panel-title>
-                                    Instance rules
+                                    {{ 'pages.settings.panels.instanceRules.title' | translate }}
                                 </mat-panel-title>
                                 @if (!isHandset()) {
                                     <mat-panel-description>
-                                        Here you can manage instance rules.
+                                        {{ 'pages.settings.panels.instanceRules.description' | translate }}
                                         <mat-icon>local_police</mat-icon>
                                     </mat-panel-description>
                                 }
@@ -45,11 +45,11 @@
                         <mat-expansion-panel>
                             <mat-expansion-panel-header>
                                 <mat-panel-title>
-                                    Instance domain blocks
+                                    {{ 'pages.settings.panels.domainBlocks.title' | translate }}
                                 </mat-panel-title>
                                 @if (!isHandset()) {
                                     <mat-panel-description>
-                                        Here you can manage domains blocked by instance.
+                                        {{ 'pages.settings.panels.domainBlocks.description' | translate }}
                                         <mat-icon>public_off</mat-icon>
                                     </mat-panel-description>
                                 }
@@ -61,11 +61,11 @@
                         <mat-expansion-panel>
                             <mat-expansion-panel-header>
                                 <mat-panel-title>
-                                    Categories
+                                    {{ 'pages.settings.panels.categories.title' | translate }}
                                 </mat-panel-title>
                                 @if (!isHandset()) {
                                     <mat-panel-description>
-                                        Here you can manage categories and hashtags.
+                                        {{ 'pages.settings.panels.categories.description' | translate }}
                                         <mat-icon>loyalty</mat-icon>
                                     </mat-panel-description>
                                 }
@@ -77,11 +77,11 @@
                         <mat-expansion-panel>
                             <mat-expansion-panel-header>
                                 <mat-panel-title>
-                                    Licenses
+                                    {{ 'pages.settings.panels.licenses.title' | translate }}
                                 </mat-panel-title>
                                 @if (!isHandset()) {
                                     <mat-panel-description>
-                                        Here you can manage photo's licenses.
+                                        {{ 'pages.settings.panels.licenses.description' | translate }}
                                         <mat-icon>license</mat-icon>
                                     </mat-panel-description>
                                 }
@@ -93,11 +93,11 @@
                         <mat-expansion-panel>
                             <mat-expansion-panel-header>
                                 <mat-panel-title>
-                                    Home cards
+                                    {{ 'pages.settings.panels.homeCards.title' | translate }}
                                 </mat-panel-title>
                                 @if (!isHandset()) {
                                     <mat-panel-description>
-                                        Here you can manage home's cards.
+                                        {{ 'pages.settings.panels.homeCards.description' | translate }}
                                         <mat-icon>home</mat-icon>
                                     </mat-panel-description>
                                 }

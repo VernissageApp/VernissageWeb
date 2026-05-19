@@ -5,42 +5,40 @@
         @if (showLegend()) {
             <div class="text-muted margin-bottom-20">
                 <small>
-                    Users from this domain cannot follow you. Their posts will not appear in your local timeline,
-                    and your posts are not delivered directly to them. However, they may still see your posts
-                    if a third party they follow boosts them.
+                    {{ 'dialogs.userBlockedDomain.texts.blockDomainLegend' | translate }}
                 </small>
             </div>
         }
 
         <div class="margin-bottom-20 padding-top-5">
             <mat-form-field class="width-100" appearance="outline">
-                <mat-label>Domain</mat-label>
-                <input type="text" matInput name="domain" [(ngModel)]="domain" #domainInput="ngModel" aria-label="Email" disabled required appMaxLength="500" />
+                <mat-label>{{ 'common.labels.domain' | translate }}</mat-label>
+                <input type="text" matInput name="domain" [(ngModel)]="domain" #domainInput="ngModel" [attr.aria-label]="'dialogs.userBlockedDomain.attrs.domain' | translate" disabled required appMaxLength="500" />
 
                 @if (domainInput.invalid && domainInput.errors?.required) {
-                    <mat-error>Enter domain.</mat-error>
+                    <mat-error>{{ 'dialogs.userBlockedDomain.texts.enterDomain' | translate }}</mat-error>
                 }
 
                 @if (domainInput.invalid && domainInput.errors?.appMaxLength) {
-                    <mat-error>Domain is too long.</mat-error>
+                    <mat-error>{{ 'dialogs.userBlockedDomain.texts.domainIsTooLong' | translate }}</mat-error>
                 }
             </mat-form-field>
         </div>
 
         <div class="margin-bottom-20">
             <mat-form-field class="width-100" appearance="outline">
-                <mat-label>Reason</mat-label>
-                <input type="text" matInput name="reason" [(ngModel)]="reason" #reasonInput="ngModel" aria-label="Email" appMaxLength="500" />
+                <mat-label>{{ 'common.labels.reason' | translate }}</mat-label>
+                <input type="text" matInput name="reason" [(ngModel)]="reason" #reasonInput="ngModel" [attr.aria-label]="'dialogs.userBlockedDomain.attrs.reason' | translate" appMaxLength="500" />
 
                 @if (reasonInput.invalid && reasonInput.errors?.appMaxLength) {
-                    <mat-error>Reason is too long.</mat-error>
+                    <mat-error>{{ 'dialogs.userBlockedDomain.texts.reasonIsTooLong' | translate }}</mat-error>
                 }
             </mat-form-field>
         </div>
 
     </div>
     <div mat-dialog-actions>
-        <button matButton="text" type="button" (click)="onNoClick()">Cancel</button>
-        <button matButton="filled" type="submit" cdkFocusInitial>Save</button>
+        <button matButton="text" type="button" (click)="onNoClick()">{{ 'common.actions.cancel' | translate }}</button>
+        <button matButton="filled" type="submit" cdkFocusInitial>{{ 'common.actions.save' | translate }}</button>
     </div>
 </form>

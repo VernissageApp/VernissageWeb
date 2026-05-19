@@ -1,5 +1,5 @@
 <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
-    <div mat-dialog-title>Unfollow account</div>
+    <div mat-dialog-title>{{ 'dialogs.unfollowAccount.texts.unfollowAccount' | translate }}</div>
     <div mat-dialog-content>
 
         <div class="padding-top-5 text-muted fs-90">
@@ -25,7 +25,7 @@
         </div>
     </div>
     <div mat-dialog-actions>
-        <button matButton="text" type="button" (click)="onNoClick()">Cancel</button>
-        <button matButton="filled" type="submit" cdkFocusInitial>Unfollow</button>
+        <button matButton="text" type="button" (click)="onNoClick()">{{ 'common.actions.cancel' | translate }}</button>
+        <button matButton="filled" type="submit" cdkFocusInitial>{{ 'common.actions.unfollow' | translate }}</button>
     </div>
 </form>

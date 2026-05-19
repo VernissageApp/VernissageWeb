@@ -3,7 +3,7 @@
 
         <!-- License Code Column -->
         <ng-container matColumnDef="code">
-            <th mat-header-cell *matHeaderCellDef> Code </th>
+            <th mat-header-cell *matHeaderCellDef> {{ 'common.labels.code' | translate }} </th>
             <td mat-cell *matCellDef="let element" class="code">
                 {{ element.code }}
             </td>
@@ -11,7 +11,7 @@
 
         <!-- License Name Column -->
         <ng-container matColumnDef="licenseName">
-            <th mat-header-cell *matHeaderCellDef> Name </th>
+            <th mat-header-cell *matHeaderCellDef> {{ 'common.labels.name' | translate }} </th>
             <td mat-cell *matCellDef="let element" class="name">
                 {{ element.name }}
             </td>
@@ -29,12 +29,12 @@
                         <mat-icon>delete</mat-icon>
                     </button>
                 } @else {
-                    <button class="more-button" matButton="outlined" [matMenuTriggerFor]="dropdownMenuAction" aria-label="More options">
+                    <button class="more-button" matButton="outlined" [matMenuTriggerFor]="dropdownMenuAction" [attr.aria-label]="'common.labels.moreOptions' | translate">
                         <span class="material-symbols-outlined">more_vert</span>
                     </button>
                     <mat-menu #dropdownMenuAction="matMenu" xPosition="before">
-                        <button mat-menu-item (click)="openLicenseDialog(element)">Update</button>
-                        <button mat-menu-item (click)="onDelete(element)">Delete</button>
+                        <button mat-menu-item (click)="openLicenseDialog(element)">{{ 'common.actions.update' | translate }}</button>
+                        <button mat-menu-item (click)="onDelete(element)">{{ 'common.actions.delete' | translate }}</button>
                     </mat-menu>
                 }
             </td>
@@ -49,8 +49,8 @@
         [pageIndex]="pageIndex"
         [pageSize]="10"
         [pageSizeOptions]="[10, 25, 100]"
-        aria-label="Select page">
+        [attr.aria-label]="'common.paginator.selectPage' | translate">
     </mat-paginator>
 
-    <button matButton="filled" (click)="openLicenseDialog(undefined)">New license</button>
+    <button matButton="filled" (click)="openLicenseDialog(undefined)">{{ 'components.licenseList.texts.newLicense' | translate }}</button>
 }

@@ -1,30 +1,30 @@
 <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
-    <div mat-dialog-title>Report</div>
+    <div mat-dialog-title>{{ 'common.actions.report' | translate }}</div>
     <div mat-dialog-content>
 
         <div class="flex-col gap-0 margin-top-5">
             <mat-form-field appearance="outline" class="width-100 padding-top-10">
-                <mat-label>Comment</mat-label>
+                <mat-label>{{ 'common.labels.comment' | translate }}</mat-label>
                 <textarea matInput name="comment" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4"
-                    cdkAutosizeMaxRows="10" placeholder="Comment" #commentModel="ngModel" [(ngModel)]="comment"
-                aria-label="Comment" appMaxLength="1000"></textarea>
+                    cdkAutosizeMaxRows="10" [placeholder]="'dialogs.report.attrs.comment' | translate" #commentModel="ngModel" [(ngModel)]="comment"
+                [attr.aria-label]="'dialogs.report.attrs.comment' | translate" appMaxLength="1000"></textarea>
 
                 @if (commentModel.invalid && commentModel.errors?.appMaxLength) {
-                    <mat-error>Too long comment.</mat-error>
+                    <mat-error>{{ 'dialogs.report.texts.tooLongComment' | translate }}</mat-error>
                 }
             </mat-form-field>
 
             <mat-form-field appearance="outline">
-                <mat-label>Category</mat-label>
+                <mat-label>{{ 'common.labels.category' | translate }}</mat-label>
                 <mat-select [(value)]="category">
                     @for (item of categories(); track item) {
-                        <mat-option [value]="item">{{ item }}</mat-option>
+                        <mat-option [value]="item">{{ 'dialogs.report.categories.' + item.toLowerCase() | translate }}</mat-option>
                     }
                 </mat-select>
             </mat-form-field>
 
             <mat-form-field appearance="outline">
-                <mat-label>Server rules</mat-label>
+                <mat-label>{{ 'dialogs.report.texts.serverRules' | translate }}</mat-label>
                 <mat-select multiple [(value)]="ruleIds">
                     @for (rule of rules(); track rule.id) {
                         <mat-option [value]="rule.id">{{ rule.text }}</mat-option>
@@ -34,13 +34,13 @@
 
             @if (!isLocal()) {
                 <mat-checkbox name="forward" [disableRipple]="true" [(ngModel)]="forward">
-                    Should the report be forwarded to the remote admin?
+                    {{ 'dialogs.report.texts.forwardToRemoteAdmin' | translate }}
                 </mat-checkbox>
             }
         </div>
     </div>
     <div mat-dialog-actions>
-        <button matButton="text" type="button" (click)="onNoClick()">Cancel</button>
-        <button matButton="filled" type="submit" cdkFocusInitial>Report</button>
+        <button matButton="text" type="button" (click)="onNoClick()">{{ 'common.actions.cancel' | translate }}</button>
+        <button matButton="filled" type="submit" cdkFocusInitial>{{ 'common.actions.report' | translate }}</button>
     </div>
 </form>

@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, model, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { InstanceBlockedDomain } from 'src/app/models/instance-blocked-domain';
 import { MessagesService } from 'src/app/services/common/messages.service';
@@ -19,6 +20,7 @@ export class InstanceBlockedDomainDialog implements OnInit {
     private instanceBlockedDomainsService = inject(InstanceBlockedDomainsService);
     private dialogRef = inject(MatDialogRef<InstanceBlockedDomainDialog>);
     private data?: InstanceBlockedDomain = inject(MAT_DIALOG_DATA);
+    private translateService = inject(TranslateService);
 
     ngOnInit(): void {
         if (this.data) {
@@ -38,14 +40,14 @@ export class InstanceBlockedDomainDialog implements OnInit {
                 this.data.reason = this.reason();
 
                 await this.instanceBlockedDomainsService.update(this.data?.id, this.data);
-                this.messageService.showSuccess('Domain has been updated.');
+                this.messageService.showSuccess(this.translateService.instant('dialogs.instanceBlockedDomain.messages.domainHasBeenUpdated'));
             } else {
                 const newDomain = new InstanceBlockedDomain();
                 newDomain.domain = this.domain();
                 newDomain.reason = this.reason();
 
                 await this.instanceBlockedDomainsService.create(newDomain);
-                this.messageService.showSuccess('New domain has been created.');
+                this.messageService.showSuccess(this.translateService.instant('dialogs.instanceBlockedDomain.messages.newDomainHasBeenCreated'));
             }
 
             this.dialogRef.close({ confirmed: true});

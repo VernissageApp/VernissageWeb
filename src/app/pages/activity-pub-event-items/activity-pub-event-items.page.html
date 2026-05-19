@@ -5,10 +5,10 @@
                 <div class="width-100">
                     <section class="flex-row flex-space-between flex-align-center margin-bottom-20" [ngClass]="{ 'flex-row': !isHandset(), 'flex-column': isHandset() }">
                         <h1>
-                            <div>ActivityPub event recipients</div>
+                            <div>{{ 'pages.activityPubEventItems.title' | translate }}</div>
                             @if (!isHandset()) {
                                 <div class="fs-60 text-muted">
-                                    List of Fediverse servers the event has been sent to.
+                                    {{ 'pages.activityPubEventItems.subtitle' | translate }}
                                 </div>
                             }
                         </h1>
@@ -22,26 +22,26 @@
                                         <div class="flex-row flex-align-center gap-16">
                                             @if (!isHandset()) {
                                                 <mat-form-field appearance="outline">
-                                                    <mat-label>Sorting</mat-label>
+                                                    <mat-label>{{ 'pages.activityPubEventItems.filters.sorting.label' | translate }}</mat-label>
                                                     <mat-select [(value)]="sortColumn">
-                                                        <mat-option value="startAt">Start date</mat-option>
-                                                        <mat-option value="endAt">End date</mat-option>
-                                                        <mat-option value="createdAt">Created date</mat-option>
-                                                        <mat-option value="updatedAt">Updated date</mat-option>
+                                                        <mat-option value="startAt">{{ 'pages.activityPubEventItems.filters.sorting.startDate' | translate }}</mat-option>
+                                                        <mat-option value="endAt">{{ 'pages.activityPubEventItems.filters.sorting.endDate' | translate }}</mat-option>
+                                                        <mat-option value="createdAt">{{ 'common.dates.createdDate' | translate }}</mat-option>
+                                                        <mat-option value="updatedAt">{{ 'pages.activityPubEventItems.filters.sorting.updatedDate' | translate }}</mat-option>
                                                     </mat-select>
                                                 </mat-form-field>
                                             }
                                             <mat-checkbox name="onlyErrors" [disableRipple]="true" [(ngModel)]="onlyErrors">
-                                                Only errors
+                                                {{ 'pages.activityPubEventItems.filters.onlyErrors' | translate }}
                                             </mat-checkbox>
                                             @if (!isHandset()) {
-                                                <mat-radio-group name="sortDirection" [(ngModel)]="sortDirection" aria-label="Sort direction">
-                                                    <mat-radio-button value="ascending">Ascending</mat-radio-button>
-                                                    <mat-radio-button value="descending">Descending</mat-radio-button>
+                                                <mat-radio-group name="sortDirection" [(ngModel)]="sortDirection" [attr.aria-label]="'pages.activityPubEventItems.filters.sortDirection.label' | translate">
+                                                    <mat-radio-button value="ascending">{{ 'common.sort.ascending' | translate }}</mat-radio-button>
+                                                    <mat-radio-button value="descending">{{ 'common.sort.descending' | translate }}</mat-radio-button>
                                                 </mat-radio-group>
                                             }
                                         </div>
-                                        <button matButton="outlined">Search</button>
+                                        <button matButton="outlined">{{ 'common.actions.search' | translate }}</button>
                                     </div>
                                     <div>
 
@@ -55,7 +55,7 @@
 
                         <!-- Url Column -->
                         <ng-container matColumnDef="url">
-                            <th mat-header-cell *matHeaderCellDef> Inbox URL </th>
+                            <th mat-header-cell *matHeaderCellDef>{{ 'pages.activityPubEventItems.table.inboxUrl' | translate }}</th>
                             <td mat-cell *matCellDef="let element">
                                 <span>{{ element.url }}</span>
                             </td>
@@ -63,7 +63,7 @@
 
                         <!-- Is Host Suspended Column -->
                         <ng-container matColumnDef="isSuspended">
-                            <th mat-header-cell *matHeaderCellDef> Host suspended </th>
+                            <th mat-header-cell *matHeaderCellDef>{{ 'pages.activityPubEventItems.table.hostSuspended' | translate }}</th>
                             <td mat-cell *matCellDef="let element">
                                 <mat-checkbox [disableRipple]="true" [ngModel]="element.isSuspended" disabled>
                                 </mat-checkbox>
@@ -72,7 +72,7 @@
 
                         <!-- Is success Column -->
                         <ng-container matColumnDef="isSuccess">
-                            <th mat-header-cell *matHeaderCellDef> Is success </th>
+                            <th mat-header-cell *matHeaderCellDef>{{ 'pages.activityPubEventItems.table.isSuccess' | translate }}</th>
                             <td mat-cell *matCellDef="let element">
                                 <mat-checkbox [disableRipple]="true" [ngModel]="element.isSuccess" disabled>
                                 </mat-checkbox>
@@ -81,7 +81,7 @@
 
                         <!-- Created Date Column -->
                         <ng-container matColumnDef="createdAt">
-                            <th mat-header-cell *matHeaderCellDef> Created date </th>
+                            <th mat-header-cell *matHeaderCellDef>{{ 'common.dates.createdDate' | translate }}</th>
                             <td mat-cell *matCellDef="let element">
                                 @if (element.createdAt) {
                                     <span>
@@ -93,7 +93,7 @@
 
                         <!-- Start Date Column -->
                         <ng-container matColumnDef="startAt">
-                            <th mat-header-cell *matHeaderCellDef> Start date </th>
+                            <th mat-header-cell *matHeaderCellDef>{{ 'pages.activityPubEventItems.table.startDate' | translate }}</th>
                             <td mat-cell *matCellDef="let element">
                                 @if (element.startAt) {
                                     <span>
@@ -105,7 +105,7 @@
 
                         <!-- Start Date Column -->
                         <ng-container matColumnDef="endAt">
-                            <th mat-header-cell *matHeaderCellDef> End date </th>
+                            <th mat-header-cell *matHeaderCellDef>{{ 'pages.activityPubEventItems.table.endDate' | translate }}</th>
                             <td mat-cell *matCellDef="let element">
                                 @if (element.endAt) {
                                     <span>
@@ -117,11 +117,11 @@
 
                         <!-- Result Column -->
                         <ng-container matColumnDef="error">
-                            <th mat-header-cell *matHeaderCellDef> Error </th>
+                            <th mat-header-cell *matHeaderCellDef>{{ 'pages.activityPubEventItems.table.error' | translate }}</th>
                             <td mat-cell *matCellDef="let element">
                                 @if (element.errorMessage) {
                                     <div>
-                                        <a href="javascript:void(0)" (click)="onOpenErrorMessage(element)">Open</a>
+                                        <a href="javascript:void(0)" (click)="onOpenErrorMessage(element)">{{ 'pages.activityPubEventItems.table.open' | translate }}</a>
                                     </div>
                                 }
                             </td>
@@ -136,7 +136,7 @@
                         [pageIndex]="pageIndex()"
                         [pageSize]="10"
                         [pageSizeOptions]="[10, 25, 100]"
-                        aria-label="Select page">
+                        [attr.aria-label]="'pages.activityPubEventItems.paginator.selectPage' | translate">
                     </mat-paginator>
                 </div>
             </div>

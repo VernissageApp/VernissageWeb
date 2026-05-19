@@ -15,6 +15,7 @@ import { MessagesService } from 'src/app/services/common/messages.service';
 import { ConfirmationDialog } from 'src/app/dialogs/confirmation-dialog/confirmation.dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { RandomGeneratorService } from 'src/app/services/common/random-generator.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-articles',
@@ -45,6 +46,7 @@ export class ArticlesPage extends ResponsiveComponent implements OnInit, OnDestr
     private randomGeneratorService = inject(RandomGeneratorService);
     private dialog = inject(MatDialog);
     private router = inject(Router);
+    private translateService = inject(TranslateService);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
@@ -97,7 +99,7 @@ export class ArticlesPage extends ResponsiveComponent implements OnInit, OnDestr
     protected async onDelete(article: Article): Promise<void> {
         const dialogRef = this.dialog.open(ConfirmationDialog, {
             width: '500px',
-            data: 'Do you want to delete article?'
+            data: this.translateService.instant('pages.articles.confirmations.deleteArticle')
         });
 
         dialogRef.afterClosed().subscribe(async (result) => {
@@ -105,7 +107,7 @@ export class ArticlesPage extends ResponsiveComponent implements OnInit, OnDestr
                 try {
                     if (article.id) {
                         await this.articlesService.delete(article.id);
-                        this.messageService.showSuccess('Article was deleted.');
+                        this.messageService.showSuccess(this.translateService.instant('pages.articles.messages.deleted'));
         
                         const navigationExtras: NavigationExtras = {
                             queryParams: { t: this.randomGeneratorService.generateString(8) },

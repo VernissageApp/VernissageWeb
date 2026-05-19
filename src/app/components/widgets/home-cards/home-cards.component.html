@@ -9,7 +9,7 @@
 
         <!-- License Code Column -->
         <ng-container matColumnDef="order">
-            <th mat-header-cell *matHeaderCellDef> Order </th>
+            <th mat-header-cell *matHeaderCellDef> {{ 'common.labels.order' | translate }} </th>
             <td mat-cell *matCellDef="let element" class="order">
                 {{ element.order }}
             </td>
@@ -17,7 +17,7 @@
 
         <!-- License Name Column -->
         <ng-container matColumnDef="title">
-            <th mat-header-cell *matHeaderCellDef> Title </th>
+            <th mat-header-cell *matHeaderCellDef> {{ 'common.labels.title' | translate }} </th>
             <td mat-cell *matCellDef="let element" class="title">
                 {{ element.title }}
             </td>
@@ -35,12 +35,12 @@
                         <mat-icon>delete</mat-icon>
                     </button>
                 } @else {
-                    <button class="more-button" matButton="outlined" [matMenuTriggerFor]="dropdownMenuAction" aria-label="More options">
+                    <button class="more-button" matButton="outlined" [matMenuTriggerFor]="dropdownMenuAction" [attr.aria-label]="'common.labels.moreOptions' | translate">
                         <span class="material-symbols-outlined">more_vert</span>
                     </button>
                     <mat-menu #dropdownMenuAction="matMenu" xPosition="before">
-                        <button mat-menu-item (click)="openHomeCardDialog(element)">Update</button>
-                        <button mat-menu-item (click)="onDelete(element)">Delete</button>
+                        <button mat-menu-item (click)="openHomeCardDialog(element)">{{ 'common.actions.update' | translate }}</button>
+                        <button mat-menu-item (click)="onDelete(element)">{{ 'common.actions.delete' | translate }}</button>
                     </mat-menu>
                 }
             </td>
@@ -55,8 +55,8 @@
         [pageIndex]="pageIndex"
         [pageSize]="10"
         [pageSizeOptions]="[10, 25, 100]"
-        aria-label="Select page">
+        [attr.aria-label]="'common.paginator.selectPage' | translate">
     </mat-paginator>
 
-    <button matButton="filled" (click)="openHomeCardDialog(undefined)">New home card</button>
+    <button matButton="filled" (click)="openHomeCardDialog(undefined)">{{ 'components.homeCards.texts.newHomeCard' | translate }}</button>
 }

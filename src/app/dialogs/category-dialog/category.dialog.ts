@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, model, OnInit, signal } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Category } from 'src/app/models/category';
 import { CategoryHashtag } from 'src/app/models/category-hashtag';
@@ -21,6 +22,7 @@ export class CategoryDialog implements OnInit {
     private categoriesService = inject(CategoriesService);
     private dialogRef = inject(MatDialogRef<CategoryDialog>);
     private data?: Category = inject(MAT_DIALOG_DATA);
+    private translateService = inject(TranslateService);
 
     public ngOnInit(): void {
         if (this.data) {
@@ -63,7 +65,7 @@ export class CategoryDialog implements OnInit {
                 this.data.hashtags = this.hashtags();
 
                 await this.categoriesService.update(this.data?.id, this.data);
-                this.messageService.showSuccess('Category has been updated.');
+                this.messageService.showSuccess(this.translateService.instant('dialogs.category.messages.categoryHasBeenUpdated'));
             } else {
                 const newCategory = new Category();
                 newCategory.name = this.name();
@@ -71,7 +73,7 @@ export class CategoryDialog implements OnInit {
                 newCategory.hashtags = this.hashtags();
 
                 await this.categoriesService.create(newCategory);
-                this.messageService.showSuccess('New category has been created.');
+                this.messageService.showSuccess(this.translateService.instant('dialogs.category.messages.newCategoryHasBeenCreated'));
             }
 
             this.dialogRef.close({ confirmed: true});

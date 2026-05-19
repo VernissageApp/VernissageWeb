@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, ElementRef, inject, model, OnInit, signal, viewChild } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import QRCodeStyling from 'qr-code-styling';
 import { TwoFactorToken } from 'src/app/models/two-factor-token';
@@ -22,6 +23,7 @@ export class EnableTwoFactorTokenDialog implements OnInit {
     private accountService = inject(AccountService);
     private messageService = inject(MessagesService);
     private dialogRef = inject(MatDialogRef<EnableTwoFactorTokenDialog>);
+    private translateService = inject(TranslateService);
 
     async ngOnInit(): Promise<void> {
         const downloadedToken = await this.accountService.getTwoFactorToken();
@@ -74,7 +76,7 @@ export class EnableTwoFactorTokenDialog implements OnInit {
     protected async onSubmit(): Promise<void> {
         try {
             await this.accountService.enableTwoFactorToken(this.code());
-            this.messageService.showSuccess('Two factor authentication enabled.');
+            this.messageService.showSuccess(this.translateService.instant('dialogs.enableTwoFactorToken.messages.twoFactorAuthenticationEnabled'));
             this.dialogRef.close({});
         } catch (error) {
             console.error(error);

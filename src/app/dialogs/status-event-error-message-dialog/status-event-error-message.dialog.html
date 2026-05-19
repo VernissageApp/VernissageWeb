@@ -1,15 +1,15 @@
-<div mat-dialog-title>Error message</div>
+<div mat-dialog-title>{{ 'dialogs.statusEventErrorMessage.texts.errorMessage' | translate }}</div>
 <div mat-dialog-content>
 
     <div class="flex-col gap-0 margin-top-5">
         <mat-form-field appearance="outline" class="width-100 padding-top-10">
-            <mat-label>Error message</mat-label>
+            <mat-label>{{ 'dialogs.statusEventErrorMessage.texts.errorMessage' | translate }}</mat-label>
             <textarea matInput name="errorMessage" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4"
-                cdkAutosizeMaxRows="22" placeholder="Message" [ngModel]="errorMessage()" [disabled]="true"
-                aria-label="Error message"></textarea>
+                cdkAutosizeMaxRows="22" [placeholder]="'dialogs.statusEventErrorMessage.attrs.message' | translate" [ngModel]="errorMessage()" [disabled]="true"
+                [attr.aria-label]="'dialogs.statusEventErrorMessage.attrs.errorMessage' | translate"></textarea>
         </mat-form-field>
     </div>
 </div>
 <div mat-dialog-actions>
-    <button matButton="text" type="button" (click)="onNoClick()">Close</button>
+    <button matButton="text" type="button" (click)="onNoClick()">{{ 'common.actions.close' | translate }}</button>
 </div>

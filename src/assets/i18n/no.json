@@ -1,0 +1,2642 @@
+{
+  "common": {
+    "actions": {
+      "addField": "Legg til felt",
+      "approve": "Godkjenne",
+      "assignRoles": "Tildel roller",
+      "back": "Tilbake",
+      "block": "Blokkér",
+      "cancel": "Avbryt",
+      "chooseFile": "Velg fil",
+      "clear": "Klart",
+      "close": "Lukk",
+      "copy": "Kopier",
+      "delete": "Slett",
+      "disable": "Deaktiver",
+      "dismiss": "Avvis",
+      "download": "Last ned",
+      "edit": "Rediger",
+      "enable": "Aktiver",
+      "follow": "Følg",
+      "forgotPassword": "Glemt passord?",
+      "import": "Importer",
+      "loadMore": "Last inn mer",
+      "loadMoreEllipsis": "Last inn mer...",
+      "login": "Logg inn",
+      "next": "Neste",
+      "ok": "OK",
+      "open": "Åpne",
+      "openProfileWithUserName": "Åpne profil @{{userName}}",
+      "refresh": "Oppdater",
+      "register": "Registrer deg",
+      "reject": "Avvis",
+      "reload": "Last inn på nytt",
+      "remove": "Fjern",
+      "report": "Rapporter",
+      "restore": "Gjenopprett",
+      "save": "Lagre",
+      "search": "Søk",
+      "send": "Send",
+      "settings": "Innstillinger",
+      "show": "Vis",
+      "signOut": "Logg ut",
+      "signUp": "Registrer deg",
+      "tryAgain": "igjen",
+      "unblock": "Fjern blokkering",
+      "unfollow": "Slutt å følge",
+      "update": "Oppdater",
+      "upload": "Last opp"
+    },
+    "articleVisibility": {
+      "homeSignIn": "Hjem - logg på",
+      "homeSignOut": "Hjem - logg ut",
+      "newsSignIn": "Nyheter - logg inn",
+      "newsSignOut": "Nyheter - logg ut"
+    },
+    "dates": {
+      "createdAt": "Opprettet kl",
+      "createdDate": "Opprettet dato"
+    },
+    "errors": {
+      "goBackLink": "hjemmeside",
+      "goBackPrefix": "Vennligst gå tilbake til",
+      "goBackSuffix": "eller ta kontakt med systemadministrator."
+    },
+    "labels": {
+      "account": "Konto",
+      "accountLink": "Kontokobling",
+      "administrator": "Administrator",
+      "alias": "Alias",
+      "all": "Alle",
+      "approved": "Godkjent",
+      "artists": "Kunstnere",
+      "authenticating": "Autentiserer",
+      "automated": "Automatisert",
+      "avatar": "Avatar",
+      "bio": "Bio",
+      "body": "Kropp",
+      "category": "Kategori",
+      "client": "Klient",
+      "clientVersion": "Klientversjon",
+      "code": "Kode",
+      "comment": "Kommentar",
+      "description": "Beskrivelse",
+      "details": "Detaljer",
+      "domain": "Domene",
+      "email": "E-post",
+      "emailConfirmed": "E-post bekreftet",
+      "enabled": "Aktivert",
+      "errorMessage": "Feilmelding",
+      "exception": "Unntak",
+      "fields": "Felter",
+      "followers": "Følgere",
+      "following": "Følger",
+      "frequentlyAskedQuestions": "Ofte stilte spørsmål",
+      "hashtags": "Hashtags",
+      "header": "Overskrift",
+      "homePage": "Hjemmeside",
+      "key": "Nøkkel",
+      "language": "Språk",
+      "lastUpdate": "Siste oppdatering",
+      "link": "Link",
+      "local": "Lokalt",
+      "member": "Medlem",
+      "message": "Melding",
+      "moderator": "Moderator",
+      "moreOptions": "Flere alternativer",
+      "name": "Navn",
+      "noResultsFound": "Ingen resultater funnet.",
+      "note": "Note",
+      "order": "Bestill",
+      "password": "Passord",
+      "photo": "Foto",
+      "photos": "Bilder",
+      "priority": "Prioritet",
+      "private": "Privat",
+      "processing": "Behandling",
+      "profilePage": "profilside",
+      "qrCode": "QR-kode",
+      "query": "Søk",
+      "reason": "Grunn",
+      "reports": "Rapporter",
+      "server": "Server",
+      "serverVersion": "Serverversjon",
+      "status": "Status",
+      "statusImage": "Statusbilde",
+      "subtitle": "Undertekst",
+      "support": "Støtte",
+      "supporter": "Supporter",
+      "telephone": "Telefon",
+      "template": "Mal",
+      "termsOfService": "Vilkår for bruk",
+      "text": "Tekst",
+      "title": "Tittel",
+      "token": "Token",
+      "twoFactorToken": "To-faktor token",
+      "type": "Type",
+      "url": "URL",
+      "user": "Bruker",
+      "userName": "Brukernavn",
+      "userNameOrEmail": "Brukernavn eller e-post",
+      "value": "Verdi",
+      "verified": "Verifisert",
+      "visibility": "Synlighet",
+      "website": "Nettsted"
+    },
+    "messages": {
+      "newVersionAvailable": "A new version ofVernissageis available. Oppdater siden for å få den nyeste versjonen.",
+      "unknownError": "Ukjent feil.",
+      "unrecoverableState": "Det oppstod en feil og applikasjonstilstanden kan ikke gjenopprettes. Last inn siden på nytt."
+    },
+    "pageTitles": {
+      "accessForbidden": "Vernissage - Access forbidden",
+      "account": "Vernissage - Konto",
+      "activityPubEventRecipients": "Vernissage - ActivityPubevent recipients",
+      "activityPubEvents": "Vernissage - ActivityPubhendelser",
+      "articles": "Vernissage - Artikler",
+      "bookmarks": "Vernissage - Bokmerker",
+      "categories": "Vernissage - Kategorier",
+      "confirmEmail": "Vernissage - Bekreft e-post",
+      "connectionLost": "Vernissage - Forbindelsen mistet",
+      "createArticle": "Vernissage - Lag artikkel",
+      "editArticle": "Vernissage - Rediger artikkel",
+      "editorsChoice": "Vernissage - Redaktørens valg",
+      "editUsersBusinessCard": "Vernissage - Rediger bruker visittkort",
+      "errors": "Vernissage - Feil",
+      "eventRecipients": "Vernissage - Event mottakere",
+      "favourites": "Vernissage - Favoritter",
+      "forgotPassword": "Vernissage - Glemt passord",
+      "frequentlyAskedQuestions": "Vernissage - Ofte stilte spørsmål",
+      "homeTimeline": "Vernissage - Hjemmetidslinje",
+      "invitations": "Vernissage - Invitasjoner",
+      "login": "Vernissage - Logg inn",
+      "news": "Vernissage - Nyheter",
+      "notifications": "Vernissage - Varsler",
+      "pageNotFound": "Vernissage - Siden ble ikke funnet",
+      "preferences": "Vernissage - Innstillinger",
+      "privacy": "Vernissage - Personvern",
+      "register": "Vernissage - Registrer deg",
+      "reports": "Vernissage - Rapporter",
+      "resetPassword": "Vernissage - Tilbakestill passord",
+      "search": "Vernissage - Søk",
+      "settings": "Vernissage - Innstillinger",
+      "sharedBusinessCard": "Vernissage - Delt visittkort",
+      "sharedBusinessCards": "Vernissage - Delte visittkort",
+      "statusEvents": "Vernissage - Statushendelser",
+      "support": "Vernissage - Støtte",
+      "tags": "Vernissage - Tags",
+      "terms": "Vernissage - Vilkår",
+      "trending": "Vernissage - Trending",
+      "unexpectedError": "Vernissage - Uventet feil",
+      "uploadImages": "Vernissage - Last opp bilder",
+      "users": "Vernissage - Brukere"
+    },
+    "paginator": {
+      "selectPage": "Velg side"
+    },
+    "sort": {
+      "ascending": "Stigende",
+      "descending": "Synkende"
+    },
+    "statuses": {
+      "error": "Feil",
+      "expired": "Utløpt",
+      "finished": "Ferdig",
+      "new": "Nytt",
+      "processing": "Behandling",
+      "ready": "Klar"
+    },
+    "timeAgo": {
+      "fewSecondsAgo": "noen sekunder siden"
+    }
+  },
+  "components": {
+    "avatar": {
+      "attrs": {
+        "avatar": "Avatar"
+      }
+    },
+    "blurhashImage": {
+      "messages": {
+        "statusBoosted": "Status forsterket.",
+        "statusFavourited": "Status som favoritt.",
+        "yourBoostHasBeenUndone": "Boosten din har blitt angret.",
+        "yourLikeHasBeenUndone": "Liker du har blitt angret.."
+      }
+    },
+    "businessCard": {
+      "attrs": {
+        "avatarProfile": "avatarprofil"
+      },
+      "texts": {
+        "importContact": "Importer kontakt"
+      }
+    },
+    "categoryGallery": {
+      "texts": {
+        "sadlyThereSNothingToSeeHere": "Dessverre er det ingenting å se her ennå."
+      }
+    },
+    "categoryList": {
+      "messages": {
+        "categoryHasBeenDeleted": "Kategori er slettet.",
+        "categoryHasBeenDisabled": "Kategori er deaktivert.",
+        "categoryHasBeenEnabled": "Kategori er aktivert.",
+        "doYouWantToDeleteCategory": "Vil du slette kategorien?"
+      },
+      "texts": {
+        "categoryName": "Kategorinavn",
+        "newCategory": "Ny kategori"
+      }
+    },
+    "commentReply": {
+      "attrs": {
+        "leaveAComment": "Legg igjen en kommentar"
+      },
+      "messages": {
+        "commentHasBeenAdded": "Kommentar er lagt til."
+      }
+    },
+    "dialogCommon": {
+      "actions": {
+        "change": "Endre",
+        "move": "Flytt",
+        "mute": "Demp",
+        "no": "Nei",
+        "share": "Del",
+        "yes": "Ja"
+      },
+      "labels": {
+        "end": "Slutt",
+        "start": "Start"
+      }
+    },
+    "domainBlocks": {
+      "messages": {
+        "doYouWantToDeleteInstanceBlockedDomain": "Vil du slette forekomstblokkert domene?",
+        "domainHasBeenDeleted": "Domene er slettet."
+      },
+      "texts": {
+        "newDomain": "Nytt domene"
+      }
+    },
+    "followButtons": {
+      "actions": {
+        "approveFollow": "Godkjenne følg",
+        "blockDomain": "Blokker domene",
+        "blockUser": "Blokker bruker",
+        "cancelRequest": "Avbryt forespørselen",
+        "copyProfileLink": "Kopier lenken til profilen",
+        "feature": "Funksjon",
+        "followBack": "Følg tilbake",
+        "mute": "Demp",
+        "openOriginalProfile": "Åpne den opprinnelige profilen",
+        "rejectFollow": "Avvis følg",
+        "unblockDomain": "Fjern blokkering av domene",
+        "unblockUser": "Opphev blokkering av bruker",
+        "undoFeature": "Angre funksjon",
+        "unmute": "Slå på lyden"
+      },
+      "messages": {
+        "youHaveAcceptedTheUserSFollowRequest": "Du har godtatt brukerens følgeforespørsel.",
+        "youHaveDeclinedTheUserSFollowRequest": "Du har avslått brukerens følgeforespørsel"
+      }
+    },
+    "followButtonsSection": {
+      "messages": {
+        "blockedDomainHasBeenDeleted": "Blokkert domene er slettet.",
+        "doYouWantToDeleteBlockedDomain": "Vil du slette blokkert domene?",
+        "doYouWantToUnblockUser": "Vil du oppheve blokkeringen av brukeren?",
+        "doYouWantToUnmuteUser": "Vil du slå på lyden for brukeren?",
+        "muteHasBeenCanceled": "Lydløs er avbrutt.",
+        "muteHasBeenSaved": "Demp er lagret.",
+        "reportHasBeenSaved": "Rapporten er lagret.",
+        "theFollowRequestHasBeenSent": "Følgeforespørselen er sendt.",
+        "userHasBeenBlocked": "Brukeren er blokkert.",
+        "userHasBeenUnblocked": "Brukeren er opphevet blokkeringen.",
+        "youAreFollowingTheUser": "Du følger brukeren.",
+        "youHaveFeaturedTheUser": "Du har omtalt brukeren.",
+        "youHaveRemovedTheUserFromFeatured": "Du har fjernet brukeren fra fremhevet.",
+        "youHaveUnfollowedTheUser": "Du har sluttet å følge brukeren.",
+        "yourFollowRequestHasBeenAccepted": "Din følgeforespørsel er godtatt."
+      }
+    },
+    "footer": {
+      "links": {
+        "privacyPolicy": "Personvernerklæring",
+        "support": "Støtte",
+        "termsOfService": "Vilkår for bruk"
+      },
+      "poweredBy": "Drevet avVernissage"
+    },
+    "gallery": {
+      "pinned": "Festet",
+      "texts": {
+        "sadlyThereSNothingToSeeHere": "Dessverre er det ingenting å se her ennå."
+      }
+    },
+    "generalSettings": {
+      "attrs": {
+        "aiDescriptionPrompt": "AIbeskrivelsesprompt",
+        "aiHashtagsPrompt": "AIhashtags spørsmål",
+        "aiModel": "AImodell",
+        "aiProviderName": "AI-leverandørnavn",
+        "aiSecretKey": "AIhemmelig nøkkel",
+        "aiUrl": "AIURL",
+        "corsOrgins": "CORS opphav",
+        "deleteStatusesOlderThanDays": "Slett statuser eldre enn (dager)",
+        "emailFromAddress": "E-post fra adresse",
+        "emailFromName": "E-post fra navn",
+        "emailHostname": "E-post vertsnavn",
+        "emailPassword": "E-postpassord",
+        "emailPort": "E-postport",
+        "emailUsername": "E-post brukernavn",
+        "httpPathToCustomCssFile": "HTTP-bane til egendefinertCSS-fil",
+        "httpPathToCustomJavascriptFile": "HTTP-sti til egendefinertJavaScript-fil",
+        "imagesQuality": "Bildekvalitet",
+        "imagesUrl": "Bilder url",
+        "inlineCustomCssStyles": "Innebygde tilpassedeCSS-stiler",
+        "inlineCustomJavascript": "Inline tilpassetJavaScript",
+        "mastodonUrl": "Mastodonurl",
+        "maximumFileSize": "Maksimal filstørrelse",
+        "maximumNumberOfAttachments": "Maksimalt antall vedlegg",
+        "maximumNumberOfCharactersInStatus": "Maksimalt antall tegn i status",
+        "maximumNumberOfInvitations": "Maksimalt antall invitasjoner",
+        "minimumIntervalBetweenAddingSilentStatusesSeconds": "Minimumsintervall mellom å legge til stille statuser (sekunder)",
+        "minimumIntervalBetweenAddingStatusesSeconds": "Minimumsintervall mellom å legge til statuser (sekunder)",
+        "patreonUrl": "Patreonurl",
+        "privacyPolicyContent": "Innhold i retningslinjene for personvern",
+        "privacyPolicyUpdateDate": "Dato for oppdatering av personvernreglene",
+        "termsOfServiceContent": "Innhold i vilkårene for bruk",
+        "termsOfServiceUpdateDate": "Oppdateringsdato for vilkår for bruk",
+        "totalCost": "Total kostnad",
+        "usersSupport": "Brukerstøtte",
+        "webDescription": "Webbeskrivelse",
+        "webEmail": "E-post på nett",
+        "webLanguages": "Nettspråk",
+        "webLongDescription": "Web lang beskrivelse",
+        "webThumbnailUr": "Nettminiatyrbilde ur",
+        "webTitle": "Netttittel",
+        "webpushServiceEndpoint": "WebPushtjenesteendepunkt",
+        "webpushServiceSecretKey": "WebPushtjeneste hemmelig nøkkel",
+        "webpushVapidPriavteKey": "WebPushVapid privat nøkkel",
+        "webpushVapidPublicKey": "WebPushUgyldig offentlig nøkkel",
+        "webpushVapidSubject": "WebPushDumt motiv"
+      },
+      "captcha": "Captcha",
+      "help": {
+        "aiDescriptionPrompt": "Brukes til å generere en bildebeskrivelse (alt tekst). Skriv klare instruksjoner for nøyaktige, objektive og tilgjengelige beskrivelser basert kun på synlig innhold.",
+        "aiHashtagsPrompt": "Brukes til å generere hashtags for en status. Skriv instruksjoner for relevante, konsise og sosiale medier-vennlige hashtags, og be modellen om å bare returnere hashtags.",
+        "cdn": "Hvis du har konfigurert et CDN, kan du overstyre standardbildetURLgenerert basert på S3-bøttenavnet og -adressen.",
+        "eventsToLog": "Utvalgte hendelser vil bli lagret i databasen. De bør bare aktiveres ved feilsøking av et problem, siden de påvirker både applikasjonsytelse og databasestørrelse, gitt at volumet kan være betydelig.",
+        "imageQuality": "Bestemmer kvaliteten på bildene som lagres og behandles av systemet etter opplasting (f.eks. for generering av miniatyrbilder). Anbefalt verdi: 85.",
+        "markdownMacros": "Markdown-syntaks støttes, og du kan bruke tre makroer som vil bli erstattet på siden:",
+        "mastodon": "Hvis forekomsten har sin offisielle konto påMastodon, kan du definere adressen her. HvisVernissage-forekomstadressen også er oppgitt påMastodon, vil det være informasjon som indikerer at kontoen er verifisert avMastodon.",
+        "quickCaptcha": "Denne CAPTCHA er implementert internt og kommuniserer ikke med noen eksterne tjenester, noe som sikrer fullstendig personvern for brukere. Captcha vises kun når registreringen er åpen for alle nye brukere.",
+        "registrationMode": "Invitasjonsbasert registrering og registrering etter godkjenning fungerer kun når registrering for alle brukere er deaktivert.",
+        "regularStatusesInterval": "Definerer minimumstiden (i sekunder) en bruker må vente før han publiserer en annen vanlig status. Dette hjelper til med å beskytte forekomsten mot spam-lignende sendinger, reduserer tidslinjestøy og begrenser unødvendig føderasjonstrafikk til eksterne servere.",
+        "sameDomainCors": "Filen skal være plassert på samme domene som den vertsbaserte applikasjonen; ellers kan den bli blokkert på grunn av CORS-sikkerhetsbegrensninger.",
+        "silentStatusesInterval": "Definerer minimumstiden (i sekunder) en bruker må vente før han publiserer en ny stille status. Stille statuser er ment for import/synkroniseringsscenarier (for eksempel fra eksterne apper). Disse innleggene leveres ikke til brukernes tidslinjer og er ikke forent gjennomActivityPub."
+      },
+      "jobs": {
+        "calculateLongTrending": "Beregn langtidstrendjobb",
+        "calculateShortTrending": "Beregn trendjobb med kort periode",
+        "clearAttachments": "Slett vedlegg som ikke er koblet til statusjobben",
+        "clearCaptchaTokens": "Fjern gamle captcha-tokens-jobb",
+        "clearDeletedUsers": "Fjern slettet brukerjobb",
+        "clearFailedLogins": "Fjern gamle mislykkede påloggingsloggjobber",
+        "clearOldErrors": "Fjern gammel feiljobb",
+        "createArchives": "Opprett arkivjobb",
+        "deleteOldArchives": "Slett gammel arkivjobb",
+        "fillLocationsTable": "Fyll plasseringstabelljobb",
+        "purgeOldStatuses": "Tøm gammel statusjobb",
+        "rescheduleFailedActivityPub": "Omplanlegg mislykketActivityPub-hendelsesjobb"
+      },
+      "labels": {
+        "systemDefaultUserId": "Standard systembruker-ID",
+        "webContactUserId": "Webkontakt bruker-ID"
+      },
+      "messages": {
+        "settingsWasSaved": "Innstillingene ble lagret."
+      },
+      "none": "Ingen",
+      "registration": "Registreringer",
+      "ssl": "SSL",
+      "texts": {
+        "aiDescriptionPrompt": "AIbeskrivelsesprompt",
+        "aiHashtagsPrompt": "AIhashtags spørsmål",
+        "aiModel": "AImodell",
+        "aiProviderName": "AI-leverandørnavn",
+        "aiSecretKey": "AIhemmelig nøkkel",
+        "aiUrl": "AIURL",
+        "anonymousAccess": "Anonym tilgang",
+        "antiFloodSettings": "Anti-flom innstillinger",
+        "artificialInteligence": "Kunstig intelligens",
+        "corsOrgins": "CORS opphav",
+        "customJavascript": "TilpassetJavaScript",
+        "customStyles": "Egendefinerte stiler",
+        "databaseLoggedEvents": "Databaseloggede hendelser",
+        "defaultAccounts": "Standardkontoer",
+        "deleteStatusesOlderThanDays": "Slett statuser eldre enn (dager)",
+        "emailFromAddress": "E-post fra adresse",
+        "emailFromName": "E-post fra navn",
+        "emailHostname": "E-post vertsnavn",
+        "emailPassword": "E-postpassord",
+        "emailPort": "E-postport",
+        "emailSecureMethod": "E-post sikker metode",
+        "emailServer": "E-postserver",
+        "emailUsername": "E-post brukernavn",
+        "eventsToLog": "Hendelser å logge",
+        "financialSupport": "Økonomisk støtte",
+        "httpPathToCustomCssFile": "HTTP-bane til egendefinertCSS-fil",
+        "httpPathToCustomJavascriptFile": "HTTP-sti til egendefinertJavaScript-fil",
+        "imagesQuality": "Bildekvalitet",
+        "imagesUrl": "Bilder url",
+        "inlineCustomCssStyles": "Innebygde tilpassedeCSS-stiler",
+        "inlineCustomJavascript": "Inline tilpassetJavaScript",
+        "mainServerSettings": "Hovedserverinnstillinger",
+        "mastodonUrl": "Mastodonurl",
+        "maximumFileSize": "Maksimal filstørrelse",
+        "maximumNumberOfAttachments": "Maksimalt antall vedlegg",
+        "maximumNumberOfCharactersInStatus": "Maksimalt antall tegn i status",
+        "maximumNumberOfInvitationsPerUser": "Maksimalt antall invitasjoner per bruker",
+        "minimumIntervalBetweenAddingSilentStatusesSeconds": "Minimumsintervall mellom å legge til stille statuser (sekunder)",
+        "minimumIntervalBetweenAddingStatusesSeconds": "Minimumsintervall mellom å legge til statuser (sekunder)",
+        "patreonUrl": "Patreonurl",
+        "privacyPolicy": "Personvernerklæring",
+        "privacyPolicyContent": "Innhold i retningslinjene for personvern",
+        "privacyPolicyUpdateDate": "Dato for oppdatering av personvernreglene",
+        "scheduledJobs": "Planlagte jobber",
+        "startTls": "Start TLS",
+        "startTlsWhenAvailable": "Start TLS når tilgjengelig",
+        "termsOfService": "Vilkår for bruk",
+        "termsOfServiceContent": "Innhold i vilkårene for bruk",
+        "termsOfServiceUpdateDate": "Oppdateringsdato for vilkår for bruk",
+        "totalCost": "Total kostnad",
+        "usersSupport": "Brukerstøtte",
+        "webDescription": "Webbeskrivelse",
+        "webEmail": "E-post på nett",
+        "webLanguages": "Nettspråk",
+        "webLongDescription": "Web lang beskrivelse",
+        "webThumbnailUrl": "Nettadresse for miniatyrbilde",
+        "webTitle": "Netttittel",
+        "webpushNotifications": "WebPush-varsler",
+        "webpushServiceEndpoint": "WebPushtjenesteendepunkt",
+        "webpushServiceSecretKey": "WebPushtjeneste hemmelig nøkkel",
+        "webpushVapidPrivateKey": "WebPushUgyldig privat nøkkel",
+        "webpushVapidPublicKey": "WebPushUgyldig offentlig nøkkel",
+        "webpushVapidSubject": "WebPushDumt motiv"
+      },
+      "toggles": {
+        "isAiEnabled": "ErAIaktivert",
+        "isQuickCaptchaEnabled": "Er QuickCaptcha aktivert (intern captcha)",
+        "isRegistrationByApprovalOpened": "Er registrering etter godkjenning åpnet",
+        "isRegistrationByInvitationsOpened": "Er påmelding ved invitasjon åpnet",
+        "isRegistrationOpened": "Er registreringen åpnet",
+        "isWebPushEnabled": "ErWebPush-varsler aktivert",
+        "showCategoriesForAnonymous": "Vis kategorier for anonym bruker",
+        "showEditorsStatusesChoiceForAnonymous": "Vis redaktørens statusvalg for anonym bruker",
+        "showEditorsUsersChoiceForAnonymous": "Vis redaktørens brukervalg for anonym bruker",
+        "showHashtagsForAnonymous": "Vis hashtags for anonym bruker",
+        "showLocalTimelineForAnonymous": "Vis lokal tidslinje for anonym bruker",
+        "showNewsForAnonymous": "Vis menyelementet \"Nyheter\" for anonyme brukere",
+        "showNewsForSignedIn": "Vis menyelementet Nyheter for påloggede brukere",
+        "showSharedBusinessCards": "Vis menyelementet \"Delte visittkort\".",
+        "showTrendingForAnonymous": "Vis trending for anonym bruker"
+      }
+    },
+    "hashtagGallery": {
+      "texts": {
+        "sadlyThereSNothingToSeeHere": "Dessverre er det ingenting å se her ennå."
+      }
+    },
+    "header": {
+      "applicationLogo": "Applikasjonslogo",
+      "menuWithActions": "Meny med handlinger",
+      "navigation": {
+        "account": "Konto",
+        "articles": "Artikler",
+        "categories": "Kategorier",
+        "editorsChoice": "Redaktørens valg",
+        "errors": "Feil",
+        "events": "Hendelser",
+        "home": "Hjem",
+        "invitations": "Invitasjoner",
+        "news": "Nyheter",
+        "notifications": "Varsler",
+        "preferences": "Preferanser",
+        "reports": "Rapporter",
+        "sharedBusinessCards": "Delte visittkort",
+        "support": "Støtte",
+        "trending": "På vei opp",
+        "users": "Brukere"
+      },
+      "signedInAs": "Logget på som",
+      "switchTheme": "Bytt tema"
+    },
+    "homeCards": {
+      "messages": {
+        "doYouWantToDeleteHomeCard": "Vil du slette hjemmekortet?",
+        "homeCardHasBeenDeleted": "Hjemmekort er slettet."
+      },
+      "texts": {
+        "newHomeCard": "Nytt hjemmekort"
+      }
+    },
+    "homeSignin": {
+      "attrs": {
+        "refreshCurrentTimeline": "Oppdater gjeldende tidslinje",
+        "timelineType": "Tidslinjetype"
+      },
+      "texts": {
+        "localCollectionOfPhotos": "En samling bilder laget av alle innlegg laget av brukere som publiserer på denne serveren.",
+        "federatedCollectionOfPhotos": "En samling bilder laget av alle brukeropplastede bilder som har nådd denne serveren.",
+        "privateCollectionOfPhotos": "Din personlige samling av bilder, laget basert på innlegg fra brukere du følger."
+      },
+      "timeline": "Tidslinje"
+    },
+    "homeSignout": {
+      "mastodon": "Mastodon",
+      "texts": {
+        "apiDocumentation": "APIdokumentasjon",
+        "editorSChoiceAcrossWholeFediverse": "Redaktørens valg på tvers av heleFediverse",
+        "itSAdFreeAndFocusedOn": "Det er annonsefritt og fokusert på fellesskap og kreativitet, ikke algoritmer.",
+        "privacyPolicy": "Personvernerklæring",
+        "rediscoverTheBeautyOfPhotography": "Redisdekk skjønnheten ved fotografering",
+        "sourceCode": "Kildekode",
+        "termsOfService": "Vilkår for bruk",
+        "vernissageIsAFreePlatformDesignedFor": "Vernissageer en gratis plattform designet for fotografer."
+      }
+    },
+    "image": {
+      "altLabel": "ALT",
+      "messages": {
+        "statusBoosted": "Status forsterket.",
+        "statusFavourited": "Status som favoritt.",
+        "yourBoostHasBeenUndone": "Boosten din har blitt angret.",
+        "yourLikeHasBeenUndone": "Liker du har blitt angret."
+      }
+    },
+    "instanceRules": {
+      "messages": {
+        "doYouWantToDeleteInstanceRule": "Vil du slette forekomstregelen?",
+        "ruleHasBeenDeleted": "Regelen er slettet."
+      },
+      "texts": {
+        "newRule": "Ny regel"
+      }
+    },
+    "licenseList": {
+      "messages": {
+        "doYouWantToDeleteLicense": "Vil du slette lisensen?",
+        "licenseHasBeenDeleted": "Lisensen er slettet."
+      },
+      "texts": {
+        "newLicense": "Ny lisens"
+      }
+    },
+    "password": {
+      "attrs": {
+        "password": "Passord",
+        "togglePasswordVisibility": "Slå passordsynlighet"
+      },
+      "texts": {
+        "between8And32CharactersLong": "Mellom 8 og 32 tegn lang",
+        "numberOrSymbol": "Tall eller symbol",
+        "oneLowercaseLetter": "En liten bokstav",
+        "oneUppercaseLetter": "Én stor bokstav",
+        "yourPasswordHaveToFullfilBelowRequirements": "Passordet ditt må oppfylle kravene nedenfor."
+      }
+    },
+    "statusProperties": {
+      "attrs": {
+        "application": "Søknad",
+        "followers": "Følgere",
+        "mentioned": "Nevnt",
+        "numberOfBoosts": "Antall forsterkninger",
+        "numberOfLikes": "Antall likes",
+        "public": "Offentlig",
+        "publishedDate": "Publiseringsdato",
+        "quietpublic": "QuietPublic"
+      }
+    },
+    "statusTextAutocomplete": {
+      "attrs": {
+        "hashtagSuggestions": "Hashtag-forslag",
+        "status": "Status",
+        "userSuggestions": "Brukerforslag"
+      },
+      "texts": {
+        "enterStatusText": "Skriv inn statustekst.",
+        "tooLongStatus": "For lang status.",
+        "usePascalcaseForHashtagsCapitalizingTheFirst": "Bruk \"PascalCase\" for hashtags, bruk stor bokstav i hvert ord for å forbedre lesbarheten og tilgjengeligheten."
+      }
+    },
+    "uploadPhoto": {
+      "attrs": {
+        "altText": "Alt tekst",
+        "aperture": "Blenderåpning",
+        "chemistry": "Kjemi",
+        "createDate": "Opprett dato",
+        "createTime": "Skap tid",
+        "enterLocation": "Angi plassering",
+        "exposureTime": "Eksponeringstid",
+        "film": "Film",
+        "flash": "Flash",
+        "focalLength": "Brennvidde",
+        "focalLengthIn35mmFilmEquivalent": "Brennvidde i 35 mm film tilsvarende",
+        "gpsLatitude": "GPSbreddegrad",
+        "gpsLongitude": "GPSlengdegrad",
+        "iso": "ISO",
+        "lens": "Linse",
+        "manufacturer": "Produsent",
+        "model": "Modell",
+        "number": "Nummer",
+        "scanner": "Skanner",
+        "software": "Programvare",
+        "uploadedPhoto": "Lastet opp bilde"
+      },
+      "labels": {
+        "city": "By",
+        "country": "Land",
+        "date": "Dato",
+        "license": "Lisens",
+        "location": "Beliggenhet",
+        "time": "Tid"
+      },
+      "messages": {
+        "uploadedFileTooLarge": "Den opplastede filen er for stor. Maksimal størrelse er{{size}}."
+      },
+      "texts": {
+        "altText": "Alt tekst",
+        "aperture": "Blenderåpning:",
+        "chemistry": "Kjemi:",
+        "createDate": "Opprettingsdato:",
+        "deleteHdrVersion": "SlettHDRversjon",
+        "exifMetadata": "Exif-metadata",
+        "exposureTime": "Eksponeringstid:",
+        "f": "f/",
+        "featurePoweredBy": "Funksjon drevet av{{providerName}}.",
+        "film": "Film:",
+        "flash": "Flash:",
+        "focalLength": "Brennvidde:",
+        "fullFrameEquivalent": "Tilsvarende fullformat",
+        "generate": "Generer",
+        "geolocationDisclosureWarning": "Ved å dele geolokaliseringsdataene til bildet ditt, avslører du den nøyaktige plasseringen der bildet ble tatt.",
+        "gpsCoordinates": "GPSkoordinater:",
+        "imageExceededLimitAndWasResized": "Bildet ditt overskred{{maxFileSize}}-grensen, så det ble automatisk endret til 4096 px på den lengre kanten.",
+        "information": "Informasjon:",
+        "iso": "ISO:",
+        "lens": "Linse:",
+        "manufacturer": "Produsent:",
+        "mm": "mm",
+        "model": "Modell:",
+        "originalFilePreservedWarning": "Det opplastede bildet vil bli bevart som originalfilen uten noen endringer.",
+        "scanner": "Skanner:",
+        "sec": "sek",
+        "software": "Programvare:",
+        "tooLongAltText": "For lang alt-tekst.",
+        "uploading": "Laster opp...",
+        "warning": "Advarsel:",
+        "withoutALicense": "Uten lisens"
+      }
+    },
+    "userSelector": {
+      "texts": {
+        "choseUser": "Velg bruker.",
+        "choseUserFromList": "Velg bruker fra listen."
+      }
+    },
+    "usersGallery": {
+      "texts": {
+        "sadlyThereSNothingToSeeHere": "Dessverre er det ingenting å se her ennå."
+      }
+    }
+  },
+  "dialogs": {
+    "category": {
+      "attrs": {
+        "categoryName": "Kategorinavn",
+        "delete": "Slett",
+        "hashtagName": "Hashtag navn",
+        "priority": "Prioritet"
+      },
+      "messages": {
+        "categoryHasBeenUpdated": "Kategori er oppdatert.",
+        "newCategoryHasBeenCreated": "Ny kategori er opprettet."
+      },
+      "texts": {
+        "categoryName": "Kategorinavn",
+        "enterCategoryName": "Skriv inn kategorinavn.",
+        "enterHashtagName": "Skriv inn hashtag-navn.",
+        "enterPriority": "Angi prioritet.",
+        "nameIsTooLong": "Navnet er for langt.",
+        "newHashtag": "Ny hashtag"
+      }
+    },
+    "changeEmail": {
+      "attrs": {
+        "email": "E-post"
+      },
+      "messages": {
+        "emailHasBeenChanged": "E-post er endret."
+      },
+      "texts": {
+        "changeEmail": "Endre e-post",
+        "chooseOtherEmailThisOneIsAlready": "Velg en annen e-postadresse, denne er allerede koblet til en annen konto.",
+        "enterEmail": "Skriv inn e-post.",
+        "privacyNote": "Ikke bekymre deg. Denne informasjonen er hellig for oss. Vi vil aldri vise, selge eller misbruke det.",
+        "verifyThatYouVeEnteredProperEmail": "Bekreft at du har oppgitt riktig e-post."
+      }
+    },
+    "changePassword": {
+      "attrs": {
+        "oldPassword": "Gammelt passord"
+      },
+      "messages": {
+        "passwordHasBeenChanged": "Passordet er endret."
+      },
+      "texts": {
+        "changePassword": "Endre passord",
+        "enterPassword": "Skriv inn passord.",
+        "oldPassword": "Gammelt passord",
+        "passwordIsTooLong": "Passordet er for langt."
+      }
+    },
+    "contentWarning": {
+      "attrs": {
+        "contentWarning": "Innholdsadvarsel"
+      },
+      "texts": {
+        "contentWarning": "Innholdsadvarsel"
+      }
+    },
+    "createAlias": {
+      "attrs": {
+        "alias": "Alias"
+      },
+      "messages": {
+        "newAccountAliasHasBeenCreated": "Nytt kontoalias er opprettet."
+      },
+      "texts": {
+        "accountAlias": "Kontoalias",
+        "accountAliasIsTooLong": "Kontoaliaset er for langt.",
+        "createAccountAlias": "Opprett kontoalias",
+        "enterAccountAlias": "Skriv inn kontoalias."
+      }
+    },
+    "deleteAccount": {
+      "attrs": {
+        "email": "E-post"
+      },
+      "texts": {
+        "contentThatHasBeenCachedByOther": "Innhold som har blitt bufret av andre servere kan vedvare",
+        "deleteAccount": "Slett konto",
+        "youWillNotBeAbleToRestore": "Du vil ikke kunne gjenopprette eller reaktivere kontoen din",
+        "yourPostsAndOtherDataWillBe": "Dine innlegg og andre data vil bli permanent fjernet",
+        "yourUsernameWillRemainUnavailable": "Brukernavnet ditt vil forbli utilgjengelig"
+      }
+    },
+    "deleteStatus": {
+      "texts": {
+        "deleteStatus": "Vil du slette status?"
+      }
+    },
+    "disableTwoFactorToken": {
+      "attrs": {
+        "code": "Kode"
+      },
+      "messages": {
+        "twoFactorAuthenticationDisabled": "Tofaktorautentisering deaktivert."
+      },
+      "texts": {
+        "disableTwoFactorAuthentication2fa": "Deaktiver tofaktorautentisering (2FA)"
+      }
+    },
+    "enableTwoFactorToken": {
+      "attrs": {
+        "code": "Kode"
+      },
+      "messages": {
+        "twoFactorAuthenticationEnabled": "Tofaktorautentisering aktivert."
+      },
+      "texts": {
+        "backupCodes": "Backup-koder",
+        "enableTwoFactorAuthentication2fa": "Aktiver tofaktorautentisering (2FA)",
+        "keepBackupCodes": "Behold disse kodene i tilfelle du ikke får tilgang til autentiseringsappen.",
+        "scanQrCodeWith2faApplication": "SkannQR-koden med et2FA-program, for eksempelAuthyellerGoogle Authenticator.",
+        "tokenIsRequired": "Token er påkrevd."
+      }
+    },
+    "errorItem": {
+      "attrs": {
+        "code": "Kode",
+        "exception": "Unntak",
+        "message": "Melding"
+      },
+      "texts": {
+        "errorData": "Feildata"
+      }
+    },
+    "followingImportAccounts": {
+      "attrs": {
+        "status": "Status"
+      },
+      "texts": {
+        "followingImportAccounts": "Følgende importkontoer",
+        "notProcessed": "Ikke behandlet",
+        "requestSent": "Forespørsel sendt"
+      }
+    },
+    "homeCard": {
+      "attrs": {
+        "homeCardTitle": "Hjemmekorttittel",
+        "licenseDescription": "Lisensbeskrivelse",
+        "order": "Bestill"
+      },
+      "messages": {
+        "homeCardHasBeenUpdated": "Hjemmekortet er oppdatert.",
+        "newHomeCardHasBeenCreated": "Nytt hjemmekort er opprettet."
+      },
+      "texts": {
+        "bodyIsTooLong": "Kroppen er for lang.",
+        "enterHomeCardBody": "Skriv inn hjemmekortets hovedtekst.",
+        "enterHomeCardOrder": "Skriv inn hjemmekortbestilling.",
+        "enterHomeCardTitle": "Skriv inn hjemmekortets tittel.",
+        "homeCard": "Hjemmekort",
+        "titleIsTooLong": "Tittelen er for lang."
+      }
+    },
+    "instanceBlockedDomain": {
+      "attrs": {
+        "domain": "Domene",
+        "reason": "Årsak"
+      },
+      "messages": {
+        "domainHasBeenUpdated": "Domene har blitt oppdatert.",
+        "newDomainHasBeenCreated": "Nytt domene er opprettet."
+      },
+      "texts": {
+        "domainIsTooLong": "Domenet er for langt.",
+        "enterDomain": "Skriv inn domene.",
+        "instanceBlockedDomain": "Forekomst blokkert domene",
+        "reasonIsTooLong": "Grunnen er for lang."
+      }
+    },
+    "instanceRule": {
+      "attrs": {
+        "order": "Rekkefølge",
+        "rule": "Regel"
+      },
+      "messages": {
+        "newRuleHasBeenCreated": "Ny regel er opprettet.",
+        "ruleHasBeenUpdated": "Regelen er oppdatert."
+      },
+      "texts": {
+        "enterOrder": "Skriv inn ordre.",
+        "enterRule": "Skriv inn regel.",
+        "instanceRule": "Forekomstregel",
+        "rule": "Regel",
+        "ruleIsTooLong": "Regelen er for lang."
+      }
+    },
+    "license": {
+      "attrs": {
+        "licenseCode": "Lisenskode",
+        "licenseDescription": "Lisensbeskrivelse",
+        "licenseName": "Lisensnavn",
+        "url": "URL"
+      },
+      "messages": {
+        "licenseHasBeenUpdated": "Lisensen er oppdatert.",
+        "newLicenseHasBeenCreated": "Ny lisens er opprettet."
+      },
+      "texts": {
+        "codeIsTooLong": "Koden er for lang.",
+        "descriptionIsTooLong": "Beskrivelsen er for lang.",
+        "enterLicenseName": "Skriv inn lisensnavn.",
+        "nameIsTooLong": "Navnet er for langt.",
+        "urlIsTooLong": "URL er for lang."
+      }
+    },
+    "moveAccount": {
+      "attrs": {
+        "account": "Konto",
+        "password": "Passord"
+      },
+      "messages": {
+        "informationAboutNewAccountHasBeenSaved": "Informasjon om ny konto er lagret."
+      },
+      "texts": {
+        "afterMovingThereMayBeAWaiting": "Etter flytting kan det være en ventetid før du kan flytte igjen.",
+        "enterNewAccount": "Skriv inn ny konto.",
+        "enterPassword": "Skriv inn passord.",
+        "moveAccount": "Flytt konto",
+        "onlyYourFollowersWillBeMovedAutomatically": "Bare dine følgere flyttes automatisk.",
+        "theNewAccountMustFirstBeConfigured": "Den nye kontoen må først konfigureres til å referere til denne kontoen som et alias eller tidligere konto.",
+        "youShouldExportYourDataBeforeContinuing": "Du bør eksportere dataene dine før du fortsetter, spesielt hvis du vil beholde en kopi av innholdet ditt eller importere fulgte kontoer andre steder.",
+        "yourCurrentAccountMayNoLongerBe": "Din nåværende konto er kanskje ikke lenger fullt brukbar etter migreringen.",
+        "yourCurrentProfileWillBeMarkedAs": "Din nåværende profil vil bli merket som flyttet og vil vise et omdirigeringsvarsel som peker til den nye kontoen.",
+        "yourPostsPhotosCommentsLikesBookmarksFollowed": "Dine innlegg, bilder, kommentarer, likes, bokmerker, fulgte kontoer, blokkeringer, dempinger og andre kontodata vil ikke bli overført."
+      }
+    },
+    "muteAccount": {
+      "texts": {
+        "muteAccount": "Demp kontoen",
+        "muteEndDate": "Demp sluttdatoen",
+        "optionalDateWhenMutingWillEnd": "Valgfri dato når dempingen avsluttes."
+      }
+    },
+    "notificationSettings": {
+      "messages": {
+        "errorDuringGeneratingEncryptionKeysForWebPush": "Feil under generering av krypteringsnøkler for web-push.",
+        "notificationSettingsHasBeenSaved": "Varslingsinnstillinger er lagret.",
+        "unexpectedErrorDuringGeneratingWebPushSubscription": "Uventet feil under generering av web-push-abonnement.",
+        "webPushNotificationsForTheWebsiteAreDisabledInTheBrowser": "Web-push-varsler for nettstedet er deaktivert i nettleseren.",
+        "webPushPublicKeyIsNotSet": "Web-push offentlig nøkkel er ikke angitt."
+      },
+      "texts": {
+        "boostedStatus": "Forsterket status",
+        "newCommentAdded": "Ny kommentar lagt til",
+        "newFollowRequest": "Ny følgeforespørsel",
+        "newFollower": "Ny følger",
+        "newLike": "Ny liker",
+        "newReport": "Ny rapport",
+        "newUser": "Ny bruker",
+        "notificationsDisabledInBrowser": "Varsler er deaktivert i nettleseren din. Du må endre nettleserinnstillingene.",
+        "notificationsSettings": "Varslingsinnstillinger",
+        "statusUpdated": "Status oppdatert",
+        "youHaveBeenMentioned": "Du har blitt nevnt"
+      }
+    },
+    "report": {
+      "attrs": {
+        "comment": "Kommentar"
+      },
+      "categories": {
+        "abusive": "Fornærmende",
+        "copyright": "Opphavsrett",
+        "impersonation": "Etterligning",
+        "scam": "Svindel",
+        "sensitive": "Sensitive",
+        "spam": "Spam",
+        "terrorism": "Terrorisme",
+        "underage": "Mindreårig",
+        "violence": "Vold"
+      },
+      "texts": {
+        "forwardToRemoteAdmin": "Bør rapporten videresendes til ekstern administrator?",
+        "serverRules": "Serverregler",
+        "tooLongComment": "For lang kommentar."
+      }
+    },
+    "reportDetails": {
+      "attrs": {
+        "comment": "Kommentar"
+      },
+      "texts": {
+        "serverRules": "Serverregler"
+      }
+    },
+    "restoreAccount": {
+      "attrs": {
+        "password": "Passord"
+      },
+      "messages": {
+        "accountHasBeenRestored": "Kontoen er gjenopprettet."
+      },
+      "texts": {
+        "enterPassword": "Skriv inn passord.",
+        "restoreAccount": "Gjenopprett konto"
+      }
+    },
+    "shareBusinessCard": {
+      "attrs": {
+        "comment": "Kommentar",
+        "title": "Tittel"
+      },
+      "texts": {
+        "enterTitle": "Skriv inn tittel.",
+        "shareBusinessCard": "Del visittkort",
+        "tooLongNote": "For lang notat.",
+        "tooLongTitle": "For lang tittel."
+      }
+    },
+    "statusEventErrorMessage": {
+      "attrs": {
+        "errorMessage": "Feilmelding",
+        "message": "Melding"
+      },
+      "texts": {
+        "errorMessage": "Feilmelding"
+      }
+    },
+    "statusTextTemplate": {
+      "attrs": {
+        "comment": "Kommentar",
+        "template": "Mal"
+      },
+      "messages": {
+        "statusTextTemplateHasBeenUpdated": "Statustekstmal er oppdatert."
+      },
+      "texts": {
+        "statusTextTemplate": "Status tekstmal",
+        "tooLongTemplate": "For lang mal."
+      }
+    },
+    "unfollowAccount": {
+      "texts": {
+        "unfollowAccount": "Slutt å følge kontoen"
+      }
+    },
+    "updateSharedBusinessCard": {
+      "attrs": {
+        "yourEmail": "Din e-post",
+        "yourName": "Navnet ditt"
+      },
+      "texts": {
+        "enterYourName": "Skriv inn navnet ditt.",
+        "shareYourPersonalInfo": "Del din personlige informasjon",
+        "tooLongEmail": "For lang e-post.",
+        "tooLongName": "For langt navn.",
+        "verifyThatYouVeEnteredProperEmail": "Bekreft at du har oppgitt riktig e-post.",
+        "yourEmail": "Din e-post",
+        "yourName": "Navnet ditt"
+      }
+    },
+    "userBlockedDomain": {
+      "attrs": {
+        "domain": "Domene",
+        "reason": "Årsak"
+      },
+      "messages": {
+        "blockedDomainHasBeenUpdated": "Blokkert domene har blitt oppdatert.",
+        "domainHasBeenBlocked": "Domenet er blokkert."
+      },
+      "texts": {
+        "blockDomain": "Blokker domene",
+        "blockDomainLegend": "Brukere fra dette domenet kan ikke følge deg. Innleggene deres vil ikke vises på din lokale tidslinje, og innleggene dine leveres ikke direkte til dem. Imidlertid kan de fortsatt se innleggene dine hvis en tredjepart de følger forsterker dem.",
+        "domainIsTooLong": "Domenet er for langt.",
+        "enterDomain": "Skriv inn domene.",
+        "reasonIsTooLong": "Grunnen er for lang."
+      }
+    },
+    "userBlockedUser": {
+      "attrs": {
+        "email": "E-post"
+      },
+      "texts": {
+        "blockUser": "Blokker bruker",
+        "reasonIsTooLong": "Grunnen er for lang."
+      }
+    },
+    "userRoles": {
+      "messages": {
+        "roleHasBeenConnected": "Rollen er koblet sammen.",
+        "roleHasBeenDisconnected": "Rollen er frakoblet."
+      },
+      "texts": {
+        "userRoles": "Brukerroller"
+      }
+    },
+    "users": {
+      "texts": {
+        "sadlyThereAreNoUsersToDisplay": "Dessverre er det ingen brukere å vise ennå."
+      }
+    }
+  },
+  "errors": {
+    "account": {
+      "emailIsAlreadyConfirmed": "E-post er allerede bekreftet.",
+      "userNameIsRequired": "Brukernavn er påkrevd.",
+      "userHaveToBeAuthenticated": "Brukeren må være autentisert.",
+      "userIsNotSupporter": "Brukeren er ikke støttespiller."
+    },
+    "accountMigration": {
+      "targetAccountNotFound": "Finner ikke målkontoen.",
+      "cannotMoveToTheSameAccount": "Målkonto kan ikke være lik kildekonto.",
+      "targetAccountIsNotAlias": "Målkonto er ikke et alias for denne kontoen.",
+      "onlyLocalAccountsCanBeMoved": "Kun lokale kontoer kan flyttes."
+    },
+    "actionsForbidden": {
+      "localTimelineForbidden": "Tilgang til lokal tidslinje er forbudt.",
+      "trendingForbidden": "Tilgang til trending er forbudt.",
+      "editorsStatusesChoiceForbidden": "Tilgang til redaktørens statusvalg er forbudt.",
+      "editorsUsersChoiceForbidden": "Tilgang til redaktørens brukervalg er forbudt.",
+      "hashtagsForbidden": "Tilgang til hashtags er forbudt.",
+      "categoriesForbidden": "Tilgang til kategorier er forbudt."
+    },
+    "activityPub": {
+      "missingSignatureHeader": "ActivityPub-forespørsel 'Signature' -overskrift mangler.",
+      "missingSignedHeadersList": "Kan ikke lese listen over signerte overskrifter fra ActivityPub-forespørsel.",
+      "missingSignatureInHeader": "Kan ikke lese signaturen i overskriften i ActivityPub-forespørselen.",
+      "missingKeyIdInHeader": "Kan ikke lese keyId fra signaturoverskriften i ActivityPub-forespørselen.",
+      "missingActivityPubProfileInKeyId": "Finner ikke skuespillerprofil i keyId {{keyIdValue}}.",
+      "missingSignedHeader": "Finner ikke headeren '{{headerName}}' som ble brukt til å opprette signaturen i ActivityPub-forespørselen.",
+      "signatureIsNotValid": "ActivityPub forespørselssignatur er ikke gyldig.",
+      "userNameIsRequired": "Brukernavn er påkrevd.",
+      "statusIdIsRequired": "Status-ID kreves.",
+      "incorrectStatusIdFormat": "Status-ID-en '{{statusId}}' har ikke riktig format.",
+      "userNotExistsInDatabase": "Brukeren '{{activityPubProfile}}' finnes ikke i den lokale databasen.",
+      "privateKeyNotExists": "Privat nøkkel for brukeren '{{activityPubProfile}}' finnes ikke i den lokale databasen.",
+      "publicKeyNotExists": "Offentlig nøkkel for brukeren '{{activityPubProfile}}' finnes ikke i den lokale databasen.",
+      "signatureDataNotCreated": "Signature-data kan ikke opprettes basert på overskrifter fra forespørsel.",
+      "missingDateHeader": "ActivityPub-forespørsel mangler 'Date' -overskrift.",
+      "incorrectDateFormat": "Feil datoformat i ActivityPub-forespørsel: {{date}}.",
+      "badTimeWindow": "Datoen for den signerte ActivityPub-forespørselen '{{date}}' er utenfor det tillatte tidsvinduet.",
+      "followTypeNotSupported": "Following-objekttype: {{type}} støttes ikke.",
+      "acceptTypeNotSupported": "Accepting-objekttype: {{type}} støttes ikke.",
+      "rejectTypeNotSupported": "Rejecting-objekttype: {{type}} støttes ikke.",
+      "algorithmNotSupported": "Algoritme: {{type}} støttes ikke.",
+      "algorithmNotSpecified": "Algoritme er ikke spesifisert.",
+      "missingUserInboxUrl": "Brukerinnboksen for brukeren '{{activityPubProfile}}' mangler i den lokale databasen.",
+      "missingSharedInboxUrl": "Den delte innboksen for brukeren '{{activityPubProfile}}' mangler i den lokale databasen.",
+      "statusHasNotBeenDownloaded": "Nedlastet status er tom: {{statusActivityPubUrl}}. Feil: {{errorDescription}}",
+      "statusCannotBeProcessed": "Nedlastet status kan ikke behandles: {{statusActivityPubUrl}}. Feil: {{errorDescription}}",
+      "missingSupportedImageAttachments": "Nedlastet status har ikke bildevedlegg: {{statusActivityPubUrl}}.",
+      "actorNotDownloaded": "Feil under nedlasting av skuespiller fra ekstern server: {{statusActivityPubUrl}}.",
+      "invalidNoteUrl": "Ugyldig URL til status: {{statusActivityPubUrl}}.",
+      "entityCaseError": "Konvertering til '{{entityName}}' mislyktes.",
+      "missingInstanceAdminAccount": "Manglende administratorkonto i lokal instans.",
+      "missingInstanceAdminPrivateKey": "Mangler privat nøkkel for adminkonto i lokal forekomst.",
+      "unrecognizedActivityPubProfileUrl": "Ukjent ActivityPub-profil URL.",
+      "domainIsBlockedByInstance": "Brukerens domene '{{activityPubProfile}}' er blokkert av instansen.",
+      "actorIsBlockedByInstance": "Aktøren '{{activityPubProfile}}' er blokkert av instansen.",
+      "signatureActorDoesNotMatchPayloadActor": "Signaturaktøren '{{signatureActor}}' samsvarer ikke med nyttelastaktøren '{{payloadActor}}'."
+    },
+    "archives": {
+      "requestWaitingForProcessing": "Det er allerede en forespørsel som venter på behandling.",
+      "processedRequestsAlreadyExist": "Behandlet forespørsel eksisterer allerede.",
+      "missingEmail": "Mangler bruker-e-post.",
+      "missingFileName": "Manglende arkivfilnavn."
+    },
+    "article": {
+      "incorrectArticleId": "Feil artikkel-ID.",
+      "incorrectArticleFileId": "Feil artikkelfil-ID.",
+      "missingFile": "Filen mangler.",
+      "imageTooLarge": "Bildet er for stort.",
+      "fileTypeNotSupported": "Filtypen støttes ikke.",
+      "fileConnectedWithDifferentArticle": "Filen er koblet til en annen artikkel."
+    },
+    "atom": {
+      "userNameIsRequired": "Brukernavn er påkrevd.",
+      "categoryNameIsRequired": "Kategorinavn er obligatorisk.",
+      "hashtagNameIsRequired": "Hashtag-navn er påkrevd."
+    },
+    "attachment": {
+      "missingImage": "Bildet er ikke vedlagt forespørselen.",
+      "createResizedImageFailed": "Kan ikke opprette bilde for å endre størrelse.",
+      "imageRotationFailed": "Bildet kan ikke roteres.",
+      "imageResizeFailed": "Bildet kan ikke endres.",
+      "attachmentAlreadyConnectedToStatus": "Vedlegg er allerede koblet til status.",
+      "imageTooLarge": "Bildefilen er for stor.",
+      "onlyAvifHdrFilesAreSupported": "Kun AVIF HDR-filer støttes.",
+      "emailNotVerified": "Brukerens e-postadresse er ikke bekreftet.",
+      "attachmentIdIsRequired": "Vedleggs-ID kreves.",
+      "incorrectRequestFormat": "Feil forespørselsformat."
+    },
+    "authClient": {
+      "authClientWithUriExists": "Autentiseringsklient med spesifisert uri eksisterer allerede.",
+      "incorrectAuthClientId": "Autentiseringsklient-ID er feil."
+    },
+    "avatar": {
+      "missingImage": "Bildet er ikke vedlagt forespørselen.",
+      "notFound": "Brukeren har ingen avatar.",
+      "createResizedImageFailed": "Kan ikke opprette bilde for å endre størrelse.",
+      "resizedImageFailed": "Bildet kan ikke endres.",
+      "userNameIsRequired": "Brukernavn er påkrevd."
+    },
+    "businessCard": {
+      "businessCardAlreadyExists": "Visittkortet finnes allerede."
+    },
+    "category": {
+      "categoryExists": "Kategori eksisterer allerede.",
+      "incorrectCategoryId": "Feil kategori-ID.",
+      "categoryCannotBeDeletedBecauseItIsInUse": "Kategori kan ikke slettes fordi den er i bruk."
+    },
+    "changePassword": {
+      "userNotFound": "Signert bruker ble ikke funnet i databasen.",
+      "invalidOldPassword": "Oppgitt gammelt passord er ugyldig.",
+      "userAccountIsBlocked": "Brukerkontoen er blokkert. Brukeren kan ikke logge på systemet akkurat nå.",
+      "emailNotConfirmed": "Brukerens e-postadresse er ikke bekreftet. Brukeren må bekrefte e-posten sin først.",
+      "saltCorrupted": "Passordet er ødelagt. Ta kontakt med portaladministratoren."
+    },
+    "confirmEmail": {
+      "invalidIdOrToken": "Ugyldig bruker-ID eller token. E-post kan ikke godkjennes."
+    },
+    "crypto": {
+      "privateKeyNotGenerated": "Kryptografisk privat nøkkel er ikke generert.",
+      "publicKeyNotGenerated": "Kryptografisk offentlig nøkkel er ikke generert.",
+      "externalPrivateKeyNotGenerated": "Kryptografisk ekstern privat nøkkel er ikke generert.",
+      "externalPublicKeyNotGenerated": "Kryptografisk ekstern offentlig nøkkel er ikke generert.",
+      "base64PrivateKeyNotGenerated": "Kryptografisk base64 privat nøkkel er ikke generert.",
+      "base64PublicKeyNotGenerated": "Kryptografisk base64 offentlig nøkkel er ikke generert."
+    },
+    "entityForbidden": {
+      "userForbidden": "Tilgang til spesifisert bruker er forbudt.",
+      "refreshTokenForbidden": "Tilgang til spesifisert oppdateringstoken er forbudt.",
+      "attachmentForbidden": "Tilgang til vedlegg er forbudt.",
+      "statusForbidden": "Tilgang til spesifisert status er forbudt.",
+      "userDomainBlockedForbidden": "Tilgang til spesifisert brukerdomeneblokkering er forbudt."
+    },
+    "entityNotFound": {
+      "userNotFound": "Brukeren eksisterer ikke.",
+      "refreshTokenNotFound": "Oppdateringstoken eksisterer ikke.",
+      "roleNotFound": "Rolle eksisterer ikke.",
+      "authClientNotFound": "Autentiseringsklient eksisterer ikke.",
+      "attachmentNotFound": "Vedlegg eksisterer ikke.",
+      "statusNotFound": "Status eksisterer ikke.",
+      "notificationNotFound": "Varsling finnes ikke.",
+      "licenseNotFound": "Lisens eksisterer ikke.",
+      "homeCardNotFound": "Hjemmekort eksisterer ikke.",
+      "locationNotFound": "Plassering eksisterer ikke.",
+      "invitationNotFound": "Invitasjonen eksisterer ikke.",
+      "reportNotFound": "Rapporten eksisterer ikke.",
+      "twoFactorTokenNotFound": "To-faktor-token eksisterer ikke.",
+      "instanceBlockedDomainNotFound": "Forekomst blokkert domene eksisterer ikke.",
+      "userBlockedDomainNotFound": "Brukerblokkert domene eksisterer ikke.",
+      "pushSubscriptionNotFound": "Push-abonnement eksisterer ikke.",
+      "ruleNotFound": "Regel eksisterer ikke.",
+      "errorItemNotFound": "Feilelementet eksisterer ikke.",
+      "userAliasNotFound": "Brukeralias eksisterer ikke.",
+      "archiveNotFound": "Arkivet finnes ikke.",
+      "userSettingNotFound": "Brukerinnstilling finnes ikke.",
+      "categoryNotFound": "Kategori eksisterer ikke.",
+      "followingImportNotFound": "Following-import eksisterer ikke.",
+      "articleNotFound": "Artikkelen eksisterer ikke.",
+      "articleFileInfoNotFound": "Artikkelfilen eksisterer ikke.",
+      "businessCardNotFound": "Visittkort eksisterer ikke.",
+      "sharedBusinessCardNotFound": "Delt visittkort eksisterer ikke.",
+      "statusActivityPubEventNotFound": "Status ActivityPub-hendelsen eksisterer ikke."
+    },
+    "errorItem": {
+      "incorrectErrorItemId": "Feilvare-ID er feil."
+    },
+    "exports": {
+      "cannotConvertToData": "Kan ikke konvertere invitasjonen til data."
+    },
+    "followImports": {
+      "missingFile": "Manglende fil med kontoer.",
+      "emptyFile": "Filen med kontoer er tom.",
+      "accountNotFound": "Finner ikke kontoen."
+    },
+    "followRequest": {
+      "missingFollowEntity": "Follow-entiteten (sourceUserId: '{{sourceUserId}}', targetUserId: '{{targetUserId}}') finnes ikke i den lokale databasen.",
+      "missingSourceUser": "Kildebrukeren '{{userId}}' mangler i databasen.",
+      "missingTargetUser": "Målbrukeren '{{userId}}' mangler i databasen.",
+      "missingActivityPubActionId": "Activity Pubhandlings-ID i følgeforespørsel mangler.",
+      "missingPrivateKey": "Privat nøkkel for bruker {{userName}} finnes ikke i lokal database.",
+      "accountHasBeenMoved": "Målkontoen er flyttet og kan ikke godta nye følgere.",
+      "incorrectId": "Feil ID i følgeforespørselen."
+    },
+    "forgotPassword": {
+      "userAccountIsBlocked": "Brukerkontoen er blokkert. Du kan ikke endre passord akkurat nå.",
+      "tokenNotGenerated": "Tokenet for tilbakestilling av passord ble ikke opprettet. Dette er en uvanlig situasjon.",
+      "tokenExpired": "Token som gjør det mulig å endre passord utløpt. Brukeren må gjenta prosessen med glemt passord.",
+      "passwordNotHashed": "Passordet ble ikke hashed.",
+      "saltCorrupted": "Passordet er ødelagt. Ta kontakt med portaladministratoren.",
+      "emailIsEmpty": "Brukerens e-post er tom. Kan ikke sende e-post med token."
+    },
+    "hashtag": {
+      "hashtagNameIsRequired": "Hashtag-navn er påkrevd.",
+      "hashtagNameIsTooLong": "Hashtag-navnet er for langt."
+    },
+    "header": {
+      "missingImage": "Bildet er ikke vedlagt forespørselen.",
+      "notFound": "Brukeren har ingen overskrift.",
+      "createResizedImageFailed": "Kan ikke opprette bilde for å endre størrelse.",
+      "resizedImageFailed": "Bildet kan ikke endres.",
+      "userNameIsRqeired": "Brukernavn er påkrevd."
+    },
+    "homeCard": {
+      "incorrectHomeCardId": "Hjemmekort-ID er feil."
+    },
+    "instanceBlockedDomain": {
+      "incorrectId": "Feil id."
+    },
+    "invitation": {
+      "maximumNumberOfInvitationsGenerated": "Maksimalt antall invitasjoner er allerede generert.",
+      "cannotDeleteUsedInvitation": "Kan ikke slette allerede brukt invitasjon.",
+      "invalidId": "Ugyldig invitasjons-ID."
+    },
+    "license": {
+      "incorrectLicenseId": "Lisens-ID er feil.",
+      "licenseAlreadyInUse": "Lisensen er allerede i bruk."
+    },
+    "location": {
+      "incorrectLocationId": "Plasserings-ID er feil.",
+      "queryIsRequired": "Spørring er påkrevd."
+    },
+    "login": {
+      "invalidLoginCredentials": "Oppgitt brukernavn eller passord er ugyldig.",
+      "userAccountIsBlocked": "Brukerkontoen er blokkert. Brukeren kan ikke logge på systemet akkurat nå.",
+      "userAccountIsNotApproved": "Brukerkontoen er ikke godkjent ennå. Brukeren kan ikke logge på systemet akkurat nå.",
+      "saltCorrupted": "Passordet er ødelagt. Ta kontakt med portaladministratoren.",
+      "twoFactorTokenNotFound": "Token for tofaktorautentisering kreves.",
+      "loginAttemptsExceeded": "For mange mislykkede pålogginger. Prøv igjen om 5 minutter."
+    },
+    "notification": {
+      "incorrectId": "Feil id."
+    },
+    "openAI": {
+      "incorrectOpenAIUrl": "Feil OpenAI url.",
+      "cannotChangeResponseToString": "Kan ikke endre svar på streng.",
+      "incorrectJsonFormat": "Feil JSON-format.",
+      "openAIIsNotEnabled": "OpenAI er ikke aktivert.",
+      "openAIIsNotConfigured": "OpenAI er ikke konfigurert. {{message}}"
+    },
+    "openidConnect": {
+      "invalidClientName": "Klientnavn må spesifiseres i URL.",
+      "clientNotFound": "Kunde med fornavn ble ikke funnet.",
+      "codeTokenNotFound": "Kodetoken ble ikke funnet.",
+      "invalidAuthenticateToken": "Autentiseringstoken er ugyldig.",
+      "authenticateTokenExpirationDateNotFound": "Autentiseringstoken har ikke utløpsdato.",
+      "autheticateTokenExpired": "Autentiseringstoken er utløpt.",
+      "userAccountIsBlocked": "Brukerkontoen er blokkert. Brukeren kan ikke logge på systemet akkurat nå."
+    },
+    "pushSubscription": {
+      "incorrectPushSubscriptionId": "Push abonnements-ID er feil."
+    },
+    "quickCaptcha": {
+      "keyLengthIsIncorrect": "Nøkkellengden er feil, skal være 16 tegn."
+    },
+    "refreshToken": {
+      "refreshTokenNotExists": "Oppdateringstoken eksisterer ikke, eller det er utløpt.",
+      "userIdNotSpecified": "Bruker-ID må angis for oppdateringstoken.",
+      "refreshTokenRevoked": "Oppdateringstoken ble opphevet.",
+      "refreshTokenExpired": "Oppdateringstoken er utløpt."
+    },
+    "register": {
+      "securityTokenIsMandatory": "Sikkerhetstoken (captcha) er obligatorisk.",
+      "securityTokenIsInvalid": "Sikkerhetstoken (captcha) er ugyldig.",
+      "userNameIsAlreadyTaken": "Bruker med oppgitt brukernavn finnes allerede i systemet.",
+      "userIdNotExists": "Bruker-ID finnes ikke. Sannsynligvis mislyktes lagring av brukerenheten.",
+      "emailIsAlreadyConnected": "E-post er allerede koblet til en annen konto.",
+      "registrationIsDisabled": "Registrering er deaktivert.",
+      "missingEmail": "E-post er ikke spesifisert, men det er obligatorisk.",
+      "missingEmailConfirmationGuid": "E-postbekreftelsesveiledning er ikke generert.",
+      "userHaveToAcceptAgreement": "Brukeren må godta avtalen.",
+      "reasonIsMandatory": "Begrunnelse er obligatorisk når kun registrering ved godkjenning er aktivert.",
+      "invitationTokenIsInvalid": "Invitasjonstoken er ugyldig.",
+      "invitationTokenHasBeenUsed": "Invitasjonstoken er brukt.",
+      "disposableEmailCannotBeUsed": "Engangse-post kan ikke brukes.",
+      "userNameIsRequired": "Brukernavn er påkrevd.",
+      "emailIsRequired": "E-post er påkrevd."
+    },
+    "report": {
+      "incorrectId": "Feil id."
+    },
+    "role": {
+      "incorrectRoleId": "Rolle-ID er feil."
+    },
+    "rss": {
+      "userNameIsRequired": "Brukernavn er påkrevd.",
+      "categoryNameIsRequired": "Kategorinavn er obligatorisk.",
+      "hashtagNameIsRequired": "Hashtag-navn er påkrevd."
+    },
+    "rule": {
+      "incorrectRuleId": "Regel-ID er feil."
+    },
+    "search": {
+      "queryIsRequired": "Spørring er påkrevd."
+    },
+    "setting": {
+      "incorrectSettingId": "Innstillings-ID er feil.",
+      "settingsKeyCannotBeChanged": "Innstillingsnøkkel kan ikke endres."
+    },
+    "sharedBusinessCard": {
+      "incorrectSharedBusinessCardId": "Feil delt visittkort-ID.",
+      "incorrectCode": "Feil kode.",
+      "businessCardNotFound": "Finner ikke visittkortet.",
+      "missingEmail": "Mangler e-post."
+    },
+    "statusActivityPubEvent": {
+      "sortColumnNotSupported": "Sorteringskolonnen støttes ikke.",
+      "incorrectStatusEventId": "Feil statushendelses-ID."
+    },
+    "status": {
+      "incorrectStatusId": "Status-ID er feil.",
+      "attachmentsAreRequired": "Vedlegg mangler.",
+      "incorrectAttachmentId": "Feil vedleggs-ID.",
+      "emailNotVerified": "Brukerens e-postadresse er ikke bekreftet.",
+      "accountHasBeenMoved": "Kontoen er flyttet og kan ikke opprette nye statuser.",
+      "cannotReblogMentionedStatus": "Kan ikke reblogge status med nevnt synlighet.",
+      "cannotReblogComments": "Kan ikke reblogge kommentarer.",
+      "cannotAddCommentWithoutCommentedStatus": "Kan ikke legge til kommentar uten kommentert status.",
+      "cannotDeleteStatus": "Det oppsto en feil under sletting av status.",
+      "cannotUpdateOtherUserStatus": "Kan ikke oppdatere annen brukerstatus.",
+      "cannotPinNonPublicStatus": "Kan ikke feste ikke-offentlig status.",
+      "cannotPinComment": "Kan ikke feste kommentarer.",
+      "cannotPinReblog": "Kan ikke feste reblogger.",
+      "sortColumnNotSupported": "Sorteringskolonnen støttes ikke.",
+      "incorrectStatusEventId": "Feil statushendelses-ID.",
+      "maxLimitOfAttachmentsExceeded": "Maksimal grense for vedlegg er overskredet",
+      "statusCreationTooFrequent": "Ny status kan ikke opprettes ennå. Vent {{waitSeconds}} sekunder før du legger til en ny."
+    },
+    "storage": {
+      "downloadRemoteResourceFailed": "Det er feilen returnert fra ekstern instansserver.",
+      "notSupportedStorage": "Lagringssystem støttes ikke ennå.",
+      "emptyBody": "Eksternt system returnerte tom kropp.",
+      "emptyPublicFolderPath": "Felles mappenavn er ikke spesifisert.",
+      "unknownError": "Svaret inneholder ingen informasjon om forespørselsstatus.",
+      "s3StorageNotConfigured": "S3-objektlagring er ikke konfigurert.",
+      "fileReadError": "Kan ikke lese filen '{{fileName}}' fra lagringen."
+    },
+    "temporaryFile": {
+      "temporaryUrlFailed": "Midlertidig URL kan ikke opprettes.",
+      "notImplemented": "Ikke implementert."
+    },
+    "timeline": {
+      "categoryNameIsRequired": "Kategorinavn er obligatorisk.",
+      "hashtagNameIsRequired": "Hashtag-navn er påkrevd."
+    },
+    "towFactorTokens": {
+      "cannotEncodeKey": "Kan ikke kode nøkkel til base32-data.",
+      "headerNotExists": "Overskrift X-Auth-2FA med kode eksisterer ikke.",
+      "tokenNotValid": "Token er ikke gyldig."
+    },
+    "userAlias": {
+      "incorrectUserAliasId": "Brukeralias-ID er feil.",
+      "userAliasAlreadyExist": "Brukeralias eksisterer allerede.",
+      "cannotVerifyRemoteAccount": "Kan ikke bekrefte ekstern konto."
+    },
+    "userBlockedDomain": {
+      "incorrectId": "Feil id."
+    },
+    "user": {
+      "userAlreadyApproved": "Brukerkontoen er allerede godkjent.",
+      "sortColumnNotSupported": "Sorteringskolonnen støttes ikke.",
+      "userNameIsRequired": "Brukernavn er påkrevd.",
+      "roleIsRequired": "Brukerrolle er påkrevd."
+    },
+    "userSetting": {
+      "keyIsRequired": "Nøkkel kreves."
+    },
+    "xsrfValidation": {
+      "xsrfTokenNotExistsInHeader": "XSRF-token (X-XSRF-TOKEN) finnes ikke i forespørselsoverskriften.",
+      "xsrfTokenNotExistsInCookie": "XSRF-token (xsrf-token) finnes ikke i informasjonskapselen.",
+      "xsrfTokensAreDifferent": "XSRF-tokens er forskjellige i informasjonskapselen og overskriften."
+    }
+  },
+  "pages": {
+    "account": {
+      "avatar": {
+        "removeAriaLabel": "Fjern avatar",
+        "subtitle": "PNG,GIFellerJPG. På det meste{{maxPictureFileSize}}. Skal nedskaleres til 600x600px"
+      },
+      "blockedDomains": {
+        "description": "Liste over domener du har blokkert. Brukere fra disse domenene kan ikke følge deg. Innleggene deres vil ikke vises på din lokale tidslinje, og innleggene dine leveres ikke direkte til dem. Imidlertid kan de fortsatt se innleggene dine hvis en tredjepart de følger forsterker dem.",
+        "title": "Blokkerte domener"
+      },
+      "changeEmail": {
+        "changeEmail": "Endre e-post",
+        "changeEmailAriaLabel": "Endre e-post",
+        "currentEmailPrefix": "Din nåværende e-post:",
+        "notConfirmed": "ikke bekreftet",
+        "resendConfirmationEmail": "Send bekreftelses-e-post på nytt",
+        "resendConfirmationEmailAriaLabel": "Send bekreftelses-e-post på nytt",
+        "title": "Endre e-post"
+      },
+      "changePassword": {
+        "changePassword": "Endre passord",
+        "changePasswordAriaLabel": "Endre passord",
+        "description": "Angi et sterkt passord, og ikke bruk det på nytt for andre kontoer.",
+        "title": "Endre passord"
+      },
+      "confirmations": {
+        "deleteBlockedDomain": "Vil du slette blokkert domene?",
+        "deleteUserAccountAlias": "Vil du slette brukerkontoalias?"
+      },
+      "deleteAccount": {
+        "deleteAccount": "Slett konto",
+        "deleteAccountAriaLabel": "Slett konto",
+        "description": "Du kan slette kontoen din, denne operasjonen er irreversibel. Husk at du ikke vil kunne aktivere kontoen din på nytt eller hente noe av innholdet eller informasjonen du har lagt til.",
+        "title": "Slett konto"
+      },
+      "export": {
+        "description": "Du kan be om et arkiv som inneholder innleggene dine og opplastede medier. De eksporterte dataene vil bli levert iActivityPub-formatet, noe som sikrer kompatibilitet med kompatibel programvare. Arkiv kan bes om en gang hver 30. dag. Arkiver genereres en gang om dagen, og du vil bli varslet via e-post når arkivet ditt er klart.",
+        "downloadDataFiles": {
+          "description": "Noen av dataene fra systemet kan lastes ned direkte uten å vente på at arkivet skal genereres. Filene lages i tekstformat (CSV) og kan også brukes til å importere til andre instanser.",
+          "items": {
+            "follows": "Følger"
+          },
+          "title": "Last ned datafiler"
+        },
+        "requestArchive": "Be om arkiv",
+        "requestArchiveAriaLabel": "Be om arkiv",
+        "table": {
+          "downloadYourArchive": "Last ned arkivet ditt",
+          "endProcessingDate": "Sluttbehandlingsdato",
+          "requestDate": "Forespørselsdato",
+          "startProcessingDate": "Startdato for behandling"
+        },
+        "title": "Eksporter"
+      },
+      "header": {
+        "removeAriaLabel": "Fjern overskriften",
+        "subtitle": "PNG,GIFellerJPG. På det meste{{maxPictureFileSize}}. Skal nedskaleres til 1500x500px"
+      },
+      "import": {
+        "description": "Du kan importere data som tidligere er eksportert fra en annen server, for eksempel en liste over kontoer du følger. Importerte kontoer vil bli slått sammen med de du allerede følger. BareCSV-filer støttes for øyeblikket. Maksimal filstørrelse er{{maxImportFileSize}}.",
+        "importAriaLabel": "Importer",
+        "table": {
+          "endProcessingDate": "Sluttbehandlingsdato",
+          "showAccounts": "Vis kontoer",
+          "showAccountsAriaLabel": "Vis kontoer",
+          "startProcessingDate": "Startdato for behandling"
+        },
+        "title": "Importer"
+      },
+      "messages": {
+        "accountAliasDeleted": "Kontoalias er slettet.",
+        "accountDetailsSaved": "Kontodetaljer er lagret.",
+        "archiveRequested": "Arkiv er etterspurt.",
+        "avatarDeleted": "Avataren er slettet.",
+        "avatarSaved": "Avataren er lagret.",
+        "blockedDomainDeleted": "Blokkert domene er slettet.",
+        "cannotReadUserNameFromToken": "Kan ikke lese brukernavn fra token.",
+        "confirmationEmailSent": "E-posten er sendt og bør komme i innboksen din innen kort tid.",
+        "errorDuringDownloadingAccountData": "Feil under nedlasting av kontodata.",
+        "headerDeleted": "Overskriften er slettet.",
+        "headerSaved": "Overskriften er lagret.",
+        "importFileTooLarge": "Den opplastede filen er for stor. Maksimal størrelse er{{maxImportFileSize}}.",
+        "supporterFlagDisabled": "Supporterflagget er deaktivert.",
+        "supporterFlagEnabled": "Supporterflagg er aktivert.",
+        "verificationCodeCopied": "Bekreftelseskoden er kopiert til utklippstavlen."
+      },
+      "moveFromDifferentAccount": {
+        "createAlias": "Opprett alias",
+        "createAliasAriaLabel": "Opprett alias",
+        "description": "Hvis du ønsker å flytte fra en annen konto til denne, kan du her opprette et alias, som kreves før du kan fortsette med å flytte følgere fra den gamle kontoen til denne. Denne handlingen i seg selv er ufarlig og reversibel. Kontomigreringen startes fra den gamle kontoen.",
+        "title": "Flytter fra en annen konto"
+      },
+      "moveToDifferentAccount": {
+        "descriptionOne": "Flytt kontoen din til en annen server og varsle følgerne dine om den nye plasseringen. Hvis serverne deres støtter kontomigrering, blir de automatisk omdirigert til å følge den nye kontoen din.",
+        "descriptionTwo": "Bare følgere flyttes automatisk. Dine innlegg, media, følgere, blokkeringer, bokmerker og andre kontodata vil ikke bli overført.",
+        "migrateAccount": "Overfør konto",
+        "migrateAccountAriaLabel": "Overfør konto",
+        "movedToPrefix": "Kontoen du flytter til er tilgjengelig på",
+        "restoreAccount": "Gjenopprett konto",
+        "restoreAccountAriaLabel": "Gjenopprett konto",
+        "title": "Flytter til en annen konto"
+      },
+      "personalInformation": {
+        "errors": {
+          "bioTooLong": "For lang biografi.",
+          "keyTooLong": "For lang nøkkel.",
+          "nameTooLong": "For langt navn.",
+          "valueTooLong": "For lang verdi."
+        },
+        "language": {
+          "english": "Engelsk (English)",
+          "finnish": "Finsk (suomi)",
+          "french": "Fransk (français)",
+          "german": "Tysk (Deutsch)",
+          "italian": "Italiensk (italiano)",
+          "norwegian": "Norsk (norsk)",
+          "polish": "Polsk (polski)",
+          "spanish": "Spansk (español)",
+          "swedish": "Svensk (svenska)"
+        },
+        "title": "Din personlige informasjon"
+      },
+      "privacy": {
+        "includeProfilePageInSearchEngines": {
+          "hint": "La profilsiden din vises i resultater fra eksterne søkemotorer, slik at profilen din kan oppdages utenforVernissage-plattformen.",
+          "label": "Inkluder profilside i søkemotorer"
+        },
+        "includePublicPostsInSearchEngines": {
+          "hint": "Tillat at de offentlige innleggene dine indekseres og vises i eksterne søkemotorer som Google eller Bing. Dette kan gjøre innholdet ditt synlig utenforVernissage.",
+          "label": "Inkluder offentlige innlegg i søkemotorer"
+        },
+        "manuallyApprovesFollowers": {
+          "hint": "Folk må vente på at du godtar følgeforespørselen deres. Merk av for dette alternativet hvis du foretrekker å manuelt gjennomgå følgeforespørsler og bestemme om du vil godta eller avvise nye følgere, eller fjern merket for å la folk følge deg uten å kreve godkjenning.",
+          "label": "Godta nye følgere manuelt"
+        }
+      },
+      "support": {
+        "descriptionOne": "Takk for at du støtterVernissage! Du kan velge å vise et lite merke på profilen din som et tegn på takknemlighet og for å inspirere andre til å bli med i vårt fellesskap av støttespillere.",
+        "descriptionThree": "Merket er valgfritt - du bestemmer om du vil vise det eller holde støtten privat.",
+        "descriptionTwo": "Dette alternativet er kun tilgjengelig for brukere som støtterVernissage. Hvis du er en støttespiller, men ikke ser dette alternativet, kan du kontakte instansadministratoren din.",
+        "showBadgeOnProfile": "Vis merket på profilen din",
+        "title": "Vis din støtte"
+      },
+      "title": "Konto",
+      "twoFactor": {
+        "description": "Beskytt tilgangen til kontoen din med tofaktorautentiseringsprosess (2FA).",
+        "disableAriaLabel": "Deaktiver tofaktorautentisering",
+        "enableAriaLabel": "Aktiver tofaktorautentisering",
+        "title": "Tofaktorautentisering (2FA)"
+      },
+      "userBlockedDomains": {
+        "editBlockedDomain": "Rediger blokkert domene"
+      },
+      "verification": {
+        "copyAriaLabel": "Kopiér bekreftelse",
+        "description": "Du kan bruke Fields til å bekrefte identiteten din. Alt du trenger er et personlig nettsted som andre anerkjenner som ditt. Ved å koble til denne nettsiden fra profilen din, vil vi bekrefte at nettsiden kobler tilbake til profilen din og vise en visuell indikator for å bekrefte dette. Bare kopier og lim inn koden nedenfor i HTML-koden til nettstedet ditt, og legg deretter til nettstedets adresse i et av de ekstra feltene ovenfor.",
+        "exampleAriaLabel": "Verifikasjonseksempel",
+        "tip": "Tips: Linken på nettstedet ditt kan være usynlig. Den viktige delen er rel=\"me\" som forhindrer etterligning på nettsteder med brukergenerert innhold.",
+        "title": "Selvverifisering av kontoen"
+      }
+    },
+    "activityPubEventItems": {
+      "filters": {
+        "onlyErrors": "Bare feil",
+        "sortDirection": {
+          "label": "Sorter retning"
+        },
+        "sorting": {
+          "endDate": "Sluttdato",
+          "label": "Sortering",
+          "startDate": "Startdato",
+          "updatedDate": "Oppdatert dato"
+        }
+      },
+      "paginator": {
+        "selectPage": "Velg side"
+      },
+      "subtitle": "Liste overFediverse-servere hendelsen er sendt til.",
+      "table": {
+        "endDate": "Sluttdato",
+        "error": "Feil",
+        "hostSuspended": "Vert suspendert",
+        "inboxUrl": "InnboksURL",
+        "isSuccess": "Er suksess",
+        "open": "Åpne",
+        "startDate": "Startdato"
+      },
+      "title": "ActivityPubhendelsesmottakere"
+    },
+    "activityPubEvents": {
+      "action": {
+        "announce": "Kunngjør",
+        "create": "Opprett",
+        "like": "Liker",
+        "pinStatus": "Pin status",
+        "undoAnnounce": "Angre kunngjøringen",
+        "undoLike": "Angre liker",
+        "unpinStatus": "Løsne status",
+        "update": "Oppdater"
+      },
+      "common": {
+        "all": "Alle"
+      },
+      "filters": {
+        "action": {
+          "label": "Handling"
+        },
+        "result": {
+          "label": "Resultat"
+        },
+        "sortDirection": {
+          "label": "Sorter retning"
+        },
+        "sorting": {
+          "endDate": "Sluttdato",
+          "label": "Sortering",
+          "startDate": "Startdato",
+          "updatedDate": "Oppdatert dato"
+        }
+      },
+      "paginator": {
+        "selectPage": "Velg side"
+      },
+      "result": {
+        "failed": "Mislyktes",
+        "finished": "Ferdig",
+        "finishedWithErrors": "Ferdig med feil",
+        "finishedWithErrorsInParens": "Ferdig (med feil)",
+        "processing": "Behandling",
+        "waiting": "Venter"
+      },
+      "subtitle": "Liste over hendelser sendt av systemet viaActivityPub-protokollen til andreFediverse-forekomster.",
+      "table": {
+        "action": "Handling",
+        "attempts": "Forsøk",
+        "endDate": "Sluttdato",
+        "errorMessage": "Feilmelding",
+        "result": "Resultat",
+        "startDate": "Startdato",
+        "user": "Bruker"
+      },
+      "title": "UtgåendeActivityPub-arrangementer"
+    },
+    "articleEdit": {
+      "files": {
+        "copy": "Kopier",
+        "copyMarkdownAriaLabel": "Kopier markdown",
+        "delete": "Slett",
+        "deleteAriaLabel": "Slett fil",
+        "fileAlt": "Artikkelfil",
+        "mainFile": "Hovedfil",
+        "markAsMain": "Merk som hoved",
+        "markAsMainAriaLabel": "Slett fil",
+        "title": "Filer",
+        "upload": "Last opp",
+        "uploadAriaLabel": "Last opp fil"
+      },
+      "form": {
+        "alternativeAuthor": {
+          "ariaLabel": "Alternativ forfatter",
+          "errors": {
+            "tooLong": "For langt brukernavn."
+          },
+          "hint": "Du kan angi et alternativt håndtak for en brukers konto iFediverse. Den vil vises som forfatter i miniatyrbilder generert basert på OpenGraph-tagger.",
+          "label": "Alternativ forfatter",
+          "placeholder": "Farge"
+        },
+        "body": {
+          "ariaLabel": "Artikkellegeme",
+          "errors": {
+            "required": "Skriv inn artikkelteksten.",
+            "tooLong": "For lang artikkeltekst."
+          },
+          "hint": "Dette feltet støtterMarkdown-formatering.",
+          "label": "Artikkellegeme",
+          "placeholder": "Artikkellegeme"
+        },
+        "color": {
+          "ariaLabel": "Farge",
+          "errors": {
+            "tooLong": "For lang farge."
+          },
+          "hint": "Du kan brukeCSS-kompatible farger her, for eksempel #00ff0020.",
+          "label": "Farge",
+          "placeholder": "Farge"
+        },
+        "title": {
+          "ariaLabel": "Tittel",
+          "errors": {
+            "tooLong": "For lang tittel."
+          },
+          "label": "Tittel",
+          "placeholder": "Tittel"
+        }
+      },
+      "messages": {
+        "fileTooLarge": "Den opplastede filen er for stor. Maksimal størrelse er{{maxArticleFileSize}}.",
+        "markdownCopied": "Markdown-koden har blitt kopiert til utklippstavlen.",
+        "saved": "Artikkelen er lagret.",
+        "updated": "Artikkelen er oppdatert."
+      },
+      "title": "Artikkelinnhold",
+      "visibilities": {
+        "title": "Synligheter"
+      }
+    },
+    "articles": {
+      "confirmations": {
+        "deleteArticle": "Vil du slette artikkelen?"
+      },
+      "createArticle": "Lag artikkel",
+      "createArticleAriaLabel": "Lag artikkel",
+      "messages": {
+        "deleted": "Artikkelen ble slettet."
+      },
+      "subtitle": "Liste over artikler opprettet i systemet.",
+      "title": "Artikler"
+    },
+    "bookmarks": {
+      "title": "Bokmerker"
+    },
+    "categories": {
+      "subtitle": "En liste over kategorier på serveren sammen med bildene som er tildelt dem.",
+      "title": "Kategorier"
+    },
+    "confirmEmail": {
+      "error": {
+        "descriptionMiddle": "Hvis feilen fortsatt oppstår, kan du prøve",
+        "descriptionPrefix": "Under bekreftelse av e-post oppstod det en uventet feil. Vennligst prøv igjen senere.",
+        "descriptionSuffix": "(det vil også aktivere kontoen din) eller ta kontakt med oss.",
+        "resetPasswordLink": "tilbakestill passordet ditt",
+        "title": "Feil!"
+      },
+      "success": {
+        "congratulations": "Gratulerer!",
+        "description": "E-posten din er bekreftet. Kontoen din ble opprettet og alle funksjoner er aktivert.",
+        "loginLink": "logge inn",
+        "loginPromptPrefix": "Du kan gå til",
+        "loginPromptSuffix": "side og bruk legitimasjonen din for å logge på systemet. Takk!",
+        "title": "E-post bekreftet"
+      },
+      "validating": {
+        "description": "Systemet validerer nå e-posten din. Vær tålmodig. Operasjonen bør ta noen sekunder.",
+        "title": "E-postvalidering..."
+      }
+    },
+    "editBusinessCard": {
+      "colors": {
+        "bottomAriaLabel": "Bunnfarge",
+        "textAriaLabel": "Tekstfarge",
+        "topAriaLabel": "Toppfarge"
+      },
+      "form": {
+        "email": {
+          "errors": {
+            "tooLong": "For lang e-post."
+          }
+        },
+        "fields": {
+          "key": {
+            "errors": {
+              "tooLong": "For lang nøkkel."
+            }
+          },
+          "value": {
+            "errors": {
+              "tooLong": "For lang verdi."
+            }
+          }
+        },
+        "note": {
+          "errors": {
+            "tooLong": "For lang notat."
+          }
+        },
+        "subtitle": {
+          "errors": {
+            "tooLong": "For lang undertekst."
+          }
+        },
+        "telephone": {
+          "errors": {
+            "tooLong": "For lang telefon."
+          }
+        },
+        "title": {
+          "errors": {
+            "required": "Skriv inn tittel.",
+            "tooLong": "For lang tittel."
+          }
+        },
+        "website": {
+          "errors": {
+            "tooLong": "For lang nettside."
+          }
+        }
+      },
+      "messages": {
+        "saved": "Visittkortet ble lagret.",
+        "updated": "Visittkortet ble oppdatert."
+      },
+      "subtitle": "Du kan opprette visittkortet ditt her og dele det sikkert med enkeltpersoner som ikke har en konto. Kortet ditt er kun synlig for de som har den unike, vanskelig å gjette lenken du genererer. Hver deling oppretter en ny lenke som du kan fjerne når som helst.",
+      "title": "Visittkort"
+    },
+    "editors": {
+      "subtitles": {
+        "statuses": "En samling bilder som har blitt vist av kuratorer på denne serveren.",
+        "users": "En samling kunstnere som har blitt omtalt av kuratorer på denne serveren."
+      },
+      "tabAriaLabel": "Populær type",
+      "title": "Redaktørens valg"
+    },
+    "errorItems": {
+      "confirmations": {
+        "deleteError": "Vil du slette feilen?"
+      },
+      "messages": {
+        "deleted": "Feilen er slettet."
+      },
+      "subtitle": "Liste over feil som er kastet i systemet.",
+      "title": "Feil"
+    },
+    "errors": {
+      "accessForbidden": {
+        "description": "Vi beklager, du har ikke tilgang til siden.",
+        "title": "Adgang forbudt"
+      },
+      "connectionLost": {
+        "description": "Vi beklager, forbindelsen er brutt.",
+        "title": "Forbindelsen mistet"
+      },
+      "pageNotFound": {
+        "description": "Vi beklager, siden du ba om ble ikke funnet.",
+        "title": "Siden ble ikke funnet"
+      },
+      "unexpectedError": {
+        "description": "Vi beklager, det oppstod en uventet feil.",
+        "errorCodeLabel": "Feilkode:",
+        "errorInformationTitle": "Feilinformasjon",
+        "title": "Uventet feil"
+      }
+    },
+    "favourites": {
+      "title": "Favoritter"
+    },
+    "forgotPassword": {
+      "errors": {
+        "unexpectedResetError": "Uventet feil under tilbakestilling av passordet ditt. Vennligst prøv igjen."
+      },
+      "form": {
+        "errors": {
+          "emailInvalid": "Bekreft at du har oppgitt riktig e-post.",
+          "emailRequired": "Skriv inn e-post."
+        },
+        "subtitle": "Skriv inn e-postadressen knyttet til kontoen din, så sender vi deg en lenke på e-post for å tilbakestille passordet ditt.",
+        "title": "Tilbakestill passordet ditt"
+      },
+      "success": {
+        "description": "Vi har sendt deg en lenke for å tilbakestille passordet ditt. Vennligst sjekk innboksen din. Det kan ta opptil 10 minutter før du vises i innboksen din.",
+        "title": "Sjekk e-posten din"
+      },
+      "userNotExists": {
+        "descriptionMiddle": "Sjekk om du har oppgitt riktig adresse.",
+        "descriptionPrefix": "Er du sikker på at du opprettet en konto på den angitte adressen?",
+        "descriptionSuffixPrefix": "Du kan prøve",
+        "title": "Brukeren eksisterer ikke"
+      }
+    },
+    "frequentlyAskedQuestions": {
+      "header": {
+        "subtitle": "Her kan du finne svar på de vanligste spørsmålene omVernissage."
+      },
+      "imageResolution": {
+        "description": "Vernissagebegrenser ikke bildeoppløsningen - bare filstørrelsen betyr noe. Du står fritt til å laste opp bilder med høy oppløsning så lenge filen forblir innenfor den tillatte opplastingsstørrelsen.",
+        "footer": "For best mulig synlighet og interoperabilitet, behold den i 4K eller lavere.",
+        "noteLabel": "Merk:",
+        "notes": {
+          "mastodon": "kan vise bildet som en plassholderlenke i stedet for å gjengi det innebygd.",
+          "pixelfed": "kan avvise bildet helt hvis det overskrider 5000px på en hvilken som helst side."
+        },
+        "recommendation": "For å sikre optimal kvalitet og kompatibilitet på tvers avFediverse, anbefaler vi imidlertid å laste opp bilder i opptil 4K-oppløsning (omtrent 3840 x 2160 piksler). Dette skaper en balanse mellom bildeklarhet og ytelse og støttes fullt ut på tvers av plattformer somMastodonogPixelfed.",
+        "title": "2. Hva er den anbefalte oppløsningen for opplastede bilder?"
+      },
+      "intro": {
+        "description": "Velkommen tilVernissageFAQ - et kuratert område for å hjelpe deg med å få mest mulig ut av opplevelsen av bildedeling."
+      },
+      "keyboardSupport": {
+        "description": "Ja.Vernissagetilbyr omfattende tastaturnavigering for brukere for å hjelpe deg raskt mellom sider, tidslinjer og handlinger.",
+        "footer": "Disse snarveiene er utformet for å forbedre tilgjengeligheten og øke hastigheten på surfingen din – spesielt nyttig for tastatursentrerte brukere.",
+        "globalShortcuts": {
+          "categories": "Vis kategorier",
+          "editorsChoice": "Åpne tidslinjen for Editor's Choice",
+          "faq": "Åpne denne FAQ-siden",
+          "home": "Gå til tidslinjen Hjem",
+          "news": "Se nyheter",
+          "profile": "Gå til profilen din",
+          "trending": "Åpne trendtidslinjen",
+          "upload": "Last opp et nytt bilde"
+        },
+        "globalShortcutsTitle": "Globale snarveier (tilgjengelig i hele appen, for påloggede brukere):",
+        "statusDetailShortcuts": {
+          "bookmark": "Lagre statusen i bokmerker",
+          "boost": "Øk statusen",
+          "like": "Liker statusen",
+          "nextStatus": "Se neste status",
+          "previousStatus": "Se forrige status"
+        },
+        "statusDetailShortcutsTitle": "På en statusdetaljside:",
+        "tabsDescription": "Hvis den gjeldende siden inneholder flere faner (f.eks. Hjem, Trender eller Editor's Choice), kan du bytte mellom dem ved å trykke på talltastene:",
+        "tabShortcuts": {
+          "first": "Bytt til den første fanen",
+          "second": "Bytt til den andre fanen",
+          "third": "Bytt til den tredje fanen"
+        },
+        "title": "1. StøtterVernissagetastatursnarveier?"
+      }
+    },
+    "hashtag": {
+      "actions": {
+        "followActionInProgressAriaLabel": "Hashtag følger handling pågår",
+        "followAriaLabel": "Følg hashtag",
+        "unfollowAriaLabel": "Slutt å følge hashtaggen"
+      },
+      "feed": {
+        "atomTitle": "Hashtag{{hashtag}}feed (Atom)",
+        "rssTitle": "Hashtag{{hashtag}}feed (RSS)"
+      },
+      "messages": {
+        "followed": "Hashtag er fulgt.",
+        "unfollowed": "Hashtag har ikke blitt fulgt."
+      }
+    },
+    "invitations": {
+      "actions": {
+        "deleteInvitationAriaLabel": "Slett invitasjonen",
+        "generateCode": "Generer kode",
+        "generateInvitationAriaLabel": "Generer invitasjon"
+      },
+      "messages": {
+        "copied": "Koden er kopiert til utklippstavlen.",
+        "deleted": "Invitasjonskoden er slettet.",
+        "generated": "Invitasjonskode er generert."
+      },
+      "subtitle": "Generer og del invitasjonskoder med andre for å gi tilgang til denne serveren.",
+      "table": {
+        "invitedUser": "Invitert bruker"
+      },
+      "title": "Invitasjoner"
+    },
+    "login": {
+      "errors": {
+        "accountBlocked": "Kontoen din er blokkert. Ta kontakt med vår support.",
+        "accountNotApproved": "Kontoen din er ikke godkjent ennå.",
+        "enterTwoFactorToken": "Skriv inn token fra autentiseringsappen.",
+        "invalidCredentials": "Ugyldig legitimasjon.",
+        "loginAttemptsExceeded": "For mange mislykkede pålogginger. Prøv igjen om 5 minutter.",
+        "twoFactorTokenNotValid": "Token er ikke gyldig. Vennligst skriv inn nytt token.",
+        "unknownLoginError": "Ukjent påloggingsfeil. Prøv igjen senere."
+      },
+      "form": {
+        "errors": {
+          "passwordRequired": "Skriv inn passord.",
+          "userNameOrEmailRequired": "Skriv inn brukernavn eller e-post."
+        },
+        "subtitle": "Skriv inn legitimasjonen din for å logge på systemet",
+        "title": "Logg påVernissage"
+      },
+      "registration": {
+        "noAccountPrefix": "Har du ikke en konto ennå?",
+        "noAccountSuffix": "."
+      },
+      "social": {
+        "separator": "Eller via sosial konto"
+      },
+      "twoFactor": {
+        "trustMachine": "Stol på denne maskinen de neste 30 dagene."
+      }
+    },
+    "loginCallback": {
+      "errors": {
+        "emailNotConfirmed": "E-posten din er ikke bekreftet. Sjekk innboksen eller tilbakestill passordet ditt."
+      }
+    },
+    "news": {
+      "empty": {
+        "noItems": "Dessverre er det ingenting å se her ennå."
+      },
+      "subtitle": "Hold deg oppdatert med våre siste innlegg.",
+      "title": "Nyheter"
+    },
+    "notifications": {
+      "actions": {
+        "openUserProfileAriaLabel": "Åpne brukerprofil",
+        "refreshCurrentTimelineAriaLabel": "Oppdater gjeldende tidslinje"
+      },
+      "title": "Varsler",
+      "types": {
+        "adminReport": "har blitt rapportert",
+        "adminSignUp": "er en ny bruker",
+        "favouriteComment": "merket kommentaren din som favoritt",
+        "favouriteStatus": "merket bildet ditt som favoritt",
+        "follow": "fulgte deg",
+        "followRequest": "ønsker å følge deg",
+        "mention": "nevnte deg",
+        "newComment": "skrev en ny kommentar",
+        "reblog": "forbedret bildet ditt",
+        "status": "publisert bilde",
+        "update": "redigert bilde"
+      }
+    },
+    "preferences": {
+      "avatar": {
+        "circle": "Sirkel",
+        "roundedRectangle": "Avrundet rektangel",
+        "select": "Velg avatar",
+        "title": "Avatar"
+      },
+      "gallery": {
+        "originalRatio": "Opprinnelig forhold",
+        "select": "Velg bildevisning",
+        "squareImages": "Firkantede bilder",
+        "title": "Brukerens profilgalleri"
+      },
+      "media": {
+        "alwaysShowNsfw": {
+          "description": "Tving frem alle NSFW (sensitive) medier uten advarsler.",
+          "title": "Vis alltid NSFW"
+        },
+        "alwaysShowSdrPhoto": {
+          "description": "I stedet forHDR-versjonen av bildet, vil alltidSDR-versjonen vises.",
+          "title": "Vis alltidSDR-bilde"
+        },
+        "autoScrollGalleryImages": {
+          "description": "Går automatisk gjennom statusbildene hvert 6. sekund.",
+          "title": "Rull bilder automatisk i statusgalleriet"
+        },
+        "showAlternativeText": {
+          "description": "Vis alternativ tekst hvis den er til stede på statusdetaljer-skjermen.",
+          "title": "Vis alternativ tekst"
+        },
+        "showAltIcon": {
+          "description": "ALT-ikonet vil vises på tidslinjene.",
+          "title": "VisALT-ikonet"
+        },
+        "showAvatars": {
+          "description": "Avatarer vil vises på tidslinjer.",
+          "title": "Vis avatarer"
+        },
+        "showBoost": {
+          "description": "Boost-ikonet vil vises på tidslinjene.",
+          "title": "Vis boost"
+        },
+        "showCounts": {
+          "description": "Vis bildetelling på statuser med flere bilder.",
+          "title": "Vis antall bilder"
+        },
+        "showFavourites": {
+          "description": "Favorittikon vil vises på tidslinjene.",
+          "title": "Vis favoritter"
+        },
+        "title": "Medieinnstillinger"
+      },
+      "theme": {
+        "dark": "Mørkt",
+        "light": "Lys",
+        "select": "Velg tema",
+        "title": "Tema"
+      },
+      "title": "Preferanser"
+    },
+    "privacy": {
+      "title": "Personvernerklæring"
+    },
+    "profile": {
+      "actions": {
+        "profileQrCodeAriaLabel": "ProfilQR-kode",
+        "shareBusinessCardAriaLabel": "Del visittkort"
+      },
+      "confirmations": {
+        "createBusinessCard": "Du har ikke opprettet et visittkort ennå. Vil du lage den nå?"
+      },
+      "images": {
+        "avatarAlt": "avatarprofil",
+        "headerAlt": "overskriftsprofil"
+      },
+      "joined": "Ble med i{{date}}",
+      "latestFollowers": {
+        "title": "SISTE FØLGERE"
+      },
+      "messages": {
+        "businessCardShared": "Visittkortet er delt."
+      },
+      "movedTo": {
+        "prefix": "Denne kontoen er flyttet til",
+        "suffix": "Fremtidige oppdateringer vil bli publisert fra den nye kontoen."
+      },
+      "noData": {
+        "local": "Det er ingenting å lese her ennå.",
+        "remote": {
+          "checkOriginalPrefix": "Sjekk brukerens original",
+          "description": "Vi har ikke denne informasjonen i systemet."
+        }
+      },
+      "remoteStatuses": {
+        "missingPosts": "Noen innlegg fra denne profilen kan mangle.",
+        "seeMorePrefix": "Se flere innlegg på brukerens originale"
+      }
+    },
+    "register": {
+      "captcha": {
+        "imageAlt": "Captcha",
+        "refreshAriaLabel": "Oppdater captcha",
+        "textAriaLabel": "Captcha-tekst",
+        "textLabel": "Captcha-tekst",
+        "title": "Løs captchaen"
+      },
+      "displayName": {
+        "label": "Visningsnavn"
+      },
+      "emailHint": "Ikke bekymre deg. Denne informasjonen er hellig for oss. Vi vil aldri vise, selge eller misbruke det.",
+      "errors": {
+        "captchaTextRequired": "Skriv inn captcha-tekst.",
+        "captchaTextTooLong": "Captcha-teksten er for lang.",
+        "disposableEmailNotAllowed": "Engangse-post kan ikke brukes.",
+        "emailAlreadyConnected": "Den gitte e-posten er allerede koblet til en annen konto.",
+        "emailInvalid": "Bekreft at du har oppgitt riktig e-post.",
+        "emailRequired": "Skriv inn e-post.",
+        "emailTaken": "Velg en annen e-postadresse, denne er allerede koblet til en annen konto.",
+        "invalidCaptchaCode": "Captcha-koden er ugyldig. Vennligst prøv igjen.",
+        "invitationCodeRequired": "Skriv inn invitasjonskoden.",
+        "invitationCodeTooLong": "Invitasjonskoden er for lang.",
+        "invitationTokenInvalid": "Invitasjonstoken er ugyldig.",
+        "invitationTokenUsed": "Invitasjonstoken er brukt.",
+        "mustAcceptRules": "Du må godta serverregler.",
+        "nameRequired": "Skriv inn navn.",
+        "nameTooLong": "Navnet er for langt.",
+        "reasonRequired": "Skriv inn årsak.",
+        "reasonTooLong": "Grunnen er for lang.",
+        "unexpectedError": "Det oppstod en uventet feil. Vennligst prøv igjen.",
+        "userNameAlreadyTaken": "Brukernavnet er allerede tatt. Vennligst velg en annen.",
+        "userNamePattern": "Kun alfanumeriske tegn er tillatt i brukernavn.",
+        "userNameRequired": "Skriv inn brukernavn.",
+        "userNameTaken": "Velg et annet brukernavn, dette er allerede tatt.",
+        "userNameTooLong": "Velg et annet brukernavn, dette er for langt."
+      },
+      "invitationCode": {
+        "ariaLabel": "Invitasjonstoken",
+        "label": "Invitasjonskode"
+      },
+      "language": {
+        "english": "engelsk (engelsk)",
+        "polish": "polsk (polski)"
+      },
+      "messages": {
+        "accountCreated": "Kontoen din er opprettet."
+      },
+      "reason": {
+        "ariaLabel": "Grunn",
+        "label": "Grunn"
+      },
+      "serverRules": {
+        "acceptance": "Jeg godtar alle serverregler.",
+        "title": "Serverregler"
+      },
+      "title": "Opprett ny konto"
+    },
+    "reports": {
+      "actions": {
+        "applyCWToStatus": "BrukCWtil status",
+        "applyCWToStatusAriaLabel": "BrukCWtil status",
+        "closeReportAriaLabel": "Lukk rapport",
+        "deleteStatus": "Slett status",
+        "deleteStatusAriaLabel": "Slett status",
+        "openProfileAriaLabel": "Åpne profil @{{userName}}",
+        "reportActionsAriaLabel": "Rapporter handlinger",
+        "restoreReportAriaLabel": "Gjenopprett rapport",
+        "sendToRemoteInstance": "Send til ekstern instans",
+        "sendToRemoteInstanceAriaLabel": "Send til ekstern instans",
+        "showReportDetailsAriaLabel": "Vis rapportdetaljer",
+        "unlistStatus": "Avlistestatus",
+        "unlistStatusAriaLabel": "Avlistestatus"
+      },
+      "confirmations": {
+        "deleteStatus": "Vil du slette status?",
+        "sendToRemoteInstance": "Vil du sende rapport til ekstern instans?",
+        "unlistStatus": "Vil du fjerne statusen?"
+      },
+      "messages": {
+        "closed": "Rapporten er stengt.",
+        "contentWarningAdded": "Innholdsadvarsel er lagt til.",
+        "restored": "Rapporten er gjenopprettet.",
+        "sentToRemoteInstance": "Rapporten er sendt til ekstern instans.",
+        "statusDeleted": "Status er slettet.",
+        "statusUnlisted": "Status er ikke oppført."
+      },
+      "subtitle": "Problemer rapportert av andre systembrukere.",
+      "table": {
+        "considerationDate": "Behandlingsdato",
+        "considerationUser": "Hensynsbruker",
+        "federated": "Forbundet",
+        "reportedUser": "Rapportert bruker"
+      },
+      "types": {
+        "comment": "Kommentar",
+        "profile": "Profil",
+        "status": "Status"
+      }
+    },
+    "resetPassword": {
+      "errors": {
+        "unexpectedResetError": "Uventet feil under tilbakestilling av passordet ditt. Vennligst prøv igjen."
+      },
+      "form": {
+        "subtitle": "Skriv inn det nye passordet til kontoen din, denne siden vil bare være tilgjengelig for deg i 10 minutter.",
+        "title": "Angi nytt passord"
+      },
+      "missingToken": {
+        "description": "Mangler obligatorisk informasjon. Er du sikker på at du åpnet siden fra e-post som vi sender til deg?",
+        "title": "Feil!"
+      },
+      "success": {
+        "descriptionMiddle": "Du kan prøve å",
+        "descriptionPrefix": "Passordet ditt er endret.",
+        "descriptionSuffix": "til systemet nå.",
+        "loginLink": "logge inn",
+        "title": "Passordet er endret"
+      }
+    },
+    "search": {
+      "empty": {
+        "hashtags": "Ingen hashtags funnet.",
+        "statuses": "Ingen statuser funnet.",
+        "users": "Ingen brukere funnet."
+      },
+      "hint": "Søk etter en bruker, status eller hashtag, eller lim inn enURLtil en status eller brukerprofil.",
+      "tabs": {
+        "hashtags": "Hashtags",
+        "statuses": "Statuser",
+        "users": "Brukere"
+      }
+    },
+    "settings": {
+      "panels": {
+        "categories": {
+          "description": "Her kan du administrere kategorier og hashtags.",
+          "title": "Kategorier"
+        },
+        "domainBlocks": {
+          "description": "Her kan du administrere domener som er blokkert av forekomst.",
+          "title": "Forekomstdomeneblokkeringer"
+        },
+        "general": {
+          "description": "Her kan du sette opp generelle applikasjonsinnstillinger.",
+          "title": "Generelle innstillinger"
+        },
+        "homeCards": {
+          "description": "Her kan du administrere hjemmets kort.",
+          "title": "Hjemmekort"
+        },
+        "instanceRules": {
+          "description": "Her kan du administrere instansregler.",
+          "title": "Forekomstregler"
+        },
+        "licenses": {
+          "description": "Her kan du administrere bildelisenser.",
+          "title": "Lisenser"
+        }
+      },
+      "title": "Innstillinger"
+    },
+    "sharedCard": {
+      "form": {
+        "messagePlaceholder": "Send melding..."
+      },
+      "messages": {
+        "personalDataSaved": "Dine personlige data er lagret."
+      }
+    },
+    "sharedCardPublic": {
+      "messages": {
+        "personalDataSaved": "Dine personlige data er lagret."
+      }
+    },
+    "sharedCards": {
+      "actions": {
+        "shareBusinessCard": "Del visittkort",
+        "yourBusinessCard": "Visittkortet ditt"
+      },
+      "confirmations": {
+        "deleteSharedBusinessCard": "Vil du slette delt visittkort?"
+      },
+      "messages": {
+        "businessCardShared": "Visittkortet er delt.",
+        "businessCardUpdated": "Visittkortet er oppdatert.",
+        "createBusinessCardFirst": "Du må lage visittkort først.",
+        "sharedBusinessCardDeleted": "Delt visittkort ble slettet.",
+        "sharedBusinessCardEnabled": "Delt visittkort er aktivert.",
+        "sharedBusinessCardRevoked": "Delt visittkort er tilbakekalt."
+      },
+      "subtitle": "Her kan du se og administrere alle offentlige lenker som visittkortet ditt har blitt delt gjennom.",
+      "title": "Delte visittkort"
+    },
+    "status": {
+      "actions": {
+        "bookmark": "Bokmerke",
+        "boost": "Boost",
+        "feature": "Funksjon",
+        "like": "Liker",
+        "openProfileAriaLabel": "Åpne profil @{{userName}}",
+        "unbookmark": "Fjern bokmerke",
+        "unboost": "Unboost",
+        "unfeature": "Ufunksjon",
+        "unlike": "I motsetning til"
+      },
+      "back": "Tilbake",
+      "comments": {
+        "actions": {
+          "like": "Liker",
+          "reply": "Svar",
+          "report": "Rapporter",
+          "unlike": "I motsetning til"
+        },
+        "likedByPrefix": "Kommentar likt av",
+        "noComments": "Det er ingenting å lese her ennå.",
+        "people": "mennesker",
+        "person": "person",
+        "title": "Kommentarer"
+      },
+      "confirmations": {
+        "changeStatusWithEnteredComment": "Du har skrevet inn en kommentar. Vil du endre status likevel?"
+      },
+      "followedTagsInThisStatus": "Følgte tagger i denne statusen",
+      "hashtagsAriaLabel": "Hashtags",
+      "hdr": {
+        "displayed": "(vises)",
+        "highDynamicRange": "Høyt dynamisk område",
+        "notDisplayed": "(ikke vist)",
+        "notSupportedByBrowser": "Støttes ikke av nettleseren",
+        "supportedByBrowser": "Støttes av nettleseren"
+      },
+      "menu": {
+        "boostedBy": "Forsterket av",
+        "copyLinkToPost": "Kopier lenken til innlegget",
+        "events": "Hendelser",
+        "favouritedBy": "Favoritt av",
+        "openOriginalPage": "Åpne originalsiden",
+        "pin": "Pin",
+        "report": "Rapporter",
+        "unpin": "Løsne"
+      },
+      "messages": {
+        "bookmarked": "Status bokmerket.",
+        "boosted": "Status forsterket.",
+        "commentFavourited": "Kommentaren er favoritt.",
+        "favourited": "Status som favoritt.",
+        "featured": "Status omtalt.",
+        "likeUndone": "Liker du har blitt angret.",
+        "pinned": "Status festet.",
+        "reportSaved": "Rapporten er lagret.",
+        "statusDeleted": "Status er slettet.",
+        "unbookmarked": "Status opphevet bokmerke.",
+        "unboosted": "Status opphevet.",
+        "unfeatured": "Status ukjent.",
+        "unpinned": "Status løsnet."
+      },
+      "navigation": {
+        "nextImageAriaLabel": "Neste bilde",
+        "previousImageAriaLabel": "Forrige bilde"
+      },
+      "openMap": "Åpne kart",
+      "showImage": "Vis bilde",
+      "tooltips": {
+        "alt": "Alt",
+        "camera": "Kamera",
+        "cameraRoll": "Kamerarull",
+        "category": "Kategori",
+        "developChemistry": "Utvikle kjemi",
+        "equivalentLens": "Tilsvarer{{focalLength}}mm fullformatobjektiv.",
+        "exposure": "Eksponering",
+        "flash": "Flash",
+        "fullFrameLens": "Fullramme objektiv.",
+        "hdr": "HDR",
+        "lens": "Linse",
+        "license": "Lisens",
+        "photoCreatedDate": "Bilde opprettet dato",
+        "place": "Sted",
+        "scanner": "Skanner",
+        "software": "Programvare"
+      },
+      "versions": {
+        "latestVersion": "Siste versjon",
+        "previousVersions": "Tidligere versjoner"
+      }
+    },
+    "statusEventItems": {
+      "otherEvents": "andre arrangementer",
+      "subtitleMiddle": "har blitt sendt",
+      "subtitlePrefix": "Liste overFediverse-servere som hendelsen knyttet til",
+      "title": "Event mottakere"
+    },
+    "statusEvents": {
+      "statusLink": "status",
+      "subtitlePrefix": "Liste over hendelser sendt fra systemet viaActivityPub-protokollen til andreFediverse-forekomster knyttet til",
+      "subtitleSuffix": ".",
+      "title": "Statushendelser"
+    },
+    "support": {
+      "actions": {
+        "supportUs": "Støtt oss"
+      },
+      "financial": {
+        "communitySupport": "Fellesskapsstøtte",
+        "perMonth": "/ måned",
+        "totalCost": "Total kostnad"
+      },
+      "health": {
+        "checking": "sjekker...",
+        "database": "Database",
+        "error": "feil",
+        "ok": "ok",
+        "redisQueues": "Redis-køer",
+        "storage": "Oppbevaring",
+        "webPushService": "Web push-tjeneste"
+      },
+      "instance": {
+        "apiVersion": "APIversjon",
+        "contactAccount": "Kontaktkonto",
+        "description": "Beskrivelse",
+        "imageSizeLimit": "Begrensning for bildestørrelse",
+        "languages": "Språk",
+        "maxMediaAttachments": "Maks medievedlegg",
+        "maxStatusCharacters": "Maks statustegn",
+        "webVersion": "WEB-versjon"
+      },
+      "links": {
+        "apiDocumentation": "APIdokumentasjon",
+        "mastodon": "Mastodon",
+        "privacyPolicy": "Personvernerklæring",
+        "reportBug": "Rapporter en feil",
+        "sourceCode": "Kildekode",
+        "termsOfService": "Vilkår for bruk"
+      },
+      "messages": {
+        "healthStatusDownloadError": "Feil under nedlasting av systemhelsestatus."
+      },
+      "sections": {
+        "financialSupport": "Økonomisk støtte",
+        "healthStatus": "Helsestatus",
+        "helpfulLinks": "Nyttige lenker",
+        "instanceInformation": "Forekomstinformasjon"
+      },
+      "title": "Støtte"
+    },
+    "trending": {
+      "period": {
+        "ariaLabel": "Velg periode",
+        "daily": "Daglig",
+        "monthly": "Månedlig",
+        "yearly": "Årlig"
+      },
+      "subtitles": {
+        "hashtags": "En samling hashtags tilordnet bilder som fikk flest likes innen en spesifisert tidsramme.",
+        "statuses": "En samling bilder som fikk flest likes innen en spesifisert tidsramme.",
+        "users": "En samling artister som har fått flest likes på bildene sine innen en spesifisert tidsramme."
+      },
+      "tabAriaLabel": "Populær type",
+      "tabs": {
+        "tags": "Tagger"
+      },
+      "title": "På vei opp"
+    },
+    "upload": {
+      "accountMoved": "Denne kontoen har blitt flyttet til en annen konto, så du kan ikke lenger legge til nye bilder eller publisere nytt innhold her. For å fortsette å legge ut, vennligst bruk den nye kontoen din.",
+      "actions": {
+        "featurePoweredBy": "Funksjon drevet av{{provider}}.",
+        "hashtags": "Hashtags",
+        "useTemplate": "Bruk mal"
+      },
+      "emailVerificationRequired": {
+        "prefix": "For å laste opp bilder må du bekrefte e-postadressen din. Du kan sende e-postbekreftelsen på nytt fra din",
+        "securityNote": "Å kreve e-postbekreftelse bidrar til å sikre at bare legitime kontoer kan laste opp innhold, noe som forbedrer både sikkerheten og den generelle kvaliteten på delt materiale.",
+        "suffix": "side hvis du ikke har mottatt den ennå."
+      },
+      "form": {
+        "contentWarning": "Innholdsadvarsel",
+        "disableComments": "Deaktiver kommentarer",
+        "sensitiveMedia": "Sensitive/NSFW-medier"
+      },
+      "messages": {
+        "accountMovedPublishingUnavailable": "Denne kontoen er flyttet, så publisering av nytt innhold er ikke tilgjengelig.",
+        "fileTooLarge": "Den opplastede filen er for stor. Maksimal størrelse er{{maxFileSize}}.",
+        "maxImagesPerPost": "Du kan laste opp opptil{{count}}-bilder per innlegg.",
+        "statusSaved": "Status er lagret.",
+        "statusUpdated": "Status er oppdatert.",
+        "tooManyFilesSelected": "For mange filer er valgt. Du kan legge til{{count}}mer image{{suffix}}.",
+        "unableToResize": "Kan ikke endre størrelse på bildet før opplasting.",
+        "unsupportedFileType": "Denne filtypen støttes ikke. Last opp etJPG-,PNG- eller WEBP-bilde.",
+        "verifyEmailBeforePublish": "For å publisere en status, vennligst bekrefte e-postadressen din først."
+      },
+      "photoAlt": "Lastet opp bilde",
+      "statusDetails": "Statusdetaljer",
+      "stepper": {
+        "imageData": "Bildedata #{{index}}"
+      },
+      "subtitle": {
+        "interoperabilityHint": "For å forbedre interoperabiliteten på tvers av forskjellige systemer, bruk bilder med den lengre kanten satt til 4096 px.",
+        "maxFileSize": "Du kan laste oppJPEG-,PNG- og WEBP-filer opptil{{maxFileSize}}."
+      },
+      "titles": {
+        "editStatus": "Rediger status",
+        "uploadPhotos": "Last opp bilder"
+      },
+      "visibility": {
+        "followers": "Kun følgere",
+        "mentioned": "Kun nevnte personer",
+        "public": "Alle sammen",
+        "quietPublic": "Alle (stille)"
+      },
+      "visibilityHints": {
+        "followers": "Bare synlig for følgerne dine og alle som er nevnt i innlegget.",
+        "mentioned": "Bare synlig for personer som er eksplisitt nevnt i innlegget.",
+        "public": "Synlig for alle og kan vises i offentlige tidslinjer.",
+        "quietPublic": "Synlig for alle, men ekskludert fra offentlige tidslinjer."
+      }
+    },
+    "users": {
+      "actions": {
+        "disable2fa": "Deaktiver2FA",
+        "notSupporter": "Ikke supporter",
+        "openProfileAriaLabel": "Åpne profil @{{userName}}"
+      },
+      "confirmations": {
+        "deleteUserAccount": "Vil du slette brukerkontoen?",
+        "disableUserTwoFactor": "Vil du deaktivere brukerens2FA?"
+      },
+      "filters": {
+        "onlyBlocked": "Bare blokkert",
+        "onlyLocal": "Kun lokalt"
+      },
+      "messages": {
+        "accountApproved": "Kontoen er godkjent.",
+        "accountDeleted": "Kontoen er slettet.",
+        "accountDisabled": "Kontoen er deaktivert.",
+        "accountEnabled": "Kontoen er aktivert.",
+        "accountMarkedAsNotSupporter": "Kontoen har blitt markert som ikke støttespiller.",
+        "accountMarkedAsSupporter": "Kontoen har blitt markert som støttespiller.",
+        "accountRefreshed": "Kontoen er oppdatert.",
+        "accountRejected": "Kontoen er avvist.",
+        "twoFactorDisabled": "2FAer deaktivert.",
+        "userBlocked": "Brukeren er blokkert.",
+        "userUnblocked": "Brukeren er opphevet blokkeringen."
+      },
+      "rolesAriaLabel": "Roller",
+      "subtitle": "Liste over brukere registrert i systemet.",
+      "table": {
+        "lastLogin": "Siste pålogging",
+        "statuses": "Statuser"
+      },
+      "title": "Brukere"
+    }
+  }
+}

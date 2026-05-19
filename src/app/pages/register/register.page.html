@@ -4,80 +4,80 @@
             <form name="form" (ngSubmit)="f.form.valid && passwordIsValid() && onSubmit()" #f="ngForm" novalidate>
                 <mat-card appearance="outlined">
                     <mat-card-header>
-                        <mat-card-title>Create new account</mat-card-title>
+                        <mat-card-title>{{ 'pages.register.title' | translate }}</mat-card-title>
                     </mat-card-header>
 
                     <mat-card-content>
                         <div class="margin-bottom-20">
                             <mat-form-field appearance="outline">
-                                <mat-label>Username</mat-label>
+                                <mat-label>{{ 'common.labels.userName' | translate }}</mat-label>
                                 <input type="text" matInput name="userName" [(ngModel)]="userName" #userNameInput="ngModel"
-                                    aria-label="Username" required pattern="^[a-zA-Z0-9]*$" appUniqueUserName appMaxLength="50" />
+                                    [attr.aria-label]="'common.labels.userName' | translate" required pattern="^[a-zA-Z0-9]*$" appUniqueUserName appMaxLength="50" />
 
                                 @if (userNameInput.invalid && userNameInput.errors?.required) {
-                                    <mat-error>Enter username.</mat-error>
+                                    <mat-error>{{ 'pages.register.errors.userNameRequired' | translate }}</mat-error>
                                 }
 
                                 @if (userNameInput.invalid && userNameInput.errors?.pattern) {
-                                    <mat-error>Only alphanumeric characters are allowed in user name.</mat-error>
+                                    <mat-error>{{ 'pages.register.errors.userNamePattern' | translate }}</mat-error>
                                 }
 
                                 @if (userNameInput.invalid && userNameInput.errors?.appUniqueUserName) {
-                                    <mat-error>Choose a different user name, this one is already taken.</mat-error>
+                                    <mat-error>{{ 'pages.register.errors.userNameTaken' | translate }}</mat-error>
                                 }
 
                                 @if (userNameInput.invalid && userNameInput.errors?.appMaxLength) {
-                                    <mat-error>Choose a different user name, this one is too long.</mat-error>
+                                    <mat-error>{{ 'pages.register.errors.userNameTooLong' | translate }}</mat-error>
                                 }
                             </mat-form-field>
                         </div>
 
                         <div class="margin-bottom-20">
                             <mat-form-field appearance="outline">
-                                <mat-label>Email</mat-label>
+                                <mat-label>{{ 'common.labels.email' | translate }}</mat-label>
                                 <input type="email" matInput name="email" [(ngModel)]="email" #emailInput="ngModel"
                                     pattern="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
-                                    aria-label="Email" appUniqueEmail required />
+                                    [attr.aria-label]="'common.labels.email' | translate" appUniqueEmail required />
 
                                 @if (emailInput.invalid && emailInput.errors?.required) {
-                                    <mat-error>Enter email.</mat-error>
+                                    <mat-error>{{ 'pages.register.errors.emailRequired' | translate }}</mat-error>
                                 }
 
                                 @if (emailInput.invalid && emailInput.errors?.pattern) {
-                                    <mat-error>Verify that you've entered proper email.</mat-error>
+                                    <mat-error>{{ 'pages.register.errors.emailInvalid' | translate }}</mat-error>
                                 }
 
                                 @if (emailInput.invalid && emailInput.errors?.appUniqueEmail) {
-                                    <mat-error>Choose other email, this one is already connected to different account.</mat-error>
+                                    <mat-error>{{ 'pages.register.errors.emailTaken' | translate }}</mat-error>
                                 }
                             </mat-form-field>
 
                             <small class="text-muted text-right">
-                                Don't worry. This info is sacred for us. We won't ever show, sell or abuse it.
+                                {{ 'pages.register.emailHint' | translate }}
                             </small>
                         </div>
 
                         <div class="margin-bottom-20">
                             <mat-form-field appearance="outline">
-                                <mat-label>Display name</mat-label>
-                                <input type="text" matInput name="name" [(ngModel)]="fullName" #name="ngModel" aria-label="Name" required appMaxLength="50" />
+                                <mat-label>{{ 'pages.register.displayName.label' | translate }}</mat-label>
+                                <input type="text" matInput name="name" [(ngModel)]="fullName" #name="ngModel" [attr.aria-label]="'common.labels.name' | translate" required appMaxLength="50" />
 
                                 @if (name.invalid && name.errors?.required) {
-                                    <mat-error>Enter name.</mat-error>
+                                    <mat-error>{{ 'pages.register.errors.nameRequired' | translate }}</mat-error>
                                 }
 
                                 @if (name.invalid && name.errors?.appMaxLength) {
-                                    <mat-error>Name is too long.</mat-error>
+                                    <mat-error>{{ 'pages.register.errors.nameTooLong' | translate }}</mat-error>
                                 }
                             </mat-form-field>
                         </div>
 
                         <div class="margin-bottom-20">
                             <mat-form-field appearance="outline">
-                                <mat-label>Language</mat-label>
+                                <mat-label>{{ 'common.labels.language' | translate }}</mat-label>
                                 <mat-select [(value)]="locale">
-                                    <mat-option value="en_US">English (English)</mat-option>
-                                    <mat-option value="pl_PL">Polish (polski)</mat-option>
+                                    <mat-option value="en_US">{{ 'pages.register.language.english' | translate }}</mat-option>
+                                    <mat-option value="pl_PL">{{ 'pages.register.language.polish' | translate }}</mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </div>
@@ -89,7 +89,7 @@
                         <mat-divider class="padding-bottom-20"></mat-divider>
 
                         <div>
-                            <h4>Server rules</h4>
+                            <h4>{{ 'pages.register.serverRules.title' | translate }}</h4>
                             <ul>
                                 @for(rule of serverRules(); track rule.id) {
                                     <li>{{ rule.text }}</li>
@@ -99,7 +99,7 @@
 
                         <div class="margin-bottom-20">
                             <mat-checkbox name="agreement" [disableRipple]="true" [(ngModel)]="agreement">
-                                I accept all server rules.
+                                {{ 'pages.register.serverRules.acceptance' | translate }}
                             </mat-checkbox>
                         </div>
 
@@ -110,15 +110,15 @@
                         @if (isRegistrationByInvitationsOpened()) {
                             <div>
                                 <mat-form-field appearance="outline">
-                                    <mat-label>Invitation code</mat-label>
-                                    <input type="text" matInput name="inviteToken" [(ngModel)]="inviteToken" #inviteTokenInput="ngModel" aria-label="Invitation token" appMaxLength="11" [required]="!isRegistrationByApprovalOpened()" />
+                                    <mat-label>{{ 'pages.register.invitationCode.label' | translate }}</mat-label>
+                                    <input type="text" matInput name="inviteToken" [(ngModel)]="inviteToken" #inviteTokenInput="ngModel" [attr.aria-label]="'pages.register.invitationCode.ariaLabel' | translate" appMaxLength="11" [required]="!isRegistrationByApprovalOpened()" />
 
                                     @if (inviteTokenInput.invalid && inviteTokenInput.errors?.required) {
-                                        <mat-error>Enter invitation code.</mat-error>
+                                        <mat-error>{{ 'pages.register.errors.invitationCodeRequired' | translate }}</mat-error>
                                     }
 
                                     @if (inviteTokenInput.invalid && inviteTokenInput.errors?.appMaxLength) {
-                                        <mat-error>Invitation code is too long.</mat-error>
+                                        <mat-error>{{ 'pages.register.errors.invitationCodeTooLong' | translate }}</mat-error>
                                     }
                                 </mat-form-field>
                             </div>
@@ -127,17 +127,17 @@
                         @if (isRegistrationByApprovalOpened()) {
                             <div>
                                 <mat-form-field appearance="outline">
-                                    <mat-label>Reason</mat-label>
+                                    <mat-label>{{ 'pages.register.reason.label' | translate }}</mat-label>
                                     <textarea matInput name="reason" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2"
                                         cdkAutosizeMaxRows="6"    #reasonInput="ngModel" [(ngModel)]="reason"
-                                    aria-label="Reason" appMaxLength="500" [required]="!isRegistrationByInvitationsOpened()"></textarea>
+                                    [attr.aria-label]="'pages.register.reason.ariaLabel' | translate" appMaxLength="500" [required]="!isRegistrationByInvitationsOpened()"></textarea>
 
                                     @if (reasonInput.invalid && reasonInput.errors?.required) {
-                                        <mat-error>Enter reason.</mat-error>
+                                        <mat-error>{{ 'pages.register.errors.reasonRequired' | translate }}</mat-error>
                                     }
 
                                     @if (reasonInput.invalid && reasonInput.errors?.appMaxLength) {
-                                        <mat-error>Reason is too long.</mat-error>
+                                        <mat-error>{{ 'pages.register.errors.reasonTooLong' | translate }}</mat-error>
                                     }
                                 </mat-form-field>
                             </div>
@@ -145,27 +145,27 @@
 
                         @if (isQuickCaptchaEnabled()) {
                             <div>
-                                <h4>Solve the captcha</h4>
+                                <h4>{{ 'pages.register.captcha.title' | translate }}</h4>
                                 <div class="flex-row gap-16">
                                     <div class="flex-align-center captcha">
-                                        <img [src]="apiUrl() +'/api/v1/quick-captcha/generate?key=' + securityKey()" class="captcha-image" alt="Captcha" />
+                                        <img [src]="apiUrl() +'/api/v1/quick-captcha/generate?key=' + securityKey()" class="captcha-image" [alt]="'pages.register.captcha.imageAlt' | translate" />
                                     </div>
                                     <div class="flex-align-center">
-                                        <button class="margin-top-15" type="button" matButton="outlined" (click)="onCaptchaRefreshClick()" aria-label="Refresh captcha">
-                                            Refresh
+                                        <button class="margin-top-15" type="button" matButton="outlined" (click)="onCaptchaRefreshClick()" [attr.aria-label]="'pages.register.captcha.refreshAriaLabel' | translate">
+                                            {{ 'common.actions.refresh' | translate }}
                                         </button>
                                     </div>
                                 </div>
                                 <mat-form-field appearance="outline">
-                                    <mat-label>Captcha text</mat-label>
-                                    <input type="text" matInput name="captcha" [(ngModel)]="securityText" #captchaInput="ngModel" aria-label="Captcha text" appMaxLength="6" required />
+                                    <mat-label>{{ 'pages.register.captcha.textLabel' | translate }}</mat-label>
+                                    <input type="text" matInput name="captcha" [(ngModel)]="securityText" #captchaInput="ngModel" [attr.aria-label]="'pages.register.captcha.textAriaLabel' | translate" appMaxLength="6" required />
 
                                     @if (captchaInput.invalid && captchaInput.errors?.required) {
-                                        <mat-error>Enter captcha text.</mat-error>
+                                        <mat-error>{{ 'pages.register.errors.captchaTextRequired' | translate }}</mat-error>
                                     }
 
                                     @if (captchaInput.invalid && captchaInput.errors?.appMaxLength) {
-                                        <mat-error>Captcha text is too long.</mat-error>
+                                        <mat-error>{{ 'pages.register.errors.captchaTextTooLong' | translate }}</mat-error>
                                     }
                                 </mat-form-field>
                             </div>
@@ -174,7 +174,7 @@
 
                     <mat-card-actions>
                         <div class="flex-row register-actions">
-                            <button type="submit" matButton="filled" (click)="onRegisterClick()" [disabled]="isSubmittingMode()" aria-label="Register">Register</button>
+                            <button type="submit" matButton="filled" (click)="onRegisterClick()" [disabled]="isSubmittingMode()" [attr.aria-label]="'common.actions.register' | translate">{{ 'common.actions.register' | translate }}</button>
                                                         
                             @if (isSubmittingMode()) {
                                 <mat-spinner [diameter]="18" class="margin-left-10 margin-top-5"></mat-spinner>

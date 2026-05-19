@@ -1,8 +1,8 @@
 @if (isReady()) {
     @if (user(); as userInternal) {
         <div>
-            <img class="header-image" alt="header profile" [ngSrc]="userInternal.headerUrl ?? 'assets/header@2x.jpg'" width="1500" height="500" priority />
-            <img class="avatar-image" alt="avatar profile" [ngSrc]="userInternal.avatarUrl ?? 'assets/avatar.svg'" width="600" height="600" priority />
+            <img class="header-image" [alt]="'pages.profile.images.headerAlt' | translate" [ngSrc]="userInternal.headerUrl ?? 'assets/header@2x.jpg'" width="1500" height="500" priority />
+            <img class="avatar-image" [alt]="'pages.profile.images.avatarAlt' | translate" [ngSrc]="userInternal.avatarUrl ?? 'assets/avatar.svg'" width="600" height="600" priority />
 
 
             <div class="flex-row flex-space-around padding-left-10 padding-right-10">
@@ -14,7 +14,7 @@
                         @if (userInternal.type === userType.Service) {
                             <div class="user-flag">
                                 <mat-chip [disableRipple]="true">
-                                    <mat-icon [inline]="true">smart_toy</mat-icon><div class="user-flag-text">Automated</div>
+                                    <mat-icon [inline]="true">smart_toy</mat-icon><div class="user-flag-text">{{ 'common.labels.automated' | translate }}</div>
                                 </mat-chip>
                             </div>
                         }
@@ -23,17 +23,17 @@
                             <div class="user-flag">
                                 @if (userInternal.roles?.includes(role.Administrator)) {
                                     <mat-chip class="margin-right-10" highlighted [disableRipple]="true">
-                                        <mat-icon [inline]="true">server_person</mat-icon><div class="user-flag-text">Administrator</div>
+                                        <mat-icon [inline]="true">server_person</mat-icon><div class="user-flag-text">{{ 'common.labels.administrator' | translate }}</div>
                                     </mat-chip>
                                 } @else if (userInternal.roles?.includes(role.Moderator)) {
                                     <mat-chip class="margin-right-10"    highlighted [disableRipple]="true">
-                                        <mat-icon [inline]="true">clinical_notes</mat-icon><div class="user-flag-text">Moderator</div>
+                                        <mat-icon [inline]="true">clinical_notes</mat-icon><div class="user-flag-text">{{ 'common.labels.moderator' | translate }}</div>
                                     </mat-chip>
                                 }
 
                                 @if (userInternal.isSupporterFlagEnabled) {
                                     <mat-chip highlighted [disableRipple]="true">
-                                        <mat-icon [inline]="true">diamond_shine</mat-icon><div class="user-flag-text">Supporter</div>
+                                        <mat-icon [inline]="true">diamond_shine</mat-icon><div class="user-flag-text">{{ 'common.labels.supporter' | translate }}</div>
                                     </mat-chip>
                                 }
                             </div>
@@ -43,12 +43,12 @@
                     </div>
 
                     @if (userInternal.movedTo; as movedToUser) {
-                        <div class="text-center text-muted padding-top-10">This account has moved to <strong>{{ movedToUser.account }}</strong>. <br />Future updates will be published from the new account.</div>
+                        <div class="text-center text-muted padding-top-10">{{ 'pages.profile.movedTo.prefix' | translate }} <strong>{{ movedToUser.account }}</strong>. <br />{{ 'pages.profile.movedTo.suffix' | translate }}</div>
                     }
 
                     @if (userInternal.isLocal && createdAt()) {
                         <div class="text-center text-muted padding-top-10">
-                            Joined {{ createdAt() | date:'longDate' }}
+                            {{ 'pages.profile.joined' | translate:{ date: (createdAt() | date:'longDate') } }}
                         </div>
                     }
 
@@ -61,17 +61,17 @@
                     @if (signedInUser()?.id === userInternal.id) {
                         <div class="flex-row flex-center gap-8 padding-top-10">
                             @if (!isHandsetPortrait()) {
-                                <button type="button" [routerLink]="['/favourites']" matButton="outlined" aria-label="Favourites"><mat-icon class="fill-symbol">grade</mat-icon> Favourites</button>
-                                <button type="button" [routerLink]="['/bookmarks']" matButton="outlined" aria-label="Bookmarks"><mat-icon class="fill-symbol">bookmark</mat-icon> Bookmarks</button>
+                                <button type="button" [routerLink]="['/favourites']" matButton="outlined" [attr.aria-label]="'pages.favourites.title' | translate"><mat-icon class="fill-symbol">grade</mat-icon> {{ 'pages.favourites.title' | translate }}</button>
+                                <button type="button" [routerLink]="['/bookmarks']" matButton="outlined" [attr.aria-label]="'pages.bookmarks.title' | translate"><mat-icon class="fill-symbol">bookmark</mat-icon> {{ 'pages.bookmarks.title' | translate }}</button>
                             } @else {
-                                <button type="button" [routerLink]="['/favourites']" class="icon-only" matButton="outlined" aria-label="Favourites"><mat-icon class="fill-symbol">grade</mat-icon></button>
-                                <button type="button" [routerLink]="['/bookmarks']" class="icon-only" matButton="outlined" aria-label="Bookmarks"><mat-icon class="fill-symbol">bookmark</mat-icon></button>
+                                <button type="button" [routerLink]="['/favourites']" class="icon-only" matButton="outlined" [attr.aria-label]="'pages.favourites.title' | translate"><mat-icon class="fill-symbol">grade</mat-icon></button>
+                                <button type="button" [routerLink]="['/bookmarks']" class="icon-only" matButton="outlined" [attr.aria-label]="'pages.bookmarks.title' | translate"><mat-icon class="fill-symbol">bookmark</mat-icon></button>
                             }
 
-                            <button type="button" (click)="onQRCodeClick()" class="icon-only" matButton="outlined" aria-label="Profile QR code"><mat-icon class="fill-symbol">qr_code_2</mat-icon></button>
+                            <button type="button" (click)="onQRCodeClick()" class="icon-only" matButton="outlined" [attr.aria-label]="'pages.profile.actions.profileQrCodeAriaLabel' | translate"><mat-icon class="fill-symbol">qr_code_2</mat-icon></button>
 
                             @if (showSharedBusinessCards()) {
-                                <button type="button" (click)="onShareBusinessCard()" class="icon-only" matButton="outlined" aria-label="Share business card"><mat-icon class="fill-symbol">share</mat-icon></button>
+                                <button type="button" (click)="onShareBusinessCard()" class="icon-only" matButton="outlined" [attr.aria-label]="'pages.profile.actions.shareBusinessCardAriaLabel' | translate"><mat-icon class="fill-symbol">share</mat-icon></button>
                             }
                         </div>
                     }
@@ -79,9 +79,9 @@
                     @if (latestFollowers(); as latestFollowersArray) {
                         @if (latestFollowersArray.data.length > 0) {
                             <div class="text-center padding-top-10">
-                                <div class="text-muted padding-bottom-5">LATEST FOLLOWERS</div>
+                                <div class="text-muted padding-bottom-5">{{ 'pages.profile.latestFollowers.title' | translate }}</div>
                                 @for (item of latestFollowersArray.data; track item.id) {
-                                    <img class="follower-image" [ngSrc]="item.avatarUrl ?? 'assets/avatar.svg'" width="600" height="600" [matTooltip]="item.name ?? item.userName ?? ''" alt="Avatar" />
+                                    <img class="follower-image" [ngSrc]="item.avatarUrl ?? 'assets/avatar.svg'" width="600" height="600" [matTooltip]="item.name ?? item.userName ?? ''" [alt]="'common.labels.avatar' | translate" />
                                 }
                             </div>
                         }
@@ -99,7 +99,7 @@
                                             </div>
                                             <div class="margin-left-10">
                                                 @if (item.isVerified) {
-                                                    <mat-icon class="text-success fill-symbol margin-top-5" matTooltip="Verified">check_circle</mat-icon>
+                                                    <mat-icon class="text-success fill-symbol margin-top-5" [matTooltip]="'common.labels.verified' | translate">check_circle</mat-icon>
                                                 }
                                             </div>
                                         </div>
@@ -113,9 +113,9 @@
                     </div>
 
                     <div class="flex-row flex-center padding-top-20">
-                        <div class="margin-left-20 margin-right-20"><span class="fw-500">{{ userInternal.photosCount }}</span><span class="fw-200 margin-left-5" [ngClass]="{ 'dashed': selectedProfilePageTab() === profilePageTab.Statuses}"><a [routerLink]="['posts']">{{ userInternal.photosCount === 1 ? 'Photo' : 'Photos' }}</a></span></div>
-                        <div class="margin-left-20 margin-right-20"><span class="fw-500">{{ userInternal.followingCount }}</span><span class="fw-200 margin-left-5" [ngClass]="{ 'dashed': selectedProfilePageTab() === profilePageTab.Following}"><a [routerLink]="['following']">Following</a></span></div>
-                        <div class="margin-left-20 margin-right-20"><span class="fw-500">{{ userInternal.followersCount }}</span><span class="fw-200 margin-left-5" [ngClass]="{ 'dashed': selectedProfilePageTab() === profilePageTab.Followers}"><a [routerLink]="['followers']">Followers</a></span></div>
+                        <div class="margin-left-20 margin-right-20"><span class="fw-500">{{ userInternal.photosCount }}</span><span class="fw-200 margin-left-5" [ngClass]="{ 'dashed': selectedProfilePageTab() === profilePageTab.Statuses}"><a [routerLink]="['posts']">{{ userInternal.photosCount === 1 ? ('common.labels.photo' | translate) : ('common.labels.photos' | translate) }}</a></span></div>
+                        <div class="margin-left-20 margin-right-20"><span class="fw-500">{{ userInternal.followingCount }}</span><span class="fw-200 margin-left-5" [ngClass]="{ 'dashed': selectedProfilePageTab() === profilePageTab.Following}"><a [routerLink]="['following']">{{ 'common.labels.following' | translate }}</a></span></div>
+                        <div class="margin-left-20 margin-right-20"><span class="fw-500">{{ userInternal.followersCount }}</span><span class="fw-200 margin-left-5" [ngClass]="{ 'dashed': selectedProfilePageTab() === profilePageTab.Followers}"><a [routerLink]="['followers']">{{ 'common.labels.followers' | translate }}</a></span></div>
                     </div>
 
                     @if (selectedProfilePageTab() === profilePageTab.Following) {
@@ -133,11 +133,11 @@
                                             </app-users-card>
                                         } @else {
                                             @if (userInternal.isLocal) {
-                                                <div>There is nothing to read here yet.</div>
+                                                <div>{{ 'pages.profile.noData.local' | translate }}</div>
                                             } @else {
                                                 <div class="text-center">
-                                                    <p>We do not have this information in the system.</p>
-                                                    <p class="margin-bottom-0">Check on the user's original <a [href]="userInternal.activityPubProfile" target="_blank">profile page</a>.</p>
+                                                    <p>{{ 'pages.profile.noData.remote.description' | translate }}</p>
+                                                    <p class="margin-bottom-0">{{ 'pages.profile.noData.remote.checkOriginalPrefix' | translate }} <a [href]="userInternal.activityPubProfile" target="_blank">{{ 'common.labels.profilePage' | translate }}</a>.</p>
                                                 </div>
                                             }
                                         }
@@ -162,11 +162,11 @@
                                             </app-users-card>
                                         } @else {
                                             @if (userInternal.isLocal) {
-                                                <div>There is nothing to read here yet.</div>
+                                                <div>{{ 'pages.profile.noData.local' | translate }}</div>
                                             } @else {
                                                 <div class="text-center">
-                                                    <p>We do not have this information in the system.</p>
-                                                    <p class="margin-bottom-0">Check on the user's original <a [href]="userInternal.activityPubProfile" target="_blank">profile page</a>.</p>
+                                                    <p>{{ 'pages.profile.noData.remote.description' | translate }}</p>
+                                                    <p class="margin-bottom-0">{{ 'pages.profile.noData.remote.checkOriginalPrefix' | translate }} <a [href]="userInternal.activityPubProfile" target="_blank">{{ 'common.labels.profilePage' | translate }}</a>.</p>
                                                 </div>
                                             }
                                         }
@@ -186,8 +186,8 @@
                                 <mat-card appearance="outlined">
                                     <mat-card-content>
                                         <div class="text-center">
-                                            <p>Some posts from this profile may be missing.</p>
-                                            <p class="margin-bottom-0">See more posts on user's original <a [href]="userInternal.activityPubProfile" target="_blank">profile page</a>.</p>
+                                            <p>{{ 'pages.profile.remoteStatuses.missingPosts' | translate }}</p>
+                                            <p class="margin-bottom-0">{{ 'pages.profile.remoteStatuses.seeMorePrefix' | translate }} <a [href]="userInternal.activityPubProfile" target="_blank">{{ 'common.labels.profilePage' | translate }}</a>.</p>
                                         </div>
                                     </mat-card-content>
                                 </mat-card>

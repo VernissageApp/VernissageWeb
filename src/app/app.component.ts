@@ -12,6 +12,7 @@ import { FocusTrackerService } from './services/common/focus-tracker.service';
 import { Router, RouteReuseStrategy } from '@angular/router';
 import { CustomReuseStrategy } from './common/custom-reuse-strategy';
 import { AuthorizationService } from './services/authorization/authorization.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-root',
@@ -38,6 +39,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     private router = inject(Router);
     private routeReuseStrategy = inject(RouteReuseStrategy);
     private authorizationService = inject(AuthorizationService);
+    private translateService = inject(TranslateService);
 
     ngOnInit(): void {
         this.routingStateService.startRoutingListener();
@@ -115,7 +117,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     private initializeApplicationStateUpdates() {
         this.isAnyNewUpdateAvailableSubscription = this.webServiceWorker.$isAnyNewUpdateAvailable.subscribe((versionAvailableFlag) => {
             if (versionAvailableFlag) {
-                const matSnackBarRef = this.matSnackBar.open('A new version of Vernissage is available. Please refresh the page to get the latest version.', 'Refresh', {
+                const matSnackBarRef = this.matSnackBar.open(this.translateService.instant('common.messages.newVersionAvailable'), this.translateService.instant('common.actions.refresh'), {
                     duration: 30000,
                     verticalPosition: 'top',
                     panelClass: ['message-success']
@@ -129,7 +131,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 
         this.isInUnrecoverableStateSubscription = this.webServiceWorker.$isInUnrecoverableState.subscribe((unrecoverableStateFlag) => {
             if (unrecoverableStateFlag) {
-                const matSnackBarRef = this.matSnackBar.open('An error occurred that we cannot recover application state. Please reload the page.', 'Reload', {
+                const matSnackBarRef = this.matSnackBar.open(this.translateService.instant('common.messages.unrecoverableState'), this.translateService.instant('common.actions.reload'), {
                     duration: 30000,
                     verticalPosition: 'top',
                     panelClass: ['message-success']

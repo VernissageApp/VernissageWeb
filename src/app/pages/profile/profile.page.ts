@@ -27,6 +27,7 @@ import { ConfirmationDialog } from 'src/app/dialogs/confirmation-dialog/confirma
 import { UserType } from 'src/app/models/user-type';
 import { Role } from 'src/app/models/role';
 import { UserPayload } from 'src/app/models/user-payload';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-profile',
@@ -78,6 +79,7 @@ export class ProfilePage extends ReusableGalleryPageComponent implements OnInit,
     private messageService = inject(MessagesService);
     private businessCardsService = inject(BusinessCardsService);
     private settingsService = inject(SettingsService);
+    private translateService = inject(TranslateService);
     protected userDisplayService = inject(UserDisplayService);
 
     override onRouteNavigationStart(navigationStarEvent: NavigationStart): void {
@@ -284,7 +286,7 @@ export class ProfilePage extends ReusableGalleryPageComponent implements OnInit,
         if (!businessCardExists) {
             const dialogRef = this.dialog.open(ConfirmationDialog, {
                 width: '500px',
-                data: 'You haven\'t created a business card yet. Would you like to create it now?'
+                data: this.translateService.instant('pages.profile.confirmations.createBusinessCard')
             });
 
             dialogRef.afterClosed().subscribe(async (result) => {
@@ -301,7 +303,7 @@ export class ProfilePage extends ReusableGalleryPageComponent implements OnInit,
             if (result) {
                 try {
                     const sharedBusinessCard = await this.sharedBusinessCardsService.create(result);
-                    this.messageService.showSuccess('Business card has been shared.');
+                    this.messageService.showSuccess(this.translateService.instant('pages.profile.messages.businessCardShared'));
 
                     this.router.navigate(['/shared-cards', sharedBusinessCard.id], { queryParams: { 'qr': true } });
                 } catch (error) {

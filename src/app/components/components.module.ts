@@ -45,6 +45,7 @@ import { HomeCardsComponent } from './widgets/home-cards/home-cards.component';
 import { PopoverComponent } from './widgets/popover/popover.component';
 import { StatusTextAutocompleteComponent } from './widgets/status-text-autocomplete/status-text-autocomplete.component';
 import { TagComponent } from './widgets/tag/tag.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
     declarations: [
@@ -138,7 +139,8 @@ import { TagComponent } from './widgets/tag/tag.component';
         RouterModule,
         ValidationsModule,
         NgOptimizedImage,
-        DirectivesModule
+        DirectivesModule,
+        TranslateModule
     ],
     providers: [
         provideHttpClient(withFetch(), withInterceptorsFromDi()),

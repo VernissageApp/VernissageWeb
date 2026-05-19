@@ -10,6 +10,7 @@ import { MessagesService } from 'src/app/services/common/messages.service';
 import { Router } from '@angular/router';
 import { Rule } from 'src/app/models/rule';
 import { SettingsService } from 'src/app/services/http/settings.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-register',
@@ -49,6 +50,7 @@ export class RegisterPage implements OnInit {
     private instanceService = inject(InstanceService);
     private settingsService = inject(SettingsService);
     private windowService = inject(WindowService);
+    private translateService = inject(TranslateService);
 
     constructor() {
         // Generate a random security key for the registration captcha.
@@ -102,25 +104,25 @@ export class RegisterPage implements OnInit {
 
             await this.registerService.register(user);
 
-            this.messageService.showSuccess('Your account has been created.');
+            this.messageService.showSuccess(this.translateService.instant('pages.register.messages.accountCreated'));
             await this.router.navigate(['/login']);
         } catch (error: any) {
             if (error.error.code === 'userNameIsAlreadyTaken') {
-                this.errorMessage.set('User name is already taken. Please choose different one.');
+                this.errorMessage.set(this.translateService.instant('pages.register.errors.userNameAlreadyTaken'));
             } else if (error.error.code === 'emailIsAlreadyConnected') {
-                this.errorMessage.set('Given email is already connected with other account.');
+                this.errorMessage.set(this.translateService.instant('pages.register.errors.emailAlreadyConnected'));
             } else if (error.error.code === 'invitationTokenIsInvalid') {
-                this.errorMessage.set('Invitation token is invalid.');
+                this.errorMessage.set(this.translateService.instant('pages.register.errors.invitationTokenInvalid'));
             } else if (error.error.code === 'invitationTokenHasBeenUsed') {
-                this.errorMessage.set('Invitation token has been used.');
+                this.errorMessage.set(this.translateService.instant('pages.register.errors.invitationTokenUsed'));
             } else if (error.error.code === 'userHaveToAcceptAgreement') {
-                this.errorMessage.set('You have to accept server rules.');
+                this.errorMessage.set(this.translateService.instant('pages.register.errors.mustAcceptRules'));
             } else if (error.error.code === 'disposableEmailCannotBeUsed') {
-                this.errorMessage.set('Disposable email cannot be used.');
+                this.errorMessage.set(this.translateService.instant('pages.register.errors.disposableEmailNotAllowed'));
             } else if (error.error.code === 'securityTokenIsInvalid') {
-                this.errorMessage.set('Captcha code is invalid. Please try again.');
+                this.errorMessage.set(this.translateService.instant('pages.register.errors.invalidCaptchaCode'));
             } else {
-                this.errorMessage.set('Unexpected error occurred. Please try again.');
+                this.errorMessage.set(this.translateService.instant('pages.register.errors.unexpectedError'));
             }
 
             this.registerPageMode.set(RegisterMode.Error);

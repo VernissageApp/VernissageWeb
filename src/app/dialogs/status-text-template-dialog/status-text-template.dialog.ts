@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, model, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { UserSetting, UserSettingKey } from 'src/app/models/user-setting';
 import { MessagesService } from 'src/app/services/common/messages.service';
@@ -18,6 +19,7 @@ export class StatusTextDialog implements OnInit {
     private messageService = inject(MessagesService);
     private dialogRef = inject(MatDialogRef<StatusTextDialog>);
     private data?: string = inject(MAT_DIALOG_DATA);
+    private translateService = inject(TranslateService);
 
     ngOnInit(): void {
         this.template.set(this.data ?? '');
@@ -35,7 +37,7 @@ export class StatusTextDialog implements OnInit {
         try {
             await this.userSettingsService.set(userSetting);
 
-            this.messageService.showSuccess('Status text template has been updated.');
+            this.messageService.showSuccess(this.translateService.instant('dialogs.statusTextTemplate.messages.statusTextTemplateHasBeenUpdated'));
             this.dialogRef.close(userSetting);
         } catch (error) {
             console.error(error);

@@ -5,7 +5,7 @@
         </div>
     </div>
     <div mat-dialog-actions>
-        <button matButton="text" type="button" (click)="onNoClick()">No</button>
-        <button matButton="filled" type="submit" cdkFocusInitial>Yes</button>
+        <button matButton="text" type="button" (click)="onNoClick()">{{ 'components.dialogCommon.actions.no' | translate }}</button>
+        <button matButton="filled" type="submit" cdkFocusInitial>{{ 'components.dialogCommon.actions.yes' | translate }}</button>
     </div>
 </form>

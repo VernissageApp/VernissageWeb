@@ -13,6 +13,8 @@ import { UserDisplayService } from 'src/app/services/common/user-display.service
 import { SettingsService } from 'src/app/services/http/settings.service';
 import { PreferencesService } from 'src/app/services/common/preferences.service';
 import { UserPayload } from 'src/app/models/user-payload';
+import { LanguageService } from 'src/app/services/common/language.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-header',
@@ -34,12 +36,25 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
     protected showNews = signal(false);
     protected showSharedBusinessCards = signal(false);
     protected isLightTheme = signal(false);
+    protected currentLanguage = signal('en');
+    protected readonly languages = [
+        { language: 'en', flag: 'gb', labelKey: 'pages.account.personalInformation.language.english' },
+        { language: 'fi', flag: 'fi', labelKey: 'pages.account.personalInformation.language.finnish' },
+        { language: 'fr', flag: 'fr', labelKey: 'pages.account.personalInformation.language.french' },
+        { language: 'es', flag: 'es', labelKey: 'pages.account.personalInformation.language.spanish' },
+        { language: 'de', flag: 'de', labelKey: 'pages.account.personalInformation.language.german' },
+        { language: 'no', flag: 'no', labelKey: 'pages.account.personalInformation.language.norwegian' },
+        { language: 'pl', flag: 'pl', labelKey: 'pages.account.personalInformation.language.polish' },
+        { language: 'sv', flag: 'se', labelKey: 'pages.account.personalInformation.language.swedish' },
+        { language: 'it', flag: 'it', labelKey: 'pages.account.personalInformation.language.italian' }
+    ];
 
     private clearReuseStrategyAfterNavigationEnds = false;
     private userChangeSubscription?: Subscription;
     private notificationChangeSubscription?: Subscription;
     private messagesSubscription?: Subscription;
     private routeNavigationEndSubscription?: Subscription;
+    private languageChangeSubscription?: Subscription;
 
     private authorizationService = inject(AuthorizationService);
     private instanceService = inject(InstanceService);
@@ -50,6 +65,8 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
     private router = inject(Router);
     private swPushService = inject(SwPush);
     private preferencesService = inject(PreferencesService);
+    private languageService = inject(LanguageService);
+    private translateService = inject(TranslateService);
     private renderer = inject(Renderer2);
 
     override async ngOnInit(): Promise<void> {
@@ -59,8 +76,13 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
         const userInternal = this.authorizationService.getUser();
 
         this.isLightTheme.set(this.preferencesService.isLightTheme);
+        this.currentLanguage.set(this.languageService.getCurrentLanguage());
         this.user.set(userInternal);
         this.isLoggedIn.set(isLoggedInInternal);
+
+        this.languageChangeSubscription = this.translateService.onLangChange.subscribe(() => {
+            this.currentLanguage.set(this.languageService.getCurrentLanguage());
+        });
 
         this.userChangeSubscription = this.authorizationService.changes.subscribe(async (user) => {
             this.user.set(user);
@@ -114,6 +136,7 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
         this.notificationChangeSubscription?.unsubscribe();
         this.messagesSubscription?.unsubscribe();
         this.routeNavigationEndSubscription?.unsubscribe();
+        this.languageChangeSubscription?.unsubscribe();
     }
 
     protected async signOut(): Promise<void> {
@@ -145,6 +168,11 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
     protected onThemeToggle(): void {
         this.preferencesService.toggleTheme(this.renderer);
         this.isLightTheme.set(this.preferencesService.isLightTheme);
+    }
+
+    protected async onLanguageChange(language: string): Promise<void> {
+        await this.languageService.setLanguageFromLocale(language);
+        this.currentLanguage.set(language);
     }
 
     protected onUserMenuClosed(): void {

@@ -1,31 +1,31 @@
-<div mat-dialog-title>Error data</div>
+<div mat-dialog-title>{{ 'dialogs.errorItem.texts.errorData' | translate }}</div>
 <div mat-dialog-content>
 
     <div class="flex-col gap-0 margin-top-5">
         <mat-form-field appearance="outline" class="width-100 padding-top-10" >
-            <mat-label>Code</mat-label>
-            <input type="text" matInput name="code" #codeInput="ngModel" [ngModel]="code()" aria-label="Code" [disabled]="true" />
+            <mat-label>{{ 'common.labels.code' | translate }}</mat-label>
+            <input type="text" matInput name="code" #codeInput="ngModel" [ngModel]="code()" [attr.aria-label]="'dialogs.errorItem.attrs.code' | translate" [disabled]="true" />
         </mat-form-field>
     </div>
 
     <div class="flex-col gap-0 margin-top-5">
         <mat-form-field appearance="outline" class="width-100 padding-top-10">
-            <mat-label>Message</mat-label>
+            <mat-label>{{ 'common.labels.message' | translate }}</mat-label>
             <textarea matInput name="message" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4"
-                cdkAutosizeMaxRows="4" placeholder="Message" [ngModel]="message()" [disabled]="true"
-                aria-label="Message"></textarea>
+                cdkAutosizeMaxRows="4" [placeholder]="'dialogs.errorItem.attrs.message' | translate" [ngModel]="message()" [disabled]="true"
+                [attr.aria-label]="'dialogs.errorItem.attrs.message' | translate"></textarea>
         </mat-form-field>
     </div>
 
     <div class="flex-col gap-0 margin-top-5">
         <mat-form-field appearance="outline" class="width-100 padding-top-10">
-            <mat-label>Exception</mat-label>
+            <mat-label>{{ 'common.labels.exception' | translate }}</mat-label>
             <textarea matInput name="exception" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4"
-                cdkAutosizeMaxRows="22" placeholder="Message" [ngModel]="exception()" [disabled]="true"
-                aria-label="Exception"></textarea>
+                cdkAutosizeMaxRows="22" [placeholder]="'dialogs.errorItem.attrs.message' | translate" [ngModel]="exception()" [disabled]="true"
+                [attr.aria-label]="'dialogs.errorItem.attrs.exception' | translate"></textarea>
         </mat-form-field>
     </div>
 </div>
 <div mat-dialog-actions>
-    <button matButton="text" type="button" (click)="onNoClick()">Close</button>
+    <button matButton="text" type="button" (click)="onNoClick()">{{ 'common.actions.close' | translate }}</button>
 </div>
