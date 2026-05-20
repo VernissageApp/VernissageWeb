@@ -5,18 +5,18 @@
                 <div class="width-100">
                     <section class="flex-row flex-space-between flex-align-center margin-bottom-20" [ngClass]="{ 'flex-row': !isHandsetPortrait(), 'flex-column': isHandsetPortrait() }">
                         <h1>
-                            <div>Shared business cards</div>
+                            <div>{{ 'pages.sharedCards.title' | translate }}</div>
                             @if (!isHandset()) {
-                                <div class="fs-60 text-muted">Here you can view and manage all the public links through which your business card has been shared.</div>
+                                <div class="fs-60 text-muted">{{ 'pages.sharedCards.subtitle' | translate }}</div>
                             }
                         </h1>
                         <div class="page-buttons">
                             @if (isHandset()) {
-                                <button type="button" [routerLink]="['/business-card', 'edit']" matButton="outlined" class="margin-right-10 icon-only" aria-label="Your business card"><mat-icon class="fill-symbol">badge</mat-icon></button>
-                                <button type="button" (click)="onShareBusinessCard()" matButton="filled" class="icon-only" aria-label="Share business card"><mat-icon class="fill-symbol">share</mat-icon></button>
+                                <button type="button" [routerLink]="['/business-card', 'edit']" matButton="outlined" class="margin-right-10 icon-only" [attr.aria-label]="'pages.sharedCards.actions.yourBusinessCard' | translate"><mat-icon class="fill-symbol">badge</mat-icon></button>
+                                <button type="button" (click)="onShareBusinessCard()" matButton="filled" class="icon-only" [attr.aria-label]="'pages.sharedCards.actions.shareBusinessCard' | translate"><mat-icon class="fill-symbol">share</mat-icon></button>
                             } @else {
-                                <button type="button" [routerLink]="['/business-card', 'edit']" matButton="outlined" class="margin-right-10" aria-label="Your business card">Your business card</button>
-                                <button type="button" (click)="onShareBusinessCard()" matButton="filled" aria-label="Share business card">Share business card</button>
+                                <button type="button" [routerLink]="['/business-card', 'edit']" matButton="outlined" class="margin-right-10" [attr.aria-label]="'pages.sharedCards.actions.yourBusinessCard' | translate">{{ 'pages.sharedCards.actions.yourBusinessCard' | translate }}</button>
+                                <button type="button" (click)="onShareBusinessCard()" matButton="filled" [attr.aria-label]="'pages.sharedCards.actions.shareBusinessCard' | translate">{{ 'pages.sharedCards.actions.shareBusinessCard' | translate }}</button>
                             }
                         </div>
                     </section>
@@ -25,7 +25,7 @@
 
                         <!-- Title Column -->
                         <ng-container matColumnDef="title">
-                            <th mat-header-cell *matHeaderCellDef> Title </th>
+                            <th mat-header-cell *matHeaderCellDef>{{ 'common.labels.title' | translate }}</th>
                             <td mat-cell *matCellDef="let element">
                                 <a [routerLink]="['/shared-cards', element.id]">{{ element.title }}</a>
                                 <div class="fs-90 text-muted">
@@ -36,7 +36,7 @@
 
                         <!-- Title ThirdPartyName -->
                         <ng-container matColumnDef="thirdPartyName">
-                            <th mat-header-cell *matHeaderCellDef> Name </th>
+                            <th mat-header-cell *matHeaderCellDef>{{ 'common.labels.name' | translate }}</th>
                             <td mat-cell *matCellDef="let element">
                                 {{ element.thirdPartyName }}
                             </td>
@@ -44,7 +44,7 @@
 
                         <!-- Title ThirdPartyName -->
                         <ng-container matColumnDef="thirdPartyEmail">
-                            <th mat-header-cell *matHeaderCellDef> Email </th>
+                            <th mat-header-cell *matHeaderCellDef>{{ 'common.labels.email' | translate }}</th>
                             <td mat-cell *matCellDef="let element">
                                 {{ element.thirdPartyEmail }}
                             </td>
@@ -52,11 +52,11 @@
 
                         <!-- Created Date Column -->
                         <ng-container matColumnDef="createdAt">
-                            <th mat-header-cell *matHeaderCellDef> Created date </th>
+                            <th mat-header-cell *matHeaderCellDef>{{ 'common.dates.createdDate' | translate }}</th>
                             <td mat-cell *matCellDef="let element" class="createdAt">
                                 @if (element.createdAt) {
                                     <span>
-                                        {{ element.createdAt | date: 'short' }}
+                                        {{ element.createdAt | localizedDate: 'short' }}
                                     </span>
                                 }
                             </td>
@@ -64,7 +64,7 @@
 
                         <!-- Revoked Column -->
                         <ng-container matColumnDef="enabled">
-                            <th mat-header-cell *matHeaderCellDef> Enabled </th>
+                            <th mat-header-cell *matHeaderCellDef>{{ 'common.labels.enabled' | translate }}</th>
                             <td mat-cell *matCellDef="let element">
                                 <mat-slide-toggle name="alwaysShowNSFW" [ngModel]="!element.revokedAt" (ngModelChange)="onRevokedChange(element.id, $event)"></mat-slide-toggle>
                             </td>
@@ -74,17 +74,17 @@
                         <ng-container matColumnDef="actions">
                             <th mat-header-cell *matHeaderCellDef></th>
                             <td mat-cell *matCellDef="let element" class="text-right">
-                                <button class="more-button" matIconButton [matMenuTriggerFor]="dropdownMenuOne2" aria-label="More options">
+                                <button class="more-button" matIconButton [matMenuTriggerFor]="dropdownMenuOne2" [attr.aria-label]="'common.labels.moreOptions' | translate">
                                     <mat-icon>more_vert</mat-icon>
                                 </button>
                                 <mat-menu #dropdownMenuOne2="matMenu" xPosition="before">
                                     <button (click)="onEdit(element)" mat-menu-item>
                                         <mat-icon class="outline-symbol">edit</mat-icon>
-                                        <span>Edit</span>
+                                        <span>{{ 'common.actions.edit' | translate }}</span>
                                     </button>
                                     <button (click)="onDelete(element)" mat-menu-item>
                                         <mat-icon class="outline-symbol">delete</mat-icon>
-                                        <span>Delete</span>
+                                        <span>{{ 'common.actions.delete' | translate }}</span>
                                     </button>
                                 </mat-menu>
                             </td>
@@ -99,7 +99,7 @@
                         [pageIndex]="pageIndex()"
                         [pageSize]="10"
                         [pageSizeOptions]="[10, 25, 100]"
-                        aria-label="Select page">
+                        [attr.aria-label]="'common.paginator.selectPage' | translate">
                     </mat-paginator>
                 </div>
             </div>

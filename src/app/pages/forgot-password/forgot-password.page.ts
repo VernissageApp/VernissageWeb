@@ -5,6 +5,7 @@ import { ForgotPasswordMode } from 'src/app/models/forgot-password-mode';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { WindowService } from 'src/app/services/common/window.service';
 import { ForgotPasswordService } from 'src/app/services/http/forgot-password.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-forgot-password',
@@ -25,6 +26,7 @@ export class ForgotPasswordPage {
     private forgotPasswordService = inject(ForgotPasswordService);
     private messagesService = inject(MessagesService);
     private windowService = inject(WindowService);
+    private translateService = inject(TranslateService);
 
     async onSubmit(): Promise<void> {
         try {
@@ -43,7 +45,7 @@ export class ForgotPasswordPage {
             }
 
             this.forgotPasswordMode.set(ForgotPasswordMode.ForgotPassword);
-            this.messagesService.showError('Unexpected error during resetting your password. Please try again.');
+            this.messagesService.showError(this.translateService.instant('pages.forgotPassword.errors.unexpectedResetError'));
         }
     }
 

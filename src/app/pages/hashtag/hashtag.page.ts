@@ -10,6 +10,7 @@ import { MessagesService } from "src/app/services/common/messages.service";
 import { StatusHashtagsService } from "src/app/services/common/status-hashtags.service";
 import { HashtagsService } from "src/app/services/http/hashtags.service";
 import { TimelineService } from "src/app/services/http/timeline.service";
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-hashtag',
@@ -35,6 +36,7 @@ export class HashtagPage extends ReusableGalleryPageComponent implements OnInit,
     private authorizationService = inject(AuthorizationService);
     private messagesService = inject(MessagesService);
     private activatedRoute = inject(ActivatedRoute);
+    private translateService = inject(TranslateService);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
@@ -77,13 +79,13 @@ export class HashtagPage extends ReusableGalleryPageComponent implements OnInit,
                 await this.statusHashtagsService.reloadFollowedHashtags();
 
                 this.isFollowed.set(false);
-                this.messagesService.showSuccess('Hashtag has been unfollowed.');
+                this.messagesService.showSuccess(this.translateService.instant('pages.hashtag.messages.unfollowed'));
             } else {
                 await this.hashtagsService.follow(normalizedHashtagName);
                 await this.statusHashtagsService.reloadFollowedHashtags();
 
                 this.isFollowed.set(true);
-                this.messagesService.showSuccess('Hashtag has been followed.');
+                this.messagesService.showSuccess(this.translateService.instant('pages.hashtag.messages.followed'));
             }
         } catch (error) {
             console.error(error);
@@ -104,28 +106,28 @@ export class HashtagPage extends ReusableGalleryPageComponent implements OnInit,
     private setFeedLinks(): void {
         const existingRssLink = this.document.querySelector('link[id="rssHashtagLink"]');
         if (existingRssLink) {
-            existingRssLink.setAttribute('title', `Hashtag ${this.hashtag()} feed (RSS)`);
+            existingRssLink.setAttribute('title', this.translateService.instant('pages.hashtag.feed.rssTitle', { hashtag: this.hashtag() }));
             existingRssLink.setAttribute('href', '/rss/hashtags/' + this.hashtag());
         } else {
             const newRssLink: HTMLLinkElement = this.document.createElement('link');
             newRssLink.setAttribute('rel', 'alternate');
             newRssLink.setAttribute('id', 'rssHashtagLink');
             newRssLink.setAttribute('type', 'application/rss+xml');
-            newRssLink.setAttribute('title', `Category ${this.hashtag()} feed (RSS)`);
+            newRssLink.setAttribute('title', this.translateService.instant('pages.hashtag.feed.rssTitle', { hashtag: this.hashtag() }));
             newRssLink.setAttribute( 'href', '/rss/hashtags/' + this.hashtag());
             this.document.head.appendChild(newRssLink);
         }
 
         const existingAtomLink = this.document.querySelector('link[id="atomHashtagLink"]');
         if (existingAtomLink) {
-            existingAtomLink.setAttribute('title', `Hashtag ${this.hashtag()} feed (Atom)`);
+            existingAtomLink.setAttribute('title', this.translateService.instant('pages.hashtag.feed.atomTitle', { hashtag: this.hashtag() }));
             existingAtomLink.setAttribute('href', '/atom/hashtags/' + this.hashtag());
         } else {
             const nwwAtomLink: HTMLLinkElement = this.document.createElement('link');
             nwwAtomLink.setAttribute('rel', 'alternate');
             nwwAtomLink.setAttribute('id', 'atomHashtagLink');
             nwwAtomLink.setAttribute('type', 'application/atom+xml');
-            nwwAtomLink.setAttribute('title', `Category ${this.hashtag()} feed (Atom)`);
+            nwwAtomLink.setAttribute('title', this.translateService.instant('pages.hashtag.feed.atomTitle', { hashtag: this.hashtag() }));
             nwwAtomLink.setAttribute( 'href', '/atom/hashtags/' + this.hashtag());
             this.document.head.appendChild(nwwAtomLink);
         }

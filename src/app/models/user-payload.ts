@@ -9,5 +9,6 @@ export class UserPayload {
     public roles: string[] = [];
     public scopes: string[] = [];
     public application = '';
+    public locale = '';
     public isMovedTo = false;
 }

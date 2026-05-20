@@ -5,22 +5,22 @@
         </div>
         <div class="flex-grow-1 comment-main">
             <mat-form-field appearance="outline" class="width-100">
-                <mat-label>Comment</mat-label>
+                <mat-label>{{ 'common.labels.comment' | translate }}</mat-label>
                 <textarea
                     matInput
                     [name]="'comment' + status().id"
                     cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="3" cdkAutosizeMaxRows="10"
-                    placeholder="Leave a comment"
+                    [placeholder]="'components.commentReply.attrs.leaveAComment' | translate"
                     #commentInput="ngModel"
                     [(ngModel)]="comment"
                     [disabled]="disabled()"
-                    aria-label="Leave a comment"
+                    [attr.aria-label]="'components.commentReply.attrs.leaveAComment' | translate"
                     [appMaxLength]="maxStatusLength().toString()">
                 </textarea>
 
                 @if (showCancel()) {
                     <mat-hint class="text-muted" align="start">
-                        <a href="javascript:void(0)" (click)="onCancel()">Cancel</a>
+                        <a href="javascript:void(0)" (click)="onCancel()">{{ 'common.actions.cancel' | translate }}</a>
                     </mat-hint>
                 }
 
@@ -40,7 +40,7 @@
             </mat-form-field>
 
             <div class="comment-submit-row">
-                <button type="submit" matButton="filled" [disabled]="isDuringSave() || !commentEntered()">Send</button>
+                <button type="submit" matButton="filled" [disabled]="isDuringSave() || !commentEntered()">{{ 'common.actions.send' | translate }}</button>
             </div>
         </div>
     </div>

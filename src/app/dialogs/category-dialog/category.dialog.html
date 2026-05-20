@@ -1,45 +1,45 @@
 <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
-    <div mat-dialog-title>Category</div>
+    <div mat-dialog-title>{{ 'common.labels.category' | translate }}</div>
     <div mat-dialog-content>
 
         <div class="margin-bottom-20 padding-top-5">
             <mat-form-field class="width-100" appearance="outline">
-                <mat-label>Category name</mat-label>
-                <input type="text" matInput name="categoryName" [(ngModel)]="name" #nameInput="ngModel" aria-label="Category name" required appMaxLength="100" />
+                <mat-label>{{ 'dialogs.category.texts.categoryName' | translate }}</mat-label>
+                <input type="text" matInput name="categoryName" [(ngModel)]="name" #nameInput="ngModel" [attr.aria-label]="'dialogs.category.attrs.categoryName' | translate" required appMaxLength="100" />
 
                 @if (nameInput.invalid && nameInput.errors?.required) {
-                    <mat-error>Enter category name.</mat-error>
+                    <mat-error>{{ 'dialogs.category.texts.enterCategoryName' | translate }}</mat-error>
                 }
 
                 @if (nameInput.invalid && nameInput.errors?.appMaxLength) {
-                    <mat-error>Name is too long.</mat-error>
+                    <mat-error>{{ 'dialogs.category.texts.nameIsTooLong' | translate }}</mat-error>
                 }
             </mat-form-field>
         </div>
 
         <div class="margin-bottom-20">
             <mat-form-field class="width-100" appearance="outline">
-                <mat-label>Priority</mat-label>
-                <input type="number" matInput name="priority" [(ngModel)]="priority" #priorityInput="ngModel" aria-label="Priority" required />
+                <mat-label>{{ 'common.labels.priority' | translate }}</mat-label>
+                <input type="number" matInput name="priority" [(ngModel)]="priority" #priorityInput="ngModel" [attr.aria-label]="'dialogs.category.attrs.priority' | translate" required />
 
                 @if (priorityInput.invalid && priorityInput.errors?.required) {
-                    <mat-error>Enter priority.</mat-error>
+                    <mat-error>{{ 'dialogs.category.texts.enterPriority' | translate }}</mat-error>
                 }
             </mat-form-field>
         </div>
 
         <mat-divider></mat-divider>
-        <h3>Hashtags</h3>
+        <h3>{{ 'common.labels.hashtags' | translate }}</h3>
 
         @for (hashtag of hashtags(); track $index; let i = $index) {
             <app-category-hashtag-item [hashtag]="hashtag" [index]="i" (delete)="onHashtagDelete($event)"></app-category-hashtag-item>
         }
 
-        <button type="button" matButton="outlined" (click)="onNewHashtag()">New hashtag</button>
+        <button type="button" matButton="outlined" (click)="onNewHashtag()">{{ 'dialogs.category.texts.newHashtag' | translate }}</button>
 
     </div>
     <div mat-dialog-actions>
-        <button type="button" matButton="text" type="button" (click)="onNoClick()">Cancel</button>
-        <button matButton="filled" type="submit" cdkFocusInitial>Save</button>
+        <button type="button" matButton="text" type="button" (click)="onNoClick()">{{ 'common.actions.cancel' | translate }}</button>
+        <button matButton="filled" type="submit" cdkFocusInitial>{{ 'common.actions.save' | translate }}</button>
     </div>
 </form>

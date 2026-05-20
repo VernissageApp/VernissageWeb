@@ -5,19 +5,19 @@
                 <div class="width-100">
                     <section class="flex-row flex-space-between flex-align-center margin-bottom-20" [ngClass]="{ 'flex-row': !isHandset(), 'flex-column': isHandset() }">
                         <h1>
-                            <div>Articles</div>
+                            <div>{{ 'pages.articles.title' | translate }}</div>
                             @if (!isHandset()) {
-                                <div class="fs-60 text-muted">List of articles created in the system.</div>
+                                <div class="fs-60 text-muted">{{ 'pages.articles.subtitle' | translate }}</div>
                             }
                         </h1>
-                        <button type="button" matButton="filled" aria-label="Create article" (click)="onCreateArticle()">Create article</button>
+                        <button type="button" matButton="filled" [attr.aria-label]="'pages.articles.createArticleAriaLabel' | translate" (click)="onCreateArticle()">{{ 'pages.articles.createArticle' | translate }}</button>
                     </section>
 
                     <table mat-table [dataSource]="articlesArray.data" class="mat-elevation-z1">
 
                         <!-- Title Column -->
                         <ng-container matColumnDef="title">
-                            <th mat-header-cell *matHeaderCellDef> Title </th>
+                            <th mat-header-cell *matHeaderCellDef>{{ 'common.labels.title' | translate }}</th>
                             <td mat-cell *matCellDef="let element">
                                 <div class="margin-top-10 margin-bottom-10">
                                     <a [routerLink]="['/articles', element.id]">{{ element.title }}</a>
@@ -30,23 +30,23 @@
 
                         <!-- Visibility Column -->
                         <ng-container matColumnDef="visibility">
-                            <th mat-header-cell *matHeaderCellDef> Visibility </th>
+                            <th mat-header-cell *matHeaderCellDef>{{ 'common.labels.visibility' | translate }}</th>
                             <td mat-cell *matCellDef="let element" class="visibility">
                                 @if (element.visibilities) {
                                     <span>
                                         @for (item of element.visibilities; track item) {
                                             @switch (item) {
                                                 @case (articleVisibility.SignInNews) {
-                                                    <div class="text-muted">News - sign in</div>
+                                                    <div class="text-muted">{{ 'common.articleVisibility.newsSignIn' | translate }}</div>
                                                 }
                                                 @case (articleVisibility.SignOutNews) {
-                                                    <div class="text-muted">News - sign out</div>
+                                                    <div class="text-muted">{{ 'common.articleVisibility.newsSignOut' | translate }}</div>
                                                 }
                                                 @case (articleVisibility.SignInHome) {
-                                                    <div class="text-muted">Home - sign in</div>
+                                                    <div class="text-muted">{{ 'common.articleVisibility.homeSignIn' | translate }}</div>
                                                 }
                                                 @case (articleVisibility.SignOutHome) {
-                                                    <div class="text-muted">Home - sign out</div>
+                                                    <div class="text-muted">{{ 'common.articleVisibility.homeSignOut' | translate }}</div>
                                                 }
                                             }
                                         }
@@ -57,11 +57,11 @@
 
                         <!-- Created Date Column -->
                         <ng-container matColumnDef="createdAt">
-                            <th mat-header-cell *matHeaderCellDef> Created date </th>
+                            <th mat-header-cell *matHeaderCellDef>{{ 'common.dates.createdDate' | translate }}</th>
                             <td mat-cell *matCellDef="let element" class="createdAt">
                                 @if (element.createdAt) {
                                     <span>
-                                        {{ element.createdAt | date: 'short' }}
+                                        {{ element.createdAt | localizedDate: 'short' }}
                                     </span>
                                 }
                             </td>
@@ -71,17 +71,17 @@
                         <ng-container matColumnDef="actions">
                             <th mat-header-cell *matHeaderCellDef></th>
                             <td mat-cell *matCellDef="let element" class="text-right">
-                                <button class="more-button" matIconButton [matMenuTriggerFor]="dropdownMenuOne2" aria-label="More options">
+                                <button class="more-button" matIconButton [matMenuTriggerFor]="dropdownMenuOne2" [attr.aria-label]="'common.labels.moreOptions' | translate">
                                     <mat-icon>more_vert</mat-icon>
                                 </button>
                                 <mat-menu #dropdownMenuOne2="matMenu" xPosition="before">
                                     <button (click)="onEdit(element)" mat-menu-item>
                                         <mat-icon class="outline-symbol">edit</mat-icon>
-                                        <span>Edit</span>
+                                        <span>{{ 'common.actions.edit' | translate }}</span>
                                     </button>
                                     <button (click)="onDelete(element)" mat-menu-item>
                                         <mat-icon class="outline-symbol">delete</mat-icon>
-                                        <span>Delete</span>
+                                        <span>{{ 'common.actions.delete' | translate }}</span>
                                     </button>
                                 </mat-menu>
                             </td>
@@ -96,7 +96,7 @@
                         [pageIndex]="pageIndex()"
                         [pageSize]="10"
                         [pageSizeOptions]="[10, 25, 100]"
-                        aria-label="Select page">
+                        [attr.aria-label]="'common.paginator.selectPage' | translate">
                     </mat-paginator>
                 </div>
             </div>

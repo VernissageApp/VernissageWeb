@@ -1,12 +1,12 @@
 <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
-    <div mat-dialog-title>Delete status?</div>
+    <div mat-dialog-title>{{ 'dialogs.deleteStatus.texts.deleteStatus' | translate }}</div>
     <div mat-dialog-content>
         <div class="margin-top-5">
             Do you want to delete status?
         </div>
     </div>
     <div mat-dialog-actions>
-        <button matButton="text" type="button" (click)="onNoClick()">Close</button>
-        <button matButton="filled" type="submit" cdkFocusInitial>Delete</button>
+        <button matButton="text" type="button" (click)="onNoClick()">{{ 'common.actions.close' | translate }}</button>
+        <button matButton="filled" type="submit" cdkFocusInitial>{{ 'common.actions.delete' | translate }}</button>
     </div>
 </form>

@@ -2,55 +2,55 @@
     <mat-toolbar>
         @if (deviceResolution() === resolution.handsetPortrait) {
             @if (showTrending() || showEditorsChoice() || showCategories()) {
-                <button matIconButton [matMenuTriggerFor]="discover" class="hamburger-menu" aria-label="More options">
+                <button matIconButton [matMenuTriggerFor]="discover" class="hamburger-menu" [attr.aria-label]="'common.labels.moreOptions' | translate">
                     <mat-icon>menu</mat-icon>
                 </button>
                 <mat-menu #discover="matMenu">
                     @if (showTrending()) {
-                        <button mat-menu-item [routerLink]="['/trending']" (click)="markClearReuseStrategy()" aria-label="Trending">
+                        <button mat-menu-item [routerLink]="['/trending']" (click)="markClearReuseStrategy()" [attr.aria-label]="'components.header.navigation.trending' | translate">
                             <mat-icon>timeline</mat-icon>
-                            <span>Trending</span>
+                            <span>{{ 'components.header.navigation.trending' | translate }}</span>
                         </button>
                     }
 
                     @if (showEditorsChoice()) {
-                        <button mat-menu-item [routerLink]="['/editors']" (click)="markClearReuseStrategy()" aria-label="Editor's choice">
+                        <button mat-menu-item [routerLink]="['/editors']" (click)="markClearReuseStrategy()" [attr.aria-label]="'components.header.navigation.editorsChoice' | translate">
                             <mat-icon>stars</mat-icon>
-                            <span>Editor's choice</span>
+                            <span>{{ 'components.header.navigation.editorsChoice' | translate }}</span>
                         </button>
                     }
 
                     @if (showCategories()) {
-                        <button mat-menu-item [routerLink]="['/categories']" (click)="markClearReuseStrategy()" aria-label="Categories">
+                        <button mat-menu-item [routerLink]="['/categories']" (click)="markClearReuseStrategy()" [attr.aria-label]="'components.header.navigation.categories' | translate">
                             <mat-icon>loyalty</mat-icon>
-                            <span>Categories</span>
+                            <span>{{ 'components.header.navigation.categories' | translate }}</span>
                         </button>
                     }
 
                     @if (showNews()) {
-                        <button mat-menu-item [routerLink]="['/news']" (click)="markClearReuseStrategy()" aria-label="News">
+                        <button mat-menu-item [routerLink]="['/news']" (click)="markClearReuseStrategy()" [attr.aria-label]="'components.header.navigation.news' | translate">
                             <mat-icon>news</mat-icon>
-                            <span>News</span>
+                            <span>{{ 'components.header.navigation.news' | translate }}</span>
                         </button>
                     }
 
                     @if (user() && isLoggedIn()) {
                         <mat-divider></mat-divider>
 
-                        <button mat-menu-item [routerLink]="['/upload']" aria-label="Upload">
+                        <button mat-menu-item [routerLink]="['/upload']" [attr.aria-label]="'common.actions.upload' | translate">
                             <mat-icon>arrow_upward</mat-icon>
-                            <span>Upload</span>
+                            <span>{{ 'common.actions.upload' | translate }}</span>
                         </button>
-                        <button mat-menu-item [routerLink]="['/search']" aria-label="Search">
+                        <button mat-menu-item [routerLink]="['/search']" [attr.aria-label]="'common.actions.search' | translate">
                             <mat-icon>search</mat-icon>
-                            <span>Search</span>
+                            <span>{{ 'common.actions.search' | translate }}</span>
                         </button>
                     }
                 </mat-menu>
             }
         }
 
-        <a class="logo link" [routerLink]="['/']" (click)="markClearReuseStrategy()" tabindex="0" aria-label="Application logo">
+        <a class="logo link" [routerLink]="['/']" (click)="markClearReuseStrategy()" tabindex="0" [attr.aria-label]="'components.header.applicationLogo' | translate">
             <div class="image"></div>
             <div class="beta"></div>
         </a>
@@ -58,25 +58,25 @@
         @if (deviceResolution() === resolution.handsetLandscape || deviceResolution() === resolution.tablet || deviceResolution() === resolution.browser) {
             @if (deviceResolution() === resolution.handsetLandscape) {
                 @if (showTrending()) {
-                    <button matIconButton [routerLink]="['/trending']" (click)="markClearReuseStrategy()" aria-label="Trending">
+                    <button matIconButton [routerLink]="['/trending']" (click)="markClearReuseStrategy()" [attr.aria-label]="'components.header.navigation.trending' | translate">
                         <mat-icon>trending_up</mat-icon>
                     </button>
                 }
                 
                 @if (showEditorsChoice()) {
-                    <button matIconButton [routerLink]="['/editors']"(click)="markClearReuseStrategy()" aria-label="Editor's choice">
+                    <button matIconButton [routerLink]="['/editors']"(click)="markClearReuseStrategy()" [attr.aria-label]="'components.header.navigation.editorsChoice' | translate">
                         <mat-icon>stars</mat-icon>
                     </button>
                 }
 
                 @if (showCategories()) {
-                    <button matIconButton [routerLink]="['/categories']" (click)="markClearReuseStrategy()" aria-label="Categories">
+                    <button matIconButton [routerLink]="['/categories']" (click)="markClearReuseStrategy()" [attr.aria-label]="'components.header.navigation.categories' | translate">
                         <mat-icon>loyalty</mat-icon>
                     </button>
                 }
 
                 @if (showNews()) {
-                    <button matIconButton [routerLink]="['/news']" (click)="markClearReuseStrategy()" aria-label="News">
+                    <button matIconButton [routerLink]="['/news']" (click)="markClearReuseStrategy()" [attr.aria-label]="'components.header.navigation.news' | translate">
                         <mat-icon>news</mat-icon>
                     </button>
                 }
@@ -84,26 +84,26 @@
 
             @if (deviceResolution() === resolution.tablet || deviceResolution() === resolution.browser) {
                 @if(showTrending()) {
-                    <button matButton="text" [routerLink]="['/trending']" (click)="markClearReuseStrategy()" aria-label="Trending" class="margin-right-5">
-                        <mat-icon>trending_up</mat-icon> Trending
+                    <button matButton="text" [routerLink]="['/trending']" (click)="markClearReuseStrategy()" [attr.aria-label]="'components.header.navigation.trending' | translate" class="margin-right-5">
+                        <mat-icon>trending_up</mat-icon> {{ 'components.header.navigation.trending' | translate }}
                     </button>
                 }
 
                 @if (showEditorsChoice()) {
-                    <button matButton="text" [routerLink]="['/editors']" (click)="markClearReuseStrategy()" aria-label="Editor's choice" class="margin-right-5">
-                        <mat-icon>stars</mat-icon> Editor's choice
+                    <button matButton="text" [routerLink]="['/editors']" (click)="markClearReuseStrategy()" [attr.aria-label]="'components.header.navigation.editorsChoice' | translate" class="margin-right-5">
+                        <mat-icon>stars</mat-icon> {{ 'components.header.navigation.editorsChoice' | translate }}
                     </button>
                 }
 
                 @if (showCategories()) {
-                    <button matButton="text" [routerLink]="['/categories']" (click)="markClearReuseStrategy()" aria-label="Categories" class="margin-right-5">
-                        <mat-icon>loyalty</mat-icon> Categories
+                    <button matButton="text" [routerLink]="['/categories']" (click)="markClearReuseStrategy()" [attr.aria-label]="'components.header.navigation.categories' | translate" class="margin-right-5">
+                        <mat-icon>loyalty</mat-icon> {{ 'components.header.navigation.categories' | translate }}
                     </button>
                 }
 
                 @if (showNews()) {
-                    <button matButton="text" [routerLink]="['/news']" (click)="markClearReuseStrategy()" aria-label="News" class="margin-right-5">
-                        <mat-icon>news</mat-icon> News
+                    <button matButton="text" [routerLink]="['/news']" (click)="markClearReuseStrategy()" [attr.aria-label]="'components.header.navigation.news' | translate" class="margin-right-5">
+                        <mat-icon>news</mat-icon> {{ 'components.header.navigation.news' | translate }}
                     </button>
                 }
             }
@@ -114,30 +114,61 @@
         @if (user() && isLoggedIn()) {
             @if (deviceResolution() === resolution.handsetLandscape || deviceResolution() === resolution.tablet || deviceResolution() === resolution.browser) {
                 @if (deviceResolution() === resolution.handsetLandscape) {
-                    <button matIconButton [routerLink]="['/upload']" aria-label="Upload">
+                    <button matIconButton [routerLink]="['/upload']" [attr.aria-label]="'common.actions.upload' | translate">
                         <mat-icon>arrow_upward</mat-icon>
                     </button>
                 }
                 @if (deviceResolution() === resolution.tablet || deviceResolution() === resolution.browser) {
                     <button matButton="outlined" class="margin-right-10" [routerLink]="['/upload']">
-                        <mat-icon>arrow_upward</mat-icon> Upload
+                        <mat-icon>arrow_upward</mat-icon> {{ 'common.actions.upload' | translate }}
                     </button>
                 }
             }
         }
 
         @if(!user() || !isLoggedIn()) {
-            @if (!isHandsetPortrait()) {
-                <button matIconButton class="margin-right-5" (click)="onThemeToggle()" aria-label="Switch theme">
-                    <mat-icon>{{ isLightTheme() ? 'dark_mode' : 'light_mode' }}</mat-icon>
+            <button matIconButton class="margin-right-5" [matMenuTriggerFor]="languageMenu" [attr.aria-label]="'common.labels.language' | translate">
+                <mat-icon>language</mat-icon>
+            </button>
+            <mat-menu #languageMenu="matMenu" class="language-menu-panel">
+                @for (language of languages; track language.language) {
+                    <button mat-menu-item (click)="onLanguageChange(language.language)" [attr.aria-label]="language.labelKey | translate">
+                        <span class="language-menu-item">
+                            <span class="language-menu-label">
+                                <img class="language-flag" [src]="'assets/flags/' + getLanguageFlag(language.language) + '.svg'" [alt]="language.labelKey | translate" />
+                                <span>{{ language.labelKey | translate }}</span>
+                            </span>
+                            <span class="language-menu-check">
+                                @if (currentLanguage() === language.language) {
+                                    <mat-icon>check</mat-icon>
+                                }
+                            </span>
+                        </span>
+                    </button>
+                }
+            </mat-menu>
+
+            <button matIconButton class="margin-right-5" (click)="onThemeToggle()" [attr.aria-label]="'components.header.switchTheme' | translate">
+                <mat-icon>{{ isLightTheme() ? 'dark_mode' : 'light_mode' }}</mat-icon>
+            </button>
+
+            @if (deviceResolution() === resolution.tablet || deviceResolution() === resolution.browser) {
+                @if (isRegistrationEnabled()) {
+                    <button matButton="outlined" [routerLink]="['/register']" class="margin-right-5">{{ 'common.actions.signUp' | translate }}</button>
+                }
+
+                <button matButton="text" [routerLink]="['/login']">{{ 'common.actions.login' | translate }}</button>
+            } @else {
+                @if (isRegistrationEnabled()) {
+                    <button matIconButton [routerLink]="['/register']" [attr.aria-label]="'common.actions.signUp' | translate">
+                        <mat-icon>person_add</mat-icon>
+                    </button>
+                }
+
+                <button matIconButton [routerLink]="['/login']" [attr.aria-label]="'common.actions.login' | translate">
+                    <mat-icon>login</mat-icon>
                 </button>
             }
-
-            @if (isRegistrationEnabled()) {
-                <button matButton="outlined" [routerLink]="['/register']" class="margin-right-5">Sign up</button>
-            }
-
-            <button matButton="text" [routerLink]="['/login']">Log in</button>
         }
 
         @if (user(); as userObject) {
@@ -145,12 +176,12 @@
                 @if (deviceResolution() !== resolution.handsetPortrait) {
                     <mat-divider class="menu-divider" [vertical]="true"></mat-divider>
 
-                    <button matIconButton [routerLink]="['/search']" aria-label="Search">
+                    <button matIconButton [routerLink]="['/search']" [attr.aria-label]="'common.actions.search' | translate">
                         <mat-icon>search</mat-icon>
                     </button>
                 }
 
-                <button matIconButton [routerLink]="['/notifications']" aria-label="Notifications">
+                <button matIconButton [routerLink]="['/notifications']" [attr.aria-label]="'components.header.navigation.notifications' | translate">
                     @if (notificationCounter(); as notificationCounterNumber) {
                         <mat-icon [matBadge]="notificationCounterNumber > 99 ? '99+' : `${notificationCounterNumber}`" aria-hidden="false">notifications_none</mat-icon>
                     } @else {
@@ -164,84 +195,84 @@
                         [matMenuTriggerFor]="menu"
                         [matMenuTriggerRestoreFocus]="false"
                         (menuClosed)="onUserMenuClosed()"
-                        aria-label="Menu with actions">
-                        <img class="avatar" [ngSrc]="avatarUrl()" width="600" height="600" alt="Avatar" priority />
+                        [attr.aria-label]="'components.header.menuWithActions' | translate">
+                        <img class="avatar" [ngSrc]="avatarUrl()" width="600" height="600" [alt]="'common.labels.avatar' | translate" priority />
                     </button>
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item [routerLink]="['/@' + userObject.userName]" (click)="markClearReuseStrategy()" aria-label="Signed in as">
+                        <button mat-menu-item [routerLink]="['/@' + userObject.userName]" (click)="markClearReuseStrategy()" [attr.aria-label]="'components.header.signedInAs' | translate">
                             <mat-icon>face</mat-icon>
                             <span>{{ fullName() }}</span>
                         </button>
                         <mat-divider></mat-divider>
-                        <button mat-menu-item [routerLink]="['/']" (click)="markClearReuseStrategy()" aria-label="Home">
+                        <button mat-menu-item [routerLink]="['/']" (click)="markClearReuseStrategy()" [attr.aria-label]="'components.header.navigation.home' | translate">
                             <mat-icon>home</mat-icon>
-                            <span>Home</span>
+                            <span>{{ 'components.header.navigation.home' | translate }}</span>
                         </button>
 
                         @if (isRegistrationByInvitationsOpened()) {
-                            <button mat-menu-item [routerLink]="['/invitations']" aria-label="Invitations">
+                            <button mat-menu-item [routerLink]="['/invitations']" [attr.aria-label]="'components.header.navigation.invitations' | translate">
                                 <mat-icon>person_add</mat-icon>
-                                <span>Invitations</span>
+                                <span>{{ 'components.header.navigation.invitations' | translate }}</span>
                             </button>
                         }
 
                         @if (showSharedBusinessCards()) {
-                            <button mat-menu-item [routerLink]="['/shared-cards']" (click)="markClearReuseStrategy()" aria-label="Shared business cards">
+                            <button mat-menu-item [routerLink]="['/shared-cards']" (click)="markClearReuseStrategy()" [attr.aria-label]="'components.header.navigation.sharedBusinessCards' | translate">
                                 <mat-icon>badge</mat-icon>
-                                <span>Shared business cards</span>
+                                <span>{{ 'components.header.navigation.sharedBusinessCards' | translate }}</span>
                             </button>
                         }
 
                         <mat-divider></mat-divider>
-                        <button mat-menu-item [routerLink]="['/account']" aria-label="Account">
+                        <button mat-menu-item [routerLink]="['/account']" [attr.aria-label]="'components.header.navigation.account' | translate">
                             <mat-icon>account_circle</mat-icon>
-                            <span>Account</span>
+                            <span>{{ 'components.header.navigation.account' | translate }}</span>
                         </button>
-                        <button mat-menu-item [routerLink]="['/preferences']" aria-label="Preferences">
+                        <button mat-menu-item [routerLink]="['/preferences']" [attr.aria-label]="'components.header.navigation.preferences' | translate">
                             <mat-icon>build</mat-icon>
-                            <span>Preferences</span>
+                            <span>{{ 'components.header.navigation.preferences' | translate }}</span>
                         </button>
-                        <button mat-menu-item [routerLink]="['/support']" aria-label="Support">
+                        <button mat-menu-item [routerLink]="['/support']" [attr.aria-label]="'components.header.navigation.support' | translate">
                             <mat-icon>info</mat-icon>
-                            <span>Support</span>
+                            <span>{{ 'components.header.navigation.support' | translate }}</span>
                         </button>
 
                         @if (isAdministrator() || isModerator()) {
                             <mat-divider></mat-divider>
 
-                            <button mat-menu-item [routerLink]="['/users']" aria-label="Users">
+                            <button mat-menu-item [routerLink]="['/users']" [attr.aria-label]="'components.header.navigation.users' | translate">
                                 <mat-icon>people</mat-icon>
-                                <span>Users</span>
+                                <span>{{ 'components.header.navigation.users' | translate }}</span>
                             </button>
-                            <button mat-menu-item [routerLink]="['/articles']" aria-label="Articles">
+                            <button mat-menu-item [routerLink]="['/articles']" [attr.aria-label]="'components.header.navigation.articles' | translate">
                                 <mat-icon>article</mat-icon>
-                                <span>Articles</span>
+                                <span>{{ 'components.header.navigation.articles' | translate }}</span>
                             </button>
-                            <button mat-menu-item [routerLink]="['/reports']" aria-label="Reports">
+                            <button mat-menu-item [routerLink]="['/reports']" [attr.aria-label]="'components.header.navigation.reports' | translate">
                                 <mat-icon>feedback</mat-icon>
-                                <span>Reports</span>
+                                <span>{{ 'components.header.navigation.reports' | translate }}</span>
                             </button>
-                            <button mat-menu-item [routerLink]="['/activity-pub-events']" aria-label="Events">
+                            <button mat-menu-item [routerLink]="['/activity-pub-events']" [attr.aria-label]="'components.header.navigation.events' | translate">
                                 <mat-icon>call_split</mat-icon>
-                                <span>Events</span>
+                                <span>{{ 'components.header.navigation.events' | translate }}</span>
                             </button>
-                            <button mat-menu-item [routerLink]="['/error-items']" aria-label="Errors">
+                            <button mat-menu-item [routerLink]="['/error-items']" [attr.aria-label]="'components.header.navigation.errors' | translate">
                                 <mat-icon>release_alert</mat-icon>
-                                <span>Errors</span>
+                                <span>{{ 'components.header.navigation.errors' | translate }}</span>
                             </button>
                         }
 
                         @if (isAdministrator()) {
-                            <button mat-menu-item [routerLink]="['/settings']" aria-label="Settings">
+                            <button mat-menu-item [routerLink]="['/settings']" [attr.aria-label]="'common.actions.settings' | translate">
                                 <mat-icon>settings</mat-icon>
-                                <span>Settings</span>
+                                <span>{{ 'common.actions.settings' | translate }}</span>
                             </button>
                         }
 
                         <mat-divider></mat-divider>
-                        <button mat-menu-item (click)="signOut()" aria-label="Sign out">
+                        <button mat-menu-item (click)="signOut()" [attr.aria-label]="'common.actions.signOut' | translate">
                             <mat-icon>exit_to_app</mat-icon>
-                            <span>Sign out</span>
+                            <span>{{ 'common.actions.signOut' | translate }}</span>
                         </button>
 
                     </mat-menu>

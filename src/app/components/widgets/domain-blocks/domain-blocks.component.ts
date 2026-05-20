@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { ResponsiveComponent } from 'src/app/common/responsive';
@@ -30,6 +31,7 @@ export class DomainBlocksComponent extends ResponsiveComponent implements OnInit
     private instanceBlockedDomainsService = inject(InstanceBlockedDomainsService);
     private messageService = inject(MessagesService);
     private dialog = inject(MatDialog);
+    private translateService = inject(TranslateService);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
@@ -49,14 +51,14 @@ export class DomainBlocksComponent extends ResponsiveComponent implements OnInit
     protected async onDelete(instanceBlockedDomain: InstanceBlockedDomain): Promise<void> {
         const dialogRef = this.dialog.open(ConfirmationDialog, {
             width: '500px',
-            data: 'Do you want to delete instance blocked domain?'
+            data: this.translateService.instant('components.domainBlocks.messages.doYouWantToDeleteInstanceBlockedDomain')
         });
 
         dialogRef.afterClosed().subscribe(async (result) => {
             if (result?.confirmed) {
                 try {
                     await this.instanceBlockedDomainsService.delete(instanceBlockedDomain.id);
-                    this.messageService.showSuccess('Domain has been deleted.');
+                    this.messageService.showSuccess(this.translateService.instant('components.domainBlocks.messages.domainHasBeenDeleted'));
 
                     const domainsInternal = await this.instanceBlockedDomainsService.get(this.pageIndex() + 1, this.pageSize);
                     this.domains.set(domainsInternal);

@@ -2,13 +2,11 @@
     <div animate.enter="fade-in" [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
         <section>
             <h1>
-                <div>Business card</div>
+                <div>{{ 'pages.editBusinessCard.title' | translate }}</div>
                 @if (!isHandset()) {
                     <div class="flex-row flex-responsive flex-stretch">
                         <div class="fs-60 text-muted line-height-normal">
-                            You can create your business card here and share it securely with individuals who do not have an account.
-                            Your card is only visible to those who have the unique, hard-to-guess link you generate.
-                            Each share creates a new link that you can remove at any time.
+                            {{ 'pages.editBusinessCard.subtitle' | translate }}
                         </div>
                         <div></div>
                     </div>
@@ -25,29 +23,29 @@
                             <mat-card-content>
                                 <div class="flex-row flex-end gap-8 margin-bottom-20">
                                     <div class="input-color-container">
-                                        <input type="color" class="input-color" name="color1" [(ngModel)]="color1" aria-label="Top color">
+                                        <input type="color" class="input-color" name="color1" [(ngModel)]="color1" [attr.aria-label]="'pages.editBusinessCard.colors.topAriaLabel' | translate">
                                     </div>
                                     <div class="input-color-container">
-                                        <input type="color" class="input-color" name="color2" [(ngModel)]="color2" aria-label="Bottom color">
+                                        <input type="color" class="input-color" name="color2" [(ngModel)]="color2" [attr.aria-label]="'pages.editBusinessCard.colors.bottomAriaLabel' | translate">
                                     </div>
                                     <div class="input-color-container">
-                                        <input    type="color"class="input-color" name="color3" [(ngModel)]="color3" aria-label="Text color">
+                                        <input type="color" class="input-color" name="color3" [(ngModel)]="color3" [attr.aria-label]="'pages.editBusinessCard.colors.textAriaLabel' | translate">
                                     </div>
                                 </div>
 
                                 <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-10">
                                     <mat-form-field appearance="outline">
-                                        <mat-label>Title</mat-label>
+                                        <mat-label>{{ 'common.labels.title' | translate }}</mat-label>
                                         <input type="text" matInput name="title" #titleInput="ngModel" [(ngModel)]="title"
-                                            placeholder="Title" aria-label="Title" appMaxLength="200" required />
+                                            [attr.placeholder]="'common.labels.title' | translate" [attr.aria-label]="'common.labels.title' | translate" appMaxLength="200" required />
 
                                         @if (titleInput.invalid && titleInput.errors?.required) {
-                                            <mat-error>Enter title.</mat-error>
+                                            <mat-error>{{ 'pages.editBusinessCard.form.title.errors.required' | translate }}</mat-error>
                                         }
 
                                         @if (titleInput.invalid && titleInput.errors?.appMaxLength) {
                                             <mat-error>
-                                                Too long title.
+                                                {{ 'pages.editBusinessCard.form.title.errors.tooLong' | translate }}
                                             </mat-error>
                                         }
                                     </mat-form-field>
@@ -55,13 +53,13 @@
 
                                 <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-10">
                                     <mat-form-field appearance="outline">
-                                        <mat-label>Subtitle</mat-label>
+                                        <mat-label>{{ 'common.labels.subtitle' | translate }}</mat-label>
                                         <input type="text" matInput name="subtitle" #subtitleInput="ngModel" [(ngModel)]="subtitle"
-                                            placeholder="Subtitle" aria-label="Title" appMaxLength="200" />
+                                            [attr.placeholder]="'common.labels.subtitle' | translate" [attr.aria-label]="'common.labels.subtitle' | translate" appMaxLength="200" />
 
                                         @if (subtitleInput.invalid && subtitleInput.errors?.appMaxLength) {
                                             <mat-error>
-                                                Too long subtitle.
+                                                {{ 'pages.editBusinessCard.form.subtitle.errors.tooLong' | translate }}
                                             </mat-error>
                                         }
                                     </mat-form-field>
@@ -69,26 +67,26 @@
 
                                 <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-10">
                                     <mat-form-field appearance="outline">
-                                        <mat-label>Note</mat-label>
+                                        <mat-label>{{ 'common.labels.note' | translate }}</mat-label>
                                         <textarea matInput name="body" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="8"
-                                            cdkAutosizeMaxRows="100" placeholder="Note" #bodyInput="ngModel" [(ngModel)]="body"
-                                        aria-label="Note" appMaxLength="50000"></textarea>
+                                            cdkAutosizeMaxRows="100" [attr.placeholder]="'common.labels.note' | translate" #bodyInput="ngModel" [(ngModel)]="body"
+                                        [attr.aria-label]="'common.labels.note' | translate" appMaxLength="50000"></textarea>
 
                                         @if (bodyInput.invalid && bodyInput.errors?.appMaxLength) {
-                                            <mat-error>Too long article body.</mat-error>
+                                            <mat-error>{{ 'pages.editBusinessCard.form.note.errors.tooLong' | translate }}</mat-error>
                                         }
                                     </mat-form-field>
                                 </div>
 
                                 <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-10">
                                     <mat-form-field appearance="outline">
-                                        <mat-label>Website</mat-label>
+                                        <mat-label>{{ 'common.labels.website' | translate }}</mat-label>
                                         <input type="text" matInput name="website" #websiteInput="ngModel" [(ngModel)]="website"
-                                            placeholder="Website" aria-label="Website" appMaxLength="200" />
+                                            [attr.placeholder]="'common.labels.website' | translate" [attr.aria-label]="'common.labels.website' | translate" appMaxLength="200" />
 
                                         @if (websiteInput.invalid && websiteInput.errors?.appMaxLength) {
                                             <mat-error>
-                                                Too long website.
+                                                {{ 'pages.editBusinessCard.form.website.errors.tooLong' | translate }}
                                             </mat-error>
                                         }
                                     </mat-form-field>
@@ -96,13 +94,13 @@
 
                                 <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-10">
                                     <mat-form-field appearance="outline">
-                                        <mat-label>Telephone</mat-label>
+                                        <mat-label>{{ 'common.labels.telephone' | translate }}</mat-label>
                                         <input type="text" matInput name="telephone" #telephoneInput="ngModel" [(ngModel)]="telephone"
-                                            placeholder="Telephone" aria-label="Telephone" appMaxLength="200" />
+                                            [attr.placeholder]="'common.labels.telephone' | translate" [attr.aria-label]="'common.labels.telephone' | translate" appMaxLength="200" />
 
                                         @if (telephoneInput.invalid && telephoneInput.errors?.appMaxLength) {
                                             <mat-error>
-                                                Too long telephone.
+                                                {{ 'pages.editBusinessCard.form.telephone.errors.tooLong' | translate }}
                                             </mat-error>
                                         }
                                     </mat-form-field>
@@ -110,13 +108,13 @@
 
                                 <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-10">
                                     <mat-form-field appearance="outline">
-                                        <mat-label>Email</mat-label>
+                                        <mat-label>{{ 'common.labels.email' | translate }}</mat-label>
                                         <input type="text" matInput name="email" #emailInput="ngModel" [(ngModel)]="email"
-                                            placeholder="Title" aria-label="Title" appMaxLength="200" />
+                                            [attr.placeholder]="'common.labels.email' | translate" [attr.aria-label]="'common.labels.email' | translate" appMaxLength="200" />
 
                                         @if (emailInput.invalid && emailInput.errors?.appMaxLength) {
                                             <mat-error>
-                                                Too long email.
+                                                {{ 'pages.editBusinessCard.form.email.errors.tooLong' | translate }}
                                             </mat-error>
                                         }
                                     </mat-form-field>
@@ -128,9 +126,9 @@
 
                                 <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20 padding-top-20">
                                     <div class="flex-row flex-stretch flex-space-between">
-                                        <h3>Fields</h3>
+                                        <h3>{{ 'common.labels.fields' | translate }}</h3>
                                         <div class="text-right">
-                                            <button matButton="outlined" type="button" (click)="onAddField()">Add field</button>
+                                            <button matButton="outlined" type="button" (click)="onAddField()">{{ 'common.actions.addField' | translate }}</button>
                                         </div>
                                     </div>
                                 </div>
@@ -139,29 +137,29 @@
                                     <div>
                                         <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
                                             <mat-form-field appearance="outline">
-                                                <mat-label>Key</mat-label>
-                                                <input type="text" matInput [name]="'key-' + i" #key="ngModel" [(ngModel)]="field.key" (blur)="updateFields()" placeholder="Key" aria-label="Key" appMaxLength="500" />
+                                                <mat-label>{{ 'common.labels.key' | translate }}</mat-label>
+                                                <input type="text" matInput [name]="'key-' + i" #key="ngModel" [(ngModel)]="field.key" (blur)="updateFields()" [attr.placeholder]="'common.labels.key' | translate" [attr.aria-label]="'common.labels.key' | translate" appMaxLength="500" />
 
                                                 @if (key.invalid && key.errors?.appMaxLength) {
-                                                    <mat-error>Too long key.</mat-error>
+                                                    <mat-error>{{ 'pages.editBusinessCard.form.fields.key.errors.tooLong' | translate }}</mat-error>
                                                 }
                                             </mat-form-field>
                                         </div>
 
                                         <div class="flex-row flex-responsive flex-stretch gap-16">
                                             <mat-form-field appearance="outline">
-                                                <mat-label>Value</mat-label>
-                                                <input type="text" matInput [name]="'value-' + i" #value="ngModel" [(ngModel)]="field.value" (blur)="updateFields()" placeholder="Value" aria-label="Value" appMaxLength="500" />
+                                                <mat-label>{{ 'common.labels.value' | translate }}</mat-label>
+                                                <input type="text" matInput [name]="'value-' + i" #value="ngModel" [(ngModel)]="field.value" (blur)="updateFields()" [attr.placeholder]="'common.labels.value' | translate" [attr.aria-label]="'common.labels.value' | translate" appMaxLength="500" />
 
                                                 @if (value.invalid && value.errors?.appMaxLength) {
-                                                    <mat-error>Too long value.</mat-error>
+                                                    <mat-error>{{ 'pages.editBusinessCard.form.fields.value.errors.tooLong' | translate }}</mat-error>
                                                 }
                                             </mat-form-field>
                                         </div>
 
                                         <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
                                             <div class="text-right">
-                                                <button matButton="outlined" type="button" (click)="onDeleteField(field)">Delete</button>
+                                                <button matButton="outlined" type="button" (click)="onDeleteField(field)">{{ 'common.actions.delete' | translate }}</button>
                                             </div>
                                         </div>
                                     </div>
@@ -169,8 +167,8 @@
 
                             </mat-card-content>
                             <mat-card-actions>
-                                <button matButton="text" type="button" (click)="onCancelClick()">Cancel</button>
-                                <button matButton="filled" type="submit" class="margin-left-10" cdkFocusInitial>Save</button>
+                                <button matButton="text" type="button" (click)="onCancelClick()">{{ 'common.actions.cancel' | translate }}</button>
+                                <button matButton="filled" type="submit" class="margin-left-10" cdkFocusInitial>{{ 'common.actions.save' | translate }}</button>
                             </mat-card-actions>
                         </mat-card>
                     </form>

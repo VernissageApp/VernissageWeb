@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { ResponsiveComponent } from 'src/app/common/responsive';
@@ -31,6 +32,7 @@ export class HomeCardsComponent extends ResponsiveComponent implements OnInit {
     private homeCardsService = inject(HomeCardsService);
     private messageService = inject(MessagesService);
     private dialog = inject(MatDialog);
+    private translateService = inject(TranslateService);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
@@ -50,14 +52,14 @@ export class HomeCardsComponent extends ResponsiveComponent implements OnInit {
     protected async onDelete(license: License): Promise<void> {
         const dialogRef = this.dialog.open(ConfirmationDialog, {
             width: '500px',
-            data: 'Do you want to delete home card?'
+            data: this.translateService.instant('components.homeCards.messages.doYouWantToDeleteHomeCard')
         });
 
         dialogRef.afterClosed().subscribe(async (result) => {
             if (result?.confirmed) {
                 try {
                     await this.homeCardsService.delete(license.id ??  '');
-                    this.messageService.showSuccess('Home card has been deleted.');
+                    this.messageService.showSuccess(this.translateService.instant('components.homeCards.messages.homeCardHasBeenDeleted'));
 
                     const homeCardsInternal = await this.homeCardsService.get(this.pageIndex() + 1, this.pageSize);
                     this.homeCards.set(homeCardsInternal);

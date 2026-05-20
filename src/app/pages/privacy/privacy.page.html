@@ -5,8 +5,8 @@
             <div class="privacy-container width-100">
 
                 <div class="flex-row flex-align-center flex-space-between margin-bottom-10">
-                    <h1>Privacy policy</h1>
-                    <div>Last update: {{ privacyPolicyUpdatedAt() }}</div>
+                    <h1>{{ 'pages.privacy.title' | translate }}</h1>
+                    <div>{{ 'common.labels.lastUpdate' | translate }}: {{ privacyPolicyUpdatedAt() }}</div>
                 </div>
 
                 <div [innerHTML]="privacyPolicyContent()"></div>

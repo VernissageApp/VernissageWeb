@@ -1,10 +1,10 @@
 @if (isReady()) {
     <div animate.enter="fade-in">
         <section [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
-            <h1>Favourites</h1>
+            <h1>{{ 'pages.favourites.title' | translate }}</h1>
 
             @if (user(); as userInternal) {
-                <a [routerLink]="['/@' + userInternal.userName]" aria-label="Account link">{{ fullName() }}</a>
+                <a [routerLink]="['/@' + userInternal.userName]" [attr.aria-label]="'common.labels.accountLink' | translate">{{ fullName() }}</a>
             }
 
         </section>

@@ -1,40 +1,40 @@
 <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
-    <div mat-dialog-title>Share your personal info</div>
+    <div mat-dialog-title>{{ 'dialogs.updateSharedBusinessCard.texts.shareYourPersonalInfo' | translate }}</div>
     <div mat-dialog-content>
 
         <div class="flex-col gap-0 margin-top-5">
             <mat-form-field appearance="outline" class="width-100 padding-top-10">
-                <mat-label>Your name</mat-label>
+                <mat-label>{{ 'dialogs.updateSharedBusinessCard.texts.yourName' | translate }}</mat-label>
                 <input type="text" matInput name="name" #nameInput="ngModel" [(ngModel)]="name"
-                    placeholder="Your name" aria-label="Your name" appMaxLength="100" autocomplete="off" required />
+                    [placeholder]="'dialogs.updateSharedBusinessCard.attrs.yourName' | translate" [attr.aria-label]="'dialogs.updateSharedBusinessCard.attrs.yourName' | translate" appMaxLength="100" autocomplete="off" required />
 
                 @if (nameInput.invalid && nameInput.errors?.required) {
-                    <mat-error>Enter your name.</mat-error>
+                    <mat-error>{{ 'dialogs.updateSharedBusinessCard.texts.enterYourName' | translate }}</mat-error>
                 }
 
                 @if (nameInput.invalid && nameInput.errors?.appMaxLength) {
-                    <mat-error>Too long name.</mat-error>
+                    <mat-error>{{ 'dialogs.updateSharedBusinessCard.texts.tooLongName' | translate }}</mat-error>
                 }
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="width-100 padding-top-10">
-                <mat-label>Your email</mat-label>
+                <mat-label>{{ 'dialogs.updateSharedBusinessCard.texts.yourEmail' | translate }}</mat-label>
                 <input type="email" matInput name="email" #emailInput="ngModel" [(ngModel)]="email"
                     pattern="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
-                    placeholder="Your email" aria-label="Your email" appMaxLength="500" autocomplete="off" />
+                    [placeholder]="'dialogs.updateSharedBusinessCard.attrs.yourEmail' | translate" [attr.aria-label]="'dialogs.updateSharedBusinessCard.attrs.yourEmail' | translate" appMaxLength="500" autocomplete="off" />
 
                 @if (emailInput.invalid && emailInput.errors?.pattern) {
-                    <mat-error>Verify that you've entered proper email.</mat-error>
+                    <mat-error>{{ 'dialogs.updateSharedBusinessCard.texts.verifyThatYouVeEnteredProperEmail' | translate }}</mat-error>
                 }
 
                 @if (emailInput.invalid && emailInput.errors?.appMaxLength) {
-                    <mat-error>Too long email.</mat-error>
+                    <mat-error>{{ 'dialogs.updateSharedBusinessCard.texts.tooLongEmail' | translate }}</mat-error>
                 }
             </mat-form-field>
         </div>
     </div>
     <div mat-dialog-actions>
-        <button matButton="text" type="button" (click)="onNoClick()">Cancel</button>
-        <button matButton="filled" type="submit" cdkFocusInitial>Save</button>
+        <button matButton="text" type="button" (click)="onNoClick()">{{ 'common.actions.cancel' | translate }}</button>
+        <button matButton="filled" type="submit" cdkFocusInitial>{{ 'common.actions.save' | translate }}</button>
     </div>
 </form>

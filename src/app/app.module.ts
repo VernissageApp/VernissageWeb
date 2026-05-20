@@ -9,7 +9,7 @@ import { appInitialization } from './app-initialization';
 import { HammerModule } from "@angular/platform-browser";
 import { provideAnimations } from '@angular/platform-browser/animations';
 
-import { RouteReuseStrategy } from '@angular/router';
+import { RouteReuseStrategy, TitleStrategy } from '@angular/router';
 import { AppComponent } from './app.component';
 import { PersistenceBrowserService, PersistenceServerService, PersistenceService } from './services/persistance/persistance.service';
 import { AuthorizationService } from './services/authorization/authorization.service';
@@ -26,6 +26,10 @@ import { ErrorItemsService } from './services/http/error-items.service';
 import { RandomGeneratorService } from './services/common/random-generator.service';
 import { CustomScriptsService } from './services/common/custom-scripts.service';
 import { CustomStylesService } from './services/common/custom-styles.service';
+import { TranslateModule } from '@ngx-translate/core';
+import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
+import { LanguageService } from './services/common/language.service';
+import { LocalizedTitleStrategy } from './common/localized-title-strategy';
 
 /** Custom options the configure the tooltip's default show/hide delays. */
 export const customTooltipDefaults: MatTooltipDefaultOptions = {
@@ -44,6 +48,14 @@ export const customTooltipDefaults: MatTooltipDefaultOptions = {
         BrowserModule,
         HammerModule,
         PagesModule,
+        TranslateModule.forRoot({
+            fallbackLang: 'en-us',
+            loader: provideTranslateHttpLoader({
+                prefix: './assets/i18n/',
+                suffix: '.json',
+                useHttpBackend: true,
+            })
+        }),
         ServiceWorkerModule.register('service-worker.js', {
             enabled: !isDevMode(),
             // Register the ServiceWorker as soon as the application is stable
@@ -53,10 +65,11 @@ export const customTooltipDefaults: MatTooltipDefaultOptions = {
     ],
     providers: [
         { provide: RouteReuseStrategy, useClass: CustomReuseStrategy },
+        { provide: TitleStrategy, useClass: LocalizedTitleStrategy },
         { provide: MAT_CHECKBOX_DEFAULT_OPTIONS, useValue: { clickAction: 'check' } as MatCheckboxDefaultOptions },
         { provide: MAT_TOOLTIP_DEFAULT_OPTIONS, useValue: customTooltipDefaults },
         provideAppInitializer(() => {
-            const initializerFn = (appInitialization)(inject(AuthorizationService), inject(InstanceService), inject(SettingsService), inject(CustomScriptsService), inject(CustomStylesService));
+            const initializerFn = (appInitialization)(inject(AuthorizationService), inject(InstanceService), inject(SettingsService), inject(CustomScriptsService), inject(CustomStylesService), inject(LanguageService));
             return initializerFn();
         }),
         { provide: HTTP_INTERCEPTORS, useClass: APIInterceptor, multi: true },

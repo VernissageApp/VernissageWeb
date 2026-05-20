@@ -6,6 +6,7 @@ import { ResetPassword } from 'src/app/models/reset-password';
 import { ResetPasswordMode } from 'src/app/models/reset-password-mode';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { ForgotPasswordService } from 'src/app/services/http/forgot-password.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-reset-password',
@@ -30,6 +31,7 @@ export class ResetPasswordPage implements OnInit, OnDestroy {
     private route = inject(ActivatedRoute);
     private forgotPasswordService = inject(ForgotPasswordService);
     private messagesService = inject(MessagesService);
+    private translateService = inject(TranslateService);
 
     ngOnInit(): void {
         this.queryParamsSubscription = this.route.queryParams.subscribe(params => {
@@ -58,7 +60,7 @@ export class ResetPasswordPage implements OnInit, OnDestroy {
             this.resetPasswordMode.set(ResetPasswordMode.Success);
         } catch {
             this.resetPasswordMode.set(ResetPasswordMode.ResetPassword);
-            this.messagesService.showError('Unexpected error during resetting your password. Please try again.');
+            this.messagesService.showError(this.translateService.instant('pages.resetPassword.errors.unexpectedResetError'));
         }
     }
 

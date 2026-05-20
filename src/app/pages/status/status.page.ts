@@ -39,6 +39,7 @@ import { UserPayload } from 'src/app/models/user-payload';
 import { ConfirmationDialog } from 'src/app/dialogs/confirmation-dialog/confirmation.dialog';
 import { CommentReplyComponent } from 'src/app/components/widgets/comment-reply/comment-reply.component';
 import { StatusHashtagsService } from 'src/app/services/common/status-hashtags.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-status',
@@ -132,6 +133,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     private clipboard = inject(Clipboard);
     private focusTrackerService = inject(FocusTrackerService);
     private statusHashtagsService = inject(StatusHashtagsService);
+    private translateService = inject(TranslateService);
 
     constructor() {
         super();
@@ -346,7 +348,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
             if (result) {
                 try {
                     await this.reportsService.create(result);
-                    this.messageService.showSuccess('Report has been saved.');
+                    this.messageService.showSuccess(this.translateService.instant('pages.status.messages.reportSaved'));
                 } catch (error) {
                     console.error(error);
                     this.messageService.showServerError(error);
@@ -367,7 +369,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
                 try {
                     await this.statusesService.delete(internalStatus.id);
 
-                    this.messageService.showSuccess('Status has been deleted.');
+                    this.messageService.showSuccess(this.translateService.instant('pages.status.messages.statusDeleted'));
                     await this.router.navigate(['/']);
                 } catch (error) {
                     console.error(error);
@@ -394,7 +396,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
             if (result && comment?.id) {
                 try {
                     await this.statusesService.delete(comment?.id);
-                    this.messageService.showSuccess('Status has been deleted.');
+                    this.messageService.showSuccess(this.translateService.instant('pages.status.messages.statusDeleted'));
 
                     const internalMainStatus = this.mainStatus();
                     if (internalMainStatus) {
@@ -417,7 +419,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
 
         this.dialog.open(UsersDialog, {
             width: '500px',
-            data: new UsersDialogContext(internalMainStatus.id, UsersListType.reblogged, 'Boosted by')
+            data: new UsersDialogContext(internalMainStatus.id, UsersListType.reblogged, this.translateService.instant('pages.status.menu.boostedBy'))
         });
     }
 
@@ -429,7 +431,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
 
         this.dialog.open(UsersDialog, {
             width: '500px',
-            data: new UsersDialogContext(internalMainStatus.id, UsersListType.favourited, 'Favourited by')
+            data: new UsersDialogContext(internalMainStatus.id, UsersListType.favourited, this.translateService.instant('pages.status.menu.favouritedBy'))
         });
     }
 
@@ -504,7 +506,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
             if (internalMainStatus) {
                 const downloadedMainStatus = await this.statusesService.reblog(internalMainStatus.id);
                 this.mainStatus.set(downloadedMainStatus);
-                this.messageService.showSuccess('Status boosted.');
+                this.messageService.showSuccess(this.translateService.instant('pages.status.messages.boosted'));
             }
         } catch (error) {
             console.error(error);
@@ -521,7 +523,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
             if (internalMainStatus) {
                 const downloadedMainStatus = await this.statusesService.unreblog(internalMainStatus.id);
                 this.mainStatus.set(downloadedMainStatus);
-                this.messageService.showSuccess('Status unboosted.');
+                this.messageService.showSuccess(this.translateService.instant('pages.status.messages.unboosted'));
             }
         } catch (error) {
             console.error(error);
@@ -554,7 +556,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
             if (internalMainStatus) {
                 const downloadedMainStatus = await this.statusesService.favourite(internalMainStatus.id);
                 this.mainStatus.set(downloadedMainStatus);
-                this.messageService.showSuccess('Status favourited.');
+                this.messageService.showSuccess(this.translateService.instant('pages.status.messages.favourited'));
             }
         } catch (error) {
             console.error(error);
@@ -571,7 +573,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
             if (internalMainStatus) {
                 const downloadMainStatus = await this.statusesService.unfavourite(internalMainStatus.id);
                 this.mainStatus.set(downloadMainStatus);
-                this.messageService.showSuccess('Your like has been undone.');
+                this.messageService.showSuccess(this.translateService.instant('pages.status.messages.likeUndone'));
             }
         } catch (error) {
             console.error(error);
@@ -604,7 +606,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
             if (internalMainStatus) {
                 const downloadedMainStatus = await this.statusesService.bookmark(internalMainStatus.id);
                 this.mainStatus.set(downloadedMainStatus);
-                this.messageService.showSuccess('Status bookmarked.');
+                this.messageService.showSuccess(this.translateService.instant('pages.status.messages.bookmarked'));
             }
         } catch (error) {
             console.error(error);
@@ -621,7 +623,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
             if (internalMainStatus) {
                 const downloadedMainStatus = await this.statusesService.unbookmark(internalMainStatus.id);
                 this.mainStatus.set(downloadedMainStatus);
-                this.messageService.showSuccess('Status unbookmarked.');
+                this.messageService.showSuccess(this.translateService.instant('pages.status.messages.unbookmarked'));
             }
         } catch (error) {
             console.error(error);
@@ -638,7 +640,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
             if (internalMainStatus) {
                 const downloadedMainStatus = await this.statusesService.feature(internalMainStatus.id);
                 this.mainStatus.set(downloadedMainStatus);
-                this.messageService.showSuccess('Status featured.');
+                this.messageService.showSuccess(this.translateService.instant('pages.status.messages.featured'));
             }
         } catch (error) {
             console.error(error);
@@ -655,7 +657,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
             if (internalMainStatus) {
                 const downloadMainStatus = await this.statusesService.unfeature(internalMainStatus.id);
                 this.mainStatus.set(downloadMainStatus);
-                this.messageService.showSuccess('Status unfeatured.');
+                this.messageService.showSuccess(this.translateService.instant('pages.status.messages.unfeatured'));
             }
         } catch (error) {
             console.error(error);
@@ -672,7 +674,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
             if (internalMainStatus) {
                 const downloadedMainStatus = await this.statusesService.pin(internalMainStatus.id);
                 this.mainStatus.set(downloadedMainStatus);
-                this.messageService.showSuccess('Status pinned.');
+                this.messageService.showSuccess(this.translateService.instant('pages.status.messages.pinned'));
             }
         } catch (error) {
             console.error(error);
@@ -689,7 +691,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
             if (internalMainStatus) {
                 const downloadedMainStatus = await this.statusesService.unpin(internalMainStatus.id);
                 this.mainStatus.set(downloadedMainStatus);
-                this.messageService.showSuccess('Status unpinned.');
+                this.messageService.showSuccess(this.translateService.instant('pages.status.messages.unpinned'));
             }
         } catch (error) {
             console.error(error);
@@ -704,7 +706,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
             await this.statusesService.favourite(status.id);
             status.favourited = true;
 
-            this.messageService.showSuccess('Comment favourited.');
+            this.messageService.showSuccess(this.translateService.instant('pages.status.messages.commentFavourited'));
         } catch (error) {
             console.error(error);
             this.messageService.showServerError(error);
@@ -716,7 +718,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
             await this.statusesService.unfavourite(status.id);
             status.favourited = false;
 
-            this.messageService.showSuccess('Comment favourited.');
+            this.messageService.showSuccess(this.translateService.instant('pages.status.messages.commentFavourited'));
         } catch (error) {
             console.error(error);
             this.messageService.showServerError(error);
@@ -822,7 +824,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
 
         const dialogRef = this.dialog.open(ConfirmationDialog, {
             width: '500px',
-            data: 'You have entered a comment. Do you want to change status anyway?'
+            data: this.translateService.instant('pages.status.confirmations.changeStatusWithEnteredComment')
         });
 
         const result = await firstValueFrom(dialogRef.afterClosed());

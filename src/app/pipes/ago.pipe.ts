@@ -1,17 +1,19 @@
-import { Pipe, PipeTransform } from "@angular/core";
+import { inject, Pipe, PipeTransform } from "@angular/core";
+import { TranslateService } from "@ngx-translate/core";
 
 @Pipe({
 	name:'ago',
 	standalone: false
 })
 export class AgoPipe implements PipeTransform {
-    private readonly intervals: Record<string, number> = {
-        'day': 86400,
-        'hour': 3600,
-        'minute': 60,
-        'second': 1
-    };
+    private readonly intervals: { unit: Intl.RelativeTimeFormatUnitSingular; seconds: number }[] = [
+        { unit: 'day', seconds: 86400 },
+        { unit: 'hour', seconds: 3600 },
+        { unit: 'minute', seconds: 60 },
+        { unit: 'second', seconds: 1 }
+    ];
 
+    private translateService = inject(TranslateService);
 
     transform(value: any): any {
         if (value) {
@@ -24,18 +26,14 @@ export class AgoPipe implements PipeTransform {
 
             const seconds = Math.floor((currentDate.getTime() - displayedDate.getTime()) / 1000);
             if (seconds < 59) {
-                return 'few seconds ago';
+                return this.translateService.instant('common.timeAgo.fewSecondsAgo');
             }
 
-            let counter;
-            for (const interval in this.intervals) {
-                counter = Math.floor(seconds / this.intervals[interval]);
+            for (const interval of this.intervals) {
+                const counter = Math.floor(seconds / interval.seconds);
                 if (counter > 0) {
-                    if (counter === 1) {
-                        return `${counter} ${interval} ago`;
-                    } else {
-                        return `${counter} ${interval}s ago`;
-                    }
+                    const formatter = new Intl.RelativeTimeFormat(this.translateService.getCurrentLang() || 'en', { numeric: 'auto' });
+                    return formatter.format(-counter, interval.unit);
                 }
             }
         }

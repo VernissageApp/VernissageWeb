@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, model, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Role } from 'src/app/models/role';
 import { User } from 'src/app/models/user';
@@ -20,6 +21,7 @@ export class UserRolesDialog implements OnInit {
     private messageService = inject(MessagesService);
     private dialogRef = inject(MatDialogRef<UserRolesDialog>);
     private data?: User = inject(MAT_DIALOG_DATA);
+    private translateService = inject(TranslateService);
 
     ngOnInit(): void {
         this.isAdministrator.set(this.data?.roles?.includes(Role.Administrator) ?? false);
@@ -33,7 +35,7 @@ export class UserRolesDialog implements OnInit {
                     this.usersService.connect(this.data?.userName, Role.Administrator);
 
                     this.data.roles?.push(Role.Administrator);
-                    this.messageService.showSuccess('Role has been connected.');
+                    this.messageService.showSuccess(this.translateService.instant('dialogs.userRoles.messages.roleHasBeenConnected'));
                 } else {
                     this.usersService.disconnect(this.data?.userName, Role.Administrator);
 
@@ -42,7 +44,7 @@ export class UserRolesDialog implements OnInit {
                         this.data.roles?.splice(index, 1);
                     }
 
-                    this.messageService.showSuccess('Role has been disconnected.');
+                    this.messageService.showSuccess(this.translateService.instant('dialogs.userRoles.messages.roleHasBeenDisconnected'));
                 }
             } catch (error) {
                 console.error(error);
@@ -58,7 +60,7 @@ export class UserRolesDialog implements OnInit {
                     this.usersService.connect(this.data?.userName, Role.Moderator);
 
                     this.data.roles?.push(Role.Moderator);
-                    this.messageService.showSuccess('Role has been connected.');
+                    this.messageService.showSuccess(this.translateService.instant('dialogs.userRoles.messages.roleHasBeenConnected'));
                 } else {
                     this.usersService.disconnect(this.data?.userName, Role.Moderator);
 
@@ -67,7 +69,7 @@ export class UserRolesDialog implements OnInit {
                         this.data.roles?.splice(index, 1);
                     }
 
-                    this.messageService.showSuccess('Role has been disconnected.');
+                    this.messageService.showSuccess(this.translateService.instant('dialogs.userRoles.messages.roleHasBeenDisconnected'));
                 }
             } catch (error) {
                 console.error(error);

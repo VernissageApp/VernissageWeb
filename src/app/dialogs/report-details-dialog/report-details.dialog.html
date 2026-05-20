@@ -1,9 +1,9 @@
-<div mat-dialog-title>Report</div>
+<div mat-dialog-title>{{ 'common.actions.report' | translate }}</div>
 <div mat-dialog-content>
 
     <div class="flex-col gap-0 margin-top-5">
         <mat-form-field appearance="outline" class="width-100 padding-top-10">
-            <mat-label>Comment</mat-label>
+            <mat-label>{{ 'common.labels.comment' | translate }}</mat-label>
             <textarea
                 matInput
                 name="comment"
@@ -11,24 +11,24 @@
                 #autosize="cdkTextareaAutosize"
                 cdkAutosizeMinRows="4"
                 cdkAutosizeMaxRows="10"
-                placeholder="Comment"
+                [placeholder]="'dialogs.reportDetails.attrs.comment' | translate"
                 #commentModel="ngModel"
                 [(ngModel)]="comment"
-                aria-label="Comment"
+                [attr.aria-label]="'dialogs.reportDetails.attrs.comment' | translate"
                 disabled></textarea>
         </mat-form-field>
     
         <mat-form-field appearance="outline">
-            <mat-label>Category</mat-label>
+            <mat-label>{{ 'common.labels.category' | translate }}</mat-label>
             <mat-select [(value)]="category" disabled>
                 @for (item of categories(); track item) {
-                    <mat-option [value]="item">{{ item }}</mat-option>
+                    <mat-option [value]="item">{{ 'dialogs.report.categories.' + item.toLowerCase() | translate }}</mat-option>
                 }
             </mat-select>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-            <mat-label>Server rules</mat-label>
+            <mat-label>{{ 'dialogs.reportDetails.texts.serverRules' | translate }}</mat-label>
             <mat-select [(value)]="ruleIds" multiple disabled>
                 @for (rule of rules(); track rule.id) {
                     <mat-option [value]="rule.id">{{ rule.text }}</mat-option>
@@ -38,11 +38,11 @@
 
         @if (!isLocal()) {
             <mat-checkbox name="forward" [disableRipple]="true" [(ngModel)]="forward" disabled>
-                Should the report be forwarded to the remote admin?
+                {{ 'dialogs.report.texts.forwardToRemoteAdmin' | translate }}
             </mat-checkbox>
         }
     </div>
 </div>
 <div mat-dialog-actions>
-    <button matButton="text" type="button" (click)="onNoClick()">Close</button>
+    <button matButton="text" type="button" (click)="onNoClick()">{{ 'common.actions.close' | translate }}</button>
 </div>

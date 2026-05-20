@@ -13,6 +13,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { RandomGeneratorService } from 'src/app/services/common/random-generator.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-notifications',
@@ -42,6 +43,7 @@ export class NotificationsPage extends ResponsiveComponent implements OnInit, On
     private activatedRoute = inject(ActivatedRoute);
     private randomGeneratorService = inject(RandomGeneratorService);
     private router = inject(Router);
+    private translateService = inject(TranslateService);
     public dialog = inject(MatDialog);
 
     override async ngOnInit(): Promise<void> {
@@ -130,29 +132,29 @@ export class NotificationsPage extends ResponsiveComponent implements OnInit, On
     protected getNotificationText(notification: Notification): string {
         switch (notification.notificationType) {
             case NotificationType.Mention:
-                return 'mentioned you';
+                return this.translateService.instant('pages.notifications.types.mention');
             case NotificationType.Status:
-                return 'published photo';
+                return this.translateService.instant('pages.notifications.types.status');
             case NotificationType.Reblog:
-                return 'boost your photo';
+                return this.translateService.instant('pages.notifications.types.reblog');
             case NotificationType.Follow:
-                return 'followed you';
+                return this.translateService.instant('pages.notifications.types.follow');
             case NotificationType.FollowRequest:
-                return 'want to follow you';
+                return this.translateService.instant('pages.notifications.types.followRequest');
             case NotificationType.Favourite:
                 if (!notification.mainStatus) {
-                    return 'favourited your photo';
+                    return this.translateService.instant('pages.notifications.types.favouriteStatus');
                 } else {
-                    return 'favourited your comment';
+                    return this.translateService.instant('pages.notifications.types.favouriteComment');
                 }
             case NotificationType.Update:
-                return 'edited photo';
+                return this.translateService.instant('pages.notifications.types.update');
             case NotificationType.AdminSignUp:
-                return 'is a new user';
+                return this.translateService.instant('pages.notifications.types.adminSignUp');
             case NotificationType.AdminReport:
-                return 'has been reported';
+                return this.translateService.instant('pages.notifications.types.adminReport');
             case NotificationType.NewComment:
-                return 'wrote new comment';
+                return this.translateService.instant('pages.notifications.types.newComment');
             default:
                 return '';
         }

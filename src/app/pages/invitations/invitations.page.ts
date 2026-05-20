@@ -11,6 +11,7 @@ import { SettingsService } from 'src/app/services/http/settings.service';
 import { PublicSettings } from 'src/app/models/public-settings';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 import { Role } from 'src/app/models/role';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-invitations',
@@ -38,6 +39,7 @@ export class InvitationsPage extends ResponsiveComponent implements OnInit {
     private settingsService = inject(SettingsService);
     private authorizationService = inject(AuthorizationService);
     private clipboard = inject(Clipboard);
+    private translateService = inject(TranslateService);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
@@ -81,7 +83,7 @@ export class InvitationsPage extends ResponsiveComponent implements OnInit {
             await this.invitationsService.generate();
             const downloadedInvitations = await this.invitationsService.get();
             this.invitations.set(downloadedInvitations);
-            this.messageService.showSuccess('Invitation code has been generated.');
+            this.messageService.showSuccess(this.translateService.instant('pages.invitations.messages.generated'));
         } catch (error) {
             console.error(error);
             this.messageService.showServerError(error);
@@ -93,7 +95,7 @@ export class InvitationsPage extends ResponsiveComponent implements OnInit {
             await this.invitationsService.delete(id);
             const downloadedInvitations = await this.invitationsService.get();
             this.invitations.set(downloadedInvitations);
-            this.messageService.showSuccess('Invitation code has been deleted.');
+            this.messageService.showSuccess(this.translateService.instant('pages.invitations.messages.deleted'));
         } catch (error) {
             console.error(error);
             this.messageService.showServerError(error);
@@ -102,7 +104,7 @@ export class InvitationsPage extends ResponsiveComponent implements OnInit {
 
     protected copy(code: string): void {
         this.clipboard.copy(code);
-        this.messageService.showSuccess('Code has been copied into clipboard.');
+        this.messageService.showSuccess(this.translateService.instant('pages.invitations.messages.copied'));
     }
 
     private isRegistrationByInvitationsOpened(): boolean {

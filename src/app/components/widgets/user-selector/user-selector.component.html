@@ -1,5 +1,5 @@
 <mat-form-field class="width-100" appearance="outline">
-    <mat-label>{{ label() }}</mat-label>
+    <mat-label>{{ label() || ('common.labels.user' | translate) }}</mat-label>
     <input
         type="text"
         [name]="name() + '-input'"
@@ -9,7 +9,7 @@
         [ngModel]="selectedUser()"
         (ngModelChange)="onModelChange($event)"
         #userSelector="ngModel"
-        [attr.aria-label]="label()"
+        [attr.aria-label]="label() || ('common.labels.user' | translate)"
         [matAutocomplete]="autoUsers"
         [required]="isRequired()"
         [appAutocompleteValid]="true"
@@ -27,7 +27,7 @@
     </mat-autocomplete>
 
     @if (selectedUser() && !isReadOnly) {
-        <button [name]="name + '-clear'" [id]="name + '-clear'" type="button" matSuffix matIconButton aria-label="Clear" (click)="onChange()">
+        <button [name]="name + '-clear'" [id]="name + '-clear'" type="button" matSuffix matIconButton [attr.aria-label]="'common.actions.clear' | translate" (click)="onChange()">
             <mat-icon class="text-muted">backspace</mat-icon>
         </button>
     }
@@ -37,10 +37,10 @@
     }
 
     @if (userSelector.invalid && userSelector.errors?.required) {
-        <mat-error>Chose user.</mat-error>
+        <mat-error>{{ 'components.userSelector.texts.choseUser' | translate }}</mat-error>
     }
 
     @if (userSelector.invalid && userSelector.errors?.appAutocompleteValid) {
-        <mat-error>Chose user from list.</mat-error>
+        <mat-error>{{ 'components.userSelector.texts.choseUserFromList' | translate }}</mat-error>
     }
 </mat-form-field>

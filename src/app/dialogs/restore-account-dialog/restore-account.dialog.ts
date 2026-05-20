@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, model, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 import { MessagesService } from 'src/app/services/common/messages.service';
@@ -19,6 +20,7 @@ export class RestoreAccountDialog implements OnInit {
     public authorizationService = inject(AuthorizationService);
 
     private data?: string = inject(MAT_DIALOG_DATA);
+    private translateService = inject(TranslateService);
     private userName = '';
 
     ngOnInit(): void {
@@ -36,7 +38,7 @@ export class RestoreAccountDialog implements OnInit {
             await this.usersService.unmove(this.userName, this.password());
             await this.authorizationService.refreshAccessToken();
 
-            this.messageService.showSuccess('Account has been restored.');
+            this.messageService.showSuccess(this.translateService.instant('dialogs.restoreAccount.messages.accountHasBeenRestored'));
             this.dialogRef.close(true);
         } catch (error) {
             console.error(error);

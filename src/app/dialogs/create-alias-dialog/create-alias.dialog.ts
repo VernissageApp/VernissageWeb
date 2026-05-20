@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, model } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { UserAlias } from 'src/app/models/user-alias';
 import { MessagesService } from 'src/app/services/common/messages.service';
@@ -17,6 +18,7 @@ export class CreateAliasDialog {
     private messageService = inject(MessagesService);
     private userAliasesService = inject(UserAliasesService);
     private dialogRef = inject(MatDialogRef<CreateAliasDialog>);
+    private translateService = inject(TranslateService);
 
     protected onNoClick(): void {
         this.dialogRef.close();
@@ -28,7 +30,7 @@ export class CreateAliasDialog {
             newUserAlias.alias = this.alias();
 
             await this.userAliasesService.create(newUserAlias);
-            this.messageService.showSuccess('New account alias has been created.');
+            this.messageService.showSuccess(this.translateService.instant('dialogs.createAlias.messages.newAccountAliasHasBeenCreated'));
 
             this.dialogRef.close({ confirmed: true});
         } catch (error) {

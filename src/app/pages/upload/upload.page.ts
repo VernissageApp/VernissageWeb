@@ -32,6 +32,7 @@ import { AuthorizationService } from 'src/app/services/authorization/authorizati
 import { ForbiddenError } from 'src/app/errors/forbidden-error';
 import { CanonExifService } from 'src/app/services/common/canon-exif.service';
 import { DeviceDetectorService, DeviceType } from 'ngx-device-detector';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-upload',
@@ -98,6 +99,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
     private authorizationService = inject(AuthorizationService);
     private canonExifService = inject(CanonExifService);
     private deviceDetectorService = inject(DeviceDetectorService);
+    private translateService = inject(TranslateService);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
@@ -142,13 +144,16 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
 
         const availablePhotoSlots = this.maxMediaAttachments() - this.photos().length;
         if (availablePhotoSlots <= 0) {
-            this.messageService.showError(`You can upload up to ${this.maxMediaAttachments()} images per post.`);
+            this.messageService.showError(this.translateService.instant('pages.upload.messages.maxImagesPerPost', { count: this.maxMediaAttachments() }));
             this.resetPhotoFileUpload();
             return;
         }
 
         if (files.length > availablePhotoSlots) {
-            this.messageService.showError(`Too many files selected. You can add ${availablePhotoSlots} more image${availablePhotoSlots === 1 ? '' : 's'}.`);
+            this.messageService.showError(this.translateService.instant('pages.upload.messages.tooManyFilesSelected', {
+                count: availablePhotoSlots,
+                suffix: availablePhotoSlots === 1 ? '' : 's'
+            }));
             this.resetPhotoFileUpload();
             return;
         }
@@ -165,7 +170,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
         const isSupportedType = file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/webp' || fileExtension === 'jpg' || fileExtension === 'jpeg' || fileExtension === 'png' || fileExtension === 'webp';
 
         if (!isSupportedType) {
-            this.messageService.showError('This file type is not supported. Please upload a JPG, PNG or WEBP image.');
+            this.messageService.showError(this.translateService.instant('pages.upload.messages.unsupportedFileType'));
             return;
         }
 
@@ -175,7 +180,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
 
         if (file.size > this.maxFileSize) {
             if (this.deviceDetectorService.deviceType() !== DeviceType.Mobile) {
-                this.messageService.showError(`Uploaded file is too large. Maximum size is ${this.maxFileSizeString()}.`);
+                this.messageService.showError(this.translateService.instant('pages.upload.messages.fileTooLarge', { maxFileSize: this.maxFileSizeString() }));
                 return;
             }
 
@@ -183,12 +188,12 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
                 uploadPhoto.photoResizedFile = await this.resizeImageToJpeg(file);
             } catch (error) {
                 console.error(error);
-                this.messageService.showError('Unable to resize image before upload.');
+                this.messageService.showError(this.translateService.instant('pages.upload.messages.unableToResize'));
                 return;
             }
 
             if (uploadPhoto.photoResizedFile.size > this.maxFileSize) {
-                this.messageService.showError(`Uploaded file is too large. Maximum size is ${this.maxFileSizeString()}.`);
+                this.messageService.showError(this.translateService.instant('pages.upload.messages.fileTooLarge', { maxFileSize: this.maxFileSizeString() }));
                 return;
             }
         }
@@ -301,12 +306,12 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
 
     protected async onSubmit(): Promise<void> {
         if (!this.emailHasBeenVerified()) {
-            this.messageService.showError('To publish a status, please verify your email address first.');
+            this.messageService.showError(this.translateService.instant('pages.upload.messages.verifyEmailBeforePublish'));
             return;
         }
 
         if (this.accountHasBeenMoved()) {
-            this.messageService.showError('This account has been moved, so publishing new content is not available.');
+            this.messageService.showError(this.translateService.instant('pages.upload.messages.accountMovedPublishingUnavailable'));
             return;
         }
 
@@ -399,12 +404,12 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
             if (this.isEditMode()) {
                 await this.statusesService.update(status)
 
-                this.messageService.showSuccess('Status has been updated.');
+                this.messageService.showSuccess(this.translateService.instant('pages.upload.messages.statusUpdated'));
                 await this.router.navigate(['/statuses', this.statusId]);
             } else {
                 await this.statusesService.create(status)
 
-                this.messageService.showSuccess('Status has been saved.');
+                this.messageService.showSuccess(this.translateService.instant('pages.upload.messages.statusSaved'));
                 await this.router.navigate(['/']);
             }
         } catch (error) {

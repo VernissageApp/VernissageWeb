@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
 import AppServerModule from './src/main.server';
 import { REQUEST, RESPONSE } from 'express.tokens';
+import { I18N_ASSETS_PATH } from './src/app/common/i18n-assets-path.token';
 
 const DEFAULT_ALLOWED_HOSTS = [
     'localhost',
@@ -100,7 +101,8 @@ export function app(): express.Express {
                 providers: [
                     { provide: APP_BASE_HREF, useValue: baseUrl },
                     { provide: REQUEST, useValue: req },
-                    { provide: RESPONSE, useValue: res }
+                    { provide: RESPONSE, useValue: res },
+                    { provide: I18N_ASSETS_PATH, useValue: join(browserDistFolder, 'assets/i18n') }
                 ],
             })
             .then((html) => {

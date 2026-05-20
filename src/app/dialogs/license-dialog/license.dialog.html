@@ -1,60 +1,60 @@
 <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
-    <div mat-dialog-title>License</div>
+    <div mat-dialog-title>{{ 'components.uploadPhoto.labels.license' | translate }}</div>
     <div mat-dialog-content>
 
         <div class="margin-bottom-20 padding-top-5">
             <mat-form-field class="width-100" appearance="outline">
-                <mat-label>Name</mat-label>
-                <input type="text" matInput name="licenseName" [(ngModel)]="name" #nameInput="ngModel" aria-label="License name" required appMaxLength="100" />
+                <mat-label>{{ 'common.labels.name' | translate }}</mat-label>
+                <input type="text" matInput name="licenseName" [(ngModel)]="name" #nameInput="ngModel" [attr.aria-label]="'dialogs.license.attrs.licenseName' | translate" required appMaxLength="100" />
 
                 @if (nameInput.invalid && nameInput.errors?.required) {
-                    <mat-error>Enter license name.</mat-error>
+                    <mat-error>{{ 'dialogs.license.texts.enterLicenseName' | translate }}</mat-error>
                 }
 
                 @if (nameInput.invalid && nameInput.errors?.appMaxLength) {
-                    <mat-error>Name is too long.</mat-error>
+                    <mat-error>{{ 'dialogs.license.texts.nameIsTooLong' | translate }}</mat-error>
                 }
             </mat-form-field>
         </div>
 
         <div class="margin-bottom-20">
             <mat-form-field class="width-100" appearance="outline">
-                <mat-label>Code</mat-label>
-                <input type="text" matInput name="licenseCode" [(ngModel)]="code" #codeInput="ngModel" aria-label="License code" appMaxLength="50" />
+                <mat-label>{{ 'common.labels.code' | translate }}</mat-label>
+                <input type="text" matInput name="licenseCode" [(ngModel)]="code" #codeInput="ngModel" [attr.aria-label]="'dialogs.license.attrs.licenseCode' | translate" appMaxLength="50" />
 
                 @if (codeInput.invalid && codeInput.errors?.appMaxLength) {
-                    <mat-error>Code is too long.</mat-error>
+                    <mat-error>{{ 'dialogs.license.texts.codeIsTooLong' | translate }}</mat-error>
                 }
             </mat-form-field>
         </div>
 
         <div class="margin-bottom-20">
             <mat-form-field class="width-100" appearance="outline">
-                <mat-label>Description</mat-label>
+                <mat-label>{{ 'common.labels.description' | translate }}</mat-label>
                 <textarea matInput name="licenseDescription" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4"
                     cdkAutosizeMaxRows="10" #descriptionInput="ngModel" [(ngModel)]="description"
-                aria-label="License description"></textarea>
+                [attr.aria-label]="'dialogs.license.attrs.licenseDescription' | translate"></textarea>
 
                 @if (descriptionInput.invalid && descriptionInput.errors?.appMaxLength) {
-                    <mat-error>Description is too long.</mat-error>
+                    <mat-error>{{ 'dialogs.license.texts.descriptionIsTooLong' | translate }}</mat-error>
                 }
             </mat-form-field>
         </div>
 
         <div class="margin-bottom-20">
             <mat-form-field class="width-100" appearance="outline">
-                <mat-label>Url</mat-label>
-                <input type="text" matInput name="licenseUrl" [(ngModel)]="url" #urlInput="ngModel" aria-label="Url" appMaxLength="500" />
+                <mat-label>{{ 'common.labels.url' | translate }}</mat-label>
+                <input type="text" matInput name="licenseUrl" [(ngModel)]="url" #urlInput="ngModel" [attr.aria-label]="'dialogs.license.attrs.url' | translate" appMaxLength="500" />
 
                 @if (urlInput.invalid && urlInput.errors?.appMaxLength) {
-                    <mat-error>Url is too long.</mat-error>
+                    <mat-error>{{ 'dialogs.license.texts.urlIsTooLong' | translate }}</mat-error>
                 }
             </mat-form-field>
         </div>
 
     </div>
     <div mat-dialog-actions>
-        <button matButton="text" type="button" type="button" (click)="onNoClick()">Cancel</button>
-        <button matButton="filled" type="submit" cdkFocusInitial>Save</button>
+        <button matButton="text" type="button" type="button" (click)="onNoClick()">{{ 'common.actions.cancel' | translate }}</button>
+        <button matButton="filled" type="submit" cdkFocusInitial>{{ 'common.actions.save' | translate }}</button>
     </div>
 </form>

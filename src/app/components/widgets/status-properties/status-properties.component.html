@@ -1,28 +1,28 @@
 <div class="flex-row properties text-muted">
-    <div class="margin-right-15" matTooltip="Published date" aria-label="Published date">{{ publishedAt() | date: 'short' }}</div>
+    <div class="margin-right-15" [matTooltip]="'components.statusProperties.attrs.publishedDate' | translate" [attr.aria-label]="'components.statusProperties.attrs.publishedDate' | translate">{{ publishedAt() | localizedDate: 'short' }}</div>
 
     @switch (status().visibility) {
         @case (statusVisibility.Public) {
-            <mat-icon class="margin-right-15" matTooltip="Public">public</mat-icon>
+            <mat-icon class="margin-right-15" [matTooltip]="'components.statusProperties.attrs.public' | translate">public</mat-icon>
         }
         @case (statusVisibility.QuietPublic) {
-            <mat-icon class="margin-right-15" matTooltip="QuietPublic">public</mat-icon>
+            <mat-icon class="margin-right-15" [matTooltip]="'components.statusProperties.attrs.quietpublic' | translate">public</mat-icon>
         }
         @case (statusVisibility.Followers) {
-            <mat-icon class="margin-right-15" matTooltip="Followers">people</mat-icon>
+            <mat-icon class="margin-right-15" [matTooltip]="'components.statusProperties.attrs.followers' | translate">people</mat-icon>
         }
         @case (statusVisibility.Mentioned) {
-            <mat-icon class="margin-right-15" matTooltip="Mentioned">person</mat-icon>
+            <mat-icon class="margin-right-15" [matTooltip]="'components.statusProperties.attrs.mentioned' | translate">person</mat-icon>
         }
     }
 
     @if (status().application) {
-        <mat-icon class="margin-right-15" [matTooltip]="status().application" aria-label="Application">settings_applications</mat-icon>
+        <mat-icon class="margin-right-15" [matTooltip]="status().application" [attr.aria-label]="'components.statusProperties.attrs.application' | translate">settings_applications</mat-icon>
     }
     
-    <mat-icon matTooltip="Number of boosts" aria-label="Number of boosts">rocket</mat-icon>
+    <mat-icon [matTooltip]="'components.statusProperties.attrs.numberOfBoosts' | translate" [attr.aria-label]="'components.statusProperties.attrs.numberOfBoosts' | translate">rocket</mat-icon>
     <div  class="margin-right-15">{{ status().reblogsCount }}</div>
     
-    <mat-icon matTooltip="Number of likes" aria-label="Number of likes">star</mat-icon>
+    <mat-icon [matTooltip]="'components.statusProperties.attrs.numberOfLikes' | translate" [attr.aria-label]="'components.statusProperties.attrs.numberOfLikes' | translate">star</mat-icon>
     <div>{{ status().favouritesCount }}</div>
 </div>

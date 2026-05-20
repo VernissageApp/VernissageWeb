@@ -1,13 +1,13 @@
 <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
-    <div mat-dialog-title>Content warning</div>
+    <div mat-dialog-title>{{ 'dialogs.contentWarning.texts.contentWarning' | translate }}</div>
     <div mat-dialog-content>
         <div class="flex-col gap-0 margin-top-5">
             <div>
                 Enter new content warning for the status.
             </div>
             <mat-form-field appearance="outline" class="margin-top-10" >
-                <mat-label>Content warning</mat-label>
-                <input type="text" matInput name="contentWarning" #contentWarningInput="ngModel" [(ngModel)]="contentWarning" aria-label="Content warning" required />
+                <mat-label>{{ 'dialogs.contentWarning.texts.contentWarning' | translate }}</mat-label>
+                <input type="text" matInput name="contentWarning" #contentWarningInput="ngModel" [(ngModel)]="contentWarning" [attr.aria-label]="'dialogs.contentWarning.attrs.contentWarning' | translate" required />
 
                 @if (contentWarningInput.invalid && contentWarningInput.errors?.required) {
                     <mat-error>
@@ -18,7 +18,7 @@
         </div>
     </div>
     <div mat-dialog-actions>
-        <button matButton="text" type="button" (click)="onNoClick()">Cancel</button>
-        <button matButton="filled" type="submit" cdkFocusInitial>Send</button>
+        <button matButton="text" type="button" (click)="onNoClick()">{{ 'common.actions.cancel' | translate }}</button>
+        <button matButton="filled" type="submit" cdkFocusInitial>{{ 'common.actions.send' | translate }}</button>
     </div>
 </form>

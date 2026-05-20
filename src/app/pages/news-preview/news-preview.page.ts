@@ -12,6 +12,7 @@ import { UserDisplayService } from 'src/app/services/common/user-display.service
 import { WindowService } from 'src/app/services/common/window.service';
 import { ArticlesService } from 'src/app/services/http/articles.service';
 import { SettingsService } from 'src/app/services/http/settings.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-news-preview',
@@ -36,6 +37,7 @@ export class NewsPreviewPage extends ResponsiveComponent implements OnInit, OnDe
     private titleService = inject(Title);
     private metaService = inject(Meta);
     private userDisplayService = inject(UserDisplayService);
+    private translateService = inject(TranslateService);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
@@ -76,7 +78,7 @@ export class NewsPreviewPage extends ResponsiveComponent implements OnInit, OnDe
     }
 
     private setCardMetaTags(): void {
-        const newsTitle = this.article()?.title ?? 'Vernissage - news';
+        const newsTitle = this.article()?.title ?? this.translateService.instant('common.pageTitles.news');
         const newsDescription = this.htmlToText(this.article()?.bodyHtml ?? '').slice(0, 400);
         const newsUserDisplayName = this.userDisplayService.displayName(this.article()?.user);
         const newsAuthor = this.article()?.alternativeAuthor;

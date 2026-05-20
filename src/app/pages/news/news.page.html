@@ -5,9 +5,9 @@
                 <div class="news-container width-100">
                     <section>
                         <h1>
-                            <div>News</div>
+                            <div>{{ 'pages.news.title' | translate }}</div>
                             @if (!isHandset()) {
-                                <div class="fs-60 text-muted">Stay updated with our latest posts.</div>
+                                <div class="fs-60 text-muted">{{ 'pages.news.subtitle' | translate }}</div>
                             }
                         </h1>
                     </section>
@@ -32,7 +32,7 @@
                                 </mat-card-content>
                                 <mat-card-footer>
                                     <div class="text-muted fs-90">
-                                        {{ article.createdAt | date: 'short' }}
+                                        {{ article.createdAt | localizedDate: 'short' }}
                                     </div>
                                 </mat-card-footer>
                             </mat-card>
@@ -44,13 +44,13 @@
                             [pageIndex]="pageIndex()"
                             [pageSize]="5"
                             [pageSizeOptions]="[5, 10, 25, 100]"
-                            aria-label="Select page">
+                            [attr.aria-label]="'common.paginator.selectPage' | translate">
                         </mat-paginator>
                     } @else {
                         <div class="text-muted padding-top-30 text-center" [ngClass]="{ 'padding-left-30 padding-right-30': !isHandset(), 'padding-left-10 padding-right-10': isHandset() }">
                             <h2 class="empty-page">
                                 <div class="news"></div>
-                                <div>Sadly, there's nothing to see here just yet.</div>
+                                <div>{{ 'pages.news.empty.noItems' | translate }}</div>
                             </h2>
                         </div>
                     }

@@ -3,16 +3,19 @@ import { InstanceService } from 'src/app/services/http/instance.service';
 import { SettingsService } from './services/http/settings.service';
 import { CustomScriptsService } from './services/common/custom-scripts.service';
 import { CustomStylesService } from './services/common/custom-styles.service';
+import { LanguageService } from './services/common/language.service';
 
 export function appInitialization(
     authorizationService: AuthorizationService,
     instanceService: InstanceService,
     settingsService: SettingsService,
     customScriptsService: CustomScriptsService,
-    customStylesService: CustomStylesService
+    customStylesService: CustomStylesService,
+    languageService: LanguageService
 ): any {
     return async () => {
         try {
+            await languageService.initializeLanguage();
             await authorizationService.refreshAccessToken();
 
             await Promise.all([

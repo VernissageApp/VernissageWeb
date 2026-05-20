@@ -11,10 +11,13 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MaxLengthValidatorDirective } from 'src/app/validators/directives/max-length-validator.directive'; // Import the directive
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { of } from 'rxjs';
 import { PersistenceBrowserService, PersistenceService } from 'src/app/services/persistance/persistance.service';
 import { NO_ERRORS_SCHEMA, provideZoneChangeDetection } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
+import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
+import { MatDialog } from '@angular/material/dialog';
 
 describe('UploadPage', () => {
     let component: UploadPage;
@@ -35,9 +38,31 @@ describe('UploadPage', () => {
                     },
                 },
             }, {
+                provide: Router,
+                useValue: {
+                    navigate: () => Promise.resolve(true),
+                    routerState: {
+                        snapshot: {
+                            url: ''
+                        }
+                    }
+                }
+            }, {
                 provide: PersistenceService,
                 useFactory: () => {
                     return new PersistenceBrowserService();
+                }
+            }, {
+                provide: AuthorizationService,
+                useValue: {
+                    getUser: () => undefined
+                }
+            }, {
+                provide: MatDialog,
+                useValue: {
+                    open: () => ({
+                        afterClosed: () => of(undefined)
+                    })
                 }
             },
             provideZoneChangeDetection()],
@@ -50,7 +75,8 @@ describe('UploadPage', () => {
                 MatFormFieldModule,
                 MatInputModule,
                 MatSelectModule,
-                MatCheckboxModule
+                MatCheckboxModule,
+                TranslateModule.forRoot()
             ] // Add MatCardModule here] // Add HttpClientTestingModule here
         }).compileComponents();
     });
@@ -58,7 +84,6 @@ describe('UploadPage', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(UploadPage);
         component = fixture.componentInstance;
-        fixture.detectChanges();
     });
 
     it('should remove the manufacturer from the model if it starts with the manufacturer', () => {

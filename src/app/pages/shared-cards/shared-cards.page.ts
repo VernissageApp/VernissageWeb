@@ -13,6 +13,7 @@ import { MessagesService } from 'src/app/services/common/messages.service';
 import { RandomGeneratorService } from 'src/app/services/common/random-generator.service';
 import { BusinessCardsService } from 'src/app/services/http/business-cards.service';
 import { SharedBusinessCardsService } from 'src/app/services/http/shared-business-cards.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-shared-cards',
@@ -43,6 +44,7 @@ export class SharedCardsPage extends ResponsiveComponent implements OnInit, OnDe
     private router = inject(Router);
     private activatedRoute = inject(ActivatedRoute);
     private randomGeneratorService = inject(RandomGeneratorService);
+    private translateService = inject(TranslateService);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
@@ -74,7 +76,7 @@ export class SharedCardsPage extends ResponsiveComponent implements OnInit, OnDe
     protected async onShareBusinessCard(): Promise<void> {
         const businessCardExists = await this.businessCardsService.businessCardExists();
         if (!businessCardExists) {
-            this.messageService.showError('You need to create business card first.');
+            this.messageService.showError(this.translateService.instant('pages.sharedCards.messages.createBusinessCardFirst'));
             return;
         }
 
@@ -84,7 +86,7 @@ export class SharedCardsPage extends ResponsiveComponent implements OnInit, OnDe
             if (result) {
                 try {
                     const sharedBusinessCard = await this.sharedBusinessCardsService.create(result);
-                    this.messageService.showSuccess('Business card has been shared.');
+                    this.messageService.showSuccess(this.translateService.instant('pages.sharedCards.messages.businessCardShared'));
 
                     this.router.navigate(['/shared-cards', sharedBusinessCard.id], { queryParams: { 'qr': true } });
                 } catch (error) {
@@ -99,10 +101,10 @@ export class SharedCardsPage extends ResponsiveComponent implements OnInit, OnDe
         try {
             if (!isEnabled) {
                 await this.sharedBusinessCardsService.revoke(id);
-                this.messageService.showSuccess('Shared business card has been revoked.');
+                this.messageService.showSuccess(this.translateService.instant('pages.sharedCards.messages.sharedBusinessCardRevoked'));
             } else {
                 await this.sharedBusinessCardsService.unrevoke(id);
-                this.messageService.showSuccess('Shared business card has been enabled.');
+                this.messageService.showSuccess(this.translateService.instant('pages.sharedCards.messages.sharedBusinessCardEnabled'));
             }
         } catch (error) {
             console.error(error);
@@ -121,7 +123,7 @@ export class SharedCardsPage extends ResponsiveComponent implements OnInit, OnDe
                 try {
                     if(sharedBusinessCard.id) {
                         await this.sharedBusinessCardsService.update(sharedBusinessCard.id, result);
-                        this.messageService.showSuccess('Business card has been updated.');
+                        this.messageService.showSuccess(this.translateService.instant('pages.sharedCards.messages.businessCardUpdated'));
 
                         const navigationExtras: NavigationExtras = {
                             queryParams: { t: this.randomGeneratorService.generateString(8) },
@@ -141,7 +143,7 @@ export class SharedCardsPage extends ResponsiveComponent implements OnInit, OnDe
     protected onDelete(sharedBusinessCard: SharedBusinessCard): void {
         const dialogRef = this.dialog.open(ConfirmationDialog, {
             width: '500px',
-            data: 'Do you want to delete shared business card?'
+            data: this.translateService.instant('pages.sharedCards.confirmations.deleteSharedBusinessCard')
         });
 
         dialogRef.afterClosed().subscribe(async (result) => {
@@ -149,7 +151,7 @@ export class SharedCardsPage extends ResponsiveComponent implements OnInit, OnDe
                 try {
                     if (sharedBusinessCard.id) {
                         await this.sharedBusinessCardsService.delete(sharedBusinessCard.id);
-                        this.messageService.showSuccess('Shared business card was deleted.');
+                        this.messageService.showSuccess(this.translateService.instant('pages.sharedCards.messages.sharedBusinessCardDeleted'));
         
                         const navigationExtras: NavigationExtras = {
                             queryParams: { t: this.randomGeneratorService.generateString(8) },

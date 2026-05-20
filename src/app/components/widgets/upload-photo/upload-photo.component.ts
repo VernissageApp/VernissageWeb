@@ -16,6 +16,7 @@ import { InstanceService } from 'src/app/services/http/instance.service';
 import { LocationsService } from 'src/app/services/http/locations.service';
 import { SettingsService } from 'src/app/services/http/settings.service';
 import { PersistenceService } from 'src/app/services/persistance/persistance.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-upload-photo',
@@ -58,6 +59,7 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
     private persistenceService = inject(PersistenceService);
     private fileSizeService = inject(FileSizeService);
     private instanceService = inject(InstanceService);
+    private translateService = inject(TranslateService);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
@@ -197,7 +199,7 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
             }
 
             if (file.size > this.defaultMaxHdrFileSize) {
-                this.messageService.showError(`Uploaded file is too large. Maximum size is ${this.hdrFileSizeString()}.`);
+                this.messageService.showError(this.translateService.instant('components.uploadPhoto.messages.uploadedFileTooLarge', { size: this.hdrFileSizeString() }));
                 return;
             }
 
