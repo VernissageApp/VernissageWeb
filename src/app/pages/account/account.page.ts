@@ -42,7 +42,6 @@ import { UserBlockedDomainDialog } from 'src/app/dialogs/user-blocked-domain-dia
 import { UserBlockedDomainDialogEntity } from 'src/app/dialogs/user-blocked-domain-dialog/user-blocked-domain-dialog-entity';
 import { MoveAccountDialog } from 'src/app/dialogs/move-account-dialog/move-account.dialog';
 import { RestoreAccountDialog } from 'src/app/dialogs/restore-account-dialog/restore-account.dialog';
-import { LanguageService } from 'src/app/services/common/language.service';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -135,7 +134,6 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
     private dialog = inject(MatDialog);
     private clipboard = inject(Clipboard);
     private loadingService = inject(LoadingService);
-    private languageService = inject(LanguageService);
     private translateService = inject(TranslateService);
 
     override async ngOnInit(): Promise<void> {
@@ -213,9 +211,8 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
         }
     }
 
-    protected async onLocaleChange(locale: string | null): Promise<void> {
+    protected onLocaleChange(locale: string | null): void {
         this.user.update(user => Object.assign(new User(), user, { locale: locale ?? undefined }));
-        await this.languageService.setLanguageFromLocale(locale);
     }
 
     protected selectedLanguage(): { locale: string; labelKey: string } {
