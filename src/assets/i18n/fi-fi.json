@@ -1588,7 +1588,8 @@
           "valueTooLong": "Liian pitkä arvo."
         },
         "language": {
-          "english": "Englanti (English)",
+          "english": "Englanti US (English US)",
+          "englishGb": "Englanti GB (English GB)",
           "finnish": "Suomi (suomi)",
           "french": "Ranska (français)",
           "german": "Saksa (Deutsch)",
@@ -2228,7 +2229,15 @@
         "label": "Kutsukoodi"
       },
       "language": {
-        "english": "englanti (englanti)",
+        "english": "Englanti US (English US)",
+        "englishGb": "Englanti GB (English GB)",
+        "finnish": "Suomi (suomi)",
+        "french": "Ranska (français)",
+        "german": "Saksa (Deutsch)",
+        "italian": "Italia (italiano)",
+        "norwegian": "Norja (norsk)",
+        "spanish": "Espanja (español)",
+        "swedish": "Ruotsi (svenska)",
         "polish": "puola (polski)"
       },
       "messages": {

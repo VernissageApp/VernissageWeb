@@ -48,7 +48,7 @@
 
                     @if (userInternal.isLocal && createdAt()) {
                         <div class="text-center text-muted padding-top-10">
-                            {{ 'pages.profile.joined' | translate:{ date: (createdAt() | date:'longDate') } }}
+                            {{ 'pages.profile.joined' | translate:{ date: (createdAt() | localizedDate:'longDate') } }}
                         </div>
                     }
 

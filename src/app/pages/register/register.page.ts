@@ -32,6 +32,18 @@ export class RegisterPage implements OnInit {
     protected apiUrl = model('');
     protected securityText = model('');
     protected securityKey = signal('');
+    protected readonly languages = [
+        { locale: 'en_US', labelKey: 'pages.register.language.english' },
+        { locale: 'en_GB', labelKey: 'pages.register.language.englishGb' },
+        { locale: 'fi_FI', labelKey: 'pages.register.language.finnish' },
+        { locale: 'fr_FR', labelKey: 'pages.register.language.french' },
+        { locale: 'es_ES', labelKey: 'pages.register.language.spanish' },
+        { locale: 'de_DE', labelKey: 'pages.register.language.german' },
+        { locale: 'nb_NO', labelKey: 'pages.register.language.norwegian' },
+        { locale: 'pl_PL', labelKey: 'pages.register.language.polish' },
+        { locale: 'sv_SE', labelKey: 'pages.register.language.swedish' },
+        { locale: 'it_IT', labelKey: 'pages.register.language.italian' }
+    ];
 
     protected registerPageMode = signal(RegisterMode.Register);
     protected passwordIsValid = signal(false);
@@ -87,6 +99,15 @@ export class RegisterPage implements OnInit {
         this.securityKey.set(this.generateKey(16));
     }
 
+    protected selectedLanguage(): { locale: string; labelKey: string } {
+        const normalizedLocale = this.normalizeLocale(this.locale());
+        return this.languages.find(language => this.normalizeLocale(language.locale) === normalizedLocale) ?? this.languages[0];
+    }
+
+    protected getLocaleFlag(locale: string): string {
+        return this.normalizeLocale(locale).split('-')[1] ?? locale;
+    }
+
     private async registerUser(): Promise<void> {
         try {
             const user = new RegisterUser();
@@ -127,6 +148,10 @@ export class RegisterPage implements OnInit {
 
             this.registerPageMode.set(RegisterMode.Error);
         }
+    }
+
+    private normalizeLocale(locale: string | null | undefined): string {
+        return locale?.toLowerCase().replace('_', '-') ?? '';
     }
 
     private generateKey(length: number): string {

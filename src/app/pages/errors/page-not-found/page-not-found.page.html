@@ -3,7 +3,7 @@
         <h1><mat-icon [inline]="true" class="text-muted vertical-align-bottom">https</mat-icon> {{ 'pages.errors.pageNotFound.title' | translate }}</h1>
         <p>
             {{ 'pages.errors.pageNotFound.description' | translate }}
-            {{ 'common.errors.goBackPrefix' | translate }}<a routerLink="/home" [attr.aria-label]="'common.labels.homePage' | translate">{{ 'common.errors.goBackLink' | translate }}</a>{{ 'common.errors.goBackSuffix' | translate }}
+            {{ 'common.errors.goBackPrefix' | translate }} <a routerLink="/home" [attr.aria-label]="'common.labels.homePage' | translate">{{ 'common.errors.goBackLink' | translate }}</a> {{ 'common.errors.goBackSuffix' | translate }}
         </p>
         <mat-progress-bar mode="determinate" [value]="value()"></mat-progress-bar>
     </div>

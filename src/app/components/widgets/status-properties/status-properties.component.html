@@ -1,5 +1,5 @@
 <div class="flex-row properties text-muted">
-    <div class="margin-right-15" [matTooltip]="'components.statusProperties.attrs.publishedDate' | translate" [attr.aria-label]="'components.statusProperties.attrs.publishedDate' | translate">{{ publishedAt() | date: 'short' }}</div>
+    <div class="margin-right-15" [matTooltip]="'components.statusProperties.attrs.publishedDate' | translate" [attr.aria-label]="'components.statusProperties.attrs.publishedDate' | translate">{{ publishedAt() | localizedDate: 'short' }}</div>
 
     @switch (status().visibility) {
         @case (statusVisibility.Public) {

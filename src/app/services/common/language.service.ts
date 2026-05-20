@@ -10,18 +10,19 @@ import { PreferencesService } from './preferences.service';
     providedIn: 'root'
 })
 export class LanguageService {
-    private readonly defaultLanguage = 'en';
-    private readonly supportedLanguages = ['de', 'en', 'es', 'fi', 'fr', 'it', 'no', 'pl', 'sv'];
+    private readonly defaultLanguage = 'en-us';
+    private readonly supportedLanguages = ['de-de', 'en-us', 'en-gb', 'es-es', 'fi-fi', 'fr-fr', 'it-it', 'nb-no', 'pl-pl', 'sv-se'];
     private readonly languageLocales: Record<string, string> = {
-        de: 'de-DE',
-        en: 'en-US',
-        es: 'es-ES',
-        fi: 'fi-FI',
-        fr: 'fr-FR',
-        it: 'it-IT',
-        no: 'no-NO',
-        pl: 'pl-PL',
-        sv: 'sv-SE'
+        'de-de': 'de-DE',
+        'en-gb': 'en-GB',
+        'en-us': 'en-US',
+        'es-es': 'es-ES',
+        'fi-fi': 'fi-FI',
+        'fr-fr': 'fr-FR',
+        'it-it': 'it-IT',
+        'nb-no': 'nb-NO',
+        'pl-pl': 'pl-PL',
+        'sv-se': 'sv-SE'
     };
 
     private platformId = inject(PLATFORM_ID);
@@ -100,11 +101,15 @@ export class LanguageService {
         }
 
         const normalizedLanguage = language.toLowerCase().replace('_', '-');
-        if (normalizedLanguage === 'nb' || normalizedLanguage === 'nn' || normalizedLanguage.startsWith('nb-') || normalizedLanguage.startsWith('nn-')) {
-            return 'no';
+        const exactLanguage = this.supportedLanguages.find(supportedLanguage => normalizedLanguage === supportedLanguage || normalizedLanguage.startsWith(`${supportedLanguage}-`));
+        if (exactLanguage) {
+            return exactLanguage;
         }
 
-        return this.supportedLanguages.find(supportedLanguage => normalizedLanguage === supportedLanguage || normalizedLanguage.startsWith(`${supportedLanguage}-`)) ?? null;
+        return this.supportedLanguages.find(supportedLanguage => {
+            const languageCode = supportedLanguage.split('-')[0];
+            return normalizedLanguage === languageCode || normalizedLanguage.startsWith(`${languageCode}-`);
+        }) ?? null;
     }
 
     private mapLanguageToLocale(language: string): string {

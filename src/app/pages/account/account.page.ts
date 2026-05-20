@@ -61,15 +61,16 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
     protected isReady = signal(false);
     protected isSupporterFlagEnabled = model(false);
     protected readonly languages = [
-        { locale: 'en_US', flag: 'gb', labelKey: 'pages.account.personalInformation.language.english' },
-        { locale: 'fi_FI', flag: 'fi', labelKey: 'pages.account.personalInformation.language.finnish' },
-        { locale: 'fr_FR', flag: 'fr', labelKey: 'pages.account.personalInformation.language.french' },
-        { locale: 'es_ES', flag: 'es', labelKey: 'pages.account.personalInformation.language.spanish' },
-        { locale: 'de_DE', flag: 'de', labelKey: 'pages.account.personalInformation.language.german' },
-        { locale: 'no_NO', flag: 'no', labelKey: 'pages.account.personalInformation.language.norwegian' },
-        { locale: 'pl_PL', flag: 'pl', labelKey: 'pages.account.personalInformation.language.polish' },
-        { locale: 'sv_SE', flag: 'se', labelKey: 'pages.account.personalInformation.language.swedish' },
-        { locale: 'it_IT', flag: 'it', labelKey: 'pages.account.personalInformation.language.italian' }
+        { locale: 'en_US', labelKey: 'pages.account.personalInformation.language.english' },
+        { locale: 'en_GB', labelKey: 'pages.account.personalInformation.language.englishGb' },
+        { locale: 'fi_FI', labelKey: 'pages.account.personalInformation.language.finnish' },
+        { locale: 'fr_FR', labelKey: 'pages.account.personalInformation.language.french' },
+        { locale: 'es_ES', labelKey: 'pages.account.personalInformation.language.spanish' },
+        { locale: 'de_DE', labelKey: 'pages.account.personalInformation.language.german' },
+        { locale: 'nb_NO', labelKey: 'pages.account.personalInformation.language.norwegian' },
+        { locale: 'pl_PL', labelKey: 'pages.account.personalInformation.language.polish' },
+        { locale: 'sv_SE', labelKey: 'pages.account.personalInformation.language.swedish' },
+        { locale: 'it_IT', labelKey: 'pages.account.personalInformation.language.italian' }
     ];
 
     protected aliasDisplayedColumns = signal<string[]>(['alias', 'actions']);
@@ -217,8 +218,17 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
         await this.languageService.setLanguageFromLocale(locale);
     }
 
-    protected selectedLanguage(): { locale: string; flag: string; labelKey: string } {
-        return this.languages.find(language => language.locale === this.user()?.locale) ?? this.languages[0];
+    protected selectedLanguage(): { locale: string; labelKey: string } {
+        const normalizedUserLocale = this.normalizeLocale(this.user()?.locale);
+        return this.languages.find(language => this.normalizeLocale(language.locale) === normalizedUserLocale) ?? this.languages[0];
+    }
+
+    protected getLocaleFlag(locale: string): string {
+        return this.normalizeLocale(locale).split('-')[1] ?? locale;
+    }
+
+    private normalizeLocale(locale: string | null | undefined): string {
+        return locale?.toLowerCase().replace('_', '-') ?? '';
     }
 
     protected async onAvatarFormSubmit(): Promise<void> {

@@ -36,17 +36,18 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
     protected showNews = signal(false);
     protected showSharedBusinessCards = signal(false);
     protected isLightTheme = signal(false);
-    protected currentLanguage = signal('en');
+    protected currentLanguage = signal('en-us');
     protected readonly languages = [
-        { language: 'en', flag: 'gb', labelKey: 'pages.account.personalInformation.language.english' },
-        { language: 'fi', flag: 'fi', labelKey: 'pages.account.personalInformation.language.finnish' },
-        { language: 'fr', flag: 'fr', labelKey: 'pages.account.personalInformation.language.french' },
-        { language: 'es', flag: 'es', labelKey: 'pages.account.personalInformation.language.spanish' },
-        { language: 'de', flag: 'de', labelKey: 'pages.account.personalInformation.language.german' },
-        { language: 'no', flag: 'no', labelKey: 'pages.account.personalInformation.language.norwegian' },
-        { language: 'pl', flag: 'pl', labelKey: 'pages.account.personalInformation.language.polish' },
-        { language: 'sv', flag: 'se', labelKey: 'pages.account.personalInformation.language.swedish' },
-        { language: 'it', flag: 'it', labelKey: 'pages.account.personalInformation.language.italian' }
+        { language: 'en-us', labelKey: 'pages.account.personalInformation.language.english' },
+        { language: 'en-gb', labelKey: 'pages.account.personalInformation.language.englishGb' },
+        { language: 'fi-fi', labelKey: 'pages.account.personalInformation.language.finnish' },
+        { language: 'fr-fr', labelKey: 'pages.account.personalInformation.language.french' },
+        { language: 'es-es', labelKey: 'pages.account.personalInformation.language.spanish' },
+        { language: 'de-de', labelKey: 'pages.account.personalInformation.language.german' },
+        { language: 'nb-no', labelKey: 'pages.account.personalInformation.language.norwegian' },
+        { language: 'pl-pl', labelKey: 'pages.account.personalInformation.language.polish' },
+        { language: 'sv-se', labelKey: 'pages.account.personalInformation.language.swedish' },
+        { language: 'it-it', labelKey: 'pages.account.personalInformation.language.italian' }
     ];
 
     private clearReuseStrategyAfterNavigationEnds = false;
@@ -173,6 +174,10 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
     protected async onLanguageChange(language: string): Promise<void> {
         await this.languageService.setLanguageFromLocale(language);
         this.currentLanguage.set(language);
+    }
+
+    protected getLanguageFlag(language: string): string {
+        return language.split('-')[1] ?? language;
     }
 
     protected onUserMenuClosed(): void {

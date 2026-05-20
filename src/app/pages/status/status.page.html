@@ -412,7 +412,7 @@
                                     @if (getCorrectIsoDate(exifInternal.createDate)) {
                                         <div class="margin-bottom-10">
                                             <mat-icon class="margin-right-20" inline="true" [matTooltip]="'pages.status.tooltips.photoCreatedDate' | translate">event</mat-icon>
-                                            <span class="exif-label">{{ getCorrectIsoDate(exifInternal.createDate) | date: 'short' }}</span>
+                                            <span class="exif-label">{{ getCorrectIsoDate(exifInternal.createDate) | localizedDate: 'short' }}</span>
                                         </div>
                                     }
                                 </div>
@@ -549,7 +549,7 @@
                                         <mat-select [(value)]="versionId" (selectionChange)="onVersionChange()">
                                             <mat-option value="">{{ 'pages.status.versions.latestVersion' | translate }}</mat-option>
                                             @for (version of versions(); track version.id) {
-                                                <mat-option [value]="version.id">{{ version.orginalStatusUpdatedAt | date:'medium' }}</mat-option>
+                                                <mat-option [value]="version.id">{{ version.orginalStatusUpdatedAt | localizedDate:'medium' }}</mat-option>
                                             }
                                         </mat-select>
                                     </mat-form-field>

@@ -40,6 +40,7 @@ import { UserBlockedUserDialog } from './user-blocked-user-dialog/user-blocked-d
 import { MoveAccountDialog } from './move-account-dialog/move-account.dialog';
 import { RestoreAccountDialog } from './restore-account-dialog/restore-account.dialog';
 import { TranslateModule } from '@ngx-translate/core';
+import { PipesModule } from '../pipes/pipes.module';
 
 @NgModule({
     declarations: [
@@ -118,7 +119,8 @@ import { TranslateModule } from '@ngx-translate/core';
         RouterModule,
         ValidationsModule,
         ComponentsModule,
-        TranslateModule
+        TranslateModule,
+        PipesModule
     ],
     providers: [
         provideHttpClient(withFetch(), withInterceptorsFromDi()),

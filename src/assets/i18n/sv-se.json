@@ -1588,7 +1588,8 @@
           "valueTooLong": "För långt värde."
         },
         "language": {
-          "english": "Engelska (English)",
+          "english": "Engelska US (English US)",
+          "englishGb": "Engelska GB (English GB)",
           "finnish": "Finska (suomi)",
           "french": "Franska (français)",
           "german": "Tyska (Deutsch)",
@@ -2228,7 +2229,15 @@
         "label": "Inbjudningskod"
       },
       "language": {
-        "english": "engelska (engelska)",
+        "english": "Engelska US (English US)",
+        "englishGb": "Engelska GB (English GB)",
+        "finnish": "Finska (suomi)",
+        "french": "Franska (français)",
+        "german": "Tyska (Deutsch)",
+        "italian": "Italienska (italiano)",
+        "norwegian": "Norska (norsk)",
+        "spanish": "Spanska (español)",
+        "swedish": "Svenska (svenska)",
         "polish": "polska (polski)"
       },
       "messages": {

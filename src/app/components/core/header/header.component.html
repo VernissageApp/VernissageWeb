@@ -130,12 +130,12 @@
             <button matIconButton class="margin-right-5" [matMenuTriggerFor]="languageMenu" [attr.aria-label]="'common.labels.language' | translate">
                 <mat-icon>language</mat-icon>
             </button>
-            <mat-menu #languageMenu="matMenu">
+            <mat-menu #languageMenu="matMenu" class="language-menu-panel">
                 @for (language of languages; track language.language) {
                     <button mat-menu-item (click)="onLanguageChange(language.language)" [attr.aria-label]="language.labelKey | translate">
                         <span class="language-menu-item">
                             <span class="language-menu-label">
-                                <img class="language-flag" [src]="'assets/flags/' + language.flag + '.svg'" [alt]="language.labelKey | translate" />
+                                <img class="language-flag" [src]="'assets/flags/' + getLanguageFlag(language.language) + '.svg'" [alt]="language.labelKey | translate" />
                                 <span>{{ language.labelKey | translate }}</span>
                             </span>
                             <span class="language-menu-check">

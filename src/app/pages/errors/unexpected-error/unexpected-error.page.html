@@ -3,7 +3,7 @@
         <h1><mat-icon [inline]="true" class="text-muted vertical-align-bottom">bug_report</mat-icon> {{ 'pages.errors.unexpectedError.title' | translate }}</h1>
         <p>
             {{ 'pages.errors.unexpectedError.description' | translate }}
-            {{ 'common.errors.goBackPrefix' | translate }}<a routerLink="/home" [attr.aria-label]="'common.labels.homePage' | translate">{{ 'common.errors.goBackLink' | translate }}</a>{{ 'common.errors.goBackSuffix' | translate }}
+            {{ 'common.errors.goBackPrefix' | translate }} <a routerLink="/home" [attr.aria-label]="'common.labels.homePage' | translate">{{ 'common.errors.goBackLink' | translate }}</a> {{ 'common.errors.goBackSuffix' | translate }}
 
             @if (code(); as codeString) {
                 <span>{{ 'pages.errors.unexpectedError.errorCodeLabel' | translate }} <code>{{ codeString }}</code>.</span>

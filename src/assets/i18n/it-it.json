@@ -1588,7 +1588,8 @@
           "valueTooLong": "Valore troppo lungo."
         },
         "language": {
-          "english": "Inglese (English)",
+          "english": "Inglese US (English US)",
+          "englishGb": "Inglese GB (English GB)",
           "finnish": "Finlandese (suomi)",
           "french": "Francese (français)",
           "german": "Tedesco (Deutsch)",
@@ -2228,7 +2229,15 @@
         "label": "Codice invito"
       },
       "language": {
-        "english": "Inglese (inglese)",
+        "english": "Inglese US (English US)",
+        "englishGb": "Inglese GB (English GB)",
+        "finnish": "Finlandese (suomi)",
+        "french": "Francese (français)",
+        "german": "Tedesco (Deutsch)",
+        "italian": "Italiano (italiano)",
+        "norwegian": "Norvegese (norsk)",
+        "spanish": "Spagnolo (español)",
+        "swedish": "Svedese (svenska)",
         "polish": "Polacco (polski)"
       },
       "messages": {

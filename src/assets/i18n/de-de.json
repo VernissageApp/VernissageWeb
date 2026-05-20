@@ -1588,7 +1588,8 @@
           "valueTooLong": "Zu langer Wert."
         },
         "language": {
-          "english": "Englisch (English)",
+          "english": "Englisch US (English US)",
+          "englishGb": "Englisch GB (English GB)",
           "finnish": "Finnisch (suomi)",
           "french": "Französisch (français)",
           "german": "Deutsch (Deutsch)",
@@ -2228,7 +2229,15 @@
         "label": "Einladungscode"
       },
       "language": {
-        "english": "Englisch (Englisch)",
+        "english": "Englisch US (English US)",
+        "englishGb": "Englisch GB (English GB)",
+        "finnish": "Finnisch (suomi)",
+        "french": "Französisch (français)",
+        "german": "Deutsch (Deutsch)",
+        "italian": "Italienisch (italiano)",
+        "norwegian": "Norwegisch (norsk)",
+        "spanish": "Spanisch (español)",
+        "swedish": "Schwedisch (svenska)",
         "polish": "Polnisch (polski)"
       },
       "messages": {

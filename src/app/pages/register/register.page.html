@@ -76,8 +76,21 @@
                             <mat-form-field appearance="outline">
                                 <mat-label>{{ 'common.labels.language' | translate }}</mat-label>
                                 <mat-select [(value)]="locale">
-                                    <mat-option value="en_US">{{ 'pages.register.language.english' | translate }}</mat-option>
-                                    <mat-option value="pl_PL">{{ 'pages.register.language.polish' | translate }}</mat-option>
+                                    <mat-select-trigger>
+                                        <span class="language-option">
+                                            <img class="language-flag" [src]="'assets/flags/' + getLocaleFlag(selectedLanguage().locale) + '.svg'" [alt]="selectedLanguage().labelKey | translate" />
+                                            <span>{{ selectedLanguage().labelKey | translate }}</span>
+                                        </span>
+                                    </mat-select-trigger>
+
+                                    @for (language of languages; track language.locale) {
+                                        <mat-option [value]="language.locale">
+                                            <span class="language-option">
+                                                <img class="language-flag" [src]="'assets/flags/' + getLocaleFlag(language.locale) + '.svg'" [alt]="language.labelKey | translate" />
+                                                <span>{{ language.labelKey | translate }}</span>
+                                            </span>
+                                        </mat-option>
+                                    }
                                 </mat-select>
                             </mat-form-field>
                         </div>

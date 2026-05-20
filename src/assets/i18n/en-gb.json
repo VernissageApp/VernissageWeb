@@ -60,7 +60,7 @@
     "errors": {
       "goBackLink": "homepage",
       "goBackPrefix": "Please go back to the ",
-      "goBackSuffix": " or contact with system administrator."
+      "goBackSuffix": " or contact the system administrator."
     },
     "labels": {
       "account": "Account",
@@ -92,7 +92,7 @@
       "followers": "Followers",
       "following": "Following",
       "frequentlyAskedQuestions": "Frequently Asked Questions",
-      "hashtags": "Hashtagi",
+      "hashtags": "Hashtags",
       "header": "Header",
       "homePage": "Home page",
       "key": "Key",
@@ -221,7 +221,7 @@
         "statusBoosted": "Status boosted.",
         "statusFavourited": "Status favourited.",
         "yourBoostHasBeenUndone": "Your boost has been undone.",
-        "yourLikeHasBeenUndone": "Your like has been undone.."
+        "yourLikeHasBeenUndone": "Your like has been undone."
       }
     },
     "businessCard": {
@@ -308,7 +308,7 @@
         "doYouWantToDeleteBlockedDomain": "Do you want to delete blocked domain?",
         "doYouWantToUnblockUser": "Do you want to unblock user?",
         "doYouWantToUnmuteUser": "Do you want to unmute user?",
-        "muteHasBeenCanceled": "Mute has been canceled.",
+        "muteHasBeenCanceled": "Mute has been cancelled.",
         "muteHasBeenSaved": "Mute has been saved.",
         "reportHasBeenSaved": "Report has been saved.",
         "theFollowRequestHasBeenSent": "The follow request has been sent.",
@@ -342,8 +342,8 @@
         "aiModel": "AI model",
         "aiProviderName": "AI provider name",
         "aiSecretKey": "AI secret key",
-        "aiUrl": "AI Url",
-        "corsOrgins": "CORS orgins",
+        "aiUrl": "AI URL",
+        "corsOrgins": "CORS origins",
         "deleteStatusesOlderThanDays": "Delete statuses older than (days)",
         "emailFromAddress": "Email from address",
         "emailFromName": "Email from name",
@@ -354,17 +354,17 @@
         "httpPathToCustomCssFile": "HTTP path to custom CSS file",
         "httpPathToCustomJavascriptFile": "HTTP path to custom JavaScript file",
         "imagesQuality": "Images quality",
-        "imagesUrl": "Images url",
+        "imagesUrl": "Image URL",
         "inlineCustomCssStyles": "Inline custom CSS styles",
         "inlineCustomJavascript": "Inline custom JavaScript",
-        "mastodonUrl": "Mastodon url",
+        "mastodonUrl": "Mastodon URL",
         "maximumFileSize": "Maximum file size",
         "maximumNumberOfAttachments": "Maximum number of attachments",
         "maximumNumberOfCharactersInStatus": "Maximum number of characters in status",
         "maximumNumberOfInvitations": "Maximum number of invitations",
         "minimumIntervalBetweenAddingSilentStatusesSeconds": "Minimum interval between adding silent statuses (seconds)",
         "minimumIntervalBetweenAddingStatusesSeconds": "Minimum interval between adding statuses (seconds)",
-        "patreonUrl": "Patreon url",
+        "patreonUrl": "Patreon URL",
         "privacyPolicyContent": "Privacy policy content",
         "privacyPolicyUpdateDate": "Privacy policy update date",
         "termsOfServiceContent": "Terms of Service content",
@@ -375,18 +375,18 @@
         "webEmail": "Web email",
         "webLanguages": "Web languages",
         "webLongDescription": "Web long description",
-        "webThumbnailUr": "Web thumbnail ur",
+        "webThumbnailUr": "Web thumbnail URL",
         "webTitle": "Web title",
         "webpushServiceEndpoint": "WebPush service endpoint",
         "webpushServiceSecretKey": "WebPush service secret key",
-        "webpushVapidPriavteKey": "WebPush Vapid priavte key",
+        "webpushVapidPriavteKey": "WebPush Vapid private key",
         "webpushVapidPublicKey": "WebPush Vapid public key",
         "webpushVapidSubject": "WebPush Vapid subject"
       },
       "captcha": "Captcha",
       "help": {
         "aiDescriptionPrompt": "Used to generate an image description (alt text). Write clear instructions for accurate, objective, and accessible descriptions based only on visible content.",
-        "aiHashtagsPrompt": "Used to generate hashtags for an status. Write instructions for relevant, concise, and social-media-friendly hashtags, and ask the model to return hashtags only.",
+        "aiHashtagsPrompt": "Used to generate hashtags for a status. Write instructions for relevant, concise, and social-media-friendly hashtags, and ask the model to return hashtags only.",
         "cdn": "If you have a CDN configured, you can override the default image URL generated based on the S3 bucket name and address.",
         "eventsToLog": "Selected events will be stored in the database. They should only be enabled when debugging an issue, as they impact both application performance and database size, given that their volume can be significant.",
         "imageQuality": "Determines the quality of images saved and processed by the system after upload (e.g., for thumbnail generation). Recommended value: 85.",
@@ -417,7 +417,7 @@
         "webContactUserId": "Web contact user id"
       },
       "messages": {
-        "settingsWasSaved": "Settings was saved."
+        "settingsWasSaved": "Settings have been saved."
       },
       "none": "None",
       "registration": "Registrations",
@@ -431,8 +431,8 @@
         "aiUrl": "AI URL",
         "anonymousAccess": "Anonymous access",
         "antiFloodSettings": "Anti-flood settings",
-        "artificialInteligence": "Artificial Inteligence",
-        "corsOrgins": "CORS orgins",
+        "artificialInteligence": "Artificial Intelligence",
+        "corsOrgins": "CORS origins",
         "customJavascript": "Custom JavaScript",
         "customStyles": "Custom styles",
         "databaseLoggedEvents": "Database logged events",
@@ -451,18 +451,18 @@
         "httpPathToCustomCssFile": "HTTP path to custom CSS file",
         "httpPathToCustomJavascriptFile": "HTTP path to custom JavaScript file",
         "imagesQuality": "Images quality",
-        "imagesUrl": "Images url",
+        "imagesUrl": "Image URL",
         "inlineCustomCssStyles": "Inline custom CSS styles",
         "inlineCustomJavascript": "Inline custom JavaScript",
         "mainServerSettings": "Main server settings",
-        "mastodonUrl": "Mastodon url",
+        "mastodonUrl": "Mastodon URL",
         "maximumFileSize": "Maximum file size",
         "maximumNumberOfAttachments": "Maximum number of attachments",
         "maximumNumberOfCharactersInStatus": "Maximum number of characters in status",
         "maximumNumberOfInvitationsPerUser": "Maximum number of invitations per user",
         "minimumIntervalBetweenAddingSilentStatusesSeconds": "Minimum interval between adding silent statuses (seconds)",
         "minimumIntervalBetweenAddingStatusesSeconds": "Minimum interval between adding statuses (seconds)",
-        "patreonUrl": "Patreon url",
+        "patreonUrl": "Patreon URL",
         "privacyPolicy": "Privacy policy",
         "privacyPolicyContent": "Privacy policy content",
         "privacyPolicyUpdateDate": "Privacy policy update date",
@@ -478,7 +478,7 @@
         "webEmail": "Web email",
         "webLanguages": "Web languages",
         "webLongDescription": "Web long description",
-        "webThumbnailUrl": "Web thumbnail url",
+        "webThumbnailUrl": "Web thumbnail URL",
         "webTitle": "Web title",
         "webpushNotifications": "WebPush notifications",
         "webpushServiceEndpoint": "WebPush service endpoint",
@@ -588,11 +588,11 @@
     },
     "licenseList": {
       "messages": {
-        "doYouWantToDeleteLicense": "Do you want to delete license?",
-        "licenseHasBeenDeleted": "License has been deleted."
+        "doYouWantToDeleteLicense": "Do you want to delete licence?",
+        "licenseHasBeenDeleted": "Licence has been deleted."
       },
       "texts": {
-        "newLicense": "New license"
+        "newLicense": "New licence"
       }
     },
     "password": {
@@ -605,7 +605,7 @@
         "numberOrSymbol": "Number or symbol",
         "oneLowercaseLetter": "One lowercase letter",
         "oneUppercaseLetter": "One uppercase letter",
-        "yourPasswordHaveToFullfilBelowRequirements": "Your password have to fullfil below requirements."
+        "yourPasswordHaveToFullfilBelowRequirements": "Your password must meet the requirements below."
       }
     },
     "statusProperties": {
@@ -660,7 +660,7 @@
         "city": "City",
         "country": "Country",
         "date": "Date",
-        "license": "License",
+        "license": "Licence",
         "location": "Location",
         "time": "Time"
       },
@@ -698,7 +698,7 @@
         "tooLongAltText": "Too long alt text.",
         "uploading": "Uploading...",
         "warning": "Warning:",
-        "withoutALicense": "Without a license"
+        "withoutALicense": "Without a licence"
       }
     },
     "userSelector": {
@@ -743,7 +743,7 @@
       },
       "texts": {
         "changeEmail": "Change email",
-        "chooseOtherEmailThisOneIsAlready": "Choose other email, this one is already connected to different account.",
+        "chooseOtherEmailThisOneIsAlready": "Choose another email address. This one is already connected to a different account.",
         "enterEmail": "Enter email.",
         "privacyNote": "Don't worry. This info is sacred for us. We won't ever show, sell or abuse it.",
         "verifyThatYouVeEnteredProperEmail": "Verify that you've entered proper email."
@@ -851,7 +851,7 @@
     "homeCard": {
       "attrs": {
         "homeCardTitle": "Home card title",
-        "licenseDescription": "License description",
+        "licenseDescription": "Licence description",
         "order": "Order"
       },
       "messages": {
@@ -902,21 +902,21 @@
     },
     "license": {
       "attrs": {
-        "licenseCode": "License code",
-        "licenseDescription": "License description",
-        "licenseName": "License name",
-        "url": "Url"
+        "licenseCode": "Licence code",
+        "licenseDescription": "Licence description",
+        "licenseName": "Licence name",
+        "url": "URL"
       },
       "messages": {
-        "licenseHasBeenUpdated": "License has been updated.",
-        "newLicenseHasBeenCreated": "New license has been created."
+        "licenseHasBeenUpdated": "Licence has been updated.",
+        "newLicenseHasBeenCreated": "New licence has been created."
       },
       "texts": {
         "codeIsTooLong": "Code is too long.",
         "descriptionIsTooLong": "Description is too long.",
-        "enterLicenseName": "Enter license name.",
+        "enterLicenseName": "Enter licence name.",
         "nameIsTooLong": "Name is too long.",
-        "urlIsTooLong": "Url is too long."
+        "urlIsTooLong": "URL is too long."
       }
     },
     "moveAccount": {
@@ -949,9 +949,9 @@
     },
     "notificationSettings": {
       "messages": {
-        "errorDuringGeneratingEncryptionKeysForWebPush": "Error during generating encryption keys for Web push.",
-        "notificationSettingsHasBeenSaved": "Notification settings has been saved.",
-        "unexpectedErrorDuringGeneratingWebPushSubscription": "Unexpected error during generating Web push subscription.",
+        "errorDuringGeneratingEncryptionKeysForWebPush": "Error while generating encryption keys for Web Push.",
+        "notificationSettingsHasBeenSaved": "Notification settings have been saved.",
+        "unexpectedErrorDuringGeneratingWebPushSubscription": "Unexpected error while generating Web Push subscription.",
         "webPushNotificationsForTheWebsiteAreDisabledInTheBrowser": "Web push notifications for the website are disabled in the browser.",
         "webPushPublicKeyIsNotSet": "Web push public key is not set."
       },
@@ -1109,12 +1109,12 @@
     "account": {
       "emailIsAlreadyConfirmed": "Email is already confirmed.",
       "userNameIsRequired": "User name is required.",
-      "userHaveToBeAuthenticated": "User have to be authenticated.",
+      "userHaveToBeAuthenticated": "User must be authenticated.",
       "userIsNotSupporter": "User is not supporter."
     },
     "accountMigration": {
       "targetAccountNotFound": "Target account cannot be found.",
-      "cannotMoveToTheSameAccount": "Target account cannot be equal to source account.",
+      "cannotMoveToTheSameAccount": "Target account cannot be the same as the source account.",
       "targetAccountIsNotAlias": "Target account is not an alias of this account.",
       "onlyLocalAccountsCanBeMoved": "Only local accounts can be moved."
     },
@@ -1140,7 +1140,7 @@
       "userNotExistsInDatabase": "User '{{activityPubProfile}}' cannot be found in the local database.",
       "privateKeyNotExists": "Private key not found in local database for user: '{{activityPubProfile}}'.",
       "publicKeyNotExists": "Public key not found in local database for user: '{{activityPubProfile}}'.",
-      "signatureDataNotCreated": "Signature data cannot be created based on headers from request.",
+      "signatureDataNotCreated": "Signature data cannot be created based on headers from the request.",
       "missingDateHeader": "ActivityPub request missing 'Date' header.",
       "incorrectDateFormat": "Incorrect date format in ActivityPub request: {{date}}.",
       "badTimeWindow": "ActivityPub signed request date '{{date}}' is outside acceptable time window.",
@@ -1154,7 +1154,7 @@
       "statusHasNotBeenDownloaded": "Downloaded status is empty: {{statusActivityPubUrl}}. Error: {{errorDescription}}",
       "statusCannotBeProcessed": "Downloaded status cannot be processed: {{statusActivityPubUrl}}. Error: {{errorDescription}}",
       "missingSupportedImageAttachments": "Downloaded status does not have image attachments: {{statusActivityPubUrl}}.",
-      "actorNotDownloaded": "Error during downloading actor from remote server: {{statusActivityPubUrl}}.",
+      "actorNotDownloaded": "Error while downloading actor from remote server: {{statusActivityPubUrl}}.",
       "invalidNoteUrl": "Invalid URL to status: {{statusActivityPubUrl}}.",
       "entityCaseError": "Cast to '{{entityName}}' failed.",
       "missingInstanceAdminAccount": "Missing admin account in local instance.",
@@ -1176,7 +1176,7 @@
       "missingFile": "The file is missing.",
       "imageTooLarge": "Image is too large.",
       "fileTypeNotSupported": "File type is not supported.",
-      "fileConnectedWithDifferentArticle": "File is connected to different article."
+      "fileConnectedWithDifferentArticle": "File is connected to a different article."
     },
     "atom": {
       "userNameIsRequired": "User name is required.",
@@ -1192,11 +1192,11 @@
       "imageTooLarge": "Image file is too large.",
       "onlyAvifHdrFilesAreSupported": "Only AVIF HDR files are supported.",
       "emailNotVerified": "User email has not been verified.",
-      "attachmentIdIsRequired": "Attachment Id is required.",
+      "attachmentIdIsRequired": "Attachment ID is required.",
       "incorrectRequestFormat": "Incorrect request format."
     },
     "authClient": {
-      "authClientWithUriExists": "Authentication client with specified uri already exists.",
+      "authClientWithUriExists": "Authentication client with the specified URI already exists.",
       "incorrectAuthClientId": "Authentication client id is incorrect."
     },
     "avatar": {
@@ -1215,14 +1215,14 @@
       "categoryCannotBeDeletedBecauseItIsInUse": "Category cannot be deleted because it is in use."
     },
     "changePassword": {
-      "userNotFound": "Signed user was not found in the database.",
+      "userNotFound": "Signed-in user was not found in the database.",
       "invalidOldPassword": "Given old password is invalid.",
-      "userAccountIsBlocked": "User account is blocked. User cannot login to the system right now.",
-      "emailNotConfirmed": "User email is not confirmed. User have to confirm his email first.",
+      "userAccountIsBlocked": "User account is blocked. The user cannot log in to the system right now.",
+      "emailNotConfirmed": "User email is not confirmed. The user must confirm their email first.",
       "saltCorrupted": "Password has been corrupted. Please contact with portal administrator."
     },
     "confirmEmail": {
-      "invalidIdOrToken": "Invalid user Id or token. Email cannot be approved."
+      "invalidIdOrToken": "Invalid user ID or token. Email cannot be approved."
     },
     "crypto": {
       "privateKeyNotGenerated": "Cryptographic private key has not been generated.",
@@ -1240,34 +1240,34 @@
       "userDomainBlockedForbidden": "Access to specified user domain block is forbidden."
     },
     "entityNotFound": {
-      "userNotFound": "User not exists.",
-      "refreshTokenNotFound": "Refresh token not exists.",
-      "roleNotFound": "Role not exists.",
-      "authClientNotFound": "Authentication client not exists.",
-      "attachmentNotFound": "Attachment not exists.",
-      "statusNotFound": "Status not exists.",
-      "notificationNotFound": "Notification not exists.",
-      "licenseNotFound": "License not exists.",
-      "homeCardNotFound": "Home card not exists.",
-      "locationNotFound": "Location not exists.",
-      "invitationNotFound": "Invitation not exists.",
-      "reportNotFound": "Report not exists.",
-      "twoFactorTokenNotFound": "Two factor token not exists.",
-      "instanceBlockedDomainNotFound": "Instance blocked domain not exists.",
-      "userBlockedDomainNotFound": "User blocked domain not exists.",
-      "pushSubscriptionNotFound": "Push subscription not exists.",
-      "ruleNotFound": "Rule not exists.",
-      "errorItemNotFound": "Error item not exists.",
-      "userAliasNotFound": "User alias not exists.",
-      "archiveNotFound": "Archive not exists.",
-      "userSettingNotFound": "User setting not exists.",
-      "categoryNotFound": "Category not exists.",
-      "followingImportNotFound": "Following import not exists.",
-      "articleNotFound": "Article not exists.",
-      "articleFileInfoNotFound": "Article file not exists.",
-      "businessCardNotFound": "Business card not exists.",
-      "sharedBusinessCardNotFound": "Shared business card not exists.",
-      "statusActivityPubEventNotFound": "Status ActivityPub event not exists."
+      "userNotFound": "User does not exist.",
+      "refreshTokenNotFound": "Refresh token does not exist.",
+      "roleNotFound": "Role does not exist.",
+      "authClientNotFound": "Authentication client does not exist.",
+      "attachmentNotFound": "Attachment does not exist.",
+      "statusNotFound": "Status does not exist.",
+      "notificationNotFound": "Notification does not exist.",
+      "licenseNotFound": "Licence does not exist.",
+      "homeCardNotFound": "Home card does not exist.",
+      "locationNotFound": "Location does not exist.",
+      "invitationNotFound": "Invitation does not exist.",
+      "reportNotFound": "Report does not exist.",
+      "twoFactorTokenNotFound": "Two factor token does not exist.",
+      "instanceBlockedDomainNotFound": "Instance blocked domain does not exist.",
+      "userBlockedDomainNotFound": "User blocked domain does not exist.",
+      "pushSubscriptionNotFound": "Push subscription does not exist.",
+      "ruleNotFound": "Rule does not exist.",
+      "errorItemNotFound": "Error item does not exist.",
+      "userAliasNotFound": "User alias does not exist.",
+      "archiveNotFound": "Archive does not exist.",
+      "userSettingNotFound": "User setting does not exist.",
+      "categoryNotFound": "Category does not exist.",
+      "followingImportNotFound": "Following import does not exist.",
+      "articleNotFound": "Article does not exist.",
+      "articleFileInfoNotFound": "Article file does not exist.",
+      "businessCardNotFound": "Business card does not exist.",
+      "sharedBusinessCardNotFound": "Shared business card does not exist.",
+      "statusActivityPubEventNotFound": "Status ActivityPub event does not exist."
     },
     "errorItem": {
       "incorrectErrorItemId": "Error item id is incorrect."
@@ -1281,18 +1281,18 @@
       "accountNotFound": "Account not found."
     },
     "followRequest": {
-      "missingFollowEntity": "Follow entity (sourceUserId: '{{sourceUserId}}', targetUserId: {{targetUserId}} not exists in local database.",
+      "missingFollowEntity": "Follow entity (sourceUserId: '{{sourceUserId}}', targetUserId: {{targetUserId}} does not exist in local database.",
       "missingSourceUser": "Missing source user '{{userId}}' in database.",
       "missingTargetUser": "Missing target user '{{userId}}' in database.",
       "missingActivityPubActionId": "Activity Pub action id in follow request is missing.",
-      "missingPrivateKey": "Private key for user {{userName}} not exists in local database.",
+      "missingPrivateKey": "Private key for user {{userName}} does not exist in local database.",
       "accountHasBeenMoved": "Target account has been moved and cannot accept new followers.",
       "incorrectId": "Incorrect id in follow request."
     },
     "forgotPassword": {
       "userAccountIsBlocked": "User account is blocked. You cannot change password right now.",
-      "tokenNotGenerated": "Forgot password token wasn't generated. It's really strange.",
-      "tokenExpired": "Token which allows to change password expired. User have to repeat forgot password process.",
+      "tokenNotGenerated": "Forgot password token was not generated. This is unexpected.",
+      "tokenExpired": "The token that allows the user to change their password has expired. The user must repeat the forgot password process.",
       "passwordNotHashed": "Password was not hashed successfully.",
       "saltCorrupted": "Password has been corrupted. Please contact with portal administrator.",
       "emailIsEmpty": "User email is empty. Cannot send email with token."
@@ -1315,13 +1315,13 @@
       "incorrectId": "Incorrect id."
     },
     "invitation": {
-      "maximumNumberOfInvitationsGenerated": "Maximum number of invitations has been already generated.",
+      "maximumNumberOfInvitationsGenerated": "The maximum number of invitations has already been generated.",
       "cannotDeleteUsedInvitation": "Cannot delete already used invitation.",
       "invalidId": "Invalid invitation id."
     },
     "license": {
-      "incorrectLicenseId": "License id is incorrect.",
-      "licenseAlreadyInUse": "License is already in use."
+      "incorrectLicenseId": "Licence id is incorrect.",
+      "licenseAlreadyInUse": "Licence is already in use."
     },
     "location": {
       "incorrectLocationId": "Location id is incorrect.",
@@ -1329,8 +1329,8 @@
     },
     "login": {
       "invalidLoginCredentials": "Given user name or password are invalid.",
-      "userAccountIsBlocked": "User account is blocked. User cannot login to the system right now.",
-      "userAccountIsNotApproved": "User account is not approved yet. User cannot login to the system right now.",
+      "userAccountIsBlocked": "User account is blocked. The user cannot log in to the system right now.",
+      "userAccountIsNotApproved": "User account is not approved yet. The user cannot log in to the system right now.",
       "saltCorrupted": "Password has been corrupted. Please contact with portal administrator.",
       "twoFactorTokenNotFound": "Token for two factor authentication is required.",
       "loginAttemptsExceeded": "Too many failed logins. Please try again in 5 minutes."
@@ -1339,20 +1339,20 @@
       "incorrectId": "Incorrect id."
     },
     "openAI": {
-      "incorrectOpenAIUrl": "Incorrect OpenAI url.",
+      "incorrectOpenAIUrl": "Incorrect OpenAI URL.",
       "cannotChangeResponseToString": "Cannot change response to string.",
       "incorrectJsonFormat": "Incorrect JSON format.",
       "openAIIsNotEnabled": "OpenAI is not enabled.",
       "openAIIsNotConfigured": "OpenAI is not configured. {{message}}"
     },
     "openidConnect": {
-      "invalidClientName": "Client name have to be specified in the URL.",
-      "clientNotFound": "Client with given name was not found.",
+      "invalidClientName": "Client name must be specified in the URL.",
+      "clientNotFound": "Client with the given name was not found.",
       "codeTokenNotFound": "Code token was not found.",
       "invalidAuthenticateToken": "Authenticate token is invalid.",
-      "authenticateTokenExpirationDateNotFound": "Authentication token don't have expiration date.",
+      "authenticateTokenExpirationDateNotFound": "Authentication token does not have an expiration date.",
       "autheticateTokenExpired": "Authentication token expired.",
-      "userAccountIsBlocked": "User account is blocked. User cannot login to the system right now."
+      "userAccountIsBlocked": "User account is blocked. The user cannot log in to the system right now."
     },
     "pushSubscription": {
       "incorrectPushSubscriptionId": "Push subscription id is incorrect."
@@ -1361,21 +1361,21 @@
       "keyLengthIsIncorrect": "Key length is incorrect, should be 16 characters."
     },
     "refreshToken": {
-      "refreshTokenNotExists": "Refresh token not exists or it's expired.",
+      "refreshTokenNotExists": "Refresh token does not exist or has expired.",
       "userIdNotSpecified": "User id must be specified for refresh token.",
       "refreshTokenRevoked": "Refresh token was revoked.",
-      "refreshTokenExpired": "Refresh token was expired."
+      "refreshTokenExpired": "Refresh token has expired."
     },
     "register": {
       "securityTokenIsMandatory": "Security token (captcha) is mandatory.",
       "securityTokenIsInvalid": "Security token (captcha) is invalid.",
       "userNameIsAlreadyTaken": "User with provided user name already exists in the system.",
-      "userIdNotExists": "User Id not exists. Probably saving of the user entity failed.",
+      "userIdNotExists": "User ID does not exist. Saving the user entity probably failed.",
       "emailIsAlreadyConnected": "Email is already connected with other account.",
       "registrationIsDisabled": "Registration is disabled.",
       "missingEmail": "Email has not been specified but it's mandatory.",
       "missingEmailConfirmationGuid": "Email confirmation guid has not been generated.",
-      "userHaveToAcceptAgreement": "User have to accept agreement.",
+      "userHaveToAcceptAgreement": "User must accept the agreement.",
       "reasonIsMandatory": "Reason is mandatory when only registration by approval is enabled.",
       "invitationTokenIsInvalid": "Invitation token is invalid.",
       "invitationTokenHasBeenUsed": "Invitation token has been used.",
@@ -1416,7 +1416,7 @@
     },
     "status": {
       "incorrectStatusId": "Status id is incorrect.",
-      "attachmentsAreRequired": "Attachments are misssing.",
+      "attachmentsAreRequired": "Attachments are missing.",
       "incorrectAttachmentId": "Incorrect attachment id.",
       "emailNotVerified": "User email has not been verified.",
       "accountHasBeenMoved": "Account has been moved and cannot create new statuses.",
@@ -1430,15 +1430,15 @@
       "cannotPinReblog": "Cannot pin reblogs.",
       "sortColumnNotSupported": "Sort column is not supported.",
       "incorrectStatusEventId": "Incorrect status event id.",
-      "maxLimitOfAttachmentsExceeded": "Maximum limit of attachments exceeded",
+      "maxLimitOfAttachmentsExceeded": "Maximum attachment limit exceeded",
       "statusCreationTooFrequent": "New status cannot be created yet. Please wait {{waitSeconds}} seconds before adding another one."
     },
     "storage": {
-      "downloadRemoteResourceFailed": "It's error returned from remote instance server.",
+      "downloadRemoteResourceFailed": "An error was returned from the remote instance server.",
       "notSupportedStorage": "Storage system is not supported yet.",
       "emptyBody": "External system returned empty body.",
       "emptyPublicFolderPath": "Public folder name is not specified.",
-      "unknownError": "Response doesn't contains any information about request status.",
+      "unknownError": "Response does not contain any information about the request status.",
       "s3StorageNotConfigured": "S3 object storage is not configured.",
       "fileReadError": "Cannot read file '{{fileName}}' from storage."
     },
@@ -1452,7 +1452,7 @@
     },
     "towFactorTokens": {
       "cannotEncodeKey": "Cannot encode key to base32 data.",
-      "headerNotExists": "Header X-Auth-2FA with code not exists.",
+      "headerNotExists": "Header X-Auth-2FA with code does not exist.",
       "tokenNotValid": "Token is not valid."
     },
     "userAlias": {
@@ -1464,7 +1464,7 @@
       "incorrectId": "Incorrect id."
     },
     "user": {
-      "userAlreadyApproved": "User account is already apporoved.",
+      "userAlreadyApproved": "User account is already approved.",
       "sortColumnNotSupported": "Sort column is not supported.",
       "userNameIsRequired": "User name is required.",
       "roleIsRequired": "User role is required."
@@ -1473,8 +1473,8 @@
       "keyIsRequired": "Key is required."
     },
     "xsrfValidation": {
-      "xsrfTokenNotExistsInHeader": "XSRF token (X-XSRF-TOKEN) not exists in request header.",
-      "xsrfTokenNotExistsInCookie": "XSRF token (xsrf-token) not exists in the cookie.",
+      "xsrfTokenNotExistsInHeader": "XSRF token (X-XSRF-TOKEN) does not exist in the request header.",
+      "xsrfTokenNotExistsInCookie": "XSRF token (xsrf-token) does not exist in the cookie.",
       "xsrfTokensAreDifferent": "XSRF tokens are different in the cookie and header."
     }
   },
@@ -1482,7 +1482,7 @@
     "account": {
       "avatar": {
         "removeAriaLabel": "Remove avatar",
-        "subtitle": "PNG, GIF or JPG. At most {{maxPictureFileSize}}. Will be downscaled to 600x600px"
+        "subtitle": "PNG, GIF, or JPG. At most {{maxPictureFileSize}}. Will be downscaled to 600x600px."
       },
       "blockedDomains": {
         "description": "List of domains you have blocked. Users from these domains cannot follow you. Their posts will not appear in your local timeline, and your posts are not delivered directly to them. However, they may still see your posts if a third party they follow boosts them.",
@@ -1534,10 +1534,10 @@
       },
       "header": {
         "removeAriaLabel": "Remove header",
-        "subtitle": "PNG, GIF or JPG. At most {{maxPictureFileSize}}. Will be downscaled to 1500x500px"
+        "subtitle": "PNG, GIF, or JPG. At most {{maxPictureFileSize}}. Will be downscaled to 1500x500px."
       },
       "import": {
-        "description": "You can import data previously exported from another server, such as a list of accounts you are following. Imported accounts will be merged with the ones you are already following. Only CSV files are currently supported. Max file size is {{maxImportFileSize}}.",
+        "description": "You can import data previously exported from another server, such as a list of accounts you are following. Imported accounts will be merged with the ones you are already following. Only CSV files are currently supported. The maximum file size is {{maxImportFileSize}}.",
         "importAriaLabel": "Import",
         "table": {
           "endProcessingDate": "End processing date",
@@ -1556,7 +1556,7 @@
         "blockedDomainDeleted": "Blocked domain has been deleted.",
         "cannotReadUserNameFromToken": "Cannot read username from token.",
         "confirmationEmailSent": "The email has been sent and should arrive in your inbox shortly.",
-        "errorDuringDownloadingAccountData": "Error during downloading account data.",
+        "errorDuringDownloadingAccountData": "Error while downloading account data.",
         "headerDeleted": "Header has been deleted.",
         "headerSaved": "Header has been saved.",
         "importFileTooLarge": "Uploaded file is too large. Maximum size is {{maxImportFileSize}}.",
@@ -1588,7 +1588,8 @@
           "valueTooLong": "Too long value."
         },
         "language": {
-          "english": "English (English)",
+          "english": "English US (English US)",
+          "englishGb": "English GB (English GB)",
           "finnish": "Finnish (suomi)",
           "french": "French (français)",
           "german": "German (Deutsch)",
@@ -1743,7 +1744,7 @@
           },
           "hint": "You can set an alternative handle for a user's account in the Fediverse. It will be displayed as the author in thumbnails generated based on OpenGraph tags.",
           "label": "Alternative author",
-          "placeholder": "Color"
+          "placeholder": "Colour"
         },
         "body": {
           "ariaLabel": "Article body",
@@ -1756,13 +1757,13 @@
           "placeholder": "Article body"
         },
         "color": {
-          "ariaLabel": "Color",
+          "ariaLabel": "Colour",
           "errors": {
-            "tooLong": "Too long color."
+            "tooLong": "Too long colour."
           },
-          "hint": "You can use CSS-compatible colors here, e.g., #00ff0020.",
-          "label": "Color",
-          "placeholder": "Color"
+          "hint": "You can use CSS-compatible colours here, e.g., #00ff0020.",
+          "label": "Colour",
+          "placeholder": "Colour"
         },
         "title": {
           "ariaLabel": "Title",
@@ -1806,7 +1807,7 @@
     "confirmEmail": {
       "error": {
         "descriptionMiddle": "If error will still occurs you can try to ",
-        "descriptionPrefix": "During confirming email unexpected error occurred. Please try again later.",
+        "descriptionPrefix": "An unexpected error occurred while confirming your email. Please try again later.",
         "descriptionSuffix": " (it will also activate your account) or contact wih us.",
         "resetPasswordLink": "reset your password",
         "title": "Error!"
@@ -1826,9 +1827,9 @@
     },
     "editBusinessCard": {
       "colors": {
-        "bottomAriaLabel": "Bottom color",
-        "textAriaLabel": "Text color",
-        "topAriaLabel": "Top color"
+        "bottomAriaLabel": "Bottom colour",
+        "textAriaLabel": "Text colour",
+        "topAriaLabel": "Top colour"
       },
       "form": {
         "email": {
@@ -1925,7 +1926,7 @@
     },
     "forgotPassword": {
       "errors": {
-        "unexpectedResetError": "Unexpected error during resetting your password. Please try again."
+        "unexpectedResetError": "Unexpected error while resetting your password. Please try again."
       },
       "form": {
         "errors": {
@@ -1943,7 +1944,7 @@
         "descriptionMiddle": "Check if you have entered the correct address.",
         "descriptionPrefix": "Are you sure you created an account at the given address?",
         "descriptionSuffixPrefix": "You can try",
-        "title": "User not exists"
+        "title": "User does not exist"
       }
     },
     "frequentlyAskedQuestions": {
@@ -2205,7 +2206,7 @@
         "emailAlreadyConnected": "Given email is already connected with other account.",
         "emailInvalid": "Verify that you've entered proper email.",
         "emailRequired": "Enter email.",
-        "emailTaken": "Choose other email, this one is already connected to different account.",
+        "emailTaken": "Choose another email address. This one is already connected to a different account.",
         "invalidCaptchaCode": "Captcha code is invalid. Please try again.",
         "invitationCodeRequired": "Enter invitation code.",
         "invitationCodeTooLong": "Invitation code is too long.",
@@ -2228,7 +2229,15 @@
         "label": "Invitation code"
       },
       "language": {
-        "english": "English (English)",
+        "english": "English US (English US)",
+        "englishGb": "English GB (English GB)",
+        "finnish": "Finnish (suomi)",
+        "french": "French (français)",
+        "german": "German (Deutsch)",
+        "italian": "Italian (italiano)",
+        "norwegian": "Norwegian (norsk)",
+        "spanish": "Spanish (español)",
+        "swedish": "Swedish (svenska)",
         "polish": "Polish (polski)"
       },
       "messages": {
@@ -2288,7 +2297,7 @@
     },
     "resetPassword": {
       "errors": {
-        "unexpectedResetError": "Unexpected error during resetting your password. Please try again."
+        "unexpectedResetError": "Unexpected error while resetting your password. Please try again."
       },
       "form": {
         "subtitle": "Enter the new password to your account, this page will be available for you only for 10 minutes.",
@@ -2342,8 +2351,8 @@
           "title": "Instance rules"
         },
         "licenses": {
-          "description": "Here you can manage photo's licenses.",
-          "title": "Licenses"
+          "description": "Here you can manage photo's licences.",
+          "title": "Licences"
         }
       },
       "title": "Settings"
@@ -2461,7 +2470,7 @@
         "fullFrameLens": "Full frame lens.",
         "hdr": "HDR",
         "lens": "Lens",
-        "license": "License",
+        "license": "Licence",
         "photoCreatedDate": "Photo created date",
         "place": "Place",
         "scanner": "Scanner",
@@ -2521,7 +2530,7 @@
         "termsOfService": "Terms of Service"
       },
       "messages": {
-        "healthStatusDownloadError": "Error during downloading system health status."
+        "healthStatusDownloadError": "Error while downloading system health status."
       },
       "sections": {
         "financialSupport": "Financial support",

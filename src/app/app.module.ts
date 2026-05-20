@@ -49,7 +49,7 @@ export const customTooltipDefaults: MatTooltipDefaultOptions = {
         HammerModule,
         PagesModule,
         TranslateModule.forRoot({
-            fallbackLang: 'en',
+            fallbackLang: 'en-us',
             loader: provideTranslateHttpLoader({
                 prefix: './assets/i18n/',
                 suffix: '.json',

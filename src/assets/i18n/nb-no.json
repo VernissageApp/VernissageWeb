@@ -1588,7 +1588,8 @@
           "valueTooLong": "For lang verdi."
         },
         "language": {
-          "english": "Engelsk (English)",
+          "english": "Engelsk US (English US)",
+          "englishGb": "Engelsk GB (English GB)",
           "finnish": "Finsk (suomi)",
           "french": "Fransk (français)",
           "german": "Tysk (Deutsch)",
@@ -2228,7 +2229,15 @@
         "label": "Invitasjonskode"
       },
       "language": {
-        "english": "engelsk (engelsk)",
+        "english": "Engelsk US (English US)",
+        "englishGb": "Engelsk GB (English GB)",
+        "finnish": "Finsk (suomi)",
+        "french": "Fransk (français)",
+        "german": "Tysk (Deutsch)",
+        "italian": "Italiensk (italiano)",
+        "norwegian": "Norsk (norsk)",
+        "spanish": "Spansk (español)",
+        "swedish": "Svensk (svenska)",
         "polish": "polsk (polski)"
       },
       "messages": {

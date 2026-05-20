@@ -46,6 +46,7 @@ import { PopoverComponent } from './widgets/popover/popover.component';
 import { StatusTextAutocompleteComponent } from './widgets/status-text-autocomplete/status-text-autocomplete.component';
 import { TagComponent } from './widgets/tag/tag.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { PipesModule } from '../pipes/pipes.module';
 
 @NgModule({
     declarations: [
@@ -140,7 +141,8 @@ import { TranslateModule } from '@ngx-translate/core';
         ValidationsModule,
         NgOptimizedImage,
         DirectivesModule,
-        TranslateModule
+        TranslateModule,
+        PipesModule
     ],
     providers: [
         provideHttpClient(withFetch(), withInterceptorsFromDi()),

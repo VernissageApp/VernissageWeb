@@ -61,7 +61,7 @@
                             <td mat-cell *matCellDef="let element" class="createdAt">
                                 @if (element.createdAt) {
                                     <span>
-                                        {{ element.createdAt | date: 'short' }}
+                                        {{ element.createdAt | localizedDate: 'short' }}
                                     </span>
                                 }
                             </td>

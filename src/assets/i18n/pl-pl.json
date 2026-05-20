@@ -1588,7 +1588,8 @@
           "valueTooLong": "Zbyt długa wartość."
         },
         "language": {
-          "english": "Angielski (English)",
+          "english": "Angielski US (English US)",
+          "englishGb": "Angielski GB (English GB)",
           "finnish": "Fiński (suomi)",
           "french": "Francuski (français)",
           "german": "Niemiecki (Deutsch)",
@@ -2228,7 +2229,15 @@
         "label": "Kod zaproszenia"
       },
       "language": {
-        "english": "Angielski (English)",
+        "english": "Angielski US (English US)",
+        "englishGb": "Angielski GB (English GB)",
+        "finnish": "Fiński (suomi)",
+        "french": "Francuski (français)",
+        "german": "Niemiecki (Deutsch)",
+        "italian": "Włoski (italiano)",
+        "norwegian": "Norweski (norsk)",
+        "spanish": "Hiszpański (español)",
+        "swedish": "Szwedzki (svenska)",
         "polish": "Polski (polski)"
       },
       "messages": {
