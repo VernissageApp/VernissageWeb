@@ -163,6 +163,35 @@
     </div>
 
     <mat-divider></mat-divider>
+    <h3>Anti-flood settings</h3>
+
+    <div class="margin-bottom-20">
+        <mat-form-field appearance="outline">
+            <mat-label>Minimum interval between adding statuses (seconds)</mat-label>
+            <input type="number" matInput name="minimumSecondsBetweenRegularStatuses" #statusPurgeAfterDays="ngModel" [(ngModel)]="settings().minimumSecondsBetweenRegularStatuses"
+                placeholder="Minimum interval between adding statuses (seconds)" aria-label="Minimum interval between adding statuses (seconds)" />
+        </mat-form-field>
+        <div class="text-muted fs-90 margin-left-10 margin-top-5">
+            Defines the minimum time (in seconds) a user must wait before publishing another regular status.
+            This helps protect the instance from spam-like posting bursts, reduces timeline noise,
+            and limits unnecessary federation traffic to remote servers.
+        </div>
+    </div>
+
+    <div class="margin-bottom-20">
+        <mat-form-field appearance="outline">
+            <mat-label>Minimum interval between adding silent statuses (seconds)</mat-label>
+            <input type="number" matInput name="minimumSecondsBetweenSilentStatuses" #statusPurgeAfterDays="ngModel" [(ngModel)]="settings().minimumSecondsBetweenSilentStatuses"
+                placeholder="Minimum interval between adding silent statuses (seconds)" aria-label="Minimum interval between adding silent statuses (seconds)" />
+        </mat-form-field>
+        <div class="text-muted fs-90 margin-left-10 margin-top-5">
+            Defines the minimum time (in seconds) a user must wait before publishing another silent status.
+            Silent statuses are intended for import/sync scenarios (for example from external apps).
+            These posts are not delivered to users’ timelines and are not federated through ActivityPub.
+        </div>
+    </div>
+
+    <mat-divider></mat-divider>
     <h3>Default accounts</h3>
 
     <div class="margin-bottom-30">
