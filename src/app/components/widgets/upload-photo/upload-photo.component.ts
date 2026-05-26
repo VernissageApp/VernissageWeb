@@ -43,6 +43,7 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
 
     private readonly defaultMaxHdrFileSize = 4194304;
     private readonly defaultMaxFileSize = 10485760;
+    private readonly maxDescriptionLength = 2000;
     private readonly defaultCountryCacheKey = 'default-country';
     private readonly defaultLocationCacheKey = 'default-location';
     private readonly defaultLicenseCacheKey = 'default-license';
@@ -79,8 +80,13 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
 
                 // During first initialization (restoring country from cache we have to restore also city).
                 if (this.initialized) {
+                    if (typeof value === 'string') {
+                        this.currentCountry.set(undefined);
+                        this.storeCountryInCache(undefined);
+                    }
+
                     this.citiesControl.setValue('');
-                    this.currentCity.set(undefined);
+                    this.clearSelectedCity();
                 } else {
                     if (!this.photo().id) {
                         this.restoreCityFromCache();
@@ -98,6 +104,11 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
             debounceTime(1000),
             switchMap(value => {
                 const query = typeof value === 'string' ? value : value?.name;
+
+                if (typeof value === 'string') {
+                    this.clearSelectedCity();
+                }
+
                 return this.locationService.search(this.currentCountry()?.code ?? "GB", query)
             })
         );
@@ -121,11 +132,24 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
         }
     }
 
-    protected displayCountryFn(country: Country): string {
+    public isValid(): boolean {
+        const descriptionLength = this.photo().description?.length ?? 0;
+        return this.countriesControl.valid && this.citiesControl.valid && descriptionLength <= this.maxDescriptionLength;
+    }
+
+    protected displayCountryFn(country: Country | string): string {
+        if (typeof country === 'string') {
+            return country;
+        }
+
         return country && country.name ? country.name : '';
     }
 
-    protected displayCityFn(location: Location): string {
+    protected displayCityFn(location: Location | string): string {
+        if (typeof location === 'string') {
+            return location;
+        }
+
         return location && location.name ? location.name : '';
     }
 
@@ -284,6 +308,16 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
         } else {
             this.persistenceService.remove(this.defaultLocationCacheKey);
         }
+    }
+
+    private clearSelectedCity(): void {
+        this.currentCity.set(undefined);
+        this.storeCityInCache(undefined);
+
+        this.photo.update((photo) => {
+            photo.locationId = undefined;
+            return photo;
+        });
     }
 
     private storeLicenseInCache(licenseId?: string): void {
