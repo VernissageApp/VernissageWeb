@@ -36,7 +36,7 @@
         </div>
     }
 
-    <mat-form-field appearance="outline" class="margin-top-10">
+    <mat-form-field appearance="outline" class="margin-top-10 margin-bottom-10">
         <mat-label>{{ 'components.uploadPhoto.texts.altText' | translate }}</mat-label>
         <textarea
             matInput [name]="'altText-' + internalIndex"
@@ -70,13 +70,14 @@
     </mat-form-field>
 
     <div class="text-muted">{{ 'components.uploadPhoto.labels.location' | translate }}</div>
-    <mat-form-field appearance="outline" class="margin-top-10">
+    <mat-form-field appearance="outline" class="margin-top-10 margin-bottom-10">
         <mat-label>{{ 'components.uploadPhoto.labels.country' | translate }}</mat-label>
         <input type="text"
             [placeholder]="'components.uploadPhoto.attrs.enterLocation' | translate"
             [attr.aria-label]="'components.uploadPhoto.attrs.number' | translate"
             matInput
             [formControl]="countriesControl"
+            [appAutocompleteValid]="true"
             [matAutocomplete]="autoCountry">
         <mat-autocomplete autoActiveFirstOption #autoCountry="matAutocomplete" [displayWith]="displayCountryFn" (optionSelected)="selectedCountry($event.option.value)">
             @for (option of filteredCountries$ | async; track option) {
@@ -91,6 +92,10 @@
                 <mat-icon>close</mat-icon>
             </button>
         }
+
+        @if (countriesControl.hasError('appAutocompleteValid')) {
+            <mat-error>Choose a country from the list.</mat-error>
+        }
     </mat-form-field>
 
     <mat-form-field appearance="outline">
@@ -100,6 +105,7 @@
             [attr.aria-label]="'components.uploadPhoto.attrs.number' | translate"
             matInput
             [formControl]="citiesControl"
+            [appAutocompleteValid]="true"
             [matAutocomplete]="auto">
         <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayCityFn" (optionSelected)="selectedCity($event.option.value)">
             @for (option of cities$ | async; track option) {
@@ -113,6 +119,10 @@
             <button matSuffix matIconButton [attr.aria-label]="'common.actions.clear' | translate" (click)="onCityClear()">
                 <mat-icon>close</mat-icon>
             </button>
+        }
+
+        @if (citiesControl.hasError('appAutocompleteValid')) {
+            <mat-error>Choose a city from the list.</mat-error>
         }
     </mat-form-field>
 

@@ -55,13 +55,13 @@
                     @for (photo of photos(); track $index; let i = $index) {
                         <mat-step>
                             <ng-template matStepLabel>{{ 'pages.upload.stepper.imageData' | translate:{ index: i + 1 } }}</ng-template>
-                            <app-upload-photo [photo]="photo" [licenses]="licenses()" (cancelUpload)="onPhotoUploadCancel($event)"></app-upload-photo>
+                            <app-upload-photo #uploadPhoto [photo]="photo" [licenses]="licenses()" (cancelUpload)="onPhotoUploadCancel($event)"></app-upload-photo>
                             <div class="margin-top-15 flex-row flex-space-between">
                                 <div>
                                     @if (i > 0) {
                                         <button class="margin-right-10" matButton="text" matStepperPrevious>{{ 'common.actions.back' | translate }}</button>
                                     }
-                                    <button matButton="filled" matStepperNext>{{ 'common.actions.next' | translate }}</button>
+                                    <button matButton="filled" [disabled]="!uploadPhoto.isValid()" matStepperNext>{{ 'common.actions.next' | translate }}</button>
                                 </div>
                                 <div>
                                     @if (photo.isDeleting()) {
@@ -165,7 +165,7 @@
                             <div class="flex-row flex-space-between">
                                 <div>
                                     <button class="margin-right-10" matButton="text" matStepperPrevious>{{ 'common.actions.back' | translate }}</button>
-                                    <button matButton="filled" [disabled]="!allPhotosUploaded() || photos().length === 0" matStepperNext>
+                                    <button matButton="filled" [disabled]="!allPhotosUploaded() || photos().length === 0 || f.form.invalid" matStepperNext>
                                         {{ isEditMode() ? ('common.actions.update' | translate) : ('common.actions.upload' | translate) }}
                                     </button>
                                 </div>
