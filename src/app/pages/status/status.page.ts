@@ -211,7 +211,8 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     protected onVersionChange(): void {
         const navigationExtras: NavigationExtras = {
             queryParams: { version: this.versionId().length > 0 ?  this.versionId() : undefined },
-            queryParamsHandling: 'merge'
+            queryParamsHandling: 'merge',
+            state: { ci: this.contextStatusIndex() }
         };
 
         this.router.navigate([], navigationExtras);
