@@ -13,7 +13,7 @@
                     </div>
 
                     <div class="photo-container photo-container-table" [style.height]="isHandset() ? 'auto' : 'calc(100dvh - 109px)'">
-                @if (showContextArrows() && !isInVersionMode()) {
+                @if (showContextArrows()) {
                     <div class="icon" (click)="onPrevClick()" (keydown.enter)="onPrevClick()" tabindex="0">
                         @if (!hideLeftArrow()) {
                             <mat-icon>arrow_back_ios</mat-icon>
@@ -69,7 +69,7 @@
                     }
                 </div>
 
-                @if (showContextArrows() && !isInVersionMode()) {
+                @if (showContextArrows()) {
                     <div class="icon" (click)="onNextClick()" (keydown.enter)="onNextClick()" tabindex="0">
                         @if (!hideRightArrow()) {
                             <mat-icon>arrow_forward_ios</mat-icon>
