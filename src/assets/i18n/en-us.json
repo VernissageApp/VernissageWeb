@@ -1281,7 +1281,7 @@
       "accountNotFound": "Account not found."
     },
     "followRequest": {
-      "missingFollowEntity": "Follow entity (sourceUserId: '{{sourceUserId}}', targetUserId: {{targetUserId}} does not exist in local database.",
+      "missingFollowEntity": "Follow entity (sourceUserId: '{{sourceUserId}}', targetUserId: {{targetUserId}}) does not exist in local database.",
       "missingSourceUser": "Missing source user '{{userId}}' in database.",
       "missingTargetUser": "Missing target user '{{userId}}' in database.",
       "missingActivityPubActionId": "Activity Pub action id in follow request is missing.",
