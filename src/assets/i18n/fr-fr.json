@@ -1596,6 +1596,7 @@
           "italian": "Italien (italiano)",
           "norwegian": "Norvégien (norsk)",
           "polish": "Polonais (polski)",
+          "portuguese": "Portugais (português)",
           "spanish": "Espagnol (español)",
           "swedish": "Suédois (svenska)"
         },
@@ -2238,7 +2239,8 @@
         "norwegian": "Norvégien (norsk)",
         "spanish": "Espagnol (español)",
         "swedish": "Suédois (svenska)",
-        "polish": "polonais (polski)"
+        "polish": "polonais (polski)",
+        "portuguese": "Portugais (português)"
       },
       "messages": {
         "accountCreated": "Votre compte a été créé."

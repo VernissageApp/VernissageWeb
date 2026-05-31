@@ -1596,6 +1596,7 @@
           "italian": "Italia (italiano)",
           "norwegian": "Norja (norsk)",
           "polish": "Puola (polski)",
+          "portuguese": "Portugali (português)",
           "spanish": "Espanja (español)",
           "swedish": "Ruotsi (svenska)"
         },
@@ -2238,7 +2239,8 @@
         "norwegian": "Norja (norsk)",
         "spanish": "Espanja (español)",
         "swedish": "Ruotsi (svenska)",
-        "polish": "puola (polski)"
+        "polish": "puola (polski)",
+        "portuguese": "Portugali (português)"
       },
       "messages": {
         "accountCreated": "Tilisi on luotu."

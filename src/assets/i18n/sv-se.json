@@ -1596,6 +1596,7 @@
           "italian": "Italienska (italiano)",
           "norwegian": "Norska (norsk)",
           "polish": "Polska (polski)",
+          "portuguese": "Portugisiska (português)",
           "spanish": "Spanska (español)",
           "swedish": "Svenska (svenska)"
         },
@@ -2238,7 +2239,8 @@
         "norwegian": "Norska (norsk)",
         "spanish": "Spanska (español)",
         "swedish": "Svenska (svenska)",
-        "polish": "polska (polski)"
+        "polish": "polska (polski)",
+        "portuguese": "Portugisiska (português)"
       },
       "messages": {
         "accountCreated": "Ditt konto har skapats."

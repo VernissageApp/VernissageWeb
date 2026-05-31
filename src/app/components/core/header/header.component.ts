@@ -46,6 +46,7 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
         { language: 'de-de', labelKey: 'pages.account.personalInformation.language.german' },
         { language: 'nb-no', labelKey: 'pages.account.personalInformation.language.norwegian' },
         { language: 'pl-pl', labelKey: 'pages.account.personalInformation.language.polish' },
+        { language: 'pt-pt', labelKey: 'pages.account.personalInformation.language.portuguese' },
         { language: 'sv-se', labelKey: 'pages.account.personalInformation.language.swedish' },
         { language: 'it-it', labelKey: 'pages.account.personalInformation.language.italian' }
     ];

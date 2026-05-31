@@ -8,6 +8,7 @@ import localeFr from '@angular/common/locales/fr';
 import localeIt from '@angular/common/locales/it';
 import localeNb from '@angular/common/locales/nb';
 import localePl from '@angular/common/locales/pl';
+import localePt from '@angular/common/locales/pt';
 import localeSv from '@angular/common/locales/sv';
 import { inject, Pipe, PipeTransform } from '@angular/core';
 import { LanguageService } from '../services/common/language.service';
@@ -21,6 +22,7 @@ registerLocaleData(localeFr, 'fr-FR');
 registerLocaleData(localeIt, 'it-IT');
 registerLocaleData(localeNb, 'nb-NO');
 registerLocaleData(localePl, 'pl-PL');
+registerLocaleData(localePt, 'pt-PT');
 registerLocaleData(localeSv, 'sv-SE');
 
 @Pipe({

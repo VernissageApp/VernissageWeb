@@ -68,6 +68,7 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
         { locale: 'de_DE', labelKey: 'pages.account.personalInformation.language.german' },
         { locale: 'nb_NO', labelKey: 'pages.account.personalInformation.language.norwegian' },
         { locale: 'pl_PL', labelKey: 'pages.account.personalInformation.language.polish' },
+        { locale: 'pt_PT', labelKey: 'pages.account.personalInformation.language.portuguese' },
         { locale: 'sv_SE', labelKey: 'pages.account.personalInformation.language.swedish' },
         { locale: 'it_IT', labelKey: 'pages.account.personalInformation.language.italian' }
     ];

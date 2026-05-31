@@ -11,7 +11,7 @@ import { PreferencesService } from './preferences.service';
 })
 export class LanguageService {
     private readonly defaultLanguage = 'en-us';
-    private readonly supportedLanguages = ['de-de', 'en-us', 'en-gb', 'es-es', 'fi-fi', 'fr-fr', 'it-it', 'nb-no', 'pl-pl', 'sv-se'];
+    private readonly supportedLanguages = ['de-de', 'en-us', 'en-gb', 'es-es', 'fi-fi', 'fr-fr', 'it-it', 'nb-no', 'pl-pl', 'pt-pt', 'sv-se'];
     private readonly languageLocales: Record<string, string> = {
         'de-de': 'de-DE',
         'en-gb': 'en-GB',
@@ -22,6 +22,7 @@ export class LanguageService {
         'it-it': 'it-IT',
         'nb-no': 'nb-NO',
         'pl-pl': 'pl-PL',
+        'pt-pt': 'pt-PT',
         'sv-se': 'sv-SE'
     };
 

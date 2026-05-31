@@ -617,7 +617,7 @@
         "numberOfLikes": "Liczba polubień",
         "public": "Publiczny",
         "publishedDate": "Data publikacji",
-        "quietpublic": "CichyPubliczny"
+        "quietpublic": "Publiczny (cichy)"
       }
     },
     "statusTextAutocomplete": {
@@ -1596,6 +1596,7 @@
           "italian": "Włoski (italiano)",
           "norwegian": "Norweski (norsk)",
           "polish": "Polski (polski)",
+          "portuguese": "Portugalski (português)",
           "spanish": "Hiszpański (español)",
           "swedish": "Szwedzki (svenska)"
         },
@@ -2238,7 +2239,8 @@
         "norwegian": "Norweski (norsk)",
         "spanish": "Hiszpański (español)",
         "swedish": "Szwedzki (svenska)",
-        "polish": "Polski (polski)"
+        "polish": "Polski (polski)",
+        "portuguese": "Portugalski (português)"
       },
       "messages": {
         "accountCreated": "Twoje konto zostało utworzone."

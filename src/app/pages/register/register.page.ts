@@ -41,6 +41,7 @@ export class RegisterPage implements OnInit {
         { locale: 'de_DE', labelKey: 'pages.register.language.german' },
         { locale: 'nb_NO', labelKey: 'pages.register.language.norwegian' },
         { locale: 'pl_PL', labelKey: 'pages.register.language.polish' },
+        { locale: 'pt_PT', labelKey: 'pages.register.language.portuguese' },
         { locale: 'sv_SE', labelKey: 'pages.register.language.swedish' },
         { locale: 'it_IT', labelKey: 'pages.register.language.italian' }
     ];
