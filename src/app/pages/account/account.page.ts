@@ -64,13 +64,13 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
         { locale: 'en_GB', labelKey: 'pages.account.personalInformation.language.englishGb' },
         { locale: 'fi_FI', labelKey: 'pages.account.personalInformation.language.finnish' },
         { locale: 'fr_FR', labelKey: 'pages.account.personalInformation.language.french' },
-        { locale: 'es_ES', labelKey: 'pages.account.personalInformation.language.spanish' },
+        // { locale: 'es_ES', labelKey: 'pages.account.personalInformation.language.spanish' },
         { locale: 'de_DE', labelKey: 'pages.account.personalInformation.language.german' },
-        { locale: 'nb_NO', labelKey: 'pages.account.personalInformation.language.norwegian' },
+        // { locale: 'nb_NO', labelKey: 'pages.account.personalInformation.language.norwegian' },
         { locale: 'pl_PL', labelKey: 'pages.account.personalInformation.language.polish' },
-        { locale: 'pt_PT', labelKey: 'pages.account.personalInformation.language.portuguese' },
-        { locale: 'sv_SE', labelKey: 'pages.account.personalInformation.language.swedish' },
-        { locale: 'it_IT', labelKey: 'pages.account.personalInformation.language.italian' }
+        // { locale: 'pt_PT', labelKey: 'pages.account.personalInformation.language.portuguese' },
+        // { locale: 'sv_SE', labelKey: 'pages.account.personalInformation.language.swedish' },
+        // { locale: 'it_IT', labelKey: 'pages.account.personalInformation.language.italian' }
     ];
 
     protected aliasDisplayedColumns = signal<string[]>(['alias', 'actions']);

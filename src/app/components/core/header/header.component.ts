@@ -42,13 +42,13 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
         { language: 'en-gb', labelKey: 'pages.account.personalInformation.language.englishGb' },
         { language: 'fi-fi', labelKey: 'pages.account.personalInformation.language.finnish' },
         { language: 'fr-fr', labelKey: 'pages.account.personalInformation.language.french' },
-        { language: 'es-es', labelKey: 'pages.account.personalInformation.language.spanish' },
+        // { language: 'es-es', labelKey: 'pages.account.personalInformation.language.spanish' },
         { language: 'de-de', labelKey: 'pages.account.personalInformation.language.german' },
-        { language: 'nb-no', labelKey: 'pages.account.personalInformation.language.norwegian' },
+        // { language: 'nb-no', labelKey: 'pages.account.personalInformation.language.norwegian' },
         { language: 'pl-pl', labelKey: 'pages.account.personalInformation.language.polish' },
-        { language: 'pt-pt', labelKey: 'pages.account.personalInformation.language.portuguese' },
-        { language: 'sv-se', labelKey: 'pages.account.personalInformation.language.swedish' },
-        { language: 'it-it', labelKey: 'pages.account.personalInformation.language.italian' }
+        // { language: 'pt-pt', labelKey: 'pages.account.personalInformation.language.portuguese' },
+        // { language: 'sv-se', labelKey: 'pages.account.personalInformation.language.swedish' },
+        // { language: 'it-it', labelKey: 'pages.account.personalInformation.language.italian' }
     ];
 
     private clearReuseStrategyAfterNavigationEnds = false;

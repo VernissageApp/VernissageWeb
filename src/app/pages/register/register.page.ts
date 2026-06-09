@@ -37,13 +37,13 @@ export class RegisterPage implements OnInit {
         { locale: 'en_GB', labelKey: 'pages.register.language.englishGb' },
         { locale: 'fi_FI', labelKey: 'pages.register.language.finnish' },
         { locale: 'fr_FR', labelKey: 'pages.register.language.french' },
-        { locale: 'es_ES', labelKey: 'pages.register.language.spanish' },
+        // { locale: 'es_ES', labelKey: 'pages.register.language.spanish' },
         { locale: 'de_DE', labelKey: 'pages.register.language.german' },
-        { locale: 'nb_NO', labelKey: 'pages.register.language.norwegian' },
+        // { locale: 'nb_NO', labelKey: 'pages.register.language.norwegian' },
         { locale: 'pl_PL', labelKey: 'pages.register.language.polish' },
-        { locale: 'pt_PT', labelKey: 'pages.register.language.portuguese' },
-        { locale: 'sv_SE', labelKey: 'pages.register.language.swedish' },
-        { locale: 'it_IT', labelKey: 'pages.register.language.italian' }
+        // { locale: 'pt_PT', labelKey: 'pages.register.language.portuguese' },
+        // { locale: 'sv_SE', labelKey: 'pages.register.language.swedish' },
+        // { locale: 'it_IT', labelKey: 'pages.register.language.italian' }
     ];
 
     protected registerPageMode = signal(RegisterMode.Register);
