@@ -18,6 +18,7 @@ import { StatusesService } from 'src/app/services/http/statuses.service';
 import { ContentWarningDialog } from 'src/app/dialogs/content-warning-dialog/content-warning.dialog';
 import { RandomGeneratorService } from 'src/app/services/common/random-generator.service';
 import { ConfirmationDialog } from 'src/app/dialogs/confirmation-dialog/confirmation.dialog';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-reports',
@@ -48,6 +49,7 @@ export class ReportsPage extends ResponsiveComponent implements OnInit, OnDestro
     private activatedRoute = inject(ActivatedRoute);
     private dialog = inject(MatDialog);
     private router = inject(Router);
+    private translateService = inject(TranslateService);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
@@ -108,13 +110,13 @@ export class ReportsPage extends ResponsiveComponent implements OnInit, OnDestro
     protected getReportType(report: Report): string {
         if (report.status) {
             if (report.status.replyToStatusId) {
-                return 'Comment';
+                return this.translateService.instant('pages.reports.types.comment');
             }
 
-            return 'Status';
+            return this.translateService.instant('pages.reports.types.status');
         }
 
-        return 'Profile';
+        return this.translateService.instant('pages.reports.types.profile');
     }
 
     protected onOpen(report: Report): void {
@@ -129,7 +131,7 @@ export class ReportsPage extends ResponsiveComponent implements OnInit, OnDestro
             await this.reportsService.close(report.id);
             await this.refreshList();
 
-            this.messageService.showSuccess('Report has been closed.');
+            this.messageService.showSuccess(this.translateService.instant('pages.reports.messages.closed'));
         } catch (error) {
             console.error(error);
             this.messageService.showServerError(error);
@@ -141,7 +143,7 @@ export class ReportsPage extends ResponsiveComponent implements OnInit, OnDestro
             await this.reportsService.restore(report.id);
             await this.refreshList();
 
-            this.messageService.showSuccess('Report has been restored.');
+            this.messageService.showSuccess(this.translateService.instant('pages.reports.messages.restored'));
         } catch (error) {
             console.error(error);
             this.messageService.showServerError(error);
@@ -151,7 +153,7 @@ export class ReportsPage extends ResponsiveComponent implements OnInit, OnDestro
     protected async onSend(report: Report): Promise<void> {
         const dialogRef = this.dialog.open(ConfirmationDialog, {
             width: '500px',
-            data: 'Do you want to send report to remote instance?'
+            data: this.translateService.instant('pages.reports.confirmations.sendToRemoteInstance')
         });
 
         dialogRef.afterClosed().subscribe(async (result) => {
@@ -160,7 +162,7 @@ export class ReportsPage extends ResponsiveComponent implements OnInit, OnDestro
                     await this.reportsService.send(report.id);
                     await this.refreshList();
 
-                    this.messageService.showSuccess('Report has been send to remote instance.');
+                    this.messageService.showSuccess(this.translateService.instant('pages.reports.messages.sentToRemoteInstance'));
                 } catch (error) {
                     console.error(error);
                     this.messageService.showServerError(error);
@@ -172,7 +174,7 @@ export class ReportsPage extends ResponsiveComponent implements OnInit, OnDestro
     protected async onUnlist(report: Report): Promise<void> {
         const dialogRef = this.dialog.open(ConfirmationDialog, {
             width: '500px',
-            data: 'Do you want to unlist status?'
+            data: this.translateService.instant('pages.reports.confirmations.unlistStatus')
         });
 
         dialogRef.afterClosed().subscribe(async (result) => {
@@ -186,7 +188,7 @@ export class ReportsPage extends ResponsiveComponent implements OnInit, OnDestro
                     await this.reportsService.close(report.id);
                     await this.refreshList();
         
-                    this.messageService.showSuccess('Status has been unlisted.');
+                    this.messageService.showSuccess(this.translateService.instant('pages.reports.messages.statusUnlisted'));
                 } catch (error) {
                     console.error(error);
                     this.messageService.showServerError(error);
@@ -198,7 +200,7 @@ export class ReportsPage extends ResponsiveComponent implements OnInit, OnDestro
     protected async onDelete(report: Report): Promise<void> {
         const dialogRef = this.dialog.open(ConfirmationDialog, {
             width: '500px',
-            data: 'Do you want to delete status?'
+            data: this.translateService.instant('pages.reports.confirmations.deleteStatus')
         });
 
         dialogRef.afterClosed().subscribe(async (result) => {
@@ -211,7 +213,7 @@ export class ReportsPage extends ResponsiveComponent implements OnInit, OnDestro
                     await this.statusesService.delete(report.status.id);
                     await this.refreshList();
         
-                    this.messageService.showSuccess('Status has been deleted.');
+                    this.messageService.showSuccess(this.translateService.instant('pages.reports.messages.statusDeleted'));
                 } catch (error) {
                     console.error(error);
                     this.messageService.showServerError(error);
@@ -238,7 +240,7 @@ export class ReportsPage extends ResponsiveComponent implements OnInit, OnDestro
                     await this.reportsService.close(report.id);
                     await this.refreshList();
         
-                    this.messageService.showSuccess('Content warning has been added.');
+                    this.messageService.showSuccess(this.translateService.instant('pages.reports.messages.contentWarningAdded'));
                 } catch (error) {
                     console.error(error);
                     this.messageService.showServerError(error);

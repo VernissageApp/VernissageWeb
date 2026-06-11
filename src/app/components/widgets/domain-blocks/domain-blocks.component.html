@@ -3,7 +3,7 @@
 
         <!-- Domain Name Column -->
         <ng-container matColumnDef="domain">
-            <th mat-header-cell *matHeaderCellDef> Domain </th>
+            <th mat-header-cell *matHeaderCellDef> {{ 'common.labels.domain' | translate }} </th>
             <td mat-cell *matCellDef="let element" class="domain">
                 {{ element.domain }}
                 <div class="overflow-ellipsis">
@@ -24,12 +24,12 @@
                         <mat-icon>delete</mat-icon>
                     </button>
                 } @else {
-                    <button class="more-button" matButton="outlined" [matMenuTriggerFor]="dropdownMenuAction" aria-label="More options">
+                    <button class="more-button" matButton="outlined" [matMenuTriggerFor]="dropdownMenuAction" [attr.aria-label]="'common.labels.moreOptions' | translate">
                         <span class="material-symbols-outlined">more_vert</span>
                     </button>
                     <mat-menu #dropdownMenuAction="matMenu" xPosition="before">
-                        <button mat-menu-item (click)="openInstanceBlockedDomainDialog(element)">Update</button>
-                        <button mat-menu-item (click)="onDelete(element)">Delete</button>
+                        <button mat-menu-item (click)="openInstanceBlockedDomainDialog(element)">{{ 'common.actions.update' | translate }}</button>
+                        <button mat-menu-item (click)="onDelete(element)">{{ 'common.actions.delete' | translate }}</button>
                     </mat-menu>
                 }
             </td>
@@ -44,8 +44,8 @@
         [pageIndex]="pageIndex"
         [pageSize]="10"
         [pageSizeOptions]="[10, 25, 100]"
-        aria-label="Select page">
+        [attr.aria-label]="'common.paginator.selectPage' | translate">
     </mat-paginator>
 
-    <button matButton="filled" (click)="openInstanceBlockedDomainDialog(undefined)">New domain</button>
+    <button matButton="filled" (click)="openInstanceBlockedDomainDialog(undefined)">{{ 'components.domainBlocks.texts.newDomain' | translate }}</button>
 }

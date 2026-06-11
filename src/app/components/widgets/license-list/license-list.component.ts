@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { ResponsiveComponent } from 'src/app/common/responsive';
@@ -30,6 +31,7 @@ export class LicenseListComponent extends ResponsiveComponent implements OnInit 
     private licensesService = inject(LicensesService);
     private messageService = inject(MessagesService);
     private dialog = inject(MatDialog);
+    private translateService = inject(TranslateService);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
@@ -49,14 +51,14 @@ export class LicenseListComponent extends ResponsiveComponent implements OnInit 
     protected async onDelete(license: License): Promise<void> {
         const dialogRef = this.dialog.open(ConfirmationDialog, {
             width: '500px',
-            data: 'Do you want to delete license?'
+            data: this.translateService.instant('components.licenseList.messages.doYouWantToDeleteLicense')
         });
 
         dialogRef.afterClosed().subscribe(async (result) => {
             if (result?.confirmed) {
                 try {
                     await this.licensesService.delete(license.id ??  '');
-                    this.messageService.showSuccess('License has been deleted.');
+                    this.messageService.showSuccess(this.translateService.instant('components.licenseList.messages.licenseHasBeenDeleted'));
 
                     const licensesInternal = await this.licensesService.get(this.pageIndex() + 1, this.pageSize);
                     this.licenses.set(licensesInternal);

@@ -10,6 +10,7 @@ import { LoadingService } from 'src/app/services/common/loading.service';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { BusinessCardsService } from 'src/app/services/http/business-cards.service';
 import { UsersService } from 'src/app/services/http/users.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-edit-business-card',
@@ -44,6 +45,7 @@ export class EditBusinessCardPage extends ResponsiveComponent implements OnInit 
     private loadingService = inject(LoadingService);
     private businessCardsService = inject(BusinessCardsService);
     private messageService = inject(MessagesService);
+    private translateService = inject(TranslateService);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
@@ -106,10 +108,10 @@ export class EditBusinessCardPage extends ResponsiveComponent implements OnInit 
 
             if (this.id()) {
                 await this.businessCardsService.update(businessCard);
-                this.messageService.showSuccess('Business card was updated.');                
+                this.messageService.showSuccess(this.translateService.instant('pages.editBusinessCard.messages.updated'));
             } else {
                 await this.businessCardsService.create(businessCard);
-                this.messageService.showSuccess('Business card was saved.');
+                this.messageService.showSuccess(this.translateService.instant('pages.editBusinessCard.messages.saved'));
             }
             
             this.router.navigate(['/shared-cards']);

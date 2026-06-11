@@ -1,13 +1,13 @@
 <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
-    <div mat-dialog-title>Disable two factor authentication (2FA)</div>
+    <div mat-dialog-title>{{ 'dialogs.disableTwoFactorToken.texts.disableTwoFactorAuthentication2fa' | translate }}</div>
     <div mat-dialog-content>
         <div class="flex-col gap-0 margin-top-5">
             <div>
                 Enter token from 2FA application (like Authy or Google Authenticator).
             </div>
             <mat-form-field appearance="outline" class="margin-top-10" >
-                <mat-label>Token</mat-label>
-                <input type="text" matInput name="code" #codeInput="ngModel" [(ngModel)]="code" aria-label="Code" required />
+                <mat-label>{{ 'common.labels.token' | translate }}</mat-label>
+                <input type="text" matInput name="code" #codeInput="ngModel" [(ngModel)]="code" [attr.aria-label]="'dialogs.disableTwoFactorToken.attrs.code' | translate" required />
 
                 @if (codeInput.invalid && codeInput.errors?.required) {
                     <mat-error>
@@ -18,7 +18,7 @@
         </div>
     </div>
     <div mat-dialog-actions>
-        <button matButton="text" type="button" (click)="onNoClick()">Cancel</button>
-        <button matButton="filled" type="submit" cdkFocusInitial>Send</button>
+        <button matButton="text" type="button" (click)="onNoClick()">{{ 'common.actions.cancel' | translate }}</button>
+        <button matButton="filled" type="submit" cdkFocusInitial>{{ 'common.actions.send' | translate }}</button>
     </div>
 </form>

@@ -1,0 +1,2657 @@
+{
+  "common": {
+    "actions": {
+      "addField": "Lägg till fält",
+      "approve": "Godkänn",
+      "assignRoles": "Tilldela roller",
+      "back": "Tillbaka",
+      "block": "Blockera",
+      "cancel": "Avbryt",
+      "chooseFile": "Välj fil",
+      "clear": "Rensa",
+      "close": "Stäng",
+      "copy": "Kopiera",
+      "delete": "Ta bort",
+      "disable": "Inaktivera",
+      "dismiss": "Avvisa",
+      "download": "Ladda ner",
+      "edit": "Redigera",
+      "enable": "Aktivera",
+      "follow": "Följ",
+      "forgotPassword": "Glömt lösenordet?",
+      "import": "Importera",
+      "loadMore": "Ladda mer",
+      "loadMoreEllipsis": "Ladda mer...",
+      "login": "Logga in",
+      "next": "Nästa",
+      "ok": "OK",
+      "open": "Öppna",
+      "openProfileWithUserName": "Öppna profilen @{{userName}}",
+      "refresh": "Uppdatera",
+      "register": "Registrera dig",
+      "reject": "Avvisa",
+      "reload": "Ladda om",
+      "remove": "Ta bort",
+      "report": "Rapportera",
+      "restore": "Återställ",
+      "save": "Spara",
+      "search": "Sök",
+      "send": "Skicka",
+      "settings": "Inställningar",
+      "show": "Visa",
+      "signOut": "Logga ut",
+      "signUp": "Anmäl dig",
+      "tryAgain": "igen",
+      "unblock": "Avblockera",
+      "unfollow": "Sluta följa",
+      "update": "Uppdatering",
+      "upload": "Ladda upp"
+    },
+    "articleVisibility": {
+      "homeSignIn": "Hem - logga in",
+      "homeSignOut": "Hem - logga ut",
+      "newsSignIn": "Nyheter - logga in",
+      "newsSignOut": "Nyheter - logga ut"
+    },
+    "dates": {
+      "createdAt": "Skapad på",
+      "createdDate": "Skapat datum"
+    },
+    "errors": {
+      "goBackLink": "hemsida",
+      "goBackPrefix": "Vänligen gå tillbaka till",
+      "goBackSuffix": "eller kontakta systemadministratören."
+    },
+    "labels": {
+      "account": "konto",
+      "accountLink": "Kontolänk",
+      "administrator": "Administratör",
+      "alias": "Alias",
+      "all": "Alla",
+      "approved": "Godkänd",
+      "artists": "Konstnärer",
+      "authenticating": "Autentiseras",
+      "automated": "Automatiserad",
+      "avatar": "Avatar",
+      "bio": "Bio",
+      "body": "Kropp",
+      "category": "Kategori",
+      "client": "Kund",
+      "clientVersion": "Klientversion",
+      "code": "Kod",
+      "comment": "Kommentera",
+      "description": "Beskrivning",
+      "details": "Detaljer",
+      "domain": "Domän",
+      "email": "E-post",
+      "emailConfirmed": "E-post bekräftad",
+      "enabled": "Aktiverad",
+      "errorMessage": "Felmeddelande",
+      "exception": "Undantag",
+      "fields": "Fält",
+      "followers": "Följare",
+      "following": "Följer",
+      "frequentlyAskedQuestions": "Vanliga frågor",
+      "hashtags": "Hashtaggar",
+      "header": "Rubrik",
+      "homePage": "Hemsida",
+      "key": "Nyckel",
+      "language": "Språk",
+      "lastUpdate": "Senaste uppdatering",
+      "link": "Länk",
+      "local": "Lokalt",
+      "member": "Medlem",
+      "message": "Meddelande",
+      "moderator": "Moderator",
+      "moreOptions": "Fler alternativ",
+      "name": "Namn",
+      "noResultsFound": "Inga resultat hittades.",
+      "note": "Notera",
+      "order": "Beställ",
+      "password": "Lösenord",
+      "photo": "Foto",
+      "photos": "Foton",
+      "priority": "Prioritet",
+      "private": "Privat",
+      "processing": "Bearbetning",
+      "profilePage": "profilsida",
+      "qrCode": "QR-kod",
+      "query": "Fråga",
+      "reason": "Anledning",
+      "reports": "Rapporter",
+      "server": "Server",
+      "serverVersion": "Serverversion",
+      "status": "Status",
+      "statusImage": "Statusbild",
+      "subtitle": "Undertext",
+      "support": "Support",
+      "supporter": "Supporter",
+      "telephone": "Telefon",
+      "template": "Mall",
+      "termsOfService": "Användarvillkor",
+      "text": "Text",
+      "title": "Titel",
+      "token": "Token",
+      "twoFactorToken": "Tvåfaktors token",
+      "type": "Typ",
+      "url": "URL",
+      "user": "Användare",
+      "userName": "Användarnamn",
+      "userNameOrEmail": "Användarnamn eller e-post",
+      "value": "Värde",
+      "verified": "Verifierad",
+      "visibility": "Synlighet",
+      "website": "Webbplats"
+    },
+    "messages": {
+      "newVersionAvailable": "En ny version avVernissageär tillgänglig. Uppdatera sidan för att få den senaste versionen.",
+      "unknownError": "Okänt fel.",
+      "unrecoverableState": "Ett fel uppstod och programtillståndet kan inte återställas. Vänligen ladda om sidan."
+    },
+    "pageTitles": {
+      "accessForbidden": "Vernissage - Tillgång förbjuden",
+      "account": "Vernissage - Konto",
+      "activityPubEventRecipients": "Vernissage - ActivityPub-händelsemottagare",
+      "activityPubEvents": "Vernissage - ActivityPubhändelser",
+      "articles": "Vernissage - Artiklar",
+      "bookmarks": "Vernissage - Bokmärken",
+      "categories": "Vernissage - Kategorier",
+      "confirmEmail": "Vernissage - Bekräfta e-post",
+      "connectionLost": "Vernissage - Anslutningen förlorad",
+      "createArticle": "Vernissage - Skapa artikel",
+      "editArticle": "Vernissage - Redigera artikel",
+      "editorsChoice": "Vernissage - Redaktörens val",
+      "editUsersBusinessCard": "Vernissage - Redigera användarvisitkort",
+      "errors": "Vernissage - Fel",
+      "eventRecipients": "Vernissage - Eventmottagare",
+      "favourites": "Vernissage - Favoriter",
+      "forgotPassword": "Vernissage - Glömt lösenord",
+      "frequentlyAskedQuestions": "Vernissage - Vanliga frågor",
+      "homeTimeline": "Vernissage - Hemtidslinje",
+      "invitations": "Vernissage - Inbjudningar",
+      "login": "Vernissage - Logga in",
+      "news": "Vernissage - Nyheter",
+      "notifications": "Vernissage - Aviseringar",
+      "pageNotFound": "Vernissage - Sidan hittades inte",
+      "preferences": "Vernissage - Inställningar",
+      "privacy": "Vernissage - Sekretess",
+      "register": "Vernissage - Registrera dig",
+      "reports": "Vernissage - Rapporter",
+      "resetPassword": "Vernissage - Återställ lösenord",
+      "search": "Vernissage - Sök",
+      "settings": "Vernissage - Inställningar",
+      "sharedBusinessCard": "Vernissage - Delat visitkort",
+      "sharedBusinessCards": "Vernissage - Delade visitkort",
+      "statusEvents": "Vernissage - Statushändelser",
+      "support": "Vernissage - Support",
+      "tags": "Vernissage - Taggar",
+      "terms": "Vernissage - Villkor",
+      "trending": "Vernissage - Trendigt",
+      "unexpectedError": "Vernissage - Oväntat fel",
+      "uploadImages": "Vernissage - Ladda upp bilder",
+      "users": "Vernissage - Användare"
+    },
+    "paginator": {
+      "selectPage": "Välj sida"
+    },
+    "sort": {
+      "ascending": "Stigande",
+      "descending": "Fallande"
+    },
+    "statuses": {
+      "error": "Fel",
+      "expired": "Utgått",
+      "finished": "Färdig",
+      "new": "Nytt",
+      "processing": "Bearbetning",
+      "ready": "Klar"
+    },
+    "timeAgo": {
+      "fewSecondsAgo": "några sekunder sedan"
+    }
+  },
+  "components": {
+    "avatar": {
+      "attrs": {
+        "avatar": "Avatar"
+      }
+    },
+    "blurhashImage": {
+      "messages": {
+        "statusBoosted": "Status förstärkt.",
+        "statusFavourited": "Status som favorit.",
+        "yourBoostHasBeenUndone": "Din boost har ångrats.",
+        "yourLikeHasBeenUndone": "Din like har ångrats.."
+      }
+    },
+    "businessCard": {
+      "attrs": {
+        "avatarProfile": "avatarprofil"
+      },
+      "texts": {
+        "importContact": "Importera kontakt"
+      }
+    },
+    "categoryGallery": {
+      "texts": {
+        "sadlyThereSNothingToSeeHere": "Tyvärr finns det inget att se här än."
+      }
+    },
+    "categoryList": {
+      "messages": {
+        "categoryHasBeenDeleted": "Kategori har tagits bort.",
+        "categoryHasBeenDisabled": "Kategori har inaktiverats.",
+        "categoryHasBeenEnabled": "Kategori har aktiverats.",
+        "doYouWantToDeleteCategory": "Vill du ta bort kategori?"
+      },
+      "texts": {
+        "categoryName": "Kategorinamn",
+        "newCategory": "Ny kategori"
+      }
+    },
+    "commentReply": {
+      "attrs": {
+        "leaveAComment": "Lämna en kommentar"
+      },
+      "messages": {
+        "commentHasBeenAdded": "Kommentar har lagts till."
+      }
+    },
+    "dialogCommon": {
+      "actions": {
+        "change": "Ändra",
+        "move": "Flytta",
+        "mute": "Ljud av",
+        "no": "Nej",
+        "share": "Dela",
+        "yes": "Ja"
+      },
+      "labels": {
+        "end": "Slut",
+        "start": "Starta"
+      }
+    },
+    "domainBlocks": {
+      "messages": {
+        "doYouWantToDeleteInstanceBlockedDomain": "Vill du ta bort instansblockerad domän?",
+        "domainHasBeenDeleted": "Domänen har tagits bort."
+      },
+      "texts": {
+        "newDomain": "Ny domän"
+      }
+    },
+    "followButtons": {
+      "actions": {
+        "approveFollow": "Godkänn följ",
+        "blockDomain": "Blockera domän",
+        "blockUser": "Blockera användare",
+        "cancelRequest": "Avbryt begäran",
+        "copyProfileLink": "Kopiera länken till profilen",
+        "feature": "Funktion",
+        "followBack": "Följ tillbaka",
+        "mute": "Ljud av",
+        "openOriginalProfile": "Öppna originalprofilen",
+        "rejectFollow": "Avvisa följ",
+        "unblockDomain": "Avblockera domänen",
+        "unblockUser": "Avblockera användare",
+        "undoFeature": "Ångra funktionen",
+        "unmute": "Slå på ljudet"
+      },
+      "messages": {
+        "youHaveAcceptedTheUserSFollowRequest": "Du har accepterat användarens följningsförfrågan.",
+        "youHaveDeclinedTheUserSFollowRequest": "Du har avböjt användarens följningsförfrågan"
+      }
+    },
+    "followButtonsSection": {
+      "messages": {
+        "blockedDomainHasBeenDeleted": "Blockerad domän har tagits bort.",
+        "doYouWantToDeleteBlockedDomain": "Vill du ta bort blockerad domän?",
+        "doYouWantToUnblockUser": "Vill du avblockera användare?",
+        "doYouWantToUnmuteUser": "Vill du stänga av ljudet för användare?",
+        "muteHasBeenCanceled": "Ljudet har avbrutits.",
+        "muteHasBeenSaved": "Tyst har sparats.",
+        "reportHasBeenSaved": "Rapporten har sparats.",
+        "theFollowRequestHasBeenSent": "Följningsförfrågan har skickats.",
+        "userHasBeenBlocked": "Användaren har blockerats.",
+        "userHasBeenUnblocked": "Användaren har avblockerats.",
+        "youAreFollowingTheUser": "Du följer användaren.",
+        "youHaveFeaturedTheUser": "Du har presenterat användaren.",
+        "youHaveRemovedTheUserFromFeatured": "Du har tagit bort användaren från utvalda.",
+        "youHaveUnfollowedTheUser": "Du har slutat följa användaren.",
+        "yourFollowRequestHasBeenAccepted": "Din följningsförfrågan har godkänts."
+      }
+    },
+    "footer": {
+      "links": {
+        "privacyPolicy": "Integritetspolicy",
+        "support": "Support",
+        "termsOfService": "Användarvillkor"
+      },
+      "poweredBy": "Drivs avVernissage"
+    },
+    "gallery": {
+      "pinned": "Fäst",
+      "texts": {
+        "sadlyThereSNothingToSeeHere": "Tyvärr finns det inget att se här än."
+      }
+    },
+    "generalSettings": {
+      "attrs": {
+        "aiDescriptionPrompt": "AIbeskrivningsprompt",
+        "aiHashtagsPrompt": "AIhashtags prompt",
+        "aiModel": "ModellAI",
+        "aiProviderName": "AI-leverantörens namn",
+        "aiSecretKey": "AIhemlig nyckel",
+        "aiUrl": "AIURL",
+        "corsOrgins": "CORS ursprung",
+        "deleteStatusesOlderThanDays": "Ta bort statusar äldre än (dagar)",
+        "emailFromAddress": "E-post från adress",
+        "emailFromName": "E-post från namn",
+        "emailHostname": "E-post värdnamn",
+        "emailPassword": "E-postlösenord",
+        "emailPort": "E-postport",
+        "emailUsername": "E-posta användarnamn",
+        "httpPathToCustomCssFile": "HTTPsökväg till anpassadCSS-fil",
+        "httpPathToCustomJavascriptFile": "HTTPsökväg till anpassadJavaScript-fil",
+        "imagesQuality": "Bildkvalitet",
+        "imagesUrl": "Bilder url",
+        "inlineCustomCssStyles": "Inline anpassadeCSS-stilar",
+        "inlineCustomJavascript": "Inline anpassadJavaScript",
+        "mastodonUrl": "Mastodonwebbadress",
+        "maximumFileSize": "Maximal filstorlek",
+        "maximumNumberOfAttachments": "Maximalt antal bilagor",
+        "maximumNumberOfCharactersInStatus": "Maximalt antal tecken i status",
+        "maximumNumberOfInvitations": "Maximalt antal inbjudningar",
+        "minimumIntervalBetweenAddingSilentStatusesSeconds": "Minsta intervall mellan att lägga till tysta statusar (sekunder)",
+        "minimumIntervalBetweenAddingStatusesSeconds": "Minsta intervall mellan att lägga till statusar (sekunder)",
+        "patreonUrl": "Patreonwebbadress",
+        "privacyPolicyContent": "Sekretesspolicy innehåll",
+        "privacyPolicyUpdateDate": "Uppdateringsdatum för sekretesspolicyn",
+        "termsOfServiceContent": "Innehåll i användarvillkoren",
+        "termsOfServiceUpdateDate": "Uppdateringsdatum för användarvillkoren",
+        "totalCost": "Total kostnad",
+        "usersSupport": "Användare stöder",
+        "webDescription": "Webbbeskrivning",
+        "webEmail": "Webb e-post",
+        "webLanguages": "Webbspråk",
+        "webLongDescription": "Webb lång beskrivning",
+        "webThumbnailUr": "Webbminiatyr ur",
+        "webTitle": "Webbtitel",
+        "webpushServiceEndpoint": "WebPushtjänstslutpunkt",
+        "webpushServiceSecretKey": "WebPushtjänst hemlig nyckel",
+        "webpushVapidPriavteKey": "WebPushVapid privat nyckel",
+        "webpushVapidPublicKey": "WebPushOgiltig offentlig nyckel",
+        "webpushVapidSubject": "WebPushDumt ämne"
+      },
+      "captcha": "Captcha",
+      "help": {
+        "aiDescriptionPrompt": "Används för att skapa en bildbeskrivning (alt text). Skriv tydliga instruktioner för korrekta, objektiva och tillgängliga beskrivningar endast baserat på synligt innehåll.",
+        "aiHashtagsPrompt": "Används för att generera hashtags för en status. Skriv instruktioner för relevanta, kortfattade och sociala medier-vänliga hashtags och be modellen att endast returnera hashtags.",
+        "cdn": "Om du har ett CDN konfigurerat kan du åsidosätta standardbildenURLsom genereras baserat på S3-segmentets namn och adress.",
+        "eventsToLog": "Valda händelser kommer att lagras i databasen. De bör endast aktiveras vid felsökning av ett problem, eftersom de påverkar både applikationsprestanda och databasstorlek, med tanke på att deras volym kan vara betydande.",
+        "imageQuality": "Bestämmer kvaliteten på bilder som sparas och bearbetas av systemet efter uppladdning (t.ex. för generering av miniatyrbilder). Rekommenderat värde: 85.",
+        "markdownMacros": "Markdown-syntax stöds, och du kan använda tre makron som kommer att ersättas på sidan:",
+        "mastodon": "Om instansen har sitt officiella konto påMastodonkan du definiera dess adress här. OmVernissage-instansadressen också tillhandahålls påMastodon, kommer det att finnas information som indikerar att kontot har verifierats avMastodon.",
+        "quickCaptcha": "Denna CAPTCHA är implementerad internt och kommunicerar inte med några externa tjänster, vilket säkerställer fullständig integritet för användarna. Captcha visas endast när registreringen är öppen för alla nya användare.",
+        "registrationMode": "Inbjudningsbaserad registrering och registrering efter godkännande fungerar endast när registrering för alla användare är inaktiverad.",
+        "regularStatusesInterval": "Definierar den minsta tid (i sekunder) en användare måste vänta innan en annan vanlig status publiceras. Detta hjälper till att skydda instansen från skräppostliknande inläggsskurar, minskar tidslinjebrus och begränsar onödig federationstrafik till fjärrservrar.",
+        "sameDomainCors": "Filen bör finnas på samma domän som den värdbaserade applikationen; annars kan den blockeras på grund av CORS-säkerhetsrestriktioner.",
+        "silentStatusesInterval": "Definierar den minsta tid (i sekunder) en användare måste vänta innan en annan tyst status publiceras. Tysta statusar är avsedda för import/synkroniseringsscenarier (till exempel från externa appar). Dessa inlägg levereras inte till användarnas tidslinjer och är inte federerade viaActivityPub."
+      },
+      "jobs": {
+        "calculateLongTrending": "Beräkna trendjobb under lång tid",
+        "calculateShortTrending": "Beräkna kort period trendjobb",
+        "clearAttachments": "Rensa bilagor som inte är anslutna till statusjobb",
+        "clearCaptchaTokens": "Rensa gamla captcha-tokens jobb",
+        "clearDeletedUsers": "Rensa borttaget användarjobb",
+        "clearFailedLogins": "Rensa gamla misslyckade inloggningsloggar jobb",
+        "clearOldErrors": "Rensa gamla feljobb",
+        "createArchives": "Skapa arkivjobb",
+        "deleteOldArchives": "Ta bort gammalt arkivjobb",
+        "fillLocationsTable": "Fyll platstabelljobb",
+        "purgeOldStatuses": "Rensa gamla statusjobb",
+        "rescheduleFailedActivityPub": "Omplanera misslyckadesActivityPub-händelser"
+      },
+      "labels": {
+        "systemDefaultUserId": "Systemanvändar-ID som standard",
+        "webContactUserId": "Användar-id för webbkontakt"
+      },
+      "messages": {
+        "settingsWasSaved": "Inställningarna sparades."
+      },
+      "none": "Inga",
+      "registration": "Registreringar",
+      "ssl": "SSL",
+      "texts": {
+        "aiDescriptionPrompt": "AIbeskrivningsprompt",
+        "aiHashtagsPrompt": "AIhashtags prompt",
+        "aiModel": "ModellAI",
+        "aiProviderName": "AI-leverantörens namn",
+        "aiSecretKey": "AIhemlig nyckel",
+        "aiUrl": "AIURL",
+        "anonymousAccess": "Anonym åtkomst",
+        "antiFloodSettings": "Inställningar mot översvämning",
+        "artificialInteligence": "Artificiell intelligens",
+        "corsOrgins": "CORS ursprung",
+        "customJavascript": "AnpassadJavaScript",
+        "customStyles": "Anpassade stilar",
+        "databaseLoggedEvents": "Databasloggade händelser",
+        "defaultAccounts": "Standardkonton",
+        "deleteStatusesOlderThanDays": "Ta bort statusar äldre än (dagar)",
+        "emailFromAddress": "E-post från adress",
+        "emailFromName": "E-post från namn",
+        "emailHostname": "E-post värdnamn",
+        "emailPassword": "E-postlösenord",
+        "emailPort": "E-postport",
+        "emailSecureMethod": "Säker metod för e-post",
+        "emailServer": "E-postserver",
+        "emailUsername": "E-posta användarnamn",
+        "eventsToLog": "Händelser att logga",
+        "financialSupport": "Ekonomiskt stöd",
+        "httpPathToCustomCssFile": "HTTPsökväg till anpassadCSS-fil",
+        "httpPathToCustomJavascriptFile": "HTTPsökväg till anpassadJavaScript-fil",
+        "imagesQuality": "Bildkvalitet",
+        "imagesUrl": "Bilder url",
+        "inlineCustomCssStyles": "Inline anpassadeCSS-stilar",
+        "inlineCustomJavascript": "Inline anpassadJavaScript",
+        "mainServerSettings": "Huvudserverinställningar",
+        "mastodonUrl": "Mastodonwebbadress",
+        "maximumFileSize": "Maximal filstorlek",
+        "maximumNumberOfAttachments": "Maximalt antal bilagor",
+        "maximumNumberOfCharactersInStatus": "Maximalt antal tecken i status",
+        "maximumNumberOfInvitationsPerUser": "Maximalt antal inbjudningar per användare",
+        "minimumIntervalBetweenAddingSilentStatusesSeconds": "Minsta intervall mellan att lägga till tysta statusar (sekunder)",
+        "minimumIntervalBetweenAddingStatusesSeconds": "Minsta intervall mellan att lägga till statusar (sekunder)",
+        "patreonUrl": "Patreonwebbadress",
+        "privacyPolicy": "Integritetspolicy",
+        "privacyPolicyContent": "Sekretesspolicy innehåll",
+        "privacyPolicyUpdateDate": "Uppdateringsdatum för sekretesspolicyn",
+        "scheduledJobs": "Schemalagda jobb",
+        "startTls": "Starta TLS",
+        "startTlsWhenAvailable": "Starta TLS när det är tillgängligt",
+        "termsOfService": "Användarvillkor",
+        "termsOfServiceContent": "Innehåll i användarvillkoren",
+        "termsOfServiceUpdateDate": "Uppdateringsdatum för användarvillkoren",
+        "totalCost": "Total kostnad",
+        "usersSupport": "Användare stöder",
+        "webDescription": "Webbbeskrivning",
+        "webEmail": "Webb e-post",
+        "webLanguages": "Webbspråk",
+        "webLongDescription": "Webb lång beskrivning",
+        "webThumbnailUrl": "Webb-url för miniatyrbilder",
+        "webTitle": "Webbtitel",
+        "webpushNotifications": "WebPush-meddelanden",
+        "webpushServiceEndpoint": "WebPushtjänstslutpunkt",
+        "webpushServiceSecretKey": "WebPushtjänst hemlig nyckel",
+        "webpushVapidPrivateKey": "WebPushOgiltig privat nyckel",
+        "webpushVapidPublicKey": "WebPushOgiltig offentlig nyckel",
+        "webpushVapidSubject": "WebPushDumt ämne"
+      },
+      "toggles": {
+        "isAiEnabled": "ÄrAIaktiverad",
+        "isQuickCaptchaEnabled": "Är QuickCaptcha aktiverad (intern captcha)",
+        "isRegistrationByApprovalOpened": "Är anmälan genom godkännande öppnad",
+        "isRegistrationByInvitationsOpened": "Är anmälan genom inbjudan öppnad",
+        "isRegistrationOpened": "Är registreringen öppen",
+        "isWebPushEnabled": "ÄrWebPush-aviseringar aktiverade",
+        "showCategoriesForAnonymous": "Visa kategorier för anonym användare",
+        "showEditorsStatusesChoiceForAnonymous": "Visa redaktörens statusval för anonym användare",
+        "showEditorsUsersChoiceForAnonymous": "Visa redaktörens användares val för anonym användare",
+        "showHashtagsForAnonymous": "Visa hashtags för anonym användare",
+        "showLocalTimelineForAnonymous": "Visa lokal tidslinje för anonym användare",
+        "showNewsForAnonymous": "Visa menyalternativet \"Nyheter\" för anonyma användare",
+        "showNewsForSignedIn": "Visa menyalternativet \"Nyheter\" för inloggade användare",
+        "showSharedBusinessCards": "Visa menyalternativet \"Delade visitkort\".",
+        "showTrendingForAnonymous": "Visa trender för anonym användare"
+      }
+    },
+    "hashtagGallery": {
+      "texts": {
+        "sadlyThereSNothingToSeeHere": "Tyvärr finns det inget att se här än."
+      }
+    },
+    "header": {
+      "applicationLogo": "Applikationslogotyp",
+      "menuWithActions": "Meny med åtgärder",
+      "navigation": {
+        "account": "konto",
+        "articles": "Artiklar",
+        "categories": "Kategorier",
+        "editorsChoice": "Redaktörens val",
+        "errors": "Fel",
+        "events": "Händelser",
+        "home": "Hem",
+        "invitations": "Inbjudningar",
+        "news": "Nyheter",
+        "notifications": "Aviseringar",
+        "preferences": "Inställningar",
+        "reports": "Rapporter",
+        "sharedBusinessCards": "Delade visitkort",
+        "support": "Support",
+        "trending": "Trendigt",
+        "users": "Användare"
+      },
+      "signedInAs": "Inloggad som",
+      "switchTheme": "Byt tema"
+    },
+    "homeCards": {
+      "messages": {
+        "doYouWantToDeleteHomeCard": "Vill du radera hemkortet?",
+        "homeCardHasBeenDeleted": "Hemkort har tagits bort."
+      },
+      "texts": {
+        "newHomeCard": "Nytt hemkort"
+      }
+    },
+    "homeSignin": {
+      "attrs": {
+        "refreshCurrentTimeline": "Uppdatera aktuell tidslinje",
+        "timelineType": "Tidslinjetyp"
+      },
+      "texts": {
+        "localCollectionOfPhotos": "En samling bilder skapade från alla inlägg som gjorts av användare som publicerar på denna server.",
+        "federatedCollectionOfPhotos": "En samling bilder skapade från alla användaruppladdade bilder som har nått den här servern.",
+        "privateCollectionOfPhotos": "Din personliga samling av foton, skapad baserat på inlägg från användare du följer."
+      },
+      "timeline": "Tidslinje"
+    },
+    "homeSignout": {
+      "mastodon": "Mastodon",
+      "texts": {
+        "apiDocumentation": "APIdokumentation",
+        "editorSChoiceAcrossWholeFediverse": "Redaktörens val över helaFediverse",
+        "itSAdFreeAndFocusedOn": "Det är annonsfritt och fokuserat på gemenskap och kreativitet, inte algoritmer.",
+        "privacyPolicy": "Integritetspolicy",
+        "rediscoverTheBeautyOfPhotography": "Redistäck fotografiets skönhet",
+        "sourceCode": "Källkod",
+        "termsOfService": "Användarvillkor",
+        "vernissageIsAFreePlatformDesignedFor": "Vernissageär en gratis plattform designad för fotografer."
+      }
+    },
+    "image": {
+      "altLabel": "ALT",
+      "messages": {
+        "statusBoosted": "Status förstärkt.",
+        "statusFavourited": "Status som favorit.",
+        "yourBoostHasBeenUndone": "Din boost har ångrats.",
+        "yourLikeHasBeenUndone": "Din like har ångrats."
+      }
+    },
+    "instanceRules": {
+      "messages": {
+        "doYouWantToDeleteInstanceRule": "Vill du ta bort instansregeln?",
+        "ruleHasBeenDeleted": "Regeln har tagits bort."
+      },
+      "texts": {
+        "newRule": "Ny regel"
+      }
+    },
+    "licenseList": {
+      "messages": {
+        "doYouWantToDeleteLicense": "Vill du ta bort licensen?",
+        "licenseHasBeenDeleted": "Licensen har tagits bort."
+      },
+      "texts": {
+        "newLicense": "Ny licens"
+      }
+    },
+    "password": {
+      "attrs": {
+        "password": "Lösenord",
+        "togglePasswordVisibility": "Växla lösenordssynlighet"
+      },
+      "texts": {
+        "between8And32CharactersLong": "Mellan 8 och 32 tecken långa",
+        "numberOrSymbol": "Siffra eller symbol",
+        "oneLowercaseLetter": "En liten bokstav",
+        "oneUppercaseLetter": "En stor bokstav",
+        "yourPasswordHaveToFullfilBelowRequirements": "Ditt lösenord måste uppfylla nedanstående krav."
+      }
+    },
+    "statusProperties": {
+      "attrs": {
+        "application": "Ansökan",
+        "followers": "Följare",
+        "mentioned": "Nämnd",
+        "numberOfBoosts": "Antal förstärkningar",
+        "numberOfLikes": "Antal likes",
+        "public": "Offentligt",
+        "publishedDate": "Publiceringsdatum",
+        "quietpublic": "Alla (tyst)"
+      }
+    },
+    "statusTextAutocomplete": {
+      "attrs": {
+        "hashtagSuggestions": "Hashtag-förslag",
+        "status": "Status",
+        "userSuggestions": "Användarförslag"
+      },
+      "texts": {
+        "enterStatusText": "Ange statustext.",
+        "tooLongStatus": "För lång status.",
+        "usePascalcaseForHashtagsCapitalizingTheFirst": "Använd \"PascalCase\" för hashtags, med stor bokstav i varje ord, för att förbättra läsbarheten och tillgängligheten."
+      }
+    },
+    "uploadPhoto": {
+      "attrs": {
+        "altText": "Alt-text",
+        "aperture": "Bländare",
+        "chemistry": "Kemi",
+        "createDate": "Skapa datum",
+        "createTime": "Skapa tid",
+        "enterLocation": "Ange plats",
+        "exposureTime": "Exponeringstid",
+        "film": "Film",
+        "flash": "Flash",
+        "focalLength": "Brännvidd",
+        "focalLengthIn35mmFilmEquivalent": "Brännvidd i 35 mm film motsvarande",
+        "gpsLatitude": "GPSlatitud",
+        "gpsLongitude": "GPSlongitud",
+        "iso": "ISO",
+        "lens": "Lins",
+        "manufacturer": "Tillverkare",
+        "model": "Modell",
+        "number": "Nummer",
+        "scanner": "Skanner",
+        "software": "Programvara",
+        "uploadedPhoto": "Uppladdat foto"
+      },
+      "labels": {
+        "city": "Stad",
+        "country": "Land",
+        "date": "Datum",
+        "license": "Licens",
+        "location": "Plats",
+        "time": "Tid"
+      },
+      "messages": {
+        "uploadedFileTooLarge": "Den uppladdade filen är för stor. Maximal storlek är{{size}}."
+      },
+      "texts": {
+        "altText": "Alt text",
+        "aperture": "Bländare:",
+        "chemistry": "Kemi:",
+        "chooseCityFromList": "Välj en stad från listan.",
+        "chooseCountryFromList": "Välj ett land från listan.",
+        "createDate": "Skapa datum:",
+        "deleteHdrVersion": "Ta bortHDRversion",
+        "exifMetadata": "Exif-metadata",
+        "exposureTime": "Exponeringstid:",
+        "f": "f/",
+        "featurePoweredBy": "Funktion som drivs av{{providerName}}.",
+        "film": "Film:",
+        "flash": "Flash:",
+        "focalLength": "Brännvidd:",
+        "fullFrameEquivalent": "Motsvarande helbild",
+        "generate": "Generera",
+        "geolocationDisclosureWarning": "Genom att dela geolokaliseringsdata för ditt foto avslöjar du den exakta plats där fotot togs. Se till att du är bekväm med att denna information blir offentligt tillgänglig innan du fortsätter.",
+        "gpsCoordinates": "GPSkoordinater:",
+        "hdrIncludeInformation": "Du har möjlighet att inkludera en HDR-version av bilden (AVIF). Denna version visas endast i statusdetaljerna på Vernissage-plattformen. Maximal filstorlek är {{hdrFileSizeString}}.",
+        "imageExceededLimitAndWasResized": "Din bild överskred gränsen för{{maxFileSize}}, så storleken ändrades automatiskt till 4096 px på den längre kanten.",
+        "information": "Information:",
+        "iso": "ISO:",
+        "lens": "Objektiv:",
+        "manufacturer": "Tillverkare:",
+        "mm": "mm",
+        "model": "Modell:",
+        "originalFilePreservedWarning": "Den uppladdade bilden kommer att bevaras som originalfilen utan några ändringar. Kontrollera innan du laddar upp den att den inte innehåller metadata som du inte vill göra offentliga.",
+        "scanner": "Skanner:",
+        "sec": "sek",
+        "software": "Programvara:",
+        "tooLongAltText": "För lång alt-text.",
+        "uploading": "Laddar upp...",
+        "warning": "Varning:",
+        "withoutALicense": "Utan licens"
+      }
+    },
+    "userSelector": {
+      "texts": {
+        "choseUser": "Välj användare.",
+        "choseUserFromList": "Välj användare från listan."
+      }
+    },
+    "usersGallery": {
+      "texts": {
+        "sadlyThereSNothingToSeeHere": "Tyvärr finns det inget att se här än."
+      }
+    }
+  },
+  "dialogs": {
+    "category": {
+      "attrs": {
+        "categoryName": "Kategorinamn",
+        "delete": "Ta bort",
+        "hashtagName": "Hashtag namn",
+        "priority": "Prioritet"
+      },
+      "messages": {
+        "categoryHasBeenUpdated": "Kategori har uppdaterats.",
+        "newCategoryHasBeenCreated": "Ny kategori har skapats."
+      },
+      "texts": {
+        "categoryName": "Kategorinamn",
+        "enterCategoryName": "Ange kategorinamn.",
+        "enterHashtagName": "Ange hashtaggnamn.",
+        "enterPriority": "Ange prioritet.",
+        "nameIsTooLong": "Namnet är för långt.",
+        "newHashtag": "Ny hashtag"
+      }
+    },
+    "changeEmail": {
+      "attrs": {
+        "email": "E-post"
+      },
+      "messages": {
+        "emailHasBeenChanged": "E-post har ändrats."
+      },
+      "texts": {
+        "changeEmail": "Ändra e-post",
+        "chooseOtherEmailThisOneIsAlready": "Välj annan e-postadress, den här är redan kopplad till ett annat konto.",
+        "enterEmail": "Ange e-post.",
+        "privacyNote": "Oroa dig inte. Denna information är helig för oss. Vi kommer aldrig att visa, sälja eller missbruka det.",
+        "verifyThatYouVeEnteredProperEmail": "Kontrollera att du har angett korrekt e-postadress."
+      }
+    },
+    "changePassword": {
+      "attrs": {
+        "oldPassword": "Old password"
+      },
+      "messages": {
+        "passwordHasBeenChanged": "Lösenordet har ändrats."
+      },
+      "texts": {
+        "changePassword": "Byt lösenord",
+        "enterPassword": "Enter password.",
+        "oldPassword": "Old password",
+        "passwordIsTooLong": "Password is too long."
+      }
+    },
+    "contentWarning": {
+      "attrs": {
+        "contentWarning": "Content warning"
+      },
+      "texts": {
+        "contentWarning": "Content warning"
+      }
+    },
+    "createAlias": {
+      "attrs": {
+        "alias": "Alias"
+      },
+      "messages": {
+        "newAccountAliasHasBeenCreated": "New account alias has been created."
+      },
+      "texts": {
+        "accountAlias": "Kontoalias",
+        "accountAliasIsTooLong": "Account alias is too long.",
+        "createAccountAlias": "Skapa kontoalias",
+        "enterAccountAlias": "Ange kontoalias."
+      }
+    },
+    "deleteAccount": {
+      "attrs": {
+        "email": "E-post"
+      },
+      "texts": {
+        "contentThatHasBeenCachedByOther": "Innehåll som har cachelagrats av andra servrar kan finnas kvar",
+        "deleteAccount": "Ta bort konto",
+        "youWillNotBeAbleToRestore": "Du kommer inte att kunna återställa eller återaktivera ditt konto",
+        "yourPostsAndOtherDataWillBe": "Dina inlägg och annan data kommer att tas bort permanent",
+        "yourUsernameWillRemainUnavailable": "Ditt användarnamn kommer att förbli otillgängligt"
+      }
+    },
+    "deleteStatus": {
+      "texts": {
+        "deleteStatus": "Ta bort status?"
+      }
+    },
+    "disableTwoFactorToken": {
+      "attrs": {
+        "code": "Kod"
+      },
+      "messages": {
+        "twoFactorAuthenticationDisabled": "Tvåfaktorsautentisering inaktiverad."
+      },
+      "texts": {
+        "disableTwoFactorAuthentication2fa": "Inaktivera tvåfaktorsautentisering (2FA)"
+      }
+    },
+    "enableTwoFactorToken": {
+      "attrs": {
+        "code": "Kod"
+      },
+      "messages": {
+        "twoFactorAuthenticationEnabled": "Two factor authentication enabled."
+      },
+      "texts": {
+        "backupCodes": "Säkerhetskopieringskoder",
+        "enableTwoFactorAuthentication2fa": "Aktivera tvåfaktorsautentisering (2FA)",
+        "keepBackupCodes": "Behåll dessa koder om du inte kan komma åt autentiseringsappen.",
+        "scanQrCodeWith2faApplication": "SkannaQR-koden med en2FA-applikation, somAuthyellerGoogle Authenticator.",
+        "tokenIsRequired": "Token krävs."
+      }
+    },
+    "errorItem": {
+      "attrs": {
+        "code": "Kod",
+        "exception": "Undantag",
+        "message": "Meddelande"
+      },
+      "texts": {
+        "errorData": "Feldata"
+      }
+    },
+    "followingImportAccounts": {
+      "attrs": {
+        "status": "Status"
+      },
+      "texts": {
+        "followingImportAccounts": "Följande importkonton",
+        "notProcessed": "Ej bearbetad",
+        "requestSent": "Begäran har skickats"
+      }
+    },
+    "homeCard": {
+      "attrs": {
+        "homeCardTitle": "Hemkorts titel",
+        "licenseDescription": "Licensbeskrivning",
+        "order": "Beställ"
+      },
+      "messages": {
+        "homeCardHasBeenUpdated": "Hemkortet har uppdaterats.",
+        "newHomeCardHasBeenCreated": "Nytt hemkort har skapats."
+      },
+      "texts": {
+        "bodyIsTooLong": "Kroppen är för lång.",
+        "enterHomeCardBody": "Ange hemkortets innehåll.",
+        "enterHomeCardOrder": "Ange hemkortsordning.",
+        "enterHomeCardTitle": "Ange hemkortets titel.",
+        "homeCard": "Hemkort",
+        "titleIsTooLong": "Rubriken är för lång."
+      }
+    },
+    "instanceBlockedDomain": {
+      "attrs": {
+        "domain": "Domän",
+        "reason": "Anledning"
+      },
+      "messages": {
+        "domainHasBeenUpdated": "Domänen har uppdaterats.",
+        "newDomainHasBeenCreated": "Ny domän har skapats."
+      },
+      "texts": {
+        "domainIsTooLong": "Domänen är för lång.",
+        "enterDomain": "Ange domän.",
+        "instanceBlockedDomain": "Förekomst blockerad domän",
+        "reasonIsTooLong": "Anledningen är för lång."
+      }
+    },
+    "instanceRule": {
+      "attrs": {
+        "order": "Ordning",
+        "rule": "Regel"
+      },
+      "messages": {
+        "newRuleHasBeenCreated": "Ny regel har skapats.",
+        "ruleHasBeenUpdated": "Regeln har uppdaterats."
+      },
+      "texts": {
+        "enterOrder": "Ange order.",
+        "enterRule": "Ange regel.",
+        "instanceRule": "Instansregel",
+        "rule": "Regel",
+        "ruleIsTooLong": "Regeln är för lång."
+      }
+    },
+    "license": {
+      "attrs": {
+        "licenseCode": "Licenskod",
+        "licenseDescription": "Licensbeskrivning",
+        "licenseName": "Licensnamn",
+        "url": "URL"
+      },
+      "messages": {
+        "licenseHasBeenUpdated": "Licensen har uppdaterats.",
+        "newLicenseHasBeenCreated": "Ny licens har skapats."
+      },
+      "texts": {
+        "codeIsTooLong": "Koden är för lång.",
+        "descriptionIsTooLong": "Beskrivningen är för lång.",
+        "enterLicenseName": "Ange licensnamn.",
+        "nameIsTooLong": "Namnet är för långt.",
+        "urlIsTooLong": "URL:en är för lång."
+      }
+    },
+    "moveAccount": {
+      "attrs": {
+        "account": "konto",
+        "password": "Lösenord"
+      },
+      "messages": {
+        "informationAboutNewAccountHasBeenSaved": "Information om nytt konto har sparats."
+      },
+      "texts": {
+        "afterMovingThereMayBeAWaiting": "Efter flytt kan det bli en väntetid innan du kan flytta igen.",
+        "enterNewAccount": "Ange nytt konto.",
+        "enterPassword": "Enter password.",
+        "moveAccount": "Flytta konto",
+        "onlyYourFollowersWillBeMovedAutomatically": "Endast dina följare kommer att flyttas automatiskt.",
+        "theNewAccountMustFirstBeConfigured": "Det nya kontot måste först konfigureras för att referera till detta konto som ett alias eller ett tidigare konto.",
+        "youShouldExportYourDataBeforeContinuing": "Du bör exportera dina data innan du fortsätter, särskilt om du vill behålla en kopia av ditt innehåll eller importera följda konton någon annanstans.",
+        "yourCurrentAccountMayNoLongerBe": "Ditt nuvarande konto kanske inte längre är fullt användbart efter migreringen.",
+        "yourCurrentProfileWillBeMarkedAs": "Din nuvarande profil kommer att markeras som flyttad och kommer att visa ett omdirigeringsmeddelande som pekar på det nya kontot.",
+        "yourPostsPhotosCommentsLikesBookmarksFollowed": "Dina inlägg, foton, kommentarer, gilla-markeringar, bokmärken, följda konton, blockeringar, tysta och andra kontodata kommer inte att överföras."
+      }
+    },
+    "muteAccount": {
+      "texts": {
+        "muteAccount": "Stäng av kontot",
+        "muteEndDate": "Stäng av slutdatum",
+        "optionalDateWhenMutingWillEnd": "Valfritt datum när ljudet upphör."
+      }
+    },
+    "notificationSettings": {
+      "messages": {
+        "errorDuringGeneratingEncryptionKeysForWebPush": "Fel under generering av krypteringsnycklar för webbpush.",
+        "notificationSettingsHasBeenSaved": "Aviseringsinställningar har sparats.",
+        "unexpectedErrorDuringGeneratingWebPushSubscription": "Oväntat fel under generering av Web Push-prenumeration.",
+        "webPushNotificationsForTheWebsiteAreDisabledInTheBrowser": "Webb-push-meddelanden för webbplatsen är inaktiverade i webbläsaren.",
+        "webPushPublicKeyIsNotSet": "Den offentliga webbnyckeln är inte inställd."
+      },
+      "texts": {
+        "boostedStatus": "Boostad status",
+        "newCommentAdded": "Ny kommentar tillagd",
+        "newFollowRequest": "Ny följningsförfrågan",
+        "newFollower": "Ny följare",
+        "newLike": "Ny gilla",
+        "newReport": "Ny rapport",
+        "newUser": "Ny användare",
+        "notificationsDisabledInBrowser": "Aviseringar är inaktiverade i din webbläsare. Du måste ändra dina webbläsarinställningar.",
+        "notificationsSettings": "Aviseringsinställningar",
+        "statusUpdated": "Status uppdaterad",
+        "youHaveBeenMentioned": "Du har blivit omnämnd"
+      }
+    },
+    "report": {
+      "attrs": {
+        "comment": "Kommentera"
+      },
+      "categories": {
+        "abusive": "Missbruk",
+        "copyright": "Upphovsrätt",
+        "impersonation": "Imitation",
+        "scam": "Bedrägeri",
+        "sensitive": "Känslig",
+        "spam": "Spam",
+        "terrorism": "Terrorism",
+        "underage": "Minderårig",
+        "violence": "Våld"
+      },
+      "texts": {
+        "forwardToRemoteAdmin": "Ska rapporten vidarebefordras till fjärradministratören?",
+        "serverRules": "Serverregler",
+        "tooLongComment": "För lång kommentar."
+      }
+    },
+    "reportDetails": {
+      "attrs": {
+        "comment": "Kommentera"
+      },
+      "texts": {
+        "serverRules": "Serverregler"
+      }
+    },
+    "restoreAccount": {
+      "attrs": {
+        "password": "Lösenord"
+      },
+      "messages": {
+        "accountHasBeenRestored": "Kontot har återställts."
+      },
+      "texts": {
+        "enterPassword": "Enter password.",
+        "restoreAccount": "Återställ konto"
+      }
+    },
+    "shareBusinessCard": {
+      "attrs": {
+        "comment": "Kommentera",
+        "title": "Titel"
+      },
+      "texts": {
+        "enterTitle": "Ange titel.",
+        "shareBusinessCard": "Dela visitkort",
+        "tooLongNote": "För lång anteckning.",
+        "tooLongTitle": "För lång titel."
+      }
+    },
+    "statusEventErrorMessage": {
+      "attrs": {
+        "errorMessage": "Felmeddelande",
+        "message": "Meddelande"
+      },
+      "texts": {
+        "errorMessage": "Felmeddelande"
+      }
+    },
+    "statusTextTemplate": {
+      "attrs": {
+        "comment": "Kommentera",
+        "template": "Mall"
+      },
+      "messages": {
+        "statusTextTemplateHasBeenUpdated": "Statustextmall har uppdaterats."
+      },
+      "texts": {
+        "statusTextTemplate": "Statustextmall",
+        "tooLongTemplate": "För lång mall."
+      }
+    },
+    "unfollowAccount": {
+      "texts": {
+        "unfollowAccount": "Sluta följa kontot"
+      }
+    },
+    "updateSharedBusinessCard": {
+      "attrs": {
+        "yourEmail": "Din e-post",
+        "yourName": "Ditt namn"
+      },
+      "texts": {
+        "enterYourName": "Ange ditt namn.",
+        "shareYourPersonalInfo": "Dela din personliga information",
+        "tooLongEmail": "För långt mail.",
+        "tooLongName": "För långt namn.",
+        "verifyThatYouVeEnteredProperEmail": "Kontrollera att du har angett korrekt e-postadress.",
+        "yourEmail": "Din e-post",
+        "yourName": "Ditt namn"
+      }
+    },
+    "userBlockedDomain": {
+      "attrs": {
+        "domain": "Domän",
+        "reason": "Anledning"
+      },
+      "messages": {
+        "blockedDomainHasBeenUpdated": "Blockerad domän har uppdaterats.",
+        "domainHasBeenBlocked": "Domänen har blockerats."
+      },
+      "texts": {
+        "blockDomain": "Blockera domän",
+        "blockDomainLegend": "Användare från denna domän kan inte följa dig. Deras inlägg kommer inte att visas på din lokala tidslinje, och dina inlägg levereras inte direkt till dem. De kan dock fortfarande se dina inlägg om en tredje part de följer ökar dem.",
+        "domainIsTooLong": "Domänen är för lång.",
+        "enterDomain": "Ange domän.",
+        "reasonIsTooLong": "Anledningen är för lång."
+      }
+    },
+    "userBlockedUser": {
+      "attrs": {
+        "email": "E-post"
+      },
+      "texts": {
+        "blockUser": "Blockera användare",
+        "reasonIsTooLong": "Anledningen är för lång."
+      }
+    },
+    "userRoles": {
+      "messages": {
+        "roleHasBeenConnected": "Rollen har kopplats ihop.",
+        "roleHasBeenDisconnected": "Rollen har kopplats bort."
+      },
+      "texts": {
+        "userRoles": "Användarroller"
+      }
+    },
+    "users": {
+      "texts": {
+        "sadlyThereAreNoUsersToDisplay": "Tyvärr finns det inga användare att visa ännu."
+      }
+    }
+  },
+  "errors": {
+    "account": {
+      "emailIsAlreadyConfirmed": "E-post är redan bekräftat.",
+      "userNameIsRequired": "Användarnamn krävs.",
+      "userHaveToBeAuthenticated": "Användaren måste vara autentiserad.",
+      "userIsNotSupporter": "Användaren är inte supporter."
+    },
+    "accountMigration": {
+      "targetAccountNotFound": "Målkonto kan inte hittas.",
+      "cannotMoveToTheSameAccount": "Målkonto kan inte vara lika med källkonto.",
+      "targetAccountIsNotAlias": "Målkonto är inte ett alias för detta konto.",
+      "onlyLocalAccountsCanBeMoved": "Endast lokala konton kan flyttas."
+    },
+    "actionsForbidden": {
+      "localTimelineForbidden": "Tillgång till lokal tidslinje är förbjuden.",
+      "trendingForbidden": "Tillgång till trending är förbjuden.",
+      "editorsStatusesChoiceForbidden": "Tillgång till redaktörens statusval är förbjuden.",
+      "editorsUsersChoiceForbidden": "Tillgång till redaktörens användares val är förbjuden.",
+      "hashtagsForbidden": "Tillgång till hashtags är förbjuden.",
+      "categoriesForbidden": "Tillgång till kategorier är förbjuden."
+    },
+    "activityPub": {
+      "missingSignatureHeader": "ActivityPub-begäran 'Signature' -huvud saknas.",
+      "missingSignedHeadersList": "Kan inte läsa listan med signerade rubriker från ActivityPub-förfrågan.",
+      "missingSignatureInHeader": "Kan inte läsa signaturen i rubriken i ActivityPub-förfrågan.",
+      "missingKeyIdInHeader": "Kan inte läsa keyId från signaturhuvudet i ActivityPub-begäran.",
+      "missingActivityPubProfileInKeyId": "Kan inte hitta skådespelarens profil i keyId {{keyIdValue}}.",
+      "missingSignedHeader": "Kan inte hitta headern '{{headerName}}' som användes för att skapa signaturen i ActivityPub-begäran.",
+      "signatureIsNotValid": "ActivityPub begäransignatur är inte giltig.",
+      "userNameIsRequired": "Användarnamn krävs.",
+      "statusIdIsRequired": "Status-id krävs.",
+      "incorrectStatusIdFormat": "Status-id:t '{{statusId}}' har inte rätt format.",
+      "userNotExistsInDatabase": "Användaren '{{activityPubProfile}}' finns inte i den lokala databasen.",
+      "privateKeyNotExists": "Privat nyckel för användaren '{{activityPubProfile}}' hittades inte i den lokala databasen.",
+      "publicKeyNotExists": "Publik nyckel för användaren '{{activityPubProfile}}' hittades inte i den lokala databasen.",
+      "signatureDataNotCreated": "Signature-data kan inte skapas baserat på rubriker från begäran.",
+      "missingDateHeader": "ActivityPub-förfrågan saknar 'Date' -huvud.",
+      "incorrectDateFormat": "Felaktigt datumformat i ActivityPub-begäran: {{date}}.",
+      "badTimeWindow": "Datumet för den signerade ActivityPub-begäran '{{date}}' ligger utanför det tillåtna tidsfönstret.",
+      "followTypeNotSupported": "Following-objekttyp: {{type}} stöds inte.",
+      "acceptTypeNotSupported": "Accepting-objekttyp: {{type}} stöds inte.",
+      "rejectTypeNotSupported": "Rejecting-objekttyp: {{type}} stöds inte.",
+      "algorithmNotSupported": "Algoritm: {{type}} stöds inte.",
+      "algorithmNotSpecified": "Algoritm är inte specificerad.",
+      "missingUserInboxUrl": "Användarens inkorg för '{{activityPubProfile}}' saknas i den lokala databasen.",
+      "missingSharedInboxUrl": "Den delade inkorgen för '{{activityPubProfile}}' saknas i den lokala databasen.",
+      "statusHasNotBeenDownloaded": "Nedladdad status är tom: {{statusActivityPubUrl}}. Fel: {{errorDescription}}",
+      "statusCannotBeProcessed": "Nedladdad status kan inte bearbetas: {{statusActivityPubUrl}}. Fel: {{errorDescription}}",
+      "missingSupportedImageAttachments": "Nedladdad status har inga bildbilagor: {{statusActivityPubUrl}}.",
+      "actorNotDownloaded": "Fel under nedladdning av aktör från fjärrserver: {{statusActivityPubUrl}}.",
+      "invalidNoteUrl": "Ogiltig URL till status: {{statusActivityPubUrl}}.",
+      "entityCaseError": "Konvertering till '{{entityName}}' misslyckades.",
+      "missingInstanceAdminAccount": "Adminkonto saknas i lokal instans.",
+      "missingInstanceAdminPrivateKey": "Saknar privat nyckel för adminkonto i lokal instans.",
+      "unrecognizedActivityPubProfileUrl": "Okänd ActivityPub-profil URL.",
+      "domainIsBlockedByInstance": "Användarens domän '{{activityPubProfile}}' blockeras av instansen.",
+      "actorIsBlockedByInstance": "Aktören '{{activityPubProfile}}' blockeras av instansen.",
+      "signatureActorDoesNotMatchPayloadActor": "Signaturaktören '{{signatureActor}}' matchar inte nyttolastaktören '{{payloadActor}}'."
+    },
+    "archives": {
+      "requestWaitingForProcessing": "Det finns redan en begäran som väntar på behandling.",
+      "processedRequestsAlreadyExist": "Bearbetad begäran finns redan.",
+      "missingEmail": "Användarens e-postadress saknas.",
+      "missingFileName": "Saknar arkivfilnamn."
+    },
+    "article": {
+      "incorrectArticleId": "Felaktig artikel-id.",
+      "incorrectArticleFileId": "Felaktig artikelfil-id.",
+      "missingFile": "Filen saknas.",
+      "imageTooLarge": "Bilden är för stor.",
+      "fileTypeNotSupported": "Filtyp stöds inte.",
+      "fileConnectedWithDifferentArticle": "Filen är kopplad till en annan artikel."
+    },
+    "atom": {
+      "userNameIsRequired": "Användarnamn krävs.",
+      "categoryNameIsRequired": "Kategorinamn krävs.",
+      "hashtagNameIsRequired": "Hashtagnamn krävs."
+    },
+    "attachment": {
+      "missingImage": "Bild bifogas inte i begäran.",
+      "createResizedImageFailed": "Det går inte att skapa en bild för storleksändring.",
+      "imageRotationFailed": "Bilden kan inte roteras.",
+      "imageResizeFailed": "Bilden kan inte ändras i storlek.",
+      "attachmentAlreadyConnectedToStatus": "Bilagan är redan kopplad till status.",
+      "imageTooLarge": "Bildfilen är för stor.",
+      "onlyAvifHdrFilesAreSupported": "Endast AVIF HDR-filer stöds.",
+      "emailNotVerified": "Användarens e-postadress har inte verifierats.",
+      "attachmentIdIsRequired": "Bilaga-ID krävs.",
+      "incorrectRequestFormat": "Felaktigt format för begäran."
+    },
+    "authClient": {
+      "authClientWithUriExists": "Autentiseringsklient med angiven uri finns redan.",
+      "incorrectAuthClientId": "Autentiseringsklient-id är felaktigt."
+    },
+    "avatar": {
+      "missingImage": "Bild bifogas inte i begäran.",
+      "notFound": "Användaren har ingen avatar.",
+      "createResizedImageFailed": "Det går inte att skapa en bild för storleksändring.",
+      "resizedImageFailed": "Bilden kan inte ändras i storlek.",
+      "userNameIsRequired": "Användarnamn krävs."
+    },
+    "businessCard": {
+      "businessCardAlreadyExists": "Visitkort finns redan."
+    },
+    "category": {
+      "categoryExists": "Kategori finns redan.",
+      "incorrectCategoryId": "Felaktig kategori-id.",
+      "categoryCannotBeDeletedBecauseItIsInUse": "Kategori kan inte tas bort eftersom den används."
+    },
+    "changePassword": {
+      "userNotFound": "Signerad användare hittades inte i databasen.",
+      "invalidOldPassword": "Det gamla lösenordet är ogiltigt.",
+      "userAccountIsBlocked": "Användarkontot är blockerat. Användaren kan inte logga in på systemet just nu.",
+      "emailNotConfirmed": "Användarens e-postadress är inte bekräftad. Användaren måste bekräfta sin e-postadress först.",
+      "saltCorrupted": "Lösenordet har skadats. Kontakta portaladministratören."
+    },
+    "confirmEmail": {
+      "invalidIdOrToken": "Ogiltigt användar-ID eller token. E-post kan inte godkännas."
+    },
+    "crypto": {
+      "privateKeyNotGenerated": "Kryptografisk privat nyckel har inte genererats.",
+      "publicKeyNotGenerated": "Kryptografisk offentlig nyckel har inte genererats.",
+      "externalPrivateKeyNotGenerated": "Kryptografisk extern privat nyckel har inte genererats.",
+      "externalPublicKeyNotGenerated": "Kryptografisk extern offentlig nyckel har inte genererats.",
+      "base64PrivateKeyNotGenerated": "Kryptografisk bas64 privat nyckel har inte genererats.",
+      "base64PublicKeyNotGenerated": "Kryptografisk bas64 offentlig nyckel har inte genererats."
+    },
+    "entityForbidden": {
+      "userForbidden": "Tillgång till angiven användare är förbjuden.",
+      "refreshTokenForbidden": "Tillgång till specificerad uppdateringstoken är förbjuden.",
+      "attachmentForbidden": "Tillgång till bilaga är förbjuden.",
+      "statusForbidden": "Tillgång till angiven status är förbjuden.",
+      "userDomainBlockedForbidden": "Åtkomst till specificerat användardomänblock är förbjudet."
+    },
+    "entityNotFound": {
+      "userNotFound": "Användaren finns inte.",
+      "refreshTokenNotFound": "Uppdateringstoken finns inte.",
+      "roleNotFound": "Roll finns inte.",
+      "authClientNotFound": "Autentiseringsklienten finns inte.",
+      "attachmentNotFound": "Bilaga finns inte.",
+      "statusNotFound": "Status finns inte.",
+      "notificationNotFound": "Avisering finns inte.",
+      "licenseNotFound": "Licens finns inte.",
+      "homeCardNotFound": "Hemkort finns inte.",
+      "locationNotFound": "Platsen finns inte.",
+      "invitationNotFound": "Inbjudan finns inte.",
+      "reportNotFound": "Rapporten finns inte.",
+      "twoFactorTokenNotFound": "Tvåfaktorstoken existerar inte.",
+      "instanceBlockedDomainNotFound": "En instansblockerad domän finns inte.",
+      "userBlockedDomainNotFound": "Användarblockerad domän finns inte.",
+      "pushSubscriptionNotFound": "Push-prenumeration finns inte.",
+      "ruleNotFound": "Regeln finns inte.",
+      "errorItemNotFound": "Felobjektet finns inte.",
+      "userAliasNotFound": "Användaralias finns inte.",
+      "archiveNotFound": "Arkivet finns inte.",
+      "userSettingNotFound": "Användarinställning finns inte.",
+      "categoryNotFound": "Kategori finns inte.",
+      "followingImportNotFound": "Following-importen finns inte.",
+      "articleNotFound": "Artikeln finns inte.",
+      "articleFileInfoNotFound": "Artikelfilen finns inte.",
+      "businessCardNotFound": "Visitkort finns inte.",
+      "sharedBusinessCardNotFound": "Delat visitkort finns inte.",
+      "statusActivityPubEventNotFound": "Status ActivityPub-händelse existerar inte."
+    },
+    "errorItem": {
+      "incorrectErrorItemId": "Felobjekt-id är felaktigt."
+    },
+    "exports": {
+      "cannotConvertToData": "Det går inte att konvertera inbjudan till data."
+    },
+    "followImports": {
+      "missingFile": "Saknar fil med konton.",
+      "emptyFile": "Filen med konton är tom.",
+      "accountNotFound": "Kontot hittades inte."
+    },
+    "followRequest": {
+      "missingFollowEntity": "Follow-entiteten (sourceUserId: '{{sourceUserId}}', targetUserId: '{{targetUserId}}') finns inte i den lokala databasen.",
+      "missingSourceUser": "Källanvändaren '{{userId}}' saknas i databasen.",
+      "missingTargetUser": "Målanvändaren '{{userId}}' saknas i databasen.",
+      "missingActivityPubActionId": "Activity Pubåtgärds-id i följbegäran saknas.",
+      "missingPrivateKey": "Privat nyckel för användaren {{userName}} finns inte i den lokala databasen.",
+      "accountHasBeenMoved": "Målkontot har flyttats och kan inte acceptera nya följare.",
+      "incorrectId": "Felaktigt id i följbegäran."
+    },
+    "forgotPassword": {
+      "userAccountIsBlocked": "Användarkontot är blockerat. Du kan inte ändra lösenord just nu.",
+      "tokenNotGenerated": "Token för lösenordsåterställning skapades inte. Det är en ovanlig situation.",
+      "tokenExpired": "Token som gör det möjligt att ändra lösenord har löpt ut. Användaren måste upprepa processen för glömt lösenord.",
+      "passwordNotHashed": "Lösenordet hashades inte.",
+      "saltCorrupted": "Lösenordet har skadats. Kontakta portaladministratören.",
+      "emailIsEmpty": "Användarens e-postadress är tom. Kan inte skicka e-post med token."
+    },
+    "hashtag": {
+      "hashtagNameIsRequired": "Hashtagnamn krävs.",
+      "hashtagNameIsTooLong": "Hashtagnamnet är för långt."
+    },
+    "header": {
+      "missingImage": "Bild bifogas inte i begäran.",
+      "notFound": "Användaren har ingen rubrik.",
+      "createResizedImageFailed": "Det går inte att skapa en bild för storleksändring.",
+      "resizedImageFailed": "Bilden kan inte ändras i storlek.",
+      "userNameIsRqeired": "Användarnamn krävs."
+    },
+    "homeCard": {
+      "incorrectHomeCardId": "Hemkorts-id är felaktigt."
+    },
+    "instanceBlockedDomain": {
+      "incorrectId": "Felaktigt id."
+    },
+    "invitation": {
+      "maximumNumberOfInvitationsGenerated": "Maximalt antal inbjudningar har redan genererats.",
+      "cannotDeleteUsedInvitation": "Det går inte att ta bort redan använd inbjudan.",
+      "invalidId": "Ogiltigt inbjudnings-id."
+    },
+    "license": {
+      "incorrectLicenseId": "Licens-id är felaktigt.",
+      "licenseAlreadyInUse": "Licensen används redan."
+    },
+    "location": {
+      "incorrectLocationId": "Plats-id är felaktigt.",
+      "queryIsRequired": "Fråga krävs."
+    },
+    "login": {
+      "invalidLoginCredentials": "Det angivna användarnamnet eller lösenordet är ogiltigt.",
+      "userAccountIsBlocked": "Användarkontot är blockerat. Användaren kan inte logga in på systemet just nu.",
+      "userAccountIsNotApproved": "Användarkontot är inte godkänt ännu. Användaren kan inte logga in på systemet just nu.",
+      "saltCorrupted": "Lösenordet har skadats. Kontakta portaladministratören.",
+      "twoFactorTokenNotFound": "Token för tvåfaktorsautentisering krävs.",
+      "loginAttemptsExceeded": "För många misslyckade inloggningar. Försök igen om 5 minuter."
+    },
+    "notification": {
+      "incorrectId": "Felaktigt id."
+    },
+    "openAI": {
+      "incorrectOpenAIUrl": "Felaktig OpenAI url.",
+      "cannotChangeResponseToString": "Det går inte att ändra svar på strängen.",
+      "incorrectJsonFormat": "Felaktigt JSON-format.",
+      "openAIIsNotEnabled": "OpenAI är inte aktiverat.",
+      "openAIIsNotConfigured": "OpenAI är inte konfigurerad. {{message}}"
+    },
+    "openidConnect": {
+      "invalidClientName": "Klientnamn måste anges i URL.",
+      "clientNotFound": "Kunden med förnamn hittades inte.",
+      "codeTokenNotFound": "Kodtoken hittades inte.",
+      "invalidAuthenticateToken": "Autentiseringstoken är ogiltig.",
+      "authenticateTokenExpirationDateNotFound": "Autentiseringstoken har inget utgångsdatum.",
+      "autheticateTokenExpired": "Autentiseringstoken har löpt ut.",
+      "userAccountIsBlocked": "Användarkontot är blockerat. Användaren kan inte logga in på systemet just nu."
+    },
+    "pushSubscription": {
+      "incorrectPushSubscriptionId": "Push-prenumerations-id är felaktigt."
+    },
+    "quickCaptcha": {
+      "keyLengthIsIncorrect": "Nyckellängden är felaktig, bör vara 16 tecken."
+    },
+    "refreshToken": {
+      "refreshTokenNotExists": "Uppdateringstoken finns inte eller så har den löpt ut.",
+      "userIdNotSpecified": "Användar-ID måste anges för uppdateringstoken.",
+      "refreshTokenRevoked": "Uppdateringstoken återkallades.",
+      "refreshTokenExpired": "Uppdateringstoken har löpt ut."
+    },
+    "register": {
+      "securityTokenIsMandatory": "Säkerhetstoken (captcha) är obligatorisk.",
+      "securityTokenIsInvalid": "Säkerhetstoken (captcha) är ogiltig.",
+      "userNameIsAlreadyTaken": "Användare med angett användarnamn finns redan i systemet.",
+      "userIdNotExists": "Användar-ID finns inte. Förmodligen misslyckades sparandet av användarentiteten.",
+      "emailIsAlreadyConnected": "E-post är redan kopplat till ett annat konto.",
+      "registrationIsDisabled": "Registreringen är inaktiverad.",
+      "missingEmail": "E-post har inte specificerats men det är obligatoriskt.",
+      "missingEmailConfirmationGuid": "E-postbekräftelseguide har inte genererats.",
+      "userHaveToAcceptAgreement": "Användaren måste acceptera avtalet.",
+      "reasonIsMandatory": "Skälet är obligatoriskt när endast registrering genom godkännande är aktiverad.",
+      "invitationTokenIsInvalid": "Inbjudanstoken är ogiltig.",
+      "invitationTokenHasBeenUsed": "Inbjudanstoken har använts.",
+      "disposableEmailCannotBeUsed": "Engångsmail kan inte användas.",
+      "userNameIsRequired": "Användarnamn krävs.",
+      "emailIsRequired": "E-post krävs."
+    },
+    "report": {
+      "incorrectId": "Felaktigt id."
+    },
+    "role": {
+      "incorrectRoleId": "Roll-id är felaktigt."
+    },
+    "rss": {
+      "userNameIsRequired": "Användarnamn krävs.",
+      "categoryNameIsRequired": "Kategorinamn krävs.",
+      "hashtagNameIsRequired": "Hashtagnamn krävs."
+    },
+    "rule": {
+      "incorrectRuleId": "Regel-id är felaktigt."
+    },
+    "search": {
+      "queryIsRequired": "Fråga krävs."
+    },
+    "setting": {
+      "incorrectSettingId": "Inställnings-id är felaktigt.",
+      "settingsKeyCannotBeChanged": "Inställningsnyckel kan inte ändras."
+    },
+    "sharedBusinessCard": {
+      "incorrectSharedBusinessCardId": "Felaktigt delat visitkort-id.",
+      "incorrectCode": "Felaktig kod.",
+      "businessCardNotFound": "Visitkort hittades inte.",
+      "missingEmail": "E-post saknas."
+    },
+    "statusActivityPubEvent": {
+      "sortColumnNotSupported": "Sorteringskolumnen stöds inte.",
+      "incorrectStatusEventId": "Felaktigt statushändelse-id."
+    },
+    "status": {
+      "incorrectStatusId": "Status-id är felaktigt.",
+      "attachmentsAreRequired": "Bilagor saknas.",
+      "incorrectAttachmentId": "Felaktigt bilaga-id.",
+      "emailNotVerified": "Användarens e-postadress har inte verifierats.",
+      "accountHasBeenMoved": "Kontot har flyttats och kan inte skapa nya statusar.",
+      "cannotReblogMentionedStatus": "Kan inte blogga om status med nämnda synlighet.",
+      "cannotReblogComments": "Kan inte blogga om kommentarer.",
+      "cannotAddCommentWithoutCommentedStatus": "Kan inte lägga till kommentar utan kommenterad status.",
+      "cannotDeleteStatus": "Ett fel uppstod vid borttagning av status.",
+      "cannotUpdateOtherUserStatus": "Det går inte att uppdatera annan användarstatus.",
+      "cannotPinNonPublicStatus": "Det går inte att fästa icke-offentlig status.",
+      "cannotPinComment": "Det går inte att fästa kommentarer.",
+      "cannotPinReblog": "Det går inte att fästa rebloggar.",
+      "sortColumnNotSupported": "Sorteringskolumnen stöds inte.",
+      "incorrectStatusEventId": "Felaktigt statushändelse-id.",
+      "maxLimitOfAttachmentsExceeded": "Maximal gräns för bilagor har överskridits",
+      "statusCreationTooFrequent": "Ny status kan inte skapas ännu. Vänta {{waitSeconds}} sekunder innan du lägger till en till."
+    },
+    "storage": {
+      "downloadRemoteResourceFailed": "Det är ett fel som returneras från fjärrinstansservern.",
+      "notSupportedStorage": "Lagringssystem stöds inte ännu.",
+      "emptyBody": "Externt system returnerade tom kropp.",
+      "emptyPublicFolderPath": "Namnet på den offentliga mappen har inte angetts.",
+      "unknownError": "Svaret innehåller ingen information om status för begäran.",
+      "s3StorageNotConfigured": "S3-objektlagring är inte konfigurerad.",
+      "fileReadError": "Kan inte läsa filen '{{fileName}}' från lagringen."
+    },
+    "temporaryFile": {
+      "temporaryUrlFailed": "Tillfällig URL kan inte skapas.",
+      "notImplemented": "Inte genomfört."
+    },
+    "timeline": {
+      "categoryNameIsRequired": "Kategorinamn krävs.",
+      "hashtagNameIsRequired": "Hashtagnamn krävs."
+    },
+    "towFactorTokens": {
+      "cannotEncodeKey": "Kan inte koda nyckel till base32-data.",
+      "headerNotExists": "Rubrik X-Auth-2FA med kod finns inte.",
+      "tokenNotValid": "Token är inte giltig."
+    },
+    "userAlias": {
+      "incorrectUserAliasId": "Användaralias-id är felaktigt.",
+      "userAliasAlreadyExist": "Användaralias finns redan.",
+      "cannotVerifyRemoteAccount": "Det går inte att verifiera fjärrkontot."
+    },
+    "userBlockedDomain": {
+      "incorrectId": "Felaktigt id."
+    },
+    "user": {
+      "userAlreadyApproved": "Användarkontot är redan godkänt.",
+      "sortColumnNotSupported": "Sorteringskolumnen stöds inte.",
+      "userNameIsRequired": "Användarnamn krävs.",
+      "roleIsRequired": "Användarroll krävs."
+    },
+    "userSetting": {
+      "keyIsRequired": "Nyckel krävs."
+    },
+    "xsrfValidation": {
+      "xsrfTokenNotExistsInHeader": "XSRF-token (X-XSRF-TOKEN) finns inte i förfrågningshuvudet.",
+      "xsrfTokenNotExistsInCookie": "XSRF-token (xsrf-token) finns inte i cookien.",
+      "xsrfTokensAreDifferent": "XSRF-tokens är olika i cookien och rubriken."
+    }
+  },
+  "pages": {
+    "account": {
+      "avatar": {
+        "removeAriaLabel": "Ta bort avatar",
+        "subtitle": "PNG,GIFellerJPG. Som mest{{maxPictureFileSize}}. Kommer att nedskalas till 600x600px"
+      },
+      "blockedDomains": {
+        "description": "Lista över domäner som du har blockerat. Användare från dessa domäner kan inte följa dig. Deras inlägg kommer inte att visas på din lokala tidslinje, och dina inlägg levereras inte direkt till dem. De kan dock fortfarande se dina inlägg om en tredje part de följer ökar dem.",
+        "title": "Blockerade domäner"
+      },
+      "changeEmail": {
+        "changeEmail": "Ändra e-post",
+        "changeEmailAriaLabel": "Ändra e-post",
+        "currentEmailPrefix": "Din nuvarande e-post:",
+        "notConfirmed": "inte bekräftat",
+        "resendConfirmationEmail": "Skicka bekräftelsemail igen",
+        "resendConfirmationEmailAriaLabel": "Skicka bekräftelsemail igen",
+        "title": "Ändra e-post"
+      },
+      "changePassword": {
+        "changePassword": "Byt lösenord",
+        "changePasswordAriaLabel": "Byt lösenord",
+        "description": "Ange ett starkt lösenord och återanvänd det inte för andra konton.",
+        "title": "Byt lösenord"
+      },
+      "confirmations": {
+        "deleteBlockedDomain": "Vill du ta bort blockerad domän?",
+        "deleteUserAccountAlias": "Vill du ta bort användarkontoalias?"
+      },
+      "deleteAccount": {
+        "deleteAccount": "Ta bort konto",
+        "deleteAccountAriaLabel": "Ta bort konto",
+        "description": "Du kan ta bort ditt konto, denna operation är oåterkallelig. Tänk på att du inte kommer att kunna återaktivera ditt konto eller hämta något av innehållet eller informationen du har lagt till.",
+        "title": "Ta bort konto"
+      },
+      "export": {
+        "description": "Du kan begära ett arkiv som innehåller dina inlägg och uppladdade media. De exporterade data kommer att tillhandahållas iActivityPub-formatet, vilket säkerställer kompatibilitet med alla kompatibla program. Arkiv kan begäras en gång var 30:e dag. Arkiv genereras en gång om dagen och du kommer att meddelas via e-post när ditt arkiv är klart.",
+        "downloadDataFiles": {
+          "description": "En del av data från systemet kan laddas ner direkt utan att vänta på att arkivet ska genereras. Filerna skapas i textformat (CSV) och kan även användas för import till andra instanser.",
+          "items": {
+            "follows": "Följer"
+          },
+          "title": "Ladda ner datafiler"
+        },
+        "requestArchive": "Begär arkiv",
+        "requestArchiveAriaLabel": "Begär arkiv",
+        "table": {
+          "downloadYourArchive": "Ladda ner ditt arkiv",
+          "endProcessingDate": "Slutdatum för bearbetning",
+          "requestDate": "Datum för begäran",
+          "startProcessingDate": "Startdatum för bearbetning"
+        },
+        "title": "Exportera"
+      },
+      "header": {
+        "removeAriaLabel": "Ta bort rubriken",
+        "subtitle": "PNG,GIFellerJPG. Som mest{{maxPictureFileSize}}. Kommer att nedskalas till 1500x500px"
+      },
+      "import": {
+        "description": "Du kan importera data som tidigare exporterats från en annan server, till exempel en lista över konton du följer. Importerade konton kommer att slås samman med de du redan följer. EndastCSV-filer stöds för närvarande. Max filstorlek är{{maxImportFileSize}}.",
+        "importAriaLabel": "Importera",
+        "table": {
+          "endProcessingDate": "Slutdatum för bearbetning",
+          "showAccounts": "Visa konton",
+          "showAccountsAriaLabel": "Visa konton",
+          "startProcessingDate": "Startdatum för bearbetning"
+        },
+        "title": "Importera"
+      },
+      "messages": {
+        "accountAliasDeleted": "Kontoalias har tagits bort.",
+        "accountDetailsSaved": "Kontoinformationen har sparats.",
+        "archiveRequested": "Arkiv har begärts.",
+        "avatarDeleted": "Avatar har tagits bort.",
+        "avatarSaved": "Avatar har sparats.",
+        "blockedDomainDeleted": "Blockerad domän har tagits bort.",
+        "cannotReadUserNameFromToken": "Kan inte läsa användarnamn från token.",
+        "confirmationEmailSent": "Mejlet har skickats och bör komma till din inkorg inom kort.",
+        "errorDuringDownloadingAccountData": "Fel under nedladdning av kontodata.",
+        "headerDeleted": "Rubriken har tagits bort.",
+        "headerSaved": "Rubriken har sparats.",
+        "importFileTooLarge": "Den uppladdade filen är för stor. Maximal storlek är{{maxImportFileSize}}.",
+        "supporterFlagDisabled": "Supporterflaggan har inaktiverats.",
+        "supporterFlagEnabled": "Supporterflaggan har aktiverats.",
+        "verificationCodeCopied": "Verifieringskoden har kopierats till urklipp."
+      },
+      "moveFromDifferentAccount": {
+        "createAlias": "Skapa alias",
+        "createAliasAriaLabel": "Skapa alias",
+        "description": "Om du vill flytta från ett annat konto till detta kan du här skapa ett alias, vilket krävs innan du kan fortsätta med att flytta följare från det gamla kontot till detta. Denna åtgärd i sig är ofarlig och reversibel. Kontomigreringen initieras från det gamla kontot.",
+        "title": "Flyttar från ett annat konto"
+      },
+      "moveToDifferentAccount": {
+        "descriptionOne": "Flytta ditt konto till en annan server och meddela dina följare om den nya platsen. Om deras servrar stöder kontomigrering kommer de automatiskt att omdirigeras för att följa ditt nya konto.",
+        "descriptionTwo": "Endast följare flyttas automatiskt. Dina inlägg, media, följare, blockeringar, bokmärken och andra kontodata kommer inte att överföras.",
+        "migrateAccount": "Migrera konto",
+        "migrateAccountAriaLabel": "Migrera konto",
+        "movedToPrefix": "Kontot du flyttar till finns på",
+        "restoreAccount": "Återställ konto",
+        "restoreAccountAriaLabel": "Återställ konto",
+        "title": "Flyttar till ett annat konto"
+      },
+      "personalInformation": {
+        "errors": {
+          "bioTooLong": "För lång bio.",
+          "keyTooLong": "För lång nyckel.",
+          "nameTooLong": "För långt namn.",
+          "valueTooLong": "För långt värde."
+        },
+        "language": {
+          "english": "Engelska US (English US)",
+          "englishGb": "Engelska GB (English GB)",
+          "finnish": "Finska (suomi)",
+          "french": "Franska (français)",
+          "german": "Tyska (Deutsch)",
+          "italian": "Italienska (italiano)",
+          "norwegian": "Norska (norsk)",
+          "polish": "Polska (polski)",
+          "portuguese": "Portugisiska (português)",
+          "spanish": "Spanska (español)",
+          "swedish": "Svenska (svenska)"
+        },
+        "title": "Din personliga information"
+      },
+      "privacy": {
+        "includeProfilePageInSearchEngines": {
+          "hint": "Tillåt din profilsida att visas i resultat från externa sökmotorer, vilket gör din profil synlig utanförVernissage-plattformen.",
+          "label": "Inkludera profilsida i sökmotorer"
+        },
+        "includePublicPostsInSearchEngines": {
+          "hint": "Tillåt att dina offentliga inlägg indexeras och visas i externa sökmotorer som Google eller Bing. Detta kan göra ditt innehåll upptäckbart utanförVernissage.",
+          "label": "Inkludera offentliga inlägg i sökmotorer"
+        },
+        "manuallyApprovesFollowers": {
+          "hint": "Folk kommer att behöva vänta på att du accepterar deras följningsförfrågan. Markera det här alternativet om du föredrar att manuellt granska följningsförfrågningar och bestämma om du ska acceptera eller avvisa nya följare, eller avmarkera det för att tillåta andra att följa dig utan att kräva godkännande.",
+          "label": "Acceptera nya följare manuellt"
+        }
+      },
+      "support": {
+        "descriptionOne": "Tack för att du stödjerVernissage! Du kan välja att visa ett litet märke på din profil som ett tecken på uppskattning och för att inspirera andra att gå med i vår community av supportrar.",
+        "descriptionThree": "Märket är valfritt - du bestämmer om du vill visa det eller hålla ditt stöd privat.",
+        "descriptionTwo": "Det här alternativet är endast tillgängligt för användare som stöderVernissage. Om du är en supporter men inte ser det här alternativet, kontakta din instansadministratör.",
+        "showBadgeOnProfile": "Visa märket på din profil",
+        "title": "Visa ditt stöd"
+      },
+      "title": "konto",
+      "twoFactor": {
+        "description": "Skydda åtkomst till ditt konto genom tvåfaktorsautentiseringsprocess (2FA).",
+        "disableAriaLabel": "Inaktivera tvåfaktorsautentisering",
+        "enableAriaLabel": "Aktivera tvåfaktorsautentisering",
+        "title": "Tvåfaktorsautentisering (2FA)"
+      },
+      "userBlockedDomains": {
+        "editBlockedDomain": "Redigera blockerad domän"
+      },
+      "verification": {
+        "copyAriaLabel": "Kopiera verifiering",
+        "description": "Du kan använda Fields för att verifiera din identitet. Allt du behöver är en personlig webbplats som andra känner igen som din. Genom att länka till denna webbplats från din profil kommer vi att verifiera att webbplatsen länkar tillbaka till din profil och visar en visuell indikator för att bekräfta detta. Kopiera och klistra bara in koden nedan i HTML-koden på din webbplats och lägg sedan till din webbplatsadress i ett av de extra fälten ovan.",
+        "exampleAriaLabel": "Verifieringsexempel",
+        "tip": "Tips: Länken på din webbplats kan vara osynlig. Den viktiga delen är rel=\"me\" som förhindrar personifiering på webbplatser med användargenererat innehåll.",
+        "title": "Självverifiering av kontot"
+      }
+    },
+    "activityPubEventItems": {
+      "filters": {
+        "onlyErrors": "Bara fel",
+        "sortDirection": {
+          "label": "Sorteringsriktning"
+        },
+        "sorting": {
+          "endDate": "Slutdatum",
+          "label": "Sortering",
+          "startDate": "Startdatum",
+          "updatedDate": "Uppdaterat datum"
+        }
+      },
+      "paginator": {
+        "selectPage": "Välj sida"
+      },
+      "subtitle": "Lista överFediverse-servrar som händelsen har skickats till.",
+      "table": {
+        "endDate": "Slutdatum",
+        "error": "Fel",
+        "hostSuspended": "Värden avstängd",
+        "inboxUrl": "InkorgURL",
+        "isSuccess": "Är framgång",
+        "open": "Öppna",
+        "startDate": "Startdatum"
+      },
+      "title": "Mottagare avActivityPub-händelser"
+    },
+    "activityPubEvents": {
+      "action": {
+        "announce": "Meddela",
+        "create": "Skapa",
+        "like": "Gilla",
+        "pinStatus": "Pin status",
+        "undoAnnounce": "Ångra meddelande",
+        "undoLike": "Ångra gilla",
+        "unpinStatus": "Lossa status",
+        "update": "Uppdatering"
+      },
+      "common": {
+        "all": "Alla"
+      },
+      "filters": {
+        "action": {
+          "label": "Åtgärd"
+        },
+        "result": {
+          "label": "Resultat"
+        },
+        "sortDirection": {
+          "label": "Sorteringsriktning"
+        },
+        "sorting": {
+          "endDate": "Slutdatum",
+          "label": "Sortering",
+          "startDate": "Startdatum",
+          "updatedDate": "Uppdaterat datum"
+        }
+      },
+      "paginator": {
+        "selectPage": "Välj sida"
+      },
+      "result": {
+        "failed": "Misslyckades",
+        "finished": "Färdig",
+        "finishedWithErrors": "Slutade med fel",
+        "finishedWithErrorsInParens": "Färdig (med fel)",
+        "processing": "Bearbetning",
+        "waiting": "Väntar"
+      },
+      "subtitle": "Lista över händelser som skickas av systemet viaActivityPub-protokollet till andraFediverse-instanser.",
+      "table": {
+        "action": "Åtgärd",
+        "attempts": "Försök",
+        "endDate": "Slutdatum",
+        "errorMessage": "Felmeddelande",
+        "result": "Resultat",
+        "startDate": "Startdatum",
+        "user": "Användare"
+      },
+      "title": "UtgåendeActivityPub-händelser"
+    },
+    "articleEdit": {
+      "files": {
+        "copy": "Kopiera",
+        "copyMarkdownAriaLabel": "Kopiera markdown",
+        "delete": "Ta bort",
+        "deleteAriaLabel": "Ta bort fil",
+        "fileAlt": "Artikelfil",
+        "mainFile": "Huvudfil",
+        "markAsMain": "Markera som huvud",
+        "markAsMainAriaLabel": "Ta bort fil",
+        "title": "Filer",
+        "upload": "Ladda upp",
+        "uploadAriaLabel": "Ladda upp fil"
+      },
+      "form": {
+        "alternativeAuthor": {
+          "ariaLabel": "Alternativ författare",
+          "errors": {
+            "tooLong": "För långt användarnamn."
+          },
+          "hint": "Du kan ställa in ett alternativt handtag för en användares konto iFediverse. Den kommer att visas som författare i miniatyrbilder som genereras baserat på OpenGraph-taggar.",
+          "label": "Alternativ författare",
+          "placeholder": "Färg"
+        },
+        "body": {
+          "ariaLabel": "Artikelkropp",
+          "errors": {
+            "required": "Ange artikeltext.",
+            "tooLong": "För lång artikeltext."
+          },
+          "hint": "Det här fältet stöderMarkdown-formatering.",
+          "label": "Artikelkropp",
+          "placeholder": "Artikelkropp"
+        },
+        "color": {
+          "ariaLabel": "Färg",
+          "errors": {
+            "tooLong": "För lång färg."
+          },
+          "hint": "Du kan användaCSS-kompatibla färger här, t.ex. #00ff0020.",
+          "label": "Färg",
+          "placeholder": "Färg"
+        },
+        "title": {
+          "ariaLabel": "Titel",
+          "errors": {
+            "tooLong": "För lång titel."
+          },
+          "label": "Titel",
+          "placeholder": "Titel"
+        }
+      },
+      "messages": {
+        "fileTooLarge": "Den uppladdade filen är för stor. Maximal storlek är{{maxArticleFileSize}}.",
+        "markdownCopied": "Markdown-koden har kopierats till urklipp.",
+        "saved": "Artikeln har sparats.",
+        "updated": "Artikeln har uppdaterats."
+      },
+      "title": "Artikelinnehåll",
+      "visibilities": {
+        "title": "Synligheter"
+      }
+    },
+    "articles": {
+      "confirmations": {
+        "deleteArticle": "Vill du radera artikeln?"
+      },
+      "createArticle": "Skapa artikel",
+      "createArticleAriaLabel": "Skapa artikel",
+      "messages": {
+        "deleted": "Artikeln togs bort."
+      },
+      "subtitle": "Lista över artiklar skapade i systemet.",
+      "title": "Artiklar"
+    },
+    "bookmarks": {
+      "title": "Bokmärken"
+    },
+    "categories": {
+      "subtitle": "En lista över kategorier på servern tillsammans med bilderna som tilldelats dem.",
+      "title": "Kategorier"
+    },
+    "confirmEmail": {
+      "error": {
+        "descriptionMiddle": "Om felet fortfarande uppstår kan du försöka",
+        "descriptionPrefix": "Under bekräftelsen av e-postmeddelandet uppstod ett oväntat fel. Försök igen senare.",
+        "descriptionSuffix": "(det kommer också att aktivera ditt konto) eller kontakta oss.",
+        "resetPasswordLink": "återställ ditt lösenord",
+        "title": "Fel!"
+      },
+      "success": {
+        "congratulations": "Grattis!",
+        "description": "Din e-post har bekräftats. Ditt konto har skapats och alla funktioner har aktiverats.",
+        "loginLink": "logga in",
+        "loginPromptPrefix": "Du kan gå till",
+        "loginPromptSuffix": "sida och använd dina referenser för att logga in på systemet. Tack!",
+        "title": "E-post bekräftad"
+      },
+      "validating": {
+        "description": "Systemet validerar nu din e-post. Ha tålamod. Driften bör ta några sekunder.",
+        "title": "E-postvalidering..."
+      }
+    },
+    "editBusinessCard": {
+      "colors": {
+        "bottomAriaLabel": "Bottenfärg",
+        "textAriaLabel": "Textfärg",
+        "topAriaLabel": "Toppfärg"
+      },
+      "form": {
+        "email": {
+          "errors": {
+            "tooLong": "För långt mail."
+          }
+        },
+        "fields": {
+          "key": {
+            "errors": {
+              "tooLong": "För lång nyckel."
+            }
+          },
+          "value": {
+            "errors": {
+              "tooLong": "För långt värde."
+            }
+          }
+        },
+        "note": {
+          "errors": {
+            "tooLong": "För lång anteckning."
+          }
+        },
+        "subtitle": {
+          "errors": {
+            "tooLong": "För lång undertext."
+          }
+        },
+        "telephone": {
+          "errors": {
+            "tooLong": "För lång telefon."
+          }
+        },
+        "title": {
+          "errors": {
+            "required": "Ange titel.",
+            "tooLong": "För lång titel."
+          }
+        },
+        "website": {
+          "errors": {
+            "tooLong": "För lång hemsida."
+          }
+        }
+      },
+      "messages": {
+        "saved": "Visitkortet har sparats.",
+        "updated": "Visitkortet har uppdaterats."
+      },
+      "subtitle": "Du kan skapa ditt visitkort här och dela det säkert med personer som inte har ett konto. Ditt kort är endast synligt för de som har den unika, svårgissa länken du genererar. Varje delning skapar en ny länk som du kan ta bort när som helst.",
+      "title": "Visitkort"
+    },
+    "editors": {
+      "subtitles": {
+        "statuses": "En samling foton som har visats av curatorer på den här servern.",
+        "users": "En samling konstnärer som har presenterats av curatorer på den här servern."
+      },
+      "tabAriaLabel": "Trendig typ",
+      "title": "Redaktörens val"
+    },
+    "errorItems": {
+      "confirmations": {
+        "deleteError": "Vill du radera felet?"
+      },
+      "messages": {
+        "deleted": "Felet har tagits bort."
+      },
+      "subtitle": "Lista över fel som kastas i systemet.",
+      "title": "Fel"
+    },
+    "errors": {
+      "accessForbidden": {
+        "description": "Vi är ledsna, du har inte tillgång till sidan.",
+        "title": "Tillträde förbjuden"
+      },
+      "connectionLost": {
+        "description": "Vi är ledsna, anslutningen har förlorats.",
+        "title": "Anslutning förlorad"
+      },
+      "pageNotFound": {
+        "description": "Vi beklagar, sidan du begärde kunde inte hittas.",
+        "title": "Sidan hittades inte"
+      },
+      "unexpectedError": {
+        "description": "Vi beklagar, ett oväntat fel inträffade.",
+        "errorCodeLabel": "Felkod:",
+        "errorInformationTitle": "Felinformation",
+        "title": "Oväntat fel"
+      }
+    },
+    "favourites": {
+      "title": "Favoriter"
+    },
+    "forgotPassword": {
+      "errors": {
+        "unexpectedResetError": "Oväntat fel under återställning av ditt lösenord. Försök igen."
+      },
+      "form": {
+        "errors": {
+          "emailInvalid": "Kontrollera att du har angett korrekt e-postadress.",
+          "emailRequired": "Ange e-post."
+        },
+        "subtitle": "Ange e-postadressen som är kopplad till ditt konto, så skickar vi en länk för att återställa ditt lösenord via e-post.",
+        "title": "Återställ ditt lösenord"
+      },
+      "success": {
+        "description": "Vi har skickat en länk för att återställa ditt lösenord. Kontrollera din inkorg. Det kan ta upp till 10 minuter att dyka upp i din inkorg.",
+        "title": "Kontrollera din e-post"
+      },
+      "userNotExists": {
+        "descriptionMiddle": "Kontrollera om du har angett rätt adress.",
+        "descriptionPrefix": "Är du säker på att du skapade ett konto på den angivna adressen?",
+        "descriptionSuffixPrefix": "Du kan prova",
+        "title": "Användaren finns inte"
+      }
+    },
+    "frequentlyAskedQuestions": {
+      "header": {
+        "subtitle": "Här kan du hitta svar på de vanligaste frågorna omVernissage."
+      },
+      "imageResolution": {
+        "description": "Vernissagebegränsar inte bildupplösningen - bara filstorleken har betydelse. Du är fri att ladda upp högupplösta bilder så länge filen förblir inom den tillåtna uppladdningsstorleken.",
+        "footer": "För bästa synlighet och interoperabilitet, behåll den i 4K eller lägre.",
+        "noteLabel": "Obs:",
+        "notes": {
+          "mastodon": "kan visa bilden som en platshållarlänk istället för att rendera den inline.",
+          "pixelfed": "kan avvisa bilden helt om den överstiger 5000px på någon sida."
+        },
+        "recommendation": "För att säkerställa optimal kvalitet och kompatibilitet överFediverserekommenderar vi dock att du laddar upp bilder i upp till 4K-upplösning (cirka 3840 x 2160 pixlar). Detta skapar en balans mellan bildskärpa och prestanda och stöds fullt ut på plattformar somMastodonochPixelfed.",
+        "title": "2. Vilken är den rekommenderade upplösningen för uppladdade bilder?"
+      },
+      "intro": {
+        "description": "Välkommen tillVernissageFAQ - ett kurerat utrymme som hjälper dig att få ut det mesta av din fotodelningsupplevelse."
+      },
+      "keyboardSupport": {
+        "description": "Ja.Vernissageerbjuder omfattande tangentbordsnavigering för användare som hjälper dig att snabbt flytta mellan sidor, tidslinjer och åtgärder.",
+        "footer": "Dessa genvägar är utformade för att förbättra tillgängligheten och påskynda din surfning - särskilt användbara för tangentbordscentrerade användare.",
+        "globalShortcuts": {
+          "categories": "Visa kategorier",
+          "editorsChoice": "Öppna tidslinjen för Editor's Choice",
+          "faq": "Öppna denna FAQ-sida",
+          "home": "Gå till tidslinjen Hem",
+          "news": "Visa nyheter",
+          "profile": "Gå till din profil",
+          "trending": "Öppna trendtidslinjen",
+          "upload": "Ladda upp ett nytt foto"
+        },
+        "globalShortcutsTitle": "Globala genvägar (tillgängliga i hela appen, för inloggade användare):",
+        "statusDetailShortcuts": {
+          "bookmark": "Spara statusen till bokmärken",
+          "boost": "Öka statusen",
+          "like": "Gillar statusen",
+          "nextStatus": "Se nästa status",
+          "previousStatus": "Visa föregående status"
+        },
+        "statusDetailShortcutsTitle": "På en statusdetaljsida:",
+        "tabsDescription": "Om den aktuella sidan innehåller flera flikar (t.ex. Hem, Trender eller Redaktörens val) kan du växla mellan dem genom att trycka på siffertangenterna:",
+        "tabShortcuts": {
+          "first": "Växla till den första fliken",
+          "second": "Växla till den andra fliken",
+          "third": "Växla till den tredje fliken"
+        },
+        "title": "1. HarVernissagestöd för kortkommandon?"
+      }
+    },
+    "hashtag": {
+      "actions": {
+        "followActionInProgressAriaLabel": "Hashtag följer pågående åtgärd",
+        "followAriaLabel": "Följ hashtag",
+        "unfollowAriaLabel": "Sluta följa hashtaggen"
+      },
+      "feed": {
+        "atomTitle": "Hashtag{{hashtag}}-flöde (Atom)",
+        "rssTitle": "Hashtag{{hashtag}}-flöde (RSS)"
+      },
+      "messages": {
+        "followed": "Hashtag har följts.",
+        "unfollowed": "Hashtag har slutat följas."
+      }
+    },
+    "invitations": {
+      "actions": {
+        "deleteInvitationAriaLabel": "Ta bort inbjudan",
+        "generateCode": "Generera kod",
+        "generateInvitationAriaLabel": "Skapa inbjudan"
+      },
+      "messages": {
+        "copied": "Koden har kopierats till urklipp.",
+        "deleted": "Inbjudningskoden har tagits bort.",
+        "generated": "Inbjudningskoden har genererats."
+      },
+      "subtitle": "Generera och dela inbjudningskoder med andra för att ge åtkomst till den här servern.",
+      "table": {
+        "invitedUser": "Inbjuden användare"
+      },
+      "title": "Inbjudningar"
+    },
+    "login": {
+      "errors": {
+        "accountBlocked": "Ditt konto är blockerat. Kontakta vår support.",
+        "accountNotApproved": "Ditt konto är inte godkänt ännu.",
+        "enterTwoFactorToken": "Ange token från autentiseringsappen.",
+        "invalidCredentials": "Ogiltiga användaruppgifter.",
+        "loginAttemptsExceeded": "För många misslyckade inloggningar. Försök igen om 5 minuter.",
+        "twoFactorTokenNotValid": "Token är inte giltig. Vänligen ange ny token.",
+        "unknownLoginError": "Okänt inloggningsfel. Försök igen senare."
+      },
+      "form": {
+        "errors": {
+          "passwordRequired": "Enter password.",
+          "userNameOrEmailRequired": "Ange användarnamn eller e-postadress."
+        },
+        "subtitle": "Ange dina autentiseringsuppgifter för att logga in på systemet",
+        "title": "Logga in påVernissage"
+      },
+      "registration": {
+        "noAccountPrefix": "Har du inget konto än?",
+        "noAccountSuffix": "."
+      },
+      "social": {
+        "separator": "Eller via socialt konto"
+      },
+      "twoFactor": {
+        "trustMachine": "Lita på den här maskinen under de kommande 30 dagarna."
+      }
+    },
+    "loginCallback": {
+      "errors": {
+        "emailNotConfirmed": "Din e-post är inte bekräftad. Kontrollera din inkorg eller återställ ditt lösenord."
+      }
+    },
+    "news": {
+      "empty": {
+        "noItems": "Tyvärr finns det inget att se här än."
+      },
+      "subtitle": "Håll dig uppdaterad med våra senaste inlägg.",
+      "title": "Nyheter"
+    },
+    "notifications": {
+      "actions": {
+        "openUserProfileAriaLabel": "Öppna användarprofilen",
+        "refreshCurrentTimelineAriaLabel": "Uppdatera aktuell tidslinje"
+      },
+      "title": "Aviseringar",
+      "types": {
+        "adminReport": "har rapporterats",
+        "adminSignUp": "är en ny användare",
+        "favouriteComment": "favoriserade din kommentar",
+        "favouriteStatus": "favoritmarkerade ditt foto",
+        "follow": "följde dig",
+        "followRequest": "vill följa dig",
+        "mention": "nämnde dig",
+        "newComment": "skrev en ny kommentar",
+        "reblog": "förstärkte ditt foto",
+        "status": "publicerat foto",
+        "update": "redigerat foto"
+      }
+    },
+    "preferences": {
+      "avatar": {
+        "circle": "Cirkel",
+        "roundedRectangle": "Rundad rektangel",
+        "select": "Välj avatar",
+        "title": "Avatar"
+      },
+      "gallery": {
+        "originalRatio": "Originalförhållande",
+        "select": "Välj bildvy",
+        "squareImages": "Fyrkantiga bilder",
+        "title": "Användarens profilgalleri"
+      },
+      "media": {
+        "alwaysShowNsfw": {
+          "description": "Tvinga visa alla NSFW (känsliga) media utan varningar.",
+          "title": "Visa alltid NSFW"
+        },
+        "alwaysShowSdrPhoto": {
+          "description": "Istället förHDR-versionen av fotot, kommer alltidSDR-versionen att visas.",
+          "title": "Visa alltidSDR-foto"
+        },
+        "autoScrollGalleryImages": {
+          "description": "Går automatiskt igenom statusbilder var sjätte sekund.",
+          "title": "Rulla bilder automatiskt i statusgalleriet"
+        },
+        "showAlternativeText": {
+          "description": "Visa alternativ text om den finns på skärmen med statusdetaljer.",
+          "title": "Visa alternativ text"
+        },
+        "showAltIcon": {
+          "description": "ALT-ikonen kommer att visas på tidslinjerna.",
+          "title": "VisaALT-ikonen"
+        },
+        "showAvatars": {
+          "description": "Avatarer kommer att visas på tidslinjer.",
+          "title": "Visa avatarer"
+        },
+        "showBoost": {
+          "description": "Boost-ikonen kommer att visas på tidslinjerna.",
+          "title": "Visa boost"
+        },
+        "showCounts": {
+          "description": "Visa bildräkning på status med flera bilder.",
+          "title": "Visa bildantal"
+        },
+        "showFavourites": {
+          "description": "Favoritikonen kommer att visas på tidslinjerna.",
+          "title": "Visa favoriter"
+        },
+        "title": "Mediainställningar"
+      },
+      "theme": {
+        "dark": "Mörkt",
+        "light": "Ljus",
+        "select": "Välj tema",
+        "title": "Tema"
+      },
+      "title": "Inställningar"
+    },
+    "privacy": {
+      "title": "Integritetspolicy"
+    },
+    "profile": {
+      "actions": {
+        "profileQrCodeAriaLabel": "ProfilQR-kod",
+        "shareBusinessCardAriaLabel": "Dela visitkort"
+      },
+      "confirmations": {
+        "createBusinessCard": "Du har inte skapat ett visitkort än. Vill du skapa den nu?"
+      },
+      "images": {
+        "avatarAlt": "avatarprofil",
+        "headerAlt": "rubrikprofil"
+      },
+      "joined": "Gick med i{{date}}",
+      "latestFollowers": {
+        "title": "SENASTE FÖLJARE"
+      },
+      "messages": {
+        "businessCardShared": "Visitkort har delats."
+      },
+      "movedTo": {
+        "prefix": "Detta konto har flyttats till",
+        "suffix": "Framtida uppdateringar kommer att publiceras från det nya kontot."
+      },
+      "noData": {
+        "local": "Det finns inget att läsa här ännu.",
+        "remote": {
+          "checkOriginalPrefix": "Kontrollera användarens original",
+          "description": "Vi har inte denna information i systemet."
+        }
+      },
+      "remoteStatuses": {
+        "missingPosts": "Vissa inlägg från den här profilen kan saknas.",
+        "seeMorePrefix": "Se fler inlägg på användarens original"
+      }
+    },
+    "register": {
+      "captcha": {
+        "imageAlt": "Captcha",
+        "refreshAriaLabel": "Uppdatera captcha",
+        "textAriaLabel": "Captcha-text",
+        "textLabel": "Captcha-text",
+        "title": "Lös captcha"
+      },
+      "displayName": {
+        "label": "Visningsnamn"
+      },
+      "emailHint": "Oroa dig inte. Denna information är helig för oss. Vi kommer aldrig att visa, sälja eller missbruka det.",
+      "errors": {
+        "captchaTextRequired": "Ange captcha-text.",
+        "captchaTextTooLong": "Captcha-texten är för lång.",
+        "disposableEmailNotAllowed": "Engångsmail kan inte användas.",
+        "emailAlreadyConnected": "Givet e-post är redan kopplat till ett annat konto.",
+        "emailInvalid": "Kontrollera att du har angett korrekt e-postadress.",
+        "emailRequired": "Ange e-post.",
+        "emailTaken": "Välj annan e-postadress, den här är redan kopplad till ett annat konto.",
+        "invalidCaptchaCode": "Captcha-koden är ogiltig. Försök igen.",
+        "invitationCodeRequired": "Ange inbjudningskoden.",
+        "invitationCodeTooLong": "Inbjudningskoden är för lång.",
+        "invitationTokenInvalid": "Inbjudanstoken är ogiltig.",
+        "invitationTokenUsed": "Inbjudanstoken har använts.",
+        "mustAcceptRules": "Du måste acceptera serverregler.",
+        "nameRequired": "Ange namn.",
+        "nameTooLong": "Namnet är för långt.",
+        "reasonRequired": "Ange orsak.",
+        "reasonTooLong": "Anledningen är för lång.",
+        "unexpectedError": "Ett oväntat fel inträffade. Försök igen.",
+        "userNameAlreadyTaken": "Användarnamnet är redan upptaget. Välj en annan.",
+        "userNamePattern": "Endast alfanumeriska tecken är tillåtna i användarnamn.",
+        "userNameRequired": "Ange användarnamn.",
+        "userNameTaken": "Välj ett annat användarnamn, det här är redan upptaget.",
+        "userNameTooLong": "Välj ett annat användarnamn, det här är för långt."
+      },
+      "invitationCode": {
+        "ariaLabel": "Inbjudningsbricka",
+        "label": "Inbjudningskod"
+      },
+      "language": {
+        "english": "Engelska US (English US)",
+        "englishGb": "Engelska GB (English GB)",
+        "finnish": "Finska (suomi)",
+        "french": "Franska (français)",
+        "german": "Tyska (Deutsch)",
+        "italian": "Italienska (italiano)",
+        "norwegian": "Norska (norsk)",
+        "spanish": "Spanska (español)",
+        "swedish": "Svenska (svenska)",
+        "polish": "polska (polski)",
+        "portuguese": "Portugisiska (português)"
+      },
+      "messages": {
+        "accountCreated": "Ditt konto har skapats."
+      },
+      "reason": {
+        "ariaLabel": "Anledning",
+        "label": "Anledning"
+      },
+      "serverRules": {
+        "acceptance": "Jag accepterar alla serverregler.",
+        "title": "Serverregler"
+      },
+      "title": "Skapa nytt konto"
+    },
+    "reports": {
+      "actions": {
+        "applyCWToStatus": "AppliceraCWtill status",
+        "applyCWToStatusAriaLabel": "AppliceraCWtill status",
+        "closeReportAriaLabel": "Stäng rapport",
+        "deleteStatus": "Ta bort status",
+        "deleteStatusAriaLabel": "Ta bort status",
+        "openProfileAriaLabel": "Öppna profilen @{{userName}}",
+        "reportActionsAriaLabel": "Rapportera åtgärder",
+        "restoreReportAriaLabel": "Återställ rapport",
+        "sendToRemoteInstance": "Skicka till fjärrinstans",
+        "sendToRemoteInstanceAriaLabel": "Skicka till fjärrinstans",
+        "showReportDetailsAriaLabel": "Visa rapportdetaljer",
+        "unlistStatus": "Avlista status",
+        "unlistStatusAriaLabel": "Avlista status"
+      },
+      "confirmations": {
+        "deleteStatus": "Vill du ta bort status?",
+        "sendToRemoteInstance": "Vill du skicka rapport till fjärrinstans?",
+        "unlistStatus": "Vill du ta bort status?"
+      },
+      "messages": {
+        "closed": "Rapporten har stängts.",
+        "contentWarningAdded": "Innehållsvarning har lagts till.",
+        "restored": "Rapporten har återställts.",
+        "sentToRemoteInstance": "Rapporten har skickats till fjärrinstans.",
+        "statusDeleted": "Status har tagits bort.",
+        "statusUnlisted": "Status har varit olistad."
+      },
+      "subtitle": "Problem som rapporterats av andra systemanvändare.",
+      "table": {
+        "considerationDate": "Behandlingsdatum",
+        "considerationUser": "Omtanke användare",
+        "federated": "Federerat",
+        "reportedUser": "Rapporterad användare"
+      },
+      "types": {
+        "comment": "Kommentera",
+        "profile": "Profil",
+        "status": "Status"
+      }
+    },
+    "resetPassword": {
+      "errors": {
+        "unexpectedResetError": "Oväntat fel under återställning av ditt lösenord. Försök igen."
+      },
+      "form": {
+        "subtitle": "Ange det nya lösenordet till ditt konto, den här sidan kommer endast att vara tillgänglig för dig i 10 minuter.",
+        "title": "Ställ in nytt lösenord"
+      },
+      "missingToken": {
+        "description": "Obligatorisk information saknas. Är du säker på att du öppnade sidan från e-post som vi skickar till dig?",
+        "title": "Fel!"
+      },
+      "success": {
+        "descriptionMiddle": "Du kan försöka",
+        "descriptionPrefix": "Ditt lösenord har ändrats.",
+        "descriptionSuffix": "till systemet nu.",
+        "loginLink": "logga in",
+        "title": "Lösenordet har ändrats"
+      }
+    },
+    "search": {
+      "empty": {
+        "hashtags": "Inga hashtags hittades.",
+        "statuses": "Inga statusar hittades.",
+        "users": "Inga användare hittades."
+      },
+      "hint": "Sök efter en användare, status eller hashtag, eller klistra in enURLi en status eller användarprofil.",
+      "tabs": {
+        "hashtags": "Hashtags",
+        "statuses": "Statuser",
+        "users": "Användare"
+      }
+    },
+    "settings": {
+      "panels": {
+        "categories": {
+          "description": "Här kan du hantera kategorier och hashtags.",
+          "title": "Kategorier"
+        },
+        "domainBlocks": {
+          "description": "Här kan du hantera domäner blockerade av instans.",
+          "title": "Instansdomänblockeringar"
+        },
+        "general": {
+          "description": "Här kan du ställa in allmänna programinställningar.",
+          "title": "Allmänna inställningar"
+        },
+        "homeCards": {
+          "description": "Här kan du hantera hemmets kort.",
+          "title": "Hemkort"
+        },
+        "instanceRules": {
+          "description": "Här kan du hantera instansregler.",
+          "title": "Instansregler"
+        },
+        "licenses": {
+          "description": "Här kan du hantera fotolicenser.",
+          "title": "Licenser"
+        }
+      },
+      "title": "Inställningar"
+    },
+    "sharedCard": {
+      "form": {
+        "messagePlaceholder": "Skicka meddelande..."
+      },
+      "messages": {
+        "personalDataSaved": "Dina personuppgifter har sparats."
+      }
+    },
+    "sharedCardPublic": {
+      "messages": {
+        "personalDataSaved": "Dina personuppgifter har sparats."
+      }
+    },
+    "sharedCards": {
+      "actions": {
+        "shareBusinessCard": "Dela visitkort",
+        "yourBusinessCard": "Ditt visitkort"
+      },
+      "confirmations": {
+        "deleteSharedBusinessCard": "Vill du ta bort delat visitkort?"
+      },
+      "messages": {
+        "businessCardShared": "Visitkort har delats.",
+        "businessCardUpdated": "Visitkortet har uppdaterats.",
+        "createBusinessCardFirst": "Du måste skapa visitkort först.",
+        "sharedBusinessCardDeleted": "Delat visitkort raderades.",
+        "sharedBusinessCardEnabled": "Delat visitkort har aktiverats.",
+        "sharedBusinessCardRevoked": "Delat visitkort har återkallats."
+      },
+      "subtitle": "Här kan du se och hantera alla offentliga länkar genom vilka ditt visitkort har delats.",
+      "title": "Delade visitkort"
+    },
+    "status": {
+      "actions": {
+        "bookmark": "Bokmärke",
+        "boost": "Boost",
+        "feature": "Funktion",
+        "like": "Gilla",
+        "openProfileAriaLabel": "Öppna profilen @{{userName}}",
+        "unbookmark": "Ta bort bokmärke",
+        "unboost": "Unboost",
+        "unfeature": "Ofunktion",
+        "unlike": "Till skillnad från"
+      },
+      "back": "Tillbaka",
+      "comments": {
+        "actions": {
+          "like": "Gilla",
+          "reply": "Svara",
+          "report": "Rapportera",
+          "unlike": "Till skillnad från"
+        },
+        "likedByPrefix": "Kommentar gillad av",
+        "noComments": "Det finns inget att läsa här ännu.",
+        "people": "människor",
+        "person": "person",
+        "title": "Kommentarer"
+      },
+      "confirmations": {
+        "changeStatusWithEnteredComment": "Du har skrivit en kommentar. Vill du ändra status ändå?"
+      },
+      "followedTagsInThisStatus": "Följde taggar i denna status",
+      "hashtagsAriaLabel": "Hashtags",
+      "hdr": {
+        "displayed": "(visas)",
+        "highDynamicRange": "Högt dynamiskt omfång",
+        "notDisplayed": "(visas inte)",
+        "notSupportedByBrowser": "Stöds inte av webbläsaren",
+        "supportedByBrowser": "Stöds av webbläsare"
+      },
+      "menu": {
+        "boostedBy": "Förstärkt av",
+        "copyLinkToPost": "Kopiera länken till inlägget",
+        "events": "Händelser",
+        "favouritedBy": "Favoritad av",
+        "openOriginalPage": "Öppna originalsidan",
+        "pin": "Pin",
+        "report": "Rapportera",
+        "unpin": "Lossa"
+      },
+      "messages": {
+        "bookmarked": "Status bokmärkt.",
+        "boosted": "Status förstärkt.",
+        "commentFavourited": "Kommentar favoritmarkerad.",
+        "favourited": "Status som favorit.",
+        "featured": "Status visas.",
+        "likeUndone": "Din like har ångrats.",
+        "pinned": "Status fäst.",
+        "reportSaved": "Rapporten har sparats.",
+        "statusDeleted": "Status har tagits bort.",
+        "unbookmarked": "Status avbokmärkt.",
+        "unboosted": "Status oförstärkt.",
+        "unfeatured": "Status saknar funktion.",
+        "unpinned": "Status lossad."
+      },
+      "navigation": {
+        "nextImageAriaLabel": "Nästa bild",
+        "previousImageAriaLabel": "Föregående bild"
+      },
+      "openMap": "Öppna kartan",
+      "showImage": "Visa bild",
+      "tooltips": {
+        "alt": "Alt",
+        "camera": "Kamera",
+        "cameraRoll": "Kamerarulle",
+        "category": "Kategori",
+        "developChemistry": "Utveckla kemi",
+        "equivalentLens": "Motsvarar{{focalLength}}mm helbildsobjektiv.",
+        "exposure": "Exponering",
+        "flash": "Flash",
+        "fullFrameLens": "Helbildsobjektiv.",
+        "hdr": "HDR",
+        "lens": "Lins",
+        "license": "Licens",
+        "photoCreatedDate": "Foto skapat datum",
+        "place": "Plats",
+        "scanner": "Skanner",
+        "software": "Programvara"
+      },
+      "versions": {
+        "latestVersion": "Senaste versionen",
+        "previousVersions": "Tidigare versioner"
+      }
+    },
+    "statusEventItems": {
+      "otherEvents": "andra evenemang",
+      "subtitleMiddle": "har skickats",
+      "subtitlePrefix": "Lista överFediverse-servrar till vilka händelsen är kopplad till",
+      "title": "Eventmottagare"
+    },
+    "statusEvents": {
+      "statusLink": "status",
+      "subtitlePrefix": "Lista över händelser som skickats från systemet viaActivityPub-protokollet till andraFediverse-instanser associerade med",
+      "subtitleSuffix": ".",
+      "title": "Statushändelser"
+    },
+    "support": {
+      "actions": {
+        "supportUs": "Stöd oss"
+      },
+      "financial": {
+        "communitySupport": "Gemenskapsstöd",
+        "perMonth": "/ månad",
+        "totalCost": "Total kostnad"
+      },
+      "health": {
+        "checking": "kollar...",
+        "database": "Databas",
+        "error": "fel",
+        "ok": "okej",
+        "redisQueues": "Redisköer",
+        "storage": "Förvaring",
+        "webPushService": "Webb push-tjänst"
+      },
+      "instance": {
+        "apiVersion": "APIversion",
+        "contactAccount": "Kontaktkonto",
+        "description": "Beskrivning",
+        "imageSizeLimit": "Bildstorleksgräns",
+        "languages": "Språk",
+        "maxMediaAttachments": "Max mediabilagor",
+        "maxStatusCharacters": "Max statustecken",
+        "webVersion": "WEB-version"
+      },
+      "links": {
+        "apiDocumentation": "APIdokumentation",
+        "mastodon": "Mastodon",
+        "privacyPolicy": "Integritetspolicy",
+        "reportBug": "Rapportera ett fel",
+        "sourceCode": "Källkod",
+        "termsOfService": "Användarvillkor"
+      },
+      "messages": {
+        "healthStatusDownloadError": "Fel under nedladdning av systemets hälsostatus."
+      },
+      "sections": {
+        "financialSupport": "Ekonomiskt stöd",
+        "healthStatus": "Hälsostatus",
+        "helpfulLinks": "Användbara länkar",
+        "instanceInformation": "Instansinformation"
+      },
+      "title": "Support"
+    },
+    "trending": {
+      "period": {
+        "ariaLabel": "Välj period",
+        "daily": "Dagligen",
+        "monthly": "Månatlig",
+        "yearly": "Årligen"
+      },
+      "subtitles": {
+        "hashtags": "En samling hashtags tilldelade foton som fått flest likes inom en viss tidsram.",
+        "statuses": "En samling bilder som fått flest likes inom en viss tidsram.",
+        "users": "En samling artister som fått flest likes på sina bilder inom en angiven tidsram."
+      },
+      "tabAriaLabel": "Trendig typ",
+      "tabs": {
+        "tags": "Taggar"
+      },
+      "title": "Trendigt"
+    },
+    "upload": {
+      "accountMoved": "Det här kontot har flyttats till ett annat konto, så du kan inte längre lägga till nya foton eller publicera nytt innehåll här. För att fortsätta publicera, använd ditt nya konto.",
+      "actions": {
+        "featurePoweredBy": "Funktion som drivs av{{provider}}.",
+        "hashtags": "Hashtags",
+        "useTemplate": "Använd mall"
+      },
+      "emailVerificationRequired": {
+        "prefix": "För att ladda upp bilder, vänligen verifiera din e-postadress. Du kan skicka om bekräftelsemailet från din",
+        "securityNote": "Att kräva e-postverifiering hjälper till att säkerställa att endast legitima konton kan ladda upp innehåll, vilket förbättrar både säkerheten och den övergripande kvaliteten på delat material.",
+        "suffix": "sida om du inte har fått den än."
+      },
+      "form": {
+        "contentWarning": "Content warning",
+        "disableComments": "Inaktivera kommentarer",
+        "sensitiveMedia": "Känsliga/NSFW media"
+      },
+      "messages": {
+        "accountMovedPublishingUnavailable": "Det här kontot har flyttats, så det går inte att publicera nytt innehåll.",
+        "fileTooLarge": "Den uppladdade filen är för stor. Maximal storlek är{{maxFileSize}}.",
+        "maxImagesPerPost": "Du kan ladda upp upp till{{count}}bilder per inlägg.",
+        "statusSaved": "Status har sparats.",
+        "statusUpdated": "Status har uppdaterats.",
+        "tooManyFilesSelectedSingular": "För många filer har valts. Du kan lägga till en bild till.",
+        "tooManyFilesSelectedPlural": "För många filer har valts. Du kan lägga till {{count}} bilder till.",
+        "unableToResize": "Det gick inte att ändra storlek på bilden före uppladdning.",
+        "unsupportedFileType": "Denna filtyp stöds inte. Ladda upp enJPG-,PNG- eller WEBP-bild.",
+        "verifyEmailBeforePublish": "För att publicera en status, vänligen verifiera din e-postadress först."
+      },
+      "photoAlt": "Uppladdat foto",
+      "statusDetails": "Statusinformation",
+      "stepper": {
+        "imageData": "Bilddata #{{index}}"
+      },
+      "subtitle": {
+        "interoperabilityHint": "För att förbättra interoperabiliteten mellan olika system, använd bilder med den längre kanten inställd på 4096 px.",
+        "maxFileSize": "Du kan ladda uppJPEG-,PNG- och WEBP-filer upp till{{maxFileSize}}."
+      },
+      "titles": {
+        "editStatus": "Redigera status",
+        "uploadPhotos": "Ladda upp bilder"
+      },
+      "visibility": {
+        "followers": "Endast följare",
+        "mentioned": "Endast nämnda personer",
+        "public": "Alla",
+        "quietPublic": "Alla (tyst)"
+      },
+      "visibilityHints": {
+        "followers": "Synlig endast för dina följare och alla som nämns i inlägget.",
+        "mentioned": "Synlig endast för personer som uttryckligen nämns i inlägget.",
+        "public": "Synlig för alla och kan visas i offentliga tidslinjer.",
+        "quietPublic": "Synlig för alla, men utesluten från offentliga tidslinjer."
+      }
+    },
+    "users": {
+      "actions": {
+        "disable2fa": "Inaktivera2FA",
+        "notSupporter": "Inte supporter",
+        "openProfileAriaLabel": "Öppna profilen @{{userName}}"
+      },
+      "confirmations": {
+        "deleteUserAccount": "Vill du radera användarkontot?",
+        "disableUserTwoFactor": "Vill du inaktivera användarens2FA?"
+      },
+      "filters": {
+        "onlyBlocked": "Endast blockerad",
+        "onlyLocal": "Endast lokalt"
+      },
+      "messages": {
+        "accountApproved": "Kontot har godkänts.",
+        "accountDeleted": "Kontot har tagits bort.",
+        "accountDisabled": "Kontot har inaktiverats.",
+        "accountEnabled": "Kontot har aktiverats.",
+        "accountMarkedAsNotSupporter": "Kontot har markerats som inte supporter.",
+        "accountMarkedAsSupporter": "Kontot har markerats som supporter.",
+        "accountRefreshed": "Kontot har uppdaterats.",
+        "accountRejected": "Kontot har avvisats.",
+        "twoFactorDisabled": "2FAhar inaktiverats.",
+        "userBlocked": "Användaren har blockerats.",
+        "userUnblocked": "Användaren har avblockerats."
+      },
+      "rolesAriaLabel": "Roller",
+      "subtitle": "Lista över användare som är registrerade i systemet.",
+      "table": {
+        "lastLogin": "Senaste inloggning",
+        "statuses": "Statuser"
+      },
+      "title": "Användare"
+    }
+  }
+}

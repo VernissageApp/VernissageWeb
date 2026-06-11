@@ -1,22 +1,22 @@
 <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
-    <div mat-dialog-title>Status text template</div>
+    <div mat-dialog-title>{{ 'dialogs.statusTextTemplate.texts.statusTextTemplate' | translate }}</div>
     <div mat-dialog-content>
 
         <div class="flex-col gap-0 margin-top-5">
             <mat-form-field appearance="outline" class="width-100 padding-top-10">
-                <mat-label>Template</mat-label>
+                <mat-label>{{ 'common.labels.template' | translate }}</mat-label>
                 <textarea matInput name="template" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="6"
-                    cdkAutosizeMaxRows="12" placeholder="Template" #templateModel="ngModel" [(ngModel)]="template"
-                aria-label="Comment" appMaxLength="1000"></textarea>
+                    cdkAutosizeMaxRows="12" [placeholder]="'dialogs.statusTextTemplate.attrs.template' | translate" #templateModel="ngModel" [(ngModel)]="template"
+                [attr.aria-label]="'dialogs.statusTextTemplate.attrs.comment' | translate" appMaxLength="1000"></textarea>
 
                 @if (templateModel.invalid && templateModel.errors?.appMaxLength) {
-                    <mat-error>Too long template.</mat-error>
+                    <mat-error>{{ 'dialogs.statusTextTemplate.texts.tooLongTemplate' | translate }}</mat-error>
                 }
             </mat-form-field>
         </div>
     </div>
     <div mat-dialog-actions>
-        <button matButton="text" type="button" (click)="onNoClick()">Cancel</button>
-        <button matButton="filled" type="submit" cdkFocusInitial>Save</button>
+        <button matButton="text" type="button" (click)="onNoClick()">{{ 'common.actions.cancel' | translate }}</button>
+        <button matButton="filled" type="submit" cdkFocusInitial>{{ 'common.actions.save' | translate }}</button>
     </div>
 </form>

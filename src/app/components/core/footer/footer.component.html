@@ -1,12 +1,12 @@
 <div class="margin-top-40 margin-bottom-20">
     <div class="flex-row flex-space-between text-uppercase fw-300">
-        <div><a [routerLink]="['/support']">Support</a></div>
-        <div><a [routerLink]="['/terms']">Terms of Service</a></div>        
-        <div><a [routerLink]="['/privacy']">Privacy policy</a></div>
+        <div><a [routerLink]="['/support']">{{ 'components.footer.links.support' | translate }}</a></div>
+        <div><a [routerLink]="['/terms']">{{ 'components.footer.links.termsOfService' | translate }}</a></div>
+        <div><a [routerLink]="['/privacy']">{{ 'components.footer.links.privacyPolicy' | translate }}</a></div>
     </div>
     <div class="flex-row flex-space-between text-muted margin-top-10">
         <div>© {{ currentYear() }} {{ apiService() }}</div>
         <div>·</div>
-        <div><a href="https://github.com/VernissageApp" rel="noopener">Powered by Vernissage</a></div>
+        <div><a href="https://github.com/VernissageApp" rel="noopener">{{ 'components.footer.poweredBy' | translate }}</a></div>
     </div>
 </div>

@@ -3,7 +3,7 @@
         <div class="flex-row flex-space-around">
             <div class="article-container width-100">
                 <section>
-                    <h1>Article content</h1>
+                    <h1>{{ 'pages.articleEdit.title' | translate }}</h1>
                 </section>
 
                 <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
@@ -12,12 +12,12 @@
                         <mat-card-content>
                             <div class="margin-bottom-10">
                                 <mat-form-field appearance="outline">
-                                    <mat-label>Title</mat-label>
+                                    <mat-label>{{ 'pages.articleEdit.form.title.label' | translate }}</mat-label>
                                     <input type="text" matInput name="title" #titleInput="ngModel" [(ngModel)]="title"
-                                        placeholder="Title" aria-label="Title" appMaxLength="200" />
+                                        [attr.placeholder]="'pages.articleEdit.form.title.placeholder' | translate" [attr.aria-label]="'pages.articleEdit.form.title.ariaLabel' | translate" appMaxLength="200" />
                                     @if (titleInput.invalid && titleInput.errors?.appMaxLength) {
                                         <mat-error>
-                                            Too long title.
+                                            {{ 'pages.articleEdit.form.title.errors.tooLong' | translate }}
                                         </mat-error>
                                     }
                                 </mat-form-field>
@@ -25,29 +25,29 @@
 
                             <div class="margin-bottom-10">
                                 <mat-form-field appearance="outline">
-                                    <mat-label>Article body</mat-label>
+                                    <mat-label>{{ 'pages.articleEdit.form.body.label' | translate }}</mat-label>
                                     <textarea matInput name="body" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="8"
-                                        cdkAutosizeMaxRows="26" placeholder="Article body" #bodyInput="ngModel" [(ngModel)]="body"
-                                    aria-label="Article body" appMaxLength="50000" required></textarea>
-                                    <mat-hint align="end"><span class="text-muted">This field supports Markdown formatting.</span></mat-hint>
+                                        cdkAutosizeMaxRows="26" [attr.placeholder]="'pages.articleEdit.form.body.placeholder' | translate" #bodyInput="ngModel" [(ngModel)]="body"
+                                    [attr.aria-label]="'pages.articleEdit.form.body.ariaLabel' | translate" appMaxLength="50000" required></textarea>
+                                    <mat-hint align="end"><span class="text-muted">{{ 'pages.articleEdit.form.body.hint' | translate }}</span></mat-hint>
                                     @if (bodyInput.invalid && bodyInput.errors?.appMaxLength) {
-                                        <mat-error>Too long article body.</mat-error>
+                                        <mat-error>{{ 'pages.articleEdit.form.body.errors.tooLong' | translate }}</mat-error>
                                     }
                                     @if (bodyInput.invalid && bodyInput.errors?.required) {
-                                        <mat-error>Enter article body.</mat-error>
+                                        <mat-error>{{ 'pages.articleEdit.form.body.errors.required' | translate }}</mat-error>
                                     }
                                 </mat-form-field>
                             </div>
 
                             <div [ngClass]="{ 'margin-bottom-30': isHandsetPortrait(), 'margin-bottom-10': !isHandsetPortrait() }">
                                 <mat-form-field appearance="outline">
-                                    <mat-label>Color</mat-label>
+                                    <mat-label>{{ 'pages.articleEdit.form.color.label' | translate }}</mat-label>
                                     <input type="text" matInput name="color" #colorInput="ngModel" [(ngModel)]="color"
-                                        placeholder="Color" aria-label="Color" appMaxLength="200" />
-                                    <mat-hint align="end"><span class="text-muted">You can use CSS-compatible colors here, e.g., #00ff0020.</span></mat-hint>
+                                        [attr.placeholder]="'pages.articleEdit.form.color.placeholder' | translate" [attr.aria-label]="'pages.articleEdit.form.color.ariaLabel' | translate" appMaxLength="200" />
+                                    <mat-hint align="end"><span class="text-muted">{{ 'pages.articleEdit.form.color.hint' | translate }}</span></mat-hint>
                                     @if (colorInput.invalid && colorInput.errors?.appMaxLength) {
                                         <mat-error>
-                                            Too long color.
+                                            {{ 'pages.articleEdit.form.color.errors.tooLong' | translate }}
                                         </mat-error>
                                     }
 
@@ -56,54 +56,53 @@
 
                             <div ngClass="margin-bottom-40">
                                 <mat-form-field appearance="outline">
-                                    <mat-label>Alternative author</mat-label>
+                                    <mat-label>{{ 'pages.articleEdit.form.alternativeAuthor.label' | translate }}</mat-label>
                                     <input type="text" matInput name="alternativeAuthor" #alternativeAuthorInput="ngModel" [(ngModel)]="alternativeAuthor"
-                                        placeholder="Color" aria-label="Alternative author" appMaxLength="500" />
+                                        [attr.placeholder]="'pages.articleEdit.form.alternativeAuthor.placeholder' | translate" [attr.aria-label]="'pages.articleEdit.form.alternativeAuthor.ariaLabel' | translate" appMaxLength="500" />
                                     <mat-hint align="end">
                                         <span class="text-muted">
-                                            You can set an alternative handle for a user's account in the Fediverse.
-                                            It will be displayed as the author in thumbnails generated based on OpenGraph tags.
+                                            {{ 'pages.articleEdit.form.alternativeAuthor.hint' | translate }}
                                         </span>
                                     </mat-hint>
                                     @if (alternativeAuthorInput.invalid && alternativeAuthorInput.errors?.appMaxLength) {
                                         <mat-error>
-                                            Too long user name.
+                                            {{ 'pages.articleEdit.form.alternativeAuthor.errors.tooLong' | translate }}
                                         </mat-error>
                                     }
                                 </mat-form-field>
                             </div>
 
-                            <h3 [ngClass]="{ 'padding-top-20': isHandsetPortrait() }">Visibilities</h3>
+                            <h3 [ngClass]="{ 'padding-top-20': isHandsetPortrait() }">{{ 'pages.articleEdit.visibilities.title' | translate }}</h3>
 
                             <div class="padding-bottom-20">
                                 <div>
                                     <mat-checkbox name="showInNewsSignIn" [disableRipple]="true" [(ngModel)]="showInNewsSignIn">
-                                        News - sign in
+                                        {{ 'common.articleVisibility.newsSignIn' | translate }}
                                     </mat-checkbox>
                                 </div>
                                 <div>
                                     <mat-checkbox name="showInNewsSignOut" [disableRipple]="true" [(ngModel)]="showInNewsSignOut">
-                                        News - sign out
+                                        {{ 'common.articleVisibility.newsSignOut' | translate }}
                                     </mat-checkbox>
                                 </div>
                                 <div>
                                     <mat-checkbox name="showInHomeSignIn" [disableRipple]="true" [(ngModel)]="showInHomeSignIn">
-                                        Home - sign in
+                                        {{ 'common.articleVisibility.homeSignIn' | translate }}
                                     </mat-checkbox>
                                 </div>
                                 <div>
                                     <mat-checkbox name="showInHomeSignOut" [disableRipple]="true" [(ngModel)]="showInHomeSignOut">
-                                        Home - sign out
+                                        {{ 'common.articleVisibility.homeSignOut' | translate }}
                                     </mat-checkbox>
                                 </div>
                             </div>
 
                             <h3>
                                 <div class="flex-row flex-space-between">
-                                    <div>Files</div>
+                                    <div>{{ 'pages.articleEdit.files.title' | translate }}</div>
                                     <div class="text-right">
                                         <input type="file" hidden (change)="onFileSelected($event)" #fileInput id="file">
-                                        <button type="button" matButton="outlined" class="small-button" aria-label="Upload file" (click)="fileInput.click()">Upload</button>
+                                        <button type="button" matButton="outlined" class="small-button" [attr.aria-label]="'pages.articleEdit.files.uploadAriaLabel' | translate" (click)="fileInput.click()">{{ 'pages.articleEdit.files.upload' | translate }}</button>
                                     </div>
                                 </div>
                             </h3>
@@ -112,26 +111,26 @@
                                     <div class="margin-bottom-10">
                                         <div class="flex-row flex-space-between flex-align-center">
                                             <div>
-                                                <img [src]="item.url" alt="Article file">
+                                                <img [src]="item.url" [attr.alt]="'pages.articleEdit.files.fileAlt' | translate">
                                             </div>
                                             <div>
                                                 @if (mainArticleFileInfoId() === item.id) {
-                                                    <span class="margin-right-10"><strong>Main file</strong></span>
+                                                    <span class="margin-right-10"><strong>{{ 'pages.articleEdit.files.mainFile' | translate }}</strong></span>
                                                 } @else {
-                                                    <button type="button" matButton="outlined" class="small-button margin-right-10" aria-label="Delete file" (click)="onMarkAsMainFile(item)">Mark as main</button>
+                                                    <button type="button" matButton="outlined" class="small-button margin-right-10" [attr.aria-label]="'pages.articleEdit.files.markAsMainAriaLabel' | translate" (click)="onMarkAsMainFile(item)">{{ 'pages.articleEdit.files.markAsMain' | translate }}</button>
                                                 }
-                                                <button type="button" matButton="outlined" class="icon-only small-button margin-right-10" (click)="onCopyMarkdown(item)" aria-label="Copy markdown">
+                                                <button type="button" matButton="outlined" class="icon-only small-button margin-right-10" (click)="onCopyMarkdown(item)" [attr.aria-label]="'pages.articleEdit.files.copyMarkdownAriaLabel' | translate">
                                                     @if (isHandset()) {
                                                         <mat-icon>content_copy</mat-icon>
                                                     } @else {
-                                                        <span>Copy</span>
+                                                        <span>{{ 'pages.articleEdit.files.copy' | translate }}</span>
                                                     }
                                                 </button>
-                                                <button type="button" matButton="outlined" class="icon-only small-button" aria-label="Delete file" (click)="onDeleteFile(item)">
+                                                <button type="button" matButton="outlined" class="icon-only small-button" [attr.aria-label]="'pages.articleEdit.files.deleteAriaLabel' | translate" (click)="onDeleteFile(item)">
                                                     @if (isHandset()) {
                                                         <mat-icon>delete</mat-icon>
                                                     } @else {
-                                                        <span>Delete</span>
+                                                        <span>{{ 'pages.articleEdit.files.delete' | translate }}</span>
                                                     }
                                                 </button>
                                             </div>
@@ -142,8 +141,8 @@
 
                         </mat-card-content>
                         <mat-card-actions>
-                            <button matButton="text" type="button" (click)="onCancelClick()">Cancel</button>
-                            <button matButton="filled" type="submit" class="margin-left-10" cdkFocusInitial>Save</button>
+                            <button matButton="text" type="button" (click)="onCancelClick()">{{ 'common.actions.cancel' | translate }}</button>
+                            <button matButton="filled" type="submit" class="margin-left-10" cdkFocusInitial>{{ 'common.actions.save' | translate }}</button>
                         </mat-card-actions>
                     </mat-card>
                 </form>

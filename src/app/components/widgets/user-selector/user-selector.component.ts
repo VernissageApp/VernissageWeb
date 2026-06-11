@@ -16,7 +16,7 @@ import { UsersService } from 'src/app/services/http/users.service';
 })
 export class UserSelectorComponent implements OnInit, OnDestroy {
     public name = input.required<string>();
-    public label = input('User');
+    public label = input('');
     public isRequired = input(false);
     public isReadOnly = input(false);
 

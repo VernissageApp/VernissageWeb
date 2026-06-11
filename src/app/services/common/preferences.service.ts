@@ -113,6 +113,14 @@ export class PreferencesService {
         this.cookieService.set('autoScrollGalleryImages', autoScrollGalleryImages ? 'true' : 'false', { expires: this.longFuture });
     }
 
+    public get language(): string | null {
+        return this.cookieService.get('language') || null;
+    }
+
+    public set language(language: string) {
+        this.cookieService.set('language', language, { expires: this.longFuture, path: '/' });
+    }
+
     public toggleTheme(renderer: Renderer2): void {
         const isLightThemeInternal = this.isLightTheme;
         this.isLightTheme = !isLightThemeInternal;

@@ -6,12 +6,12 @@
                 <mat-card class="margin-bottom-20" appearance="outlined">
                     <mat-card-content>
                         <mat-form-field appearance="outline">
-                            <input type="text" #queryInput matInput name="query" [(ngModel)]="search" cdkFocusInitial aria-label="Query" />
-                            <button matSuffix matButton="outlined" type="submit" class="margin-right-10" aria-label="Search">Search</button>
+                            <input type="text" #queryInput matInput name="query" [(ngModel)]="search" cdkFocusInitial [attr.aria-label]="'common.labels.query' | translate" />
+                            <button matSuffix matButton="outlined" type="submit" class="margin-right-10" [attr.aria-label]="'common.actions.search' | translate">{{ 'common.actions.search' | translate }}</button>
                             <mat-hint class="text-muted"></mat-hint>
                         </mat-form-field>
                         <div class="text-muted fs-90 margin-left-10 margin-top-5">
-                            Search for a <strong>user</strong>, <strong>status</strong>, or <strong>hashtag</strong>, or paste a <strong>URL</strong> to a status or user profile.
+                            {{ 'pages.search.hint' | translate }}
                         </div>
                     </mat-card-content>
                 </mat-card>
@@ -21,7 +21,7 @@
                         <mat-card-content>
                             
                             <mat-tab-group mat-stretch-tabs animationDuration="0ms" [selectedIndex]="selectedIndex()" (selectedTabChange)="onSelectedTabChange($event)">
-                                <mat-tab label="Users">
+                                <mat-tab [label]="'pages.search.tabs.users' | translate">
                                     @if (users().length > 0) {
                                         <div class="margin-top-20 margin-bottom-20">
                                             <app-users-card [users]="users()" [relationships]="usersRelationships()" [showBio]="true"></app-users-card>
@@ -30,11 +30,11 @@
 
                                     @if (wasSearchExecuted && users().length === 0) {
                                         <div class="text-center text-muted margin-top-20 margin-bottom-20">
-                                            No users found.
+                                            {{ 'pages.search.empty.users' | translate }}
                                         </div>
                                     }
                                 </mat-tab>
-                                <mat-tab label="Hashtags">
+                                <mat-tab [label]="'pages.search.tabs.hashtags' | translate">
                                     @if (hashtags().length > 0) {
                                         <div class="margin-top-20 margin-bottom-20">
                                             @for (hashtag of hashtags(); track hashtag.name) {
@@ -45,11 +45,11 @@
 
                                     @if (wasSearchExecuted && hashtags().length === 0) {
                                         <div class="text-center text-muted margin-top-20 margin-bottom-20">
-                                            No hashtags found.
+                                            {{ 'pages.search.empty.hashtags' | translate }}
                                         </div>
                                     }
                                 </mat-tab>
-                                <mat-tab label="Statuses">
+                                <mat-tab [label]="'pages.search.tabs.statuses' | translate">
                                     @if (statuses().length > 0) {
                                         <div class="margin-top-20 margin-bottom-20">
                                             @for (status of statuses(); track status.id) {
@@ -60,7 +60,7 @@
 
                                     @if (wasSearchExecuted && statuses().length === 0) {
                                         <div class="text-center text-muted margin-top-20 margin-bottom-20">
-                                            No statuses found.
+                                            {{ 'pages.search.empty.statuses' | translate }}
                                         </div>
                                     }
                                 </mat-tab>

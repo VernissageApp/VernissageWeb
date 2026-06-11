@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { ConnectionLostPage } from 'src/app/pages/errors/connection-lost/connection-lost.page';
 import { UnexpectedErrorPage } from 'src/app/pages/errors/unexpected-error/unexpected-error.page';
 import { ProfilePage } from 'src/app/pages/profile/profile.page';
@@ -55,6 +56,7 @@ import { ActivityPubEventItemsPage } from './activity-pub-event-items/activity-p
 @NgModule({
     imports: [
         ComponentsModule,
+        TranslateModule,
         DialogsModule,
         PipesModule,
         PagesRoutingModule

@@ -3,19 +3,19 @@
         <div class="flex-row flex-space-around">
             <div class="preferences-container width-100">
                 <section>
-                    <h1>Preferences</h1>
+                    <h1>{{ 'pages.preferences.title' | translate }}</h1>
                 </section>
 
                 <mat-card class="preferences-card" appearance="outlined">
                     <mat-card-content>
-                        <h4>Theme</h4>
+                        <h4>{{ 'pages.preferences.theme.title' | translate }}</h4>
                         <div class="margin-bottom-20">
-                            <mat-radio-group name="theme" [(ngModel)]="isLightTheme" (ngModelChange)="onThemeChange()" aria-label="Select theme">
+                            <mat-radio-group name="theme" [(ngModel)]="isLightTheme" (ngModelChange)="onThemeChange()" [attr.aria-label]="'pages.preferences.theme.select' | translate">
                                 <div>
-                                    <mat-radio-button [value]="true" [disableRipple]="true"> Light</mat-radio-button>
+                                    <mat-radio-button [value]="true" [disableRipple]="true">{{ 'pages.preferences.theme.light' | translate }}</mat-radio-button>
                                 </div>
                                 <div>
-                                    <mat-radio-button [value]="false" [disableRipple]="true"> Dark</mat-radio-button>
+                                    <mat-radio-button [value]="false" [disableRipple]="true">{{ 'pages.preferences.theme.dark' | translate }}</mat-radio-button>
                                 </div>
                             </mat-radio-group>
                         </div>
@@ -23,16 +23,16 @@
                         <mat-divider></mat-divider>
 
                         <div class="margin-top-20">
-                            <h4>Avatar</h4>
+                            <h4>{{ 'pages.preferences.avatar.title' | translate }}</h4>
                         </div>
 
                         <div class="margin-bottom-20">
-                            <mat-radio-group name="avatar" [(ngModel)]="isCircleAvatar" (ngModelChange)="onAvatarChange()" aria-label="Select avatar">
+                            <mat-radio-group name="avatar" [(ngModel)]="isCircleAvatar" (ngModelChange)="onAvatarChange()" [attr.aria-label]="'pages.preferences.avatar.select' | translate">
                                 <div>
-                                    <mat-radio-button [value]="true" [disableRipple]="true"> Circle</mat-radio-button>
+                                    <mat-radio-button [value]="true" [disableRipple]="true">{{ 'pages.preferences.avatar.circle' | translate }}</mat-radio-button>
                                 </div>
                                 <div>
-                                    <mat-radio-button [value]="false" [disableRipple]="true"> Rounded rectangle</mat-radio-button>
+                                    <mat-radio-button [value]="false" [disableRipple]="true">{{ 'pages.preferences.avatar.roundedRectangle' | translate }}</mat-radio-button>
                                 </div>
                             </mat-radio-group>
                         </div>
@@ -40,16 +40,16 @@
                         <mat-divider></mat-divider>
 
                         <div class="margin-top-20">
-                            <h4>User's profile gallery</h4>
+                            <h4>{{ 'pages.preferences.gallery.title' | translate }}</h4>
                         </div>
 
                         <div class="margin-bottom-20">
-                            <mat-radio-group name="square" [(ngModel)]="isSquareImages" (ngModelChange)="onSquareImageChange()" aria-label="Select image view">
+                            <mat-radio-group name="square" [(ngModel)]="isSquareImages" (ngModelChange)="onSquareImageChange()" [attr.aria-label]="'pages.preferences.gallery.select' | translate">
                                 <div>
-                                    <mat-radio-button [value]="true" [disableRipple]="true"> Square images</mat-radio-button>
+                                    <mat-radio-button [value]="true" [disableRipple]="true">{{ 'pages.preferences.gallery.squareImages' | translate }}</mat-radio-button>
                                 </div>
                                 <div>
-                                    <mat-radio-button [value]="false" [disableRipple]="true"> Original ratio</mat-radio-button>
+                                    <mat-radio-button [value]="false" [disableRipple]="true">{{ 'pages.preferences.gallery.originalRatio' | translate }}</mat-radio-button>
                                 </div>
                             </mat-radio-group>
                         </div>
@@ -57,60 +57,60 @@
                         <mat-divider></mat-divider>
 
                         <div class="margin-top-20">
-                            <h4>Media settings</h4>
+                            <h4>{{ 'pages.preferences.media.title' | translate }}</h4>
                         </div>
 
                         <div class="margin-bottom-20">
                             <mat-slide-toggle name="alwaysShowNSFW" [(ngModel)]="alwaysShowNSFW" (ngModelChange)="onAlwaysShowNSFWChange()">
-                                Always show NSFW <div class="text-muted fs-90">Force show all NSFW (sensitive) media without warnings.</div>
+                                {{ 'pages.preferences.media.alwaysShowNsfw.title' | translate }} <div class="text-muted fs-90">{{ 'pages.preferences.media.alwaysShowNsfw.description' | translate }}</div>
                             </mat-slide-toggle>
                         </div>
 
                         <div class="margin-bottom-20">
                             <mat-slide-toggle name="showAlternativeText" [(ngModel)]="showAlternativeText" (ngModelChange)="onShowAlternativeTextChange()">
-                                Show alternative text <div class="text-muted fs-90">Show alternative text if present on status details screen.</div>
+                                {{ 'pages.preferences.media.showAlternativeText.title' | translate }} <div class="text-muted fs-90">{{ 'pages.preferences.media.showAlternativeText.description' | translate }}</div>
                             </mat-slide-toggle>
                         </div>
 
                         <div class="margin-bottom-20">
                             <mat-slide-toggle name="showAvatars" [(ngModel)]="showAvatars" (ngModelChange)="onShowAvatarsChange()">
-                                Show avatars <div class="text-muted fs-90">Avatars will be displayed on timelines.</div>
+                                {{ 'pages.preferences.media.showAvatars.title' | translate }} <div class="text-muted fs-90">{{ 'pages.preferences.media.showAvatars.description' | translate }}</div>
                             </mat-slide-toggle>
                         </div>
 
                         <div class="margin-bottom-20">
                             <mat-slide-toggle name="showCounts" [(ngModel)]="showCounts" (ngModelChange)="onShowCountsChange()">
-                                Show image counts <div class="text-muted fs-90">Show image count on statuses with multiple images.</div>
+                                {{ 'pages.preferences.media.showCounts.title' | translate }} <div class="text-muted fs-90">{{ 'pages.preferences.media.showCounts.description' | translate }}</div>
                             </mat-slide-toggle>
                         </div>
 
                         <div class="margin-bottom-20">
                             <mat-slide-toggle name="showFavourites" [(ngModel)]="showFavourites" (ngModelChange)="onShowFavouritesChange()">
-                                Show favourites <div class="text-muted fs-90">Favourite icon will be displayed on timelines.</div>
+                                {{ 'pages.preferences.media.showFavourites.title' | translate }} <div class="text-muted fs-90">{{ 'pages.preferences.media.showFavourites.description' | translate }}</div>
                             </mat-slide-toggle>
                         </div>
 
                         <div class="margin-bottom-20">
                             <mat-slide-toggle name="showReblog" [(ngModel)]="showReblog" (ngModelChange)="onShowReblogChange()">
-                                Show boost <div class="text-muted fs-90">Boost icon will be displayed on timelines.</div>
+                                {{ 'pages.preferences.media.showBoost.title' | translate }} <div class="text-muted fs-90">{{ 'pages.preferences.media.showBoost.description' | translate }}</div>
                             </mat-slide-toggle>
                         </div>
 
                         <div class="margin-bottom-20">
                             <mat-slide-toggle name="showAltIcon" [(ngModel)]="showAltIcon" (ngModelChange)="onShowAltIconChange()">
-                                Show ALT icon <div class="text-muted fs-90">ALT icon will be displayed on timelines.</div>
+                                {{ 'pages.preferences.media.showAltIcon.title' | translate }} <div class="text-muted fs-90">{{ 'pages.preferences.media.showAltIcon.description' | translate }}</div>
                             </mat-slide-toggle>
                         </div>
 
                         <div class="margin-bottom-20">
                             <mat-slide-toggle name="alwaysShowSdrPhoto" [(ngModel)]="alwaysShowSdrPhoto" (ngModelChange)="onAlwaysShowSdrPhotoChange()">
-                                Always display SDR photo <div class="text-muted fs-90">Instead of HDR version o photo always SDR version will be displayed.</div>
+                                {{ 'pages.preferences.media.alwaysShowSdrPhoto.title' | translate }} <div class="text-muted fs-90">{{ 'pages.preferences.media.alwaysShowSdrPhoto.description' | translate }}</div>
                             </mat-slide-toggle>
                         </div>
 
                         <div class="margin-bottom-20">
                             <mat-slide-toggle name="autoScrollGalleryImages" [(ngModel)]="autoScrollGalleryImages" (ngModelChange)="onAutoScrollGalleryImagesChange()">
-                                Auto-scroll images in status gallery <div class="text-muted fs-90">Automatically cycles through status images every 6 seconds.</div>
+                                {{ 'pages.preferences.media.autoScrollGalleryImages.title' | translate }} <div class="text-muted fs-90">{{ 'pages.preferences.media.autoScrollGalleryImages.description' | translate }}</div>
                             </mat-slide-toggle>
                         </div>
                     </mat-card-content>

@@ -1,648 +1,637 @@
 <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
 
-    <h3>Main server settings</h3>
+    <h3>{{ 'components.generalSettings.texts.mainServerSettings' | translate }}</h3>
 
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
-            <mat-label>Web title</mat-label>
+            <mat-label>{{ 'components.generalSettings.texts.webTitle' | translate }}</mat-label>
             <input type="text" matInput name="webTitle" #webTitle="ngModel" [(ngModel)]="settings().webTitle"
-                placeholder="Web title" aria-label="Web title" />
+                [placeholder]="'components.generalSettings.attrs.webTitle' | translate" [attr.aria-label]="'components.generalSettings.attrs.webTitle' | translate" />
         </mat-form-field>
     </div>
 
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
-            <mat-label>Web description</mat-label>
+            <mat-label>{{ 'components.generalSettings.texts.webDescription' | translate }}</mat-label>
             <input type="text" matInput name="webDescription" #webDescription="ngModel" [(ngModel)]="settings().webDescription"
-                placeholder="Web description" aria-label="Web description" />
+                [placeholder]="'components.generalSettings.attrs.webDescription' | translate" [attr.aria-label]="'components.generalSettings.attrs.webDescription' | translate" />
         </mat-form-field>
     </div>
 
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
-            <mat-label>Web long description</mat-label>
+            <mat-label>{{ 'components.generalSettings.texts.webLongDescription' | translate }}</mat-label>
             <textarea matInput name="webLongDescription" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4"
-                cdkAutosizeMaxRows="10" placeholder="Web long description" #webLongDescription="ngModel" [(ngModel)]="settings().webLongDescription"
-                aria-label="Web long description"></textarea>
+                cdkAutosizeMaxRows="10" [placeholder]="'components.generalSettings.attrs.webLongDescription' | translate" #webLongDescription="ngModel" [(ngModel)]="settings().webLongDescription"
+                [attr.aria-label]="'components.generalSettings.attrs.webLongDescription' | translate"></textarea>
         </mat-form-field>
     </div>
 
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
-            <mat-label>Web email</mat-label>
+            <mat-label>{{ 'components.generalSettings.texts.webEmail' | translate }}</mat-label>
             <input type="text" matInput name="webEmail" #webEmail="ngModel" [(ngModel)]="settings().webEmail"
-                placeholder="Web email" aria-label="Web email" />
+                [placeholder]="'components.generalSettings.attrs.webEmail' | translate" [attr.aria-label]="'components.generalSettings.attrs.webEmail' | translate" />
         </mat-form-field>
     </div>
 
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
-            <mat-label>Web thumbnail url</mat-label>
+            <mat-label>{{ 'components.generalSettings.texts.webThumbnailUrl' | translate }}</mat-label>
             <input type="text" matInput name="webThumbnail" #webThumbnail="ngModel" [(ngModel)]="settings().webThumbnail"
-                placeholder="Web thumbnail ur" aria-label="Web thumbnail ur" />
+                [placeholder]="'components.generalSettings.attrs.webThumbnailUr' | translate" [attr.aria-label]="'components.generalSettings.attrs.webThumbnailUr' | translate" />
         </mat-form-field>
     </div>
 
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
-            <mat-label>Web languages</mat-label>
+            <mat-label>{{ 'components.generalSettings.texts.webLanguages' | translate }}</mat-label>
             <input type="text" matInput name="webLanguages" #webLanguages="ngModel" [(ngModel)]="settings().webLanguages"
-                placeholder="Web languages" aria-label="Web languages" />
+                [placeholder]="'components.generalSettings.attrs.webLanguages' | translate" [attr.aria-label]="'components.generalSettings.attrs.webLanguages' | translate" />
         </mat-form-field>
     </div>
 
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
-            <mat-label>CORS orgins</mat-label>
+            <mat-label>{{ 'components.generalSettings.texts.corsOrgins' | translate }}</mat-label>
             <input type="text" matInput name="corsOrigin" #corsOrigin="ngModel" [(ngModel)]="settings().corsOrigin"
-                placeholder="CORS orgins" aria-label="CORS orgins" />
+                [placeholder]="'components.generalSettings.attrs.corsOrgins' | translate" [attr.aria-label]="'components.generalSettings.attrs.corsOrgins' | translate" />
         </mat-form-field>
     </div>
 
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
-            <mat-label>Maximum number of invitations per user</mat-label>
+            <mat-label>{{ 'components.generalSettings.texts.maximumNumberOfInvitationsPerUser' | translate }}</mat-label>
             <input type="number" matInput name="maximumNumberOfInvitations" #maximumNumberOfInvitations="ngModel" [(ngModel)]="settings().maximumNumberOfInvitations"
-                placeholder="Maximum number of invitations" aria-label="Maximum number of invitations" />
+                [placeholder]="'components.generalSettings.attrs.maximumNumberOfInvitations' | translate" [attr.aria-label]="'components.generalSettings.attrs.maximumNumberOfInvitations' | translate" />
         </mat-form-field>
     </div>
 
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
-            <mat-label>Maximum number of characters in status</mat-label>
+            <mat-label>{{ 'components.generalSettings.texts.maximumNumberOfCharactersInStatus' | translate }}</mat-label>
             <input type="number" matInput name="maxCharacters" #maxCharacters="ngModel" [(ngModel)]="settings().maxCharacters"
-                placeholder="Maximum number of characters in status" aria-label="Maximum number of characters in status" />
+                [placeholder]="'components.generalSettings.attrs.maximumNumberOfCharactersInStatus' | translate" [attr.aria-label]="'components.generalSettings.attrs.maximumNumberOfCharactersInStatus' | translate" />
         </mat-form-field>
     </div>
 
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
-            <mat-label>Maximum number of attachments</mat-label>
+            <mat-label>{{ 'components.generalSettings.texts.maximumNumberOfAttachments' | translate }}</mat-label>
             <input type="number" matInput name="maxMediaAttachments" #maxMediaAttachments="ngModel" [(ngModel)]="settings().maxMediaAttachments"
-                placeholder="Maximum number of attachments" aria-label="Maximum number of attachments" />
+                [placeholder]="'components.generalSettings.attrs.maximumNumberOfAttachments' | translate" [attr.aria-label]="'components.generalSettings.attrs.maximumNumberOfAttachments' | translate" />
         </mat-form-field>
     </div>
 
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
-            <mat-label>Maximum file size</mat-label>
+            <mat-label>{{ 'components.generalSettings.texts.maximumFileSize' | translate }}</mat-label>
             <input type="number" matInput name="imageSizeLimit" #imageSizeLimit="ngModel" [(ngModel)]="settings().imageSizeLimit"
-                placeholder="Maximum file size" aria-label="Maximum file size" />
+                [placeholder]="'components.generalSettings.attrs.maximumFileSize' | translate" [attr.aria-label]="'components.generalSettings.attrs.maximumFileSize' | translate" />
         </mat-form-field>
     </div>
 
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
-            <mat-label>Delete statuses older than (days)</mat-label>
+            <mat-label>{{ 'components.generalSettings.texts.deleteStatusesOlderThanDays' | translate }}</mat-label>
             <input type="number" matInput name="statusPurgeAfterDays" #statusPurgeAfterDays="ngModel" [(ngModel)]="settings().statusPurgeAfterDays"
-                placeholder="Delete statuses older than (days)" aria-label="Delete statuses older than (days)" />
+                [placeholder]="'components.generalSettings.attrs.deleteStatusesOlderThanDays' | translate" [attr.aria-label]="'components.generalSettings.attrs.deleteStatusesOlderThanDays' | translate" />
         </mat-form-field>
     </div>
 
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
-            <mat-label>Patreon url</mat-label>
+            <mat-label>{{ 'components.generalSettings.texts.patreonUrl' | translate }}</mat-label>
             <input type="text" matInput name="patreonUrl" #patreonUrl="ngModel" [(ngModel)]="settings().patreonUrl"
-                placeholder="Patreon url" aria-label="Patreon url" />
+                [placeholder]="'components.generalSettings.attrs.patreonUrl' | translate" [attr.aria-label]="'components.generalSettings.attrs.patreonUrl' | translate" />
         </mat-form-field>
     </div>
 
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
-            <mat-label>Mastodon url</mat-label>
+            <mat-label>{{ 'components.generalSettings.texts.mastodonUrl' | translate }}</mat-label>
             <input type="text" matInput name="mastodonUrl" #mastodonUrl="ngModel" [(ngModel)]="settings().mastodonUrl"
-                placeholder="Mastodon url" aria-label="Mastodon url" />
+                [placeholder]="'components.generalSettings.attrs.mastodonUrl' | translate" [attr.aria-label]="'components.generalSettings.attrs.mastodonUrl' | translate" />
         </mat-form-field>
         <div class="text-muted fs-90 margin-left-10 margin-top-5">
-            If the instance has its official account on Mastodon, you can define its address here.
-            If the Vernissage instance address is also provided on Mastodon, there will be information
-            indicating that the account has been verified by Mastodon.
+            {{ 'components.generalSettings.help.mastodon' | translate }}
         </div>
     </div>
 
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
-            <mat-label>Images url</mat-label>
+            <mat-label>{{ 'components.generalSettings.texts.imagesUrl' | translate }}</mat-label>
             <input type="text" matInput name="imagesUrl" #imagesUrl="ngModel" [(ngModel)]="settings().imagesUrl"
-                placeholder="Images url" aria-label="Images url" />
+                [placeholder]="'components.generalSettings.attrs.imagesUrl' | translate" [attr.aria-label]="'components.generalSettings.attrs.imagesUrl' | translate" />
         </mat-form-field>
         <div class="text-muted fs-90 margin-left-10 margin-top-5">
-            If you have a CDN configured, you can override the default image URL generated
-            based on the S3 bucket name and address.
+            {{ 'components.generalSettings.help.cdn' | translate }}
         </div>
     </div>
 
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
-            <mat-label>Images quality</mat-label>
+            <mat-label>{{ 'components.generalSettings.texts.imagesQuality' | translate }}</mat-label>
             <input type="number" matInput name="imageQuality" #imageQuality="ngModel" [(ngModel)]="settings().imageQuality"
-                placeholder="Images quality" aria-label="Images quality" />
+                [placeholder]="'components.generalSettings.attrs.imagesQuality' | translate" [attr.aria-label]="'components.generalSettings.attrs.imagesQuality' | translate" />
         </mat-form-field>
         <div class="text-muted fs-90 margin-left-10 margin-top-5">
-            Determines the quality of images saved and processed by the system after upload
-            (e.g., for thumbnail generation). Recommended value: 85.
+            {{ 'components.generalSettings.help.imageQuality' | translate }}
         </div>
     </div>
 
     <div>
         <mat-checkbox name="showNews" [disableRipple]="true" [(ngModel)]="settings().showNews">
-            Show 'News' menu item for signed in users
+            {{ 'components.generalSettings.toggles.showNewsForSignedIn' | translate }}
         </mat-checkbox>
     </div>
 
     <div>
         <mat-checkbox name="showNewsForAnonymous" [disableRipple]="true" [(ngModel)]="settings().showNewsForAnonymous">
-            Show 'News' menu item for anonymous users
+            {{ 'components.generalSettings.toggles.showNewsForAnonymous' | translate }}
         </mat-checkbox>
     </div>
 
     <div class="margin-bottom-20">
         <mat-checkbox name="showSharedBusinessCards" [disableRipple]="true" [(ngModel)]="settings().showSharedBusinessCards">
-            Show 'Shared business cards' menu item
+            {{ 'components.generalSettings.toggles.showSharedBusinessCards' | translate }}
         </mat-checkbox>
     </div>
 
     <mat-divider></mat-divider>
-    <h3>Anti-flood settings</h3>
+    <h3>{{ 'components.generalSettings.texts.antiFloodSettings' | translate }}</h3>
 
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
-            <mat-label>Minimum interval between adding statuses (seconds)</mat-label>
+            <mat-label>{{ 'components.generalSettings.texts.minimumIntervalBetweenAddingStatusesSeconds' | translate }}</mat-label>
             <input type="number" matInput name="minimumSecondsBetweenRegularStatuses" #statusPurgeAfterDays="ngModel" [(ngModel)]="settings().minimumSecondsBetweenRegularStatuses"
-                placeholder="Minimum interval between adding statuses (seconds)" aria-label="Minimum interval between adding statuses (seconds)" />
+                [placeholder]="'components.generalSettings.attrs.minimumIntervalBetweenAddingStatusesSeconds' | translate" [attr.aria-label]="'components.generalSettings.attrs.minimumIntervalBetweenAddingStatusesSeconds' | translate" />
         </mat-form-field>
         <div class="text-muted fs-90 margin-left-10 margin-top-5">
-            Defines the minimum time (in seconds) a user must wait before publishing another regular status.
-            This helps protect the instance from spam-like posting bursts, reduces timeline noise,
-            and limits unnecessary federation traffic to remote servers.
+            {{ 'components.generalSettings.help.regularStatusesInterval' | translate }}
         </div>
     </div>
 
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
-            <mat-label>Minimum interval between adding silent statuses (seconds)</mat-label>
+            <mat-label>{{ 'components.generalSettings.texts.minimumIntervalBetweenAddingSilentStatusesSeconds' | translate }}</mat-label>
             <input type="number" matInput name="minimumSecondsBetweenSilentStatuses" #statusPurgeAfterDays="ngModel" [(ngModel)]="settings().minimumSecondsBetweenSilentStatuses"
-                placeholder="Minimum interval between adding silent statuses (seconds)" aria-label="Minimum interval between adding silent statuses (seconds)" />
+                [placeholder]="'components.generalSettings.attrs.minimumIntervalBetweenAddingSilentStatusesSeconds' | translate" [attr.aria-label]="'components.generalSettings.attrs.minimumIntervalBetweenAddingSilentStatusesSeconds' | translate" />
         </mat-form-field>
         <div class="text-muted fs-90 margin-left-10 margin-top-5">
-            Defines the minimum time (in seconds) a user must wait before publishing another silent status.
-            Silent statuses are intended for import/sync scenarios (for example from external apps).
-            These posts are not delivered to users’ timelines and are not federated through ActivityPub.
+            {{ 'components.generalSettings.help.silentStatusesInterval' | translate }}
         </div>
     </div>
 
     <mat-divider></mat-divider>
-    <h3>Default accounts</h3>
+    <h3>{{ 'components.generalSettings.texts.defaultAccounts' | translate }}</h3>
 
     <div class="margin-bottom-30">
-        <app-user-selector name="webContactUserId" label="Web contact user id" [(selectedUser)]="webContactUser"></app-user-selector>
+        <app-user-selector name="webContactUserId" [label]="'components.generalSettings.labels.webContactUserId' | translate" [(selectedUser)]="webContactUser"></app-user-selector>
     </div>
 
     <div class="margin-bottom-30">
-        <app-user-selector name="systemDefaultUserId" label="Default system user id" [(selectedUser)]="systemDefaultUser"></app-user-selector>
+        <app-user-selector name="systemDefaultUserId" [label]="'components.generalSettings.labels.systemDefaultUserId' | translate" [(selectedUser)]="systemDefaultUser"></app-user-selector>
     </div>
 
     <mat-divider></mat-divider>
-    <h3>Financial support</h3>
+    <h3>{{ 'components.generalSettings.texts.financialSupport' | translate }}</h3>
 
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
-            <mat-label>Total cost</mat-label>
+            <mat-label>{{ 'components.generalSettings.texts.totalCost' | translate }}</mat-label>
             <input type="number" matInput name="totalCost" #totalCost="ngModel" [(ngModel)]="settings().totalCost"
-                placeholder="Total cost" aria-label="Total cost" />
+                [placeholder]="'components.generalSettings.attrs.totalCost' | translate" [attr.aria-label]="'components.generalSettings.attrs.totalCost' | translate" />
         </mat-form-field>
     </div>
 
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
-            <mat-label>Users support</mat-label>
+            <mat-label>{{ 'components.generalSettings.texts.usersSupport' | translate }}</mat-label>
             <input type="number" matInput name="usersSupport" #usersSupport="ngModel" [(ngModel)]="settings().usersSupport"
-                placeholder="Users support" aria-label="Users support" />
+                [placeholder]="'components.generalSettings.attrs.usersSupport' | translate" [attr.aria-label]="'components.generalSettings.attrs.usersSupport' | translate" />
         </mat-form-field>
     </div>
 
     <mat-divider></mat-divider>
-    <h3>Anonymous access</h3>
+    <h3>{{ 'components.generalSettings.texts.anonymousAccess' | translate }}</h3>
 
     <div class="margin-bottom-20">
         <div>
             <mat-checkbox name="showLocalTimelineForAnonymous" [disableRipple]="true" [(ngModel)]="settings().showLocalTimelineForAnonymous">
-                Show local timeline for anonymous user
+                {{ 'components.generalSettings.toggles.showLocalTimelineForAnonymous' | translate }}
             </mat-checkbox>
         </div>
         <div>
             <mat-checkbox name="showTrendingForAnonymous" [disableRipple]="true" [(ngModel)]="settings().showTrendingForAnonymous">
-                Show trending for anonymous user
+                {{ 'components.generalSettings.toggles.showTrendingForAnonymous' | translate }}
             </mat-checkbox>
         </div>
         <div>
             <mat-checkbox name="showEditorsChoiceForAnonymous" [disableRipple]="true" [(ngModel)]="settings().showEditorsChoiceForAnonymous">
-                Show editor's statuses choice for anonymous user
+                {{ 'components.generalSettings.toggles.showEditorsStatusesChoiceForAnonymous' | translate }}
             </mat-checkbox>
         </div>
         <div>
             <mat-checkbox name="showEditorsUsersChoiceForAnonymous" [disableRipple]="true" [(ngModel)]="settings().showEditorsUsersChoiceForAnonymous">
-                Show editor's users choice for anonymous user
+                {{ 'components.generalSettings.toggles.showEditorsUsersChoiceForAnonymous' | translate }}
             </mat-checkbox>
         </div>
         <div>
             <mat-checkbox name="showHashtagsForAnonymous" [disableRipple]="true" [(ngModel)]="settings().showHashtagsForAnonymous">
-                Show hashtags for anonymous user
+                {{ 'components.generalSettings.toggles.showHashtagsForAnonymous' | translate }}
             </mat-checkbox>
         </div>
         <div>
             <mat-checkbox name="showCategoriesForAnonymous" [disableRipple]="true" [(ngModel)]="settings().showCategoriesForAnonymous">
-                Show categories for anonymous user
+                {{ 'components.generalSettings.toggles.showCategoriesForAnonymous' | translate }}
             </mat-checkbox>
         </div>
     </div>
 
     <mat-divider></mat-divider>
-    <h3>Registrations</h3>
+    <h3>{{ 'components.generalSettings.registration' | translate }}</h3>
 
     <div class="margin-bottom-20">
         <div>
             <mat-checkbox name="isRegistrationOpened" [disableRipple]="true" [(ngModel)]="settings().isRegistrationOpened">
-                Is registration opened
+                {{ 'components.generalSettings.toggles.isRegistrationOpened' | translate }}
             </mat-checkbox>
         </div>
         <div>
             <mat-checkbox name="isRegistrationByApprovalOpened" [disableRipple]="true" [disabled]="settings().isRegistrationOpened" [(ngModel)]="settings().isRegistrationByApprovalOpened">
-                Is registration by approval opened
+                {{ 'components.generalSettings.toggles.isRegistrationByApprovalOpened' | translate }}
             </mat-checkbox>
         </div>
         <div>
             <mat-checkbox name="isRegistrationByInvitationsOpened" [disableRipple]="true" [disabled]="settings().isRegistrationOpened" [(ngModel)]="settings().isRegistrationByInvitationsOpened">
-                Is registration by invitations opened
+                {{ 'components.generalSettings.toggles.isRegistrationByInvitationsOpened' | translate }}
             </mat-checkbox>
         </div>
         <div class="text-muted fs-90 margin-left-10 margin-top-5">
-            Invitation-based registration and registration by approval only work when registration for all users is disabled.
+            {{ 'components.generalSettings.help.registrationMode' | translate }}
         </div>
     </div>
 
     <mat-divider></mat-divider>
-    <h3>Captcha</h3>
+    <h3>{{ 'components.generalSettings.captcha' | translate }}</h3>
 
     <div class="margin-bottom-20">
         <div>
             <mat-checkbox name="isQuickCaptchaEnabled" [disableRipple]="true" [(ngModel)]="settings().isQuickCaptchaEnabled">
-                Is QuickCaptcha enabled (internal captcha)
+                {{ 'components.generalSettings.toggles.isQuickCaptchaEnabled' | translate }}
             </mat-checkbox>
             <div class="text-muted fs-90 margin-left-10 margin-top-5">
-                This CAPTCHA is implemented internally and does not communicate with any external services, ensuring complete privacy for users.
-                Captcha is shown only when registration is open for all new users.
+                {{ 'components.generalSettings.help.quickCaptcha' | translate }}
             </div>
         </div>
     </div>
 
     <mat-divider></mat-divider>
-    <h3>Email server</h3>
+    <h3>{{ 'components.generalSettings.texts.emailServer' | translate }}</h3>
 
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
-            <mat-label>Email hostname</mat-label>
+            <mat-label>{{ 'components.generalSettings.texts.emailHostname' | translate }}</mat-label>
             <input type="text" matInput name="emailHostname" #emailHostname="ngModel" [(ngModel)]="settings().emailHostname"
-                placeholder="Email hostname" aria-label="Email hostname" />
+                [placeholder]="'components.generalSettings.attrs.emailHostname' | translate" [attr.aria-label]="'components.generalSettings.attrs.emailHostname' | translate" />
         </mat-form-field>
     </div>
 
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
-            <mat-label>Email port</mat-label>
+            <mat-label>{{ 'components.generalSettings.texts.emailPort' | translate }}</mat-label>
             <input type="number" matInput name="emailPort" #emailPort="ngModel" [(ngModel)]="settings().emailPort"
-                placeholder="Email port" aria-label="Email port" />
+                [placeholder]="'components.generalSettings.attrs.emailPort' | translate" [attr.aria-label]="'components.generalSettings.attrs.emailPort' | translate" />
         </mat-form-field>
     </div>
 
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
-            <mat-label>Email username</mat-label>
+            <mat-label>{{ 'components.generalSettings.texts.emailUsername' | translate }}</mat-label>
             <input type="text" matInput name="emailUserName" #emailUserName="ngModel" [(ngModel)]="settings().emailUserName"
-                placeholder="Email username" aria-label="Email username" />
+                [placeholder]="'components.generalSettings.attrs.emailUsername' | translate" [attr.aria-label]="'components.generalSettings.attrs.emailUsername' | translate" />
         </mat-form-field>
     </div>
 
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
-            <mat-label>Email password</mat-label>
+            <mat-label>{{ 'components.generalSettings.texts.emailPassword' | translate }}</mat-label>
             <input type="text" matInput name="emailPassword" #emailPassword="ngModel" [(ngModel)]="settings().emailPassword"
-                placeholder="Email password" aria-label="Email password" />
+                [placeholder]="'components.generalSettings.attrs.emailPassword' | translate" [attr.aria-label]="'components.generalSettings.attrs.emailPassword' | translate" />
         </mat-form-field>
     </div>
 
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
-            <mat-label>Email from address</mat-label>
+            <mat-label>{{ 'components.generalSettings.texts.emailFromAddress' | translate }}</mat-label>
             <input type="text" matInput name="emailFromAddress" #emailFromAddress="ngModel" [(ngModel)]="settings().emailFromAddress"
-                placeholder="Email from address" aria-label="Email from address" />
+                [placeholder]="'components.generalSettings.attrs.emailFromAddress' | translate" [attr.aria-label]="'components.generalSettings.attrs.emailFromAddress' | translate" />
         </mat-form-field>
     </div>
 
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
-            <mat-label>Email from name</mat-label>
+            <mat-label>{{ 'components.generalSettings.texts.emailFromName' | translate }}</mat-label>
             <input type="text" matInput name="emailFromName" #emailFromName="ngModel" [(ngModel)]="settings().emailFromName"
-                placeholder="Email from name" aria-label="Email from name" />
+                [placeholder]="'components.generalSettings.attrs.emailFromName' | translate" [attr.aria-label]="'components.generalSettings.attrs.emailFromName' | translate" />
         </mat-form-field>
     </div>
 
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
-            <mat-label>Email secure method</mat-label>
+            <mat-label>{{ 'components.generalSettings.texts.emailSecureMethod' | translate }}</mat-label>
             <mat-select [(value)]="settings().emailSecureMethod">
-                <mat-option value="none">None</mat-option>
-                <mat-option value="ssl">SSL</mat-option>
-                <mat-option value="startTls">Start TLS</mat-option>
-                <mat-option value="startTlsWhenAvailable">Start TLS when available</mat-option>
+                <mat-option value="none">{{ 'components.generalSettings.none' | translate }}</mat-option>
+                <mat-option value="ssl">{{ 'components.generalSettings.ssl' | translate }}</mat-option>
+                <mat-option value="startTls">{{ 'components.generalSettings.texts.startTls' | translate }}</mat-option>
+                <mat-option value="startTlsWhenAvailable">{{ 'components.generalSettings.texts.startTlsWhenAvailable' | translate }}</mat-option>
             </mat-select>
         </mat-form-field>
     </div>
 
     <mat-divider></mat-divider>
-    <h3>Artificial Inteligence</h3>
+    <h3>{{ 'components.generalSettings.texts.artificialInteligence' | translate }}</h3>
 
     <div class="margin-bottom-20">
         <div>
             <mat-checkbox name="isAIEnabled" [disableRipple]="true" [(ngModel)]="settings().isOpenAIEnabled">
-                Is AI enabled
+                {{ 'components.generalSettings.toggles.isAiEnabled' | translate }}
             </mat-checkbox>
         </div>
     </div>
 
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
-            <mat-label>AI provider name</mat-label>
+            <mat-label>{{ 'components.generalSettings.texts.aiProviderName' | translate }}</mat-label>
             <input type="text" matInput name="AIProviderName" #openAIProviderName="ngModel" [(ngModel)]="settings().openAIProviderName"
-                placeholder="AI provider name" aria-label="AI provider name" />
+                [placeholder]="'components.generalSettings.attrs.aiProviderName' | translate" [attr.aria-label]="'components.generalSettings.attrs.aiProviderName' | translate" />
         </mat-form-field>
     </div>
 
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
-            <mat-label>AI URL</mat-label>
+            <mat-label>{{ 'components.generalSettings.texts.aiUrl' | translate }}</mat-label>
             <input type="text" matInput name="AIUrl" #openAIUrl="ngModel" [(ngModel)]="settings().openAIUrl"
-                placeholder="AI Url" aria-label="AI Url" />
+                [placeholder]="'components.generalSettings.attrs.aiUrl' | translate" [attr.aria-label]="'components.generalSettings.attrs.aiUrl' | translate" />
         </mat-form-field>
     </div>
 
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
-            <mat-label>AI secret key</mat-label>
+            <mat-label>{{ 'components.generalSettings.texts.aiSecretKey' | translate }}</mat-label>
             <input type="text" matInput name="AISecretKey" #openAPIKey="ngModel" [(ngModel)]="settings().openAIKey"
-                placeholder="AI secret key" aria-label="AI secret key" />
+                [placeholder]="'components.generalSettings.attrs.aiSecretKey' | translate" [attr.aria-label]="'components.generalSettings.attrs.aiSecretKey' | translate" />
         </mat-form-field>
     </div>
 
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
-            <mat-label>AI model</mat-label>
+            <mat-label>{{ 'components.generalSettings.texts.aiModel' | translate }}</mat-label>
             <input type="text" matInput name="AIModel" #openAPIModel="ngModel" [(ngModel)]="settings().openAIModel"
-                placeholder="AI model" aria-label="AI model" />
+                [placeholder]="'components.generalSettings.attrs.aiModel' | translate" [attr.aria-label]="'components.generalSettings.attrs.aiModel' | translate" />
         </mat-form-field>
     </div>
 
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
-            <mat-label>AI description prompt</mat-label>
+            <mat-label>{{ 'components.generalSettings.texts.aiDescriptionPrompt' | translate }}</mat-label>
             <textarea matInput name="AIDescriptionPrompt" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4"
-                cdkAutosizeMaxRows="20" placeholder="AI description prompt" #openAIDescriptionPrompt="ngModel" [(ngModel)]="settings().openAIImageDescriptionPrompt"
-                aria-label="AI description prompt"></textarea>
+                cdkAutosizeMaxRows="20" [placeholder]="'components.generalSettings.attrs.aiDescriptionPrompt' | translate" #openAIDescriptionPrompt="ngModel" [(ngModel)]="settings().openAIImageDescriptionPrompt"
+                [attr.aria-label]="'components.generalSettings.attrs.aiDescriptionPrompt' | translate"></textarea>
         </mat-form-field>
         <div class="text-muted fs-90 margin-left-10 margin-top-5">
-            Used to generate an image description (alt text). Write clear instructions for accurate, objective, and accessible descriptions based only on visible content.
+            {{ 'components.generalSettings.help.aiDescriptionPrompt' | translate }}
         </div>
     </div>
 
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
-            <mat-label>AI hashtags prompt</mat-label>
+            <mat-label>{{ 'components.generalSettings.texts.aiHashtagsPrompt' | translate }}</mat-label>
             <textarea matInput name="AIHashtagsPrompt" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4"
-                cdkAutosizeMaxRows="20" placeholder="AI hashtags prompt" #openAIHashtagsPrompt="ngModel" [(ngModel)]="settings().openAIImageHashtagsPrompt"
-                aria-label="AI hashtags prompt"></textarea>
+                cdkAutosizeMaxRows="20" [placeholder]="'components.generalSettings.attrs.aiHashtagsPrompt' | translate" #openAIHashtagsPrompt="ngModel" [(ngModel)]="settings().openAIImageHashtagsPrompt"
+                [attr.aria-label]="'components.generalSettings.attrs.aiHashtagsPrompt' | translate"></textarea>
         </mat-form-field>
         <div class="text-muted fs-90 margin-left-10 margin-top-5">
-            Used to generate hashtags for an status. Write instructions for relevant, concise, and social-media-friendly hashtags, and ask the model to return hashtags only.
+            {{ 'components.generalSettings.help.aiHashtagsPrompt' | translate }}
         </div>
     </div>
 
     <mat-divider></mat-divider>
-    <h3>WebPush notifications</h3>
+    <h3>{{ 'components.generalSettings.texts.webpushNotifications' | translate }}</h3>
 
     <div class="margin-bottom-20">
         <div>
             <mat-checkbox name="isWebPushEnabled" [disableRipple]="true" [(ngModel)]="settings().isWebPushEnabled">
-                Are WebPush notifications enabled
+                {{ 'components.generalSettings.toggles.isWebPushEnabled' | translate }}
             </mat-checkbox>
         </div>
     </div>
 
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
-            <mat-label>WebPush service endpoint</mat-label>
+            <mat-label>{{ 'components.generalSettings.texts.webpushServiceEndpoint' | translate }}</mat-label>
             <input type="text" matInput name="webPushEndpoint" #webPushEndpoint="ngModel" [(ngModel)]="settings().webPushEndpoint"
-                placeholder="WebPush service endpoint" aria-label="WebPush service endpoint" />
+                [placeholder]="'components.generalSettings.attrs.webpushServiceEndpoint' | translate" [attr.aria-label]="'components.generalSettings.attrs.webpushServiceEndpoint' | translate" />
         </mat-form-field>
     </div>
 
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
-            <mat-label>WebPush service secret key</mat-label>
+            <mat-label>{{ 'components.generalSettings.texts.webpushServiceSecretKey' | translate }}</mat-label>
             <input type="text" matInput name="webPushSecretKey" #webPushSecretKey="ngModel" [(ngModel)]="settings().webPushSecretKey"
-                placeholder="WebPush service secret key" aria-label="WebPush service secret key" />
+                [placeholder]="'components.generalSettings.attrs.webpushServiceSecretKey' | translate" [attr.aria-label]="'components.generalSettings.attrs.webpushServiceSecretKey' | translate" />
         </mat-form-field>
     </div>
 
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
-            <mat-label>WebPush Vapid subject</mat-label>
+            <mat-label>{{ 'components.generalSettings.texts.webpushVapidSubject' | translate }}</mat-label>
             <input type="text" matInput name="webPushVapidSubject" #webPushVapidSubject="ngModel" [(ngModel)]="settings().webPushVapidSubject"
-                placeholder="WebPush Vapid subject" aria-label="WebPush Vapid subject" />
+                [placeholder]="'components.generalSettings.attrs.webpushVapidSubject' | translate" [attr.aria-label]="'components.generalSettings.attrs.webpushVapidSubject' | translate" />
         </mat-form-field>
     </div>
 
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
-            <mat-label>WebPush Vapid public key</mat-label>
+            <mat-label>{{ 'components.generalSettings.texts.webpushVapidPublicKey' | translate }}</mat-label>
             <input type="text" matInput name="webPushVapidPublicKey" #webPushVapidPublicKey="ngModel" [(ngModel)]="settings().webPushVapidPublicKey"
-                placeholder="WebPush Vapid public key" aria-label="WebPush Vapid public key" />
+                [placeholder]="'components.generalSettings.attrs.webpushVapidPublicKey' | translate" [attr.aria-label]="'components.generalSettings.attrs.webpushVapidPublicKey' | translate" />
         </mat-form-field>
     </div>
 
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
-            <mat-label>WebPush Vapid private key</mat-label>
+            <mat-label>{{ 'components.generalSettings.texts.webpushVapidPrivateKey' | translate }}</mat-label>
             <input type="text" matInput name="webPushVapidPrivateKey" #webPushVapidPrivateKey="ngModel" [(ngModel)]="settings().webPushVapidPrivateKey"
-                placeholder="WebPush Vapid priavte key" aria-label="WebPush Vapid priavte key" />
+                [placeholder]="'components.generalSettings.attrs.webpushVapidPriavteKey' | translate" [attr.aria-label]="'components.generalSettings.attrs.webpushVapidPriavteKey' | translate" />
         </mat-form-field>
     </div>
 
     <mat-divider></mat-divider>
-    <h3>Privacy policy</h3>
+    <h3>{{ 'components.generalSettings.texts.privacyPolicy' | translate }}</h3>
 
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
-            <mat-label>Privacy policy update date</mat-label>
+            <mat-label>{{ 'components.generalSettings.texts.privacyPolicyUpdateDate' | translate }}</mat-label>
             <input type="text" matInput name="privacyPolicyUpdatedAt" #privacyPolicyUpdatedAt="ngModel" [(ngModel)]="settings().privacyPolicyUpdatedAt"
-                placeholder="Privacy policy update date" aria-label="Privacy policy update date" />
+                [placeholder]="'components.generalSettings.attrs.privacyPolicyUpdateDate' | translate" [attr.aria-label]="'components.generalSettings.attrs.privacyPolicyUpdateDate' | translate" />
         </mat-form-field>
     </div>
 
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
-            <mat-label>Privacy policy content</mat-label>
+            <mat-label>{{ 'components.generalSettings.texts.privacyPolicyContent' | translate }}</mat-label>
             <textarea matInput name="privacyPolicyContent" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4"
-                cdkAutosizeMaxRows="20" placeholder="Privacy policy content" #privacyPolicyContent="ngModel" [(ngModel)]="settings().privacyPolicyContent"
-                aria-label="Privacy policy content"></textarea>
+                cdkAutosizeMaxRows="20" [placeholder]="'components.generalSettings.attrs.privacyPolicyContent' | translate" #privacyPolicyContent="ngModel" [(ngModel)]="settings().privacyPolicyContent"
+                [attr.aria-label]="'components.generalSettings.attrs.privacyPolicyContent' | translate"></textarea>
         </mat-form-field>
         <div class="text-muted fs-90 margin-left-10 margin-top-5">
-            Markdown syntax is supported, and you can use three macros that will be replaced on the page: {{'{{email}}, {{hostname}}, {{rules}}'}}.
+            {{ 'components.generalSettings.help.markdownMacros' | translate }} {{'{{email}}, {{hostname}}, {{rules}}'}}.
         </div>
     </div>
 
     <mat-divider></mat-divider>
-    <h3>Terms of Service</h3>
+    <h3>{{ 'components.generalSettings.texts.termsOfService' | translate }}</h3>
 
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
-            <mat-label>Terms of Service update date</mat-label>
+            <mat-label>{{ 'components.generalSettings.texts.termsOfServiceUpdateDate' | translate }}</mat-label>
             <input type="text" matInput name="termsOfServiceUpdatedAt" #termsOfServiceUpdatedAt="ngModel" [(ngModel)]="settings().termsOfServiceUpdatedAt"
-                placeholder="Terms of Service update date" aria-label="Terms of Service update date" />
+                [placeholder]="'components.generalSettings.attrs.termsOfServiceUpdateDate' | translate" [attr.aria-label]="'components.generalSettings.attrs.termsOfServiceUpdateDate' | translate" />
         </mat-form-field>
     </div>
 
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
-            <mat-label>Terms of Service content</mat-label>
+            <mat-label>{{ 'components.generalSettings.texts.termsOfServiceContent' | translate }}</mat-label>
             <textarea matInput name="termsOfServiceContent" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4"
-                cdkAutosizeMaxRows="20" placeholder="Terms of Service content" #termsOfServiceContent="ngModel" [(ngModel)]="settings().termsOfServiceContent"
-                aria-label="Terms of Service content"></textarea>
+                cdkAutosizeMaxRows="20" [placeholder]="'components.generalSettings.attrs.termsOfServiceContent' | translate" #termsOfServiceContent="ngModel" [(ngModel)]="settings().termsOfServiceContent"
+                [attr.aria-label]="'components.generalSettings.attrs.termsOfServiceContent' | translate"></textarea>
         </mat-form-field>
         <div class="text-muted fs-90 margin-left-10 margin-top-5">
-            Markdown syntax is supported, and you can use three macros that will be replaced on the page: {{'{{email}}, {{hostname}}, {{rules}}'}}.
+            {{ 'components.generalSettings.help.markdownMacros' | translate }} {{'{{email}}, {{hostname}}, {{rules}}'}}.
         </div>
     </div>
 
     <mat-divider></mat-divider>
-    <h3>Custom styles</h3>
+    <h3>{{ 'components.generalSettings.texts.customStyles' | translate }}</h3>
 
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
-            <mat-label>HTTP path to custom CSS file</mat-label>
+            <mat-label>{{ 'components.generalSettings.texts.httpPathToCustomCssFile' | translate }}</mat-label>
             <input type="text" matInput name="customFileStyle" #customFileStyle="ngModel" [(ngModel)]="settings().customFileStyle"
-                placeholder="HTTP path to custom CSS file" aria-label="HTTP path to custom CSS file" />
+                [placeholder]="'components.generalSettings.attrs.httpPathToCustomCssFile' | translate" [attr.aria-label]="'components.generalSettings.attrs.httpPathToCustomCssFile' | translate" />
         </mat-form-field>
         <div class="text-muted fs-90 margin-left-10 margin-top-5">
-            The file should be located on the same domain as the hosted application; otherwise,
-            it may be blocked due to CORS security restrictions.
+            {{ 'components.generalSettings.help.sameDomainCors' | translate }}
         </div>
     </div>
 
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
-            <mat-label>Inline custom CSS styles</mat-label>
+            <mat-label>{{ 'components.generalSettings.texts.inlineCustomCssStyles' | translate }}</mat-label>
             <textarea matInput name="customInlineStyle" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4"
-                cdkAutosizeMaxRows="20" placeholder="Inline custom CSS styles" #customInlineStyle="ngModel" [(ngModel)]="settings().customInlineStyle"
-                aria-label="Inline custom CSS styles"></textarea>
+                cdkAutosizeMaxRows="20" [placeholder]="'components.generalSettings.attrs.inlineCustomCssStyles' | translate" #customInlineStyle="ngModel" [(ngModel)]="settings().customInlineStyle"
+                [attr.aria-label]="'components.generalSettings.attrs.inlineCustomCssStyles' | translate"></textarea>
         </mat-form-field>
     </div>
 
     <mat-divider></mat-divider>
-    <h3>Custom JavaScript</h3>
+    <h3>{{ 'components.generalSettings.texts.customJavascript' | translate }}</h3>
 
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
-            <mat-label>HTTP path to custom JavaScript file</mat-label>
+            <mat-label>{{ 'components.generalSettings.texts.httpPathToCustomJavascriptFile' | translate }}</mat-label>
             <input type="text" matInput name="customFileScript" #customFileScript="ngModel" [(ngModel)]="settings().customFileScript"
-                placeholder="HTTP path to custom JavaScript file" aria-label="HTTP path to custom JavaScript file" />
+                [placeholder]="'components.generalSettings.attrs.httpPathToCustomJavascriptFile' | translate" [attr.aria-label]="'components.generalSettings.attrs.httpPathToCustomJavascriptFile' | translate" />
         </mat-form-field>
         <div class="text-muted fs-90 margin-left-10 margin-top-5">
-            The file should be located on the same domain as the hosted application; otherwise,
-            it may be blocked due to CORS security restrictions.
+            {{ 'components.generalSettings.help.sameDomainCors' | translate }}
         </div>
     </div>
 
     <div class="margin-bottom-20">
         <mat-form-field appearance="outline">
-            <mat-label>Inline custom JavaScript</mat-label>
+            <mat-label>{{ 'components.generalSettings.texts.inlineCustomJavascript' | translate }}</mat-label>
             <textarea matInput name="customInlineScript" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4"
-                cdkAutosizeMaxRows="20" placeholder="Inline custom JavaScript" #customInlineScript="ngModel" [(ngModel)]="settings().customInlineScript"
-                aria-label="Inline custom JavaScript"></textarea>
+                cdkAutosizeMaxRows="20" [placeholder]="'components.generalSettings.attrs.inlineCustomJavascript' | translate" #customInlineScript="ngModel" [(ngModel)]="settings().customInlineScript"
+                [attr.aria-label]="'components.generalSettings.attrs.inlineCustomJavascript' | translate"></textarea>
         </mat-form-field>
     </div>
 
     <mat-divider></mat-divider>
-    <h3>Scheduled jobs</h3>
+    <h3>{{ 'components.generalSettings.texts.scheduledJobs' | translate }}</h3>
 
     <div class="margin-bottom-20">
         <div>
             <mat-checkbox name="clearAttachmentsJobEnabled" [disableRipple]="true" [(ngModel)]="settings().clearAttachmentsJobEnabled">
-                Clear attachments not connected to statuses job
+                {{ 'components.generalSettings.jobs.clearAttachments' | translate }}
             </mat-checkbox>
         </div>
         <div>
             <mat-checkbox name="clearDeletedUsersJobEnabled" [disableRipple]="true" [(ngModel)]="settings().clearDeletedUsersJobEnabled">
-                Clear deleted users job
+                {{ 'components.generalSettings.jobs.clearDeletedUsers' | translate }}
             </mat-checkbox>
         </div>
         <div>
             <mat-checkbox name="clearErrorItemsJobEnabled" [disableRipple]="true" [(ngModel)]="settings().clearErrorItemsJobEnabled">
-                Clear old errors job
+                {{ 'components.generalSettings.jobs.clearOldErrors' | translate }}
             </mat-checkbox>
         </div>
         <div>
             <mat-checkbox name="clearFailedLoginsJobEnabled" [disableRipple]="true" [(ngModel)]="settings().clearFailedLoginsJobEnabled">
-                Clear old failed logins logs job
+                {{ 'components.generalSettings.jobs.clearFailedLogins' | translate }}
             </mat-checkbox>
         </div>
         <div>
             <mat-checkbox name="clearQuickCaptchasJobEnabled" [disableRipple]="true" [(ngModel)]="settings().clearQuickCaptchasJobEnabled">
-                Clear old captcha tokens job
+                {{ 'components.generalSettings.jobs.clearCaptchaTokens' | translate }}
             </mat-checkbox>
         </div>
         <div>
             <mat-checkbox name="createArchiveJobEnabled" [disableRipple]="true" [(ngModel)]="settings().createArchiveJobEnabled">
-                Create archives job
+                {{ 'components.generalSettings.jobs.createArchives' | translate }}
             </mat-checkbox>
         </div>
         <div>
             <mat-checkbox name="deleteArchiveJobEnabled" [disableRipple]="true" [(ngModel)]="settings().deleteArchiveJobEnabled">
-                Delete old archives job
+                {{ 'components.generalSettings.jobs.deleteOldArchives' | translate }}
             </mat-checkbox>
         </div>
         <div>
             <mat-checkbox name="locationsJobEnabled" [disableRipple]="true" [(ngModel)]="settings().locationsJobEnabled">
-                Fill locations table job
+                {{ 'components.generalSettings.jobs.fillLocationsTable' | translate }}
             </mat-checkbox>
         </div>
         <div>
             <mat-checkbox name="longPeriodTrendingJobEnabled" [disableRipple]="true" [(ngModel)]="settings().longPeriodTrendingJobEnabled">
-                Calculate long period trending job
+                {{ 'components.generalSettings.jobs.calculateLongTrending' | translate }}
             </mat-checkbox>
         </div>
         <div>
             <mat-checkbox name="shortPeriodTrendingJobEnabled" [disableRipple]="true" [(ngModel)]="settings().shortPeriodTrendingJobEnabled">
-                Calculate short period trending job
+                {{ 'components.generalSettings.jobs.calculateShortTrending' | translate }}
             </mat-checkbox>
         </div>
         <div>
             <mat-checkbox name="purgeStatusesJobEnabled" [disableRipple]="true" [(ngModel)]="settings().purgeStatusesJobEnabled">
-                Purge old statuses job
+                {{ 'components.generalSettings.jobs.purgeOldStatuses' | translate }}
             </mat-checkbox>
         </div>
         <div>
             <mat-checkbox name="rescheduleActivityPubJobEnabled" [disableRipple]="true" [(ngModel)]="settings().rescheduleActivityPubJobEnabled">
-                Reschedule failed ActivityPub events job
+                {{ 'components.generalSettings.jobs.rescheduleFailedActivityPub' | translate }}
             </mat-checkbox>
         </div>
     </div>
 
     <mat-divider></mat-divider>
-    <h3>Database logged events</h3>
+    <h3>{{ 'components.generalSettings.texts.databaseLoggedEvents' | translate }}</h3>
 
     <div class="margin-bottom-20 margin-top-20">
         <mat-form-field>
-            <mat-label>Events to log</mat-label>
+            <mat-label>{{ 'components.generalSettings.texts.eventsToLog' | translate }}</mat-label>
             <mat-select [(value)]="settings().eventsToStore" multiple>
                 @for (eventType of eventTypes(); track eventType) {
                     <mat-option [value]="eventType">{{ eventType }}</mat-option>
@@ -650,10 +639,9 @@
             </mat-select>
         </mat-form-field>
         <div class="text-muted fs-90 margin-left-10 margin-top-5">
-            Selected events will be stored in the database. They should only be enabled when debugging an issue,
-            as they impact both application performance and database size, given that their volume can be significant.
+            {{ 'components.generalSettings.help.eventsToLog' | translate }}
         </div>
     </div>
 
-    <button type="submit" matButton="filled" aria-label="Save">Save</button>
+    <button type="submit" matButton="filled" [attr.aria-label]="'common.actions.save' | translate">{{ 'common.actions.save' | translate }}</button>
 </form>

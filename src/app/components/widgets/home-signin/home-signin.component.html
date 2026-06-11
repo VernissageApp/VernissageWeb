@@ -12,9 +12,9 @@
         <div class="flex-row flex-align-center flex-space-between margin-bottom-10" [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
             <h1>
                 <div class="flex-row flex-align-center gap-8">
-                    <div>Timeline</div>
+                    <div>{{ 'components.homeSignin.timeline' | translate }}</div>
                     <div class="small-icon-button">
-                        <button matIconButton (click)="onTimelineRefresh()" aria-label="Refresh current timeline">
+                        <button matIconButton (click)="onTimelineRefresh()" [attr.aria-label]="'components.homeSignin.attrs.refreshCurrentTimeline' | translate">
                             <mat-icon>change_circle</mat-icon>
                         </button>
                     </div>
@@ -23,38 +23,38 @@
                 @if (!isHandset()) {
                     @switch (timeline()) {
                         @case ('private') {
-                            <div class="fs-60 text-muted">Your personal collection of photos, created based on posts from users you follow.</div>
+                            <div class="fs-60 text-muted">{{ 'components.homeSignin.texts.privateCollectionOfPhotos' | translate }}</div>
                         }
                         @case ('local') {
-                            <div class="fs-60 text-muted">A collection of photos created from all posts made by users publishing on this server.</div>
+                            <div class="fs-60 text-muted">{{ 'components.homeSignin.texts.localCollectionOfPhotos' | translate }}</div>
                         }
                         @case ('global') {
-                            <div class="fs-60 text-muted">A collection of photos created from all user-uploaded images that have reached this server.</div>
+                            <div class="fs-60 text-muted">{{ 'components.homeSignin.texts.federatedCollectionOfPhotos' | translate }}</div>
                         }
                     }
                 }
             </h1>
 
             <section class="small-button-toggle">
-                <mat-button-toggle-group [(ngModel)]="timeline" (ngModelChange)="onTimelineChange()" [hideSingleSelectionIndicator]="true" aria-label="Timeline type">
+                <mat-button-toggle-group [(ngModel)]="timeline" (ngModelChange)="onTimelineChange()" [hideSingleSelectionIndicator]="true" [attr.aria-label]="'components.homeSignin.attrs.timelineType' | translate">
 
                     @if (isLoggedIn()) {
                         <mat-button-toggle value="private">
                             <mat-icon>person</mat-icon>
                             @if (!isHandset()) {
-                                <span> Private</span>
+                                <span> {{ 'common.labels.private' | translate }}</span>
                             }
                         </mat-button-toggle>
                     }
 
                     <mat-button-toggle value="local"><mat-icon>communities</mat-icon>
                         @if (!isHandset()) {
-                            <span> Local</span>
+                            <span> {{ 'common.labels.local' | translate }}</span>
                         }
                     </mat-button-toggle>
                     <mat-button-toggle value="global"><mat-icon>hub</mat-icon>
                         @if (!isHandset()) {
-                            <span> All</span>
+                            <span> {{ 'common.labels.all' | translate }}</span>
                         }
                     </mat-button-toggle>
                 </mat-button-toggle-group>

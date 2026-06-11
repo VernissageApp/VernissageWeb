@@ -16,6 +16,7 @@ import { AvatarSize } from 'src/app/components/widgets/avatar/avatar-size';
 import { UserRolesDialog } from 'src/app/dialogs/user-roles-dialog/user-roles.dialog';
 import { RandomGeneratorService } from 'src/app/services/common/random-generator.service';
 import { ConfirmationDialog } from 'src/app/dialogs/confirmation-dialog/confirmation.dialog';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-users',
@@ -52,6 +53,7 @@ export class UsersPage extends ResponsiveComponent implements OnInit, OnDestroy 
     private activatedRoute = inject(ActivatedRoute);
     private router = inject(Router);
     private dialog = inject(MatDialog);
+    private translateService = inject(TranslateService);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
@@ -131,7 +133,9 @@ export class UsersPage extends ResponsiveComponent implements OnInit, OnDestroy 
                 await this.usersService.enable(user.userName);
 
                 user.isBlocked = false;
-                this.messageService.showSuccess(user.isLocal ? 'Account has been enabled.' : 'User has been unblocked.');
+                this.messageService.showSuccess(user.isLocal
+                    ? this.translateService.instant('pages.users.messages.accountEnabled')
+                    : this.translateService.instant('pages.users.messages.userUnblocked'));
             }
         } catch (error) {
             console.error(error);
@@ -145,7 +149,9 @@ export class UsersPage extends ResponsiveComponent implements OnInit, OnDestroy 
                 await this.usersService.disable(user.userName);
 
                 user.isBlocked = true;
-                this.messageService.showSuccess(user.isLocal ? 'Account has been disabled.' : 'User has been blocked.');
+                this.messageService.showSuccess(user.isLocal
+                    ? this.translateService.instant('pages.users.messages.accountDisabled')
+                    : this.translateService.instant('pages.users.messages.userBlocked'));
             }
         } catch (error) {
             console.error(error);
@@ -159,7 +165,7 @@ export class UsersPage extends ResponsiveComponent implements OnInit, OnDestroy 
                 await this.usersService.supporter(user.userName);
 
                 user.isSupporter = true;
-                this.messageService.showSuccess('Account has been mark as supporter.');
+                this.messageService.showSuccess(this.translateService.instant('pages.users.messages.accountMarkedAsSupporter'));
             }
         } catch (error) {
             console.error(error);
@@ -173,7 +179,7 @@ export class UsersPage extends ResponsiveComponent implements OnInit, OnDestroy 
                 await this.usersService.notSupporter(user.userName);
 
                 user.isSupporter = false;
-                this.messageService.showSuccess('Account has been mark as not supporter.');
+                this.messageService.showSuccess(this.translateService.instant('pages.users.messages.accountMarkedAsNotSupporter'));
             }
         } catch (error) {
             console.error(error);
@@ -187,7 +193,7 @@ export class UsersPage extends ResponsiveComponent implements OnInit, OnDestroy 
                 await this.usersService.approve(user.userName);
 
                 user.isApproved = true;
-                this.messageService.showSuccess('Account has been approved.');
+                this.messageService.showSuccess(this.translateService.instant('pages.users.messages.accountApproved'));
             }
         } catch (error) {
             console.error(error);
@@ -199,7 +205,7 @@ export class UsersPage extends ResponsiveComponent implements OnInit, OnDestroy 
         try {
             if (user.userName) {
                 await this.usersService.reject(user.userName);
-                this.messageService.showSuccess('Account has been rejected.');
+                this.messageService.showSuccess(this.translateService.instant('pages.users.messages.accountRejected'));
 
                 const navigationExtras: NavigationExtras = {
                     queryParams: { t: this.randomGeneratorService.generateString(8) },
@@ -217,7 +223,7 @@ export class UsersPage extends ResponsiveComponent implements OnInit, OnDestroy 
     protected async onDisableTwoFactor(user: User): Promise<void> {
         const dialogRef = this.dialog.open(ConfirmationDialog, {
             width: '500px',
-            data: 'Do you want to disable user\'s 2FA?'
+            data: this.translateService.instant('pages.users.confirmations.disableUserTwoFactor')
         });
 
         dialogRef.afterClosed().subscribe(async (result) => {
@@ -225,7 +231,7 @@ export class UsersPage extends ResponsiveComponent implements OnInit, OnDestroy 
                 try {
                     if (user.userName) {
                         await this.usersService.disableTwoFactorAuthentication(user.userName);
-                        this.messageService.showSuccess('2FA has been disabled.');
+                        this.messageService.showSuccess(this.translateService.instant('pages.users.messages.twoFactorDisabled'));
         
                         const navigationExtras: NavigationExtras = {
                             queryParams: { t: this.randomGeneratorService.generateString(8) },
@@ -246,7 +252,7 @@ export class UsersPage extends ResponsiveComponent implements OnInit, OnDestroy 
         try {
             if (user.userName) {
                 await this.usersService.refresh(user.userName);
-                this.messageService.showSuccess('Account has been refreshed.');
+                this.messageService.showSuccess(this.translateService.instant('pages.users.messages.accountRefreshed'));
 
                 const navigationExtras: NavigationExtras = {
                     queryParams: { t: this.randomGeneratorService.generateString(8) },
@@ -264,7 +270,7 @@ export class UsersPage extends ResponsiveComponent implements OnInit, OnDestroy 
     protected async onDelete(user: User): Promise<void> {
         const dialogRef = this.dialog.open(ConfirmationDialog, {
             width: '500px',
-            data: 'Do you want to delete user account?'
+            data: this.translateService.instant('pages.users.confirmations.deleteUserAccount')
         });
 
         dialogRef.afterClosed().subscribe(async (result) => {
@@ -272,7 +278,7 @@ export class UsersPage extends ResponsiveComponent implements OnInit, OnDestroy 
                 try {
                     if (user.userName) {
                         await this.usersService.delete(user.userName);
-                        this.messageService.showSuccess('Account has been deleted.');
+                        this.messageService.showSuccess(this.translateService.instant('pages.users.messages.accountDeleted'));
         
                         const navigationExtras: NavigationExtras = {
                             queryParams: { t: this.randomGeneratorService.generateString(8) },

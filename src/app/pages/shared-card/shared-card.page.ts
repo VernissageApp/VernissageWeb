@@ -13,6 +13,7 @@ import { LoadingService } from 'src/app/services/common/loading.service';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { WindowService } from 'src/app/services/common/window.service';
 import { SharedBusinessCardsService } from 'src/app/services/http/shared-business-cards.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-shared-card',
@@ -46,6 +47,7 @@ export class SharedCardPage extends ResponsiveComponent implements OnInit, OnDes
     private dialog = inject(MatDialog);
     private windowService = inject(WindowService)
     private router = inject(Router);
+    private translateService = inject(TranslateService);
 
     protected isAuthor(message: SharedBusinessCardMessage): boolean {
         return message.addedByUser;
@@ -146,7 +148,7 @@ export class SharedCardPage extends ResponsiveComponent implements OnInit, OnDes
 
                     await this.router.navigate([], navigationExtras);
 
-                    this.messageService.showSuccess('Your personal data has been saved.');
+                    this.messageService.showSuccess(this.translateService.instant('pages.sharedCard.messages.personalDataSaved'));
                 } catch (error) {
                     console.error(error);
                     this.messageService.showServerError(error);

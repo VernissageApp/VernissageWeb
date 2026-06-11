@@ -7,7 +7,7 @@
                         @if (!isHandset()) {
                             <div class="back-container" (click)="onBackClick()" (keydown.enter)="onBackClick()" tabindex="0">
                                 <mat-icon>arrow_back</mat-icon>
-                                <span class="back-label">Back</span>
+                                <span class="back-label">{{ 'pages.status.back' | translate }}</span>
                             </div>
                         }
                     </div>
@@ -36,14 +36,14 @@
                                             @if (mainStatusInternal.contentWarning) {
                                                 <div class="text">{{ mainStatusInternal.contentWarning }}</div>
                                             }
-                                            <button matButton="filled" (click)="onShowSensitiveImageClick()">Show image</button>
+                                            <button matButton="filled" (click)="onShowSensitiveImageClick()">{{ 'pages.status.showImage' | translate }}</button>
                                         </div>
                                         <canvas class="blurhash show-or-hide" [class.is-visible]="!showSensitiveImage()" [class.is-hidden]="showSensitiveImage()" #canvas [width]="imageWidth()" [height]="imageHeight()"></canvas>
                                     }
 
-                                    <img class="link show-fade" [class.is-visible]="showSensitiveImage()" [src]="imagesInternally[0].data?.src" (click)="openInFullScreen()" (keydown.enter)="openInFullScreen()" tabindex="0" (load)="onImageLoaded()" [alt]="altStatus() ?? 'Status image'" />
+                                    <img class="link show-fade" [class.is-visible]="showSensitiveImage()" [src]="imagesInternally[0].data?.src" (click)="openInFullScreen()" (keydown.enter)="openInFullScreen()" tabindex="0" (load)="onImageLoaded()" [alt]="altStatus() ?? ('common.labels.statusImage' | translate)" />
                                 } @else {
-                                    <img class="link show-fade" [class.is-visible]="imageIsLoaded()" [src]="imagesInternally[0].data?.src" (click)="openInFullScreen()" (keydown.enter)="openInFullScreen()" tabindex="0" (load)="onImageLoaded()" [alt]="altStatus() ?? 'Status image'" />
+                                    <img class="link show-fade" [class.is-visible]="imageIsLoaded()" [src]="imagesInternally[0].data?.src" (click)="openInFullScreen()" (keydown.enter)="openInFullScreen()" tabindex="0" (load)="onImageLoaded()" [alt]="altStatus() ?? ('common.labels.statusImage' | translate)" />
                                 }
                             </div>
                         }
@@ -87,7 +87,7 @@
                         <div class="flex-row flex-space-between padding-left-10 padding-right-10 padding-top-10">
                             @if (!hideLeftArrow()) {
                                 <div>
-                                    <button matButton="outlined" (click)="onPrevClick()" class="small-button context-left" aria-label="Previous image">
+                                    <button matButton="outlined" (click)="onPrevClick()" class="small-button context-left" [attr.aria-label]="'pages.status.navigation.previousImageAriaLabel' | translate">
                                         <mat-icon>arrow_back_ios</mat-icon>
                                     </button>
                                 </div>
@@ -97,7 +97,7 @@
 
                             @if (!hideRightArrow()) {
                                 <div>
-                                    <button matButton="outlined" (click)="onNextClick()" class="small-button context-right" aria-label="Next image">
+                                    <button matButton="outlined" (click)="onNextClick()" class="small-button context-right" [attr.aria-label]="'pages.status.navigation.nextImageAriaLabel' | translate">
                                         <mat-icon iconPositionEnd>arrow_forward_ios</mat-icon>
                                     </button>
                                 </div>
@@ -119,112 +119,112 @@
                                 <!-- Actions panel -->
                                 @if (isLoggedIn()) {
                                     @if (!mainStatusInternal.reblogged) {
-                                        <button matIconButton class="margin-right-10" matTooltip="Boost" matTooltipPosition="above" aria-label="Boost" [disabled]="isDuringBoostProcessing() || isInVersionMode()" (click)="reblog()">
+                                        <button matIconButton class="margin-right-10" [matTooltip]="'pages.status.actions.boost' | translate" matTooltipPosition="above" [attr.aria-label]="'pages.status.actions.boost' | translate" [disabled]="isDuringBoostProcessing() || isInVersionMode()" (click)="reblog()">
                                             <mat-icon class="outline-symbol">rocket_launch</mat-icon>
                                         </button>
                                     }
 
                                     @if (mainStatusInternal.reblogged) {
-                                        <button matIconButton class="margin-right-10" matTooltip="Unboost" matTooltipPosition="above" aria-label="Unboost" [disabled]="isDuringBoostProcessing() || isInVersionMode()" (click)="unreblog()">
+                                        <button matIconButton class="margin-right-10" [matTooltip]="'pages.status.actions.unboost' | translate" matTooltipPosition="above" [attr.aria-label]="'pages.status.actions.unboost' | translate" [disabled]="isDuringBoostProcessing() || isInVersionMode()" (click)="unreblog()">
                                             <mat-icon class="fill-symbol">rocket_launch</mat-icon>
                                         </button>
                                     }
 
                                     @if (!mainStatusInternal.favourited) {
-                                        <button matIconButton class="margin-right-10" matTooltip="Like" matTooltipPosition="above" aria-label="Like" [disabled]="isDuringFavouriteProcessing() || isInVersionMode()" (click)="favourite()">
+                                        <button matIconButton class="margin-right-10" [matTooltip]="'pages.status.actions.like' | translate" matTooltipPosition="above" [attr.aria-label]="'pages.status.actions.like' | translate" [disabled]="isDuringFavouriteProcessing() || isInVersionMode()" (click)="favourite()">
                                             <mat-icon class="outline-symbol">grade</mat-icon>
                                         </button>
                                     }
 
                                     @if (mainStatusInternal.favourited) {
-                                        <button matIconButton class="margin-right-10" matTooltip="Unlike" matTooltipPosition="above" aria-label="Unlike" [disabled]="isDuringFavouriteProcessing() || isInVersionMode()" (click)="unfavourite()">
+                                        <button matIconButton class="margin-right-10" [matTooltip]="'pages.status.actions.unlike' | translate" matTooltipPosition="above" [attr.aria-label]="'pages.status.actions.unlike' | translate" [disabled]="isDuringFavouriteProcessing() || isInVersionMode()" (click)="unfavourite()">
                                             <mat-icon class="fill-symbol">grade</mat-icon>
                                         </button>
                                     }
 
                                     @if (!mainStatusInternal.bookmarked) {
-                                        <button matIconButton class="margin-right-10" matTooltip="Bookmark" matTooltipPosition="above" aria-label="Bookmark" [disabled]="isDuringBookmarkProcessing() || isInVersionMode()" (click)="bookmark()">
+                                        <button matIconButton class="margin-right-10" [matTooltip]="'pages.status.actions.bookmark' | translate" matTooltipPosition="above" [attr.aria-label]="'pages.status.actions.bookmark' | translate" [disabled]="isDuringBookmarkProcessing() || isInVersionMode()" (click)="bookmark()">
                                             <mat-icon class="outline-symbol">bookmark</mat-icon>
                                         </button>
                                     }
 
                                     @if (mainStatusInternal.bookmarked) {
-                                        <button matIconButton class="margin-right-10" matTooltip="Unbookmark" matTooltipPosition="above" aria-label="Unbookmark" [disabled]="isDuringBookmarkProcessing() || isInVersionMode()" (click)="unbookmark()">
+                                        <button matIconButton class="margin-right-10" [matTooltip]="'pages.status.actions.unbookmark' | translate" matTooltipPosition="above" [attr.aria-label]="'pages.status.actions.unbookmark' | translate" [disabled]="isDuringBookmarkProcessing() || isInVersionMode()" (click)="unbookmark()">
                                             <mat-icon class="fill-symbol">bookmark</mat-icon>
                                         </button>
                                     }
 
                                     @if (shouldDisplayFeatureButton()) {
                                         @if (!mainStatusInternal.featured) {
-                                            <button matIconButton class="margin-right-10" matTooltip="Feature" matTooltipPosition="above" aria-label="Feature" [disabled]="isDuringFeatureProcessing() || isInVersionMode()" (click)="feature()">
+                                            <button matIconButton class="margin-right-10" [matTooltip]="'pages.status.actions.feature' | translate" matTooltipPosition="above" [attr.aria-label]="'pages.status.actions.feature' | translate" [disabled]="isDuringFeatureProcessing() || isInVersionMode()" (click)="feature()">
                                                 <mat-icon class="outline-symbol">stars</mat-icon>
                                             </button>
                                         }
 
                                         @if (mainStatusInternal.featured) {
-                                            <button matIconButton class="margin-right-10" matTooltip="Unfeature" matTooltipPosition="above" aria-label="Unfeature" [disabled]="isDuringFeatureProcessing() || isInVersionMode()" (click)="unfeature()">
+                                            <button matIconButton class="margin-right-10" [matTooltip]="'pages.status.actions.unfeature' | translate" matTooltipPosition="above" [attr.aria-label]="'pages.status.actions.unfeature' | translate" [disabled]="isDuringFeatureProcessing() || isInVersionMode()" (click)="unfeature()">
                                                 <mat-icon class="fill-symbol">stars</mat-icon>
                                             </button>
                                         }
                                     }
 
-                                    <button matIconButton [matMenuTriggerFor]="menu" [disabled]="isInVersionMode()" class="margin-right-10" aria-label="More options">
+                                    <button matIconButton [matMenuTriggerFor]="menu" [disabled]="isInVersionMode()" class="margin-right-10" [attr.aria-label]="'common.labels.moreOptions' | translate">
                                         <mat-icon>more_vert</mat-icon>
                                     </button>
                                     <mat-menu #menu="matMenu">
                                         <button mat-menu-item (click)="onBoostedByDialog()">
                                             <mat-icon class="fill-symbol">rocket_launch</mat-icon>
-                                            <span>Boosted by</span>
+                                            <span>{{ 'pages.status.menu.boostedBy' | translate }}</span>
                                         </button>
                                         <button mat-menu-item (click)="onFavouritedByDialog()">
                                             <mat-icon class="fill-symbol">grade</mat-icon>
-                                            <span>Favourited by</span>
+                                            <span>{{ 'pages.status.menu.favouritedBy' | translate }}</span>
                                         </button>
                                         <mat-divider></mat-divider>
                                         @if (!mainStatusInternal.isLocal) {
                                             <button mat-menu-item (click)="onOpenOriginalPage()">
                                                 <mat-icon class="fill-symbol">export_notes</mat-icon>
-                                                <span>Open original page</span>
+                                                <span>{{ 'pages.status.menu.openOriginalPage' | translate }}</span>
                                             </button>
                                         }
                                         <button mat-menu-item (click)="onCopyLinkToPost()">
                                             <mat-icon class="fill-symbol">file_copy</mat-icon>
-                                            <span>Copy link to post</span>
+                                            <span>{{ 'pages.status.menu.copyLinkToPost' | translate }}</span>
                                         </button>
                                         @if (shouldDisplayPinButton()) {
                                             @if (!mainStatusInternal.pinnedAt) {
                                                 <button mat-menu-item [disabled]="isDuringPinProcessing() || isInVersionMode()" (click)="pin()">
                                                     <mat-icon class="outline-symbol">keep</mat-icon>
-                                                    <span>Pin</span>
+                                                    <span>{{ 'pages.status.menu.pin' | translate }}</span>
                                                 </button>
                                             } @else {
                                                 <button mat-menu-item [disabled]="isDuringPinProcessing() || isInVersionMode()" (click)="unpin()">
                                                     <mat-icon class="outline-symbol">keep_off</mat-icon>
-                                                    <span>Unpin</span>
+                                                    <span>{{ 'pages.status.menu.unpin' | translate }}</span>
                                                 </button>
                                             }
                                         }
                                         <mat-divider></mat-divider>
                                         <button mat-menu-item (click)="onReportDialog(mainStatusInternal)">
                                             <mat-icon class="outline-symbol">report</mat-icon>
-                                            <span>Report</span>
+                                            <span>{{ 'pages.status.menu.report' | translate }}</span>
                                         </button>
                                         @if (shouldDisplayEventsButton()) {
                                             <button mat-menu-item (click)="onStatusEvents()">
                                                 <mat-icon class="outline-symbol">call_split</mat-icon>
-                                                <span>Events</span>
+                                                <span>{{ 'pages.status.menu.events' | translate }}</span>
                                             </button>
                                         }
                                         @if (shouldDisplayEditButton()) {
                                             <button mat-menu-item (click)="onEditStatus()">
                                                 <mat-icon class="outline-symbol">edit</mat-icon>
-                                                <span>Edit</span>
+                                                <span>{{ 'common.actions.edit' | translate }}</span>
                                             </button>
                                         }
                                         @if (shouldDisplayDeleteButton()) {
                                             <button mat-menu-item (click)="onDeleteStatus()">
                                                 <mat-icon class="outline-symbol">delete</mat-icon>
-                                                <span>Delete</span>
+                                                <span>{{ 'common.actions.delete' | translate }}</span>
                                             </button>
                                         }
                                     </mat-menu>
@@ -256,8 +256,8 @@
 
                             <!-- Followed hashtags -->
                             @if (sharedFollowedHashtags().length > 0) {
-                                <div class="text-muted fs-90">Followed tags in this status</div>
-                                <div class="followed-hashtags" aria-label="Hashtags">
+                                <div class="text-muted fs-90">{{ 'pages.status.followedTagsInThisStatus' | translate }}</div>
+                                <div class="followed-hashtags" [attr.aria-label]="'pages.status.hashtagsAriaLabel' | translate">
                                     @for (hashtagName of sharedFollowedHashtags(); track hashtagName) {
                                         <app-tag>{{ "#" + hashtagName }}</app-tag>
                                     }
@@ -268,7 +268,7 @@
                             @if (showAlternativeText() && altStatus()) {
                                 <div class="flex-row alt margin-bottom-10">
                                     <div>
-                                        <mat-icon class="margin-right-20" inline="true" matTooltip="Alt">remove_red_eye</mat-icon>
+                                        <mat-icon class="margin-right-20" inline="true" [matTooltip]="'pages.status.tooltips.alt' | translate">remove_red_eye</mat-icon>
                                     </div>
                                     <div>
                                         <span class="alt-label">{{ altStatus() }}</span>
@@ -279,7 +279,7 @@
                             <!-- Category -->
                             @if (mainStatusInternal.category) {
                                 <div class="category margin-bottom-10">
-                                    <mat-icon class="margin-right-20" inline="true" matTooltip="Category">loyalty</mat-icon>
+                                    <mat-icon class="margin-right-20" inline="true" [matTooltip]="'pages.status.tooltips.category' | translate">loyalty</mat-icon>
                                     <span class="category-label">{{ mainStatusInternal.category.name }}</span>
                                 </div>
                             }
@@ -287,7 +287,7 @@
                             <!-- Location -->
                             @if (location()) {
                                 <div class="location margin-bottom-10">
-                                    <mat-icon class="margin-right-20" inline="true" matTooltip="Place">place</mat-icon>
+                                    <mat-icon class="margin-right-20" inline="true" [matTooltip]="'pages.status.tooltips.place' | translate">place</mat-icon>
                                     @if (location()?.name) {
                                         <span class="location-label"><a class="dashed" target="_blank" [href]="mapsUrl()">{{ location()?.name }}</a> ({{ location()?.country?.name }})</span>
                                     }
@@ -295,15 +295,15 @@
                             }
                             @if (!location() && hasGpsCoordinations()) {
                                 <div class="location margin-bottom-10">
-                                    <mat-icon class="margin-right-20" inline="true" matTooltip="Place">place</mat-icon>
-                                    <span class="location-label"><a class="dashed" target="_blank" [href]="mapsUrl()">Open map</a> <small class="text-muted"> ({{ gpsLatitudeToDisplay() }}, {{ gpsLongitudeToDisplay() }})</small></span>
+                                    <mat-icon class="margin-right-20" inline="true" [matTooltip]="'pages.status.tooltips.place' | translate">place</mat-icon>
+                                    <span class="location-label"><a class="dashed" target="_blank" [href]="mapsUrl()">{{ 'pages.status.openMap' | translate }}</a> <small class="text-muted"> ({{ gpsLatitudeToDisplay() }}, {{ gpsLongitudeToDisplay() }})</small></span>
                                 </div>
                             }
 
                             <!-- License -->
                             @if (license(); as internalLicense) {
                                 <div class="license margin-bottom-10">
-                                    <mat-icon class="margin-right-20" inline="true" matTooltip="License">license</mat-icon>
+                                    <mat-icon class="margin-right-20" inline="true" [matTooltip]="'pages.status.tooltips.license' | translate">license</mat-icon>
                                     @if (internalLicense.name) {
                                         <span class="license-label">
                                             @if (internalLicense.url) {
@@ -327,7 +327,7 @@
                                 <div class="exif">
                                     @if (exifInternal.make || exifInternal.model) {
                                         <div class="margin-bottom-10">
-                                            <mat-icon class="margin-right-20" inline="true" matTooltip="Camera">camera_alt</mat-icon>
+                                            <mat-icon class="margin-right-20" inline="true" [matTooltip]="'pages.status.tooltips.camera' | translate">camera_alt</mat-icon>
                                             <span class="exif-label">
                                                 @if (exifInternal.make) {
                                                     <span>{{ exifInternal.make }}</span>&nbsp;
@@ -342,19 +342,19 @@
 
                                     @if (exifInternal.lens) {
                                         <div class="margin-bottom-10">
-                                            <mat-icon class="margin-right-20" inline="true" matTooltip="Lens">camera</mat-icon>
+                                            <mat-icon class="margin-right-20" inline="true" [matTooltip]="'pages.status.tooltips.lens' | translate">camera</mat-icon>
                                             <span class="exif-label">{{ exifInternal.lens }}</span>
                                         </div>
                                     }
 
                                     @if (exifInternal.focalLenIn35mmFilm || exifInternal.fNumber || exifInternal.exposureTime || exifInternal.photographicSensitivity) {
                                         <div class="margin-bottom-10">
-                                            <mat-icon class="margin-right-20" inline="true" matTooltip="Exposure">brightness_7</mat-icon>
+                                            <mat-icon class="margin-right-20" inline="true" [matTooltip]="'pages.status.tooltips.exposure' | translate">brightness_7</mat-icon>
                                             @if (exifInternal.focalLenIn35mmFilm && exifInternal.focalLength) {
                                                 @if (exifInternal.focalLenIn35mmFilm === exifInternal.focalLength) {
-                                                    <span class="margin-right-15 exif-label" matTooltipPosition="right" [matTooltip]="'Full frame lens.'">{{ getCleanFocalLength(exifInternal.focalLength) }}mm</span>
+                                                    <span class="margin-right-15 exif-label" matTooltipPosition="right" [matTooltip]="'pages.status.tooltips.fullFrameLens' | translate">{{ getCleanFocalLength(exifInternal.focalLength) }}mm</span>
                                                 } @else {
-                                                    <span class="margin-right-15 exif-label" matTooltipPosition="right" [matTooltip]="'Equivalent of ' + getCleanFocalLength(exifInternal.focalLenIn35mmFilm)    + 'mm full frame lens.'">{{ getCleanFocalLength(exifInternal.focalLength) }}mm</span>
+                                                    <span class="margin-right-15 exif-label" matTooltipPosition="right" [matTooltip]="'pages.status.tooltips.equivalentLens' | translate:{ focalLength: getCleanFocalLength(exifInternal.focalLenIn35mmFilm) }">{{ getCleanFocalLength(exifInternal.focalLength) }}mm</span>
                                                 }
                                             } @else if (exifInternal.focalLenIn35mmFilm && !exifInternal.focalLength) {
                                                 <span class="margin-right-15 exif-label">{{ getCleanFocalLength(exifInternal.focalLenIn35mmFilm) }}mm</span>
@@ -376,43 +376,43 @@
 
                                     @if (exifInternal.flash) {
                                         <div class="margin-bottom-10">
-                                            <mat-icon class="margin-right-20" inline="true" matTooltip="Flash">flash_on</mat-icon>
+                                            <mat-icon class="margin-right-20" inline="true" [matTooltip]="'pages.status.tooltips.flash' | translate">flash_on</mat-icon>
                                             <span class="exif-label">{{ exifInternal.flash }}</span>
                                         </div>
                                     }
 
                                     @if (exifInternal.software) {
                                         <div class="margin-bottom-10">
-                                            <mat-icon class="margin-right-20" inline="true" matTooltip="Software">settings_photo_camera</mat-icon>
+                                            <mat-icon class="margin-right-20" inline="true" [matTooltip]="'pages.status.tooltips.software' | translate">settings_photo_camera</mat-icon>
                                             <span class="exif-label">{{ exifInternal.software }}</span>
                                         </div>
                                     }
 
                                     @if (exifInternal.film) {
                                         <div class="margin-bottom-10">
-                                            <mat-icon class="margin-right-20" inline="true" matTooltip="Camera roll">camera_roll</mat-icon>
+                                            <mat-icon class="margin-right-20" inline="true" [matTooltip]="'pages.status.tooltips.cameraRoll' | translate">camera_roll</mat-icon>
                                             <span class="exif-label">{{ exifInternal.film }}</span>
                                         </div>
                                     }
 
                                     @if (exifInternal.chemistry) {
                                         <div class="margin-bottom-10">
-                                            <mat-icon class="margin-right-20" inline="true" matTooltip="Develop chemistry">experiment</mat-icon>
+                                            <mat-icon class="margin-right-20" inline="true" [matTooltip]="'pages.status.tooltips.developChemistry' | translate">experiment</mat-icon>
                                             <span class="exif-label">{{ exifInternal.chemistry }}</span>
                                         </div>
                                     }
 
                                     @if (exifInternal.scanner) {
                                         <div class="margin-bottom-10">
-                                            <mat-icon class="margin-right-20" inline="true" matTooltip="Scanner">scanner</mat-icon>
+                                            <mat-icon class="margin-right-20" inline="true" [matTooltip]="'pages.status.tooltips.scanner' | translate">scanner</mat-icon>
                                             <span class="exif-label">{{ exifInternal.scanner }}</span>
                                         </div>
                                     }
 
                                     @if (getCorrectIsoDate(exifInternal.createDate)) {
                                         <div class="margin-bottom-10">
-                                            <mat-icon class="margin-right-20" inline="true" matTooltip="Photo created date">event</mat-icon>
-                                            <span class="exif-label">{{ getCorrectIsoDate(exifInternal.createDate) | date: 'short' }}</span>
+                                            <mat-icon class="margin-right-20" inline="true" [matTooltip]="'pages.status.tooltips.photoCreatedDate' | translate">event</mat-icon>
+                                            <span class="exif-label">{{ getCorrectIsoDate(exifInternal.createDate) | localizedDate: 'short' }}</span>
                                         </div>
                                     }
                                 </div>
@@ -421,8 +421,8 @@
                             <!-- HDR-->
                             @if (hasHdrVersion()) {
                                 <div class="hdr margin-bottom-10">
-                                    <mat-icon class="margin-right-20" inline="true" matTooltip="HDR">unknown_2</mat-icon>
-                                    <span class="hdr-label">High Dynamic Range <span [matTooltip]="hasHdrSupport() ? 'Supported by browser' : 'Not supported by browser'" class="fs-90 text-muted">{{ hasHdrSupport() ? '(displayed)' : '(not displayed)' }}</span></span>
+                                    <mat-icon class="margin-right-20" inline="true" [matTooltip]="'pages.status.tooltips.hdr' | translate">unknown_2</mat-icon>
+                                    <span class="hdr-label">{{ 'pages.status.hdr.highDynamicRange' | translate }} <span [matTooltip]="hasHdrSupport() ? ('pages.status.hdr.supportedByBrowser' | translate) : ('pages.status.hdr.notSupportedByBrowser' | translate)" class="fs-90 text-muted">{{ hasHdrSupport() ? ('pages.status.hdr.displayed' | translate) : ('pages.status.hdr.notDisplayed' | translate) }}</span></span>
                                 </div>
                             }
 
@@ -434,7 +434,7 @@
                     <!-- Comments -->
                     <mat-card class="margin-bottom-20" appearance="outlined">
                             <mat-card-header>
-                                <mat-card-title>Comments</mat-card-title>
+                                <mat-card-title>{{ 'pages.status.comments.title' | translate }}</mat-card-title>
                             </mat-card-header>
                             <mat-card-content>
                                 @if (signedInUser(); as signedInUserInternal) {
@@ -445,7 +445,7 @@
                                     @for (comment of comments(); track comment.status.id) {
                                         <div class="padding-top-10 comments">
                                             <div class="flex-row gap-8" [ngClass]="{ 'replies': !comment.showDivider, 'padding-top-15': comment.showDivider }">
-                                                <a [routerLink]="[ '/@' + comment.status.user?.userName ]" class="comment-avatar" [attr.aria-label]="'Open profile @' + comment.status.user?.userName">
+                                                <a [routerLink]="[ '/@' + comment.status.user?.userName ]" class="comment-avatar" [attr.aria-label]="'pages.status.actions.openProfileAriaLabel' | translate:{ userName: comment.status.user?.userName }">
                                                     <app-avatar [user]="comment.status.user" [size]="avatarSize.medium"></app-avatar>
                                                 </a>
                                                 <div>
@@ -462,7 +462,7 @@
                                                     @if (commentHasImages(comment)) {
                                                         <div class="comment-images-container" (click)="openCommentImagesInFullScreen(comment)" (keydown.enter)="openCommentImagesInFullScreen(comment)" tabindex="0">
                                                             @for (commentAttachment of commentImagesToDisplay(comment); track commentAttachment.id) {
-                                                                <img [src]="getCommentAttachmentUrl(commentAttachment)" class="" [alt]="getCommentAttachmentAlt(commentAttachment) ?? 'Status image'" />
+                                                                <img [src]="getCommentAttachmentUrl(commentAttachment)" class="" [alt]="getCommentAttachmentAlt(commentAttachment) ?? ('common.labels.statusImage' | translate)" />
                                                             }
                                                         </div>
                                                     }
@@ -474,35 +474,35 @@
                                                             <mat-icon class="favourited fill-symbol">star</mat-icon>
                                                         }
 
-                                                        <button matIconButton [matMenuTriggerFor]="menu" class="margin-right-10" aria-label="More options">
+                                                        <button matIconButton [matMenuTriggerFor]="menu" class="margin-right-10" [attr.aria-label]="'common.labels.moreOptions' | translate">
                                                             <mat-icon>more_vert</mat-icon>
                                                         </button>
                                                         <mat-menu #menu="matMenu">
                                                             @if (!comment.status.favourited) {
                                                                 <button mat-menu-item (click)="favouriteComment(comment.status)">
                                                                     <mat-icon>star_border</mat-icon>
-                                                                    <span>Like</span>
+                                                                    <span>{{ 'pages.status.comments.actions.like' | translate }}</span>
                                                                 </button>
                                                             }
                                                             @if (comment.status.favourited) {
                                                                 <button mat-menu-item (click)="unFavouriteComment(comment.status)">
                                                                     <mat-icon>star</mat-icon>
-                                                                    <span>Unlike</span>
+                                                                    <span>{{ 'pages.status.comments.actions.unlike' | translate }}</span>
                                                                 </button>
                                                             }
                                                             <button mat-menu-item (click)="onReply(comment.status)">
                                                                 <mat-icon>reply</mat-icon>
-                                                                <span>Reply</span>
+                                                                <span>{{ 'pages.status.comments.actions.reply' | translate }}</span>
                                                             </button>
                                                             <mat-divider></mat-divider>
                                                             <button mat-menu-item (click)="onReportDialog(comment.status)">
                                                                 <mat-icon>warning</mat-icon>
-                                                                <span>Report</span>
+                                                                <span>{{ 'pages.status.comments.actions.report' | translate }}</span>
                                                             </button>
                                                             @if (shouldDisplayDeleteCommentButton(comment.status)) {
                                                                 <button mat-menu-item (click)="onDeleteComment(comment.status)">
                                                                     <mat-icon class="outline-symbol">delete</mat-icon>
-                                                                    <span>Delete</span>
+                                                                    <span>{{ 'common.actions.delete' | translate }}</span>
                                                                 </button>
                                                             }
                                                         </mat-menu>
@@ -515,7 +515,7 @@
                                                 <div class="text-muted fs-80" >
                                                     @if (comment.status.favouritesCount > 0) {
                                                         <span>
-                                                            Comment liked by {{ comment.status.favouritesCount }} {{ comment.status.favouritesCount === 1 ? 'person' : 'people'}}.
+                                                            {{ 'pages.status.comments.likedByPrefix' | translate }} {{ comment.status.favouritesCount }} {{ comment.status.favouritesCount === 1 ? ('pages.status.comments.person' | translate) : ('pages.status.comments.people' | translate)}}.
                                                         </span>
                                                     }
                                                 </div>
@@ -533,7 +533,7 @@
                                 }
 
                                 @if ((comments()?.length ?? 0) === 0) {
-                                    <div>There is nothing to read here yet.</div>
+                                    <div>{{ 'pages.status.comments.noComments' | translate }}</div>
                                 }
 
                             </mat-card-content>
@@ -545,11 +545,11 @@
                             <mat-card-content>
                                 <div class="versions">
                                     <mat-form-field appearance="outline">
-                                        <mat-label>Previous versions</mat-label>
+                                        <mat-label>{{ 'pages.status.versions.previousVersions' | translate }}</mat-label>
                                         <mat-select [(value)]="versionId" (selectionChange)="onVersionChange()">
-                                            <mat-option value="">Latest version</mat-option>
+                                            <mat-option value="">{{ 'pages.status.versions.latestVersion' | translate }}</mat-option>
                                             @for (version of versions(); track version.id) {
-                                                <mat-option [value]="version.id">{{ version.orginalStatusUpdatedAt | date:'medium' }}</mat-option>
+                                                <mat-option [value]="version.id">{{ version.orginalStatusUpdatedAt | localizedDate:'medium' }}</mat-option>
                                             }
                                         </mat-select>
                                     </mat-form-field>

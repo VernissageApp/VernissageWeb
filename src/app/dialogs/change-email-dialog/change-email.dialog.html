@@ -1,34 +1,34 @@
 <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
-    <div mat-dialog-title>Change email</div>
+    <div mat-dialog-title>{{ 'dialogs.changeEmail.texts.changeEmail' | translate }}</div>
     <div mat-dialog-content>
 
         <small class="text-muted text-right">
-            Don't worry. This info is sacred for us. We won't ever show, sell or abuse it.
+            {{ 'dialogs.changeEmail.texts.privacyNote' | translate }}
         </small>
 
         <div class="margin-bottom-20 padding-top-5">
             <mat-form-field class="width-100" appearance="outline">
-                <mat-label>Email</mat-label>
+                <mat-label>{{ 'common.labels.email' | translate }}</mat-label>
                 <input type="email" matInput name="email" [(ngModel)]="email" #emailInput="ngModel"
                     pattern="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
-                    aria-label="Email" appUniqueEmail required />
+                    [attr.aria-label]="'dialogs.changeEmail.attrs.email' | translate" appUniqueEmail required />
 
                 @if (emailInput.invalid && emailInput.errors?.required) {
-                    <mat-error>Enter email.</mat-error>
+                    <mat-error>{{ 'dialogs.changeEmail.texts.enterEmail' | translate }}</mat-error>
                 }
 
                 @if (emailInput.invalid && emailInput.errors?.pattern) {
-                    <mat-error>Verify that you've entered proper email.</mat-error>
+                    <mat-error>{{ 'dialogs.changeEmail.texts.verifyThatYouVeEnteredProperEmail' | translate }}</mat-error>
                 }
 
                 @if (emailInput.invalid && emailInput.errors?.appUniqueEmail) {
-                    <mat-error>Choose other email, this one is already connected to different account.</mat-error>
+                    <mat-error>{{ 'dialogs.changeEmail.texts.chooseOtherEmailThisOneIsAlready' | translate }}</mat-error>
                 }
             </mat-form-field>
         </div>
     </div>
     <div mat-dialog-actions>
-        <button matButton="text" type="button" (click)="onNoClick()">Cancel</button>
-        <button matButton="filled" type="submit" cdkFocusInitial>Change</button>
+        <button matButton="text" type="button" (click)="onNoClick()">{{ 'common.actions.cancel' | translate }}</button>
+        <button matButton="filled" type="submit" cdkFocusInitial>{{ 'components.dialogCommon.actions.change' | translate }}</button>
     </div>
 </form>

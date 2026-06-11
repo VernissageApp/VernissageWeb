@@ -7,6 +7,7 @@ import { ServerRefreshTokenNotExistsError } from 'src/app/errors/server-refresh-
 import { isPlatformBrowser } from '@angular/common';
 import { PersistenceService } from '../persistance/persistance.service';
 import { UserPayload } from 'src/app/models/user-payload';
+import { LanguageService } from '../common/language.service';
 
 @Injectable({
     providedIn: 'root'
@@ -23,6 +24,7 @@ export class AuthorizationService {
     private platformId = inject(PLATFORM_ID);
     private accountService = inject(AccountService);
     private persistenceService = inject(PersistenceService);
+    private languageService = inject(LanguageService);
     private zone = inject(NgZone);
 
     constructor() {
@@ -89,6 +91,7 @@ export class AuthorizationService {
 
         this.userPayloadToken = userPayloadToken;
         this.persistenceService.set(this.xsrfTokenName, userPayloadToken.xsrfToken);
+        await this.languageService.setLanguageFromLocale(userPayloadToken.userPayload.locale);
 
         const expirationTime = tokenExpirationTime.getTime();
         const tokenExpirationSeconds = Math.round(expirationTime / this.oneSecond);

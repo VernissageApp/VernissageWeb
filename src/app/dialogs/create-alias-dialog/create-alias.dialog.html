@@ -1,5 +1,5 @@
 <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
-    <div mat-dialog-title>Create account alias</div>
+    <div mat-dialog-title>{{ 'dialogs.createAlias.texts.createAccountAlias' | translate }}</div>
     <div mat-dialog-content>
 
         <small class="text-muted text-right">
@@ -8,22 +8,22 @@
 
         <div class="margin-bottom-20 padding-top-5">
             <mat-form-field class="width-100" appearance="outline">
-                <mat-label>Account alias</mat-label>
-                <input type="text" matInput name="text" [(ngModel)]="alias" #aliasInput="ngModel" aria-label="Alias" required appMaxLength="100" />
+                <mat-label>{{ 'dialogs.createAlias.texts.accountAlias' | translate }}</mat-label>
+                <input type="text" matInput name="text" [(ngModel)]="alias" #aliasInput="ngModel" [attr.aria-label]="'dialogs.createAlias.attrs.alias' | translate" required appMaxLength="100" />
 
                 @if (aliasInput.invalid && aliasInput.errors?.appMaxLength) {
-                    <mat-error>Account alias is too long.</mat-error>
+                    <mat-error>{{ 'dialogs.createAlias.texts.accountAliasIsTooLong' | translate }}</mat-error>
                 }
 
                 @if (aliasInput.invalid && aliasInput.errors?.required) {
-                    <mat-error>Enter account alias.</mat-error>
+                    <mat-error>{{ 'dialogs.createAlias.texts.enterAccountAlias' | translate }}</mat-error>
                 }
             </mat-form-field>
         </div>
 
     </div>
     <div mat-dialog-actions>
-        <button matButton="text" type="button" (click)="onNoClick()">Cancel</button>
-        <button matButton="filled" type="submit" cdkFocusInitial>Save</button>
+        <button matButton="text" type="button" (click)="onNoClick()">{{ 'common.actions.cancel' | translate }}</button>
+        <button matButton="filled" type="submit" cdkFocusInitial>{{ 'common.actions.save' | translate }}</button>
     </div>
 </form>

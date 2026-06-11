@@ -43,6 +43,36 @@ nav {
     border-radius: 50%;
 }
 
+.language-menu-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-width: 280px;
+}
+
+.language-menu-label {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.language-menu-check {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 24px;
+    margin-left: 16px;
+}
+
+.language-flag {
+    width: 24px;
+    height: 18px;
+    margin-right: 16px;
+    object-fit: cover;
+    border-radius: 2px;
+}
+
 a.logo {
     .image {
         position: relative;

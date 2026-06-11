@@ -1,5 +1,5 @@
 @if (errorMessage(); as errorMessageString) {
     <div>{{ errorMessageString }}</div>
 } @else {
-    <div>Authenticating...</div>
+    <div>{{ 'common.labels.authenticating' | translate }}...</div>
 }

@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ElementRef, PLATFORM_ID, OnInit, OnDestroy, input, computed, viewChild, signal, ChangeDetectionStrategy, effect, inject } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { decode } from 'blurhash';
 import { AvatarSize } from '../avatar/avatar-size';
 import { User } from 'src/app/models/user';
@@ -60,6 +61,7 @@ export class BlurhashImageComponent implements AfterViewInit, OnInit, OnDestroy 
     private relationshipsService = inject(RelationshipsService);
     private router = inject(Router);
     private authorizationService = inject(AuthorizationService);
+    private translateService = inject(TranslateService);
 
     constructor() {
         this.isBrowser = isPlatformBrowser(this.platformId);
@@ -124,11 +126,11 @@ export class BlurhashImageComponent implements AfterViewInit, OnInit, OnDestroy 
             if (this.isFavourited()) {
                 await this.statusesService.unfavourite(this.mainStatus().id);
                 this.isFavourited.set(false);
-                this.messageService.showSuccess('Your like has been undone..');
+                this.messageService.showSuccess(this.translateService.instant('components.blurhashImage.messages.yourLikeHasBeenUndone'));
             } else {
                 await this.statusesService.favourite(this.mainStatus().id);
                 this.isFavourited.set(true);
-                this.messageService.showSuccess('Status favourited.');
+                this.messageService.showSuccess(this.translateService.instant('components.blurhashImage.messages.statusFavourited'));
             }
         } catch (error) {
             console.error(error);
@@ -141,11 +143,11 @@ export class BlurhashImageComponent implements AfterViewInit, OnInit, OnDestroy 
             if (this.isReblogged()) {
                 await this.statusesService.unreblog(this.mainStatus().id);
                 this.isReblogged.set(false);
-                this.messageService.showSuccess('Your boost has been undone.');
+                this.messageService.showSuccess(this.translateService.instant('components.blurhashImage.messages.yourBoostHasBeenUndone'));
             } else {
                 await this.statusesService.reblog(this.mainStatus().id);
                 this.isReblogged.set(true);
-                this.messageService.showSuccess('Status boosted.');
+                this.messageService.showSuccess(this.translateService.instant('components.blurhashImage.messages.statusBoosted'));
             }
         } catch (error) {
             console.error(error);

@@ -1,9 +1,9 @@
 <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
-    <div mat-dialog-title>Enable two factor authentication (2FA)</div>
+    <div mat-dialog-title>{{ 'dialogs.enableTwoFactorToken.texts.enableTwoFactorAuthentication2fa' | translate }}</div>
     <div mat-dialog-content>
         <div class="flex-col gap-0 margin-top-5">
             <div>
-                Scan QR code with 2FA application (like Authy or Google Authenticator).
+                {{ 'dialogs.enableTwoFactorToken.texts.scanQrCodeWith2faApplication' | translate }}
             </div>
             <div class="flex-row flex-responsive gap-16 flex-align-center margin-top-5">
                 <div class="qr-code">
@@ -11,21 +11,21 @@
                 </div>
                 <div>
                     <mat-form-field appearance="outline" class="token">
-                        <mat-label>Token</mat-label>
-                        <input type="text" matInput name="code" #codeInput="ngModel" [(ngModel)]="code" required aria-label="Code" />
+                        <mat-label>{{ 'common.labels.token' | translate }}</mat-label>
+                        <input type="text" matInput name="code" #codeInput="ngModel" [(ngModel)]="code" required [attr.aria-label]="'dialogs.enableTwoFactorToken.attrs.code' | translate" />
 
                         @if (codeInput.invalid && codeInput.errors?.required) {
-                            <mat-error>Token is required.</mat-error>
+                            <mat-error>{{ 'dialogs.enableTwoFactorToken.texts.tokenIsRequired' | translate }}</mat-error>
                         }
                     </mat-form-field>
                 </div>
             </div>
             <div>
                 <mat-divider></mat-divider>
-                <strong>Backup codes</strong>
+                <strong>{{ 'dialogs.enableTwoFactorToken.texts.backupCodes' | translate }}</strong>
                 <div>
                     <small class="text-muted text-right">
-                        You should keep these codes in case you cannot access the authenticator app.
+                        {{ 'dialogs.enableTwoFactorToken.texts.keepBackupCodes' | translate }}
                     </small>
                 </div>
                 <div>
@@ -37,7 +37,7 @@
         </div>
     </div>
     <div mat-dialog-actions>
-        <button matButton="text" type="button" (click)="onNoClick()">Cancel</button>
-        <button matButton="filled" type="submit" cdkFocusInitial>Send</button>
+        <button matButton="text" type="button" (click)="onNoClick()">{{ 'common.actions.cancel' | translate }}</button>
+        <button matButton="filled" type="submit" cdkFocusInitial>{{ 'common.actions.send' | translate }}</button>
     </div>
 </form>

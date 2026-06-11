@@ -1,6 +1,6 @@
 <div class="status-autocomplete-wrapper margin-bottom-40">
     <mat-form-field appearance="outline">
-        <mat-label>{{ label() }}</mat-label>
+        <mat-label>{{ label() || ('common.labels.text' | translate) }}</mat-label>
         <textarea
             matInput
             [name]="name()"
@@ -14,25 +14,25 @@
             (click)="onTextCursorChange()"
             (blur)="onTextBlur()"
             [required]="isRequired()"
-            aria-label="Status"
+            [attr.aria-label]="'components.statusTextAutocomplete.attrs.status' | translate"
             [appMaxLength]="maxLength().toString()">
         </textarea>
 
         @if (showPascalCaseHint()) {
-            <mat-hint class="text-muted" align="start">Use "PascalCase" for hashtags, capitalizing the first letter of each word, to improve readability and accessibility.</mat-hint>
+            <mat-hint class="text-muted" align="start">{{ 'components.statusTextAutocomplete.texts.usePascalcaseForHashtagsCapitalizingTheFirst' | translate }}</mat-hint>
         }
 
         <mat-hint class="text-muted" align="end">{{ text().length }}/{{ maxLength() }}</mat-hint>
         @if (statusInput.invalid && statusInput.errors?.required) {
-            <mat-error>Enter status text.</mat-error>
+            <mat-error>{{ 'components.statusTextAutocomplete.texts.enterStatusText' | translate }}</mat-error>
         }
         @if (statusInput.invalid && statusInput.errors?.appMaxLength) {
-            <mat-error>Too long status.</mat-error>
+            <mat-error>{{ 'components.statusTextAutocomplete.texts.tooLongStatus' | translate }}</mat-error>
         }
     </mat-form-field>
 
     @if (autocompleteSuggestions().length > 0) {
-        <div #autocompletePanel class="status-autocomplete-panel" role="listbox" [attr.aria-label]="autocompleteType() === 'hashtags' ? 'Hashtag suggestions' : 'User suggestions'">
+        <div #autocompletePanel class="status-autocomplete-panel" role="listbox" [attr.aria-label]="(autocompleteType() === 'hashtags' ? 'components.statusTextAutocomplete.attrs.hashtagSuggestions' : 'components.statusTextAutocomplete.attrs.userSuggestions') | translate">
             @for (suggestion of autocompleteSuggestions(); track suggestion.id; let i = $index) {
                 <div
                     #autocompleteOption

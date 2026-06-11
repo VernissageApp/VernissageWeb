@@ -32,7 +32,7 @@ interface StatusAutocompleteSuggestion {
 })
 export class StatusTextAutocompleteComponent implements OnDestroy {
     public name = input.required<string>();
-    public label = input('Text');
+    public label = input('');
     public maxLength = input(500);
     public showPascalCaseHint = input(false);
     public isRequired = input(false);

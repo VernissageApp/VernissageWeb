@@ -8,6 +8,7 @@ import { Health } from 'src/app/models/health';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { environment } from 'src/environments/environment';
 import { FileSizeService } from 'src/app/services/common/file-size.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-support',
@@ -33,6 +34,7 @@ export class SupportPage extends ResponsiveComponent implements OnInit {
     private healthService = inject(HealthService);
     private messageService = inject(MessagesService);
     private fileSizeService = inject(FileSizeService);
+    private translateService = inject(TranslateService);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
@@ -66,7 +68,7 @@ export class SupportPage extends ResponsiveComponent implements OnInit {
             this.health.set(healthInternal);
         } catch {
             this.health.set(new Health());
-            this.messageService.showError('Error during downloading system health status.');
+            this.messageService.showError(this.translateService.instant('pages.support.messages.healthStatusDownloadError'));
         }
     }
 }

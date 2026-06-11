@@ -1,38 +1,36 @@
 <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
-    <div mat-dialog-title>Share business card</div>
+    <div mat-dialog-title>{{ 'dialogs.shareBusinessCard.texts.shareBusinessCard' | translate }}</div>
     <div mat-dialog-content>
 
         <div class="flex-col gap-0 margin-top-5">
             <mat-form-field appearance="outline" class="width-100 padding-top-10">
-                <mat-label>Title</mat-label>
+                <mat-label>{{ 'common.labels.title' | translate }}</mat-label>
                 <input type="text" matInput name="title" #titleInput="ngModel" [(ngModel)]="title"
-                    placeholder="Title" aria-label="Title" appMaxLength="200" required />
+                    [placeholder]="'dialogs.shareBusinessCard.attrs.title' | translate" [attr.aria-label]="'dialogs.shareBusinessCard.attrs.title' | translate" appMaxLength="200" required />
 
                 @if (titleInput.invalid && titleInput.errors?.required) {
-                    <mat-error>Enter title.</mat-error>
+                    <mat-error>{{ 'dialogs.shareBusinessCard.texts.enterTitle' | translate }}</mat-error>
                 }
 
                 @if (titleInput.invalid && titleInput.errors?.appMaxLength) {
-                    <mat-error>
-                        Too long title.
-                    </mat-error>
+                    <mat-error>{{ 'dialogs.shareBusinessCard.texts.tooLongTitle' | translate }}</mat-error>
                 }
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="width-100 padding-top-10">
-                <mat-label>Comment</mat-label>
+                <mat-label>{{ 'common.labels.comment' | translate }}</mat-label>
                 <textarea matInput name="note" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4"
-                    cdkAutosizeMaxRows="10" placeholder="Comment" #noteModel="ngModel" [(ngModel)]="note"
-                aria-label="Comment" appMaxLength="500"></textarea>
+                    cdkAutosizeMaxRows="10" [placeholder]="'dialogs.shareBusinessCard.attrs.comment' | translate" #noteModel="ngModel" [(ngModel)]="note"
+                [attr.aria-label]="'dialogs.shareBusinessCard.attrs.comment' | translate" appMaxLength="500"></textarea>
 
                 @if (noteModel.invalid && noteModel.errors?.appMaxLength) {
-                    <mat-error>Too long note.</mat-error>
+                    <mat-error>{{ 'dialogs.shareBusinessCard.texts.tooLongNote' | translate }}</mat-error>
                 }
             </mat-form-field>
         </div>
     </div>
     <div mat-dialog-actions>
-        <button matButton="text" type="button" (click)="onNoClick()">Cancel</button>
-        <button matButton="filled" type="submit" cdkFocusInitial>Share</button>
+        <button matButton="text" type="button" (click)="onNoClick()">{{ 'common.actions.cancel' | translate }}</button>
+        <button matButton="filled" type="submit" cdkFocusInitial>{{ 'components.dialogCommon.actions.share' | translate }}</button>
     </div>
 </form>

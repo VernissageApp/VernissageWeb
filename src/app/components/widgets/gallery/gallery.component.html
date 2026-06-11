@@ -20,7 +20,7 @@
                                         @if (highlightPinnedStatuses() && !!getMainStatus(galleryStatus.status).pinnedAt) {
                                             <div class="pinned-tag">
                                                 <mat-icon class="fill-symbol">keep</mat-icon>
-                                                <span>Pinned</span>
+                                                <span>{{ 'components.gallery.pinned' | translate }}</span>
                                             </div>
                                         }
                                         @if (galleryStatus.inViewport()) {
@@ -48,7 +48,7 @@
     <div class="text-muted padding-top-30 text-center" [ngClass]="{ 'padding-left-30 padding-right-30': !isHandset(), 'padding-left-10 padding-right-10': isHandset() }">
         <h2 class="empty-page">
             <div class="camera"></div>
-            <div>Sadly, there's nothing to see here just yet.</div>
+            <div>{{ 'components.gallery.texts.sadlyThereSNothingToSeeHere' | translate }}</div>
         </h2>
     </div>
 }

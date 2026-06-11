@@ -4,7 +4,7 @@
 
     @if (photo().photoResizedFile) {
         <div class="margin-bottom-10 width-100 text-warning fs-90">
-            <strong>Information:</strong> Your image exceeded the {{ maxFileSizeString() }} limit, so it was automatically resized to 4096 px on the longer edge.
+            <strong>{{ 'components.uploadPhoto.texts.information' | translate }}</strong> {{ 'components.uploadPhoto.texts.imageExceededLimitAndWasResized' | translate: { maxFileSize: maxFileSizeString() } }}
         </div>
     }
 
@@ -14,8 +14,8 @@
                 @if (photo().isUploading()) {
                     <div class="flex-row flex-align-center gap-10">
                         <mat-spinner class="display-inline-block margin-right-10" [diameter]="18"></mat-spinner>
-                        <div class="text-muted">Uploading...</div>
-                        <button type="button" matButton="text" (click)="onCancelUpload()">Cancel</button>
+                        <div class="text-muted">{{ 'components.uploadPhoto.texts.uploading' | translate }}</div>
+                        <button type="button" matButton="text" (click)="onCancelUpload()">{{ 'common.actions.cancel' | translate }}</button>
                     </div>
                 }
             </div>
@@ -26,18 +26,18 @@
                 }
 
                 <button matButton="outlined" (click)="onGenerateDescription()" [disabled]="!photo().isUploaded() || describeInProgress()">
-                    <mat-icon>smart_toy</mat-icon> Generate
+                    <mat-icon>smart_toy</mat-icon> {{ 'components.uploadPhoto.texts.generate' | translate }}
                 </button>
             </div>
         </div>
 
         <div class="text-right text-muted fs-80">
-            Feature powered by {{ openAIProviderName() }}.
+            {{ 'components.uploadPhoto.texts.featurePoweredBy' | translate: { providerName: openAIProviderName() } }}
         </div>
     }
 
     <mat-form-field appearance="outline" class="margin-top-10 margin-bottom-10">
-        <mat-label>Alt text</mat-label>
+        <mat-label>{{ 'components.uploadPhoto.texts.altText' | translate }}</mat-label>
         <textarea
             matInput [name]="'altText-' + internalIndex"
             cdkTextareaAutosize
@@ -46,18 +46,18 @@
             cdkAutosizeMaxRows="10"
             #altTextInput="ngModel"
             [(ngModel)]="photo().description"
-            aria-label="Alt text"
+            [attr.aria-label]="'components.uploadPhoto.attrs.altText' | translate"
         appMaxLength="2000"></textarea>
 
         @if (altTextInput.invalid && altTextInput.errors?.appMaxLength) {
-            <mat-error>Too long alt text.</mat-error>
+            <mat-error>{{ 'components.uploadPhoto.texts.tooLongAltText' | translate }}</mat-error>
         }
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-        <mat-label>License</mat-label>
+        <mat-label>{{ 'components.uploadPhoto.labels.license' | translate }}</mat-label>
         <mat-select [(value)]="photo().licenseId" (selectionChange)="onLicenseChange()">
-            <mat-option [value]="null"><span class="text-muted">Without a license</span></mat-option>
+            <mat-option [value]="null"><span class="text-muted">{{ 'components.uploadPhoto.texts.withoutALicense' | translate }}</span></mat-option>
             @for (license of licenses(); track license.id) {
                 <mat-option [value]="license.id">
                     {{ license.name }}
@@ -69,12 +69,12 @@
         </mat-select>
     </mat-form-field>
 
-    <div class="text-muted">Location</div>
+    <div class="text-muted">{{ 'components.uploadPhoto.labels.location' | translate }}</div>
     <mat-form-field appearance="outline" class="margin-top-10 margin-bottom-10">
-        <mat-label>Country</mat-label>
+        <mat-label>{{ 'components.uploadPhoto.labels.country' | translate }}</mat-label>
         <input type="text"
-            placeholder="Enter location"
-            aria-label="Country"
+            [placeholder]="'components.uploadPhoto.attrs.enterLocation' | translate"
+            [attr.aria-label]="'components.uploadPhoto.labels.country' | translate"
             matInput
             [formControl]="countriesControl"
             [appAutocompleteValid]="true"
@@ -88,21 +88,21 @@
         </mat-autocomplete>
 
         @if (currentCountry()) {
-            <button matSuffix matIconButton aria-label="Clear" (click)="onCountryClear()">
+            <button matSuffix matIconButton [attr.aria-label]="'common.actions.clear' | translate" (click)="onCountryClear()">
                 <mat-icon>close</mat-icon>
             </button>
         }
 
         @if (countriesControl.hasError('appAutocompleteValid')) {
-            <mat-error>Choose a country from the list.</mat-error>
+            <mat-error>{{ 'components.uploadPhoto.texts.chooseCountryFromList' | translate }}</mat-error>
         }
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-        <mat-label>City</mat-label>
+        <mat-label>{{ 'components.uploadPhoto.labels.city' | translate }}</mat-label>
         <input type="text"
-            placeholder="Enter location"
-            aria-label="City"
+            [placeholder]="'components.uploadPhoto.attrs.enterLocation' | translate"
+            [attr.aria-label]="'components.uploadPhoto.labels.city' | translate"
             matInput
             [formControl]="citiesControl"
             [appAutocompleteValid]="true"
@@ -116,13 +116,13 @@
         </mat-autocomplete>
 
         @if (currentCity()) {
-            <button matSuffix matIconButton aria-label="Clear" (click)="onCityClear()">
+            <button matSuffix matIconButton [attr.aria-label]="'common.actions.clear' | translate" (click)="onCityClear()">
                 <mat-icon>close</mat-icon>
             </button>
         }
 
         @if (citiesControl.hasError('appAutocompleteValid')) {
-            <mat-error>Choose a city from the list.</mat-error>
+            <mat-error>{{ 'components.uploadPhoto.texts.chooseCityFromList' | translate }}</mat-error>
         }
     </mat-form-field>
 
@@ -130,69 +130,68 @@
         <mat-divider></mat-divider>
     </div>
 
-    <div class="text-muted">Exif metadata</div>
+    <div class="text-muted">{{ 'components.uploadPhoto.texts.exifMetadata' | translate }}</div>
     <div class="exif-values">
 
         <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
             <mat-checkbox class="exif-label" [name]="'gpsCoordination' + internalIndex" [disableRipple]="true" [(ngModel)]="photo().showGpsCoordination">
-                <span class="text-muted">GPS coordinates:</span>
+                <span class="text-muted">{{ 'components.uploadPhoto.texts.gpsCoordinates' | translate }}</span>
             </mat-checkbox>
             <div class="flex-grow-2">
                 <mat-form-field appearance="outline" class="margin-bottom-20 width-100">
-                    <input type="text" matInput [name]="'inputGpsLatitude' + internalIndex" [(ngModel)]="photo().latitude" [disabled]="!photo().showGpsCoordination" aria-label="GPS latitude" />
+                    <input type="text" matInput [name]="'inputGpsLatitude' + internalIndex" [(ngModel)]="photo().latitude" [disabled]="!photo().showGpsCoordination" [attr.aria-label]="'components.uploadPhoto.attrs.gpsLatitude' | translate" />
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="width-100">
-                    <input type="text" matInput [name]="'inputGpsLongitude' + internalIndex" [(ngModel)]="photo().longitude" [disabled]="!photo().showGpsCoordination" aria-label="GPS longitude" />
+                    <input type="text" matInput [name]="'inputGpsLongitude' + internalIndex" [(ngModel)]="photo().longitude" [disabled]="!photo().showGpsCoordination" [attr.aria-label]="'components.uploadPhoto.attrs.gpsLongitude' | translate" />
                 </mat-form-field>
             </div>
         </div>
 
         <div class="margin-bottom-20 margin-left-10 width-100 text-muted fs-90">
-            <strong>Warning:</strong> By sharing the geolocation data of your photo, you are disclosing the exact location where the photo was taken.
-            Please ensure you are comfortable with this information being publicly available before proceeding.
+            <strong>{{ 'components.uploadPhoto.texts.warning' | translate }}</strong> {{ 'components.uploadPhoto.texts.geolocationDisclosureWarning' | translate }}
         </div>
 
         <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
             <mat-checkbox class="exif-label" [name]="'make' + internalIndex" [disableRipple]="true" [(ngModel)]="photo().showMake">
-                <span class="text-muted">Manufacturer:</span>
+                <span class="text-muted">{{ 'components.uploadPhoto.texts.manufacturer' | translate }}</span>
             </mat-checkbox>
             <mat-form-field appearance="outline" class="flex-grow-2">
-                <input type="text" matInput [name]="'inputMake' + internalIndex" [(ngModel)]="photo().make" [disabled]="!photo().showMake" aria-label="Manufacturer" />
+                <input type="text" matInput [name]="'inputMake' + internalIndex" [(ngModel)]="photo().make" [disabled]="!photo().showMake" [attr.aria-label]="'components.uploadPhoto.attrs.manufacturer' | translate" />
             </mat-form-field>
         </div>
 
         <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
             <mat-checkbox class="exif-label" [name]="'model' + internalIndex" [disableRipple]="true" [(ngModel)]="photo().showModel">
-                <span class="text-muted">Model:</span>
+                <span class="text-muted">{{ 'components.uploadPhoto.texts.model' | translate }}</span>
             </mat-checkbox>
             <mat-form-field appearance="outline" class="flex-grow-2">
-                <input type="text" matInput [name]="'inputModel' + internalIndex" [(ngModel)]="photo().model" [disabled]="!photo().showModel" aria-label="Model" />
+                <input type="text" matInput [name]="'inputModel' + internalIndex" [(ngModel)]="photo().model" [disabled]="!photo().showModel" [attr.aria-label]="'components.uploadPhoto.attrs.model' | translate" />
             </mat-form-field>
         </div>
 
         <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
             <mat-checkbox class="exif-label" [name]="'lens' + internalIndex" [disableRipple]="true" [(ngModel)]="photo().showLens">
-                <span class="text-muted">Lens:</span>
+                <span class="text-muted">{{ 'components.uploadPhoto.texts.lens' | translate }}</span>
             </mat-checkbox>
             <mat-form-field appearance="outline" class="flex-grow-2">
-                <input type="text" matInput [name]="'inputLens' + internalIndex" [(ngModel)]="photo().lens" [disabled]="!photo().showLens" aria-label="Lens" />
+                <input type="text" matInput [name]="'inputLens' + internalIndex" [(ngModel)]="photo().lens" [disabled]="!photo().showLens" [attr.aria-label]="'components.uploadPhoto.attrs.lens' | translate" />
             </mat-form-field>
         </div>
 
         <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
             <mat-checkbox class="exif-label" [name]="'focalLenIn35mmFilm' + internalIndex" [disableRipple]="true" [(ngModel)]="photo().showFocalLenIn35mmFilm">
-                <span class="text-muted">Focal length:</span>
+                <span class="text-muted">{{ 'components.uploadPhoto.texts.focalLength' | translate }}</span>
             </mat-checkbox>
             <div class="flex-grow-2">
                 <div class="flex-row flex-stretch gap-4 small-text-input margin-bottom-10 double-field">
                     <mat-form-field appearance="outline">
-                        <input type="text" matInput [name]="'inputFocalLength' + internalIndex" [(ngModel)]="photo().focalLength" [disabled]="!photo().showFocalLenIn35mmFilm" aria-label="Focal length" />
-                        <span class="text-muted" matSuffix>mm&nbsp;&nbsp;</span>
+                        <input type="text" matInput [name]="'inputFocalLength' + internalIndex" [(ngModel)]="photo().focalLength" [disabled]="!photo().showFocalLenIn35mmFilm" [attr.aria-label]="'components.uploadPhoto.attrs.focalLength' | translate" />
+                        <span class="text-muted" matSuffix>{{ 'components.uploadPhoto.texts.mm' | translate }}</span>
                     </mat-form-field>
                     <mat-form-field appearance="outline" floatLabel="always">
-                        <mat-label>Full frame equivalent</mat-label>
-                        <input type="text" matInput [name]="'inputFocalLenIn35mmFilm' + internalIndex" [(ngModel)]="photo().focalLenIn35mmFilm" [disabled]="!photo().showFocalLenIn35mmFilm" aria-label="Focal length in 35mm film equivalent" />
-                        <span class="text-muted" matSuffix>mm&nbsp;&nbsp;</span>
+                        <mat-label>{{ 'components.uploadPhoto.texts.fullFrameEquivalent' | translate }}</mat-label>
+                        <input type="text" matInput [name]="'inputFocalLenIn35mmFilm' + internalIndex" [(ngModel)]="photo().focalLenIn35mmFilm" [disabled]="!photo().showFocalLenIn35mmFilm" [attr.aria-label]="'components.uploadPhoto.attrs.focalLengthIn35mmFilmEquivalent' | translate" />
+                        <span class="text-muted" matSuffix>{{ 'components.uploadPhoto.texts.mm' | translate }}</span>
                     </mat-form-field>
                 </div>
             </div>
@@ -200,93 +199,93 @@
 
         <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
             <mat-checkbox class="exif-label" [name]="'fNumber' + internalIndex" [disableRipple]="true" [(ngModel)]="photo().showFNumber">
-                <span class="text-muted">Aperture:</span>
+                <span class="text-muted">{{ 'components.uploadPhoto.texts.aperture' | translate }}</span>
             </mat-checkbox>
             <mat-form-field appearance="outline" class="flex-grow-2">
-                <span class="text-muted" matTextPrefix>f/</span>
-                <input type="text" matInput [name]="'inputFNumber' + internalIndex" [(ngModel)]="photo().fNumber" [disabled]="!photo().showFNumber" aria-label="Aperture" />
+                <span class="text-muted" matTextPrefix>{{ 'components.uploadPhoto.texts.f' | translate }}</span>
+                <input type="text" matInput [name]="'inputFNumber' + internalIndex" [(ngModel)]="photo().fNumber" [disabled]="!photo().showFNumber" [attr.aria-label]="'components.uploadPhoto.attrs.aperture' | translate" />
             </mat-form-field>
         </div>
 
         <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
             <mat-checkbox class="exif-label" [name]="'exposureTime' + internalIndex" [disableRipple]="true" [(ngModel)]="photo().showExposureTime">
-                <span class="text-muted">Exposure time:</span>
+                <span class="text-muted">{{ 'components.uploadPhoto.texts.exposureTime' | translate }}</span>
             </mat-checkbox>
             <mat-form-field appearance="outline" class="flex-grow-2">
-                <input type="text" matInput [name]="'inputExposureTime' + internalIndex" [(ngModel)]="photo().exposureTime" [disabled]="!photo().showExposureTime" aria-label="Exposure time" />
-                <span class="text-muted" matSuffix>sec&nbsp;&nbsp;</span>
+                <input type="text" matInput [name]="'inputExposureTime' + internalIndex" [(ngModel)]="photo().exposureTime" [disabled]="!photo().showExposureTime" [attr.aria-label]="'components.uploadPhoto.attrs.exposureTime' | translate" />
+                <span class="text-muted" matSuffix>{{ 'components.uploadPhoto.texts.sec' | translate }}</span>
             </mat-form-field>
         </div>
 
         <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
             <mat-checkbox class="exif-label" [name]="'photographicSensitivity' + internalIndex" [disableRipple]="true" [(ngModel)]="photo().showPhotographicSensitivity">
-                <span class="text-muted">ISO:</span>
+                <span class="text-muted">{{ 'components.uploadPhoto.texts.iso' | translate }}</span>
             </mat-checkbox>
             <mat-form-field appearance="outline" class="flex-grow-2">
-                <input type="text" matInput [name]="'inputPhotographicSensitivity' + internalIndex" [(ngModel)]="photo().photographicSensitivity" [disabled]="!photo().showPhotographicSensitivity" aria-label="ISO" />
+                <input type="text" matInput [name]="'inputPhotographicSensitivity' + internalIndex" [(ngModel)]="photo().photographicSensitivity" [disabled]="!photo().showPhotographicSensitivity" [attr.aria-label]="'components.uploadPhoto.attrs.iso' | translate" />
             </mat-form-field>
         </div>
 
         <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
             <mat-checkbox class="exif-label" [name]="'flash' + internalIndex" [disableRipple]="true" [(ngModel)]="photo().showFlash">
-                <span class="text-muted">Flash:</span>
+                <span class="text-muted">{{ 'components.uploadPhoto.texts.flash' | translate }}</span>
             </mat-checkbox>
             <mat-form-field appearance="outline" class="flex-grow-2">
-                <input type="text" matInput [name]="'inputFlash' + internalIndex" [(ngModel)]="photo().flash" [disabled]="!photo().showFlash" aria-label="Flash" />
+                <input type="text" matInput [name]="'inputFlash' + internalIndex" [(ngModel)]="photo().flash" [disabled]="!photo().showFlash" [attr.aria-label]="'components.uploadPhoto.attrs.flash' | translate" />
             </mat-form-field>
         </div>
 
         <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
             <mat-checkbox class="exif-label" [name]="'software' + internalIndex" [disableRipple]="true" [(ngModel)]="photo().showSoftware">
-                <span class="text-muted">Software:</span>
+                <span class="text-muted">{{ 'components.uploadPhoto.texts.software' | translate }}</span>
             </mat-checkbox>
             <mat-form-field appearance="outline" class="flex-grow-2">
-                <input type="text" matInput [name]="'inputSoftware' + internalIndex" [(ngModel)]="photo().software" [disabled]="!photo().showSoftware" aria-label="Software" />
+                <input type="text" matInput [name]="'inputSoftware' + internalIndex" [(ngModel)]="photo().software" [disabled]="!photo().showSoftware" [attr.aria-label]="'components.uploadPhoto.attrs.software' | translate" />
             </mat-form-field>
         </div>
 
         <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
             <mat-checkbox class="exif-label" [name]="'film' + internalIndex" [disableRipple]="true" [(ngModel)]="photo().showFilm">
-                <span class="text-muted">Film:</span>
+                <span class="text-muted">{{ 'components.uploadPhoto.texts.film' | translate }}</span>
             </mat-checkbox>
             <mat-form-field appearance="outline" class="flex-grow-2">
-                <input type="text" matInput [name]="'inputFilm' + internalIndex" [(ngModel)]="photo().film" [disabled]="!photo().showFilm" aria-label="Film" />
+                <input type="text" matInput [name]="'inputFilm' + internalIndex" [(ngModel)]="photo().film" [disabled]="!photo().showFilm" [attr.aria-label]="'components.uploadPhoto.attrs.film' | translate" />
             </mat-form-field>
         </div>
 
         <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
             <mat-checkbox class="exif-label" [name]="'chemistry' + internalIndex" [disableRipple]="true" [(ngModel)]="photo().showChemistry">
-                <span class="text-muted">Chemistry:</span>
+                <span class="text-muted">{{ 'components.uploadPhoto.texts.chemistry' | translate }}</span>
             </mat-checkbox>
             <mat-form-field appearance="outline" class="flex-grow-2">
-                <input type="text" matInput [name]="'inputChemistry' + internalIndex" [(ngModel)]="photo().chemistry" [disabled]="!photo().showChemistry" aria-label="Chemistry" />
+                <input type="text" matInput [name]="'inputChemistry' + internalIndex" [(ngModel)]="photo().chemistry" [disabled]="!photo().showChemistry" [attr.aria-label]="'components.uploadPhoto.attrs.chemistry' | translate" />
             </mat-form-field>
         </div>
 
         <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
             <mat-checkbox class="exif-label" [name]="'scanner' + internalIndex" [disableRipple]="true" [(ngModel)]="photo().showScanner">
-                <span class="text-muted">Scanner:</span>
+                <span class="text-muted">{{ 'components.uploadPhoto.texts.scanner' | translate }}</span>
             </mat-checkbox>
             <mat-form-field appearance="outline" class="flex-grow-2">
-                <input type="text" matInput [name]="'inputScanner' + internalIndex" [(ngModel)]="photo().scanner" [disabled]="!photo().showScanner" aria-label="Scanner" />
+                <input type="text" matInput [name]="'inputScanner' + internalIndex" [(ngModel)]="photo().scanner" [disabled]="!photo().showScanner" [attr.aria-label]="'components.uploadPhoto.attrs.scanner' | translate" />
             </mat-form-field>
         </div>
 
         <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
             <mat-checkbox class="exif-label" [name]="'createDate' + internalIndex" [disableRipple]="true" [(ngModel)]="photo().showCreateDate">
-                <span class="text-muted">Create date:</span>
+                <span class="text-muted">{{ 'components.uploadPhoto.texts.createDate' | translate }}</span>
             </mat-checkbox>
             <div class="flex-grow-2">
                 <div class="flex-row flex-stretch gap-4 small-text-input margin-bottom-10 double-field">
                     <mat-form-field appearance="outline">
-                        <mat-label>Date</mat-label>
-                        <input matInput [matDatepicker]="datepicker" [(ngModel)]="photo().createDate" aria-label="Create date">
+                        <mat-label>{{ 'components.uploadPhoto.labels.date' | translate }}</mat-label>
+                        <input matInput [matDatepicker]="datepicker" [(ngModel)]="photo().createDate" [attr.aria-label]="'components.uploadPhoto.attrs.createDate' | translate">
                         <mat-datepicker #datepicker/>
                         <mat-datepicker-toggle [for]="datepicker" matSuffix/>
                     </mat-form-field>
                     <mat-form-field appearance="outline">
-                        <mat-label>Time</mat-label>
-                        <input matInput [matTimepicker]="timepicker" [(ngModel)]="photo().createDate" [ngModelOptions]="{updateOn: 'blur'}" aria-label="Create time">
+                        <mat-label>{{ 'components.uploadPhoto.labels.time' | translate }}</mat-label>
+                        <input matInput [matTimepicker]="timepicker" [(ngModel)]="photo().createDate" [ngModelOptions]="{updateOn: 'blur'}" [attr.aria-label]="'components.uploadPhoto.attrs.createTime' | translate">
                         <mat-timepicker #timepicker />
                         <mat-timepicker-toggle [for]="timepicker" matSuffix/>
                     </mat-form-field>
@@ -305,7 +304,7 @@
         <div class="pull-right">
             @if (photo().photoHdrSrc) {
                 @if (photo().isHdrUploaded) {
-                    <button matButton="tonal" class="small-button" (click)="onHdrDelete()">Delete HDR version</button>
+                    <button matButton="tonal" class="small-button" (click)="onHdrDelete()">{{ 'components.uploadPhoto.texts.deleteHdrVersion' | translate }}</button>
                 } @else {
                     <mat-spinner class="display-inline-block" [diameter]="18"></mat-spinner>
                 }
@@ -319,7 +318,7 @@
     <div class="flex-row gap-16 margin-top-10">
         <div class="flex-align-start hdr-image margin-bottom-20">
             @if (photo().photoHdrSrc) {
-                <img [src]="photo().photoHdrSrc" alt="Uploaded photo" />
+                <img [src]="photo().photoHdrSrc" [alt]="'components.uploadPhoto.attrs.uploadedPhoto' | translate" />
             } @else {
                 @if (!photo().isUploaded()) {
                     <div class="dropzone small inactive">
@@ -339,16 +338,13 @@
 
         <div class="flex-grow-3 width-100 text-muted fs-90">
             <p class="padding-top-5">
-                You have the option to include an HDR version of the image (AVIF).
-                This version will only be displayed in the status details on the Vernissage platform.
-                Maximum file size is {{ hdrFileSizeString() }}.
+                {{ 'components.uploadPhoto.texts.hdrIncludeInformation' | translate: { hdrFileSizeString: hdrFileSizeString() } }}
             </p>
         </div>
 
     </div>
 
     <div class="width-100 text-muted fs-90">
-        <strong>Warning:</strong> The uploaded image will be preserved as the original file without any modifications.
-        Ensure that it does not contain any metadata you do not wish to make public before uploading.
+            <strong>{{ 'components.uploadPhoto.texts.warning' | translate }}</strong> {{ 'components.uploadPhoto.texts.originalFilePreservedWarning' | translate }}
     </div>
 </div>

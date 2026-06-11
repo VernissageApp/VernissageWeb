@@ -1,5 +1,5 @@
 <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
-    <div mat-dialog-title>Move account</div>
+    <div mat-dialog-title>{{ 'dialogs.moveAccount.texts.moveAccount' | translate }}</div>
     <div mat-dialog-content>
 
         <div class="padding-top-5 text-muted fs-90">
@@ -18,40 +18,40 @@
             </p>
 
             <ul>
-                <li>Only your followers will be moved automatically.</li>
-                <li>Your posts, photos, comments, likes, bookmarks, followed accounts, blocks, mutes, and other account data will not be transferred.</li>
-                <li>Your current profile will be marked as moved and will display a redirect notice pointing to the new account.</li>
-                <li>Your current account may no longer be fully usable after the migration.</li>
-                <li>The new account must first be configured to reference this account as an alias or previous account.</li>
-                <li>After moving, there may be a waiting period before you can move again.</li>
-                <li>You should export your data before continuing, especially if you want to keep a copy of your content or import followed accounts elsewhere.</li>
+                <li>{{ 'dialogs.moveAccount.texts.onlyYourFollowersWillBeMovedAutomatically' | translate }}</li>
+                <li>{{ 'dialogs.moveAccount.texts.yourPostsPhotosCommentsLikesBookmarksFollowed' | translate }}</li>
+                <li>{{ 'dialogs.moveAccount.texts.yourCurrentProfileWillBeMarkedAs' | translate }}</li>
+                <li>{{ 'dialogs.moveAccount.texts.yourCurrentAccountMayNoLongerBe' | translate }}</li>
+                <li>{{ 'dialogs.moveAccount.texts.theNewAccountMustFirstBeConfigured' | translate }}</li>
+                <li>{{ 'dialogs.moveAccount.texts.afterMovingThereMayBeAWaiting' | translate }}</li>
+                <li>{{ 'dialogs.moveAccount.texts.youShouldExportYourDataBeforeContinuing' | translate }}</li>
             </ul>
         </div>
 
         <div class="margin-bottom-10 padding-top-5">
             <mat-form-field class="width-100" appearance="outline">
-                <mat-label>Account</mat-label>
-                <input type="text" matInput name="account" [(ngModel)]="account" #accountInput="ngModel" aria-label="Account" required />
+                <mat-label>{{ 'common.labels.account' | translate }}</mat-label>
+                <input type="text" matInput name="account" [(ngModel)]="account" #accountInput="ngModel" [attr.aria-label]="'dialogs.moveAccount.attrs.account' | translate" required />
 
                 @if (accountInput.invalid && accountInput.errors?.required) {
-                    <mat-error>Enter new account.</mat-error>
+                    <mat-error>{{ 'dialogs.moveAccount.texts.enterNewAccount' | translate }}</mat-error>
                 }
             </mat-form-field>
         </div>
 
         <div class="margin-bottom-20 padding-top-5">
             <mat-form-field class="width-100" appearance="outline">
-                <mat-label>Password</mat-label>
-                <input type="password" matInput name="password" [(ngModel)]="password" #passwordInput="ngModel" aria-label="Password" required />
+                <mat-label>{{ 'common.labels.password' | translate }}</mat-label>
+                <input type="password" matInput name="password" [(ngModel)]="password" #passwordInput="ngModel" [attr.aria-label]="'dialogs.moveAccount.attrs.password' | translate" required />
 
                 @if (passwordInput.invalid && passwordInput.errors?.required) {
-                    <mat-error>Enter password.</mat-error>
+                    <mat-error>{{ 'dialogs.moveAccount.texts.enterPassword' | translate }}</mat-error>
                 }
             </mat-form-field>
         </div>
     </div>
     <div mat-dialog-actions>
-        <button matButton="text" type="button" (click)="onNoClick()">Cancel</button>
-        <button matButton="filled" type="submit" cdkFocusInitial>Move</button>
+        <button matButton="text" type="button" (click)="onNoClick()">{{ 'common.actions.cancel' | translate }}</button>
+        <button matButton="filled" type="submit" cdkFocusInitial>{{ 'components.dialogCommon.actions.move' | translate }}</button>
     </div>
 </form>

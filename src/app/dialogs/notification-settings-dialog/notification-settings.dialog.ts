@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, model, OnInit, signal } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { SwPush } from '@angular/service-worker';
 import { firstValueFrom } from 'rxjs';
@@ -43,6 +44,7 @@ export class NotificationSettingsDialog implements OnInit {
     private settingsService = inject(SettingsService);
     private pushSubscriptionsService = inject(PushSubscriptionsService);
     private dialogRef = inject(MatDialogRef<NotificationSettingsDialog>);
+    private translateService = inject(TranslateService);
 
     async ngOnInit(): Promise<void> {
         this.loadingService.showLoader();
@@ -95,7 +97,7 @@ export class NotificationSettingsDialog implements OnInit {
             await this.subscribeToPush();
 
             if (!this.endpoint || !this.p256dh || !this.auth) {
-                this.messageService.showError('Error during generating encryption keys for Web push.');
+                this.messageService.showError(this.translateService.instant('dialogs.notificationSettings.messages.errorDuringGeneratingEncryptionKeysForWebPush'));
                 return;
             }
 
@@ -117,7 +119,7 @@ export class NotificationSettingsDialog implements OnInit {
             pusSubscription.webPushNewCommentEnabled = this.webPushNewCommentEnabled();
 
             await this.pushSubscriptionsService.create(pusSubscription);
-            this.messageService.showSuccess('Notification settings has been saved.');
+            this.messageService.showSuccess(this.translateService.instant('dialogs.notificationSettings.messages.notificationSettingsHasBeenSaved'));
 
             this.dialogRef.close({ confirmed: true});
         } catch (error) {
@@ -128,13 +130,13 @@ export class NotificationSettingsDialog implements OnInit {
 
     private async subscribeToPush(): Promise<void> {
         if (!this.settingsService.publicSettings?.webPushVapidPublicKey) {
-            this.messageService.showError('Web push public key is not set.');
+            this.messageService.showError(this.translateService.instant('dialogs.notificationSettings.messages.webPushPublicKeyIsNotSet'));
             return;
         }
 
         try {
             if (!this.swPushService.isEnabled) {
-                this.messageService.showError('Web push notifications for the website are disabled in the browser.');
+                this.messageService.showError(this.translateService.instant('dialogs.notificationSettings.messages.webPushNotificationsForTheWebsiteAreDisabledInTheBrowser'));
                 return;
             }
 
@@ -147,7 +149,7 @@ export class NotificationSettingsDialog implements OnInit {
             this.p256dh = jsonObject.keys?.p256dh;
             this.auth = jsonObject.keys?.auth;
         } catch (err) {
-            this.messageService.showError('Unexpected error during generating Web push subscription.');
+            this.messageService.showError(this.translateService.instant('dialogs.notificationSettings.messages.unexpectedErrorDuringGeneratingWebPushSubscription'));
             console.error('Could not subscribe due to:', err);
         }
     }

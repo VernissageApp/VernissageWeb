@@ -1,4 +1,4 @@
-<div mat-dialog-title>Following import accounts</div>
+<div mat-dialog-title>{{ 'dialogs.followingImportAccounts.texts.followingImportAccounts' | translate }}</div>
 <div mat-dialog-content>
     <div class="text-muted fs-90">
         Below you will find a list of accounts that were read from the import file.
@@ -11,7 +11,7 @@
 
             <!-- RequestDate Column -->
             <ng-container matColumnDef="account">
-                <th mat-header-cell *matHeaderCellDef> Account </th>
+                <th mat-header-cell *matHeaderCellDef> {{ 'common.labels.account' | translate }} </th>
                 <td mat-cell *matCellDef="let element">
                     {{ element.account }}
                 </td>
@@ -19,41 +19,41 @@
 
             <!-- Request StartDate Column -->
             <ng-container matColumnDef="startedAt">
-                <th mat-header-cell *matHeaderCellDef> Start </th>
+                <th mat-header-cell *matHeaderCellDef> {{ 'components.dialogCommon.labels.start' | translate }} </th>
                 <td mat-cell *matCellDef="let element">
                     @if (element.startedAt) {
-                        {{ element.startedAt | date: 'short' }}
+                        {{ element.startedAt | localizedDate: 'short' }}
                     }
                 </td>
             </ng-container>
 
             <!-- Request EndDate Column -->
             <ng-container matColumnDef="endedAt">
-                <th mat-header-cell *matHeaderCellDef> End </th>
+                <th mat-header-cell *matHeaderCellDef> {{ 'components.dialogCommon.labels.end' | translate }} </th>
                 <td mat-cell *matCellDef="let element">
                     @if (element.endedAt) {
-                        {{ element.endedAt | date: 'short' }}
+                        {{ element.endedAt | localizedDate: 'short' }}
                     }
                 </td>
             </ng-container>
 
             <!-- Status Column -->
             <ng-container matColumnDef="status">
-                <th mat-header-cell *matHeaderCellDef> Status </th>
+                <th mat-header-cell *matHeaderCellDef> {{ 'common.labels.status' | translate }} </th>
                 <td mat-cell *matCellDef="let element">
-                    <mat-chip-set aria-label="Status">
+                    <mat-chip-set [attr.aria-label]="'dialogs.followingImportAccounts.attrs.status' | translate">
                         @switch (element.status) {
                             @case (followingImportItemStatus.NotProcessed) {
-                                <mat-chip [disableRipple]="true">Not processed</mat-chip>
+                                <mat-chip [disableRipple]="true">{{ 'dialogs.followingImportAccounts.texts.notProcessed' | translate }}</mat-chip>
                             }
                             @case (followingImportItemStatus.Followed) {
-                                <mat-chip [disableRipple]="true">Followed</mat-chip>
+                                <mat-chip [disableRipple]="true">{{ 'common.statuses.finished' | translate }}</mat-chip>
                             }
                             @case (followingImportItemStatus.Sent) {
-                                <mat-chip [disableRipple]="true">Request sent</mat-chip>
+                                <mat-chip [disableRipple]="true">{{ 'dialogs.followingImportAccounts.texts.requestSent' | translate }}</mat-chip>
                             }
                             @case (followingImportItemStatus.Error) {
-                                <mat-chip [disableRipple]="true" [matTooltip]="element.errorMessage">Error</mat-chip>
+                                <mat-chip [disableRipple]="true" [matTooltip]="element.errorMessage">{{ 'common.statuses.error' | translate }}</mat-chip>
                             }
                         }
                     </mat-chip-set>
@@ -67,5 +67,5 @@
 
 </div>
 <div mat-dialog-actions>
-    <button matButton="text" type="button" (click)="onNoClick()">Close</button>
+    <button matButton="text" type="button" (click)="onNoClick()">{{ 'common.actions.close' | translate }}</button>
 </div>
