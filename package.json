@@ -25,6 +25,7 @@
     "@angular/service-worker": "^21.2.0",
     "@angular/ssr": "^21.2.7",
     "@auth0/angular-jwt": "^5.2.0",
+    "@contentauth/c2pa-web": "^0.10.0",
     "@ngx-translate/core": "^17.0.0",
     "blurhash": "^2.0.5",
     "exifreader": "^4.38.1",

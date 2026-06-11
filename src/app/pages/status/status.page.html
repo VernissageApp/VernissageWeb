@@ -431,10 +431,60 @@
                         </mat-card-content>
                     </mat-card>
 
+                    <!-- Content Credentials -->
+                    @if (contentCredentials(); as contentCredentialsInternal) {
+                        <mat-card class="content-credentials-card margin-bottom-20" appearance="outlined">
+                            <mat-card-header class="content-credentials-card-header">
+                                <mat-card-title class="status-panel-card-title content-credentials-card-title">
+                                    <span class="content-credentials-title">
+                                        <span class="content-credentials-icon" aria-hidden="true"></span>
+                                        <span>{{ 'pages.status.contentCredentials.title' | translate }}</span>
+                                    </span>
+                                    <button matIconButton type="button" (click)="openContentCredentialsDialog()" [matTooltip]="'pages.status.contentCredentials.details' | translate" [attr.aria-label]="'pages.status.contentCredentials.details' | translate">
+                                        <mat-icon>info</mat-icon>
+                                    </button>
+                                </mat-card-title>
+                            </mat-card-header>
+                            <mat-card-content>
+                                <div class="flex-col gap-8">
+                                    @if (contentCredentialsInternal.author || contentCredentialsInternal.signatureIssuer) {
+                                        <div>
+                                            <span class="text-muted">{{ 'pages.status.contentCredentials.author' | translate }}</span>
+                                            <span class="margin-left-10">{{ contentCredentialsInternal.author ?? contentCredentialsInternal.signatureIssuer }}</span>
+                                        </div>
+                                    }
+
+                                    @if (contentCredentialsInternal.appOrDeviceUsed) {
+                                        <div>
+                                            <span class="text-muted">{{ 'pages.status.contentCredentials.appOrDeviceUsed' | translate }}</span>
+                                            <span class="margin-left-10">{{ contentCredentialsInternal.appOrDeviceUsed }}</span>
+                                        </div>
+                                    }
+
+                                    @if (contentCredentialsInternal.softwareAgent || contentCredentialsInternal.claimGenerator) {
+                                        <div>
+                                            <span class="text-muted">{{ 'pages.status.contentCredentials.equipmentOrApplication' | translate }}</span>
+                                            <span class="margin-left-10">{{ contentCredentialsInternal.softwareAgent ?? contentCredentialsInternal.claimGenerator }}</span>
+                                        </div>
+                                    }
+
+                                </div>
+                            </mat-card-content>
+                            @if (contentCredentialsInternal.aiGenerated) {
+                                <mat-card-actions class="content-credentials-card-footer">
+                                    <div class="ai-generated-tag">
+                                        <mat-icon>smart_toy</mat-icon>
+                                        <span>{{ 'pages.status.contentCredentials.aiGenerated' | translate }}</span>
+                                    </div>
+                                </mat-card-actions>
+                            }
+                        </mat-card>
+                    }
+
                     <!-- Comments -->
                     <mat-card class="margin-bottom-20" appearance="outlined">
                             <mat-card-header>
-                                <mat-card-title>{{ 'pages.status.comments.title' | translate }}</mat-card-title>
+                                <mat-card-title class="status-panel-card-title">{{ 'pages.status.comments.title' | translate }}</mat-card-title>
                             </mat-card-header>
                             <mat-card-content>
                                 @if (signedInUser(); as signedInUserInternal) {

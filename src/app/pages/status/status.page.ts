@@ -40,6 +40,9 @@ import { ConfirmationDialog } from 'src/app/dialogs/confirmation-dialog/confirma
 import { CommentReplyComponent } from 'src/app/components/widgets/comment-reply/comment-reply.component';
 import { StatusHashtagsService } from 'src/app/services/common/status-hashtags.service';
 import { TranslateService } from '@ngx-translate/core';
+import { C2paContentCredentials } from 'src/app/models/c2pa-content-credentials';
+import { C2paService } from 'src/app/services/common/c2pa.service';
+import { ContentCredentialsDialog } from 'src/app/dialogs/content-credentials-dialog/content-credentials.dialog';
 
 @Component({
     selector: 'app-status',
@@ -73,6 +76,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     protected isLoggedIn = signal(false);
     protected rendered = signal<SafeHtml>('');
     protected hasHdrSupport = signal(false);
+    protected contentCredentials = signal<C2paContentCredentials | undefined>(undefined);
 
     protected versionId = model<string>('');
     protected versions = signal<Status[]>([]);
@@ -109,6 +113,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     private mainGalleryId = 'mainGalleryId';
     private commentGalleryId = 'commentGalleryId';
     private blurhash = 'LEHV6nWB2yk8pyo0adR*.7kCMdnj';
+    private contentCredentialsRequestId = 0;
 
     private document = inject(DOCUMENT);
     private platformId = inject(PLATFORM_ID);
@@ -134,6 +139,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     private focusTrackerService = inject(FocusTrackerService);
     private statusHashtagsService = inject(StatusHashtagsService);
     private translateService = inject(TranslateService);
+    private c2paService = inject(C2paService);
 
     constructor() {
         super();
@@ -337,6 +343,19 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
 
     protected onImageIndexChange(event: any): void {
         this.currentIndex.set(event.currIndex);
+        void this.loadContentCredentialsForCurrentImage();
+    }
+
+    protected openContentCredentialsDialog(): void {
+        const internalContentCredentials = this.contentCredentials();
+        if (!internalContentCredentials) {
+            return;
+        }
+
+        this.dialog.open(ContentCredentialsDialog, {
+            width: '520px',
+            data: internalContentCredentials
+        });
     }
 
     protected async onReportDialog(reportedStatus: Status): Promise<void> {
@@ -859,6 +878,20 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         return undefined;
     }
 
+    private async loadContentCredentialsForCurrentImage(): Promise<void> {
+        const requestId = ++this.contentCredentialsRequestId;
+        const imageUrl = this.mainStatus()?.attachments?.at(this.currentIndex())?.originalFile?.url;
+
+        this.contentCredentials.set(undefined);
+        const internalContentCredentials = await this.c2paService.getContentCredentials(imageUrl);
+
+        if (requestId !== this.contentCredentialsRequestId) {
+            return;
+        }
+
+        this.contentCredentials.set(internalContentCredentials);
+    }
+
     private getMapsUrl(index: number): string | undefined {
         const locationInternal = this.getLocation(index);
         if (locationInternal) {
@@ -965,6 +998,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         // Set main status data.
         this.status.set(downloadedStatus);
         this.replyStatus.set(undefined);
+        this.contentCredentials.set(undefined);
 
         // Calculate main status (for reblogs).
         const internalMainStatus = downloadedStatus.reblog ? downloadedStatus.reblog : downloadedStatus;
@@ -1007,6 +1041,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
 
         this.images.set(internalImages);
         this.rendered.set(this.mainStatus()?.noteHtml ?? '');
+        void this.loadContentCredentialsForCurrentImage();
 
         // Load status histories asynchronously.
         this.loadStatusHistories(statusId);

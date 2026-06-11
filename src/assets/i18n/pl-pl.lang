@@ -717,6 +717,28 @@
     }
   },
   "dialogs": {
+    "contentCredentials": {
+      "labels": {
+        "actions": "Akcje",
+        "format": "Format",
+        "ingredients": "Składniki",
+        "producedWith": "Utworzono w",
+        "signedAt": "Podpisano",
+        "signedBy": "Podpis",
+        "title": "Tytuł",
+        "identity": "Tożsamość",
+        "actionsCount": "Liczba akcji",
+        "verify": "Weryfikacja",
+        "appOrDeviceUsed": "App or device used"
+      },
+      "texts": {
+        "verifiedSummary": "Zdjęcie zawiera prawidłowy manifest C2PA i przeszło walidację po stronie klienta."
+      },
+      "title": "Content Credentials",
+      "actions": {
+        "openOnVerifySite": "Otwórz w Verify Site"
+      }
+    },
     "category": {
       "attrs": {
         "categoryName": "Nazwa kategorii",
@@ -2422,6 +2444,16 @@
       },
       "confirmations": {
         "changeStatusWithEnteredComment": "Wpisałeś komentarz. Czy mimo to chcesz zmienić status?"
+      },
+      "contentCredentials": {
+        "label": "Content Credentials",
+        "verified": "Content Credentials verified",
+        "title": "Content Credentials",
+        "author": "Autor",
+        "equipmentOrApplication": "Sprzęt/Aplikacja",
+        "details": "Szczegóły",
+        "appOrDeviceUsed": "App or device used",
+        "aiGenerated": "AI Generated"
       },
       "followedTagsInThisStatus": "Obserwowane tagi w tym statusie",
       "hashtagsAriaLabel": "Hashtagi",
