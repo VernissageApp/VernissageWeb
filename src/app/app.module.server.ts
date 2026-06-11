@@ -27,7 +27,7 @@ class ServerTranslateLoader implements TranslateLoader {
 
     getTranslation(lang: string): Observable<TranslationObject> {
         const i18nAssetsPath = this.i18nAssetsPath ?? join(process.cwd(), 'src/assets/i18n');
-        const filePath = join(i18nAssetsPath, `${lang}.json`);
+        const filePath = join(i18nAssetsPath, `${lang}.lang`);
 
         return from(readFile(filePath, 'utf8').then((content) => JSON.parse(content) as TranslationObject));
     }

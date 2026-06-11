@@ -26,10 +26,10 @@ import { ErrorItemsService } from './services/http/error-items.service';
 import { RandomGeneratorService } from './services/common/random-generator.service';
 import { CustomScriptsService } from './services/common/custom-scripts.service';
 import { CustomStylesService } from './services/common/custom-styles.service';
-import { TranslateModule } from '@ngx-translate/core';
-import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { LanguageService } from './services/common/language.service';
 import { LocalizedTitleStrategy } from './common/localized-title-strategy';
+import { BrowserTranslateLoader } from './common/browser-translate-loader';
 
 /** Custom options the configure the tooltip's default show/hide delays. */
 export const customTooltipDefaults: MatTooltipDefaultOptions = {
@@ -50,11 +50,10 @@ export const customTooltipDefaults: MatTooltipDefaultOptions = {
         PagesModule,
         TranslateModule.forRoot({
             fallbackLang: 'en-us',
-            loader: provideTranslateHttpLoader({
-                prefix: './assets/i18n/',
-                suffix: '.json',
-                useHttpBackend: true,
-            })
+            loader: {
+                provide: TranslateLoader,
+                useClass: BrowserTranslateLoader,
+            }
         }),
         ServiceWorkerModule.register('service-worker.js', {
             enabled: !isDevMode(),

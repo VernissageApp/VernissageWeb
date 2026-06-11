@@ -26,7 +26,6 @@
     "@angular/ssr": "^21.2.7",
     "@auth0/angular-jwt": "^5.2.0",
     "@ngx-translate/core": "^17.0.0",
-    "@ngx-translate/http-loader": "^17.0.0",
     "blurhash": "^2.0.5",
     "exifreader": "^4.38.1",
     "express": "^4.21.2",
