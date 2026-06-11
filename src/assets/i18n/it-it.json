@@ -2,13 +2,13 @@
   "common": {
     "actions": {
       "addField": "Aggiungi campo",
-      "approve": "Approvare",
-      "assignRoles": "Assegnare ruoli",
+      "approve": "Approva",
+      "assignRoles": "Assegna ruoli",
       "back": "Indietro",
       "block": "Blocca",
       "cancel": "Annulla",
       "chooseFile": "Scegli file",
-      "clear": "Chiaro",
+      "clear": "Pulisci",
       "close": "Chiudi",
       "copy": "Copia",
       "delete": "Elimina",
@@ -20,19 +20,19 @@
       "follow": "Segui",
       "forgotPassword": "Password dimenticata?",
       "import": "Importa",
-      "loadMore": "Carica di più",
+      "loadMore": "Carica altro",
       "loadMoreEllipsis": "Carica altro...",
       "login": "Accedi",
-      "next": "Avanti",
+      "next": "Successivo",
       "ok": "OK",
-      "open": "Aperto",
+      "open": "Apri",
       "openProfileWithUserName": "Apri il profilo @{{userName}}",
       "refresh": "Aggiorna",
       "register": "Registrati",
-      "reject": "Rifiutare",
+      "reject": "Rifiuta",
       "reload": "Ricarica",
       "remove": "Rimuovi",
-      "report": "Rapporto",
+      "report": "Segnala",
       "restore": "Ripristina",
       "save": "Salva",
       "search": "Cerca",
@@ -48,22 +48,22 @@
       "upload": "Carica"
     },
     "articleVisibility": {
-      "homeSignIn": "Home - utenti connessi",
-      "homeSignOut": "Home - utenti non connessi",
-      "newsSignIn": "Notizie - utenti connessi",
+      "homeSignIn": "Home - Accedi",
+      "homeSignOut": "Home - esci",
+      "newsSignIn": "Notizie - accedi",
       "newsSignOut": "Notizie - utenti non connessi"
     },
     "dates": {
-      "createdAt": "Creato a",
+      "createdAt": "Creato il",
       "createdDate": "Data di creazione"
     },
     "errors": {
       "goBackLink": "home page",
       "goBackPrefix": "Per favore, torna al",
-      "goBackSuffix": "o contattare l'amministratore di sistema."
+      "goBackSuffix": " o contatta l'amministratore."
     },
     "labels": {
-      "account": "Conto",
+      "account": "Account",
       "accountLink": "Collegamento all'account",
       "administrator": "Amministratore",
       "alias": "Alias",
@@ -76,8 +76,8 @@
       "bio": "Bio",
       "body": "Corpo",
       "category": "Categoria",
-      "client": "Cliente",
-      "clientVersion": "Versione cliente",
+      "client": "Client",
+      "clientVersion": "Versione del client",
       "code": "Codice",
       "comment": "Commento",
       "description": "Descrizione",
@@ -89,8 +89,8 @@
       "errorMessage": "Messaggio di errore",
       "exception": "Eccezione",
       "fields": "Campi",
-      "followers": "Seguaci",
-      "following": "Segue",
+      "followers": "Follower",
+      "following": "Seguiti",
       "frequentlyAskedQuestions": "Domande frequenti",
       "hashtags": "Hashtag",
       "header": "Intestazione",
@@ -103,24 +103,24 @@
       "member": "Membro",
       "message": "Messaggio",
       "moderator": "Moderatore",
-      "moreOptions": "Più opzioni",
+      "moreOptions": "Altre opzioni",
       "name": "Nome",
-      "noResultsFound": "Nessun risultato trovato",
-      "note": "Nota",
+      "noResultsFound": "Nessun risultato trovato.",
+      "note": "Note",
       "order": "Ordine",
-      "password": "Parola d'ordine",
+      "password": "Password",
       "photo": "Foto",
       "photos": "Foto",
       "priority": "Priorità",
-      "private": "Privato",
-      "processing": "Elaborazione",
+      "private": "Private",
+      "processing": "In elaborazione",
       "profilePage": "pagina del profilo",
-      "qrCode": "CodiceQR",
-      "query": "Domanda",
+      "qrCode": "Codice QR",
+      "query": "Query",
       "reason": "Motivo",
-      "reports": "Rapporti",
+      "reports": "Segnalazioni",
       "server": "Server",
-      "serverVersion": "Versione server",
+      "serverVersion": "Versione del server",
       "status": "Stato",
       "statusImage": "Immagine di stato",
       "subtitle": "Sottotitolo",
@@ -131,9 +131,9 @@
       "termsOfService": "Termini di servizio",
       "text": "Testo",
       "title": "Titolo",
-      "token": "Gettone",
-      "twoFactorToken": "Gettone a due fattori",
-      "type": "Digitare",
+      "token": "Token",
+      "twoFactorToken": "Token a due fattori",
+      "type": "Digita",
       "url": "URL",
       "user": "Utente",
       "userName": "Nome utente",
@@ -144,23 +144,23 @@
       "website": "Sito web"
     },
     "messages": {
-      "newVersionAvailable": "È disponibile una nuova versione diVernissage. Aggiorna la pagina per ottenere la versione più recente.",
+      "newVersionAvailable": "È disponibile una nuova versione di Vernissage. Aggiorna la pagina per ottenere l'ultima versione.",
       "unknownError": "Errore sconosciuto.",
       "unrecoverableState": "Si è verificato un errore e lo stato dell'applicazione non può essere ripristinato. Per favore ricarica la pagina."
     },
     "pageTitles": {
       "accessForbidden": "Vernissage - Accesso vietato",
-      "account": "Vernissage - Conto",
-      "activityPubEventRecipients": "Vernissage - Destinatari dell'eventoActivityPub",
-      "activityPubEvents": "Vernissage - EventiVernissage-ActivityPub",
+      "account": "Vernissage - Account",
+      "activityPubEventRecipients": "Vernissage - Destinatari dell'evento ActivityPub",
+      "activityPubEvents": "Vernissage - Eventi ActivityPub",
       "articles": "Vernissage - Articoli",
       "bookmarks": "Vernissage - Segnalibri",
       "categories": "Vernissage - Categorie",
-      "confirmEmail": "Vernissage - Conferma e-mail",
+      "confirmEmail": "Vernissage - Conferma l'email",
       "connectionLost": "Vernissage - Connessione persa",
       "createArticle": "Vernissage - Crea articolo",
       "editArticle": "Vernissage - Modifica articolo",
-      "editorsChoice": "Vernissage - Scelta dell'editore",
+      "editorsChoice": "Vernissage - Scelte dell'editor",
       "editUsersBusinessCard": "Vernissage - Modifica il biglietto da visita dell'utente",
       "errors": "Vernissage - Errori",
       "eventRecipients": "Vernissage - Destinatari dell'evento",
@@ -176,7 +176,7 @@
       "preferences": "Vernissage - Preferenze",
       "privacy": "Vernissage - Privacy",
       "register": "Vernissage - Registrati",
-      "reports": "Vernissage - Rapporti",
+      "reports": "Vernissage - Segnalazioni",
       "resetPassword": "Vernissage - Reimposta la password",
       "search": "Vernissage - Cerca",
       "settings": "Vernissage - Impostazioni",
@@ -186,7 +186,7 @@
       "support": "Vernissage - Supporto",
       "tags": "Vernissage - Tag",
       "terms": "Vernissage - Termini",
-      "trending": "Vernissage - Tendenza",
+      "trending": "Vernissage - In tendenza",
       "unexpectedError": "Vernissage - Errore imprevisto",
       "uploadImages": "Vernissage - Carica immagini",
       "users": "Vernissage - Utenti"
@@ -195,15 +195,15 @@
       "selectPage": "Seleziona pagina"
     },
     "sort": {
-      "ascending": "Ascendente",
-      "descending": "Discendente"
+      "ascending": "Crescente",
+      "descending": "Decrescente"
     },
     "statuses": {
       "error": "Errore",
       "expired": "Scaduto",
-      "finished": "Finito",
+      "finished": "Completato",
       "new": "Nuovo",
-      "processing": "Elaborazione",
+      "processing": "In elaborazione",
       "ready": "Pronto"
     },
     "timeAgo": {
@@ -218,15 +218,15 @@
     },
     "blurhashImage": {
       "messages": {
-        "statusBoosted": "Stato potenziato.",
-        "statusFavourited": "Stato favorito.",
-        "yourBoostHasBeenUndone": "Il tuo potenziamento è stato annullato.",
-        "yourLikeHasBeenUndone": "Il tuo Mi piace è stato annullato.."
+        "statusBoosted": "Status condiviso.",
+        "statusFavourited": "Status aggiunto ai preferiti.",
+        "yourBoostHasBeenUndone": "La tua condivisione è stata annullata.",
+        "yourLikeHasBeenUndone": "Il tuo mi piace è stato annullato."
       }
     },
     "businessCard": {
       "attrs": {
-        "avatarProfile": "profilo dell'avatar"
+        "avatarProfile": "avatar del profilo"
       },
       "texts": {
         "importContact": "Importa contatto"
@@ -254,26 +254,26 @@
         "leaveAComment": "Lascia un commento"
       },
       "messages": {
-        "commentHasBeenAdded": "È stato aggiunto il commento."
+        "commentHasBeenAdded": "Il commento è stato aggiunto."
       }
     },
     "dialogCommon": {
       "actions": {
-        "change": "Cambiare",
-        "move": "Muoviti",
-        "mute": "Muto",
+        "change": "Modifica",
+        "move": "Sposta",
+        "mute": "Silenzia",
         "no": "No",
         "share": "Condividi",
         "yes": "Sì"
       },
       "labels": {
         "end": "Fine",
-        "start": "Inizia"
+        "start": "Inizio"
       }
     },
     "domainBlocks": {
       "messages": {
-        "doYouWantToDeleteInstanceBlockedDomain": "Vuoi eliminare il dominio bloccato dall'istanza?",
+        "doYouWantToDeleteInstanceBlockedDomain": "Vuoi eliminare il blocco al dominio dell'istanza?",
         "domainHasBeenDeleted": "Il dominio è stato eliminato."
       },
       "texts": {
@@ -282,19 +282,19 @@
     },
     "followButtons": {
       "actions": {
-        "approveFollow": "Approva segui",
+        "approveFollow": "Approva il follower",
         "blockDomain": "Blocca dominio",
         "blockUser": "Blocca utente",
         "cancelRequest": "Annulla richiesta",
         "copyProfileLink": "Copia il collegamento al profilo",
-        "feature": "Caratteristica",
-        "followBack": "Segui indietro",
-        "mute": "Muto",
+        "feature": "Funzionalità",
+        "followBack": "Segui anche tu",
+        "mute": "Silenzia",
         "openOriginalProfile": "Apri il profilo originale",
-        "rejectFollow": "Rifiuta segui",
+        "rejectFollow": "Rifiuta il follower",
         "unblockDomain": "Sblocca dominio",
         "unblockUser": "Sblocca utente",
-        "undoFeature": "Funzione Annulla",
+        "undoFeature": "Funzione annulla",
         "unmute": "Riattiva"
       },
       "messages": {
@@ -305,17 +305,17 @@
     "followButtonsSection": {
       "messages": {
         "blockedDomainHasBeenDeleted": "Il dominio bloccato è stato eliminato.",
-        "doYouWantToDeleteBlockedDomain": "Vuoi eliminare il dominio bloccato?",
+        "doYouWantToDeleteBlockedDomain": "Vuoi eliminare il blocco al dominio?",
         "doYouWantToUnblockUser": "Vuoi sbloccare l'utente?",
-        "doYouWantToUnmuteUser": "Vuoi riattivare l'audio dell'utente?",
+        "doYouWantToUnmuteUser": "Vuoi riattivare l'utente?",
         "muteHasBeenCanceled": "Il silenziamento è stato annullato.",
-        "muteHasBeenSaved": "L'audio è stato salvato.",
-        "reportHasBeenSaved": "Il rapporto è stato salvato.",
+        "muteHasBeenSaved": "Il silenziamento è stato salvato.",
+        "reportHasBeenSaved": "La segnalazione è stata salvata.",
         "theFollowRequestHasBeenSent": "La richiesta di follow è stata inviata.",
         "userHasBeenBlocked": "L'utente è stato bloccato.",
         "userHasBeenUnblocked": "L'utente è stato sbloccato.",
         "youAreFollowingTheUser": "Stai seguendo l'utente.",
-        "youHaveFeaturedTheUser": "Hai presentato l'utente.",
+        "youHaveFeaturedTheUser": "Hai inserito l'utente in primo piano.",
         "youHaveRemovedTheUserFromFeatured": "Hai rimosso l'utente da in primo piano.",
         "youHaveUnfollowedTheUser": "Hai smesso di seguire l'utente.",
         "yourFollowRequestHasBeenAccepted": "La tua richiesta di follow è stata accettata."
@@ -323,48 +323,48 @@
     },
     "footer": {
       "links": {
-        "privacyPolicy": "Politica sulla riservatezza",
+        "privacyPolicy": "Informativa sulla privacy",
         "support": "Supporto",
-        "termsOfService": "Termini di servizio"
+        "termsOfService": "Termini di Servizio"
       },
-      "poweredBy": "Alimentato daVernissage"
+      "poweredBy": "Alimentato da Vernissage"
     },
     "gallery": {
-      "pinned": "Appuntato",
+      "pinned": "Fissato",
       "texts": {
         "sadlyThereSNothingToSeeHere": "Purtroppo, non c'è ancora niente da vedere qui."
       }
     },
     "generalSettings": {
       "attrs": {
-        "aiDescriptionPrompt": "Richiesta di descrizioneAI",
-        "aiHashtagsPrompt": "Richiesta hashtagAI",
-        "aiModel": "ModelloAI",
-        "aiProviderName": "Nome del fornitoreAI",
-        "aiSecretKey": "Chiave segretaAI",
-        "aiUrl": "AIUrl",
+        "aiDescriptionPrompt": "Richiesta di descrizione all'AI",
+        "aiHashtagsPrompt": "Richiesta degli hashtag all'AI",
+        "aiModel": "Modello di IA",
+        "aiProviderName": "Nome del fornitore AI",
+        "aiSecretKey": "Chiave segreta AI",
+        "aiUrl": "AI URL",
         "corsOrgins": "Origini del CORS",
-        "deleteStatusesOlderThanDays": "Elimina stati più vecchi di (giorni)",
+        "deleteStatusesOlderThanDays": "Elimina status più vecchi di (giorni)",
         "emailFromAddress": "E-mail dall'indirizzo",
         "emailFromName": "E-mail dal nome",
-        "emailHostname": "Nome host e-mail",
-        "emailPassword": "Password di posta elettronica",
-        "emailPort": "Porta di posta elettronica",
-        "emailUsername": "Nome utente e-mail",
-        "httpPathToCustomCssFile": "PercorsoHTTPal fileCSSpersonalizzato",
-        "httpPathToCustomJavascriptFile": "PercorsoHTTPal fileJavaScriptpersonalizzato",
+        "emailHostname": "Nome del dominio dell'e-mail",
+        "emailPassword": "Password dell'e-mail",
+        "emailPort": "Porta dell'e-mail",
+        "emailUsername": "Nome utente dell'e-mail",
+        "httpPathToCustomCssFile": "Percorso HTTP del file CSS personalizzato",
+        "httpPathToCustomJavascriptFile": "Percorso HTTP al file JavaScript personalizzato",
         "imagesQuality": "Qualità delle immagini",
         "imagesUrl": "URL delle immagini",
-        "inlineCustomCssStyles": "StiliCSSpersonalizzati in linea",
-        "inlineCustomJavascript": "JavaScriptpersonalizzato in linea",
-        "mastodonUrl": "MastodonURL",
+        "inlineCustomCssStyles": "Stili CSS personalizzati",
+        "inlineCustomJavascript": "JavaScript personalizzato",
+        "mastodonUrl": "URL Mastodon",
         "maximumFileSize": "Dimensione massima del file",
         "maximumNumberOfAttachments": "Numero massimo di allegati",
-        "maximumNumberOfCharactersInStatus": "Numero massimo di caratteri nello stato",
+        "maximumNumberOfCharactersInStatus": "Numero massimo di caratteri dello status",
         "maximumNumberOfInvitations": "Numero massimo di inviti",
-        "minimumIntervalBetweenAddingSilentStatusesSeconds": "Intervallo minimo tra l'aggiunta di stati silenziosi (secondi)",
-        "minimumIntervalBetweenAddingStatusesSeconds": "Intervallo minimo tra l'aggiunta degli stati (secondi)",
-        "patreonUrl": "PatreonURL",
+        "minimumIntervalBetweenAddingSilentStatusesSeconds": "Intervallo minimo tra l'aggiunta di silenziamento degli status (secondi)",
+        "minimumIntervalBetweenAddingStatusesSeconds": "Intervallo minimo tra l'aggiunta degli status (secondi)",
+        "patreonUrl": "URL Patreon",
         "privacyPolicyContent": "Contenuto della politica sulla privacy",
         "privacyPolicyUpdateDate": "Data di aggiornamento della politica sulla privacy",
         "termsOfServiceContent": "Contenuto dei Termini di servizio",
@@ -372,98 +372,98 @@
         "totalCost": "Costo totale",
         "usersSupport": "Supporto agli utenti",
         "webDescription": "Descrizione web",
-        "webEmail": "Posta elettronica sul Web",
-        "webLanguages": "Linguaggi del web",
-        "webLongDescription": "Descrizione lunga sul Web",
-        "webThumbnailUr": "Miniatura web ur",
-        "webTitle": "Titolo web",
-        "webpushServiceEndpoint": "Endpoint del servizioWebPush",
-        "webpushServiceSecretKey": "Chiave segreta del servizioWebPush",
-        "webpushVapidPriavteKey": "WebPushChiave privata vapid",
-        "webpushVapidPublicKey": "WebPushChiave pubblica non valida",
-        "webpushVapidSubject": "WebPushSoggetto insulso"
+        "webEmail": "E-mail Web",
+        "webLanguages": "Lingue Web",
+        "webLongDescription": "Descrizione lunga per il Web",
+        "webThumbnailUr": "URL della miniatura Web",
+        "webTitle": "Titolo Web",
+        "webpushServiceEndpoint": "Endpoint del servizio WebPush",
+        "webpushServiceSecretKey": "Chiave segreta del servizio WebPush",
+        "webpushVapidPriavteKey": "Chiave privata WebPush Vapid",
+        "webpushVapidPublicKey": "Chiave pubblica WebPush Vapid",
+        "webpushVapidSubject": "Soggetto WebPush Vapid"
       },
       "captcha": "Captcha",
       "help": {
-        "aiDescriptionPrompt": "Utilizzato per generare una descrizione dell'immagine (testo alternativo). Scrivi istruzioni chiare per descrizioni accurate, obiettive e accessibili basate solo su contenuti visibili.",
-        "aiHashtagsPrompt": "Utilizzato per generare hashtag per uno stato. Scrivi istruzioni per hashtag pertinenti, concisi e adatti ai social media e chiedi alla modella di restituire solo hashtag.",
-        "cdn": "Se hai configurato una CDN, puoi sovrascrivere l'immagine predefinitaURLgenerata in base al nome e all'indirizzo del bucket S3.",
+        "aiDescriptionPrompt": "Utilizzato per generare una descrizione dell'immagine (testo alternativo). Scrivi istruzioni chiare per descrizioni accurate, obiettive e accessibili basate solo sul contenuto visibile.",
+        "aiHashtagsPrompt": "Utilizzato per generare hashtag per uno stato. Scrivi istruzioni per hashtag pertinenti, concisi e adatti ai social media e chiedi al modello di restituire solo hashtag.",
+        "cdn": "Se hai configurato una CDN, puoi sovrascrivere l'URL dell'immagine predefinita generata in base al nome e all'indirizzo del bucket S3.",
         "eventsToLog": "Gli eventi selezionati verranno archiviati nel database. Dovrebbero essere abilitati solo durante il debug di un problema, poiché influiscono sia sulle prestazioni dell'applicazione che sulle dimensioni del database, dato che il loro volume può essere significativo.",
         "imageQuality": "Determina la qualità delle immagini salvate ed elaborate dal sistema dopo il caricamento (ad esempio, per la generazione di miniature). Valore consigliato: 85.",
-        "markdownMacros": "È supportata la sintassiMarkdowned è possibile utilizzare tre macro che verranno sostituite nella pagina:",
-        "mastodon": "Se l'istanza ha il suo account ufficiale suMastodon, puoi definire qui il suo indirizzo. Se l'indirizzo dell'istanzaVernissageviene fornito anche suMastodon, saranno presenti informazioni che indicano che l'account è stato verificato daMastodon.",
-        "quickCaptcha": "Questo CAPTCHA è implementato internamente e non comunica con alcun servizio esterno, garantendo la completa privacy degli utenti. Il captcha viene mostrato solo quando la registrazione è aperta per tutti i nuovi utenti.",
-        "registrationMode": "La registrazione basata su invito e la registrazione tramite approvazione funzionano solo quando la registrazione per tutti gli utenti è disabilitata.",
-        "regularStatusesInterval": "Definisce il tempo minimo (in secondi) che un utente deve attendere prima di pubblicare un altro stato regolare. Ciò aiuta a proteggere l'istanza da picchi di post di tipo spam, riduce il rumore della sequenza temporale e limita il traffico federativo non necessario verso i server remoti.",
+        "markdownMacros": "È supportata la sintassi Markdown, ed è possibile utilizzare tre macro che verranno sostituite nella pagina:",
+        "mastodon": "Se l'istanza ha il suo account ufficiale su Mastodon, puoi indicare qui il suo indirizzo. Se l'indirizzo dell'istanza Vernissage viene indicato anche su Mastodon, saranno presenti informazioni che indicano che l'account è stato verificato da Mastodon.",
+        "quickCaptcha": "Questo CAPTCHA è implementato internamente e non comunica con alcun servizio esterno, garantendo la completa privacy degli utenti. Il captcha viene mostrato solo quando la registrazione è aperta a tutti i nuovi utenti.",
+        "registrationMode": "La registrazione basata su invito e la registrazione per approvazione funzionano solo quando la registrazione per tutti gli utenti è disabilitata.",
+        "regularStatusesInterval": "Definisce il tempo minimo (in secondi) che un utente deve attendere prima di pubblicare un altro status regolare. Ciò aiuta a proteggere l'istanza da picchi di post di tipo spam, riduce il rumore della timeline e limita il traffico federativo non necessario verso i server remoti.",
         "sameDomainCors": "Il file deve trovarsi nello stesso dominio dell'applicazione ospitata; in caso contrario, potrebbe essere bloccato a causa delle restrizioni di sicurezza CORS.",
-        "silentStatusesInterval": "Definisce il tempo minimo (in secondi) che un utente deve attendere prima di pubblicare un altro stato silenzioso. Gli stati silenziosi sono destinati a scenari di importazione/sincronizzazione (ad esempio da app esterne). Questi post non vengono consegnati alle timeline degli utenti e non sono federati tramiteActivityPub."
+        "silentStatusesInterval": "Definisce il tempo minimo (in secondi) che un utente deve attendere prima di pubblicare un altro status silenzioso. Gli status silenziosi sono destinati a scenari di importazione/sincronizzazione (ad esempio da app esterne). Questi post non vengono consegnati alle timeline degli utenti e non sono federati tramite ActivityPub."
       },
       "jobs": {
-        "calculateLongTrending": "Calcola il lavoro di tendenza a lungo termine",
-        "calculateShortTrending": "Calcola il lavoro di tendenza di breve periodo",
-        "clearAttachments": "Cancella gli allegati non collegati agli stati del lavoro",
-        "clearCaptchaTokens": "Cancella il vecchio lavoro sui token captcha",
-        "clearDeletedUsers": "Cancella il lavoro degli utenti eliminati",
-        "clearFailedLogins": "Cancella il vecchio processo di registrazione degli accessi non riusciti",
+        "calculateLongTrending": "Calcola le tendenze su un lungo periodo",
+        "calculateShortTrending": "Calcola le tendenze su un breve periodo",
+        "clearAttachments": "Cancella gli allegati non collegati a degli status",
+        "clearCaptchaTokens": "Cancella i vecchi token captcha",
+        "clearDeletedUsers": "Cancella gli utenti eliminati",
+        "clearFailedLogins": "Cancella il vecchio processo di log degli accessi non riusciti",
         "clearOldErrors": "Elimina i vecchi errori",
-        "createArchives": "Crea lavoro di archiviazione",
-        "deleteOldArchives": "Elimina il vecchio lavoro di archiviazione",
-        "fillLocationsTable": "Compila il lavoro della tabella delle posizioni",
-        "purgeOldStatuses": "Elimina i vecchi stati del lavoro",
-        "rescheduleFailedActivityPub": "Riprogrammare il processo degli eventiActivityPubnon riusciti"
+        "createArchives": "Crea degli archivi",
+        "deleteOldArchives": "Elimina i vecchi archivi",
+        "fillLocationsTable": "Compila la tabella di geolocalizzazione",
+        "purgeOldStatuses": "Elimina i vecchi status",
+        "rescheduleFailedActivityPub": "Riprogrammare gli eventi ActivityPub non riusciti"
       },
       "labels": {
-        "systemDefaultUserId": "ID utente di sistema predefinito",
-        "webContactUserId": "ID utente contatto Web"
+        "systemDefaultUserId": "Id predefinito dell'utente di sistema",
+        "webContactUserId": "Id utente contatto web"
       },
       "messages": {
         "settingsWasSaved": "Le impostazioni sono state salvate."
       },
       "none": "Nessuno",
-      "registration": "Registrazioni",
+      "registration": "Iscrizioni",
       "ssl": "SSL",
       "texts": {
-        "aiDescriptionPrompt": "Richiesta di descrizioneAI",
-        "aiHashtagsPrompt": "Richiesta hashtagAI",
-        "aiModel": "ModelloAI",
-        "aiProviderName": "Nome del fornitoreAI",
-        "aiSecretKey": "Chiave segretaAI",
-        "aiUrl": "AIURL",
+        "aiDescriptionPrompt": "Prompt descrizione AI",
+        "aiHashtagsPrompt": "Prompt hashtag AI",
+        "aiModel": "Modello AI",
+        "aiProviderName": "Nome del fornitore AI",
+        "aiSecretKey": "Chiave segreta AI",
+        "aiUrl": "URL dell'AI",
         "anonymousAccess": "Accesso anonimo",
-        "antiFloodSettings": "Impostazioni antiallagamento",
+        "antiFloodSettings": "Impostazioni anti-flood",
         "artificialInteligence": "Intelligenza artificiale",
-        "corsOrgins": "Origini del CORS",
-        "customJavascript": "JavaScriptpersonalizzato",
+        "corsOrgins": "Origini CORS",
+        "customJavascript": "JavaScript personalizzato",
         "customStyles": "Stili personalizzati",
         "databaseLoggedEvents": "Eventi registrati nel database",
-        "defaultAccounts": "Conti predefiniti",
-        "deleteStatusesOlderThanDays": "Elimina stati più vecchi di (giorni)",
-        "emailFromAddress": "E-mail dall'indirizzo",
-        "emailFromName": "E-mail dal nome",
-        "emailHostname": "Nome host e-mail",
-        "emailPassword": "Password di posta elettronica",
-        "emailPort": "Porta di posta elettronica",
-        "emailSecureMethod": "Metodo sicuro per la posta elettronica",
-        "emailServer": "Server di posta elettronica",
+        "defaultAccounts": "Account predefiniti",
+        "deleteStatusesOlderThanDays": "Elimina status più vecchi di (giorni)",
+        "emailFromAddress": "Indirizzo del mittente dell’E-mail",
+        "emailFromName": "Nome del mittente dell’E-mail",
+        "emailHostname": "Nome di dominio dell'e-mail",
+        "emailPassword": "Password dell'email",
+        "emailPort": "Porta dell'e-mail",
+        "emailSecureMethod": "Metodo di sicurezza dell'e-mail",
+        "emailServer": "Server e-mail",
         "emailUsername": "Nome utente e-mail",
         "eventsToLog": "Eventi da registrare",
         "financialSupport": "Supporto finanziario",
-        "httpPathToCustomCssFile": "PercorsoHTTPal fileCSSpersonalizzato",
-        "httpPathToCustomJavascriptFile": "PercorsoHTTPal fileJavaScriptpersonalizzato",
+        "httpPathToCustomCssFile": "Percorso HTTP al file CSS personalizzato",
+        "httpPathToCustomJavascriptFile": "Percorso HTTP al file JavaScript personalizzato",
         "imagesQuality": "Qualità delle immagini",
         "imagesUrl": "URL delle immagini",
-        "inlineCustomCssStyles": "StiliCSSpersonalizzati in linea",
-        "inlineCustomJavascript": "JavaScriptpersonalizzato in linea",
-        "mainServerSettings": "Impostazioni principali del server",
-        "mastodonUrl": "MastodonURL",
+        "inlineCustomCssStyles": "Stili CSS personalizzati",
+        "inlineCustomJavascript": "JavaScript personalizzato",
+        "mainServerSettings": "Impostazioni del server principale",
+        "mastodonUrl": "URL Mastodon",
         "maximumFileSize": "Dimensione massima del file",
         "maximumNumberOfAttachments": "Numero massimo di allegati",
-        "maximumNumberOfCharactersInStatus": "Numero massimo di caratteri nello stato",
+        "maximumNumberOfCharactersInStatus": "Numero massimo di caratteri nello status",
         "maximumNumberOfInvitationsPerUser": "Numero massimo di inviti per utente",
-        "minimumIntervalBetweenAddingSilentStatusesSeconds": "Intervallo minimo tra l'aggiunta di stati silenziosi (secondi)",
-        "minimumIntervalBetweenAddingStatusesSeconds": "Intervallo minimo tra l'aggiunta degli stati (secondi)",
-        "patreonUrl": "PatreonURL",
-        "privacyPolicy": "Politica sulla riservatezza",
+        "minimumIntervalBetweenAddingSilentStatusesSeconds": "Intervallo minimo tra l'aggiunta di status silenziosi (secondi)",
+        "minimumIntervalBetweenAddingStatusesSeconds": "Intervallo minimo tra l'aggiunta di status (secondi)",
+        "patreonUrl": "URL Patreon",
+        "privacyPolicy": "Politica sulla privacy",
         "privacyPolicyContent": "Contenuto della politica sulla privacy",
         "privacyPolicyUpdateDate": "Data di aggiornamento della politica sulla privacy",
         "scheduledJobs": "Lavori programmati",
@@ -474,35 +474,35 @@
         "termsOfServiceUpdateDate": "Data di aggiornamento dei Termini di servizio",
         "totalCost": "Costo totale",
         "usersSupport": "Supporto agli utenti",
-        "webDescription": "Descrizione web",
-        "webEmail": "Posta elettronica sul Web",
-        "webLanguages": "Linguaggi del web",
-        "webLongDescription": "Descrizione lunga sul Web",
+        "webDescription": "Descrizione per il web",
+        "webEmail": "E-mail Web",
+        "webLanguages": "Lingue web",
+        "webLongDescription": "Descrizione lunga per il Web",
         "webThumbnailUrl": "URL della miniatura Web",
         "webTitle": "Titolo web",
-        "webpushNotifications": "NotificheWebPush",
-        "webpushServiceEndpoint": "Endpoint del servizioWebPush",
-        "webpushServiceSecretKey": "Chiave segreta del servizioWebPush",
-        "webpushVapidPrivateKey": "WebPushChiave privata vapid",
-        "webpushVapidPublicKey": "WebPushChiave pubblica non valida",
-        "webpushVapidSubject": "WebPushSoggetto insulso"
+        "webpushNotifications": "Notifiche WebPush",
+        "webpushServiceEndpoint": "Endpoint del servizio WebPush",
+        "webpushServiceSecretKey": "Chiave segreta del servizio WebPush",
+        "webpushVapidPrivateKey": "Chiave privata WebPush Vapid",
+        "webpushVapidPublicKey": "Chiave pubblica WebPush Vapid",
+        "webpushVapidSubject": "Soggetto WebPush Vapid"
       },
       "toggles": {
-        "isAiEnabled": "AIè abilitato",
-        "isQuickCaptchaEnabled": "QuickCaptcha è abilitato (captcha interno)",
-        "isRegistrationByApprovalOpened": "La registrazione è aperta tramite approvazione",
-        "isRegistrationByInvitationsOpened": "È aperta la registrazione tramite inviti",
-        "isRegistrationOpened": "La registrazione è aperta",
-        "isWebPushEnabled": "Le notificheWebPushsono abilitate",
+        "isAiEnabled": "AI abilitata",
+        "isQuickCaptchaEnabled": "QuickCaptcha abilitato (captcha interno)",
+        "isRegistrationByApprovalOpened": "Registrazione tramite approvazione aperta",
+        "isRegistrationByInvitationsOpened": "Registrazione tramite inviti aperta",
+        "isRegistrationOpened": "Registrazione aperta",
+        "isWebPushEnabled": "Le notifiche WebPush sono abilitate",
         "showCategoriesForAnonymous": "Mostra categorie per utente anonimo",
-        "showEditorsStatusesChoiceForAnonymous": "Mostra la scelta dello stato dell'editor per l'utente anonimo",
-        "showEditorsUsersChoiceForAnonymous": "Mostra la scelta degli utenti dell'editor per l'utente anonimo",
-        "showHashtagsForAnonymous": "Mostra hashtag per utente anonimo",
-        "showLocalTimelineForAnonymous": "Mostra la cronologia locale per l'utente anonimo",
-        "showNewsForAnonymous": "Mostra la voce di menu \"Novità\" per gli utenti anonimi",
-        "showNewsForSignedIn": "Mostra la voce di menu \"Novità\" per gli utenti che hanno effettuato l'accesso",
-        "showSharedBusinessCards": "Mostra la voce di menu \"Biglietti da visita condivisi\".",
-        "showTrendingForAnonymous": "Mostra trend per utente anonimo"
+        "showEditorsStatusesChoiceForAnonymous": "Mostra gli status scelti dall'editor per l'utente anonimo",
+        "showEditorsUsersChoiceForAnonymous": "Mostra gli utenti scelti dall'editor per l'utente anonimo",
+        "showHashtagsForAnonymous": "Mostra gli hashtag per utente anonimo",
+        "showLocalTimelineForAnonymous": "Mostra la timeline locale per l'utente anonimo",
+        "showNewsForAnonymous": "Mostra l’elemento di menu \"Novità\" per gli utenti anonimi",
+        "showNewsForSignedIn": "Mostrala la voce \"Novità\" per gli utenti che hanno effettuato l'accesso",
+        "showSharedBusinessCards": "Mostra la voce \"Biglietti da visita condivisi\"",
+        "showTrendingForAnonymous": "Mostra i trend per l'utente anonimo"
       }
     },
     "hashtagGallery": {
@@ -512,26 +512,26 @@
     },
     "header": {
       "applicationLogo": "Logo dell'applicazione",
-      "menuWithActions": "Menù con azioni",
+      "menuWithActions": "Menù delle azioni",
       "navigation": {
-        "account": "Conto",
+        "account": "Account",
         "articles": "Articoli",
         "categories": "Categorie",
-        "editorsChoice": "La scelta dell'editore",
+        "editorsChoice": "Scelti dell'editor",
         "errors": "Errori",
         "events": "Eventi",
-        "home": "Casa",
+        "home": "Home",
         "invitations": "Inviti",
         "news": "Novità",
         "notifications": "Notifiche",
         "preferences": "Preferenze",
-        "reports": "Rapporti",
+        "reports": "Segnalazioni",
         "sharedBusinessCards": "Biglietti da visita condivisi",
         "support": "Supporto",
-        "trending": "Tendenza",
+        "trending": "In tendenza",
         "users": "Utenti"
       },
-      "signedInAs": "Registrato come",
+      "signedInAs": "Accesso eseguito come",
       "switchTheme": "Cambia tema"
     },
     "homeCards": {
@@ -540,41 +540,41 @@
         "homeCardHasBeenDeleted": "La scheda Home è stata eliminata."
       },
       "texts": {
-        "newHomeCard": "Nuova carta domestica"
+        "newHomeCard": "Nuova scheda home"
       }
     },
     "homeSignin": {
       "attrs": {
-        "refreshCurrentTimeline": "Aggiorna la sequenza temporale corrente",
-        "timelineType": "Tipo di sequenza temporale"
+        "refreshCurrentTimeline": "Aggiorna la timeline corrente",
+        "timelineType": "Tipo di timeline"
       },
       "texts": {
-        "localCollectionOfPhotos": "Una raccolta di foto create da tutti i post pubblicati dagli utenti su questo server.",
-        "federatedCollectionOfPhotos": "Una raccolta di foto creata da tutte le immagini caricate dagli utenti che hanno raggiunto questo server.",
+        "localCollectionOfPhotos": "Una raccolta di foto creata con tutti i post pubblicati dagli utenti su questo server.",
+        "federatedCollectionOfPhotos": "Una raccolta di foto creata con tutte le immagini caricate dagli utenti che hanno raggiunto questo server.",
         "privateCollectionOfPhotos": "La tua raccolta personale di foto, creata in base ai post degli utenti che segui."
       },
-      "timeline": "Cronologia"
+      "timeline": "Timeline"
     },
     "homeSignout": {
       "mastodon": "Mastodon",
       "texts": {
-        "apiDocumentation": "DocumentazioneAPI",
-        "editorSChoiceAcrossWholeFediverse": "La scelta dell'editore sull'interoFediverse",
-        "itSAdFreeAndFocusedOn": "È privo di pubblicità e si concentra sulla comunità e sulla creatività, non sugli algoritmi.",
-        "privacyPolicy": "Politica sulla riservatezza",
-        "rediscoverTheBeautyOfPhotography": "Rediscopri la bellezza della fotografia",
+        "apiDocumentation": "Documentazione API",
+        "editorSChoiceAcrossWholeFediverse": "Le scelte dell'editore nell'intero Fediverso",
+        "itSAdFreeAndFocusedOn": "È senza pubblicità e si concentra sulla comunità e sulla creatività, non sugli algoritmi.",
+        "privacyPolicy": "Politica sulla privacy",
+        "rediscoverTheBeautyOfPhotography": "Riscopri la bellezza della fotografia",
         "sourceCode": "Codice sorgente",
-        "termsOfService": "Termini di servizio",
-        "vernissageIsAFreePlatformDesignedFor": "Vernissageè una piattaforma gratuita progettata per i fotografi."
+        "termsOfService": "Termini di Servizio",
+        "vernissageIsAFreePlatformDesignedFor": "Vernissage è una piattaforma gratuita progettata per i fotografi."
       }
     },
     "image": {
       "altLabel": "ALT",
       "messages": {
-        "statusBoosted": "Stato potenziato.",
-        "statusFavourited": "Stato favorito.",
-        "yourBoostHasBeenUndone": "Il tuo potenziamento è stato annullato.",
-        "yourLikeHasBeenUndone": "Il tuo Mi piace è stato annullato."
+        "statusBoosted": "Status condiviso.",
+        "statusFavourited": "Status preferito.",
+        "yourBoostHasBeenUndone": "La tua condivisione è stata annullata.",
+        "yourLikeHasBeenUndone": "Il tuo \"Mi piace\" è stato annullato."
       }
     },
     "instanceRules": {
@@ -597,7 +597,7 @@
     },
     "password": {
       "attrs": {
-        "password": "Parola d'ordine",
+        "password": "Password",
         "togglePasswordVisibility": "Attiva/disattiva la visibilità della password"
       },
       "texts": {
@@ -611,24 +611,24 @@
     "statusProperties": {
       "attrs": {
         "application": "Applicazione",
-        "followers": "Seguaci",
+        "followers": "Follower",
         "mentioned": "Menzionato",
-        "numberOfBoosts": "Numero di boost",
-        "numberOfLikes": "Numero di Mi piace",
+        "numberOfBoosts": "Numero di condivisioni",
+        "numberOfLikes": "Numero di \"Mi piace\"",
         "public": "Pubblico",
         "publishedDate": "Data di pubblicazione",
-        "quietpublic": "QuietPublic"
+        "quietpublic": "Pubblico (tranquilli)"
       }
     },
     "statusTextAutocomplete": {
       "attrs": {
         "hashtagSuggestions": "Suggerimenti per gli hashtag",
-        "status": "Stato",
+        "status": "Status",
         "userSuggestions": "Suggerimenti degli utenti"
       },
       "texts": {
-        "enterStatusText": "Inserisci il testo dello stato.",
-        "tooLongStatus": "Stato troppo lungo.",
+        "enterStatusText": "Inserisci il testo dello status.",
+        "tooLongStatus": "Status troppo lungo.",
         "usePascalcaseForHashtagsCapitalizingTheFirst": "Utilizza \"PascalCase\" per gli hashtag, scrivendo in maiuscolo la prima lettera di ogni parola, per migliorare la leggibilità e l'accessibilità."
       }
     },
@@ -637,16 +637,16 @@
         "altText": "Testo alternativo",
         "aperture": "Apertura",
         "chemistry": "Chimica",
-        "createDate": "Crea data",
-        "createTime": "Crea tempo",
+        "createDate": "Data di creazione",
+        "createTime": "Orario di creazione",
         "enterLocation": "Inserisci la posizione",
         "exposureTime": "Tempo di esposizione",
         "film": "Pellicola",
         "flash": "Flash",
         "focalLength": "Lunghezza focale",
         "focalLengthIn35mmFilmEquivalent": "Lunghezza focale equivalente a una pellicola da 35 mm",
-        "gpsLatitude": "LatitudineGPS",
-        "gpsLongitude": "LongitudineGPS",
+        "gpsLatitude": "Latitudine GPS",
+        "gpsLongitude": "Longitudine GPS",
         "iso": "ISO",
         "lens": "Lente",
         "manufacturer": "Produttore",
@@ -662,49 +662,52 @@
         "date": "Data",
         "license": "Licenza",
         "location": "Posizione",
-        "time": "Tempo"
+        "time": "Orario"
       },
       "messages": {
-        "uploadedFileTooLarge": "Il file caricato è troppo grande. La dimensione massima è{{size}}."
+        "uploadedFileTooLarge": "Il file caricato è troppo grande. La dimensione massima è {{size}}."
       },
       "texts": {
         "altText": "Testo alternativo",
-        "aperture": "Apertura:",
+        "aperture": "Apertura del diaframma:",
         "chemistry": "Chimica:",
+        "chooseCityFromList": "Scegli una città dall’elenco.",
+        "chooseCountryFromList": "Scegli un Paese dall’elenco.",
         "createDate": "Data di creazione:",
-        "deleteHdrVersion": "Elimina la versioneHDR",
+        "deleteHdrVersion": "Elimina la versione HDR",
         "exifMetadata": "Metadati Exif",
         "exposureTime": "Tempo di esposizione:",
         "f": "f/",
-        "featurePoweredBy": "Funzionalità fornita da{{providerName}}.",
+        "featurePoweredBy": "Funzionalità fornita da {{providerName}}.",
         "film": "Pellicola:",
         "flash": "Flash:",
         "focalLength": "Lunghezza focale:",
         "fullFrameEquivalent": "Equivalente a pieno formato",
         "generate": "Genera",
-        "geolocationDisclosureWarning": "Condividendo i dati di geolocalizzazione della tua foto, riveli la posizione esatta in cui è stata scattata la foto.",
-        "gpsCoordinates": "CoordinateGPS:",
-        "imageExceededLimitAndWasResized": "La tua immagine ha superato il limite{{maxFileSize}}, quindi è stata ridimensionata automaticamente a 4096 px sul bordo più lungo.",
+        "geolocationDisclosureWarning": "Condividendo i dati di geolocalizzazione della tua foto, stai rivelando il luogo esatto in cui la foto è stata scattata. Prima di procedere, assicurati di essere d’accordo che queste informazioni siano disponibili pubblicamente.",
+        "gpsCoordinates": "Coordinate GPS:",
+        "hdrIncludeInformation": "Hai la possibilità di includere una versione HDR dell’immagine (AVIF). Questa versione verrà visualizzata solo nei dettagli dello stato sulla piattaforma Vernissage. La dimensione massima del file è {{hdrFileSizeString}}.",
+        "imageExceededLimitAndWasResized": "La tua immagine ha superato il limite di {{maxFileSize}}, quindi è stata ridimensionata automaticamente a 4096 px sul bordo più lungo.",
         "information": "Informazioni:",
         "iso": "ISO:",
         "lens": "Lente:",
         "manufacturer": "Produttore:",
         "mm": "mm",
         "model": "Modello:",
-        "originalFilePreservedWarning": "L'immagine caricata verrà conservata come file originale senza alcuna modifica.",
+        "originalFilePreservedWarning": "L’immagine caricata verrà conservata come file originale senza alcuna modifica. Prima del caricamento, assicurati che non contenga metadati che non desideri rendere pubblici.",
         "scanner": "Scanner:",
-        "sec": "sez",
+        "sec": "sec",
         "software": "Software:",
         "tooLongAltText": "Testo alternativo troppo lungo.",
-        "uploading": "Caricamento...",
-        "warning": "Avvertimento:",
+        "uploading": "In caricamento...",
+        "warning": "Attenzione:",
         "withoutALicense": "Senza licenza"
       }
     },
     "userSelector": {
       "texts": {
-        "choseUser": "Scegli utente.",
-        "choseUserFromList": "Scegli l'utente dall'elenco."
+        "choseUser": "Scegli un utente.",
+        "choseUserFromList": "Scegli un utente dall'elenco."
       }
     },
     "usersGallery": {
@@ -743,9 +746,9 @@
       },
       "texts": {
         "changeEmail": "Cambia e-mail",
-        "chooseOtherEmailThisOneIsAlready": "Scegli un'altra email, questa è già connessa a un account diverso.",
+        "chooseOtherEmailThisOneIsAlready": "Scegli un'altra e-mail. Questa è già connessa a un account diverso.",
         "enterEmail": "Inserisci l'e-mail.",
-        "privacyNote": "Non preoccuparti. Queste informazioni sono sacre per noi. Non lo mostreremo, lo venderemo o lo abuseremo mai.",
+        "privacyNote": "Non preoccuparti. Queste informazioni sono sacre per noi. Non le mostreremo, venderemo o ne abuseremo mai.",
         "verifyThatYouVeEnteredProperEmail": "Verifica di aver inserito l'e-mail corretta."
       }
     },
@@ -776,7 +779,7 @@
         "alias": "Alias"
       },
       "messages": {
-        "newAccountAliasHasBeenCreated": "È stato creato un nuovo alias account."
+        "newAccountAliasHasBeenCreated": "È stato creato un nuovo account alias."
       },
       "texts": {
         "accountAlias": "Alias dell'account",
@@ -1281,7 +1284,7 @@
       "accountNotFound": "Conto non trovato."
     },
     "followRequest": {
-      "missingFollowEntity": "L'entità Follow (sourceUserId: '{{sourceUserId}}', targetUserId: '{{targetUserId}}') non esiste nel database locale.",
+      "missingFollowEntity": "L'entità Segui (sourceUserId: '{{sourceUserId}}', targetUserId: '{{targetUserId}}') non esiste nel database locale.",
       "missingSourceUser": "L'utente di origine '{{userId}}' manca nel database.",
       "missingTargetUser": "L'utente di destinazione '{{userId}}' manca nel database.",
       "missingActivityPubActionId": "Manca l'ID azioneActivity Pubnella richiesta di follow.",
@@ -2583,7 +2586,8 @@
         "maxImagesPerPost": "Puoi caricare fino a{{count}}immagini per post.",
         "statusSaved": "Lo stato è stato salvato.",
         "statusUpdated": "Lo stato è stato aggiornato.",
-        "tooManyFilesSelected": "Troppi file selezionati. Puoi aggiungere{{count}}più immagini{{suffix}}.",
+        "tooManyFilesSelectedSingular": "Troppi file selezionati. Puoi aggiungere ancora un’immagine.",
+        "tooManyFilesSelectedPlural": "Troppi file selezionati. Puoi aggiungere ancora {{count}} immagini.",
         "unableToResize": "Impossibile ridimensionare l'immagine prima del caricamento.",
         "unsupportedFileType": "Questo tipo di file non è supportato. Carica un'immagineJPG,PNGo WEBP.",
         "verifyEmailBeforePublish": "Per pubblicare uno stato, verifica prima il tuo indirizzo email."

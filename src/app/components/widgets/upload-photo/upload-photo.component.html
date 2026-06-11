@@ -74,7 +74,7 @@
         <mat-label>{{ 'components.uploadPhoto.labels.country' | translate }}</mat-label>
         <input type="text"
             [placeholder]="'components.uploadPhoto.attrs.enterLocation' | translate"
-            [attr.aria-label]="'components.uploadPhoto.attrs.number' | translate"
+            [attr.aria-label]="'components.uploadPhoto.labels.country' | translate"
             matInput
             [formControl]="countriesControl"
             [appAutocompleteValid]="true"
@@ -94,7 +94,7 @@
         }
 
         @if (countriesControl.hasError('appAutocompleteValid')) {
-            <mat-error>Choose a country from the list.</mat-error>
+            <mat-error>{{ 'components.uploadPhoto.texts.chooseCountryFromList' | translate }}</mat-error>
         }
     </mat-form-field>
 
@@ -102,7 +102,7 @@
         <mat-label>{{ 'components.uploadPhoto.labels.city' | translate }}</mat-label>
         <input type="text"
             [placeholder]="'components.uploadPhoto.attrs.enterLocation' | translate"
-            [attr.aria-label]="'components.uploadPhoto.attrs.number' | translate"
+            [attr.aria-label]="'components.uploadPhoto.labels.city' | translate"
             matInput
             [formControl]="citiesControl"
             [appAutocompleteValid]="true"
@@ -122,7 +122,7 @@
         }
 
         @if (citiesControl.hasError('appAutocompleteValid')) {
-            <mat-error>Choose a city from the list.</mat-error>
+            <mat-error>{{ 'components.uploadPhoto.texts.chooseCityFromList' | translate }}</mat-error>
         }
     </mat-form-field>
 
@@ -149,7 +149,6 @@
 
         <div class="margin-bottom-20 margin-left-10 width-100 text-muted fs-90">
             <strong>{{ 'components.uploadPhoto.texts.warning' | translate }}</strong> {{ 'components.uploadPhoto.texts.geolocationDisclosureWarning' | translate }}
-            Please ensure you are comfortable with this information being publicly available before proceeding.
         </div>
 
         <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
@@ -339,9 +338,7 @@
 
         <div class="flex-grow-3 width-100 text-muted fs-90">
             <p class="padding-top-5">
-                You have the option to include an HDR version of the image (AVIF).
-                This version will only be displayed in the status details on the Vernissage platform.
-                Maximum file size is {{ hdrFileSizeString() }}.
+                {{ 'components.uploadPhoto.texts.hdrIncludeInformation' | translate: { hdrFileSizeString: hdrFileSizeString() } }}
             </p>
         </div>
 
@@ -349,6 +346,5 @@
 
     <div class="width-100 text-muted fs-90">
             <strong>{{ 'components.uploadPhoto.texts.warning' | translate }}</strong> {{ 'components.uploadPhoto.texts.originalFilePreservedWarning' | translate }}
-        Ensure that it does not contain any metadata you do not wish to make public before uploading.
     </div>
 </div>

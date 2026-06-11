@@ -617,7 +617,7 @@
         "numberOfLikes": "Antall likes",
         "public": "Offentlig",
         "publishedDate": "Publiseringsdato",
-        "quietpublic": "QuietPublic"
+        "quietpublic": "Offentlig (stille)"
       }
     },
     "statusTextAutocomplete": {
@@ -671,6 +671,8 @@
         "altText": "Alt tekst",
         "aperture": "Blenderåpning:",
         "chemistry": "Kjemi:",
+        "chooseCityFromList": "Velg en by fra listen.",
+        "chooseCountryFromList": "Velg et land fra listen.",
         "createDate": "Opprettingsdato:",
         "deleteHdrVersion": "SlettHDRversjon",
         "exifMetadata": "Exif-metadata",
@@ -682,8 +684,9 @@
         "focalLength": "Brennvidde:",
         "fullFrameEquivalent": "Tilsvarende fullformat",
         "generate": "Generer",
-        "geolocationDisclosureWarning": "Ved å dele geolokaliseringsdataene til bildet ditt, avslører du den nøyaktige plasseringen der bildet ble tatt.",
+        "geolocationDisclosureWarning": "Ved å dele geolokaliseringsdataene for bildet ditt, avslører du det nøyaktige stedet der bildet ble tatt. Sørg for at du er komfortabel med at denne informasjonen blir offentlig tilgjengelig før du fortsetter.",
         "gpsCoordinates": "GPSkoordinater:",
+        "hdrIncludeInformation": "Du har mulighet til å inkludere en HDR-versjon av bildet (AVIF). Denne versjonen vises bare i statusdetaljene på Vernissage-plattformen. Maksimal filstørrelse er {{hdrFileSizeString}}.",
         "imageExceededLimitAndWasResized": "Bildet ditt overskred{{maxFileSize}}-grensen, så det ble automatisk endret til 4096 px på den lengre kanten.",
         "information": "Informasjon:",
         "iso": "ISO:",
@@ -691,7 +694,7 @@
         "manufacturer": "Produsent:",
         "mm": "mm",
         "model": "Modell:",
-        "originalFilePreservedWarning": "Det opplastede bildet vil bli bevart som originalfilen uten noen endringer.",
+        "originalFilePreservedWarning": "Det opplastede bildet vil bli bevart som originalfilen uten noen endringer. Sørg for at det ikke inneholder metadata du ikke ønsker å gjøre offentlig tilgjengelige, før du laster det opp.",
         "scanner": "Skanner:",
         "sec": "sek",
         "software": "Programvare:",
@@ -2583,7 +2586,8 @@
         "maxImagesPerPost": "Du kan laste opp opptil{{count}}-bilder per innlegg.",
         "statusSaved": "Status er lagret.",
         "statusUpdated": "Status er oppdatert.",
-        "tooManyFilesSelected": "For mange filer er valgt. Du kan legge til{{count}}mer image{{suffix}}.",
+        "tooManyFilesSelectedSingular": "For mange filer er valgt. Du kan legge til ett bilde til.",
+        "tooManyFilesSelectedPlural": "For mange filer er valgt. Du kan legge til {{count}} bilder til.",
         "unableToResize": "Kan ikke endre størrelse på bildet før opplasting.",
         "unsupportedFileType": "Denne filtypen støttes ikke. Last opp etJPG-,PNG- eller WEBP-bilde.",
         "verifyEmailBeforePublish": "For å publisere en status, vennligst bekrefte e-postadressen din først."

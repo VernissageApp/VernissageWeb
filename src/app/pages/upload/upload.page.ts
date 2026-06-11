@@ -150,10 +150,16 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
         }
 
         if (files.length > availablePhotoSlots) {
-            this.messageService.showError(this.translateService.instant('pages.upload.messages.tooManyFilesSelected', {
-                count: availablePhotoSlots,
-                suffix: availablePhotoSlots === 1 ? '' : 's'
-            }));
+            if (availablePhotoSlots === 1) {
+                this.messageService.showError(this.translateService.instant('pages.upload.messages.tooManyFilesSelectedSingular', {
+                    count: availablePhotoSlots
+                }));
+            } else {
+                this.messageService.showError(this.translateService.instant('pages.upload.messages.tooManyFilesSelectedPlural', {
+                    count: availablePhotoSlots
+                }));
+            }
+
             this.resetPhotoFileUpload();
             return;
         }

@@ -617,7 +617,7 @@
         "numberOfLikes": "Antal likes",
         "public": "Offentligt",
         "publishedDate": "Publiceringsdatum",
-        "quietpublic": "QuietPublic"
+        "quietpublic": "Alla (tyst)"
       }
     },
     "statusTextAutocomplete": {
@@ -671,6 +671,8 @@
         "altText": "Alt text",
         "aperture": "Bländare:",
         "chemistry": "Kemi:",
+        "chooseCityFromList": "Välj en stad från listan.",
+        "chooseCountryFromList": "Välj ett land från listan.",
         "createDate": "Skapa datum:",
         "deleteHdrVersion": "Ta bortHDRversion",
         "exifMetadata": "Exif-metadata",
@@ -682,8 +684,9 @@
         "focalLength": "Brännvidd:",
         "fullFrameEquivalent": "Motsvarande helbild",
         "generate": "Generera",
-        "geolocationDisclosureWarning": "Genom att dela geolokaliseringsdata för ditt foto avslöjar du den exakta platsen där bilden togs.",
+        "geolocationDisclosureWarning": "Genom att dela geolokaliseringsdata för ditt foto avslöjar du den exakta plats där fotot togs. Se till att du är bekväm med att denna information blir offentligt tillgänglig innan du fortsätter.",
         "gpsCoordinates": "GPSkoordinater:",
+        "hdrIncludeInformation": "Du har möjlighet att inkludera en HDR-version av bilden (AVIF). Denna version visas endast i statusdetaljerna på Vernissage-plattformen. Maximal filstorlek är {{hdrFileSizeString}}.",
         "imageExceededLimitAndWasResized": "Din bild överskred gränsen för{{maxFileSize}}, så storleken ändrades automatiskt till 4096 px på den längre kanten.",
         "information": "Information:",
         "iso": "ISO:",
@@ -691,7 +694,7 @@
         "manufacturer": "Tillverkare:",
         "mm": "mm",
         "model": "Modell:",
-        "originalFilePreservedWarning": "Den uppladdade bilden kommer att bevaras som originalfilen utan några ändringar.",
+        "originalFilePreservedWarning": "Den uppladdade bilden kommer att bevaras som originalfilen utan några ändringar. Kontrollera innan du laddar upp den att den inte innehåller metadata som du inte vill göra offentliga.",
         "scanner": "Skanner:",
         "sec": "sek",
         "software": "Programvara:",
@@ -2583,7 +2586,8 @@
         "maxImagesPerPost": "Du kan ladda upp upp till{{count}}bilder per inlägg.",
         "statusSaved": "Status har sparats.",
         "statusUpdated": "Status har uppdaterats.",
-        "tooManyFilesSelected": "För många filer har valts. Du kan lägga till{{count}}mer image{{suffix}}.",
+        "tooManyFilesSelectedSingular": "För många filer har valts. Du kan lägga till en bild till.",
+        "tooManyFilesSelectedPlural": "För många filer har valts. Du kan lägga till {{count}} bilder till.",
         "unableToResize": "Det gick inte att ändra storlek på bilden före uppladdning.",
         "unsupportedFileType": "Denna filtyp stöds inte. Ladda upp enJPG-,PNG- eller WEBP-bild.",
         "verifyEmailBeforePublish": "För att publicera en status, vänligen verifiera din e-postadress först."
