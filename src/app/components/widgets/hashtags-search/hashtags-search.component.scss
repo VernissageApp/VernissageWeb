@@ -11,6 +11,10 @@ mat-icon {
 }
 
 .image-container {
+    display: block;
+    line-height: 0;
+    text-decoration: none;
+
     img {
         width: 100px;
         height: 100px;
