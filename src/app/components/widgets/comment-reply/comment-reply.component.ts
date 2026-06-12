@@ -43,6 +43,7 @@ export class CommentReplyComponent implements OnInit {
     private instanceService = inject(InstanceService);
     private messageService = inject(MessagesService);
     private translateService = inject(TranslateService);
+    private initializedStatusId?: string;
 
     constructor() {
         effect(() => this.fillUserName(this.status()));
@@ -67,7 +68,7 @@ export class CommentReplyComponent implements OnInit {
                 this.commentForm()?.resetForm();
 
                 setTimeout(() => {
-                    this.fillUserName(this.status());
+                    this.fillUserName(this.status(), true);
                 });
 
                 this.messageService.showSuccess(this.translateService.instant('components.commentReply.messages.commentHasBeenAdded'));
@@ -85,10 +86,15 @@ export class CommentReplyComponent implements OnInit {
         this.clickCancel.emit();
     }
 
-    private fillUserName(status: Status): void {
+    private fillUserName(status: Status, force = false): void {
+        if (!force && this.initializedStatusId === status.id) {
+            return;
+        }
+
         const userName = status.user?.userName;
         if (userName) {
             this.comment.set(`@${userName} `);
+            this.initializedStatusId = status.id;
         }
     }
 }
