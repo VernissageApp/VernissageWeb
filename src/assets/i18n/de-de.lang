@@ -946,8 +946,14 @@
     "muteAccount": {
       "texts": {
         "muteAccount": "Konto stummschalten",
+        "muteDialogHeader": "Stummgeschaltete Beiträge und Boosts erscheinen auf den meisten Timelines im System nicht.",
         "muteEndDate": "Enddatum für Stummschaltung",
-        "optionalDateWhenMutingWillEnd": "Optionales Datum, an dem die Stummschaltung beendet wird."
+        "muteNewStatuses": "Neue Statusbeiträge stummschalten",
+        "muteNotifications": "Benachrichtigungen stummschalten",
+        "muteReblogs": "Reblogs stummschalten",
+        "optionalDateWhenMutingWillEnd": "Optionales Datum, an dem die Stummschaltung beendet wird.",
+        "removeUsersReblogsFromYourTimeline": "Reblogs des Benutzers aus deiner Timeline entfernen",
+        "removeUsersStatusesFromYourTimeline": "Statusbeiträge des Benutzers aus deiner Timeline entfernen"
       }
     },
     "notificationSettings": {

@@ -946,8 +946,14 @@
     "muteAccount": {
       "texts": {
         "muteAccount": "Demp kontoen",
+        "muteDialogHeader": "Dempede innlegg og fremhevinger vises ikke på de fleste tidslinjene i systemet.",
         "muteEndDate": "Demp sluttdatoen",
-        "optionalDateWhenMutingWillEnd": "Valgfri dato når dempingen avsluttes."
+        "muteNewStatuses": "Demp nye statuser",
+        "muteNotifications": "Demp varsler",
+        "muteReblogs": "Demp reblogger",
+        "optionalDateWhenMutingWillEnd": "Valgfri dato når dempingen avsluttes.",
+        "removeUsersReblogsFromYourTimeline": "Fjern brukerens reblogger fra tidslinjen din",
+        "removeUsersStatusesFromYourTimeline": "Fjern brukerens statuser fra tidslinjen din"
       }
     },
     "notificationSettings": {

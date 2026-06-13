@@ -946,8 +946,14 @@
     "muteAccount": {
       "texts": {
         "muteAccount": "Stäng av kontot",
+        "muteDialogHeader": "Tystade inlägg och boostar visas inte på de flesta tidslinjer i systemet.",
         "muteEndDate": "Stäng av slutdatum",
-        "optionalDateWhenMutingWillEnd": "Valfritt datum när ljudet upphör."
+        "muteNewStatuses": "Stäng av nya statusar",
+        "muteNotifications": "Stäng av aviseringar",
+        "muteReblogs": "Stäng av rebloggar",
+        "optionalDateWhenMutingWillEnd": "Valfritt datum när ljudet upphör.",
+        "removeUsersReblogsFromYourTimeline": "Ta bort användarens rebloggar från din tidslinje",
+        "removeUsersStatusesFromYourTimeline": "Ta bort användarens statusar från din tidslinje"
       }
     },
     "notificationSettings": {

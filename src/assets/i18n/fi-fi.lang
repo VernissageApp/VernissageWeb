@@ -686,7 +686,7 @@
         "generate": "Luo",
         "geolocationDisclosureWarning": "Jakamalla valokuvasi maantieteelliset tiedot paljastat tarkan sijainnin, jossa kuva on otettu. Varmista ennen jatkamista, että hyväksyt näiden tietojen julkisen saatavuuden.",
         "gpsCoordinates": "GPS-koordinaatit:",
-        "hdrIncludeInformation": "Voit halutessasi lisätä kuvasta HDR-version (AVIF). Tämä versio näytetään vain Vernissage-alustan tilatiedoissa. Tiedoston enimmäiskoko on {{hdrFileSizeString}}.",
+        "hdrIncludeInformation": "Voit halutessasi lisätä kuvasta HDR-version (AVIF). Tämä versio näytetään vain päivityksen tieoissa Vernissage-alustalla. Tiedoston enimmäiskoko on {{hdrFileSizeString}}.",
         "imageExceededLimitAndWasResized": "Kuvasi ylitti {{maxFileSize}}-rajan, joten sen pidemmän reunan koko muutettiin automaattisesti 4096 pikseliksi.",
         "information": "Tietoja:",
         "iso": "ISO:",
@@ -946,8 +946,14 @@
     "muteAccount": {
       "texts": {
         "muteAccount": "Mykistä tili",
+        "muteDialogHeader": "Mykistetyt julkaisut ja tehostukset eivät näy useimmilla järjestelmän aikajanoilla.",
         "muteEndDate": "Mykistyksen loppuaika",
-        "optionalDateWhenMutingWillEnd": "Valinnainen päivämäärä, jolloin mykistys päättyy."
+        "muteNewStatuses": "Mykistä uudet päivitykset",
+        "muteNotifications": "Mykistä ilmoitukset",
+        "muteReblogs": "Mykistä tehostukset",
+        "optionalDateWhenMutingWillEnd": "Valinnainen päivämäärä, jolloin mykistys päättyy.",
+        "removeUsersReblogsFromYourTimeline": "Poista käyttäjän tehostukset aikajanaltasi",
+        "removeUsersStatusesFromYourTimeline": "Poista käyttäjän päivitykset aikajanaltasi"
       }
     },
     "notificationSettings": {
