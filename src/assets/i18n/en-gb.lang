@@ -946,8 +946,14 @@
     "muteAccount": {
       "texts": {
         "muteAccount": "Mute account",
+        "muteDialogHeader": "Muted posts and boosts won't appear on most timelines in the system.",
         "muteEndDate": "Mute end date",
-        "optionalDateWhenMutingWillEnd": "Optional date when muting will end."
+        "muteNewStatuses": "Mute new statuses",
+        "muteNotifications": "Mute notifications",
+        "muteReblogs": "Mute reblogs",
+        "optionalDateWhenMutingWillEnd": "Optional date when muting will end.",
+        "removeUsersReblogsFromYourTimeline": "Remove user's reblogs from your timeline",
+        "removeUsersStatusesFromYourTimeline": "Remove user's statuses from your timeline"
       }
     },
     "notificationSettings": {

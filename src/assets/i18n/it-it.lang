@@ -946,8 +946,14 @@
     "muteAccount": {
       "texts": {
         "muteAccount": "Conto muto",
+        "muteDialogHeader": "I post e i boost silenziati non appariranno nella maggior parte delle timeline del sistema.",
         "muteEndDate": "Data di fine disattivata",
-        "optionalDateWhenMutingWillEnd": "Data facoltativa in cui terminerà il silenziamento."
+        "muteNewStatuses": "Silenzia i nuovi status",
+        "muteNotifications": "Silenzia le notifiche",
+        "muteReblogs": "Silenzia i reblog",
+        "optionalDateWhenMutingWillEnd": "Data facoltativa in cui terminerà il silenziamento.",
+        "removeUsersReblogsFromYourTimeline": "Rimuovi i reblog dell'utente dalla tua timeline",
+        "removeUsersStatusesFromYourTimeline": "Rimuovi gli status dell'utente dalla tua timeline"
       }
     },
     "notificationSettings": {

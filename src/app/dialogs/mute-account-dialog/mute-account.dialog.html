@@ -3,46 +3,44 @@
     <div mat-dialog-content>
 
         <div class="padding-top-5 text-muted fs-90">
-            Muting statuses and reblogs only applies to your private photo timeline.
-            The user's posts will still appear in the local and global timelines,
-            as those timelines are visible to all users of the system.
+            {{ 'dialogs.muteAccount.texts.muteDialogHeader' | translate }}
         </div>
 
         <div class="padding-top-10">
             <div>
                 <mat-checkbox name="muteStatuses" [disableRipple]="true" [(ngModel)]="muteStatuses">
-                    Mute new statuses
+                    {{ 'dialogs.muteAccount.texts.muteNewStatuses' | translate }}
                 </mat-checkbox>
             </div>
 
             <div class="padding-left-20">
                 <mat-checkbox name="removeStatusesFromTimeline" [disableRipple]="true" [(ngModel)]="removeStatusesFromTimeline" [disabled]="!muteStatuses()">
-                    Remove user's statuses from your timeline
+                    {{ 'dialogs.muteAccount.texts.removeUsersStatusesFromYourTimeline' | translate }}
                 </mat-checkbox>
             </div>
 
             <div>
                 <mat-checkbox name="muteReblogs" [disableRipple]="true" [(ngModel)]="muteReblogs">
-                    Mute reblogs
+                    {{ 'dialogs.muteAccount.texts.muteReblogs' | translate }}
                 </mat-checkbox>
             </div>
 
             <div class="padding-left-20">
                 <mat-checkbox name="removeReblogsFromTimeline" [disableRipple]="true" [(ngModel)]="removeReblogsFromTimeline" [disabled]="!muteReblogs()">
-                    Remove user's reblogs from your timeline
+                    {{ 'dialogs.muteAccount.texts.removeUsersReblogsFromYourTimeline' | translate }}
                 </mat-checkbox>
             </div>
 
             <div class="padding-bottom-20">
                 <mat-checkbox name="muteNotifications" [disableRipple]="true" [(ngModel)]="muteNotifications">
-                    Mute notifications
+                    {{ 'dialogs.muteAccount.texts.muteNotifications' | translate }}
                 </mat-checkbox>
             </div>
 
             <mat-divider></mat-divider>
 
             <div class="padding-top-20">
-                <mat-form-field>
+                <mat-form-field class="width-100">
                     <mat-label>{{ 'dialogs.muteAccount.texts.muteEndDate' | translate }}</mat-label>
                     <input type="text" name="muteEnd"  matInput [matDatepicker]="picker" [(ngModel)]="muteEnd" [disabled]="!(muteStatuses() || muteReblogs() ||muteNotifications())">
                     <mat-hint>{{ 'dialogs.muteAccount.texts.optionalDateWhenMutingWillEnd' | translate }}</mat-hint>

@@ -98,7 +98,7 @@
       "key": "Klucz",
       "language": "Język",
       "lastUpdate": "Ostatnia aktualizacja",
-      "link": "Połączyć",
+      "link": "Otwórz",
       "local": "Lokalny",
       "member": "Członek",
       "message": "Wiadomość",
@@ -946,8 +946,14 @@
     "muteAccount": {
       "texts": {
         "muteAccount": "Wycisz konto",
+        "muteDialogHeader": "Wyciszone wpisy i podbicia nie będą pokazywać się na większości osi czasu w systemie.",
         "muteEndDate": "Data zakończenia wyciszenia",
-        "optionalDateWhenMutingWillEnd": "Opcjonalna data zakończenia wyciszenia."
+        "muteNewStatuses": "Wycisz nowe wpisy",
+        "muteNotifications": "Wycisz powiadomienia",
+        "muteReblogs": "Wycisz podbicia",
+        "optionalDateWhenMutingWillEnd": "Opcjonalna data zakończenia wyciszenia.",
+        "removeUsersReblogsFromYourTimeline": "Usuń podbicia użytkownika ze swojej osi czasu",
+        "removeUsersStatusesFromYourTimeline": "Usuń wpisy użytkownika ze swojej osi czasu"
       }
     },
     "notificationSettings": {
@@ -2586,7 +2592,7 @@
         "maxImagesPerPost": "Możesz przesłać maksymalnie {{count}} obrazów na wpis.",
         "statusSaved": "Status został zapisany.",
         "statusUpdated": "Status został zaktualizowany.",
-        "tooManyFilesSelectedSingular": "Wybrano zbyt wiele plików. Możesz dodać jeszcze jeden obraz.",
+        "tooManyFilesSelectedSingular": "Wybrano zbyt wiele plików. Możesz dodać jeszcze jeden.",
         "tooManyFilesSelectedPlural": "Wybrano zbyt wiele plików. Możesz dodać jeszcze {{count}}.",
         "unableToResize": "Nie udało się zmienić rozmiaru obrazu przed wysłaniem.",
         "unsupportedFileType": "Ten typ pliku nie jest obsługiwany. Prześlij obraz JPG, PNG lub WEBP.",

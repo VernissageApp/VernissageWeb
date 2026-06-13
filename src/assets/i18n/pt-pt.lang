@@ -946,8 +946,14 @@
     "muteAccount": {
       "texts": {
         "muteAccount": "Silenciar conta",
+        "muteDialogHeader": "As publicações e os impulsos silenciados não aparecerão na maioria das linhas do tempo do sistema.",
         "muteEndDate": "Data de fim de silêncio",
-        "optionalDateWhenMutingWillEnd": "Data opcional em que o silenciamento terminará."
+        "muteNewStatuses": "Silenciar novos estados",
+        "muteNotifications": "Silenciar notificações",
+        "muteReblogs": "Silenciar reblogs",
+        "optionalDateWhenMutingWillEnd": "Data opcional em que o silenciamento terminará.",
+        "removeUsersReblogsFromYourTimeline": "Remover os reblogs do utilizador da sua linha do tempo",
+        "removeUsersStatusesFromYourTimeline": "Remover os estados do utilizador da sua linha do tempo"
       }
     },
     "notificationSettings": {
