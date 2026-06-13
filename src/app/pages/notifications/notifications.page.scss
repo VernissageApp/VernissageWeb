@@ -21,6 +21,7 @@
 
             .user {
                 margin-top: 6px;
+                flex: 0 0 auto;
 
                 .icon {
                     position: relative;
@@ -29,11 +30,32 @@
                 }
             }
 
+            > .overflow-ellipsis {
+                min-width: 0;
+                flex: 1 1 auto;
+            }
+
             .fullname {
                 line-height: 16px;
+                white-space: nowrap;
+
+                a {
+                    display: block;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
             }
 
             .username {
+                line-height: 16px;
+            }
+
+            .notification-type {
+                line-height: 16px;
+            }
+
+            .created-date {
                 line-height: 16px;
             }
         }
