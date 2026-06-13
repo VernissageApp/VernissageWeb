@@ -41,18 +41,14 @@
                                                 </a>
                                             </div>
                                             <div class="overflow-ellipsis">
-                                                <span class="text-muted fs-80">{{ notification.createdAt | ago }}</span>
-                                                <div class="overflow-ellipsis fullname flex-row flex-responsive">
-                                                    <div class="overflow-ellipsis">
-                                                        <a [routerLink]="[ '/@' + notification.byUser?.userName ]" class="margin-right-5 fw-600">{{ notification.byUser?.name }}</a>
-                                                    </div>
-                                                    <div class="overflow-ellipsis">
-                                                        <span class="text-muted">{{ getNotificationText(notification) }} </span>
-                                                    </div>
+                                                <div class="overflow-ellipsis fullname">
+                                                    <a [routerLink]="[ '/@' + notification.byUser?.userName ]" class="margin-right-5 fw-600">{{ notification.byUser?.name }}</a>
                                                 </div>
                                                 @if (!isHandsetPortrait()) {
                                                     <div class="fw-400 fs-90 text-muted overflow-ellipsis username">&#64;{{ notification.byUser?.userName }}</div>
                                                 }
+                                                <div class="overflow-ellipsis fs-90 notification-type">{{ getNotificationText(notification) }}</div>
+                                                <div class="text-muted fs-80 created-date">{{ notification.createdAt | ago }}</div>
                                             </div>
                                         </div>
 
