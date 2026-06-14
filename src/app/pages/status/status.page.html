@@ -448,11 +448,11 @@
                                                 <a [routerLink]="[ '/@' + comment.status.user?.userName ]" class="comment-avatar" [attr.aria-label]="'pages.status.actions.openProfileAriaLabel' | translate:{ userName: comment.status.user?.userName }">
                                                     <app-avatar [user]="comment.status.user" [size]="avatarSize.medium"></app-avatar>
                                                 </a>
-                                                <div>
-                                                    <div>
+                                                <div class="comment-content">
+                                                    <div class="comment-author-name">
                                                         <a [routerLink]="[ '/@' + comment.status.user?.userName ]" class="margin-right-5 fw-600">{{ comment.status.user?.name }}</a>
                                                     </div>
-                                                    <div>
+                                                    <div class="comment-user-name">
                                                         <span class="fw-400 fs-90 text-muted">&#64;{{ comment.status.user?.userName }}</span>
                                                     </div>
                                                     <div class="comment-text">
