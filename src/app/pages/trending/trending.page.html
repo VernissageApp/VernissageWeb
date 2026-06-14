@@ -23,19 +23,19 @@
                 <mat-button-toggle-group [(ngModel)]="trending" (ngModelChange)="onSelectionChange()" [hideSingleSelectionIndicator]="true" [attr.aria-label]="'pages.trending.tabAriaLabel' | translate">
                     <mat-button-toggle value="statuses"><mat-icon>insert_photo</mat-icon>
                         @if (!isHandset()) {
-                            <span>{{ 'common.labels.photos' | translate }}</span>
+                            <span> {{ 'common.labels.photosLabel' | translate: { count: 2 } }}</span>
                         }
                     </mat-button-toggle>
                     <mat-button-toggle value="users"><mat-icon>groups</mat-icon>
                         @if (!isHandset()) {
-                            <span>{{ 'common.labels.artists' | translate }}</span>
+                            <span> {{ 'common.labels.artists' | translate }}</span>
                         }
                     </mat-button-toggle>
 
                     @if (showHashtags()) {
                         <mat-button-toggle value="hashtags"><mat-icon>tag</mat-icon>
                             @if (!isHandset()) {
-                                <span>{{ 'pages.trending.tabs.tags' | translate }}</span>
+                                <span> {{ 'pages.trending.tabs.tags' | translate }}</span>
                             }
                         </mat-button-toggle>
                     }

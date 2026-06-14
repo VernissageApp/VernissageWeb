@@ -25,9 +25,9 @@
                 }
                 
                 <div class="fw-300 fs-90 flex-row flex-wrap">
-                    <div class="user-statuses-tag margin-right-15"><span class="fw-500">{{ user.photosCount }}</span> {{ (user.photosCount === 1 ? 'common.labels.photo' : 'common.labels.photos') | translate }}</div>
-                    <div class="margin-right-15"><span class="fw-500">{{ user.followersCount }}</span> {{ 'common.labels.followers' | translate }}</div>
-                    <div class="user-following-tag "><span class="fw-500">{{ user.followingCount }}</span> {{ 'common.labels.following' | translate }}</div>
+                    <div class="user-statuses-tag margin-right-15"><span class="fw-500">{{ user.photosCount }}</span> {{ 'common.labels.photosLabel' | translate: { count: user.photosCount } }}</div>
+                    <div class="margin-right-15"><span class="fw-500">{{ user.followersCount }}</span> {{ 'common.labels.followers' | translate: { followersCount: user.followersCount } }}</div>
+                    <div class="user-following-tag "><span class="fw-500">{{ user.followingCount }}</span> {{ 'common.labels.following' | translate: { followingCount: user.followingCount } }}</div>
                 </div>
             </div>
         </div>

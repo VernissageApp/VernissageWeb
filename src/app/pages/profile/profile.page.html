@@ -113,9 +113,9 @@
                     </div>
 
                     <div class="flex-row flex-center padding-top-20">
-                        <div class="margin-left-20 margin-right-20"><span class="fw-500">{{ userInternal.photosCount }}</span><span class="fw-200 margin-left-5" [ngClass]="{ 'dashed': selectedProfilePageTab() === profilePageTab.Statuses}"><a [routerLink]="['posts']">{{ userInternal.photosCount === 1 ? ('common.labels.photo' | translate) : ('common.labels.photos' | translate) }}</a></span></div>
-                        <div class="margin-left-20 margin-right-20"><span class="fw-500">{{ userInternal.followingCount }}</span><span class="fw-200 margin-left-5" [ngClass]="{ 'dashed': selectedProfilePageTab() === profilePageTab.Following}"><a [routerLink]="['following']">{{ 'common.labels.following' | translate }}</a></span></div>
-                        <div class="margin-left-20 margin-right-20"><span class="fw-500">{{ userInternal.followersCount }}</span><span class="fw-200 margin-left-5" [ngClass]="{ 'dashed': selectedProfilePageTab() === profilePageTab.Followers}"><a [routerLink]="['followers']">{{ 'common.labels.followers' | translate }}</a></span></div>
+                        <div class="margin-left-20 margin-right-20"><span class="fw-500">{{ userInternal.photosCount }}</span><span class="fw-200 margin-left-5" [ngClass]="{ 'dashed': selectedProfilePageTab() === profilePageTab.Statuses}"><a [routerLink]="['posts']">{{ 'common.labels.photosLabel' | translate: { count: userInternal.photosCount } }}</a></span></div>
+                        <div class="margin-left-20 margin-right-20"><span class="fw-500">{{ userInternal.followingCount }}</span><span class="fw-200 margin-left-5" [ngClass]="{ 'dashed': selectedProfilePageTab() === profilePageTab.Following}"><a [routerLink]="['following']">{{ 'common.labels.following' | translate: { followingCount: userInternal.followingCount } }}</a></span></div>
+                        <div class="margin-left-20 margin-right-20"><span class="fw-500">{{ userInternal.followersCount }}</span><span class="fw-200 margin-left-5" [ngClass]="{ 'dashed': selectedProfilePageTab() === profilePageTab.Followers}"><a [routerLink]="['followers']">{{ 'common.labels.followers' | translate: { followersCount: userInternal.followersCount } }}</a></span></div>
                     </div>
 
                     @if (selectedProfilePageTab() === profilePageTab.Following) {

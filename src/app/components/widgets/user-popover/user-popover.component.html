@@ -21,9 +21,9 @@
 
                         <div class="bio" [innerHTML]="userObject.bioHtml"></div>
                         <div class="fw-300 fs-90">
-                            <span class="margin-right-15"><span class="fw-500">{{ userObject.photosCount }}</span> {{ (userObject.photosCount === 1 ? 'common.labels.photo' : 'common.labels.photos') | translate }}</span>
-                            <span class="margin-right-15"><span class="fw-500">{{ userObject.followersCount }}</span> {{ 'common.labels.followers' | translate }}</span>
-                            <span><span class="fw-500">{{ userObject.followingCount }}</span> {{ 'common.labels.following' | translate }}</span>
+                            <span class="margin-right-15"><span class="fw-500">{{ userObject.photosCount }}</span> {{ 'common.labels.photosLabel' | translate: { count: userObject.photosCount } }}</span>
+                            <span class="margin-right-15"><span class="fw-500">{{ userObject.followersCount }}</span> {{ 'common.labels.followers' | translate: { followersCount: userObject.followersCount } }}</span>
+                            <span><span class="fw-500">{{ userObject.followingCount }}</span> {{ 'common.labels.following' | translate: { followingCount: userObject.followingCount } }}</span>
                         </div>
                     </div>
                 </div>
