@@ -26,7 +26,7 @@
       "next": "Suivant",
       "ok": "OK",
       "open": "Ouvrir",
-      "openProfileWithUserName": "Ouvrir le profil @{{userName}}",
+      "openProfileWithUserName": "Ouvrir le profil @{userName}",
       "refresh": "Actualiser",
       "register": "S’inscrire",
       "reject": "Rejeter",
@@ -89,8 +89,8 @@
       "errorMessage": "Message d’erreur",
       "exception": "Exception",
       "fields": "Champs",
-      "followers": "Abonnés",
-      "following": "Abonnements",
+      "followers": "{followersCount, plural, one {Abonné} other {Abonnés}}",
+      "following": "{followingCount, plural, one {Abonnement} other {Abonnements}}",
       "frequentlyAskedQuestions": "Foire aux questions",
       "hashtags": "Hashtags",
       "header": "En-tête",
@@ -109,12 +109,11 @@
       "note": "Note",
       "order": "Ordre",
       "password": "Mot de passe",
-      "photo": "Photo",
-      "photos": "Photos",
+      "photosLabel": "{count, plural, one {Photo} other {Photos}}",
       "priority": "Priorité",
       "private": "Privé",
       "processing": "Traitement",
-      "profilePage": "du profil de l’utilisateur(rice)",
+      "profilePage": "la page du profil",
       "qrCode": "QR Code",
       "query": "Requête",
       "reason": "Raison",
@@ -665,7 +664,7 @@
         "time": "Heure"
       },
       "messages": {
-        "uploadedFileTooLarge": "Le fichier envoyé est trop lourd. La taille maximale est {{size}}."
+        "uploadedFileTooLarge": "Le fichier envoyé est trop lourd. La taille maximale est {size}."
       },
       "texts": {
         "altText": "Texte alternatif",
@@ -678,7 +677,7 @@
         "exifMetadata": "Métadonnées Exif",
         "exposureTime": "Temps d’exposition :",
         "f": "f/",
-        "featurePoweredBy": "Fonctionnalité fournie par {{providerName}}.",
+        "featurePoweredBy": "Fonctionnalité fournie par {providerName}.",
         "film": "Pellicule :",
         "flash": "Flash :",
         "focalLength": "Distance focale :",
@@ -686,8 +685,8 @@
         "generate": "Générer",
         "geolocationDisclosureWarning": "En partageant les données de géolocalisation de votre photo, vous divulguez l’endroit exact où la photo a été prise. Avant de continuer, assurez-vous que vous acceptez que ces informations soient accessibles publiquement.",
         "gpsCoordinates": "Coordonnées GPS :",
-        "hdrIncludeInformation": "Vous avez la possibilité d’inclure une version HDR de l’image (AVIF). Cette version ne sera affichée que dans les détails du statut sur la plateforme Vernissage. La taille maximale du fichier est de {{hdrFileSizeString}}.",
-        "imageExceededLimitAndWasResized": "Votre image a dépassé la limite {{maxFileSize}}, elle a donc été automatiquement redimensionnée à 4096 px sur le bord le plus long.",
+        "hdrIncludeInformation": "Vous avez la possibilité d’inclure une version HDR de l’image (AVIF). Cette version ne sera affichée que dans les détails du statut sur la plateforme Vernissage. La taille maximale du fichier est de {hdrFileSizeString}.",
+        "imageExceededLimitAndWasResized": "Votre image a dépassé la limite {maxFileSize}, elle a donc été automatiquement redimensionnée à 4096 px sur le bord le plus long.",
         "information": "Information :",
         "iso": "ISO :",
         "lens": "Objectif :",
@@ -946,7 +945,7 @@
     "muteAccount": {
       "texts": {
         "muteAccount": "Mettre le compte en sourdine",
-        "muteDialogHeader": "Les publications et les boosts mis en sourdine n’apparaîtront pas dans la plupart des flux du système.",
+        "muteDialogHeader": "Les publications et les boosts mis en sourdine n’apparaîtront pas dans la plupart des flux.",
         "muteEndDate": "Date de fin de la sourdine",
         "muteNewStatuses": "Mettre les nouveaux statuts en sourdine",
         "muteNotifications": "Mettre les notifications en sourdine",
@@ -1140,38 +1139,38 @@
       "missingSignedHeadersList": "Impossible de lire la liste des en-têtes signés de la requête ActivityPub.",
       "missingSignatureInHeader": "Impossible de lire la signature dans l’en-tête de la requête ActivityPub.",
       "missingKeyIdInHeader": "Impossible de lire « keyId » à partir de l’en-tête de signature dans la requête ActivityPub.",
-      "missingActivityPubProfileInKeyId": "Impossible de trouver le profil de l’acteur dans keyId {{keyIdValue}}.",
-      "missingSignedHeader": "Impossible de trouver l’en-tête « {{headerName}} » utilisé pour créer la signature dans la requête ActivityPub.",
+      "missingActivityPubProfileInKeyId": "Impossible de trouver le profil de l’acteur dans keyId {keyIdValue}.",
+      "missingSignedHeader": "Impossible de trouver l’en-tête « {headerName} » utilisé pour créer la signature dans la requête ActivityPub.",
       "signatureIsNotValid": "La signature de la requête ActivityPub n’est pas valide.",
       "userNameIsRequired": "Le nom d’utilisateur est requis.",
       "statusIdIsRequired": "L’identifiant de statut est requis.",
-      "incorrectStatusIdFormat": "L’ID du statut '{{statusId}}' n’a pas le bon format.",
-      "userNotExistsInDatabase": "L’utilisateur '{{activityPubProfile}}' est introuvable dans la base de données locale.",
-      "privateKeyNotExists": "La clé privée de l’utilisateur '{{activityPubProfile}}' est introuvable dans la base de données locale.",
-      "publicKeyNotExists": "La clé publique de l’utilisateur '{{activityPubProfile}}' est introuvable dans la base de données locale.",
+      "incorrectStatusIdFormat": "L’ID du statut {statusId} n’a pas le bon format.",
+      "userNotExistsInDatabase": "L’utilisateur {activityPubProfile} est introuvable dans la base de données locale.",
+      "privateKeyNotExists": "La clé privée de l’utilisateur {activityPubProfile} est introuvable dans la base de données locale.",
+      "publicKeyNotExists": "La clé publique de l’utilisateur {activityPubProfile} est introuvable dans la base de données locale.",
       "signatureDataNotCreated": "La signature ne peut pas être créée sur la base des en-têtes de la demande.",
       "missingDateHeader": "En-tête « Date » manquant dans la requête ActivityPub.",
-      "incorrectDateFormat": "Format de date incorrect dans la requête ActivityPub : {{date}}.",
-      "badTimeWindow": "La date de la requête signée ActivityPub '{{date}}' est en dehors de la fenêtre de temps acceptée.",
-      "followTypeNotSupported": "L’abonnement au type d’objet '{{type}}' n’est pas pris en charge.",
-      "acceptTypeNotSupported": "Approuver le type d’objet '{{type}}' n’est pas pris en charge.",
-      "rejectTypeNotSupported": "Rejeter le type d’objet '{{type}}' n’est pas pris en charge.",
-      "algorithmNotSupported": "L’algorithme '{{type}}' n’est pas pris en charge.",
+      "incorrectDateFormat": "Format de date incorrect dans la requête ActivityPub : {date}.",
+      "badTimeWindow": "La date de la requête signée ActivityPub {date} est en dehors de la fenêtre de temps acceptée.",
+      "followTypeNotSupported": "L’abonnement au type d’objet {type} n’est pas pris en charge.",
+      "acceptTypeNotSupported": "Approuver le type d’objet {type} n’est pas pris en charge.",
+      "rejectTypeNotSupported": "Rejeter le type d’objet {type} n’est pas pris en charge.",
+      "algorithmNotSupported": "L’algorithme {type} n’est pas pris en charge.",
       "algorithmNotSpecified": "L’algorithme n’est pas spécifié.",
-      "missingUserInboxUrl": "La boîte de réception de l’utilisateur '{{activityPubProfile}}' est absente de la base de données locale.",
-      "missingSharedInboxUrl": "La boîte de réception partagée de l’utilisateur '{{activityPubProfile}}' est absente de la base de données locale.",
-      "statusHasNotBeenDownloaded": "Le statut téléchargé est vide : {{statusActivityPubUrl}}. Erreur : {{errorDescription}}",
-      "statusCannotBeProcessed": "Le statut téléchargé ne peut pas être traité : {{statusActivityPubUrl}}. Erreur : {{errorDescription}}",
-      "missingSupportedImageAttachments": "Le statut téléchargé ne comporte pas de pièces jointes : {{statusActivityPubUrl}}.",
-      "actorNotDownloaded": "Erreur lors du téléchargement de l’acteur depuis le serveur distant : {{statusActivityPubUrl}}.",
-      "invalidNoteUrl": "URL du Statut non valide : {{statusActivityPubUrl}}.",
-      "entityCaseError": "La conversion vers '{{entityName}}' a échoué.",
+      "missingUserInboxUrl": "La boîte de réception de l’utilisateur {activityPubProfile} est absente de la base de données locale.",
+      "missingSharedInboxUrl": "La boîte de réception partagée de l’utilisateur {activityPubProfile} est absente de la base de données locale.",
+      "statusHasNotBeenDownloaded": "Le statut téléchargé est vide : {statusActivityPubUrl}. Erreur : {errorDescription}",
+      "statusCannotBeProcessed": "Le statut téléchargé ne peut pas être traité : {statusActivityPubUrl}. Erreur : {errorDescription}",
+      "missingSupportedImageAttachments": "Le statut téléchargé ne comporte pas de pièces jointes : {statusActivityPubUrl}.",
+      "actorNotDownloaded": "Erreur lors du téléchargement de l’acteur depuis le serveur distant : {statusActivityPubUrl}.",
+      "invalidNoteUrl": "URL du Statut non valide : {statusActivityPubUrl}.",
+      "entityCaseError": "La conversion vers {entityName} a échoué.",
       "missingInstanceAdminAccount": "Compte administrateur manquant dans l’instance locale.",
       "missingInstanceAdminPrivateKey": "Clé privée manquante pour le compte administrateur dans l’instance locale.",
       "unrecognizedActivityPubProfileUrl": "URL du profil ActivityPub non reconnue.",
-      "domainIsBlockedByInstance": "Le domaine de l’utilisateur '{{activityPubProfile}}' est bloqué par l’instance.",
-      "actorIsBlockedByInstance": "L’acteur '{{activityPubProfile}}' est bloqué par l’instance.",
-      "signatureActorDoesNotMatchPayloadActor": "L’acteur de la signature '{{signatureActor}}' ne correspond pas à l’acteur du contenu '{{payloadActor}}'."
+      "domainIsBlockedByInstance": "Le domaine de l’utilisateur {activityPubProfile} est bloqué par l’instance.",
+      "actorIsBlockedByInstance": "L’acteur {activityPubProfile} est bloqué par l’instance.",
+      "signatureActorDoesNotMatchPayloadActor": "L’acteur de la signature {signatureActor} ne correspond pas à l’acteur du contenu {payloadActor}."
     },
     "archives": {
       "requestWaitingForProcessing": "Une demande est déjà en attente de traitement.",
@@ -1290,11 +1289,11 @@
       "accountNotFound": "Compte introuvable."
     },
     "followRequest": {
-      "missingFollowEntity": "L’entité Follow (sourceUserId: '{{sourceUserId}}', targetUserId: '{{targetUserId}}') n’existe pas dans la base de données locale.",
-      "missingSourceUser": "L’utilisateur source '{{userId}}' est absent de la base de données.",
-      "missingTargetUser": "L’utilisateur cible '{{userId}}' est absent de la base de données.",
+      "missingFollowEntity": "L’entité Follow (sourceUserId: {sourceUserId}, targetUserId: {targetUserId}) n’existe pas dans la base de données locale.",
+      "missingSourceUser": "L’utilisateur source {userId} est absent de la base de données.",
+      "missingTargetUser": "L’utilisateur cible {userId} est absent de la base de données.",
       "missingActivityPubActionId": "L’identifiant d’action ActivityPub dans la demande de suivi est manquant.",
-      "missingPrivateKey": "La clé privée de l’utilisateur {{userName}} n’existe pas dans la base de données locale.",
+      "missingPrivateKey": "La clé privée de l’utilisateur {userName} n’existe pas dans la base de données locale.",
       "accountHasBeenMoved": "Le compte cible a été migré et ne peut pas accepter de nouveaux abonnés.",
       "incorrectId": "Identifiant incorrect dans la demande d’abonnement."
     },
@@ -1352,7 +1351,7 @@
       "cannotChangeResponseToString": "Impossible de transmuter la réponse en chaîne de caractères.",
       "incorrectJsonFormat": "Format JSON incorrect.",
       "openAIIsNotEnabled": "OpenAI n’est pas activé.",
-      "openAIIsNotConfigured": "OpenAI n’est pas configuré. {{message}}"
+      "openAIIsNotConfigured": "OpenAI n’est pas configuré. {message}"
     },
     "openidConnect": {
       "invalidClientName": "Le nom du client doit être spécifié dans l’URL.",
@@ -1440,7 +1439,7 @@
       "sortColumnNotSupported": "La colonne de tri n’est pas prise en charge.",
       "incorrectStatusEventId": "Identifiant d’événement de statut incorrect.",
       "maxLimitOfAttachmentsExceeded": "Limite maximale de pièces jointes dépassée",
-      "statusCreationTooFrequent": "Un nouveau statut ne peut pas encore être créé. Veuillez attendre {{waitSeconds}} secondes avant d’en créer un autre."
+      "statusCreationTooFrequent": "Un nouveau statut ne peut pas encore être créé. Veuillez attendre {waitSeconds} secondes avant d’en créer un autre."
     },
     "storage": {
       "downloadRemoteResourceFailed": "C’est une erreur renvoyée par l’instance distante.",
@@ -1449,7 +1448,7 @@
       "emptyPublicFolderPath": "Le nom du dossier public n’est pas spécifié.",
       "unknownError": "La réponse ne contient aucune information sur l’état de la demande.",
       "s3StorageNotConfigured": "Le stockage S3 n’est pas configuré.",
-      "fileReadError": "Impossible de lire le fichier '{{fileName}}' depuis le stockage."
+      "fileReadError": "Impossible de lire le fichier {fileName} depuis le stockage."
     },
     "temporaryFile": {
       "temporaryUrlFailed": "Impossible de créer une URL temporaire.",
@@ -1491,7 +1490,7 @@
     "account": {
       "avatar": {
         "removeAriaLabel": "Supprimer l’avatar",
-        "subtitle": "PNG, GIF ou JPG. Au maximum {{maxPictureFileSize}}. Sera réduit à 600x600 px."
+        "subtitle": "PNG, GIF ou JPG. Au maximum {maxPictureFileSize}. Sera réduit à 600x600 px."
       },
       "blockedDomains": {
         "description": "Liste des domaines que vous avez bloqués. Les utilisateurs de ces domaines ne peuvent pas vous suivre. Leurs publications n’apparaîtront pas dans votre journal local et vos publications ne leur seront pas envoyées directement. Cependant, ils peuvent toujours voir vos publications si un tiers qu’ils suivent les boost.",
@@ -1543,10 +1542,10 @@
       },
       "header": {
         "removeAriaLabel": "Supprimer l’en-tête",
-        "subtitle": "PNG, GIF ou JPG. Au maximum {{maxPictureFileSize}}. Sera réduit à 1500x500 px."
+        "subtitle": "PNG, GIF ou JPG. Au maximum {maxPictureFileSize}. Sera réduit à 1500x500 px."
       },
       "import": {
-        "description": "Vous pouvez importer des données précédemment exportées depuis un autre serveur, comme une liste des comptes auxquels vous êtes abonné(e). Les comptes importés seront fusionnés avec les abonnements existants. Seuls les fichiers CSV sont actuellement pris en charge. La taille maximale du fichier est {{maxImportFileSize}}.",
+        "description": "Vous pouvez importer des données précédemment exportées depuis un autre serveur, comme une liste des comptes auxquels vous êtes abonné(e). Les comptes importés seront fusionnés avec les abonnements existants. Seuls les fichiers CSV sont actuellement pris en charge. La taille maximale du fichier est {maxImportFileSize}.",
         "importAriaLabel": "Importer",
         "table": {
           "endProcessingDate": "Date de fin de traitement",
@@ -1568,7 +1567,7 @@
         "errorDuringDownloadingAccountData": "Erreur lors du téléchargement des données du compte.",
         "headerDeleted": "L’en-tête a été supprimé.",
         "headerSaved": "L’en-tête a été enregistré.",
-        "importFileTooLarge": "Le fichier envoyé est trop volumineux. La taille maximale est de {{maxImportFileSize}}.",
+        "importFileTooLarge": "Le fichier envoyé est trop volumineux. La taille maximale est de {maxImportFileSize}.",
         "supporterFlagDisabled": "Le badge de supporteur a été désactivé.",
         "supporterFlagEnabled": "Le badge de supporteur a été activé.",
         "verificationCodeCopied": "Le code de vérification a été copié dans le presse-papiers."
@@ -1785,7 +1784,7 @@
         }
       },
       "messages": {
-        "fileTooLarge": "Le fichier envoyé est trop volumineux. La taille maximale est {{maxArticleFileSize}}.",
+        "fileTooLarge": "Le fichier envoyé est trop volumineux. La taille maximale est {maxArticleFileSize}.",
         "markdownCopied": "Le code Markdown a été copié dans le presse-papiers.",
         "saved": "L’article a été enregistré.",
         "updated": "L’article a été mis à jour."
@@ -2013,8 +2012,8 @@
         "unfollowAriaLabel": "Se désabonner du hashtag"
       },
       "feed": {
-        "atomTitle": "Flux (Atom) du hashtag {{hashtag}}",
-        "rssTitle": "Flux (RSS) du hashtag {{hashtag}}"
+        "atomTitle": "Flux (Atom) du hashtag {hashtag}",
+        "rssTitle": "Flux (RSS) du hashtag {hashtag}"
       },
       "messages": {
         "followed": "Abonné(e) au hashtag.",
@@ -2174,7 +2173,7 @@
         "avatarAlt": "avatar du profil",
         "headerAlt": "en-tête du profil"
       },
-      "joined": "Inscrit(e) le {{date}}",
+      "joined": "Inscrit(e) le {date}",
       "latestFollowers": {
         "title": "DERNIERS ABONNÉS"
       },
@@ -2194,7 +2193,7 @@
       },
       "remoteStatuses": {
         "missingPosts": "Certaines publications de ce profil peuvent être manquantes.",
-        "seeMorePrefix": "Voir plus de publications sur la page originale"
+        "seeMorePrefix": "Voir plus de publications sur"
       }
     },
     "register": {
@@ -2271,7 +2270,7 @@
         "closeReportAriaLabel": "Fermer le signalement",
         "deleteStatus": "Supprimer le statut",
         "deleteStatusAriaLabel": "Supprimer le statut",
-        "openProfileAriaLabel": "Ouvrir le profil @{{userName}}",
+        "openProfileAriaLabel": "Ouvrir le profil @{userName}",
         "reportActionsAriaLabel": "Actions de modération",
         "restoreReportAriaLabel": "Restaurer le signalement",
         "sendToRemoteInstance": "Envoyer à une instance distante",
@@ -2406,7 +2405,7 @@
         "boost": "Booster",
         "feature": "Mettre en avant",
         "like": "J’aime",
-        "openProfileAriaLabel": "Ouvrir le profil @{{userName}}",
+        "openProfileAriaLabel": "Ouvrir le profil @{userName}",
         "unbookmark": "Retirer des signets",
         "unboost": "Annuler le boost",
         "unfeature": "Ne plus mettre en avant",
@@ -2420,10 +2419,8 @@
           "report": "Signaler",
           "unlike": "Je n’aime plus"
         },
-        "likedByPrefix": "Commentaire aimé par",
+        "likedByPrefix": "{count, plural, one {Aimé par # personne} other {Aimé par # personnes}}",
         "noComments": "Il n’y a encore rien à lire ici.",
-        "people": "personnes",
-        "person": "personne",
         "title": "Commentaires"
       },
       "confirmations": {
@@ -2451,7 +2448,7 @@
       "messages": {
         "bookmarked": "Statut mis en signet.",
         "boosted": "Statut relayé.",
-        "commentFavourited": "Commentaire mis en favori.",
+        "commentFavourited": "Commentaire aimé.",
         "favourited": "Statut aimé.",
         "featured": "Statut mis en avant.",
         "likeUndone": "Votre « J’aime » a été annulé.",
@@ -2475,7 +2472,7 @@
         "cameraRoll": "Pellicule",
         "category": "Catégorie",
         "developChemistry": "Chimie du développement",
-        "equivalentLens": "Équivalent en objectif plein format {{focalLength}}mm.",
+        "equivalentLens": "Équivalent en objectif plein format {focalLength}mm.",
         "exposure": "Exposition",
         "flash": "Flash",
         "fullFrameLens": "Objectif plein format.",
@@ -2572,7 +2569,7 @@
     "upload": {
       "accountMoved": "Ce compte a été migré vers un autre compte, vous ne pouvez donc plus ajouter de nouvelles photos ou publier de nouveaux contenus ici. Pour continuer à publier, veuillez utiliser votre nouveau compte.",
       "actions": {
-        "featurePoweredBy": "Fonctionnalité fournie par {{provider}}.",
+        "featurePoweredBy": "Fonctionnalité fournie par {provider}.",
         "hashtags": "Hashtags",
         "useTemplate": "Utiliser un modèle"
       },
@@ -2588,12 +2585,12 @@
       },
       "messages": {
         "accountMovedPublishingUnavailable": "Ce compte a été migré, la publication de nouveau contenu n’est donc pas disponible.",
-        "fileTooLarge": "Le fichier téléchargé est trop volumineux. La taille maximale est de {{maxFileSize}}.",
-        "maxImagesPerPost": "Vous pouvez envoyer jusqu’à {{count}} images par publication.",
+        "fileTooLarge": "Le fichier téléchargé est trop volumineux. La taille maximale est de {maxFileSize}.",
+        "maxImagesPerPost": "Vous pouvez envoyer jusqu’à {count} images par publication.",
         "statusSaved": "Le statut a été publié.",
         "statusUpdated": "Le statut a été mis à jour.",
         "tooManyFilesSelectedSingular": "Trop de fichiers sélectionnés. Vous pouvez ajouter encore une image.",
-        "tooManyFilesSelectedPlural": "Trop de fichiers sélectionnés. Vous pouvez ajouter encore {{count}} images.",
+        "tooManyFilesSelectedPlural": "Trop de fichiers sélectionnés. Vous pouvez ajouter encore {count} images.",
         "unableToResize": "Impossible de redimensionner l’image avant l’envoi.",
         "unsupportedFileType": "Ce type de fichier n’est pas pris en charge. Veuillez envoyer une image JPG, PNG ou WEBP.",
         "verifyEmailBeforePublish": "Pour publier un statut, veuillez d’abord vérifier votre adresse e-mail."
@@ -2601,11 +2598,11 @@
       "photoAlt": "Photo envoyée",
       "statusDetails": "Détails du statut",
       "stepper": {
-        "imageData": "Données de l’image #{{index}}"
+        "imageData": "Données de l’image #{index}"
       },
       "subtitle": {
         "interoperabilityHint": "Pour améliorer l’interopérabilité entre différents systèmes, utilisez des images dont le bord le plus long est au maximum 4096 px.",
-        "maxFileSize": "Vous pouvez envoyer des fichiers JPG, PNG et WEBP jusqu’à {{maxFileSize}}."
+        "maxFileSize": "Vous pouvez envoyer des fichiers JPG, PNG et WEBP jusqu’à {maxFileSize}."
       },
       "titles": {
         "editStatus": "Modifier le statut",
@@ -2628,7 +2625,7 @@
       "actions": {
         "disable2fa": "Désactiver 2FA",
         "notSupporter": "Non supporteur",
-        "openProfileAriaLabel": "Ouvrir le profil @{{userName}}"
+        "openProfileAriaLabel": "Ouvrir le profil @{userName}"
       },
       "confirmations": {
         "deleteUserAccount": "Voulez-vous supprimer le compte utilisateur ?",

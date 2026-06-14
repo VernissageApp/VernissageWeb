@@ -26,7 +26,7 @@
       "next": "Neste",
       "ok": "OK",
       "open": "Åpne",
-      "openProfileWithUserName": "Åpne profil @{{userName}}",
+      "openProfileWithUserName": "Åpne profil @{userName}",
       "refresh": "Oppdater",
       "register": "Registrer deg",
       "reject": "Avvis",
@@ -89,8 +89,8 @@
       "errorMessage": "Feilmelding",
       "exception": "Unntak",
       "fields": "Felter",
-      "followers": "Følgere",
-      "following": "Følger",
+      "followers": "{followersCount, plural, one {Følger} other {Følgere}}",
+      "following": "{followingCount, plural, one {Følger} other {Følger}}",
       "frequentlyAskedQuestions": "Ofte stilte spørsmål",
       "hashtags": "Hashtags",
       "header": "Overskrift",
@@ -109,8 +109,7 @@
       "note": "Note",
       "order": "Bestill",
       "password": "Passord",
-      "photo": "Foto",
-      "photos": "Bilder",
+      "photosLabel": "{count, plural, one {Foto} other {Bilder}}",
       "priority": "Prioritet",
       "private": "Privat",
       "processing": "Behandling",
@@ -665,7 +664,7 @@
         "time": "Tid"
       },
       "messages": {
-        "uploadedFileTooLarge": "Den opplastede filen er for stor. Maksimal størrelse er{{size}}."
+        "uploadedFileTooLarge": "Den opplastede filen er for stor. Maksimal størrelse er{size}."
       },
       "texts": {
         "altText": "Alt tekst",
@@ -678,7 +677,7 @@
         "exifMetadata": "Exif-metadata",
         "exposureTime": "Eksponeringstid:",
         "f": "f/",
-        "featurePoweredBy": "Funksjon drevet av{{providerName}}.",
+        "featurePoweredBy": "Funksjon drevet av{providerName}.",
         "film": "Film:",
         "flash": "Flash:",
         "focalLength": "Brennvidde:",
@@ -686,8 +685,8 @@
         "generate": "Generer",
         "geolocationDisclosureWarning": "Ved å dele geolokaliseringsdataene for bildet ditt, avslører du det nøyaktige stedet der bildet ble tatt. Sørg for at du er komfortabel med at denne informasjonen blir offentlig tilgjengelig før du fortsetter.",
         "gpsCoordinates": "GPSkoordinater:",
-        "hdrIncludeInformation": "Du har mulighet til å inkludere en HDR-versjon av bildet (AVIF). Denne versjonen vises bare i statusdetaljene på Vernissage-plattformen. Maksimal filstørrelse er {{hdrFileSizeString}}.",
-        "imageExceededLimitAndWasResized": "Bildet ditt overskred{{maxFileSize}}-grensen, så det ble automatisk endret til 4096 px på den lengre kanten.",
+        "hdrIncludeInformation": "Du har mulighet til å inkludere en HDR-versjon av bildet (AVIF). Denne versjonen vises bare i statusdetaljene på Vernissage-plattformen. Maksimal filstørrelse er {hdrFileSizeString}.",
+        "imageExceededLimitAndWasResized": "Bildet ditt overskred{maxFileSize}-grensen, så det ble automatisk endret til 4096 px på den lengre kanten.",
         "information": "Informasjon:",
         "iso": "ISO:",
         "lens": "Linse:",
@@ -1140,38 +1139,38 @@
       "missingSignedHeadersList": "Kan ikke lese listen over signerte overskrifter fra ActivityPub-forespørsel.",
       "missingSignatureInHeader": "Kan ikke lese signaturen i overskriften i ActivityPub-forespørselen.",
       "missingKeyIdInHeader": "Kan ikke lese keyId fra signaturoverskriften i ActivityPub-forespørselen.",
-      "missingActivityPubProfileInKeyId": "Finner ikke skuespillerprofil i keyId {{keyIdValue}}.",
-      "missingSignedHeader": "Finner ikke headeren '{{headerName}}' som ble brukt til å opprette signaturen i ActivityPub-forespørselen.",
+      "missingActivityPubProfileInKeyId": "Finner ikke skuespillerprofil i keyId {keyIdValue}.",
+      "missingSignedHeader": "Finner ikke headeren {headerName} som ble brukt til å opprette signaturen i ActivityPub-forespørselen.",
       "signatureIsNotValid": "ActivityPub forespørselssignatur er ikke gyldig.",
       "userNameIsRequired": "Brukernavn er påkrevd.",
       "statusIdIsRequired": "Status-ID kreves.",
-      "incorrectStatusIdFormat": "Status-ID-en '{{statusId}}' har ikke riktig format.",
-      "userNotExistsInDatabase": "Brukeren '{{activityPubProfile}}' finnes ikke i den lokale databasen.",
-      "privateKeyNotExists": "Privat nøkkel for brukeren '{{activityPubProfile}}' finnes ikke i den lokale databasen.",
-      "publicKeyNotExists": "Offentlig nøkkel for brukeren '{{activityPubProfile}}' finnes ikke i den lokale databasen.",
+      "incorrectStatusIdFormat": "Status-ID-en {statusId} har ikke riktig format.",
+      "userNotExistsInDatabase": "Brukeren {activityPubProfile} finnes ikke i den lokale databasen.",
+      "privateKeyNotExists": "Privat nøkkel for brukeren {activityPubProfile} finnes ikke i den lokale databasen.",
+      "publicKeyNotExists": "Offentlig nøkkel for brukeren {activityPubProfile} finnes ikke i den lokale databasen.",
       "signatureDataNotCreated": "Signature-data kan ikke opprettes basert på overskrifter fra forespørsel.",
       "missingDateHeader": "ActivityPub-forespørsel mangler 'Date' -overskrift.",
-      "incorrectDateFormat": "Feil datoformat i ActivityPub-forespørsel: {{date}}.",
-      "badTimeWindow": "Datoen for den signerte ActivityPub-forespørselen '{{date}}' er utenfor det tillatte tidsvinduet.",
-      "followTypeNotSupported": "Following-objekttype: {{type}} støttes ikke.",
-      "acceptTypeNotSupported": "Accepting-objekttype: {{type}} støttes ikke.",
-      "rejectTypeNotSupported": "Rejecting-objekttype: {{type}} støttes ikke.",
-      "algorithmNotSupported": "Algoritme: {{type}} støttes ikke.",
+      "incorrectDateFormat": "Feil datoformat i ActivityPub-forespørsel: {date}.",
+      "badTimeWindow": "Datoen for den signerte ActivityPub-forespørselen {date} er utenfor det tillatte tidsvinduet.",
+      "followTypeNotSupported": "Following-objekttype: {type} støttes ikke.",
+      "acceptTypeNotSupported": "Accepting-objekttype: {type} støttes ikke.",
+      "rejectTypeNotSupported": "Rejecting-objekttype: {type} støttes ikke.",
+      "algorithmNotSupported": "Algoritme: {type} støttes ikke.",
       "algorithmNotSpecified": "Algoritme er ikke spesifisert.",
-      "missingUserInboxUrl": "Brukerinnboksen for brukeren '{{activityPubProfile}}' mangler i den lokale databasen.",
-      "missingSharedInboxUrl": "Den delte innboksen for brukeren '{{activityPubProfile}}' mangler i den lokale databasen.",
-      "statusHasNotBeenDownloaded": "Nedlastet status er tom: {{statusActivityPubUrl}}. Feil: {{errorDescription}}",
-      "statusCannotBeProcessed": "Nedlastet status kan ikke behandles: {{statusActivityPubUrl}}. Feil: {{errorDescription}}",
-      "missingSupportedImageAttachments": "Nedlastet status har ikke bildevedlegg: {{statusActivityPubUrl}}.",
-      "actorNotDownloaded": "Feil under nedlasting av skuespiller fra ekstern server: {{statusActivityPubUrl}}.",
-      "invalidNoteUrl": "Ugyldig URL til status: {{statusActivityPubUrl}}.",
-      "entityCaseError": "Konvertering til '{{entityName}}' mislyktes.",
+      "missingUserInboxUrl": "Brukerinnboksen for brukeren {activityPubProfile} mangler i den lokale databasen.",
+      "missingSharedInboxUrl": "Den delte innboksen for brukeren {activityPubProfile} mangler i den lokale databasen.",
+      "statusHasNotBeenDownloaded": "Nedlastet status er tom: {statusActivityPubUrl}. Feil: {errorDescription}",
+      "statusCannotBeProcessed": "Nedlastet status kan ikke behandles: {statusActivityPubUrl}. Feil: {errorDescription}",
+      "missingSupportedImageAttachments": "Nedlastet status har ikke bildevedlegg: {statusActivityPubUrl}.",
+      "actorNotDownloaded": "Feil under nedlasting av skuespiller fra ekstern server: {statusActivityPubUrl}.",
+      "invalidNoteUrl": "Ugyldig URL til status: {statusActivityPubUrl}.",
+      "entityCaseError": "Konvertering til {entityName} mislyktes.",
       "missingInstanceAdminAccount": "Manglende administratorkonto i lokal instans.",
       "missingInstanceAdminPrivateKey": "Mangler privat nøkkel for adminkonto i lokal forekomst.",
       "unrecognizedActivityPubProfileUrl": "Ukjent ActivityPub-profil URL.",
-      "domainIsBlockedByInstance": "Brukerens domene '{{activityPubProfile}}' er blokkert av instansen.",
-      "actorIsBlockedByInstance": "Aktøren '{{activityPubProfile}}' er blokkert av instansen.",
-      "signatureActorDoesNotMatchPayloadActor": "Signaturaktøren '{{signatureActor}}' samsvarer ikke med nyttelastaktøren '{{payloadActor}}'."
+      "domainIsBlockedByInstance": "Brukerens domene {activityPubProfile} er blokkert av instansen.",
+      "actorIsBlockedByInstance": "Aktøren {activityPubProfile} er blokkert av instansen.",
+      "signatureActorDoesNotMatchPayloadActor": "Signaturaktøren {signatureActor} samsvarer ikke med nyttelastaktøren {payloadActor}."
     },
     "archives": {
       "requestWaitingForProcessing": "Det er allerede en forespørsel som venter på behandling.",
@@ -1290,11 +1289,11 @@
       "accountNotFound": "Finner ikke kontoen."
     },
     "followRequest": {
-      "missingFollowEntity": "Follow-entiteten (sourceUserId: '{{sourceUserId}}', targetUserId: '{{targetUserId}}') finnes ikke i den lokale databasen.",
-      "missingSourceUser": "Kildebrukeren '{{userId}}' mangler i databasen.",
-      "missingTargetUser": "Målbrukeren '{{userId}}' mangler i databasen.",
+      "missingFollowEntity": "Follow-entiteten (sourceUserId: {sourceUserId}, targetUserId: {targetUserId}) finnes ikke i den lokale databasen.",
+      "missingSourceUser": "Kildebrukeren {userId} mangler i databasen.",
+      "missingTargetUser": "Målbrukeren {userId} mangler i databasen.",
       "missingActivityPubActionId": "Activity Pubhandlings-ID i følgeforespørsel mangler.",
-      "missingPrivateKey": "Privat nøkkel for bruker {{userName}} finnes ikke i lokal database.",
+      "missingPrivateKey": "Privat nøkkel for bruker {userName} finnes ikke i lokal database.",
       "accountHasBeenMoved": "Målkontoen er flyttet og kan ikke godta nye følgere.",
       "incorrectId": "Feil ID i følgeforespørselen."
     },
@@ -1352,7 +1351,7 @@
       "cannotChangeResponseToString": "Kan ikke endre svar på streng.",
       "incorrectJsonFormat": "Feil JSON-format.",
       "openAIIsNotEnabled": "OpenAI er ikke aktivert.",
-      "openAIIsNotConfigured": "OpenAI er ikke konfigurert. {{message}}"
+      "openAIIsNotConfigured": "OpenAI er ikke konfigurert. {message}"
     },
     "openidConnect": {
       "invalidClientName": "Klientnavn må spesifiseres i URL.",
@@ -1440,7 +1439,7 @@
       "sortColumnNotSupported": "Sorteringskolonnen støttes ikke.",
       "incorrectStatusEventId": "Feil statushendelses-ID.",
       "maxLimitOfAttachmentsExceeded": "Maksimal grense for vedlegg er overskredet",
-      "statusCreationTooFrequent": "Ny status kan ikke opprettes ennå. Vent {{waitSeconds}} sekunder før du legger til en ny."
+      "statusCreationTooFrequent": "Ny status kan ikke opprettes ennå. Vent {waitSeconds} sekunder før du legger til en ny."
     },
     "storage": {
       "downloadRemoteResourceFailed": "Det er feilen returnert fra ekstern instansserver.",
@@ -1449,7 +1448,7 @@
       "emptyPublicFolderPath": "Felles mappenavn er ikke spesifisert.",
       "unknownError": "Svaret inneholder ingen informasjon om forespørselsstatus.",
       "s3StorageNotConfigured": "S3-objektlagring er ikke konfigurert.",
-      "fileReadError": "Kan ikke lese filen '{{fileName}}' fra lagringen."
+      "fileReadError": "Kan ikke lese filen {fileName} fra lagringen."
     },
     "temporaryFile": {
       "temporaryUrlFailed": "Midlertidig URL kan ikke opprettes.",
@@ -1491,7 +1490,7 @@
     "account": {
       "avatar": {
         "removeAriaLabel": "Fjern avatar",
-        "subtitle": "PNG,GIFellerJPG. På det meste{{maxPictureFileSize}}. Skal nedskaleres til 600x600px"
+        "subtitle": "PNG,GIFellerJPG. På det meste{maxPictureFileSize}. Skal nedskaleres til 600x600px"
       },
       "blockedDomains": {
         "description": "Liste over domener du har blokkert. Brukere fra disse domenene kan ikke følge deg. Innleggene deres vil ikke vises på din lokale tidslinje, og innleggene dine leveres ikke direkte til dem. Imidlertid kan de fortsatt se innleggene dine hvis en tredjepart de følger forsterker dem.",
@@ -1543,10 +1542,10 @@
       },
       "header": {
         "removeAriaLabel": "Fjern overskriften",
-        "subtitle": "PNG,GIFellerJPG. På det meste{{maxPictureFileSize}}. Skal nedskaleres til 1500x500px"
+        "subtitle": "PNG,GIFellerJPG. På det meste{maxPictureFileSize}. Skal nedskaleres til 1500x500px"
       },
       "import": {
-        "description": "Du kan importere data som tidligere er eksportert fra en annen server, for eksempel en liste over kontoer du følger. Importerte kontoer vil bli slått sammen med de du allerede følger. BareCSV-filer støttes for øyeblikket. Maksimal filstørrelse er{{maxImportFileSize}}.",
+        "description": "Du kan importere data som tidligere er eksportert fra en annen server, for eksempel en liste over kontoer du følger. Importerte kontoer vil bli slått sammen med de du allerede følger. BareCSV-filer støttes for øyeblikket. Maksimal filstørrelse er{maxImportFileSize}.",
         "importAriaLabel": "Importer",
         "table": {
           "endProcessingDate": "Sluttbehandlingsdato",
@@ -1568,7 +1567,7 @@
         "errorDuringDownloadingAccountData": "Feil under nedlasting av kontodata.",
         "headerDeleted": "Overskriften er slettet.",
         "headerSaved": "Overskriften er lagret.",
-        "importFileTooLarge": "Den opplastede filen er for stor. Maksimal størrelse er{{maxImportFileSize}}.",
+        "importFileTooLarge": "Den opplastede filen er for stor. Maksimal størrelse er{maxImportFileSize}.",
         "supporterFlagDisabled": "Supporterflagget er deaktivert.",
         "supporterFlagEnabled": "Supporterflagg er aktivert.",
         "verificationCodeCopied": "Bekreftelseskoden er kopiert til utklippstavlen."
@@ -1785,7 +1784,7 @@
         }
       },
       "messages": {
-        "fileTooLarge": "Den opplastede filen er for stor. Maksimal størrelse er{{maxArticleFileSize}}.",
+        "fileTooLarge": "Den opplastede filen er for stor. Maksimal størrelse er{maxArticleFileSize}.",
         "markdownCopied": "Markdown-koden har blitt kopiert til utklippstavlen.",
         "saved": "Artikkelen er lagret.",
         "updated": "Artikkelen er oppdatert."
@@ -2013,8 +2012,8 @@
         "unfollowAriaLabel": "Slutt å følge hashtaggen"
       },
       "feed": {
-        "atomTitle": "Hashtag{{hashtag}}feed (Atom)",
-        "rssTitle": "Hashtag{{hashtag}}feed (RSS)"
+        "atomTitle": "Hashtag{hashtag}feed (Atom)",
+        "rssTitle": "Hashtag{hashtag}feed (RSS)"
       },
       "messages": {
         "followed": "Hashtag er fulgt.",
@@ -2174,7 +2173,7 @@
         "avatarAlt": "avatarprofil",
         "headerAlt": "overskriftsprofil"
       },
-      "joined": "Ble med i{{date}}",
+      "joined": "Ble med i{date}",
       "latestFollowers": {
         "title": "SISTE FØLGERE"
       },
@@ -2271,7 +2270,7 @@
         "closeReportAriaLabel": "Lukk rapport",
         "deleteStatus": "Slett status",
         "deleteStatusAriaLabel": "Slett status",
-        "openProfileAriaLabel": "Åpne profil @{{userName}}",
+        "openProfileAriaLabel": "Åpne profil @{userName}",
         "reportActionsAriaLabel": "Rapporter handlinger",
         "restoreReportAriaLabel": "Gjenopprett rapport",
         "sendToRemoteInstance": "Send til ekstern instans",
@@ -2406,7 +2405,7 @@
         "boost": "Boost",
         "feature": "Funksjon",
         "like": "Liker",
-        "openProfileAriaLabel": "Åpne profil @{{userName}}",
+        "openProfileAriaLabel": "Åpne profil @{userName}",
         "unbookmark": "Fjern bokmerke",
         "unboost": "Unboost",
         "unfeature": "Ufunksjon",
@@ -2420,10 +2419,8 @@
           "report": "Rapporter",
           "unlike": "I motsetning til"
         },
-        "likedByPrefix": "Kommentar likt av",
+        "likedByPrefix": "{count, plural, one {Likt av # person} other {Likt av # personer}}",
         "noComments": "Det er ingenting å lese her ennå.",
-        "people": "mennesker",
-        "person": "person",
         "title": "Kommentarer"
       },
       "confirmations": {
@@ -2475,7 +2472,7 @@
         "cameraRoll": "Kamerarull",
         "category": "Kategori",
         "developChemistry": "Utvikle kjemi",
-        "equivalentLens": "Tilsvarer{{focalLength}}mm fullformatobjektiv.",
+        "equivalentLens": "Tilsvarer{focalLength}mm fullformatobjektiv.",
         "exposure": "Eksponering",
         "flash": "Flash",
         "fullFrameLens": "Fullramme objektiv.",
@@ -2572,7 +2569,7 @@
     "upload": {
       "accountMoved": "Denne kontoen har blitt flyttet til en annen konto, så du kan ikke lenger legge til nye bilder eller publisere nytt innhold her. For å fortsette å legge ut, vennligst bruk den nye kontoen din.",
       "actions": {
-        "featurePoweredBy": "Funksjon drevet av{{provider}}.",
+        "featurePoweredBy": "Funksjon drevet av{provider}.",
         "hashtags": "Hashtags",
         "useTemplate": "Bruk mal"
       },
@@ -2588,12 +2585,12 @@
       },
       "messages": {
         "accountMovedPublishingUnavailable": "Denne kontoen er flyttet, så publisering av nytt innhold er ikke tilgjengelig.",
-        "fileTooLarge": "Den opplastede filen er for stor. Maksimal størrelse er{{maxFileSize}}.",
-        "maxImagesPerPost": "Du kan laste opp opptil{{count}}-bilder per innlegg.",
+        "fileTooLarge": "Den opplastede filen er for stor. Maksimal størrelse er{maxFileSize}.",
+        "maxImagesPerPost": "Du kan laste opp opptil{count}-bilder per innlegg.",
         "statusSaved": "Status er lagret.",
         "statusUpdated": "Status er oppdatert.",
         "tooManyFilesSelectedSingular": "For mange filer er valgt. Du kan legge til ett bilde til.",
-        "tooManyFilesSelectedPlural": "For mange filer er valgt. Du kan legge til {{count}} bilder til.",
+        "tooManyFilesSelectedPlural": "For mange filer er valgt. Du kan legge til {count} bilder til.",
         "unableToResize": "Kan ikke endre størrelse på bildet før opplasting.",
         "unsupportedFileType": "Denne filtypen støttes ikke. Last opp etJPG-,PNG- eller WEBP-bilde.",
         "verifyEmailBeforePublish": "For å publisere en status, vennligst bekrefte e-postadressen din først."
@@ -2601,11 +2598,11 @@
       "photoAlt": "Lastet opp bilde",
       "statusDetails": "Statusdetaljer",
       "stepper": {
-        "imageData": "Bildedata #{{index}}"
+        "imageData": "Bildedata #{index}"
       },
       "subtitle": {
         "interoperabilityHint": "For å forbedre interoperabiliteten på tvers av forskjellige systemer, bruk bilder med den lengre kanten satt til 4096 px.",
-        "maxFileSize": "Du kan laste oppJPEG-,PNG- og WEBP-filer opptil{{maxFileSize}}."
+        "maxFileSize": "Du kan laste oppJPEG-,PNG- og WEBP-filer opptil{maxFileSize}."
       },
       "titles": {
         "editStatus": "Rediger status",
@@ -2628,7 +2625,7 @@
       "actions": {
         "disable2fa": "Deaktiver2FA",
         "notSupporter": "Ikke supporter",
-        "openProfileAriaLabel": "Åpne profil @{{userName}}"
+        "openProfileAriaLabel": "Åpne profil @{userName}"
       },
       "confirmations": {
         "deleteUserAccount": "Vil du slette brukerkontoen?",

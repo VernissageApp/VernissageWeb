@@ -46,7 +46,7 @@ export function app(): express.Express {
                         frameAncestors: ["'none'"],
                         fontSrc: ["'self'", "https://fonts.gstatic.com"],
                         imgSrc: ["'self'","data:", "blob:", cspImg],
-                        scriptSrc: ["'self'", "'unsafe-inline'"],
+                        scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
                         scriptSrcAttr: ["'self'", "'unsafe-inline'"],
                         styleSrc: ["'self'", "'unsafe-inline'"],
                         manifestSrc: ["'self'"],

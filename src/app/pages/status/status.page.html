@@ -515,7 +515,7 @@
                                                 <div class="text-muted fs-80" >
                                                     @if (comment.status.favouritesCount > 0) {
                                                         <span>
-                                                            {{ 'pages.status.comments.likedByPrefix' | translate }} {{ comment.status.favouritesCount }} {{ comment.status.favouritesCount === 1 ? ('pages.status.comments.person' | translate) : ('pages.status.comments.people' | translate)}}.
+                                                            {{ 'pages.status.comments.likedByPrefix' | translate: { count: comment.status.favouritesCount } }}
                                                         </span>
                                                     }
                                                 </div>

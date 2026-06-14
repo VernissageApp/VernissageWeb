@@ -10,9 +10,9 @@
                     <div class="fw-400 fs-90 text-muted user-name">&#64;{{ userInternal.userName }}</div>
                 </div>
                 <div class="fw-300 fs-90">
-                    <span class="margin-right-15"><span class="fw-500">{{ userInternal.photosCount }}</span> {{ (userInternal.photosCount === 1 ? 'common.labels.photo' : 'common.labels.photos') | translate }}</span>
-                    <span class="margin-right-15"><span class="fw-500">{{ userInternal.followersCount }}</span> {{ 'common.labels.followers' | translate }}</span>
-                    <span><span class="fw-500">{{ userInternal.followingCount }}</span> {{ 'common.labels.following' | translate }}</span>
+                    <span class="margin-right-15"><span class="fw-500">{{ userInternal.photosCount }}</span> {{ 'common.labels.photosLabel' | translate: { count: userInternal.photosCount } }}</span>
+                    <span class="margin-right-15"><span class="fw-500">{{ userInternal.followersCount }}</span> {{ 'common.labels.followers' | translate: { followersCount: userInternal.followersCount } }}</span>
+                    <span><span class="fw-500">{{ userInternal.followingCount }}</span> {{ 'common.labels.following' | translate: { followingCount: userInternal.followingCount } }}</span>
                 </div>
             </div>
         </div>

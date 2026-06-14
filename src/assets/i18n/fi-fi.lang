@@ -13,7 +13,7 @@
       "copy": "Kopioi",
       "delete": "Poista",
       "disable": "Poista käytöstä",
-      "dismiss": "Hylkää",
+      "dismiss": "Ohita",
       "download": "Lataa",
       "edit": "Muokkaa",
       "enable": "Ota käyttöön",
@@ -26,7 +26,7 @@
       "next": "Seuraava",
       "ok": "OK",
       "open": "Avaa",
-      "openProfileWithUserName": "Avaa profiili @{{userName}}",
+      "openProfileWithUserName": "Avaa profiili @{userName}",
       "refresh": "Päivitä",
       "register": "Rekisteröidy",
       "reject": "Hylkää",
@@ -89,8 +89,8 @@
       "errorMessage": "Virheilmoitus",
       "exception": "Poikkeus",
       "fields": "Kentät",
-      "followers": "Seuraajat",
-      "following": "Seurataan",
+      "followers": "{followersCount, plural, one {Seuraaja} other {Seuraajaa}}",
+      "following": "{followingCount, plural, one {Seurataan} other {Seurataan}}",
       "frequentlyAskedQuestions": "Usein kysytyt kysymykset",
       "hashtags": "Aihetunnisteet",
       "header": "Otsikko",
@@ -109,8 +109,7 @@
       "note": "Huomautus",
       "order": "Järjestä",
       "password": "Salasana",
-      "photo": "Valokuva",
-      "photos": "Valokuvat̄",
+      "photosLabel": "{count, plural, one {Valokuva} other {Valokuvaa}}",
       "priority": "Prioriteetti",
       "private": "Yksityinen",
       "processing": "Käsitellään",
@@ -665,7 +664,7 @@
         "time": "Aika"
       },
       "messages": {
-        "uploadedFileTooLarge": "Ladattu tiedosto on liian suuri. Suurin koko on{{size}}."
+        "uploadedFileTooLarge": "Ladattu tiedosto on liian suuri. Suurin koko on{size}."
       },
       "texts": {
         "altText": "Vaihtoehtoinen teksti",
@@ -678,7 +677,7 @@
         "exifMetadata": "Exif-metadata",
         "exposureTime": "Valotusaika:",
         "f": "f/",
-        "featurePoweredBy": "Ominaisuuden mahdollistaa {{providerName}}.",
+        "featurePoweredBy": "Ominaisuuden mahdollistaa {providerName}.",
         "film": "Video:",
         "flash": "Salama:",
         "focalLength": "Polttoväli:",
@@ -686,8 +685,8 @@
         "generate": "Luo",
         "geolocationDisclosureWarning": "Jakamalla valokuvasi maantieteelliset tiedot paljastat tarkan sijainnin, jossa kuva on otettu. Varmista ennen jatkamista, että hyväksyt näiden tietojen julkisen saatavuuden.",
         "gpsCoordinates": "GPS-koordinaatit:",
-        "hdrIncludeInformation": "Voit halutessasi lisätä kuvasta HDR-version (AVIF). Tämä versio näytetään vain päivityksen tieoissa Vernissage-alustalla. Tiedoston enimmäiskoko on {{hdrFileSizeString}}.",
-        "imageExceededLimitAndWasResized": "Kuvasi ylitti {{maxFileSize}}-rajan, joten sen pidemmän reunan koko muutettiin automaattisesti 4096 pikseliksi.",
+        "hdrIncludeInformation": "Voit halutessasi lisätä kuvasta HDR-version (AVIF). Tämä versio näytetään vain päivityksen tieoissa Vernissage-alustalla. Tiedoston enimmäiskoko on {hdrFileSizeString}.",
+        "imageExceededLimitAndWasResized": "Kuvasi ylitti {maxFileSize}-rajan, joten sen pidemmän reunan koko muutettiin automaattisesti 4096 pikseliksi.",
         "information": "Tietoja:",
         "iso": "ISO:",
         "lens": "Objektiivi:",
@@ -948,7 +947,7 @@
         "muteAccount": "Mykistä tili",
         "muteDialogHeader": "Mykistetyt julkaisut ja tehostukset eivät näy useimmilla järjestelmän aikajanoilla.",
         "muteEndDate": "Mykistyksen loppuaika",
-        "muteNewStatuses": "Mykistä uudet päivitykset",
+        "muteNewStatuses": "Hiljennä uudet päivitykset",
         "muteNotifications": "Mykistä ilmoitukset",
         "muteReblogs": "Mykistä tehostukset",
         "optionalDateWhenMutingWillEnd": "Valinnainen päivämäärä, jolloin mykistys päättyy.",
@@ -1140,38 +1139,38 @@
       "missingSignedHeadersList": "Allekirjoitettujen otsikoiden luetteloa ei voi lukea ActivityPub-pyynnöstä.",
       "missingSignatureInHeader": "Otsikon allekirjoitusta ei voi lukea ActivityPub-pyynnössä.",
       "missingKeyIdInHeader": "KeyId ei ole luettavissa ActivityPub-pyynnön allekirjoitusotsikossa.",
-      "missingActivityPubProfileInKeyId": "Näyttelijäprofiilia ei löydy kohteesta keyId {{keyIdValue}}.",
-      "missingSignedHeader": "Otsikkoa '{{headerName}}', jota käytettiin allekirjoituksen luomiseen ActivityPub-pyynnössä, ei löydy.",
+      "missingActivityPubProfileInKeyId": "Näyttelijäprofiilia ei löydy kohteesta keyId {keyIdValue}.",
+      "missingSignedHeader": "Otsikkoa {headerName}, jota käytettiin allekirjoituksen luomiseen ActivityPub-pyynnössä, ei löydy.",
       "signatureIsNotValid": "ActivityPub-pyynnön allekirjoitus ei kelpaa.",
       "userNameIsRequired": "Käyttäjätunnus vaaditaan.",
       "statusIdIsRequired": "Tilatunnus vaaditaan.",
-      "incorrectStatusIdFormat": "Tilan tunnus '{{statusId}}' ei ole oikeassa muodossa.",
-      "userNotExistsInDatabase": "Käyttäjää '{{activityPubProfile}}' ei löydy paikallisesta tietokannasta.",
-      "privateKeyNotExists": "Käyttäjän '{{activityPubProfile}}' yksityistä avainta ei löydy paikallisesta tietokannasta.",
-      "publicKeyNotExists": "Käyttäjän '{{activityPubProfile}}' julkista avainta ei löydy paikallisesta tietokannasta.",
+      "incorrectStatusIdFormat": "Tilan tunnus {statusId} ei ole oikeassa muodossa.",
+      "userNotExistsInDatabase": "Käyttäjää {activityPubProfile} ei löydy paikallisesta tietokannasta.",
+      "privateKeyNotExists": "Käyttäjän {activityPubProfile} yksityistä avainta ei löydy paikallisesta tietokannasta.",
+      "publicKeyNotExists": "Käyttäjän {activityPubProfile} julkista avainta ei löydy paikallisesta tietokannasta.",
       "signatureDataNotCreated": "Allekirjoitustietoja ei voida luoda pyynnön otsikoiden perusteella.",
       "missingDateHeader": "ActivityPub-pyynnöstä puuttuu 'Date' -otsikko.",
-      "incorrectDateFormat": "Väärä päivämäärämuoto ActivityPub-pyynnössä: {{date}}.",
-      "badTimeWindow": "Allekirjoitetun ActivityPub-pyynnön päivämäärä '{{date}}' on sallitun aikaikkunan ulkopuolella.",
-      "followTypeNotSupported": "Kohdetyypin {{type}} seuraamista ei tueta.",
-      "acceptTypeNotSupported": "Kohdetyypin {{type}} hyväksymistä ei tueta.",
-      "rejectTypeNotSupported": "Kohdetyypin {{type}} hylkäämistä ei tueta.",
-      "algorithmNotSupported": "Algoritmi: {{type}} ei tueta.",
+      "incorrectDateFormat": "Väärä päivämäärämuoto ActivityPub-pyynnössä: {date}.",
+      "badTimeWindow": "Allekirjoitetun ActivityPub-pyynnön päivämäärä {date} on sallitun aikaikkunan ulkopuolella.",
+      "followTypeNotSupported": "Kohdetyypin {type} seuraamista ei tueta.",
+      "acceptTypeNotSupported": "Kohdetyypin {type} hyväksymistä ei tueta.",
+      "rejectTypeNotSupported": "Kohdetyypin {type} hylkäämistä ei tueta.",
+      "algorithmNotSupported": "Algoritmi: {type} ei tueta.",
       "algorithmNotSpecified": "Algoritmia ei ole määritelty.",
-      "missingUserInboxUrl": "Käyttäjän '{{activityPubProfile}}' saapuneet-kansio puuttuu paikallisesta tietokannasta.",
-      "missingSharedInboxUrl": "Käyttäjän '{{activityPubProfile}}' jaettu saapuneet-kansio puuttuu paikallisesta tietokannasta.",
-      "statusHasNotBeenDownloaded": "Ladattu päivitys on tyhjä: {{statusActivityPubUrl}}. Virhe: {{errorDescription}}",
-      "statusCannotBeProcessed": "Ladattua päivitystä ei voida käsitellä: {{statusActivityPubUrl}}. Virhe: {{errorDescription}}",
-      "missingSupportedImageAttachments": "Ladatussa päivityksessä ei ole kuvaliitteitä: {{statusActivityPubUrl}}.",
-      "actorNotDownloaded": "Virhe ladattaessa toimijaa etäpalvelimelta: {{statusActivityPubUrl}}.",
-      "invalidNoteUrl": "Virheellinen päivityksen URL: {{statusActivityPubUrl}}.",
-      "entityCaseError": "Muunnos kohdetyyppiin '{{entityName}}' epäonnistui.",
+      "missingUserInboxUrl": "Käyttäjän {activityPubProfile} saapuneet-kansio puuttuu paikallisesta tietokannasta.",
+      "missingSharedInboxUrl": "Käyttäjän {activityPubProfile} jaettu saapuneet-kansio puuttuu paikallisesta tietokannasta.",
+      "statusHasNotBeenDownloaded": "Ladattu päivitys on tyhjä: {statusActivityPubUrl}. Virhe: {errorDescription}",
+      "statusCannotBeProcessed": "Ladattua päivitystä ei voida käsitellä: {statusActivityPubUrl}. Virhe: {errorDescription}",
+      "missingSupportedImageAttachments": "Ladatussa päivityksessä ei ole kuvaliitteitä: {statusActivityPubUrl}.",
+      "actorNotDownloaded": "Virhe ladattaessa toimijaa etäpalvelimelta: {statusActivityPubUrl}.",
+      "invalidNoteUrl": "Virheellinen päivityksen URL: {statusActivityPubUrl}.",
+      "entityCaseError": "Muunnos kohdetyyppiin {entityName} epäonnistui.",
       "missingInstanceAdminAccount": "Järjestelmänvalvojan tili puuttuu paikalliselta instanssilta.",
       "missingInstanceAdminPrivateKey": "Paikallisen järjestelmänvalvojan tilin yksityinen avain puuttuu.",
       "unrecognizedActivityPubProfileUrl": "Tuntematon ActivityPub-profiilin URL.",
-      "domainIsBlockedByInstance": "Käyttäjän '{{activityPubProfile}}' verkkotunnus on instanssin estämä.",
-      "actorIsBlockedByInstance": "Instanssi estää toimijan '{{activityPubProfile}}'.",
-      "signatureActorDoesNotMatchPayloadActor": "Allekirjoituksen toimija '{{signatureActor}}' ei vastaa sisällön toimijaa '{{payloadActor}}'."
+      "domainIsBlockedByInstance": "Käyttäjän {activityPubProfile} verkkotunnus on instanssin estämä.",
+      "actorIsBlockedByInstance": "Instanssi estää toimijan {activityPubProfile}.",
+      "signatureActorDoesNotMatchPayloadActor": "Allekirjoituksen toimija {signatureActor} ei vastaa sisällön toimijaa {payloadActor}."
     },
     "archives": {
       "requestWaitingForProcessing": "Pyyntö odottaa jo käsittelyä.",
@@ -1290,11 +1289,11 @@
       "accountNotFound": "Tiliä ei löydy."
     },
     "followRequest": {
-      "missingFollowEntity": "Follow-entiteettiä (sourceUserId: '{{sourceUserId}}', targetUserId: '{{targetUserId}}') ei ole paikallisessa tietokannassa.",
-      "missingSourceUser": "Lähdekäyttäjä '{{userId}}' puuttuu tietokannasta.",
-      "missingTargetUser": "Kohdekäyttäjä '{{userId}}' puuttuu tietokannasta.",
+      "missingFollowEntity": "Follow-entiteettiä (sourceUserId: {sourceUserId}, targetUserId: {targetUserId}) ei ole paikallisessa tietokannassa.",
+      "missingSourceUser": "Lähdekäyttäjä {userId} puuttuu tietokannasta.",
+      "missingTargetUser": "Kohdekäyttäjä {userId} puuttuu tietokannasta.",
       "missingActivityPubActionId": "Activity Pub-toimintotunnus puuttuu seurantapyynnöstä.",
-      "missingPrivateKey": "Yksityistä avainta käyttäjälle {{userName}} ei ole paikallisessa tietokannassa.",
+      "missingPrivateKey": "Yksityistä avainta käyttäjälle {userName} ei ole paikallisessa tietokannassa.",
       "accountHasBeenMoved": "Kohdetili on siirretty, eikä se voi ottaa vastaan uusia seuraajia.",
       "incorrectId": "Väärä tunnus seurantapyynnössä."
     },
@@ -1352,7 +1351,7 @@
       "cannotChangeResponseToString": "Vastausta merkkijonoon ei voi muuttaa.",
       "incorrectJsonFormat": "Väärä JSON-muoto.",
       "openAIIsNotEnabled": "OpenAI ei ole käytössä.",
-      "openAIIsNotConfigured": "OpenAI ei ole määritetty. {{message}}"
+      "openAIIsNotConfigured": "OpenAI ei ole määritetty. {message}"
     },
     "openidConnect": {
       "invalidClientName": "Asiakkaan nimi on määritettävä kohdassa URL.",
@@ -1440,7 +1439,7 @@
       "sortColumnNotSupported": "Lajittelusaraketta ei tueta.",
       "incorrectStatusEventId": "Virheellinen päivitystapahtuman tunnus.",
       "maxLimitOfAttachmentsExceeded": "Liitteiden enimmäisraja ylitetty",
-      "statusCreationTooFrequent": "Uutta päivitystä ei voi vielä luoda. Odota {{waitSeconds}} sekuntia ennen kuin lisäät uuden."
+      "statusCreationTooFrequent": "Uutta päivitystä ei voi vielä luoda. Odota {waitSeconds} sekuntia ennen kuin lisäät uuden."
     },
     "storage": {
       "downloadRemoteResourceFailed": "Virhe palautettiin etäilmentymän palvelimelta.",
@@ -1449,7 +1448,7 @@
       "emptyPublicFolderPath": "Julkisen kansion nimeä ei ole määritetty.",
       "unknownError": "Vastaus ei sisällä tietoja pyynnön tilasta.",
       "s3StorageNotConfigured": "S3-kohteiden tallennustilaa ei ole määritetty.",
-      "fileReadError": "Tiedostoa '{{fileName}}' ei voi lukea tallennustilasta."
+      "fileReadError": "Tiedostoa {fileName} ei voi lukea tallennustilasta."
     },
     "temporaryFile": {
       "temporaryUrlFailed": "Tilapäistä URL-osoitetta ei voi luoda.",
@@ -1491,7 +1490,7 @@
     "account": {
       "avatar": {
         "removeAriaLabel": "Poista avatar",
-        "subtitle": "PNG, GIF tai JPG. Korkeintaan {{maxPictureFileSize}}. Koko pienennetään 600x600 pikseliin."
+        "subtitle": "PNG, GIF tai JPG. Korkeintaan {maxPictureFileSize}. Koko pienennetään 600x600 pikseliin."
       },
       "blockedDomains": {
         "description": "Luettelo estämistäsi verkkotunnuksista. Näiden verkkotunnusten käyttäjät eivät voi seurata sinua. Heidän viestinsä eivät näy paikallisella aikajanallasi, eikä viestejäsi toimiteta heille suoraan. He voivat kuitenkin nähdä viestisi, jos heidän seuraamansa kolmas osapuoli tehostaa niitä.",
@@ -1543,10 +1542,10 @@
       },
       "header": {
         "removeAriaLabel": "Poista otsikko",
-        "subtitle": "PNG, GIF ta iJPG. Korkeintaan {{maxPictureFileSize}}. Pienennetään 1500x500 pikseliin."
+        "subtitle": "PNG, GIF ta iJPG. Korkeintaan {maxPictureFileSize}. Pienennetään 1500x500 pikseliin."
       },
       "import": {
-        "description": "Voit tuoda aiemmin toiselta palvelimelta vietyjä tietoja, kuten luettelon seuraamistasi tileistä. Tuodut tilit yhdistetään tiliin, joita jo seuraat. Vain CSV-tiedostoja tuetaan tällä hetkellä. Tiedoston enimmäiskoko on {{maxImportFileSize}}.",
+        "description": "Voit tuoda aiemmin toiselta palvelimelta vietyjä tietoja, kuten luettelon seuraamistasi tileistä. Tuodut tilit yhdistetään tiliin, joita jo seuraat. Vain CSV-tiedostoja tuetaan tällä hetkellä. Tiedoston enimmäiskoko on {maxImportFileSize}.",
         "importAriaLabel": "Tuo",
         "table": {
           "endProcessingDate": "Käsittelyn päättymispäivä",
@@ -1568,7 +1567,7 @@
         "errorDuringDownloadingAccountData": "Virhe ladattaessa tilitietoja.",
         "headerDeleted": "Otsikko on poistettu.",
         "headerSaved": "Otsikko on tallennettu.",
-        "importFileTooLarge": "Ladattu tiedosto on liian suuri. Suurin koko on {{maxImportFileSize}}.",
+        "importFileTooLarge": "Ladattu tiedosto on liian suuri. Suurin koko on {maxImportFileSize}.",
         "supporterFlagDisabled": "Tukijan merkki on poistettu käytöstä.",
         "supporterFlagEnabled": "Tukijan merkki on otettu käyttöön.",
         "verificationCodeCopied": "Vahvistuskoodi on kopioitu leikepöydälle."
@@ -1785,7 +1784,7 @@
         }
       },
       "messages": {
-        "fileTooLarge": "Ladattu tiedosto on liian suuri. Suurin sallittu koko on {{maxArticleFileSize}}.",
+        "fileTooLarge": "Ladattu tiedosto on liian suuri. Suurin sallittu koko on {maxArticleFileSize}.",
         "markdownCopied": "Markdown-koodi on kopioitu leikepöydälle.",
         "saved": "Artikkeli on tallennettu.",
         "updated": "Artikkeli on päivitetty."
@@ -2013,8 +2012,8 @@
         "unfollowAriaLabel": "Lopeta aihetunnisteen seuraaminen"
       },
       "feed": {
-        "atomTitle": "Aihetunniste{{hashtag}}-syöte (Atom)",
-        "rssTitle": "Aihetunniste{{hashtag}}-syöte (RSS)"
+        "atomTitle": "Aihetunniste{hashtag}-syöte (Atom)",
+        "rssTitle": "Aihetunniste{hashtag}-syöte (RSS)"
       },
       "messages": {
         "followed": "Aihetunnistetta seurataan.",
@@ -2174,7 +2173,7 @@
         "avatarAlt": "avatar-profiili",
         "headerAlt": "otsikkoprofiili"
       },
-      "joined": "Liittyi {{date}}",
+      "joined": "Liittyi {date}",
       "latestFollowers": {
         "title": "UUSIMMAT SEURAAJAT"
       },
@@ -2271,7 +2270,7 @@
         "closeReportAriaLabel": "Sulje raportti",
         "deleteStatus": "Poista päivitys",
         "deleteStatusAriaLabel": "Poista päivitys",
-        "openProfileAriaLabel": "Avaa profiili @{{userName}}",
+        "openProfileAriaLabel": "Avaa profiili @{userName}",
         "reportActionsAriaLabel": "Ilmoita toimista",
         "restoreReportAriaLabel": "Palauta raportti",
         "sendToRemoteInstance": "Lähetä etäinstanssiin",
@@ -2406,7 +2405,7 @@
         "boost": "Tehosta",
         "feature": "Ominaisuus",
         "like": "Kuten",
-        "openProfileAriaLabel": "Avaa profiili @{{userName}}",
+        "openProfileAriaLabel": "Avaa profiili @{userName}",
         "unbookmark": "Poista kirjanmerkki",
         "unboost": "Poista tehostus",
         "unfeature": "Poista esitellyistä",
@@ -2420,10 +2419,8 @@
           "report": "Raportoi",
           "unlike": "Peru tykkäys"
         },
-        "likedByPrefix": "Kommentista piti",
+        "likedByPrefix": "{count, plural, one {Tykännyt # henkilö} other {Tykännyt # henkilöä}}",
         "noComments": "Täällä ei ole vielä mitään luettavaa.",
-        "people": "henkilöä",
-        "person": "henkilö",
         "title": "Kommentit"
       },
       "confirmations": {
@@ -2475,7 +2472,7 @@
         "cameraRoll": "Kameran rulla",
         "category": "Luokka",
         "developChemistry": "Kehityksen kemia",
-        "equivalentLens": "Vastaa {{focalLength}}mm kinofilmillä.",
+        "equivalentLens": "Vastaa {focalLength}mm kinofilmillä.",
         "exposure": "Suljinaika",
         "flash": "Salama",
         "fullFrameLens": "Objektiivi kinofilmillä.",
@@ -2572,7 +2569,7 @@
     "upload": {
       "accountMoved": "Tämä tili on siirretty toiselle tilille, joten et voi enää lisätä uusia kuvia tai julkaista uutta sisältöä täällä. Jatka lähettämistä käyttämällä uutta tiliäsi.",
       "actions": {
-        "featurePoweredBy": "Ominaisuuden mahdollistaa {{provider}}.",
+        "featurePoweredBy": "Ominaisuuden mahdollistaa {provider}.",
         "hashtags": "Aihetunnisteet",
         "useTemplate": "Käytä mallia"
       },
@@ -2588,12 +2585,12 @@
       },
       "messages": {
         "accountMovedPublishingUnavailable": "Tämä tili on siirretty, joten uuden sisällön julkaiseminen ei ole mahdollista.",
-        "fileTooLarge": "Ladattu tiedosto on liian suuri. Suurin koko on {{maxFileSize}}.",
-        "maxImagesPerPost": "Voit ladata enintään {{count}} kuvaa viestiä kohden.",
+        "fileTooLarge": "Ladattu tiedosto on liian suuri. Suurin koko on {maxFileSize}.",
+        "maxImagesPerPost": "Voit ladata enintään {count} kuvaa viestiä kohden.",
         "statusSaved": "Päivitys on tallennettu.",
         "statusUpdated": "Julkaisu on päivitetty.",
         "tooManyFilesSelectedSingular": "Liian monta tiedostoa valittu. Voit lisätä vielä yhden kuvan.",
-        "tooManyFilesSelectedPlural": "Liian monta tiedostoa valittu. Voit lisätä vielä {{count}} kuvaa.",
+        "tooManyFilesSelectedPlural": "Liian monta tiedostoa valittu. Voit lisätä vielä {count} kuvaa.",
         "unableToResize": "Kuvan kokoa ei voi muuttaa ennen latausta.",
         "unsupportedFileType": "Tätä tiedostotyyppiä ei tueta. Lataa JPG-, PNG- tai WEBP-kuva.",
         "verifyEmailBeforePublish": "Jos haluat julkaista päivityksen, vahvista ensin sähköpostiosoitteesi."
@@ -2601,11 +2598,11 @@
       "photoAlt": "Kuva ladattu",
       "statusDetails": "Päivityksen tiedot",
       "stepper": {
-        "imageData": "Kuvan tiedot #{{index}}"
+        "imageData": "Kuvan tiedot #{index}"
       },
       "subtitle": {
         "interoperabilityHint": "Voit parantaa yhteentoimivuutta eri järjestelmissä käyttämällä kuvia, joiden pidempi reuna on 4096 pikseliä.",
-        "maxFileSize": "Voit ladata JPEG-, PNG- ja WEBP-tiedostoja tidostokokoon {{maxFileSize}} asti."
+        "maxFileSize": "Voit ladata JPEG-, PNG- ja WEBP-tiedostoja tidostokokoon {maxFileSize} asti."
       },
       "titles": {
         "editStatus": "Muokkaa päivitystä",
@@ -2628,7 +2625,7 @@
       "actions": {
         "disable2fa": "Poista kaksivaiheinen tunnistus käytöstä",
         "notSupporter": "Ei tukija",
-        "openProfileAriaLabel": "Avaa profiili @{{userName}}"
+        "openProfileAriaLabel": "Avaa profiili @{userName}"
       },
       "confirmations": {
         "deleteUserAccount": "Haluatko poistaa käyttäjätilin?",
