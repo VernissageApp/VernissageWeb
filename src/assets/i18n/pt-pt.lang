@@ -26,7 +26,7 @@
       "next": "Seguinte",
       "ok": "OK",
       "open": "Abrir",
-      "openProfileWithUserName": "Abrir perfil @{{userName}}",
+      "openProfileWithUserName": "Abrir perfil @{userName}",
       "refresh": "Atualizar",
       "register": "Registar",
       "reject": "Rejeitar",
@@ -89,8 +89,8 @@
       "errorMessage": "Mensagem de erro",
       "exception": "Exceção",
       "fields": "Campos",
-      "followers": "Seguidores",
-      "following": "A seguir",
+      "followers": "{followersCount, plural, one {Seguidor} other {Seguidores}}",
+      "following": "{followingCount, plural, one {A seguir} other {A seguir}}",
       "frequentlyAskedQuestions": "Perguntas frequentes",
       "hashtags": "Etiquetas",
       "header": "Cabeçalho",
@@ -109,8 +109,7 @@
       "note": "Nota",
       "order": "Ordem",
       "password": "Palavra-passe",
-      "photo": "Foto",
-      "photos": "Fotos",
+      "photosLabel": "{count, plural, one {Foto} other {Fotos}}",
       "priority": "Prioridade",
       "private": "Privado",
       "processing": "A processar",
@@ -665,7 +664,7 @@
         "time": "Hora"
       },
       "messages": {
-        "uploadedFileTooLarge": "O ficheiro carregado é demasiado grande. O tamanho máximo é {{size}}."
+        "uploadedFileTooLarge": "O ficheiro carregado é demasiado grande. O tamanho máximo é {size}."
       },
       "texts": {
         "altText": "Texto alternativo",
@@ -678,7 +677,7 @@
         "exifMetadata": "Metadados Exif",
         "exposureTime": "Tempo de exposição:",
         "f": "f/",
-        "featurePoweredBy": "Funcionalidade fornecida por {{providerName}}.",
+        "featurePoweredBy": "Funcionalidade fornecida por {providerName}.",
         "film": "Filme:",
         "flash": "Flash:",
         "focalLength": "Distância focal:",
@@ -686,8 +685,8 @@
         "generate": "Gerar",
         "geolocationDisclosureWarning": "Ao partilhar os dados de geolocalização da sua foto, está a divulgar o local exato onde a foto foi tirada. Antes de continuar, certifique-se de que se sente confortável com o facto de esta informação ficar publicamente disponível.",
         "gpsCoordinates": "Coordenadas GPS:",
-        "hdrIncludeInformation": "Tem a opção de incluir uma versão HDR da imagem (AVIF). Esta versão será apresentada apenas nos detalhes do estado na plataforma Vernissage. O tamanho máximo do ficheiro é {{hdrFileSizeString}}.",
-        "imageExceededLimitAndWasResized": "A sua imagem excedeu o limite de {{maxFileSize}}, por isso foi redimensionada automaticamente para 4096 px no lado mais longo.",
+        "hdrIncludeInformation": "Tem a opção de incluir uma versão HDR da imagem (AVIF). Esta versão será apresentada apenas nos detalhes do estado na plataforma Vernissage. O tamanho máximo do ficheiro é {hdrFileSizeString}.",
+        "imageExceededLimitAndWasResized": "A sua imagem excedeu o limite de {maxFileSize}, por isso foi redimensionada automaticamente para 4096 px no lado mais longo.",
         "information": "Informação:",
         "iso": "ISO:",
         "lens": "Lente:",
@@ -1140,38 +1139,38 @@
       "missingSignedHeadersList": "Não é possível ler a lista de cabeçalhos assinados do pedido ActivityPub.",
       "missingSignatureInHeader": "Não é possível ler a assinatura no cabeçalho do pedido ActivityPub.",
       "missingKeyIdInHeader": "Não é possível ler o keyId do cabeçalho de assinatura no pedido ActivityPub.",
-      "missingActivityPubProfileInKeyId": "Não foi possível encontrar o perfil do ator no keyId {{keyIdValue}}.",
-      "missingSignedHeader": "Não foi possível encontrar o cabeçalho '{{headerName}}' usado para criar a assinatura no pedido ActivityPub.",
+      "missingActivityPubProfileInKeyId": "Não foi possível encontrar o perfil do ator no keyId {keyIdValue}.",
+      "missingSignedHeader": "Não foi possível encontrar o cabeçalho {headerName} usado para criar a assinatura no pedido ActivityPub.",
       "signatureIsNotValid": "A assinatura do pedido ActivityPub não é válida.",
       "userNameIsRequired": "O nome de utilizador é obrigatório.",
       "statusIdIsRequired": "O ID de estado é obrigatório.",
-      "incorrectStatusIdFormat": "O ID de estado '{{statusId}}' não está no formato correto.",
-      "userNotExistsInDatabase": "O utilizador '{{activityPubProfile}}' não foi encontrado na base de dados local.",
-      "privateKeyNotExists": "Chave privada não encontrada na base de dados local para o utilizador: '{{activityPubProfile}}'.",
-      "publicKeyNotExists": "Chave pública não encontrada na base de dados local para o utilizador: '{{activityPubProfile}}'.",
+      "incorrectStatusIdFormat": "O ID de estado {statusId} não está no formato correto.",
+      "userNotExistsInDatabase": "O utilizador {activityPubProfile} não foi encontrado na base de dados local.",
+      "privateKeyNotExists": "Chave privada não encontrada na base de dados local para o utilizador: {activityPubProfile}.",
+      "publicKeyNotExists": "Chave pública não encontrada na base de dados local para o utilizador: {activityPubProfile}.",
       "signatureDataNotCreated": "Não foi possível criar dados de assinatura com base nos cabeçalhos do pedido.",
       "missingDateHeader": "Cabeçalho 'Date' em falta no pedido ActivityPub.",
-      "incorrectDateFormat": "Formato de data incorreto no pedido ActivityPub: {{date}}.",
-      "badTimeWindow": "A data do pedido assinado ActivityPub '{{date}}' está fora da janela de tempo aceitável.",
-      "followTypeNotSupported": "O tipo de objeto Following não é suportado: {{type}}.",
-      "acceptTypeNotSupported": "O tipo de objeto Accepting não é suportado: {{type}}.",
-      "rejectTypeNotSupported": "O tipo de objeto Rejecting não é suportado: {{type}}.",
-      "algorithmNotSupported": "Algoritmo não suportado: {{type}}.",
+      "incorrectDateFormat": "Formato de data incorreto no pedido ActivityPub: {date}.",
+      "badTimeWindow": "A data do pedido assinado ActivityPub {date} está fora da janela de tempo aceitável.",
+      "followTypeNotSupported": "O tipo de objeto Following não é suportado: {type}.",
+      "acceptTypeNotSupported": "O tipo de objeto Accepting não é suportado: {type}.",
+      "rejectTypeNotSupported": "O tipo de objeto Rejecting não é suportado: {type}.",
+      "algorithmNotSupported": "Algoritmo não suportado: {type}.",
       "algorithmNotSpecified": "Algoritmo não especificado.",
-      "missingUserInboxUrl": "Caixa de entrada do utilizador em falta na base de dados local para o utilizador: '{{activityPubProfile}}'.",
-      "missingSharedInboxUrl": "Caixa de entrada partilhada em falta na base de dados local para o utilizador: '{{activityPubProfile}}'.",
-      "statusHasNotBeenDownloaded": "O estado descarregado está vazio: {{statusActivityPubUrl}}. Erro: {{errorDescription}}",
-      "statusCannotBeProcessed": "O estado descarregado não pode ser processado: {{statusActivityPubUrl}}. Erro: {{errorDescription}}",
-      "missingSupportedImageAttachments": "O estado descarregado não contém anexos de imagem: {{statusActivityPubUrl}}.",
-      "actorNotDownloaded": "Erro while downloading actor de servidor remoto: {{statusActivityPubUrl}}.",
-      "invalidNoteUrl": "URL to status: {{statusActivityPubUrl}} inválido.",
-      "entityCaseError": "Cast para '{{entityName}}' falhado.",
+      "missingUserInboxUrl": "Caixa de entrada do utilizador em falta na base de dados local para o utilizador: {activityPubProfile}.",
+      "missingSharedInboxUrl": "Caixa de entrada partilhada em falta na base de dados local para o utilizador: {activityPubProfile}.",
+      "statusHasNotBeenDownloaded": "O estado descarregado está vazio: {statusActivityPubUrl}. Erro: {errorDescription}",
+      "statusCannotBeProcessed": "O estado descarregado não pode ser processado: {statusActivityPubUrl}. Erro: {errorDescription}",
+      "missingSupportedImageAttachments": "O estado descarregado não contém anexos de imagem: {statusActivityPubUrl}.",
+      "actorNotDownloaded": "Erro while downloading actor de servidor remoto: {statusActivityPubUrl}.",
+      "invalidNoteUrl": "URL to status: {statusActivityPubUrl} inválido.",
+      "entityCaseError": "Cast para {entityName} falhado.",
       "missingInstanceAdminAccount": "Em falta administrador conta em instância local.",
       "missingInstanceAdminPrivateKey": "Em falta chave privada para administrador conta em instância local.",
       "unrecognizedActivityPubProfileUrl": "URL de perfil ActivityPub não reconhecido.",
-      "domainIsBlockedByInstance": "O domínio do utilizador '{{activityPubProfile}}' está bloqueado pela instância.",
-      "actorIsBlockedByInstance": "O ator '{{activityPubProfile}}' está bloqueado pela instância.",
-      "signatureActorDoesNotMatchPayloadActor": "O ator da assinatura '{{signatureActor}}' não corresponde ao ator do payload '{{payloadActor}}'."
+      "domainIsBlockedByInstance": "O domínio do utilizador {activityPubProfile} está bloqueado pela instância.",
+      "actorIsBlockedByInstance": "O ator {activityPubProfile} está bloqueado pela instância.",
+      "signatureActorDoesNotMatchPayloadActor": "O ator da assinatura {signatureActor} não corresponde ao ator do payload {payloadActor}."
     },
     "archives": {
       "requestWaitingForProcessing": "There já está a pedido waiting para processing.",
@@ -1290,11 +1289,11 @@
       "accountNotFound": "Conta não encontrado."
     },
     "followRequest": {
-      "missingFollowEntity": "A entidade Follow (sourceUserId: '{{sourceUserId}}', targetUserId: {{targetUserId}}) não existe na base de dados local.",
-      "missingSourceUser": "Utilizador de origem '{{userId}}' em falta na base de dados.",
-      "missingTargetUser": "Utilizador de destino '{{userId}}' em falta na base de dados.",
+      "missingFollowEntity": "A entidade Follow (sourceUserId: {sourceUserId}, targetUserId: {targetUserId}) não existe na base de dados local.",
+      "missingSourceUser": "Utilizador de origem {userId} em falta na base de dados.",
+      "missingTargetUser": "Utilizador de destino {userId} em falta na base de dados.",
       "missingActivityPubActionId": "O ID da ação ActivityPub está em falta no pedido de seguimento.",
-      "missingPrivateKey": "Chave privada para utilizador {{userName}} não existe em base de dados local.",
+      "missingPrivateKey": "Chave privada para utilizador {userName} não existe em base de dados local.",
       "accountHasBeenMoved": "Conta de destino foi movido e não pode accept novo seguidores.",
       "incorrectId": "ID incorreto no pedido de seguimento."
     },
@@ -1352,7 +1351,7 @@
       "cannotChangeResponseToString": "Não pode alterar response para string.",
       "incorrectJsonFormat": "Formato JSON incorreto.",
       "openAIIsNotEnabled": "Openai não é ativado.",
-      "openAIIsNotConfigured": "Openai não é configurado. {{message}}"
+      "openAIIsNotConfigured": "Openai não é configurado. {message}"
     },
     "openidConnect": {
       "invalidClientName": "O nome do cliente deve ser especificado no URL.",
@@ -1440,7 +1439,7 @@
       "sortColumnNotSupported": "A coluna de ordenação não é suportada.",
       "incorrectStatusEventId": "Status event id incorreto.",
       "maxLimitOfAttachmentsExceeded": "Máximo anexo limit exceeded",
-      "statusCreationTooFrequent": "Ainda não é possível criar um novo estado. Aguarde {{waitSeconds}} segundos antes de adicionar outro."
+      "statusCreationTooFrequent": "Ainda não é possível criar um novo estado. Aguarde {waitSeconds} segundos antes de adicionar outro."
     },
     "storage": {
       "downloadRemoteResourceFailed": "Foi devolvido um erro pelo servidor da instância remota.",
@@ -1449,7 +1448,7 @@
       "emptyPublicFolderPath": "Público folder nome não é specified.",
       "unknownError": "A resposta não contém nenhuma informação sobre o estado do pedido.",
       "s3StorageNotConfigured": "O armazenamento de objetos S3 não está configurado.",
-      "fileReadError": "Não é possível ler o ficheiro '{{fileName}}' do armazenamento."
+      "fileReadError": "Não é possível ler o ficheiro {fileName} do armazenamento."
     },
     "temporaryFile": {
       "temporaryUrlFailed": "Temporary URL não pode ser criado.",
@@ -1491,7 +1490,7 @@
     "account": {
       "avatar": {
         "removeAriaLabel": "Remover avatar",
-        "subtitle": "PNG, GIF ou JPG. No máximo {{maxPictureFileSize}}. Será reduzido para 600x600 px."
+        "subtitle": "PNG, GIF ou JPG. No máximo {maxPictureFileSize}. Será reduzido para 600x600 px."
       },
       "blockedDomains": {
         "description": "Lista de domínios que bloqueou. Os utilizadores destes domínios não podem seguir-lhe. As publicações deles não aparecerão na sua linha do tempo local e as suas publicações não serão entregues diretamente a eles. No entanto, ainda poderão ver as suas publicações se um terceiro que sigam as impulsionar.",
@@ -1543,10 +1542,10 @@
       },
       "header": {
         "removeAriaLabel": "Remove cabeçalho",
-        "subtitle": "PNG, GIF ou JPG. No máximo {{maxPictureFileSize}}. Será reduzido para 1500x500 px."
+        "subtitle": "PNG, GIF ou JPG. No máximo {maxPictureFileSize}. Será reduzido para 1500x500 px."
       },
       "import": {
-        "description": "Pode importar dados exportados anteriormente de outro servidor, como uma lista de contas que segue. As contas importadas serão combinadas com as que já segue. Atualmente, apenas ficheiros CSV são suportados. O tamanho máximo do ficheiro é {{maxImportFileSize}}.",
+        "description": "Pode importar dados exportados anteriormente de outro servidor, como uma lista de contas que segue. As contas importadas serão combinadas com as que já segue. Atualmente, apenas ficheiros CSV são suportados. O tamanho máximo do ficheiro é {maxImportFileSize}.",
         "importAriaLabel": "Importar",
         "table": {
           "endProcessingDate": "Data de fim do processamento",
@@ -1568,7 +1567,7 @@
         "errorDuringDownloadingAccountData": "Erro while downloading conta dados.",
         "headerDeleted": "Cabeçalho foi eliminado.",
         "headerSaved": "Cabeçalho foi guardado.",
-        "importFileTooLarge": "O ficheiro carregado é demasiado grande. O tamanho máximo é {{maxImportFileSize}}.",
+        "importFileTooLarge": "O ficheiro carregado é demasiado grande. O tamanho máximo é {maxImportFileSize}.",
         "supporterFlagDisabled": "Apoiador flag foi desativado.",
         "supporterFlagEnabled": "Apoiador flag foi ativado.",
         "verificationCodeCopied": "Verification code foi copiado para a área de transferência."
@@ -1785,7 +1784,7 @@
         }
       },
       "messages": {
-        "fileTooLarge": "O ficheiro carregado é demasiado grande. O tamanho máximo é {{maxArticleFileSize}}.",
+        "fileTooLarge": "O ficheiro carregado é demasiado grande. O tamanho máximo é {maxArticleFileSize}.",
         "markdownCopied": "Markdown code foi copiado para a área de transferência.",
         "saved": "O artigo foi guardado.",
         "updated": "O artigo foi atualizado."
@@ -2013,8 +2012,8 @@
         "unfollowAriaLabel": "Deixar de seguir hashtag"
       },
       "feed": {
-        "atomTitle": "Hashtag {{hashtag}} feed (atom)",
-        "rssTitle": "Hashtag {{hashtag}} feed (rss)"
+        "atomTitle": "Hashtag {hashtag} feed (atom)",
+        "rssTitle": "Hashtag {hashtag} feed (rss)"
       },
       "messages": {
         "followed": "Hashtag foi seguido.",
@@ -2174,7 +2173,7 @@
         "avatarAlt": "avatar do perfil",
         "headerAlt": "cabeçalho perfil"
       },
-      "joined": "Aderiu em {{date}}",
+      "joined": "Aderiu em {date}",
       "latestFollowers": {
         "title": "Latest seguidores"
       },
@@ -2271,7 +2270,7 @@
         "closeReportAriaLabel": "Fechar relatório",
         "deleteStatus": "Eliminar estado",
         "deleteStatusAriaLabel": "Eliminar estado",
-        "openProfileAriaLabel": "Abrir perfil @{{userName}}",
+        "openProfileAriaLabel": "Abrir perfil @{userName}",
         "reportActionsAriaLabel": "Relatório ações",
         "restoreReportAriaLabel": "Restore relatório",
         "sendToRemoteInstance": "Enviar para instância remota",
@@ -2406,7 +2405,7 @@
         "boost": "Impulso",
         "feature": "Destacar",
         "like": "Gostar",
-        "openProfileAriaLabel": "Abrir perfil @{{userName}}",
+        "openProfileAriaLabel": "Abrir perfil @{userName}",
         "unbookmark": "Remover marcador",
         "unboost": "Remover impulso",
         "unfeature": "Remover destaque",
@@ -2420,10 +2419,8 @@
           "report": "Denunciar",
           "unlike": "Remover gosto"
         },
-        "likedByPrefix": "Comentário gostado by",
+        "likedByPrefix": "{count, plural, one {Gostado por # pessoa} other {Gostado por # pessoas}}",
         "noComments": "Ainda não há nada para ler aqui.",
-        "people": "pessoas",
-        "person": "pessoa",
         "title": "Comentários"
       },
       "confirmations": {
@@ -2475,7 +2472,7 @@
         "cameraRoll": "Rolo da câmara",
         "category": "Categoria",
         "developChemistry": "Química de revelação",
-        "equivalentLens": "Equivalent de {{focalLength}}mm full frame lens.",
+        "equivalentLens": "Equivalent de {focalLength}mm full frame lens.",
         "exposure": "Exposição",
         "flash": "Flash",
         "fullFrameLens": "Lente full-frame.",
@@ -2572,7 +2569,7 @@
     "upload": {
       "accountMoved": "Esta conta foi movida para outra conta, por isso já não pode adicionar novas fotos nem publicar novo conteúdo aqui. Para continuar a publicar, use a sua nova conta.",
       "actions": {
-        "featurePoweredBy": "Funcionalidade fornecida por {{provider}}.",
+        "featurePoweredBy": "Funcionalidade fornecida por {provider}.",
         "hashtags": "Etiquetas",
         "useTemplate": "Use modelo"
       },
@@ -2588,12 +2585,12 @@
       },
       "messages": {
         "accountMovedPublishingUnavailable": "Esta conta foi movida, pelo que a publicação de novo conteúdo não está disponível.",
-        "fileTooLarge": "O ficheiro carregado é demasiado grande. O tamanho máximo é {{maxFileSize}}.",
-        "maxImagesPerPost": "Pode carregar até {{count}} imagens por publicação.",
+        "fileTooLarge": "O ficheiro carregado é demasiado grande. O tamanho máximo é {maxFileSize}.",
+        "maxImagesPerPost": "Pode carregar até {count} imagens por publicação.",
         "statusSaved": "Estado foi guardado.",
         "statusUpdated": "Estado foi atualizado.",
         "tooManyFilesSelectedSingular": "Demasiados ficheiros selecionados. Pode adicionar mais uma imagem.",
-        "tooManyFilesSelectedPlural": "Demasiados ficheiros selecionados. Pode adicionar mais {{count}} imagens.",
+        "tooManyFilesSelectedPlural": "Demasiados ficheiros selecionados. Pode adicionar mais {count} imagens.",
         "unableToResize": "Unable para resize imagem antes carregar.",
         "unsupportedFileType": "Este tipo de ficheiro não é suportado. Carregue uma imagem JPG, PNG ou WEBP.",
         "verifyEmailBeforePublish": "Para publicar um estado, verifique primeiro o seu endereço de email."
@@ -2601,11 +2598,11 @@
       "photoAlt": "Foto carregada",
       "statusDetails": "Estado details",
       "stepper": {
-        "imageData": "Imagem dados #{{index}}"
+        "imageData": "Imagem dados #{index}"
       },
       "subtitle": {
         "interoperabilityHint": "Para melhorar a interoperabilidade entre diferentes sistemas, use imagens com o lado mais longo definido para 4096 px.",
-        "maxFileSize": "Pode carregar ficheiros JPEG, PNG e WEBP até {{maxFileSize}}."
+        "maxFileSize": "Pode carregar ficheiros JPEG, PNG e WEBP até {maxFileSize}."
       },
       "titles": {
         "editStatus": "Editar estado",
@@ -2628,7 +2625,7 @@
       "actions": {
         "disable2fa": "Disable 2fa",
         "notSupporter": "Não apoiador",
-        "openProfileAriaLabel": "Abrir perfil @{{userName}}"
+        "openProfileAriaLabel": "Abrir perfil @{userName}"
       },
       "confirmations": {
         "deleteUserAccount": "Deseja eliminar user account?",

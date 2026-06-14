@@ -26,10 +26,11 @@ import { ErrorItemsService } from './services/http/error-items.service';
 import { RandomGeneratorService } from './services/common/random-generator.service';
 import { CustomScriptsService } from './services/common/custom-scripts.service';
 import { CustomStylesService } from './services/common/custom-styles.service';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateCompiler, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { LanguageService } from './services/common/language.service';
 import { LocalizedTitleStrategy } from './common/localized-title-strategy';
 import { BrowserTranslateLoader } from './common/browser-translate-loader';
+import { TranslateMessageFormatCompiler } from 'ngx-translate-messageformat-compiler';
 
 /** Custom options the configure the tooltip's default show/hide delays. */
 export const customTooltipDefaults: MatTooltipDefaultOptions = {
@@ -50,6 +51,10 @@ export const customTooltipDefaults: MatTooltipDefaultOptions = {
         PagesModule,
         TranslateModule.forRoot({
             fallbackLang: 'en-us',
+            compiler: {
+                provide: TranslateCompiler,
+                useClass: TranslateMessageFormatCompiler
+            },
             loader: {
                 provide: TranslateLoader,
                 useClass: BrowserTranslateLoader,

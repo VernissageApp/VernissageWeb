@@ -20,7 +20,7 @@
                     @if (showStatusesButton()) {
                         <mat-button-toggle value="statuses"><mat-icon>insert_photo</mat-icon>
                             @if (!isHandset()) {
-                                <span> {{ 'common.labels.photos' | translate }}</span>
+                                <span> {{ 'common.labels.photosLabel' | translate: { count: 2 } }}</span>
                             }
                         </mat-button-toggle>
                     }

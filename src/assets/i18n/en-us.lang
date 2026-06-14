@@ -26,7 +26,7 @@
       "next": "Next",
       "ok": "OK",
       "open": "Open",
-      "openProfileWithUserName": "Open profile @{{userName}}",
+      "openProfileWithUserName": "Open profile @{userName}",
       "refresh": "Refresh",
       "register": "Register",
       "reject": "Reject",
@@ -89,8 +89,8 @@
       "errorMessage": "Error message",
       "exception": "Exception",
       "fields": "Fields",
-      "followers": "Followers",
-      "following": "Following",
+      "followers": "{followersCount, plural, one {Follower} other {Followers}}",
+      "following": "{followingCount, plural, one {Following} other {Following}}",
       "frequentlyAskedQuestions": "Frequently Asked Questions",
       "hashtags": "Hashtags",
       "header": "Header",
@@ -109,8 +109,7 @@
       "note": "Note",
       "order": "Order",
       "password": "Password",
-      "photo": "Photo",
-      "photos": "Photos",
+      "photosLabel": "{count, plural, one {Photo} other {Photos}}",
       "priority": "Priority",
       "private": "Private",
       "processing": "Processing",
@@ -665,7 +664,7 @@
         "time": "Time"
       },
       "messages": {
-        "uploadedFileTooLarge": "Uploaded file is too large. Maximum size is {{size}}."
+        "uploadedFileTooLarge": "Uploaded file is too large. Maximum size is {size}."
       },
       "texts": {
         "altText": "Alt text",
@@ -678,7 +677,7 @@
         "exifMetadata": "Exif metadata",
         "exposureTime": "Exposure time:",
         "f": "f/",
-        "featurePoweredBy": "Feature powered by {{providerName}}.",
+        "featurePoweredBy": "Feature powered by {providerName}.",
         "film": "Film:",
         "flash": "Flash:",
         "focalLength": "Focal length:",
@@ -686,8 +685,8 @@
         "generate": "Generate",
         "geolocationDisclosureWarning": "By sharing the geolocation data of your photo, you are disclosing the exact location where the photo was taken. Please ensure you are comfortable with this information being publicly available before proceeding.",
         "gpsCoordinates": "GPS coordinates:",
-        "hdrIncludeInformation": "You have the option to include an HDR version of the image (AVIF). This version will only be displayed in the status details on the Vernissage platform. Maximum file size is {{hdrFileSizeString}}.",
-        "imageExceededLimitAndWasResized": "Your image exceeded the {{maxFileSize}} limit, so it was automatically resized to 4096 px on the longer edge.",
+        "hdrIncludeInformation": "You have the option to include an HDR version of the image (AVIF). This version will only be displayed in the status details on the Vernissage platform. Maximum file size is {hdrFileSizeString}.",
+        "imageExceededLimitAndWasResized": "Your image exceeded the {maxFileSize} limit, so it was automatically resized to 4096 px on the longer edge.",
         "information": "Information:",
         "iso": "ISO:",
         "lens": "Lens:",
@@ -1140,38 +1139,38 @@
       "missingSignedHeadersList": "Cannot read list of signed headers from ActivityPub request.",
       "missingSignatureInHeader": "Cannot read signature in header in ActivityPub request.",
       "missingKeyIdInHeader": "Cannot read keyId from signature header in ActivityPub request.",
-      "missingActivityPubProfileInKeyId": "Cannot find actor profile in keyId {{keyIdValue}}.",
-      "missingSignedHeader": "Cannot find header '{{headerName}}' used to create signature in ActivityPub request.",
+      "missingActivityPubProfileInKeyId": "Cannot find actor profile in keyId {keyIdValue}.",
+      "missingSignedHeader": "Cannot find header {headerName} used to create signature in ActivityPub request.",
       "signatureIsNotValid": "ActivityPub request signature is not valid.",
       "userNameIsRequired": "User name is required.",
       "statusIdIsRequired": "Status id is required.",
-      "incorrectStatusIdFormat": "Status id '{{statusId}}' is not in the correct format.",
-      "userNotExistsInDatabase": "User '{{activityPubProfile}}' cannot be found in the local database.",
-      "privateKeyNotExists": "Private key not found in local database for user: '{{activityPubProfile}}'.",
-      "publicKeyNotExists": "Public key not found in local database for user: '{{activityPubProfile}}'.",
+      "incorrectStatusIdFormat": "Status id {statusId} is not in the correct format.",
+      "userNotExistsInDatabase": "User {activityPubProfile} cannot be found in the local database.",
+      "privateKeyNotExists": "Private key not found in local database for user: {activityPubProfile}.",
+      "publicKeyNotExists": "Public key not found in local database for user: {activityPubProfile}.",
       "signatureDataNotCreated": "Signature data cannot be created based on headers from the request.",
       "missingDateHeader": "ActivityPub request missing 'Date' header.",
-      "incorrectDateFormat": "Incorrect date format in ActivityPub request: {{date}}.",
-      "badTimeWindow": "ActivityPub signed request date '{{date}}' is outside acceptable time window.",
-      "followTypeNotSupported": "Following object type: {{type}} is not supported.",
-      "acceptTypeNotSupported": "Accepting object type: {{type}} is not supported.",
-      "rejectTypeNotSupported": "Rejecting object type: {{type}} is not supported.",
-      "algorithmNotSupported": "Algorithm: {{type}} is not supported.",
+      "incorrectDateFormat": "Incorrect date format in ActivityPub request: {date}.",
+      "badTimeWindow": "ActivityPub signed request date {date} is outside acceptable time window.",
+      "followTypeNotSupported": "Following object type: {type} is not supported.",
+      "acceptTypeNotSupported": "Accepting object type: {type} is not supported.",
+      "rejectTypeNotSupported": "Rejecting object type: {type} is not supported.",
+      "algorithmNotSupported": "Algorithm: {type} is not supported.",
       "algorithmNotSpecified": "Algorithm is not specified.",
-      "missingUserInboxUrl": "Missing user inbox in local database for user: '{{activityPubProfile}}'.",
-      "missingSharedInboxUrl": "Missing shared inbox in local database for user: '{{activityPubProfile}}'.",
-      "statusHasNotBeenDownloaded": "Downloaded status is empty: {{statusActivityPubUrl}}. Error: {{errorDescription}}",
-      "statusCannotBeProcessed": "Downloaded status cannot be processed: {{statusActivityPubUrl}}. Error: {{errorDescription}}",
-      "missingSupportedImageAttachments": "Downloaded status does not have image attachments: {{statusActivityPubUrl}}.",
-      "actorNotDownloaded": "Error while downloading actor from remote server: {{statusActivityPubUrl}}.",
-      "invalidNoteUrl": "Invalid URL to status: {{statusActivityPubUrl}}.",
-      "entityCaseError": "Cast to '{{entityName}}' failed.",
+      "missingUserInboxUrl": "Missing user inbox in local database for user: {activityPubProfile}.",
+      "missingSharedInboxUrl": "Missing shared inbox in local database for user: {activityPubProfile}.",
+      "statusHasNotBeenDownloaded": "Downloaded status is empty: {statusActivityPubUrl}. Error: {errorDescription}",
+      "statusCannotBeProcessed": "Downloaded status cannot be processed: {statusActivityPubUrl}. Error: {errorDescription}",
+      "missingSupportedImageAttachments": "Downloaded status does not have image attachments: {statusActivityPubUrl}.",
+      "actorNotDownloaded": "Error while downloading actor from remote server: {statusActivityPubUrl}.",
+      "invalidNoteUrl": "Invalid URL to status: {statusActivityPubUrl}.",
+      "entityCaseError": "Cast to {entityName} failed.",
       "missingInstanceAdminAccount": "Missing admin account in local instance.",
       "missingInstanceAdminPrivateKey": "Missing private key for admin account in local instance.",
       "unrecognizedActivityPubProfileUrl": "Unrecognized ActivityPub profile URL.",
-      "domainIsBlockedByInstance": "User's '{{activityPubProfile}}' domain is blocked by the instance.",
-      "actorIsBlockedByInstance": "Actor '{{activityPubProfile}}' is blocked by the instance.",
-      "signatureActorDoesNotMatchPayloadActor": "Signature actor '{{signatureActor}}' does not match payload actor '{{payloadActor}}'."
+      "domainIsBlockedByInstance": "User's {activityPubProfile} domain is blocked by the instance.",
+      "actorIsBlockedByInstance": "Actor {activityPubProfile} is blocked by the instance.",
+      "signatureActorDoesNotMatchPayloadActor": "Signature actor {signatureActor} does not match payload actor {payloadActor}."
     },
     "archives": {
       "requestWaitingForProcessing": "There is already a request waiting for processing.",
@@ -1290,11 +1289,11 @@
       "accountNotFound": "Account not found."
     },
     "followRequest": {
-      "missingFollowEntity": "Follow entity (sourceUserId: '{{sourceUserId}}', targetUserId: {{targetUserId}}) does not exist in local database.",
-      "missingSourceUser": "Missing source user '{{userId}}' in database.",
-      "missingTargetUser": "Missing target user '{{userId}}' in database.",
+      "missingFollowEntity": "Follow entity (sourceUserId: {sourceUserId}, targetUserId: {targetUserId}) does not exist in local database.",
+      "missingSourceUser": "Missing source user {userId} in database.",
+      "missingTargetUser": "Missing target user {userId} in database.",
       "missingActivityPubActionId": "Activity Pub action id in follow request is missing.",
-      "missingPrivateKey": "Private key for user {{userName}} does not exist in local database.",
+      "missingPrivateKey": "Private key for user {userName} does not exist in local database.",
       "accountHasBeenMoved": "Target account has been moved and cannot accept new followers.",
       "incorrectId": "Incorrect id in follow request."
     },
@@ -1352,7 +1351,7 @@
       "cannotChangeResponseToString": "Cannot change response to string.",
       "incorrectJsonFormat": "Incorrect JSON format.",
       "openAIIsNotEnabled": "OpenAI is not enabled.",
-      "openAIIsNotConfigured": "OpenAI is not configured. {{message}}"
+      "openAIIsNotConfigured": "OpenAI is not configured. {message}"
     },
     "openidConnect": {
       "invalidClientName": "Client name must be specified in the URL.",
@@ -1440,7 +1439,7 @@
       "sortColumnNotSupported": "Sort column is not supported.",
       "incorrectStatusEventId": "Incorrect status event id.",
       "maxLimitOfAttachmentsExceeded": "Maximum attachment limit exceeded",
-      "statusCreationTooFrequent": "New status cannot be created yet. Please wait {{waitSeconds}} seconds before adding another one."
+      "statusCreationTooFrequent": "New status cannot be created yet. Please wait {waitSeconds} seconds before adding another one."
     },
     "storage": {
       "downloadRemoteResourceFailed": "An error was returned from the remote instance server.",
@@ -1449,7 +1448,7 @@
       "emptyPublicFolderPath": "Public folder name is not specified.",
       "unknownError": "Response does not contain any information about the request status.",
       "s3StorageNotConfigured": "S3 object storage is not configured.",
-      "fileReadError": "Cannot read file '{{fileName}}' from storage."
+      "fileReadError": "Cannot read file {fileName} from storage."
     },
     "temporaryFile": {
       "temporaryUrlFailed": "Temporary URL cannot be created.",
@@ -1491,7 +1490,7 @@
     "account": {
       "avatar": {
         "removeAriaLabel": "Remove avatar",
-        "subtitle": "PNG, GIF, or JPG. At most {{maxPictureFileSize}}. Will be downscaled to 600x600px."
+        "subtitle": "PNG, GIF, or JPG. At most {maxPictureFileSize}. Will be downscaled to 600x600px."
       },
       "blockedDomains": {
         "description": "List of domains you have blocked. Users from these domains cannot follow you. Their posts will not appear in your local timeline, and your posts are not delivered directly to them. However, they may still see your posts if a third party they follow boosts them.",
@@ -1543,10 +1542,10 @@
       },
       "header": {
         "removeAriaLabel": "Remove header",
-        "subtitle": "PNG, GIF, or JPG. At most {{maxPictureFileSize}}. Will be downscaled to 1500x500px."
+        "subtitle": "PNG, GIF, or JPG. At most {maxPictureFileSize}. Will be downscaled to 1500x500px."
       },
       "import": {
-        "description": "You can import data previously exported from another server, such as a list of accounts you are following. Imported accounts will be merged with the ones you are already following. Only CSV files are currently supported. The maximum file size is {{maxImportFileSize}}.",
+        "description": "You can import data previously exported from another server, such as a list of accounts you are following. Imported accounts will be merged with the ones you are already following. Only CSV files are currently supported. The maximum file size is {maxImportFileSize}.",
         "importAriaLabel": "Import",
         "table": {
           "endProcessingDate": "End processing date",
@@ -1568,7 +1567,7 @@
         "errorDuringDownloadingAccountData": "Error while downloading account data.",
         "headerDeleted": "Header has been deleted.",
         "headerSaved": "Header has been saved.",
-        "importFileTooLarge": "Uploaded file is too large. Maximum size is {{maxImportFileSize}}.",
+        "importFileTooLarge": "Uploaded file is too large. Maximum size is {maxImportFileSize}.",
         "supporterFlagDisabled": "Supporter flag has been disabled.",
         "supporterFlagEnabled": "Supporter flag has been enabled.",
         "verificationCodeCopied": "Verification code has been copied into clipboard."
@@ -1785,7 +1784,7 @@
         }
       },
       "messages": {
-        "fileTooLarge": "Uploaded file is too large. Maximum size is {{maxArticleFileSize}}.",
+        "fileTooLarge": "Uploaded file is too large. Maximum size is {maxArticleFileSize}.",
         "markdownCopied": "Markdown code has been copied into clipboard.",
         "saved": "The article has been saved.",
         "updated": "The article has been updated."
@@ -2013,8 +2012,8 @@
         "unfollowAriaLabel": "Unfollow hashtag"
       },
       "feed": {
-        "atomTitle": "Hashtag {{hashtag}} feed (Atom)",
-        "rssTitle": "Hashtag {{hashtag}} feed (RSS)"
+        "atomTitle": "Hashtag {hashtag} feed (Atom)",
+        "rssTitle": "Hashtag {hashtag} feed (RSS)"
       },
       "messages": {
         "followed": "Hashtag has been followed.",
@@ -2174,7 +2173,7 @@
         "avatarAlt": "avatar profile",
         "headerAlt": "header profile"
       },
-      "joined": "Joined {{date}}",
+      "joined": "Joined {date}",
       "latestFollowers": {
         "title": "LATEST FOLLOWERS"
       },
@@ -2271,7 +2270,7 @@
         "closeReportAriaLabel": "Close report",
         "deleteStatus": "Delete status",
         "deleteStatusAriaLabel": "Delete status",
-        "openProfileAriaLabel": "Open profile @{{userName}}",
+        "openProfileAriaLabel": "Open profile @{userName}",
         "reportActionsAriaLabel": "Report actions",
         "restoreReportAriaLabel": "Restore report",
         "sendToRemoteInstance": "Send to remote instance",
@@ -2406,7 +2405,7 @@
         "boost": "Boost",
         "feature": "Feature",
         "like": "Like",
-        "openProfileAriaLabel": "Open profile @{{userName}}",
+        "openProfileAriaLabel": "Open profile @{userName}",
         "unbookmark": "Unbookmark",
         "unboost": "Unboost",
         "unfeature": "Unfeature",
@@ -2420,10 +2419,8 @@
           "report": "Report",
           "unlike": "Unlike"
         },
-        "likedByPrefix": "Comment liked by",
+        "likedByPrefix": "{count, plural, one {Liked by # person} other {Liked by # people}}",
         "noComments": "There is nothing to read here yet.",
-        "people": "people",
-        "person": "person",
         "title": "Comments"
       },
       "confirmations": {
@@ -2475,7 +2472,7 @@
         "cameraRoll": "Camera roll",
         "category": "Category",
         "developChemistry": "Develop chemistry",
-        "equivalentLens": "Equivalent of {{focalLength}}mm full frame lens.",
+        "equivalentLens": "Equivalent of {focalLength}mm full frame lens.",
         "exposure": "Exposure",
         "flash": "Flash",
         "fullFrameLens": "Full frame lens.",
@@ -2572,7 +2569,7 @@
     "upload": {
       "accountMoved": "This account has been moved to another account, so you can no longer add new photos or publish new content here. To continue posting, please use your new account.",
       "actions": {
-        "featurePoweredBy": "Feature powered by {{provider}}.",
+        "featurePoweredBy": "Feature powered by {provider}.",
         "hashtags": "Hashtags",
         "useTemplate": "Use template"
       },
@@ -2588,12 +2585,12 @@
       },
       "messages": {
         "accountMovedPublishingUnavailable": "This account has been moved, so publishing new content is not available.",
-        "fileTooLarge": "Uploaded file is too large. Maximum size is {{maxFileSize}}.",
-        "maxImagesPerPost": "You can upload up to {{count}} images per post.",
+        "fileTooLarge": "Uploaded file is too large. Maximum size is {maxFileSize}.",
+        "maxImagesPerPost": "You can upload up to {count} images per post.",
         "statusSaved": "Status has been saved.",
         "statusUpdated": "Status has been updated.",
         "tooManyFilesSelectedSingular": "Too many files selected. You can add one more image.",
-        "tooManyFilesSelectedPlural": "Too many files selected. You can add {{count}} more images.",
+        "tooManyFilesSelectedPlural": "Too many files selected. You can add {count} more images.",
         "unableToResize": "Unable to resize image before upload.",
         "unsupportedFileType": "This file type is not supported. Please upload a JPG, PNG or WEBP image.",
         "verifyEmailBeforePublish": "To publish a status, please verify your email address first."
@@ -2601,11 +2598,11 @@
       "photoAlt": "Uploaded photo",
       "statusDetails": "Status details",
       "stepper": {
-        "imageData": "Image data #{{index}}"
+        "imageData": "Image data #{index}"
       },
       "subtitle": {
         "interoperabilityHint": "To improve interoperability across different systems, use images with the longer edge set to 4096 px.",
-        "maxFileSize": "You can upload JPEG, PNG and WEBP files up to {{maxFileSize}}."
+        "maxFileSize": "You can upload JPEG, PNG and WEBP files up to {maxFileSize}."
       },
       "titles": {
         "editStatus": "Edit status",
@@ -2628,7 +2625,7 @@
       "actions": {
         "disable2fa": "Disable 2FA",
         "notSupporter": "Not supporter",
-        "openProfileAriaLabel": "Open profile @{{userName}}"
+        "openProfileAriaLabel": "Open profile @{userName}"
       },
       "confirmations": {
         "deleteUserAccount": "Do you want to delete user account?",
