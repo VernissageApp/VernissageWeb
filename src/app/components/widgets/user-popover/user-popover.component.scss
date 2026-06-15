@@ -6,6 +6,37 @@
     color: var(--mat-sys-on-surface);
 }
 
+.user-popover-layout {
+    display: flex;
+    gap: 8px;
+}
+
+.user-popover-content {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.user-popover-header {
+    align-items: flex-start;
+    display: flex;
+    gap: 16px;
+    justify-content: space-between;
+}
+
+.user-popover-identity {
+    min-width: 0;
+}
+
+.user-popover-action {
+    flex: 0 0 auto;
+}
+
+.user-popover-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 15px;
+}
+
 .user-avatar {
     display: inline-flex;
     text-decoration: none;
