@@ -106,26 +106,10 @@
           }
         },
         "test": {
-          "builder": "@angular/build:karma",
+          "builder": "@angular/build:unit-test",
           "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
             "tsConfig": "tsconfig.spec.json",
-            "inlineStyleLanguage": "scss",
-            "assets": [
-              "src/favicon.ico",
-              "src/apple-touch-icon.png",
-              "src/apple-touch-icon-precomposed.png",
-              "src/robots.txt",
-              "src/assets",
-              "src/manifest.webmanifest"
-            ],
-            "styles": [
-              "src/styles/main.scss"
-            ],
-            "scripts": []
+            "buildTarget": "VernissageWeb:build:development"
           }
         },
         "lint": {
