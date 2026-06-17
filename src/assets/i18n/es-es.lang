@@ -686,7 +686,7 @@
         "geolocationDisclosureWarning": "Al compartir los datos de geolocalización de tu foto, estás revelando el lugar exacto donde se tomó la foto. Antes de continuar, asegúrate de estar de acuerdo con que esta información esté disponible públicamente.",
         "gpsCoordinates": "Coordenadas GPS:",
         "hdrIncludeInformation": "Tienes la opción de incluir una versión HDR de la imagen (AVIF). Esta versión solo se mostrará en los detalles del estado en la plataforma Vernissage. El tamaño máximo del archivo es {hdrFileSizeString}.",
-        "imageExceededLimitAndWasResized": "Su imagen excedió el límite {maxFileSize}, por lo que se cambió automáticamente su tamaño a 4096 px en el borde más largo.",
+        "imageExceededLimitAndWasResized": "Tu imagen excedió el límite {maxFileSize}, por lo que se cambió automáticamente su tamaño a 4096 px en el borde más largo.",
         "information": "Información:",
         "iso": "ISO:",
         "lens": "Lente:",

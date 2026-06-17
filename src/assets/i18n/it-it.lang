@@ -89,7 +89,7 @@
       "errorMessage": "Messaggio di errore",
       "exception": "Eccezione",
       "fields": "Campi",
-      "followers": "{followersCount, plural, one {Follower} other {Follower}}",
+      "followers": "{followersCount, plural, one {Follower} other {Followers}}",
       "following": "{followingCount, plural, one {Seguito} other {Seguiti}}",
       "frequentlyAskedQuestions": "Domande frequenti",
       "hashtags": "Hashtag",
@@ -792,7 +792,7 @@
         "email": "E-mail"
       },
       "texts": {
-        "contentThatHasBeenCachedByOther": "Il contenuto memorizzato nella cache da altri server potrebbe persistere",
+        "contentThatHasBeenCachedByOther": "Il contenuto memorizzato nella cache da altri server potrebbe rimanere disponibile",
         "deleteAccount": "Elimina account",
         "youWillNotBeAbleToRestore": "Non sarai in grado di ripristinare o riattivare il tuo account",
         "yourPostsAndOtherDataWillBe": "I tuoi post e altri dati verranno rimossi definitivamente",
@@ -801,7 +801,7 @@
     },
     "deleteStatus": {
       "texts": {
-        "deleteStatus": "Eliminare lo stato?"
+        "deleteStatus": "Eliminare lo status?"
       }
     },
     "disableTwoFactorToken": {
@@ -825,9 +825,9 @@
       "texts": {
         "backupCodes": "Codici di backup",
         "enableTwoFactorAuthentication2fa": "Abilita l'autenticazione a due fattori (2FA)",
-        "keepBackupCodes": "Conserva questi codici nel caso in cui non riesci ad accedere all'app di autenticazione.",
-        "scanQrCodeWith2faApplication": "Scansiona il codiceQRcon un'applicazione2FA, comeAuthyoGoogle Authenticator.",
-        "tokenIsRequired": "Il token è obbligatorio."
+        "keepBackupCodes": "Conserva questi codici qualora non riuscissi ad accedere all'app di autenticazione.",
+        "scanQrCodeWith2faApplication": "Scansiona il codice QR con un'applicazione 2FA, come Authy o Google Authenticator.",
+        "tokenIsRequired": "È richiesto un token."
       }
     },
     "errorItem": {
@@ -837,22 +837,22 @@
         "message": "Messaggio"
       },
       "texts": {
-        "errorData": "Dati di errore"
+        "errorData": "Errore nei dati"
       }
     },
     "followingImportAccounts": {
       "attrs": {
-        "status": "Stato"
+        "status": "Status"
       },
       "texts": {
-        "followingImportAccounts": "Di seguito i conti di importazione",
+        "followingImportAccounts": "Importazione degli account che segui",
         "notProcessed": "Non elaborato",
         "requestSent": "Richiesta inviata"
       }
     },
     "homeCard": {
       "attrs": {
-        "homeCardTitle": "Titolo della carta domestica",
+        "homeCardTitle": "Titolo della scheda Home",
         "licenseDescription": "Descrizione della licenza",
         "order": "Ordine"
       },
@@ -861,11 +861,11 @@
         "newHomeCardHasBeenCreated": "È stata creata una nuova scheda Home."
       },
       "texts": {
-        "bodyIsTooLong": "Il corpo è troppo lungo.",
-        "enterHomeCardBody": "Inserisci il corpo della carta domestica.",
-        "enterHomeCardOrder": "Inserisci l'ordine delle carte domestiche.",
-        "enterHomeCardTitle": "Inserisci il titolo della carta domestica.",
-        "homeCard": "Carta domestica",
+        "bodyIsTooLong": "Il contenuto è troppo lungo.",
+        "enterHomeCardBody": "Inserisci il contenuto della scheda Home.",
+        "enterHomeCardOrder": "Inserisci l'ordine della scheda Home.",
+        "enterHomeCardTitle": "Inserisci il titolo della scheda Home.",
+        "homeCard": "Scheda Home",
         "titleIsTooLong": "Il titolo è troppo lungo."
       }
     },
@@ -923,57 +923,57 @@
     },
     "moveAccount": {
       "attrs": {
-        "account": "Conto",
-        "password": "Parola d'ordine"
+        "account": "Account",
+        "password": "Password"
       },
       "messages": {
         "informationAboutNewAccountHasBeenSaved": "Le informazioni sul nuovo account sono state salvate."
       },
       "texts": {
-        "afterMovingThereMayBeAWaiting": "Dopo il trasloco potrebbe trascorrere un periodo di attesa prima di potersi spostare nuovamente.",
+        "afterMovingThereMayBeAWaiting": "Dopo il trasferimento potrebbe esserci un periodo di attesa prima di potersi trasferire nuovamente.",
         "enterNewAccount": "Inserisci un nuovo account.",
         "enterPassword": "Inserisci la password.",
-        "moveAccount": "Sposta conto",
+        "moveAccount": "Trasferisci l’account",
         "onlyYourFollowersWillBeMovedAutomatically": "Solo i tuoi follower verranno spostati automaticamente.",
-        "theNewAccountMustFirstBeConfigured": "Il nuovo account deve prima essere configurato per fare riferimento a questo account come alias o account precedente.",
+        "theNewAccountMustFirstBeConfigured": "Il nuovo account deve prima essere collegato a questo account come alias o account precedente.",
         "youShouldExportYourDataBeforeContinuing": "Dovresti esportare i tuoi dati prima di continuare, soprattutto se desideri conservare una copia dei tuoi contenuti o importare account seguiti altrove.",
-        "yourCurrentAccountMayNoLongerBe": "Il tuo conto corrente potrebbe non essere più completamente utilizzabile dopo la migrazione.",
-        "yourCurrentProfileWillBeMarkedAs": "Il tuo profilo attuale verrà contrassegnato come spostato e visualizzerà un avviso di reindirizzamento che punta al nuovo account.",
-        "yourPostsPhotosCommentsLikesBookmarksFollowed": "I tuoi post, foto, commenti, Mi piace, segnalibri, account seguiti, blocchi, disattivazioni audio e altri dati dell'account non verranno trasferiti."
+        "yourCurrentAccountMayNoLongerBe": "Il tuo attuale account potrebbe non essere più completamente utilizzabile dopo la migrazione.",
+        "yourCurrentProfileWillBeMarkedAs": "Il tuo attuale profilo attuale verrà contrassegnato come trasferito e mostrerà un avviso di reindirizzamento che punta al nuovo account.",
+        "yourPostsPhotosCommentsLikesBookmarksFollowed": "I tuoi post, foto, commenti, Mi piace, segnalibri, account seguiti, blocchi, disattivazioni e altri dati dell'account non verranno trasferiti."
       }
     },
     "muteAccount": {
       "texts": {
-        "muteAccount": "Conto muto",
+        "muteAccount": "Silenzia account",
         "muteDialogHeader": "I post e i boost silenziati non appariranno nella maggior parte delle timeline del sistema.",
-        "muteEndDate": "Data di fine disattivata",
+        "muteEndDate": "Data di fine del silenziamento",
         "muteNewStatuses": "Silenzia i nuovi status",
         "muteNotifications": "Silenzia le notifiche",
         "muteReblogs": "Silenzia i reblog",
-        "optionalDateWhenMutingWillEnd": "Data facoltativa in cui terminerà il silenziamento.",
+        "optionalDateWhenMutingWillEnd": "Data opzionale in cui terminerà il silenziamento.",
         "removeUsersReblogsFromYourTimeline": "Rimuovi i reblog dell'utente dalla tua timeline",
         "removeUsersStatusesFromYourTimeline": "Rimuovi gli status dell'utente dalla tua timeline"
       }
     },
     "notificationSettings": {
       "messages": {
-        "errorDuringGeneratingEncryptionKeysForWebPush": "Errore durante la generazione delle chiavi di crittografia per il push Web.",
+        "errorDuringGeneratingEncryptionKeysForWebPush": "Errore durante la generazione delle chiavi di crittografia per il Web Push.",
         "notificationSettingsHasBeenSaved": "Le impostazioni di notifica sono state salvate.",
-        "unexpectedErrorDuringGeneratingWebPushSubscription": "Errore imprevisto durante la generazione della sottoscrizione push Web.",
-        "webPushNotificationsForTheWebsiteAreDisabledInTheBrowser": "Le notifiche push Web per il sito Web sono disabilitate nel browser.",
-        "webPushPublicKeyIsNotSet": "La chiave pubblica push Web non è impostata."
+        "unexpectedErrorDuringGeneratingWebPushSubscription": "Errore imprevisto durante la generazione della sottoscrizione Web Push.",
+        "webPushNotificationsForTheWebsiteAreDisabledInTheBrowser": "Le notifiche Web Push per il sito Web sono disabilitate nel browser.",
+        "webPushPublicKeyIsNotSet": "La chiave pubblica Web Push non è impostata."
       },
       "texts": {
-        "boostedStatus": "Stato potenziato",
+        "boostedStatus": "Status condiviso",
         "newCommentAdded": "Nuovo commento aggiunto",
         "newFollowRequest": "Nuova richiesta di follow",
-        "newFollower": "Nuovo seguace",
-        "newLike": "Nuovo come",
-        "newReport": "Nuovo rapporto",
+        "newFollower": "Nuovo follower",
+        "newLike": "Nuovo Mi Piace",
+        "newReport": "Nuova segnalazione",
         "newUser": "Nuovo utente",
         "notificationsDisabledInBrowser": "Le notifiche sono disabilitate nel tuo browser. È necessario modificare le impostazioni del browser.",
         "notificationsSettings": "Impostazioni di notifica",
-        "statusUpdated": "Stato aggiornato",
+        "statusUpdated": "Status aggiornato",
         "youHaveBeenMentioned": "Sei stato menzionato"
       }
     },
@@ -983,9 +983,9 @@
       },
       "categories": {
         "abusive": "Abusivo",
-        "copyright": "Diritto d'autore",
-        "impersonation": "Rappresentazione",
-        "scam": "Truffa",
+        "copyright": "Copyright",
+        "impersonation": "Furto di identità",
+        "scam": "Scam",
         "sensitive": "Sensibile",
         "spam": "Spam",
         "terrorism": "Terrorismo",
@@ -993,7 +993,7 @@
         "violence": "Violenza"
       },
       "texts": {
-        "forwardToRemoteAdmin": "Il rapporto deve essere inoltrato all'amministratore remoto?",
+        "forwardToRemoteAdmin": "La segnalazione deve essere inoltrata all'amministratore remoto?",
         "serverRules": "Regole del server",
         "tooLongComment": "Commento troppo lungo."
       }
@@ -1008,7 +1008,7 @@
     },
     "restoreAccount": {
       "attrs": {
-        "password": "Parola d'ordine"
+        "password": "Password"
       },
       "messages": {
         "accountHasBeenRestored": "L'account è stato ripristinato."

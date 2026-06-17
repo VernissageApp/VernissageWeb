@@ -218,7 +218,7 @@
     "blurhashImage": {
       "messages": {
         "statusBoosted": "Statut boosté.",
-        "statusFavourited": "Statut liké.",
+        "statusFavourited": "Statut aimé.",
         "yourBoostHasBeenUndone": "Votre boost a été annulé.",
         "yourLikeHasBeenUndone": "Votre « J’aime » a été annulé."
       }
@@ -571,7 +571,7 @@
       "altLabel": "ALT",
       "messages": {
         "statusBoosted": "Statut boosté.",
-        "statusFavourited": "Statut mis en favori.",
+        "statusFavourited": "Statut aimé.",
         "yourBoostHasBeenUndone": "Votre boost a été annulé.",
         "yourLikeHasBeenUndone": "Votre « J’aime » a été annulé."
       }
@@ -2587,7 +2587,7 @@
         "accountMovedPublishingUnavailable": "Ce compte a été migré, la publication de nouveau contenu n’est donc pas disponible.",
         "fileTooLarge": "Le fichier téléchargé est trop volumineux. La taille maximale est de {maxFileSize}.",
         "maxImagesPerPost": "Vous pouvez envoyer jusqu’à {count} images par publication.",
-        "statusSaved": "Le statut a été publié.",
+        "statusSaved": "Votre statut a été publié.",
         "statusUpdated": "Le statut a été mis à jour.",
         "tooManyFilesSelectedSingular": "Trop de fichiers sélectionnés. Vous pouvez ajouter encore une image.",
         "tooManyFilesSelectedPlural": "Trop de fichiers sélectionnés. Vous pouvez ajouter encore {count} images.",
