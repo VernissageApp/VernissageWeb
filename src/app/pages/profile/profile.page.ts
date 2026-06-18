@@ -361,7 +361,13 @@ export class ProfilePage extends ReusableGalleryPageComponent implements OnInit,
 
         statuses.context = ContextTimeline.user;
         statuses.user = this.user()?.userName;
-        statuses.data = [...pinnedStatuses.data, ...statuses.data];
+
+        // Add to first statuses unique statuses (don't duplicate pinned posts).
+        const pinnedStatusIds = new Set(pinnedStatuses.data.map(status => status.id));
+        statuses.data = [
+            ...pinnedStatuses.data,
+            ...statuses.data.filter(status => !pinnedStatusIds.has(status.id))
+        ];
 
         this.statuses.set(statuses);
     }

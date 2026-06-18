@@ -113,6 +113,7 @@ export class ContextStatusesService {
         const older = await this.downloadStatuses(undefined, this.statuses?.maxId);
 
         if (this.statuses && older && older.data.length > 0) {
+            older.data = this.filterUniqueStatusesToAppend(older.data);
             this.statuses.data.push(...older.data);
             this.statuses.maxId = older.maxId;
 
@@ -124,6 +125,15 @@ export class ContextStatusesService {
         }
 
         return null;
+    }
+
+    private filterUniqueStatusesToAppend(older: Status[]): Status[] {
+        if (this.statuses?.context !== ContextTimeline.user) {
+            return older;
+        }
+
+        const existingIds = new Set(this.statuses.data.map(status => status.id));
+        return older.filter(status => !existingIds.has(status.id));
     }
 
     private async loadPreviousStatuses(): Promise<LinkableResult<Status> | null> {
