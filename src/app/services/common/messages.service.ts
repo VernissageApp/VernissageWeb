@@ -1,6 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
+import { ErrorMessageSnackbarComponent, ErrorMessageSnackbarData } from 'src/app/components/widgets/error-message-snackbar/error-message-snackbar.component';
+import { ErrorParserService } from './error-parser.service';
 
 @Injectable({
     providedIn: 'root'
@@ -8,6 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class MessagesService {
     private matSnackBar = inject(MatSnackBar);
     private translateService = inject(TranslateService);
+    private errorParserService = inject(ErrorParserService);
 
     showSuccess(message: string): void {
         this.matSnackBar.open(message, this.translateService.instant('common.actions.dismiss'), {
@@ -17,7 +20,23 @@ export class MessagesService {
         });
     }
 
-    showError(message: string): void {
+    showError(message: string, error?: any): void {
+        if (error !== undefined) {
+            this.matSnackBar.openFromComponent(ErrorMessageSnackbarComponent, {
+                data: {
+                    message: message,
+                    details: this.errorParserService.getStringFromError(error),
+                    detailsLabel: this.translateService.instant('common.labels.details'),
+                    copyLabel: this.translateService.instant('common.actions.copy'),
+                    dismiss: this.translateService.instant('common.actions.dismiss')
+                } as ErrorMessageSnackbarData,
+                verticalPosition: 'top',
+                panelClass: ['message-error']
+            });
+
+            return;
+        }
+
         this.matSnackBar.open(message, this.translateService.instant('common.actions.dismiss'), {
             duration: 5000,
             verticalPosition: 'top',

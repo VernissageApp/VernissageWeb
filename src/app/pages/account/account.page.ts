@@ -163,8 +163,8 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
 
             const applicationBaseUrl = this.windowService.getApplicationBaseUrl()
             this.verification.set(`<a rel="me" href="${applicationBaseUrl}/@${this.user().userName}">Vernissage</a>`);
-        } catch {
-            this.messageService.showError(this.translateService.instant('pages.account.messages.errorDuringDownloadingAccountData'));
+        } catch (error) {
+            this.messageService.showError(this.translateService.instant('pages.account.messages.errorDuringDownloadingAccountData'), error);
             await this.router.navigate(['/home']);
         } finally {
             this.isReady.set(true);
