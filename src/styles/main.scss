@@ -135,12 +135,16 @@ html {
     }
 
     .message-error {
-        color: var(--mat-sys-primary);
-        background-color: $warning-color;
+        --mat-snack-bar-button-color: var(--mat-sys-on-error);
+        --mat-snack-bar-container-color: var(--mat-sys-error);
+        --mat-snack-bar-supporting-text-color: var(--mat-sys-on-error);
+        color: var(--mat-sys-on-error);
+        background-color: var(--mat-sys-error);
     }
 
-    .message-error .mat-simple-snackbar-action {
-        color: var(--mat-sys-primary);
+    .message-error .mat-simple-snackbar-action,
+    .message-error .mat-mdc-snack-bar-action {
+        color: var(--mat-sys-on-error);
     }
 
     .notifications-container {
@@ -271,12 +275,16 @@ body.dark-theme {
     }
 
     .message-error {
-        color: var(--mat-sys-primary);
-        background-color: $warning-color;
+        --mat-snack-bar-button-color: var(--mat-sys-on-error);
+        --mat-snack-bar-container-color: var(--mat-sys-error);
+        --mat-snack-bar-supporting-text-color: var(--mat-sys-on-error);
+        color: var(--mat-sys-on-error);
+        background-color: var(--mat-sys-error);
     }
 
-    .message-error .mat-simple-snackbar-action {
-        color: var(--mat-sys-primary);
+    .message-error .mat-simple-snackbar-action,
+    .message-error .mat-mdc-snack-bar-action {
+        color: var(--mat-sys-on-error);
     }
 
     .notifications-container {

@@ -26,6 +26,7 @@ import { ErrorItemsService } from './services/http/error-items.service';
 import { RandomGeneratorService } from './services/common/random-generator.service';
 import { CustomScriptsService } from './services/common/custom-scripts.service';
 import { CustomStylesService } from './services/common/custom-styles.service';
+import { ErrorParserService } from './services/common/error-parser.service';
 import { TranslateCompiler, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { LanguageService } from './services/common/language.service';
 import { LocalizedTitleStrategy } from './common/localized-title-strategy';
@@ -90,7 +91,7 @@ export const customTooltipDefaults: MatTooltipDefaultOptions = {
             deps: [PLATFORM_ID]
         },
         {
-            provide: ErrorHandler, useClass: GlobalErrorHandler, deps: [PLATFORM_ID, Injector, NgZone, AuthorizationService, PersistenceService, LoadingService, ErrorItemsService, RandomGeneratorService]
+            provide: ErrorHandler, useClass: GlobalErrorHandler, deps: [PLATFORM_ID, Injector, NgZone, AuthorizationService, PersistenceService, LoadingService, ErrorItemsService, RandomGeneratorService, ErrorParserService]
         },
         provideHttpClient(withFetch(), withInterceptorsFromDi()),
         provideClientHydration(withEventReplay()),

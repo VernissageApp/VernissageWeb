@@ -1,0 +1,49 @@
+.error-message-snackbar {
+    display: flex;
+    flex-direction: column;
+    max-width: 640px;
+}
+
+.message-row {
+    display: flex;
+    align-items: center;
+}
+
+.message-content {
+    min-width: 0;
+}
+
+.actions {
+    gap: 4px;
+}
+
+.details-panel {
+    box-sizing: border-box;
+    margin: 12px 8px 8px 16px;
+    padding: 8px;
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.12);
+}
+
+.copy-button {
+    margin-top: 8px;
+}
+
+.details {
+    max-height: 240px;
+    margin: 0;
+    overflow: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+@media (max-width: 600px) {
+    .message-row {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .actions {
+        align-self: flex-end;
+    }
+}

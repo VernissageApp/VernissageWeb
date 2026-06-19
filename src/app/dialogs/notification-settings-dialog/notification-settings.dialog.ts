@@ -149,7 +149,7 @@ export class NotificationSettingsDialog implements OnInit {
             this.p256dh = jsonObject.keys?.p256dh;
             this.auth = jsonObject.keys?.auth;
         } catch (err) {
-            this.messageService.showError(this.translateService.instant('dialogs.notificationSettings.messages.unexpectedErrorDuringGeneratingWebPushSubscription'));
+            this.messageService.showError(this.translateService.instant('dialogs.notificationSettings.messages.unexpectedErrorDuringGeneratingWebPushSubscription'), err);
             console.error('Could not subscribe due to:', err);
         }
     }

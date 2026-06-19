@@ -11,8 +11,8 @@ import { RandomGeneratorService } from '../services/common/random-generator.serv
 import { ErrorItem } from '../models/error-item';
 import { isPlatformBrowser } from '@angular/common';
 import { PersistenceService } from '../services/persistance/persistance.service';
-import { CustomError } from '../errors/custom-error';
 import { environment } from 'src/environments/environment';
+import { ErrorParserService } from '../services/common/error-parser.service';
 
 export class GlobalErrorHandler implements ErrorHandler {
     private isBrowser = false;
@@ -25,7 +25,8 @@ export class GlobalErrorHandler implements ErrorHandler {
         private persistenceService: PersistenceService,
         private loadingService: LoadingService,
         private errorItemsService: ErrorItemsService,
-        private randomGeneratorService: RandomGeneratorService
+        private randomGeneratorService: RandomGeneratorService,
+        private errorParserService: ErrorParserService
     ) {
         this.isBrowser = isPlatformBrowser(platformId);
     }
@@ -37,7 +38,7 @@ export class GlobalErrorHandler implements ErrorHandler {
     async handleError(error: any): Promise<void> {
         await this.zone.run(async () => {
             console.error(error);
-            const stringified = this.getStringFromError(error);
+            const stringified = this.errorParserService.getStringFromError(error);
             this.persistenceService.set('exception', stringified.trim());
 
             this.loadingService.hideLoader();
@@ -113,30 +114,5 @@ export class GlobalErrorHandler implements ErrorHandler {
 
     private isForbiddenError(error: any): boolean {
         return error instanceof ForbiddenError || (error.rejection && error.rejection instanceof ForbiddenError);
-    }
-
-    private getStringFromError(error: any): string {
-        if (error instanceof Error) {
-            const plainObject = this.toPlainObject(error);
-            const stringified = JSON.stringify(plainObject, null, 2);
-            return stringified;
-        } else if (typeof error === 'object' && error !== null) {
-            const stringified = JSON.stringify(error, null, 2);
-            return stringified;
-        } else {
-            const customError = new CustomError(error);
-            const stringified = JSON.stringify(customError, null, 2);
-            return stringified;
-        }
-    }
-
-    private toPlainObject(value: any) {
-        const error: any = { };
-
-        Object.getOwnPropertyNames(value).forEach(function (propName) {
-            error[propName] = value[propName];
-        });
-
-        return error;
     }
 }
