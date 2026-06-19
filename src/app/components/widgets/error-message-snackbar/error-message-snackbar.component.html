@@ -1,0 +1,28 @@
+<div class="error-message-snackbar mat-mdc-simple-snack-bar">
+    <div class="message-row">
+        <div matSnackBarLabel class="message-content">
+            <div class="message">{{ data.message }}</div>
+        </div>
+
+        <div matSnackBarActions class="actions">
+            <button matButton matSnackBarAction type="button" (click)="toggleDetails()">
+                {{ data.detailsLabel }}
+            </button>
+
+            <button matButton matSnackBarAction type="button" (click)="dismiss()">
+                {{ data.dismiss }}
+            </button>
+        </div>
+    </div>
+
+    @if (isExpanded()) {
+        <div class="details-panel">
+            <pre class="details">{{ data.details }}</pre>
+
+            <button matButton matSnackBarAction type="button" class="copy-button" [attr.aria-label]="data.copyLabel" (click)="copyDetails()">
+                <mat-icon>content_copy</mat-icon>
+                {{ data.copyLabel }}
+            </button>
+        </div>
+    }
+</div>
