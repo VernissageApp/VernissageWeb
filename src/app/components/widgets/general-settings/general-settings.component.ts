@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, input, model, OnInit, signal } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { Settings } from 'src/app/models/settings';
 import { SettingsService } from 'src/app/services/http/settings.service';
 import { MessagesService } from 'src/app/services/common/messages.service';
@@ -23,6 +24,7 @@ export class GeneralSettingsComponent implements OnInit {
     private settingsService = inject(SettingsService);
     private messageService = inject(MessagesService);
     private instanceService = inject(InstanceService);
+    private translateService = inject(TranslateService);
 
     ngOnInit(): void {
         const values = Object.values(EventType);
@@ -54,7 +56,7 @@ export class GeneralSettingsComponent implements OnInit {
                     this.settingsService.load()
                 ]);
 
-                this.messageService.showSuccess('Settings was saved.');
+                this.messageService.showSuccess(this.translateService.instant('components.generalSettings.messages.settingsWasSaved'));
             }
         } catch (error) {
             console.error(error);

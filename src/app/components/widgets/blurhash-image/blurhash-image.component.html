@@ -30,7 +30,7 @@
         }
 
         @if(showAltIcon() && alt()) {
-            <div class="alt" [matTooltip]="alt()" matTooltipPosition="above">ALT</div>
+            <div class="alt" [matTooltip]="alt()" matTooltipPosition="above">{{ 'components.image.altLabel' | translate }}</div>
         }
 
         @if (signedInUser() ) {

@@ -1,36 +1,36 @@
 <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
-    <div mat-dialog-title>Instance rule</div>
+    <div mat-dialog-title>{{ 'dialogs.instanceRule.texts.instanceRule' | translate }}</div>
     <div mat-dialog-content>
 
         <div class="margin-bottom-20 padding-top-5">
             <mat-form-field class="width-100" appearance="outline">
-                <mat-label>Order</mat-label>
-                <input type="number" matInput name="order" [(ngModel)]="order" #orderInput="ngModel" aria-label="Email" required />
+                <mat-label>{{ 'common.labels.order' | translate }}</mat-label>
+                <input type="number" matInput name="order" [(ngModel)]="order" #orderInput="ngModel" [attr.aria-label]="'dialogs.instanceRule.attrs.order' | translate" required />
 
                 @if (orderInput.invalid && orderInput.errors?.required) {
-                    <mat-error>Enter order.</mat-error>
+                    <mat-error>{{ 'dialogs.instanceRule.texts.enterOrder' | translate }}</mat-error>
                 }
             </mat-form-field>
         </div>
 
         <div class="margin-bottom-20">
             <mat-form-field class="width-100" appearance="outline">
-                <mat-label>Rule</mat-label>
-                <input type="text" matInput name="text" [(ngModel)]="text" #textInput="ngModel" aria-label="Email" required appMaxLength="1000" />
+                <mat-label>{{ 'dialogs.instanceRule.texts.rule' | translate }}</mat-label>
+                <input type="text" matInput name="text" [(ngModel)]="text" #textInput="ngModel" [attr.aria-label]="'dialogs.instanceRule.attrs.rule' | translate" required appMaxLength="1000" />
 
                 @if (textInput.invalid && textInput.errors?.appMaxLength) {
-                    <mat-error>Rule is too long.</mat-error>
+                    <mat-error>{{ 'dialogs.instanceRule.texts.ruleIsTooLong' | translate }}</mat-error>
                 }
 
                 @if (textInput.invalid && textInput.errors?.required) {
-                    <mat-error>Enter rule.</mat-error>
+                    <mat-error>{{ 'dialogs.instanceRule.texts.enterRule' | translate }}</mat-error>
                 }
             </mat-form-field>
         </div>
 
     </div>
     <div mat-dialog-actions>
-        <button matButton="text" type="button" (click)="onNoClick()">Cancel</button>
-        <button matButton="filled" type="submit" cdkFocusInitial>Save</button>
+        <button matButton="text" type="button" (click)="onNoClick()">{{ 'common.actions.cancel' | translate }}</button>
+        <button matButton="filled" type="submit" cdkFocusInitial>{{ 'common.actions.save' | translate }}</button>
     </div>
 </form>

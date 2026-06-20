@@ -6,12 +6,12 @@
 
                 @if (signedInUser()) {
                     @if (isFollowActionInProgress()) {
-                        <button type="button" matButton="text" aria-label="Hashtag follow action in progress" disabled="disabled">Processing...</button>
+                        <button type="button" matButton="text" [attr.aria-label]="'pages.hashtag.actions.followActionInProgressAriaLabel' | translate" disabled="disabled">{{ 'common.labels.processing' | translate }}...</button>
                     } @else {
                         @if (isFollowed()) {
-                            <button type="button" (click)="onToggleHashtagFollow()" matButton="tonal" aria-label="Unfollow hashtag">Unfollow</button>
+                            <button type="button" (click)="onToggleHashtagFollow()" matButton="tonal" [attr.aria-label]="'pages.hashtag.actions.unfollowAriaLabel' | translate">{{ 'common.actions.unfollow' | translate }}</button>
                         } @else {
-                            <button type="button" (click)="onToggleHashtagFollow()" matButton="filled" aria-label="Follow hashtag">Follow</button>
+                            <button type="button" (click)="onToggleHashtagFollow()" matButton="filled" [attr.aria-label]="'pages.hashtag.actions.followAriaLabel' | translate">{{ 'common.actions.follow' | translate }}</button>
                         }
                     }
                 }

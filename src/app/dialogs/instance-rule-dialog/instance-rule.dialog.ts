@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, model, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Rule } from 'src/app/models/rule';
 import { MessagesService } from 'src/app/services/common/messages.service';
@@ -19,6 +20,7 @@ export class InstanceRuleDialog implements OnInit {
     private rulesService = inject(RulesService);
     private dialogRef = inject(MatDialogRef<InstanceRuleDialog>);
     private data?: Rule = inject(MAT_DIALOG_DATA);
+    private translateService = inject(TranslateService);
 
     ngOnInit(): void {
         if (this.data) {
@@ -38,14 +40,14 @@ export class InstanceRuleDialog implements OnInit {
                 this.data.text = this.text();
 
                 await this.rulesService.update(this.data?.id, this.data);
-                this.messageService.showSuccess('Rule has been updated.');
+                this.messageService.showSuccess(this.translateService.instant('dialogs.instanceRule.messages.ruleHasBeenUpdated'));
             } else {
                 const newRule = new Rule();
                 newRule.order = this.order();
                 newRule.text = this.text();
 
                 await this.rulesService.create(newRule);
-                this.messageService.showSuccess('New rule has been created.');
+                this.messageService.showSuccess(this.translateService.instant('dialogs.instanceRule.messages.newRuleHasBeenCreated'));
             }
 
             this.dialogRef.close({ confirmed: true});

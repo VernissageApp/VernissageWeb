@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, model, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 import { MessagesService } from 'src/app/services/common/messages.service';
@@ -20,6 +21,7 @@ export class MoveAccountDialog implements OnInit {
     public authorizationService = inject(AuthorizationService);
 
     private data?: string = inject(MAT_DIALOG_DATA);
+    private translateService = inject(TranslateService);
     private userName = '';
 
     ngOnInit(): void {
@@ -37,7 +39,7 @@ export class MoveAccountDialog implements OnInit {
             await this.usersService.move(this.userName, this.account(), this.password());
             await this.authorizationService.refreshAccessToken();
 
-            this.messageService.showSuccess('Information about new account has been saved.');
+            this.messageService.showSuccess(this.translateService.instant('dialogs.moveAccount.messages.informationAboutNewAccountHasBeenSaved'));
             this.dialogRef.close(true);
         } catch (error) {
             console.error(error);

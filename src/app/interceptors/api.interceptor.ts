@@ -6,6 +6,7 @@ import { catchError, switchMap } from 'rxjs/operators';
 import { isPlatformBrowser } from '@angular/common';
 import { AuthorizationService } from '../services/authorization/authorization.service';
 import { from } from 'rxjs';
+import { LanguageService } from '../services/common/language.service';
 
 @Injectable()
 export class APIInterceptor implements HttpInterceptor {
@@ -13,6 +14,7 @@ export class APIInterceptor implements HttpInterceptor {
 
     private platformId = inject(PLATFORM_ID);
     private authorizationService = inject(AuthorizationService);
+    private languageService = inject(LanguageService);
 
     constructor() {
         this.isBrowser = isPlatformBrowser(this.platformId);
@@ -21,7 +23,10 @@ export class APIInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         request = request.clone({
             withCredentials: true,
-            setHeaders: { 'X-XSRF-TOKEN': this.authorizationService.getXsrfToken() }
+            setHeaders: {
+                'X-XSRF-TOKEN': this.authorizationService.getXsrfToken(),
+                'Accept-Language': this.languageService.getAcceptLanguage(),
+            }
         });
 
         // Executing original request.

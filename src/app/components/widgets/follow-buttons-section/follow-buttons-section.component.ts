@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, effect, inject, input, OnDestroy, OnInit, output, signal } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { MatDialog } from '@angular/material/dialog';
@@ -77,6 +78,7 @@ export class FollowButtonsSectionComponent implements OnInit, OnDestroy {
     private userBlockedDomainsService = inject(UserBlockedDomainsService);
     private dialog = inject(MatDialog);
     private clipboard = inject(Clipboard);
+    private translateService = inject(TranslateService);
 
     constructor() {
         effect(() => {
@@ -131,7 +133,7 @@ export class FollowButtonsSectionComponent implements OnInit, OnDestroy {
                         this.recalculateRelationship();
 
                         this.emitRelationChange();
-                        this.messageService.showSuccess('Mute has been saved.');
+                        this.messageService.showSuccess(this.translateService.instant('components.followButtonsSection.messages.muteHasBeenSaved'));
                     }
                 } catch (error) {
                     console.error(error);
@@ -148,7 +150,7 @@ export class FollowButtonsSectionComponent implements OnInit, OnDestroy {
     protected async unmuteAccount(): Promise<void> {
         const dialogRef = this.dialog.open(ConfirmationDialog, {
             width: '500px',
-            data: 'Do you want to unmute user?'
+            data: this.translateService.instant('components.followButtonsSection.messages.doYouWantToUnmuteUser')
         });
 
         dialogRef.afterClosed().subscribe(async (result) => {
@@ -162,7 +164,7 @@ export class FollowButtonsSectionComponent implements OnInit, OnDestroy {
                         this.recalculateRelationship();
 
                         this.emitRelationChange();
-                        this.messageService.showSuccess('Mute has been canceled.');
+                        this.messageService.showSuccess(this.translateService.instant('components.followButtonsSection.messages.muteHasBeenCanceled'));
                     }
                 } catch (error) {
                     console.error(error);
@@ -188,7 +190,7 @@ export class FollowButtonsSectionComponent implements OnInit, OnDestroy {
                         this.recalculateRelationship();
 
                         this.emitRelationChange();
-                        this.messageService.showSuccess('User has been blocked.');
+                        this.messageService.showSuccess(this.translateService.instant('components.followButtonsSection.messages.userHasBeenBlocked'));
                     }
                 } catch (error) {
                     console.error(error);
@@ -201,7 +203,7 @@ export class FollowButtonsSectionComponent implements OnInit, OnDestroy {
     protected async unblockAccount(): Promise<void> {
         const dialogRef = this.dialog.open(ConfirmationDialog, {
             width: '500px',
-            data: 'Do you want to unblock user?'
+            data: this.translateService.instant('components.followButtonsSection.messages.doYouWantToUnblockUser')
         });
 
         dialogRef.afterClosed().subscribe(async (result) => {
@@ -215,7 +217,7 @@ export class FollowButtonsSectionComponent implements OnInit, OnDestroy {
                         this.recalculateRelationship();
 
                         this.emitRelationChange();
-                        this.messageService.showSuccess('User has been unblocked.');
+                        this.messageService.showSuccess(this.translateService.instant('components.followButtonsSection.messages.userHasBeenUnblocked'));
                     }
                 } catch (error) {
                     console.error(error);
@@ -235,7 +237,7 @@ export class FollowButtonsSectionComponent implements OnInit, OnDestroy {
             if (result) {
                 try {
                     await this.reportsService.create(result);
-                    this.messageService.showSuccess('Report has been saved.');
+                    this.messageService.showSuccess(this.translateService.instant('components.followButtonsSection.messages.reportHasBeenSaved'));
                 } catch (error) {
                     console.error(error);
                     this.messageService.showServerError(error);
@@ -255,7 +257,7 @@ export class FollowButtonsSectionComponent implements OnInit, OnDestroy {
 
         const dialogRef = this.dialog.open(UserBlockedDomainDialog, {
             width: '500px',
-            data: new UserBlockedDomainDialogEntity('Block domain', userBlockedDomain, true)
+            data: new UserBlockedDomainDialogEntity(this.translateService.instant('dialogs.userBlockedDomain.texts.blockDomain'), userBlockedDomain, true)
         });
 
         dialogRef.afterClosed().subscribe(async (result) => {
@@ -280,7 +282,7 @@ export class FollowButtonsSectionComponent implements OnInit, OnDestroy {
 
         const dialogRef = this.dialog.open(ConfirmationDialog, {
             width: '500px',
-            data: 'Do you want to delete blocked domain?'
+            data: this.translateService.instant('components.followButtonsSection.messages.doYouWantToDeleteBlockedDomain')
         });
 
         dialogRef.afterClosed().subscribe(async (result) => {
@@ -288,7 +290,7 @@ export class FollowButtonsSectionComponent implements OnInit, OnDestroy {
                 try {
                     await this.userBlockedDomainsService.delete(internalUserBlockDomain.id);
                     await this.loadUserBlockedDomain();
-                    this.messageService.showSuccess('Blocked domain has been deleted.');
+                    this.messageService.showSuccess(this.translateService.instant('components.followButtonsSection.messages.blockedDomainHasBeenDeleted'));
                 } catch (error) {
                     console.error(error);
                     this.messageService.showServerError(error);
@@ -310,9 +312,9 @@ export class FollowButtonsSectionComponent implements OnInit, OnDestroy {
                 this.emitRelationChange();
                 
                 if (this.updatedRelationship().following) {
-                    this.messageService.showSuccess('You are following the user.');
+                    this.messageService.showSuccess(this.translateService.instant('components.followButtonsSection.messages.youAreFollowingTheUser'));
                 } else {
-                    this.messageService.showSuccess('The follow request has been sent.');
+                    this.messageService.showSuccess(this.translateService.instant('components.followButtonsSection.messages.theFollowRequestHasBeenSent'));
                 }
             } catch (error) {
                 console.error(error);
@@ -340,7 +342,7 @@ export class FollowButtonsSectionComponent implements OnInit, OnDestroy {
                         this.recalculateRelationship();
 
                         this.emitRelationChange();
-                        this.messageService.showSuccess('You have unfollowed the user.');
+                        this.messageService.showSuccess(this.translateService.instant('components.followButtonsSection.messages.youHaveUnfollowedTheUser'));
                     } catch (error) {
                         console.error(error);
                         this.messageService.showServerError(error);
@@ -363,7 +365,7 @@ export class FollowButtonsSectionComponent implements OnInit, OnDestroy {
                 this.recalculateRelationship();
 
                 this.emitRelationChange();
-                this.messageService.showSuccess('You have accepted the user\'s follow request.');
+                this.messageService.showSuccess(this.translateService.instant('components.followButtons.messages.youHaveAcceptedTheUserSFollowRequest'));
             } catch (error) {
                 console.error(error);
                 this.messageService.showServerError(error);
@@ -384,7 +386,7 @@ export class FollowButtonsSectionComponent implements OnInit, OnDestroy {
                 this.recalculateRelationship();
 
                 this.emitRelationChange();
-                this.messageService.showSuccess('You have declined the user\'s follow request');
+                this.messageService.showSuccess(this.translateService.instant('components.followButtons.messages.youHaveDeclinedTheUserSFollowRequest'));
             } catch (error) {
                 console.error(error);
                 this.messageService.showServerError(error);
@@ -404,7 +406,7 @@ export class FollowButtonsSectionComponent implements OnInit, OnDestroy {
                 this.recalculateRelationship();
 
                 this.emitRelationChange();
-                this.messageService.showSuccess('You have featured the user.');
+                this.messageService.showSuccess(this.translateService.instant('components.followButtonsSection.messages.youHaveFeaturedTheUser'));
             } catch (error) {
                 console.error(error);
                 this.messageService.showServerError(error);
@@ -422,7 +424,7 @@ export class FollowButtonsSectionComponent implements OnInit, OnDestroy {
                 this.recalculateRelationship();
 
                 this.emitRelationChange();
-                this.messageService.showSuccess('You have removed the user from featured.');
+                this.messageService.showSuccess(this.translateService.instant('components.followButtonsSection.messages.youHaveRemovedTheUserFromFeatured'));
             } catch (error) {
                 console.error(error);
                 this.messageService.showServerError(error);
@@ -636,7 +638,7 @@ export class FollowButtonsSectionComponent implements OnInit, OnDestroy {
                 this.relationshipRefreshCounter = this.relationshipRefreshCounter  + 1;
 
                 if (this.relationship()?.following === true) {
-                    this.messagesService.showSuccess('Your follow request has been accepted.');
+                    this.messagesService.showSuccess(this.translateService.instant('components.followButtonsSection.messages.yourFollowRequestHasBeenAccepted'));
                 }
 
                 // When we try 10 times or request is approved we should cancel.

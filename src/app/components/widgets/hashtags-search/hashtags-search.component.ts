@@ -52,7 +52,7 @@ export class HashtagsSearchComponent extends ResponsiveComponent {
         return undefined;
     }
 
-    private getMainStatus(status: Status): Status {
+    protected getMainStatus(status: Status): Status {
         return status.reblog ?? status;
     }
 }

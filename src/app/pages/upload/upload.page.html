@@ -1,10 +1,10 @@
 <div animate.enter="fade-in" [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
     <h1>
-        <div>{{ isEditMode() ? 'Edit status' : 'Upload photos' }}</div>
+        <div>{{ isEditMode() ? ('pages.upload.titles.editStatus' | translate) : ('pages.upload.titles.uploadPhotos' | translate) }}</div>
         @if (!isHandset()) {
             <div class="fs-60 text-muted">
-                You can upload JPEG, PNG and WEBP files up to {{ maxFileSizeString() }}.
-                To improve interoperability across different systems, use images with the longer edge set to 4096 px.
+                {{ 'pages.upload.subtitle.maxFileSize' | translate:{ maxFileSize: maxFileSizeString() } }}
+                {{ 'pages.upload.subtitle.interoperabilityHint' | translate }}
             </div>
         }
     </h1>
@@ -16,7 +16,7 @@
                     <div cdkDropList class="example-list" cdkDropListOrientation="mixed" (cdkDropListDropped)="drop($event)">
                         @for (photo of photos(); track photo.uuid; let i = $index) {
                             <div class="display-inline-block" cdkDrag>
-                                <img (click)="onImageClick(i)" (keydown.enter)="onImageClick(i)" tabindex="0" [src]="photo.photoSrc()" alt="Uploaded photo" [ngClass]="{ 'selected': selectedIndex() === i, 'small': isHandset() }" class="photo-thumbnail" />
+                                <img (click)="onImageClick(i)" (keydown.enter)="onImageClick(i)" tabindex="0" [src]="photo.photoSrc()" [attr.alt]="'pages.upload.photoAlt' | translate" [ngClass]="{ 'selected': selectedIndex() === i, 'small': isHandset() }" class="photo-thumbnail" />
                             </div>
                         }
                     </div>
@@ -31,23 +31,22 @@
                 </div>
             </div>
         } @else if (!emailHasBeenVerified()) {
-            <div class="text-center margin-20">
-                To upload photos, please verify your email address. You can resend the confirmation email
-                from your <a routerLink="/account">Account</a> page if you haven't received it yet.
-                Requiring email verification helps ensure that only legitimate accounts can upload content,
-                which improves both security and the overall quality of shared materials.
+                <div class="text-center margin-20">
+                {{ 'pages.upload.emailVerificationRequired.prefix' | translate }}
+                <a routerLink="/account">{{ 'pages.account.title' | translate }}</a>
+                {{ 'pages.upload.emailVerificationRequired.suffix' | translate }}
+                {{ 'pages.upload.emailVerificationRequired.securityNote' | translate }}
             </div>
         } @else if (accountHasBeenMoved()) {
             <div class="text-center margin-20">
-                This account has been moved to another account, so you can no longer add new photos
-                or publish new content here. To continue posting, please use your new account.
+                {{ 'pages.upload.accountMoved' | translate }}
             </div>
         }
 
         <mat-card class="margin-bottom-20" appearance="outlined">
             <mat-card-header>
                 <mat-card-title>
-                    Status details
+                    {{ 'pages.upload.statusDetails' | translate }}
                 </mat-card-title>
             </mat-card-header>
 
@@ -55,20 +54,20 @@
                 <mat-stepper orientation="vertical" [(selectedIndex)]="selectedIndex" #stepper>
                     @for (photo of photos(); track $index; let i = $index) {
                         <mat-step>
-                            <ng-template matStepLabel>Image data #{{ i + 1 }}</ng-template>
+                            <ng-template matStepLabel>{{ 'pages.upload.stepper.imageData' | translate:{ index: i + 1 } }}</ng-template>
                             <app-upload-photo #uploadPhoto [photo]="photo" [licenses]="licenses()" (cancelUpload)="onPhotoUploadCancel($event)"></app-upload-photo>
                             <div class="margin-top-15 flex-row flex-space-between">
                                 <div>
                                     @if (i > 0) {
-                                        <button class="margin-right-10" matButton="text" matStepperPrevious>Back</button>
+                                        <button class="margin-right-10" matButton="text" matStepperPrevious>{{ 'common.actions.back' | translate }}</button>
                                     }
-                                    <button matButton="filled" [disabled]="!uploadPhoto.isValid()" matStepperNext>Next</button>
+                                    <button matButton="filled" [disabled]="!uploadPhoto.isValid()" matStepperNext>{{ 'common.actions.next' | translate }}</button>
                                 </div>
                                 <div>
                                     @if (photo.isDeleting()) {
                                         <mat-spinner class="display-inline-block vertical-align-middle margin-right-10" [diameter]="18"></mat-spinner>
                                     }
-                                    <button matButton="tonal" (click)="onPhotoDelete(photo)" [disabled]="!photo.isUploaded() || photo.isDeleting()">Delete</button>
+                                    <button matButton="tonal" (click)="onPhotoDelete(photo)" [disabled]="!photo.isUploaded() || photo.isDeleting()">{{ 'common.actions.delete' | translate }}</button>
                                 </div>
                             </div>
                         </mat-step>
@@ -76,17 +75,17 @@
 
                     <mat-step>
                         <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
-                            <ng-template matStepLabel>Status</ng-template>
+                            <ng-template matStepLabel>{{ 'common.labels.status' | translate }}</ng-template>
                             <div class="flex-col gap-0 margin-top-5">
 
                                 <div class="flex-row flex-space-between margin-bottom-5">
                                     <div class="flex-row gap-8">
-                                        <button type="button" class="text-template" matButton="outlined" (click)="onInsertTemplate()" [disabled]="!statusTextTemplate() || statusTextTemplate()?.length === 0">
-                                            <mat-icon>text_snippet</mat-icon>
-                                            @if (!isHandset()) {
-                                                <span>Use template</span>
-                                            }
-                                        </button>
+                                                <button type="button" class="text-template" matButton="outlined" (click)="onInsertTemplate()" [disabled]="!statusTextTemplate() || statusTextTemplate()?.length === 0">
+                                                    <mat-icon>text_snippet</mat-icon>
+                                                    @if (!isHandset()) {
+                                                        <span>{{ 'pages.upload.actions.useTemplate' | translate }}</span>
+                                                    }
+                                                </button>
                                         <button type="button" class="edit-template" matButton="outlined" (click)="onEditTemplate()">
                                             <mat-icon>edit_note</mat-icon>
                                         </button>
@@ -98,11 +97,11 @@
                                                     <mat-spinner class="margin-top-10 margin-right-10" [diameter]="18"></mat-spinner>
                                                 }
                                                 <button matButton="outlined" (click)="onGenerateHashtags()" [disabled]="!allPhotosUploaded() || photos().length === 0 || hashtagsInProgress()">
-                                                    <mat-icon>smart_toy</mat-icon> Hashtags
+                                                    <mat-icon>smart_toy</mat-icon> {{ 'pages.upload.actions.hashtags' | translate }}
                                                 </button>
                                             </div>
                                             <div class="text-right text-muted fs-80 margin-bottom-10">
-                                                Feature powered by {{ openAIProviderName() }}.
+                                                {{ 'pages.upload.actions.featurePoweredBy' | translate:{ provider: openAIProviderName() } }}
                                             </div>
                                         }
                                     </div>
@@ -118,7 +117,7 @@
                                 </app-status-text-autocomplete>
 
                                 <mat-form-field appearance="outline" class=" margin-bottom-20">
-                                    <mat-label>Category</mat-label>
+                                    <mat-label>{{ 'common.labels.category' | translate }}</mat-label>
                                     <mat-select [(value)]="categoryId">
                                         @for(category of categories(); track category.id) {
                                             <mat-option [value]="category.id">{{ category.name }}</mat-option>
@@ -127,27 +126,27 @@
                                 </mat-form-field>
 
                                 <mat-form-field appearance="outline" class="margin-bottom-15">
-                                    <mat-label>Visibility</mat-label>
+                                    <mat-label>{{ 'common.labels.visibility' | translate }}</mat-label>
                                     <mat-select required [(value)]="visibility">
-                                        <mat-option [value]="statusVisibility.Public">Everyone</mat-option>
-                                        <mat-option [value]="statusVisibility.QuietPublic">Everyone (quiet)</mat-option>
-                                        <mat-option [value]="statusVisibility.Followers">Followers only</mat-option>
-                                        <mat-option [value]="statusVisibility.Mentioned">Mentioned people only</mat-option>
+                                        <mat-option [value]="statusVisibility.Public">{{ 'pages.upload.visibility.public' | translate }}</mat-option>
+                                        <mat-option [value]="statusVisibility.QuietPublic">{{ 'pages.upload.visibility.quietPublic' | translate }}</mat-option>
+                                        <mat-option [value]="statusVisibility.Followers">{{ 'pages.upload.visibility.followers' | translate }}</mat-option>
+                                        <mat-option [value]="statusVisibility.Mentioned">{{ 'pages.upload.visibility.mentioned' | translate }}</mat-option>
                                     </mat-select>
                                     <mat-hint class="text-muted">
                                         @if (!isHandsetPortrait()) {
                                             @switch (visibility()) {
                                                 @case (statusVisibility.Public) {
-                                                    <span>Visible to everyone and may appear in public timelines.</span>
+                                                    <span>{{ 'pages.upload.visibilityHints.public' | translate }}</span>
                                                 }
                                                 @case (statusVisibility.QuietPublic) {
-                                                    <span>Visible to everyone, but excluded from public timelines.</span>
+                                                    <span>{{ 'pages.upload.visibilityHints.quietPublic' | translate }}</span>
                                                 }
                                                 @case (statusVisibility.Followers) {
-                                                    <span>Visible only to your followers and anyone mentioned in the post.</span>
+                                                    <span>{{ 'pages.upload.visibilityHints.followers' | translate }}</span>
                                                 }
                                                 @case (statusVisibility.Mentioned) {
-                                                    <span>Visible only to people explicitly mentioned in the post.</span>
+                                                    <span>{{ 'pages.upload.visibilityHints.mentioned' | translate }}</span>
                                                 }
                                             }
                                         }
@@ -155,26 +154,26 @@
                                     
                                 </mat-form-field>
 
-                                <mat-checkbox name="commentsDisabled" [disableRipple]="true" [(ngModel)]="commentsDisabled">Disable comments</mat-checkbox>
-                                <mat-checkbox name="isSensitive" [disableRipple]="true" [(ngModel)]="isSensitive">Sensitive/NSFW media</mat-checkbox>
+                                <mat-checkbox name="commentsDisabled" [disableRipple]="true" [(ngModel)]="commentsDisabled">{{ 'pages.upload.form.disableComments' | translate }}</mat-checkbox>
+                                <mat-checkbox name="isSensitive" [disableRipple]="true" [(ngModel)]="isSensitive">{{ 'pages.upload.form.sensitiveMedia' | translate }}</mat-checkbox>
 
                                 <mat-form-field appearance="outline" class="margin-top-10" >
-                                    <mat-label>Content warning</mat-label>
-                                    <input type="text" [disabled]="!isSensitive()" matInput name="status" [(ngModel)]="contentWarning" aria-label="Content warning" />
+                                    <mat-label>{{ 'pages.upload.form.contentWarning' | translate }}</mat-label>
+                                    <input type="text" [disabled]="!isSensitive()" matInput name="status" [(ngModel)]="contentWarning" [attr.aria-label]="'pages.upload.form.contentWarning' | translate" />
                                 </mat-form-field>
                             </div>
                             <div class="flex-row flex-space-between">
                                 <div>
-                                    <button class="margin-right-10" matButton="text" matStepperPrevious>Back</button>
+                                    <button class="margin-right-10" matButton="text" matStepperPrevious>{{ 'common.actions.back' | translate }}</button>
                                     <button matButton="filled" [disabled]="!allPhotosUploaded() || photos().length === 0 || f.form.invalid" matStepperNext>
-                                        {{ isEditMode() ? 'Update' : 'Upload' }}
+                                        {{ isEditMode() ? ('common.actions.update' | translate) : ('common.actions.upload' | translate) }}
                                     </button>
                                 </div>
                                 <div>
                                     @if (isCanceling()) {
                                         <mat-spinner class="display-inline-block vertical-align-middle margin-right-10" [diameter]="18"></mat-spinner>
                                     }
-                                    <button type="button" matButton="outlined" (click)="onCancel()" [disabled]="isCanceling()">Cancel</button>
+                                    <button type="button" matButton="outlined" (click)="onCancel()" [disabled]="isCanceling()">{{ 'common.actions.cancel' | translate }}</button>
                                 </div>
                             </div>
                         </form>

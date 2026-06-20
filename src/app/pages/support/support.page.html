@@ -2,10 +2,10 @@
     <div animate.enter="fade-in" [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
 
         <div class="flex-row flex-align-center flex-space-between margin-bottom-10">
-            <h1>Support</h1>
+            <h1>{{ 'pages.support.title' | translate }}</h1>
             @if (patreonUrl(); as patreonUrlString) {
                 <a class="patreon" matButton="filled" [href]="patreonUrlString" target="_blank">
-                    <div class="patreon-img"></div> Support us
+                    <div class="patreon-img"></div> {{ 'pages.support.actions.supportUs' | translate }}
                 </a>
             }
         </div>
@@ -17,49 +17,49 @@
             }
 
             <h3>
-                Instance information
+                {{ 'pages.support.sections.instanceInformation' | translate }}
             </h3>
 
             <dl>
                 @if (instanceObject.title) {
-                    <dt>Title:</dt>
+                    <dt>{{ 'common.labels.title' | translate }}:</dt>
                     <dd>{{ instanceObject.title }}</dd>
                 }
 
                 @if (instanceObject.description) {
-                    <dt>Description:</dt>
+                    <dt>{{ 'pages.support.instance.description' | translate }}:</dt>
                     <dd>{{ instanceObject.description }}</dd>
                 }
 
                 @if (instanceObject.version) {
-                    <dt>API version:</dt>
+                    <dt>{{ 'pages.support.instance.apiVersion' | translate }}:</dt>
                     <dd>{{ instanceObject.version }}</dd>
                 }
 
-                <dt>WEB version:</dt>
+                <dt>{{ 'pages.support.instance.webVersion' | translate }}:</dt>
                 <dd>{{ clientVersion }}</dd>
 
                 @if (instanceObject.languages) {
-                    <dt>Languages:</dt>
+                    <dt>{{ 'pages.support.instance.languages' | translate }}:</dt>
                     <dd>{{ instanceObject.languages.join(',') }}</dd>
                 }
 
-                <dt>Max status characters:</dt>
+                <dt>{{ 'pages.support.instance.maxStatusCharacters' | translate }}:</dt>
                 <dd>{{ instanceObject.configuration?.statuses?.maxCharacters ?? 0 }}</dd>
 
-                <dt>Max media attachments:</dt>
+                <dt>{{ 'pages.support.instance.maxMediaAttachments' | translate }}:</dt>
                 <dd>{{ instanceObject.configuration?.statuses?.maxMediaAttachments ?? 0 }}</dd>
 
-                <dt>Image size limit:</dt>
+                <dt>{{ 'pages.support.instance.imageSizeLimit' | translate }}:</dt>
                 <dd>{{ getFileSizeString(instanceObject.configuration?.attachments?.imageSizeLimit ?? 0) }}</dd>
 
                 @if (instanceObject.email) {
-                    <dt>Email:</dt>
+                    <dt>{{ 'common.labels.email' | translate }}:</dt>
                     <dd>{{ instanceObject.email }}</dd>
                 }
 
                 @if (instanceObject.contact) {
-                    <dt>Contact account:</dt>
+                    <dt>{{ 'pages.support.instance.contactAccount' | translate }}:</dt>
                     <dd><app-mini-user-card [user]="instanceObject.contact"></app-mini-user-card></dd>
                 }
             </dl>
@@ -67,63 +67,63 @@
 
         @if(totalCost() > 0) {
             <h3>
-                Financial support
+                {{ 'pages.support.sections.financialSupport' | translate }}
             </h3>
             <dl>
-                <dt>Total cost:</dt>
-                <dd>${{ totalCost() }} / month</dd>
+                <dt>{{ 'pages.support.financial.totalCost' | translate }}:</dt>
+                <dd>${{ totalCost() }} {{ 'pages.support.financial.perMonth' | translate }}</dd>
 
-                <dt>Community support:</dt>
-                <dd>${{ usersSupport() }} / month</dd>
+                <dt>{{ 'pages.support.financial.communitySupport' | translate }}:</dt>
+                <dd>${{ usersSupport() }} {{ 'pages.support.financial.perMonth' | translate }}</dd>
             </dl>
         }
 
         <h3>
-            Health status
+            {{ 'pages.support.sections.healthStatus' | translate }}
         </h3>
         <dl>
-            <dt>Database:</dt>
+            <dt>{{ 'pages.support.health.database' | translate }}:</dt>
             @if (health(); as healthObject) {
-                <dd>{{ healthObject.isDatabaseHealthy ? 'ok' : 'error' }}</dd>
+                <dd>{{ healthObject.isDatabaseHealthy ? ('pages.support.health.ok' | translate) : ('pages.support.health.error' | translate) }}</dd>
             } @else {
-                <dd>checking...</dd>
+                <dd>{{ 'pages.support.health.checking' | translate }}</dd>
             }
 
-            <dt>Redis queues:</dt>
+            <dt>{{ 'pages.support.health.redisQueues' | translate }}:</dt>
             @if (health(); as healthObject) {
-                <dd>{{ healthObject.isQueueHealthy ? 'ok' : 'error' }}</dd>
+                <dd>{{ healthObject.isQueueHealthy ? ('pages.support.health.ok' | translate) : ('pages.support.health.error' | translate) }}</dd>
             } @else {
-                <dd>checking...</dd>
+                <dd>{{ 'pages.support.health.checking' | translate }}</dd>
             }
 
-            <dt>Storage:</dt>
+            <dt>{{ 'pages.support.health.storage' | translate }}:</dt>
             @if (health(); as healthObject) {
-                <dd>{{ healthObject.isStorageHealthy ? 'ok' : 'error' }}</dd>
+                <dd>{{ healthObject.isStorageHealthy ? ('pages.support.health.ok' | translate) : ('pages.support.health.error' | translate) }}</dd>
             } @else {
-                <dd>checking...</dd>
+                <dd>{{ 'pages.support.health.checking' | translate }}</dd>
             }
 
-            <dt>Web push service:</dt>
+            <dt>{{ 'pages.support.health.webPushService' | translate }}:</dt>
             @if (health(); as healthObject) {
-                <dd>{{ healthObject.isWebPushHealthy ? 'ok' : 'error' }}</dd>
+                <dd>{{ healthObject.isWebPushHealthy ? ('pages.support.health.ok' | translate) : ('pages.support.health.error' | translate) }}</dd>
             } @else {
-                <dd>checking...</dd>
+                <dd>{{ 'pages.support.health.checking' | translate }}</dd>
             }
         </dl>
 
         <h3>
-            Helpful links
+            {{ 'pages.support.sections.helpfulLinks' | translate }}
         </h3>
         <ul>
-            <li class="margin-bottom-10"><a [routerLink]="['/terms']">Terms of Service</a></li>
-            <li class="margin-bottom-10"><a [routerLink]="['/privacy']">Privacy policy</a></li>
-            <li class="margin-bottom-10"><a [routerLink]="['/faq']">Frequently Asked Questions</a></li>
-            <li class="margin-bottom-10"><a href="https://github.com/VernissageApp/VernissageServer" target="_blank">Source code</a></li>
-            <li class="margin-bottom-10"><a href="https://api.vernissage.photos/" target="_blank">API documentation</a></li>
-            <li class="margin-bottom-10"><a href="https://github.com/VernissageApp/VernissageServer/issues" target="_blank">Report a bug</a></li>
+            <li class="margin-bottom-10"><a [routerLink]="['/terms']">{{ 'pages.support.links.termsOfService' | translate }}</a></li>
+            <li class="margin-bottom-10"><a [routerLink]="['/privacy']">{{ 'pages.support.links.privacyPolicy' | translate }}</a></li>
+            <li class="margin-bottom-10"><a [routerLink]="['/faq']">{{ 'common.labels.frequentlyAskedQuestions' | translate }}</a></li>
+            <li class="margin-bottom-10"><a href="https://github.com/VernissageApp/VernissageServer" target="_blank">{{ 'pages.support.links.sourceCode' | translate }}</a></li>
+            <li class="margin-bottom-10"><a href="https://api.vernissage.photos/" target="_blank">{{ 'pages.support.links.apiDocumentation' | translate }}</a></li>
+            <li class="margin-bottom-10"><a href="https://github.com/VernissageApp/VernissageServer/issues" target="_blank">{{ 'pages.support.links.reportBug' | translate }}</a></li>
 
             @if (mastodonUrl(); as mastodonUrlString) {
-                <li class="margin-bottom-10"><a [href]="mastodonUrlString" target="_blank">Mastodon</a></li>
+                <li class="margin-bottom-10"><a [href]="mastodonUrlString" target="_blank">{{ 'pages.support.links.mastodon' | translate }}</a></li>
             }
         </ul>
     </div>

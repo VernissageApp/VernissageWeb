@@ -10,10 +10,10 @@
         }
 
         <div style="max-width: 960px; margin-left: auto; margin-right: auto;">
-            <div class="header">Rediscover the beauty of photography</div>
+            <div class="header">{{ 'components.homeSignout.texts.rediscoverTheBeautyOfPhotography' | translate }}</div>
             <div class="subheader text-muted">
-                <p>Vernissage is a free platform designed for photographers.</p>
-                <p>It's ad-free and focused on community and creativity, not algorithms.</p>
+                <p>{{ 'components.homeSignout.texts.vernissageIsAFreePlatformDesignedFor' | translate }}</p>
+                <p>{{ 'components.homeSignout.texts.itSAdFreeAndFocusedOn' | translate }}</p>
             </div>
 
             <div class="flex-row flex-wrap flex-center gap-8 margin-top-20 margin-bottom-20 margin-left-10 margin-right-10">
@@ -30,20 +30,20 @@
             </div>
 
             <ul>
-                <li class="margin-bottom-10"><a [routerLink]="['/support']">Support</a></li>
-                <li class="margin-bottom-10"><a [routerLink]="['/terms']">Terms of Service</a></li>
-                <li class="margin-bottom-10"><a [routerLink]="['/privacy']">Privacy policy</a></li>
-                <li class="margin-bottom-10"><a href="https://github.com/VernissageApp/VernissageServer" target="_blank">Source code</a></li>
-                <li class="margin-bottom-10"><a href="https://api.vernissage.photos/" target="_blank">API documentation</a></li>
+                <li class="margin-bottom-10"><a [routerLink]="['/support']">{{ 'common.labels.support' | translate }}</a></li>
+                <li class="margin-bottom-10"><a [routerLink]="['/terms']">{{ 'components.homeSignout.texts.termsOfService' | translate }}</a></li>
+                <li class="margin-bottom-10"><a [routerLink]="['/privacy']">{{ 'components.homeSignout.texts.privacyPolicy' | translate }}</a></li>
+                <li class="margin-bottom-10"><a href="https://github.com/VernissageApp/VernissageServer" target="_blank">{{ 'components.homeSignout.texts.sourceCode' | translate }}</a></li>
+                <li class="margin-bottom-10"><a href="https://api.vernissage.photos/" target="_blank">{{ 'components.homeSignout.texts.apiDocumentation' | translate }}</a></li>
 
                 @if (mastodonUrl(); as mastodonUrlString) {
-                    <li class="margin-bottom-10"><a [href]="mastodonUrlString" target="_blank">Mastodon</a></li>
+                    <li class="margin-bottom-10"><a [href]="mastodonUrlString" target="_blank">{{ 'components.homeSignout.mastodon' | translate }}</a></li>
                 }
             </ul>
 
             @if (showEditorsChoice() && statuses()?.data?.length) {
                 <div class="text-center">
-                    <h1>Editor's choice across whole Fediverse</h1>
+                    <h1>{{ 'components.homeSignout.texts.editorSChoiceAcrossWholeFediverse' | translate }}</h1>
                 </div>
             }
         </div>

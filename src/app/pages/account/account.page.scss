@@ -30,3 +30,16 @@
         width: 16px;
     }
 }
+
+.language-option {
+    display: flex;
+    align-items: center;
+}
+
+.language-flag {
+    width: 24px;
+    height: 18px;
+    margin-right: 12px;
+    object-fit: cover;
+    border-radius: 2px;
+}

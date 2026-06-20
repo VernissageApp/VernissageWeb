@@ -16,6 +16,7 @@ import { ConfirmationDialog } from 'src/app/dialogs/confirmation-dialog/confirma
 import { MatDialog } from '@angular/material/dialog';
 import { RandomGeneratorService } from 'src/app/services/common/random-generator.service';
 import { ErrorItemDialog } from 'src/app/dialogs/error-item-dialog/error-item.dialog';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-error-items',
@@ -46,6 +47,7 @@ export class ErrorItemsPage extends ResponsiveComponent implements OnInit, OnDes
     private randomGeneratorService = inject(RandomGeneratorService);
     private router = inject(Router);
     private dialog = inject(MatDialog);
+    private translateService = inject(TranslateService);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
@@ -98,7 +100,7 @@ export class ErrorItemsPage extends ResponsiveComponent implements OnInit, OnDes
     protected onDelete(item: ErrorItem): void {
         const dialogRef = this.dialog.open(ConfirmationDialog, {
             width: '500px',
-            data: 'Do you want to delete error?'
+            data: this.translateService.instant('pages.errorItems.confirmations.deleteError')
         });
 
         dialogRef.afterClosed().subscribe(async (result) => {
@@ -106,7 +108,7 @@ export class ErrorItemsPage extends ResponsiveComponent implements OnInit, OnDes
                 try {
                     if (item.id) {
                         await this.errorItemsService.delete(item.id);
-                        this.messageService.showSuccess('Error has been deleted.');
+                        this.messageService.showSuccess(this.translateService.instant('pages.errorItems.messages.deleted'));
         
                         const navigationExtras: NavigationExtras = {
                             queryParams: { t: this.randomGeneratorService.generateString(8) },

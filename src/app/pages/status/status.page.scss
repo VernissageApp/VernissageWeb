@@ -405,6 +405,7 @@
     .comment-avatar {
         display: inline-flex;
         text-decoration: none;
+        flex: 0 0 auto;
     }
 
     ::ng-deep p {
@@ -412,10 +413,34 @@
     }
 
     .comment-actions {
+        flex: 0 0 auto;
+        margin-left: auto;
         min-width: 86px;
 
         .favourited {
             transform: scale(0.6);
+        }
+    }
+
+    .comment-content {
+        flex: 1 1 auto;
+        min-width: 0;
+    }
+
+    .comment-author-name,
+    .comment-user-name {
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+        a,
+        span {
+            display: inline-block;
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            vertical-align: bottom;
         }
     }
 

@@ -5,10 +5,10 @@
                 <div class="width-100">
                     <section class="flex-row flex-space-between flex-align-center margin-bottom-20" [ngClass]="{ 'flex-row': !isHandset(), 'flex-column': isHandset() }">
                         <h1>
-                            <div>Outgoing ActivityPub events</div>
+                            <div>{{ 'pages.activityPubEvents.title' | translate }}</div>
                             @if (!isHandset()) {
                                 <div class="fs-60 text-muted">
-                                    List of events sent by the system via the ActivityPub protocol to other Fediverse instances.
+                                    {{ 'pages.activityPubEvents.subtitle' | translate }}
                                 </div>
                             }
                         </h1>
@@ -22,52 +22,52 @@
                                         <div class="flex-row flex-align-center gap-16">
                                             @if (!isHandset()) {
                                                 <mat-form-field appearance="outline">
-                                                    <mat-label>Action</mat-label>
+                                                    <mat-label>{{ 'pages.activityPubEvents.filters.action.label' | translate }}</mat-label>
                                                     <mat-select [(value)]="type">
-                                                        <mat-option value="">All</mat-option>
-                                                        <mat-option value="create">Create</mat-option>
-                                                        <mat-option value="update">Update</mat-option>
-                                                        <mat-option value="like">Like</mat-option>
-                                                        <mat-option value="unlike">Undo like</mat-option>
-                                                        <mat-option value="announce">Announce</mat-option>
-                                                        <mat-option value="unannounce">Undo announce</mat-option>
-                                                        <mat-option value="pin">Pin status</mat-option>
-                                                        <mat-option value="unpin">Unpin status</mat-option>
+                                                        <mat-option value="">{{ 'pages.activityPubEvents.common.all' | translate }}</mat-option>
+                                                        <mat-option value="create">{{ 'pages.activityPubEvents.action.create' | translate }}</mat-option>
+                                                        <mat-option value="update">{{ 'pages.activityPubEvents.action.update' | translate }}</mat-option>
+                                                        <mat-option value="like">{{ 'pages.activityPubEvents.action.like' | translate }}</mat-option>
+                                                        <mat-option value="unlike">{{ 'pages.activityPubEvents.action.undoLike' | translate }}</mat-option>
+                                                        <mat-option value="announce">{{ 'pages.activityPubEvents.action.announce' | translate }}</mat-option>
+                                                        <mat-option value="unannounce">{{ 'pages.activityPubEvents.action.undoAnnounce' | translate }}</mat-option>
+                                                        <mat-option value="pin">{{ 'pages.activityPubEvents.action.pinStatus' | translate }}</mat-option>
+                                                        <mat-option value="unpin">{{ 'pages.activityPubEvents.action.unpinStatus' | translate }}</mat-option>
                                                     </mat-select>
                                                 </mat-form-field>
                                             }
 
                                             <mat-form-field appearance="outline">
-                                                <mat-label>Result</mat-label>
+                                                <mat-label>{{ 'pages.activityPubEvents.filters.result.label' | translate }}</mat-label>
                                                 <mat-select [(value)]="result">
-                                                    <mat-option value="">All</mat-option>
-                                                    <mat-option value="waiting">Waiting</mat-option>
-                                                    <mat-option value="processing">Processing</mat-option>
-                                                    <mat-option value="finished">Finished</mat-option>
-                                                    <mat-option value="finishedWithErrors">Finished with errors</mat-option>
-                                                    <mat-option value="failed">Failed</mat-option>
+                                                    <mat-option value="">{{ 'pages.activityPubEvents.common.all' | translate }}</mat-option>
+                                                    <mat-option value="waiting">{{ 'pages.activityPubEvents.result.waiting' | translate }}</mat-option>
+                                                    <mat-option value="processing">{{ 'pages.activityPubEvents.result.processing' | translate }}</mat-option>
+                                                    <mat-option value="finished">{{ 'pages.activityPubEvents.result.finished' | translate }}</mat-option>
+                                                    <mat-option value="finishedWithErrors">{{ 'pages.activityPubEvents.result.finishedWithErrors' | translate }}</mat-option>
+                                                    <mat-option value="failed">{{ 'pages.activityPubEvents.result.failed' | translate }}</mat-option>
                                                 </mat-select>
                                             </mat-form-field>
 
                                             @if (!isHandset()) {
                                                 <mat-form-field appearance="outline">
-                                                    <mat-label>Sorting</mat-label>
+                                                    <mat-label>{{ 'pages.activityPubEvents.filters.sorting.label' | translate }}</mat-label>
                                                     <mat-select [(value)]="sortColumn">
-                                                        <mat-option value="startAt">Start date</mat-option>
-                                                        <mat-option value="endAt">End date</mat-option>
-                                                        <mat-option value="createdAt">Created date</mat-option>
-                                                        <mat-option value="updatedAt">Updated date</mat-option>
+                                                        <mat-option value="startAt">{{ 'pages.activityPubEvents.filters.sorting.startDate' | translate }}</mat-option>
+                                                        <mat-option value="endAt">{{ 'pages.activityPubEvents.filters.sorting.endDate' | translate }}</mat-option>
+                                                        <mat-option value="createdAt">{{ 'common.dates.createdDate' | translate }}</mat-option>
+                                                        <mat-option value="updatedAt">{{ 'pages.activityPubEvents.filters.sorting.updatedDate' | translate }}</mat-option>
                                                     </mat-select>
                                                 </mat-form-field>
                                             }
                                         </div>
-                                        <button matButton="outlined">Search</button>
+                                        <button matButton="outlined">{{ 'common.actions.search' | translate }}</button>
                                     </div>
                                     <div class="margin-top-5">
                                         @if (!isHandset()) {
-                                            <mat-radio-group name="sortDirection" [(ngModel)]="sortDirection" aria-label="Sort direction">
-                                                <mat-radio-button value="ascending">Ascending</mat-radio-button>
-                                                <mat-radio-button value="descending">Descending</mat-radio-button>
+                                            <mat-radio-group name="sortDirection" [(ngModel)]="sortDirection" [attr.aria-label]="'pages.activityPubEvents.filters.sortDirection.label' | translate">
+                                                <mat-radio-button value="ascending">{{ 'common.sort.ascending' | translate }}</mat-radio-button>
+                                                <mat-radio-button value="descending">{{ 'common.sort.descending' | translate }}</mat-radio-button>
                                             </mat-radio-group>
                                         }
                                     </div>
@@ -80,32 +80,32 @@
 
                         <!-- Type Column -->
                         <ng-container matColumnDef="type">
-                            <th mat-header-cell *matHeaderCellDef> Action </th>
+                            <th mat-header-cell *matHeaderCellDef>{{ 'pages.activityPubEvents.table.action' | translate }}</th>
                             <td mat-cell *matCellDef="let element">
                                 @switch (element.type) {
                                     @case ('create') {
-                                        <span>Create</span>
+                                        <span>{{ 'pages.activityPubEvents.action.create' | translate }}</span>
                                     }
                                     @case ('update') {
-                                        <span>Update</span>
+                                        <span>{{ 'pages.activityPubEvents.action.update' | translate }}</span>
                                     }
                                     @case ('like') {
-                                        <span>Like</span>
+                                        <span>{{ 'pages.activityPubEvents.action.like' | translate }}</span>
                                     }
                                     @case ('unlike') {
-                                        <span>Undo like</span>
+                                        <span>{{ 'pages.activityPubEvents.action.undoLike' | translate }}</span>
                                     }
                                     @case ('announce') {
-                                        <span>Announce</span>
+                                        <span>{{ 'pages.activityPubEvents.action.announce' | translate }}</span>
                                     }
                                     @case ('unannounce') {
-                                        <span>Undo announce</span>
+                                        <span>{{ 'pages.activityPubEvents.action.undoAnnounce' | translate }}</span>
                                     }
                                     @case ('pin') {
-                                        <span>Pin status</span>
+                                        <span>{{ 'pages.activityPubEvents.action.pinStatus' | translate }}</span>
                                     }
                                     @case ('unpin') {
-                                        <span>Unpin status</span>
+                                        <span>{{ 'pages.activityPubEvents.action.unpinStatus' | translate }}</span>
                                     }
                                 }
                             </td>
@@ -113,29 +113,29 @@
 
                         <!-- Result Column -->
                         <ng-container matColumnDef="result">
-                            <th mat-header-cell *matHeaderCellDef> Result </th>
+                            <th mat-header-cell *matHeaderCellDef>{{ 'pages.activityPubEvents.table.result' | translate }}</th>
                             <td mat-cell *matCellDef="let element">
                                 @switch (element.result) {
                                     @case ('waiting') {
-                                        <span>Waiting</span>
+                                        <span>{{ 'pages.activityPubEvents.result.waiting' | translate }}</span>
                                     }
                                     @case ('processing') {
-                                        <span>Processing</span>
+                                        <span>{{ 'pages.activityPubEvents.result.processing' | translate }}</span>
                                     }
                                     @case ('finished') {
-                                        <span>Finished</span>
+                                        <span>{{ 'pages.activityPubEvents.result.finished' | translate }}</span>
                                     }
                                     @case ('finishedWithErrors') {
-                                        <span>Finished (with errors)</span>
+                                        <span>{{ 'pages.activityPubEvents.result.finishedWithErrorsInParens' | translate }}</span>
                                     }
                                     @case ('failed') {
-                                        <span>Failed</span>
+                                        <span>{{ 'pages.activityPubEvents.result.failed' | translate }}</span>
                                     }
                                 }
 
                                 @if (element.errorMessage) {
                                     <div class="fs-80">
-                                        <a href="javascript:void(0)" (click)="onOpenErrorMessage(element)">Error message</a>
+                                        <a href="javascript:void(0)" (click)="onOpenErrorMessage(element)">{{ 'pages.activityPubEvents.table.errorMessage' | translate }}</a>
                                     </div>
                                 }
                             </td>
@@ -143,7 +143,7 @@
 
                         <!-- User Name Column -->
                         <ng-container matColumnDef="user">
-                            <th mat-header-cell *matHeaderCellDef> User </th>
+                            <th mat-header-cell *matHeaderCellDef>{{ 'pages.activityPubEvents.table.user' | translate }}</th>
                             <td mat-cell *matCellDef="let element">
                                 <div class="user-name-link">
                                     <a [routerLink]="['/@' + element.user.userName ]">
@@ -158,7 +158,7 @@
 
                         <!-- Attempts Column -->
                         <ng-container matColumnDef="attempts">
-                            <th mat-header-cell *matHeaderCellDef> Attempts </th>
+                            <th mat-header-cell *matHeaderCellDef>{{ 'pages.activityPubEvents.table.attempts' | translate }}</th>
                             <td mat-cell *matCellDef="let element">
                                 <span>
                                     {{ element.attempts }}
@@ -168,11 +168,11 @@
 
                         <!-- Created Date Column -->
                         <ng-container matColumnDef="createdAt">
-                            <th mat-header-cell *matHeaderCellDef> Created date </th>
+                            <th mat-header-cell *matHeaderCellDef>{{ 'common.dates.createdDate' | translate }}</th>
                             <td mat-cell *matCellDef="let element">
                                 @if (element.createdAt) {
                                     <span>
-                                        {{ element.createdAt | date: 'short' }}
+                                        {{ element.createdAt | localizedDate: 'short' }}
                                     </span>
                                 }
                             </td>
@@ -180,11 +180,11 @@
 
                         <!-- Start Date Column -->
                         <ng-container matColumnDef="startAt">
-                            <th mat-header-cell *matHeaderCellDef> Start date </th>
+                            <th mat-header-cell *matHeaderCellDef>{{ 'pages.activityPubEvents.table.startDate' | translate }}</th>
                             <td mat-cell *matCellDef="let element">
                                 @if (element.startAt) {
                                     <span>
-                                        {{ element.startAt | date: 'short' }}
+                                        {{ element.startAt | localizedDate: 'short' }}
                                     </span>
                                 }
                             </td>
@@ -192,11 +192,11 @@
 
                         <!-- Start Date Column -->
                         <ng-container matColumnDef="endAt">
-                            <th mat-header-cell *matHeaderCellDef> End date </th>
+                            <th mat-header-cell *matHeaderCellDef>{{ 'pages.activityPubEvents.table.endDate' | translate }}</th>
                             <td mat-cell *matCellDef="let element">
                                 @if (element.endAt) {
                                     <span>
-                                        {{ element.endAt | date: 'short' }}
+                                        {{ element.endAt | localizedDate: 'short' }}
                                     </span>
                                 }
                             </td>
@@ -206,8 +206,8 @@
                         <ng-container matColumnDef="actions">
                             <th mat-header-cell *matHeaderCellDef></th>
                             <td mat-cell *matCellDef="let element" class="text-right">
-                                <a class="margin-right-10" [routerLink]="['/statuses', element.statusId]">Status</a>
-                                <a [routerLink]="['/activity-pub-events', element.id, 'items']">Details</a>
+                                <a class="margin-right-10" [routerLink]="['/statuses', element.statusId]">{{ 'common.labels.status' | translate }}</a>
+                                <a [routerLink]="['/activity-pub-events', element.id, 'items']">{{ 'common.labels.details' | translate }}</a>
                             </td>
                         </ng-container>
 
@@ -220,7 +220,7 @@
                         [pageIndex]="pageIndex()"
                         [pageSize]="10"
                         [pageSizeOptions]="[10, 25, 100]"
-                        aria-label="Select page">
+                        [attr.aria-label]="'pages.activityPubEvents.paginator.selectPage' | translate">
                     </mat-paginator>
                 </div>
             </div>

@@ -36,7 +36,7 @@ jobs:
           npm run lint
       - name: npm run test
         run: |
-          npm test -- --watch=false --browsers=ChromeHeadless
+          npm test -- --watch=false
       - name: npm run build
         run: |
           npm run build

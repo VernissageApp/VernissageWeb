@@ -3,16 +3,16 @@
 
         <!-- Category Name Column -->
         <ng-container matColumnDef="categoryName">
-            <th mat-header-cell *matHeaderCellDef> Category name </th>
+            <th mat-header-cell *matHeaderCellDef> {{ 'components.categoryList.texts.categoryName' | translate }} </th>
             <td mat-cell *matCellDef="let element" class="name">
                 {{ element.name }}
-                <div class="text-muted fs-80">Priority: {{ element.priority }}</div>
+                <div class="text-muted fs-80">{{ 'common.labels.priority' | translate }}: {{ element.priority }}</div>
             </td>
         </ng-container>
 
         <!-- Enabled Column -->
         <ng-container matColumnDef="categoryEnabled">
-            <th mat-header-cell *matHeaderCellDef> Enabled </th>
+            <th mat-header-cell *matHeaderCellDef> {{ 'common.labels.enabled' | translate }} </th>
             <td mat-cell *matCellDef="let element">
                 <mat-slide-toggle name="alwaysShowNSFW" [ngModel]="element.isEnabled" (ngModelChange)="onEnabledChange(element.id, $event)"></mat-slide-toggle>
             </td>
@@ -30,12 +30,12 @@
                         <mat-icon>delete</mat-icon>
                     </button>
                 } @else {
-                    <button class="more-button" matButton="outlined" [matMenuTriggerFor]="dropdownMenuAction" aria-label="More options">
+                    <button class="more-button" matButton="outlined" [matMenuTriggerFor]="dropdownMenuAction" [attr.aria-label]="'common.labels.moreOptions' | translate">
                         <span class="material-symbols-outlined">more_vert</span>
                     </button>
                     <mat-menu #dropdownMenuAction="matMenu" xPosition="before">
-                        <button mat-menu-item (click)="openCategoryDialog(element)">Update</button>
-                        <button mat-menu-item (click)="onDelete(element)">Delete</button>
+                        <button mat-menu-item (click)="openCategoryDialog(element)">{{ 'common.actions.update' | translate }}</button>
+                        <button mat-menu-item (click)="onDelete(element)">{{ 'common.actions.delete' | translate }}</button>
                     </mat-menu>
                 }
             </td>
@@ -50,8 +50,8 @@
         [pageIndex]="pageIndex"
         [pageSize]="10"
         [pageSizeOptions]="[10, 25, 100]"
-        aria-label="Select page">
+        [attr.aria-label]="'common.paginator.selectPage' | translate">
     </mat-paginator>
 
-    <button matButton="filled" (click)="openCategoryDialog(undefined)">New category</button>
+    <button matButton="filled" (click)="openCategoryDialog(undefined)">{{ 'components.categoryList.texts.newCategory' | translate }}</button>
 }

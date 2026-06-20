@@ -1,5 +1,5 @@
 <form name="form" (ngSubmit)="f.form.valid && data.email === email() && onSubmit()" #f="ngForm" novalidate>
-    <div mat-dialog-title>Delete account</div>
+    <div mat-dialog-title>{{ 'dialogs.deleteAccount.texts.deleteAccount' | translate }}</div>
     <div mat-dialog-content>
 
         <small class="text-error text-right">
@@ -8,23 +8,23 @@
 
         <div class="padding-top-5">
             <mat-form-field class="width-100" appearance="outline">
-                <mat-label>Email</mat-label>
-                <input type="text" matInput name="email" [(ngModel)]="email" aria-label="Email" required />
+                <mat-label>{{ 'common.labels.email' | translate }}</mat-label>
+                <input type="text" matInput name="email" [(ngModel)]="email" [attr.aria-label]="'dialogs.deleteAccount.attrs.email' | translate" required />
             </mat-form-field>
         </div>
 
         <div class="margin-bottom-20 fs-90">
             Before proceeding, please read these notes carefully:
             <ul>
-                <li>You will not be able to restore or reactivate your account</li>
-                <li>Your username will remain unavailable</li>
-                <li>Your posts and other data will be permanently removed</li>
-                <li>Content that has been cached by other servers may persist</li>
+                <li>{{ 'dialogs.deleteAccount.texts.youWillNotBeAbleToRestore' | translate }}</li>
+                <li>{{ 'dialogs.deleteAccount.texts.yourUsernameWillRemainUnavailable' | translate }}</li>
+                <li>{{ 'dialogs.deleteAccount.texts.yourPostsAndOtherDataWillBe' | translate }}</li>
+                <li>{{ 'dialogs.deleteAccount.texts.contentThatHasBeenCachedByOther' | translate }}</li>
             </ul>
         </div>
     </div>
     <div mat-dialog-actions>
-        <button matButton="text" type="button" (click)="onNoClick()">Cancel</button>
-        <button matButton="filled" type="submit" cdkFocusInitial>Delete</button>
+        <button matButton="text" type="button" (click)="onNoClick()">{{ 'common.actions.cancel' | translate }}</button>
+        <button matButton="filled" type="submit" cdkFocusInitial>{{ 'common.actions.delete' | translate }}</button>
     </div>
 </form>

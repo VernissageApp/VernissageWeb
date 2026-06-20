@@ -1,7 +1,7 @@
 @for (user of users(); track user.id) {
     <div class="user-wrapper">
         <div class="user-display-name">
-            <a [routerLink]="[ '/@' + user.userName ]" class="user-avatar" [attr.aria-label]="'Open profile @' + user.userName">
+            <a [routerLink]="[ '/@' + user.userName ]" class="user-avatar" [attr.aria-label]="'common.actions.openProfileWithUserName' | translate: { userName: user.userName }">
                 <app-avatar [user]="user" [size]="avatarSize.huge"></app-avatar>
             </a>
     
@@ -25,9 +25,9 @@
                 }
                 
                 <div class="fw-300 fs-90 flex-row flex-wrap">
-                    <div class="user-statuses-tag margin-right-15"><span class="fw-500">{{ user.photosCount }}</span> {{ user.photosCount === 1 ? 'Photo' : 'Photos' }}</div>
-                    <div class="margin-right-15"><span class="fw-500">{{ user.followersCount }}</span> Followers</div>
-                    <div class="user-following-tag "><span class="fw-500">{{ user.followingCount }}</span> Following</div>
+                    <div class="user-statuses-tag margin-right-15"><span class="fw-500">{{ user.photosCount }}</span> {{ 'common.labels.photosLabel' | translate: { count: user.photosCount } }}</div>
+                    <div class="margin-right-15"><span class="fw-500">{{ user.followersCount }}</span> {{ 'common.labels.followers' | translate: { followersCount: user.followersCount } }}</div>
+                    <div class="user-following-tag "><span class="fw-500">{{ user.followingCount }}</span> {{ 'common.labels.following' | translate: { followingCount: user.followingCount } }}</div>
                 </div>
             </div>
         </div>
@@ -45,6 +45,6 @@
 
 @if (showLoadMore()) {
     <div class="flex-row flex-space-around">
-        <button matButton="text" (click)="onLoadMore()">Load more...</button>
+        <button matButton="text" (click)="onLoadMore()">{{ 'common.actions.loadMoreEllipsis' | translate }}</button>
     </div>
 }

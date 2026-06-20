@@ -12,6 +12,7 @@ import { User } from 'src/app/models/user';
 import { LoadingService } from 'src/app/services/common/loading.service';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { SharedBusinessCardsService } from 'src/app/services/http/shared-business-cards.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-shared-card-public',
@@ -56,6 +57,7 @@ export class SharedCardPublicPage extends ResponsiveComponent implements OnInit,
     private messageService = inject(MessagesService);
     private dialog = inject(MatDialog);
     private router = inject(Router);
+    private translateService = inject(TranslateService);
 
     protected isAuthor(message: SharedBusinessCardMessage): boolean {
         return !message.addedByUser;
@@ -160,7 +162,7 @@ export class SharedCardPublicPage extends ResponsiveComponent implements OnInit,
 
                     await this.router.navigate([], navigationExtras);
 
-                    this.messageService.showSuccess('Your personal data has been saved.');
+                    this.messageService.showSuccess(this.translateService.instant('pages.sharedCardPublic.messages.personalDataSaved'));
                 } catch (error) {
                     console.error(error);
                     this.messageService.showServerError(error);

@@ -5,45 +5,45 @@
             <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
                 <mat-card appearance="outlined">
                     <mat-card-header>
-                        <mat-card-title>Log in to Vernissage</mat-card-title>
-                        <mat-card-subtitle>Enter your credentials to sign in to the system</mat-card-subtitle>
+                        <mat-card-title>{{ 'pages.login.form.title' | translate }}</mat-card-title>
+                        <mat-card-subtitle>{{ 'pages.login.form.subtitle' | translate }}</mat-card-subtitle>
                     </mat-card-header>
                     <mat-card-content>
                         <div class="login-content">
                             @if (loginPageMode() === loginMode.UserNameAndPassword) {
                                 <!-- Username. -->
                                 <mat-form-field appearance="outline">
-                                    <mat-label>Username or email</mat-label>
-                                    <input type="text" matInput [errorStateMatcher]="dirtyErrorStateMatcher" name="userNameOrEmail" [(ngModel)]="userNameOrEmail" #userNameOrEmailInput="ngModel" placeholder="Username or email" aria-label="Username or email" required />
+                                    <mat-label>{{ 'common.labels.userNameOrEmail' | translate }}</mat-label>
+                                    <input type="text" matInput [errorStateMatcher]="dirtyErrorStateMatcher" name="userNameOrEmail" [(ngModel)]="userNameOrEmail" #userNameOrEmailInput="ngModel" [placeholder]="'common.labels.userNameOrEmail' | translate" [attr.aria-label]="'common.labels.userNameOrEmail' | translate" required />
 
                                     @if (userNameOrEmailInput.dirty && userNameOrEmailInput.invalid && userNameOrEmailInput.errors?.required) {
-                                        <mat-error>Enter username or email.</mat-error>
+                                        <mat-error>{{ 'pages.login.form.errors.userNameOrEmailRequired' | translate }}</mat-error>
                                     }
                                 </mat-form-field>
 
                                 <!-- Password. -->
                                 <div class="text-right">
-                                    <a routerLink="/forgot-password">Forgot password?</a>
+                                    <a routerLink="/forgot-password">{{ 'common.actions.forgotPassword' | translate }}</a>
                                 </div>
                                 <mat-form-field appearance="outline">
-                                    <mat-label>Password</mat-label>
-                                    <input type="password" matInput [errorStateMatcher]="dirtyErrorStateMatcher" name="password" [(ngModel)]="password" #passwordInput="ngModel" placeholder="Password" aria-label="Password" required />
+                                    <mat-label>{{ 'common.labels.password' | translate }}</mat-label>
+                                    <input type="password" matInput [errorStateMatcher]="dirtyErrorStateMatcher" name="password" [(ngModel)]="password" #passwordInput="ngModel" [placeholder]="'common.labels.password' | translate" [attr.aria-label]="'common.labels.password' | translate" required />
 
                                     @if (passwordInput.dirty && passwordInput.invalid && passwordInput.errors?.required) {
-                                        <mat-error>Enter password.</mat-error>
+                                        <mat-error>{{ 'pages.login.form.errors.passwordRequired' | translate }}</mat-error>
                                     }
                                 </mat-form-field>
                             } @else {
                                 <!-- Token 2FA. -->
                                 <mat-form-field appearance="outline">
-                                    <mat-label>Token</mat-label>
-                                    <input type="text" matInput [errorStateMatcher]="alwaysErrorStateMatcher" inputmode="numeric" name="token" [(ngModel)]="twoFactorToken" #twoFactorTokenInput="ngModel" placeholder="Two factor token" aria-label="Two factor token" required />
+                                    <mat-label>{{ 'common.labels.token' | translate }}</mat-label>
+                                    <input type="text" matInput [errorStateMatcher]="alwaysErrorStateMatcher" inputmode="numeric" name="token" [(ngModel)]="twoFactorToken" #twoFactorTokenInput="ngModel" [placeholder]="'common.labels.twoFactorToken' | translate" [attr.aria-label]="'common.labels.twoFactorToken' | translate" required />
                                     @if (tokenMessage()) {
                                         <mat-error>{{ tokenMessage() }}</mat-error>
                                     }
                                 </mat-form-field>
                                 <mat-checkbox class="margin-bottom-20" name="trustMachine" [disableRipple]="true" [(ngModel)]="trustMachine">
-                                    Trust this machine for the next 30 days.
+                                    {{ 'pages.login.twoFactor.trustMachine' | translate }}
                                 </mat-checkbox>
                             }
                         </div>
@@ -51,9 +51,9 @@
                     <mat-card-actions>
                         <div class="flex-row flex-align-center gap-8 login-actions">
                             @if (loginPageMode() === loginMode.TwoFactorToken) {
-                                <button type="button" matButton="text" (click)="onCancelTwoFactor()" [disabled]="isSubmitting()" aria-label="Cancel">Cancel</button>
+                                <button type="button" matButton="text" (click)="onCancelTwoFactor()" [disabled]="isSubmitting()" [attr.aria-label]="'common.actions.cancel' | translate">{{ 'common.actions.cancel' | translate }}</button>
                             }
-                            <button type="submit" matButton="filled" [disabled]="isSubmitting()" aria-label="Login">Login</button>
+                            <button type="submit" matButton="filled" [disabled]="isSubmitting()" [attr.aria-label]="'common.actions.login' | translate">{{ 'common.actions.login' | translate }}</button>
 
                             @if (isSubmitting()) {
                                 <mat-spinner [diameter]="18"></mat-spinner>
@@ -69,7 +69,7 @@
                         <mat-card-footer>
                             <!-- Register new account. -->
                             <div class="text-center">
-                                <p>You don't have an account yet? <a routerLink="/register">Sign up</a>.</p>
+                                <p>{{ 'pages.login.registration.noAccountPrefix' | translate }} <a routerLink="/register">{{ 'common.actions.signUp' | translate }}</a>{{ 'pages.login.registration.noAccountSuffix' | translate }}</p>
                             </div>
                         </mat-card-footer>
                     }
@@ -79,7 +79,7 @@
             <!-- Sign in via external account. -->
             @if (authClients(); as authClientsArray) {
                 @if (authClientsArray.length > 0) {
-                    <div class="separator margin-top-20 margin-bottom-20">Or via Social Account</div>
+                    <div class="separator margin-top-20 margin-bottom-20">{{ 'pages.login.social.separator' | translate }}</div>
                     <div class="external-sign-in">
                         @for (authClient of authClientsArray; track authClient.id) {
                             <div>

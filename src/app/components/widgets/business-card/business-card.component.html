@@ -1,6 +1,6 @@
 <div class="business-card-container">
     <div class="top" [ngStyle]="{ background: 'linear-gradient(' + color1() + ', ' + color2() + ')' }">
-        <img class="avatar-image" alt="avatar profile" [ngSrc]="avatarUrl()" width="600" height="600" />
+        <img class="avatar-image" [alt]="'components.businessCard.attrs.avatarProfile' | translate" [ngSrc]="avatarUrl()" width="600" height="600" />
         <div class="text-center" [ngStyle]="{ color: color3() }">
             <h1>{{ title() }}</h1>
             <h4>{{ subtitle() }}</h4>
@@ -12,7 +12,7 @@
         @if (website()) {
             <mat-card class="margin-bottom-10 flexi-item" appearance="outlined">
                 <mat-card-content>
-                    <div class="flexi-key"><span class="dashed">WEBSITE</span></div>
+                    <div class="flexi-key"><span class="dashed">{{ 'common.labels.website' | translate | uppercase }}</span></div>
                     <div class="flexi-value">{{ website() }}</div>
                 </mat-card-content>
             </mat-card>
@@ -21,7 +21,7 @@
         @if (telephone()) {
             <mat-card class="margin-bottom-10 flexi-item" appearance="outlined">
                 <mat-card-content>
-                    <div class="flexi-key"><span class="dashed">TELEPHONE</span></div>
+                    <div class="flexi-key"><span class="dashed">{{ 'common.labels.telephone' | translate | uppercase }}</span></div>
                     <div class="flexi-value">{{ telephone() }}</div>
                 </mat-card-content>
             </mat-card>
@@ -30,7 +30,7 @@
         @if (email()) {
             <mat-card class="margin-bottom-10 flexi-item" appearance="outlined">
                 <mat-card-content>
-                    <div class="flexi-key"><span class="dashed">EMAIL</span></div>
+                    <div class="flexi-key"><span class="dashed">{{ 'common.labels.email' | translate | uppercase }}</span></div>
                     <div class="flexi-value">{{ email() }}</div>
                 </mat-card-content>
             </mat-card>
@@ -45,6 +45,6 @@
             </mat-card>
         }
         
-        <button matButton="filled" class="width-100 margin-top-10" type="button" (click)="onImportContact()">Import contact</button>
+        <button matButton="filled" class="width-100 margin-top-10" type="button" (click)="onImportContact()">{{ 'components.businessCard.texts.importContact' | translate }}</button>
     </div>
 </div>

@@ -6,9 +6,9 @@
                     <div class="flex-row flex-align-top flex-space-between margin-bottom-20">
                         <div>
                             <div class="flex-row gap-8">
-                                <h1>Notifications</h1>
+                                <h1>{{ 'pages.notifications.title' | translate }}</h1>
                                 <div class="small-icon-button">
-                                    <button matIconButton (click)="onNotificationsRefresh()" aria-label="Refresh current timeline">
+                                    <button matIconButton (click)="onNotificationsRefresh()" [attr.aria-label]="'pages.notifications.actions.refreshCurrentTimelineAriaLabel' | translate">
                                         <mat-icon>change_circle</mat-icon>
                                     </button>
                                 </div>
@@ -18,7 +18,7 @@
                         @if (showEnableNotificationButton()) {
                             <button matButton="outlined" (click)="openNotificationsSettings()">
                                 <mat-icon>notifications_none</mat-icon>
-                                Settings
+                                {{ 'common.actions.settings' | translate }}
                             </button>
                         }
                     </div>
@@ -36,50 +36,46 @@
                                                         <mat-icon class="fill-symbol">{{ getNotificationIcon(notification) }}</mat-icon>
                                                     </span>
                                                 }
-                                                <a [routerLink]="[ '/@' + notification.byUser?.userName ]" aria-label="Open user profile">
+                                                <a [routerLink]="[ '/@' + notification.byUser?.userName ]" [attr.aria-label]="'pages.notifications.actions.openUserProfileAriaLabel' | translate">
                                                     <app-avatar [user]="notification.byUser" [size]="avatarSize.huge"></app-avatar>
                                                 </a>
                                             </div>
                                             <div class="overflow-ellipsis">
-                                                <span class="text-muted fs-80">{{ notification.createdAt | ago }}</span>
-                                                <div class="overflow-ellipsis fullname flex-row flex-responsive">
-                                                    <div class="overflow-ellipsis">
-                                                        <a [routerLink]="[ '/@' + notification.byUser?.userName ]" class="margin-right-5 fw-600">{{ notification.byUser?.name }}</a>
-                                                    </div>
-                                                    <div class="overflow-ellipsis">
-                                                        <span class="text-muted">{{ getNotificationText(notification) }} </span>
-                                                    </div>
+                                                <div class="overflow-ellipsis fullname">
+                                                    <a [routerLink]="[ '/@' + notification.byUser?.userName ]" class="margin-right-5 fw-600">{{ notification.byUser?.name }}</a>
                                                 </div>
                                                 @if (!isHandsetPortrait()) {
                                                     <div class="fw-400 fs-90 text-muted overflow-ellipsis username">&#64;{{ notification.byUser?.userName }}</div>
                                                 }
+                                                <div class="overflow-ellipsis fs-90 notification-type">{{ getNotificationText(notification) }}</div>
+                                                <div class="text-muted fs-80 created-date">{{ notification.createdAt | ago }}</div>
                                             </div>
                                         </div>
 
                                         @if (notification.mainStatus && getAttachmentUrl(notification.mainStatus)) {
                                             <div class="status">
                                                 <a [routerLink]="['/statuses', notification.mainStatus.id]">
-                                                    <img [src]="getAttachmentUrl(notification.mainStatus)" class="" [alt]="getAttachmentAlt(notification.mainStatus) ?? 'Status image'" />
+                                                    <img [src]="getAttachmentUrl(notification.mainStatus)" class="" [alt]="getAttachmentAlt(notification.mainStatus) ?? ('common.labels.statusImage' | translate)" />
                                                 </a>
                                             </div>
                                         }
                                         @else if (notification.status && getAttachmentUrl(notification.status)) {
                                             <div class="status">
                                                 <a [routerLink]="['/statuses', notification.status.id]">
-                                                    <img [src]="getAttachmentUrl(notification.status)" class="" [alt]="getAttachmentAlt(notification.status) ?? 'Status image'" />
+                                                    <img [src]="getAttachmentUrl(notification.status)" class="" [alt]="getAttachmentAlt(notification.status) ?? ('common.labels.statusImage' | translate)" />
                                                 </a>
                                             </div>
                                         }
 
                                         @if (notification.notificationType === notificationType.AdminReport) {
-                                            <button matButton="text" [routerLink]="['/reports']">Reports</button>
+                                            <button matButton="text" [routerLink]="['/reports']">{{ 'common.labels.reports' | translate }}</button>
                                         }
                                     </div>
                                 }
 
                                 @if(showLoadMore()) {
                                     <div class="flex-row flex-space-around">
-                                        <button matButton="text" (click)="onLoadMore(false)">Load more...</button>
+                                        <button matButton="text" (click)="onLoadMore(false)">{{ 'common.actions.loadMore' | translate }}...</button>
                                     </div>
                                 }
                             </mat-card-content>
@@ -89,7 +85,7 @@
                     <!-- No results found. -->
                     @if (notificationsArray.length === 0) {
                         <div>
-                            No results found.
+                            {{ 'common.labels.noResultsFound' | translate }}
                         </div>
                     }
                 </div>
