@@ -54,7 +54,7 @@
                                 </mat-form-field>
                             </div>
 
-                            <div ngClass="margin-bottom-40">
+                            <div class="margin-bottom-40">
                                 <mat-form-field appearance="outline">
                                     <mat-label>{{ 'pages.articleEdit.form.alternativeAuthor.label' | translate }}</mat-label>
                                     <input type="text" matInput name="alternativeAuthor" #alternativeAuthorInput="ngModel" [(ngModel)]="alternativeAuthor"
@@ -72,7 +72,11 @@
                                 </mat-form-field>
                             </div>
 
-                            <h3 [ngClass]="{ 'padding-top-20': isHandsetPortrait() }">{{ 'pages.articleEdit.visibilities.title' | translate }}</h3>
+                            <div class="margin-bottom-10">
+                                <app-language-select [(value)]="language" [includeAll]="true"></app-language-select>
+                            </div>
+
+                            <h3 [ngClass]="{ 'padding-top-10': isHandsetPortrait() }">{{ 'pages.articleEdit.visibilities.title' | translate }}</h3>
 
                             <div class="padding-bottom-20">
                                 <div>

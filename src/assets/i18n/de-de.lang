@@ -270,6 +270,9 @@
         "start": "Starten"
       }
     },
+    "languageSelect": {
+      "all": "Alle"
+    },
     "domainBlocks": {
       "messages": {
         "doYouWantToDeleteInstanceBlockedDomain": "Möchten Sie die durch die Instanz blockierte Domain löschen?",

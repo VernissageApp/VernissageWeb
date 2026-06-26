@@ -270,6 +270,9 @@
         "start": "Start"
       }
     },
+    "languageSelect": {
+      "all": "Alle"
+    },
     "domainBlocks": {
       "messages": {
         "doYouWantToDeleteInstanceBlockedDomain": "Vil du slette forekomstblokkert domene?",
