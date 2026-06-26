@@ -15,6 +15,7 @@ import { PreferencesService } from 'src/app/services/common/preferences.service'
 import { UserPayload } from 'src/app/models/user-payload';
 import { LanguageService } from 'src/app/services/common/language.service';
 import { TranslateService } from '@ngx-translate/core';
+import { getLanguageFlag, SUPPORTED_HEADER_LANGUAGES } from 'src/app/models/language';
 
 @Component({
     selector: 'app-header',
@@ -37,19 +38,7 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
     protected showSharedBusinessCards = signal(false);
     protected isLightTheme = signal(false);
     protected currentLanguage = signal('en-us');
-    protected readonly languages = [
-        { language: 'en-us', labelKey: 'pages.account.personalInformation.language.english' },
-        { language: 'en-gb', labelKey: 'pages.account.personalInformation.language.englishGb' },
-        { language: 'fi-fi', labelKey: 'pages.account.personalInformation.language.finnish' },
-        { language: 'fr-fr', labelKey: 'pages.account.personalInformation.language.french' },
-        // { language: 'es-es', labelKey: 'pages.account.personalInformation.language.spanish' },
-        { language: 'de-de', labelKey: 'pages.account.personalInformation.language.german' },
-        // { language: 'nb-no', labelKey: 'pages.account.personalInformation.language.norwegian' },
-        { language: 'pl-pl', labelKey: 'pages.account.personalInformation.language.polish' },
-        // { language: 'pt-pt', labelKey: 'pages.account.personalInformation.language.portuguese' },
-        // { language: 'sv-se', labelKey: 'pages.account.personalInformation.language.swedish' },
-        // { language: 'it-it', labelKey: 'pages.account.personalInformation.language.italian' }
-    ];
+    protected readonly languages = SUPPORTED_HEADER_LANGUAGES;
 
     private clearReuseStrategyAfterNavigationEnds = false;
     private userChangeSubscription?: Subscription;
@@ -178,7 +167,7 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
     }
 
     protected getLanguageFlag(language: string): string {
-        return language.split('-')[1] ?? language;
+        return getLanguageFlag(language);
     }
 
     protected onUserMenuClosed(): void {

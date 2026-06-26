@@ -11,6 +11,7 @@ import { ArticlesService } from 'src/app/services/http/articles.service';
 import { Article } from 'src/app/models/article';
 import { HomeCardsService } from 'src/app/services/http/home-cards.service';
 import { HomeCard } from 'src/app/models/home-card';
+import { LanguageService } from 'src/app/services/common/language.service';
 
 @Component({
     selector: 'app-home-signout',
@@ -36,6 +37,7 @@ export class HomeSignoutComponent extends ReusableGalleryPageComponent implement
     private activatedRoute = inject(ActivatedRoute);
     private articlesService = inject(ArticlesService);
     private homeCardsService = inject(HomeCardsService);
+    private languageService = inject(LanguageService);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
@@ -107,8 +109,12 @@ export class HomeSignoutComponent extends ReusableGalleryPageComponent implement
         const articlesPage = 1;
         const articlesSize = 10;
 
-        const internalArticles = await this.articlesService.all(articlesPage, articlesSize, ArticleVisibility.SignOutHome, false);
+        const internalArticles = await this.articlesService.all(articlesPage, articlesSize, ArticleVisibility.SignOutHome, false, this.getArticleLanguage());
         this.articles.set(internalArticles.data);
+    }
+
+    private getArticleLanguage(): string {
+        return this.languageService.getCurrentLanguageLocale().replace('-', '_');
     }
 
     private async loadHomeCards(): Promise<void> {

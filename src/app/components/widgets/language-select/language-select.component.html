@@ -1,0 +1,24 @@
+<mat-form-field appearance="outline" class="width-100">
+    <mat-label>{{ 'common.labels.language' | translate }}</mat-label>
+    <mat-select [(value)]="value" [canSelectNullableOptions]="true">
+        <mat-select-trigger>
+            <span class="language-option">
+                @if (selectedLanguage().locale; as selectedLocale) {
+                    <img class="language-flag" [src]="'assets/flags/' + getLanguageFlag(selectedLocale) + '.svg'" [alt]="selectedLanguage().labelKey | translate" />
+                }
+                <span>{{ selectedLanguage().labelKey | translate }}</span>
+            </span>
+        </mat-select-trigger>
+
+        @for (language of languageOptions(); track language.locale) {
+            <mat-option [value]="language.locale">
+                <span class="language-option">
+                    @if (language.locale; as locale) {
+                        <img class="language-flag" [src]="'assets/flags/' + getLanguageFlag(locale) + '.svg'" [alt]="language.labelKey | translate" />
+                    }
+                    <span>{{ language.labelKey | translate }}</span>
+                </span>
+            </mat-option>
+        }
+    </mat-select>
+</mat-form-field>

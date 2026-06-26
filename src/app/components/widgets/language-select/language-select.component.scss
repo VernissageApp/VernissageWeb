@@ -1,0 +1,12 @@
+.language-option {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.language-flag {
+    width: 20px;
+    height: 14px;
+    object-fit: cover;
+    border-radius: 2px;
+}

@@ -728,6 +728,15 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
 
     protected onReply(status?: Status): void {
         this.replyStatus.set(status);
+
+        if (!status) {
+            return;
+        }
+
+        setTimeout(() => {
+            const commentReply = this.commentReplies().find(commentReply => commentReply.status().id === status.id);
+            commentReply?.focusTextAreaAtEnd();
+        });
     }
 
     protected async onCommentAdded(): Promise<void> {

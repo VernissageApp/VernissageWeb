@@ -270,6 +270,9 @@
         "start": "Starta"
       }
     },
+    "languageSelect": {
+      "all": "Alla"
+    },
     "domainBlocks": {
       "messages": {
         "doYouWantToDeleteInstanceBlockedDomain": "Vill du ta bort instansblockerad domän?",
