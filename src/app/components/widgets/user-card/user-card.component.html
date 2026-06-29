@@ -1,15 +1,15 @@
 @if (user(); as userInternal) {
     <div class="flex-row flex-space-between padding-bottom-10 padding-top-10">
-        <div class="flex-row gap-8">
+        <div class="flex-row flex-align-center gap-8">
             <a [routerLink]="[ '/@' + userInternal.userName ]" class="user-avatar" [attr.aria-label]="'common.actions.openProfileWithUserName' | translate: { userName: userInternal.userName }">
                 <app-avatar [user]="userInternal" [size]="avatarSize.huge"></app-avatar>
             </a>
-            <div>
+            <div class="user-card-content">
                 <div class="user-identity">
                     <div><a [routerLink]="[ '/@' + userInternal.userName ]" class="fw-600 user-display-name">{{ userDisplayService.displayName(userInternal) }}</a></div>
                     <div class="fw-400 fs-90 text-muted user-name">&#64;{{ userInternal.userName }}</div>
                 </div>
-                <div class="fw-300 fs-90">
+                <div class="fw-300 fs-90 user-stats">
                     <span class="margin-right-15"><span class="fw-500">{{ userInternal.photosCount }}</span> {{ 'common.labels.photosLabel' | translate: { count: userInternal.photosCount } }}</span>
                     <span class="margin-right-15"><span class="fw-500">{{ userInternal.followersCount }}</span> {{ 'common.labels.followers' | translate: { followersCount: userInternal.followersCount } }}</span>
                     <span><span class="fw-500">{{ userInternal.followingCount }}</span> {{ 'common.labels.following' | translate: { followingCount: userInternal.followingCount } }}</span>

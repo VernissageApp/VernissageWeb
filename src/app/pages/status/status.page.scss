@@ -496,6 +496,7 @@
 
     .comment-author-name,
     .comment-user-name {
+        line-height: 14px;
         max-width: 100%;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -504,6 +505,7 @@
         a,
         span {
             display: inline-block;
+            line-height: 14px;
             max-width: 100%;
             overflow: hidden;
             text-overflow: ellipsis;

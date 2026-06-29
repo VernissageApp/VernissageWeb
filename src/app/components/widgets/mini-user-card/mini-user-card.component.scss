@@ -23,6 +23,11 @@
     }
 }
 
+.user-info {
+    display: flex;
+    flex-direction: column;
+}
+
 .username {
     margin-top: -5px;
 
