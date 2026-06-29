@@ -1,16 +1,26 @@
 .user-avatar {
     display: inline-flex;
-    margin-top: 6px;
     text-decoration: none;
+}
+
+.user-card-content {
+    min-width: 0;
 }
 
 .user-identity {
     display: flex;
     flex-direction: column;
     min-width: 0;
+    line-height: 14px;
 }
 
 .user-display-name,
 .user-name {
     overflow-wrap: anywhere;
+    line-height: 14px;
+}
+
+.user-stats {
+    line-height: 14px;
+    margin-top: 4px;
 }
