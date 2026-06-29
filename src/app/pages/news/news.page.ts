@@ -11,6 +11,7 @@ import { ArticleVisibility } from 'src/app/models/article-visibility';
 import { SettingsService } from 'src/app/services/http/settings.service';
 import { ForbiddenError } from 'src/app/errors/forbidden-error';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
+import { LanguageService } from 'src/app/services/common/language.service';
 
 @Component({
     selector: 'app-news',
@@ -34,6 +35,7 @@ export class NewsPage extends ResponsiveComponent implements OnInit, OnDestroy {
     private router = inject(Router);
     private settingsService = inject(SettingsService);
     private authorizationService = inject(AuthorizationService);
+    private languageService = inject(LanguageService);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
@@ -62,7 +64,7 @@ export class NewsPage extends ResponsiveComponent implements OnInit, OnDestroy {
             this.pageIndex.set(page);
             const articlesVisibility = isLoggedIn ? ArticleVisibility.SignInNews : ArticleVisibility.SignOutNews;
 
-            const downloadedArticles = await this.articlesService.all(page + 1, size, articlesVisibility, true);
+            const downloadedArticles = await this.articlesService.all(page + 1, size, articlesVisibility, true, this.getArticleLanguage());
             this.articles.set(downloadedArticles);
 
             this.isReady.set(true);
@@ -82,5 +84,9 @@ export class NewsPage extends ResponsiveComponent implements OnInit, OnDestroy {
         };
 
         await this.router.navigate([], navigationExtras);
+    }
+
+    private getArticleLanguage(): string {
+        return this.languageService.getCurrentLanguageLocale().replace('-', '_');
     }
 }

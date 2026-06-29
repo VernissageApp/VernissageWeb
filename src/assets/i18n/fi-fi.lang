@@ -270,6 +270,9 @@
         "start": "Aloita"
       }
     },
+    "languageSelect": {
+      "all": "Kaikki"
+    },
     "domainBlocks": {
       "messages": {
         "doYouWantToDeleteInstanceBlockedDomain": "Haluatko poistaa verkkotunnuksen eston instanssitasolla?",

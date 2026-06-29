@@ -12,6 +12,7 @@
                     cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="3" cdkAutosizeMaxRows="10"
                     [placeholder]="'components.commentReply.attrs.leaveAComment' | translate"
                     #commentInput="ngModel"
+                    #commentTextArea
                     [(ngModel)]="comment"
                     [disabled]="disabled()"
                     [attr.aria-label]="'components.commentReply.attrs.leaveAComment' | translate"

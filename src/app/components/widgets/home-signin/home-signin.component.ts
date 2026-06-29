@@ -13,6 +13,7 @@ import { Article } from 'src/app/models/article';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { FocusTrackerService } from 'src/app/services/common/focus-tracker.service';
 import { RandomGeneratorService } from 'src/app/services/common/random-generator.service';
+import { LanguageService } from 'src/app/services/common/language.service';
 
 @Component({
     selector: 'app-home-signin',
@@ -39,6 +40,7 @@ export class HomeSigninComponent extends ReusableGalleryPageComponent implements
     private messagesService = inject(MessagesService);
     private focusTrackerService = inject(FocusTrackerService);
     private randomGeneratorService = inject(RandomGeneratorService);
+    private languageService = inject(LanguageService);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
@@ -187,8 +189,12 @@ export class HomeSigninComponent extends ReusableGalleryPageComponent implements
         const articlesPage = 1;
         const articlesSize = 10;
 
-        const internalArticles = await this.articlesService.all(articlesPage, articlesSize, ArticleVisibility.SignInHome, false);
+        const internalArticles = await this.articlesService.all(articlesPage, articlesSize, ArticleVisibility.SignInHome, false, this.getArticleLanguage());
         this.articles.set(internalArticles.data);
+    }
+
+    private getArticleLanguage(): string {
+        return this.languageService.getCurrentLanguageLocale().replace('-', '_');
     }
 
     private hasAccessToLocalTimeline(): boolean {

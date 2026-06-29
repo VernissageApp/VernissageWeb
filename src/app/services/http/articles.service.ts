@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { WindowService } from '../common/window.service';
 import { PagedResult } from 'src/app/models/paged-result';
@@ -14,8 +14,18 @@ export class ArticlesService {
     private httpClient = inject(HttpClient);
     private windowService = inject(WindowService);
 
-    public async all(page: number, size: number, visibility: ArticleVisibility, dismissed: boolean): Promise<PagedResult<Article>> {
-        const event$ = this.httpClient.get<PagedResult<Article>>(this.windowService.apiUrl() +  `/api/v1/articles?page=${page}&size=${size}&visibility=${visibility}&dismissed=${dismissed ? 'true' : 'false'}`);
+    public async all(page: number, size: number, visibility: ArticleVisibility, dismissed: boolean, language?: string | null): Promise<PagedResult<Article>> {
+        let params = new HttpParams()
+            .set('page', page.toString())
+            .set('size', size.toString())
+            .set('visibility', visibility)
+            .set('dismissed', dismissed ? 'true' : 'false');
+
+        if (language) {
+            params = params.set('language', language);
+        }
+
+        const event$ = this.httpClient.get<PagedResult<Article>>(this.windowService.apiUrl() +  '/api/v1/articles', { params });
         return await firstValueFrom(event$);
     }
 

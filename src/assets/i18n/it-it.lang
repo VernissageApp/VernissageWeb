@@ -270,6 +270,9 @@
         "start": "Inizio"
       }
     },
+    "languageSelect": {
+      "all": "Tutti"
+    },
     "domainBlocks": {
       "messages": {
         "doYouWantToDeleteInstanceBlockedDomain": "Vuoi eliminare il blocco al dominio dell'istanza?",

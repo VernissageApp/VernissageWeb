@@ -270,6 +270,9 @@
         "start": "Start"
       }
     },
+    "languageSelect": {
+      "all": "All"
+    },
     "domainBlocks": {
       "messages": {
         "doYouWantToDeleteInstanceBlockedDomain": "Do you want to delete instance blocked domain?",
