@@ -104,6 +104,7 @@ import { LanguageSelectComponent } from './widgets/language-select/language-sele
         UploadPhotoComponent,
         UsersCardComponent,
         UserCardComponent,
+        UserPopoverComponent,
         UserSelectorComponent,
         FollowButtonsSectionComponent,
         GalleryComponent,

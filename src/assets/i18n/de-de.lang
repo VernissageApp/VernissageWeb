@@ -2108,6 +2108,9 @@
         "openUserProfileAriaLabel": "Benutzerprofil öffnen",
         "refreshCurrentTimelineAriaLabel": "Aktuelle Timeline aktualisieren"
       },
+      "labels": {
+        "latest": "zuletzt"
+      },
       "title": "Benachrichtigungen",
       "types": {
         "adminReport": "wurde gemeldet",

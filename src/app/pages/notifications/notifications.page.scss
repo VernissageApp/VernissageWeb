@@ -9,6 +9,7 @@
 
     .notification-wrapper {
         display: flex;
+        align-items: center;
         gap: 10px;
         padding-bottom: 10px;
         padding-top: 10px;
@@ -59,6 +60,85 @@
                 line-height: 16px;
             }
         }
+
+        &.notification-group-wrapper {
+            .notification-group-icon {
+                flex: 0 0 54px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                .icon {
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+            }
+
+            .notification-group-content {
+                min-width: 0;
+                flex: 1 1 auto;
+                display: flex;
+                flex-direction: column;
+                gap: 0;
+            }
+
+            .notification-group-avatars {
+                display: flex;
+                align-items: center;
+                min-width: 0;
+                overflow: visible;
+                padding: 2px 0 2px 2px;
+
+                .notification-group-avatar {
+                    position: relative;
+                    flex: 0 0 auto;
+                    display: block;
+                    margin-left: -5px;
+
+                    &:first-child {
+                        margin-left: 0;
+                    }
+
+                    &:hover {
+                        z-index: 105;
+                    }
+
+                    a {
+                        display: block;
+                    }
+
+                    .notification-group-avatar-popover {
+                        min-width: 390px;
+                    }
+                }
+
+                img {
+                    display: block;
+                    width: 26px;
+                    height: 26px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                    box-shadow: 0 0 0 2px var(--mat-sys-surface);
+                }
+
+                .hidden-notifications-count {
+                    flex: 0 0 auto;
+                    margin-left: 7px;
+                    font-size: 16px;
+                    font-weight: 600;
+                    line-height: 26px;
+                }
+            }
+
+            .notification-type {
+                line-height: 16px;
+            }
+
+            .created-date {
+                line-height: 16px;
+            }
+        }
     }
 
     .notifications-card {
@@ -72,7 +152,7 @@
         }
 
         mat-icon {
-            transform: scale(0.7);
+            transform: scale(0.84);
         }
     }
 }

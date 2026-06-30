@@ -2108,6 +2108,9 @@
         "openUserProfileAriaLabel": "Avaa käyttäjäprofiili",
         "refreshCurrentTimelineAriaLabel": "Päivitä nykyinen aikajana"
       },
+      "labels": {
+        "latest": "viimeisin"
+      },
       "title": "Ilmoitukset",
       "types": {
         "adminReport": "on raportoitu",

@@ -2108,6 +2108,9 @@
         "openUserProfileAriaLabel": "Öppna användarprofilen",
         "refreshCurrentTimelineAriaLabel": "Uppdatera aktuell tidslinje"
       },
+      "labels": {
+        "latest": "senast"
+      },
       "title": "Aviseringar",
       "types": {
         "adminReport": "har rapporterats",
