@@ -2086,6 +2086,9 @@
         "openUserProfileAriaLabel": "Apri il profilo utente",
         "refreshCurrentTimelineAriaLabel": "Aggiorna la sequenza temporale corrente"
       },
+      "labels": {
+        "latest": "ultimo"
+      },
       "title": "Notifiche",
       "types": {
         "adminReport": "è stato segnalato",

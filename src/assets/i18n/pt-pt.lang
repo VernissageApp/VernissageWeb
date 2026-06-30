@@ -2086,6 +2086,9 @@
         "openUserProfileAriaLabel": "Abrir perfil do utilizador",
         "refreshCurrentTimelineAriaLabel": "Atualizar linha do tempo atual"
       },
+      "labels": {
+        "latest": "mais recente"
+      },
       "title": "Notificações",
       "types": {
         "adminReport": "foi denunciado",

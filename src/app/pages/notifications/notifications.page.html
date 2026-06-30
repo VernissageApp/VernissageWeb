@@ -27,50 +27,120 @@
                     @if(notificationsArray.length > 0) {
                         <mat-card class="notifications-card" appearance="outlined">
                             <mat-card-content>
-                                @for (notification of notificationsArray; track notification.id) {
-                                    <div class="notification-wrapper">
-                                        <div class="notification-display-name">
-                                            <div class="user">
-                                                @if (!isHandsetPortrait()) {
-                                                    <span class="text-muted icon" [ngClass]="getNotificationIconClass(notification)">
-                                                        <mat-icon class="fill-symbol">{{ getNotificationIcon(notification) }}</mat-icon>
-                                                    </span>
-                                                }
-                                                <a [routerLink]="[ '/@' + notification.byUser?.userName ]" [attr.aria-label]="'pages.notifications.actions.openUserProfileAriaLabel' | translate">
-                                                    <app-avatar [user]="notification.byUser" [size]="avatarSize.huge"></app-avatar>
-                                                </a>
-                                            </div>
-                                            <div class="overflow-ellipsis">
-                                                <div class="overflow-ellipsis fullname">
-                                                    <a [routerLink]="[ '/@' + notification.byUser?.userName ]" class="margin-right-5 fw-600">{{ notification.byUser?.name }}</a>
+                                @for (item of notificationItems(); track item.id) {
+                                    @switch (item.kind) {
+                                        @case ('notification') {
+                                            <div class="notification-wrapper">
+                                                <div class="notification-display-name">
+                                                    <div class="user">
+                                                        @if (!isHandsetPortrait()) {
+                                                            <span class="text-muted icon" [ngClass]="getNotificationIconClass(item.notification)">
+                                                                <mat-icon class="fill-symbol">{{ getNotificationIcon(item.notification) }}</mat-icon>
+                                                            </span>
+                                                        }
+                                                        <a [routerLink]="[ '/@' + item.notification.byUser?.userName ]" [attr.aria-label]="'pages.notifications.actions.openUserProfileAriaLabel' | translate">
+                                                            <app-avatar [user]="item.notification.byUser" [size]="avatarSize.huge"></app-avatar>
+                                                        </a>
+                                                    </div>
+                                                    <div class="overflow-ellipsis">
+                                                        <div class="overflow-ellipsis fullname">
+                                                            <a [routerLink]="[ '/@' + item.notification.byUser?.userName ]" class="margin-right-5 fw-600">{{ item.notification.byUser?.name }}</a>
+                                                        </div>
+                                                        @if (!isHandsetPortrait()) {
+                                                            <div class="fw-400 fs-90 text-muted overflow-ellipsis username">&#64;{{ item.notification.byUser?.userName }}</div>
+                                                        }
+                                                        <div class="overflow-ellipsis fs-90 notification-type">{{ getNotificationText(item.notification) }}</div>
+                                                        <div class="text-muted fs-80 created-date">{{ item.notification.createdAt | ago }}</div>
+                                                    </div>
                                                 </div>
-                                                @if (!isHandsetPortrait()) {
-                                                    <div class="fw-400 fs-90 text-muted overflow-ellipsis username">&#64;{{ notification.byUser?.userName }}</div>
+
+                                                @if (item.notification.mainStatus && getAttachmentUrl(item.notification.mainStatus)) {
+                                                    <div class="status">
+                                                        <a [routerLink]="['/statuses', item.notification.mainStatus.id]">
+                                                            <img [src]="getAttachmentUrl(item.notification.mainStatus)" class="" [alt]="getAttachmentAlt(item.notification.mainStatus) ?? ('common.labels.statusImage' | translate)" />
+                                                        </a>
+                                                    </div>
                                                 }
-                                                <div class="overflow-ellipsis fs-90 notification-type">{{ getNotificationText(notification) }}</div>
-                                                <div class="text-muted fs-80 created-date">{{ notification.createdAt | ago }}</div>
-                                            </div>
-                                        </div>
+                                                @else if (item.notification.status && getAttachmentUrl(item.notification.status)) {
+                                                    <div class="status">
+                                                        <a [routerLink]="['/statuses', item.notification.status.id]">
+                                                            <img [src]="getAttachmentUrl(item.notification.status)" class="" [alt]="getAttachmentAlt(item.notification.status) ?? ('common.labels.statusImage' | translate)" />
+                                                        </a>
+                                                    </div>
+                                                }
 
-                                        @if (notification.mainStatus && getAttachmentUrl(notification.mainStatus)) {
-                                            <div class="status">
-                                                <a [routerLink]="['/statuses', notification.mainStatus.id]">
-                                                    <img [src]="getAttachmentUrl(notification.mainStatus)" class="" [alt]="getAttachmentAlt(notification.mainStatus) ?? ('common.labels.statusImage' | translate)" />
-                                                </a>
+                                                @if (item.notification.notificationType === notificationType.AdminReport) {
+                                                    <button matButton="text" [routerLink]="['/reports']">{{ 'common.labels.reports' | translate }}</button>
+                                                }
                                             </div>
                                         }
-                                        @else if (notification.status && getAttachmentUrl(notification.status)) {
-                                            <div class="status">
-                                                <a [routerLink]="['/statuses', notification.status.id]">
-                                                    <img [src]="getAttachmentUrl(notification.status)" class="" [alt]="getAttachmentAlt(notification.status) ?? ('common.labels.statusImage' | translate)" />
-                                                </a>
-                                            </div>
-                                        }
+                                        @case ('group') {
+                                            <div class="notification-wrapper notification-group-wrapper">
+                                                @if (!isHandsetPortrait()) {
+                                                    <div class="notification-group-icon">
+                                                        <span class="text-muted icon" [ngClass]="getNotificationIconClass(item.representative)">
+                                                            <mat-icon class="fill-symbol">{{ getNotificationIcon(item.representative) }}</mat-icon>
+                                                        </span>
+                                                    </div>
+                                                }
 
-                                        @if (notification.notificationType === notificationType.AdminReport) {
-                                            <button matButton="text" [routerLink]="['/reports']">{{ 'common.labels.reports' | translate }}</button>
+                                                <div class="notification-group-content">
+                                                    <div class="notification-group-avatars">
+                                                        @for (groupedNotification of item.visibleNotifications; track $index) {
+                                                            @if (groupedNotification.byUser; as groupedNotificationUser) {
+                                                                <span class="notification-group-avatar" (mouseenter)="avatarMouseenter.next({ user: groupedNotificationUser, anchorKey: item.id + ':' + $index })" (mouseleave)="avatarMouseleave.next()">
+                                                                    <a [routerLink]="[ '/@' + groupedNotificationUser.userName ]" [attr.aria-label]="'pages.notifications.actions.openUserProfileAriaLabel' | translate">
+                                                                        <img
+                                                                            [src]="groupedNotificationUser.avatarUrl ?? 'assets/avatar.svg'"
+                                                                            [alt]="groupedNotificationUser.name ?? ('components.avatar.attrs.avatar' | translate)" />
+                                                                    </a>
+
+                                                                    @if (isUserPopoverVisible(groupedNotificationUser, item.id + ':' + $index)) {
+                                                                        <app-popover [visible]="true">
+                                                                            <div
+                                                                                class="notification-group-avatar-popover"
+                                                                                tabindex="0"
+                                                                                (mouseenter)="avatarMouseenter.next({ user: groupedNotificationUser, anchorKey: item.id + ':' + $index })"
+                                                                                (mouseleave)="avatarMouseleave.next()"
+                                                                                (click)="$event.preventDefault(); $event.stopPropagation()"
+                                                                                (keydown.enter)="$event.preventDefault(); $event.stopPropagation()"
+                                                                                (keydown.space)="$event.preventDefault(); $event.stopPropagation()">
+                                                                                <app-user-popover [user]="groupedNotificationUser" [relationship]="popoverRelationship()"></app-user-popover>
+                                                                            </div>
+                                                                        </app-popover>
+                                                                    }
+                                                                </span>
+                                                            }
+                                                            @else {
+                                                                <span class="notification-group-avatar">
+                                                                    <img
+                                                                        src="assets/avatar.svg"
+                                                                        [alt]="'components.avatar.attrs.avatar' | translate" />
+                                                                </span>
+                                                            }
+                                                        }
+
+                                                        @if (item.hiddenNotificationsCount > 0) {
+                                                            <span class="text-muted hidden-notifications-count">+{{ item.hiddenNotificationsCount }}</span>
+                                                        }
+                                                    </div>
+
+                                                    <div class="overflow-ellipsis fs-90 notification-type">{{ getNotificationText(item.representative) }}</div>
+                                                    @if (item.latestCreatedAt) {
+                                                        <div class="text-muted fs-80 created-date">{{ 'pages.notifications.labels.latest' | translate }} {{ item.latestCreatedAt | ago }}</div>
+                                                    }
+                                                </div>
+
+                                                @if (item.linkedStatus && getAttachmentUrl(item.linkedStatus)) {
+                                                    <div class="status">
+                                                        <a [routerLink]="['/statuses', item.linkedStatus.id]">
+                                                            <img [src]="getAttachmentUrl(item.linkedStatus)" class="" [alt]="getAttachmentAlt(item.linkedStatus) ?? ('common.labels.statusImage' | translate)" />
+                                                        </a>
+                                                    </div>
+                                                }
+                                            </div>
                                         }
-                                    </div>
+                                    }
                                 }
 
                                 @if(showLoadMore()) {

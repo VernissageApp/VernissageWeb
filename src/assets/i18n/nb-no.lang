@@ -2086,6 +2086,9 @@
         "openUserProfileAriaLabel": "Åpne brukerprofil",
         "refreshCurrentTimelineAriaLabel": "Oppdater gjeldende tidslinje"
       },
+      "labels": {
+        "latest": "siste"
+      },
       "title": "Varsler",
       "types": {
         "adminReport": "har blitt rapportert",

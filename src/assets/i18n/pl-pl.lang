@@ -2086,6 +2086,9 @@
         "openUserProfileAriaLabel": "Otwórz profil użytkownika",
         "refreshCurrentTimelineAriaLabel": "Odśwież bieżącą oś czasu"
       },
+      "labels": {
+        "latest": "ostatnio"
+      },
       "title": "Powiadomienia",
       "types": {
         "adminReport": "został(a) zgłoszony(a)",
