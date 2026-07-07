@@ -13,9 +13,8 @@ import { UserDisplayService } from 'src/app/services/common/user-display.service
 import { SettingsService } from 'src/app/services/http/settings.service';
 import { PreferencesService } from 'src/app/services/common/preferences.service';
 import { UserPayload } from 'src/app/models/user-payload';
-import { LanguageService } from 'src/app/services/common/language.service';
+import { getLanguageFlag, LanguageService, SUPPORTED_HEADER_LANGUAGES } from 'src/app/services/common/language.service';
 import { TranslateService } from '@ngx-translate/core';
-import { getLanguageFlag, SUPPORTED_HEADER_LANGUAGES } from 'src/app/models/language';
 
 @Component({
     selector: 'app-header',
