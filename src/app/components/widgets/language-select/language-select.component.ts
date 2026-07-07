@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, input, model } from '@angular/core';
-import { getLanguageFlag, Language, SUPPORTED_LANGUAGES } from 'src/app/models/language';
+import type { Language } from 'src/app/models/language';
+import { getLanguageFlag, SUPPORTED_LANGUAGES } from 'src/app/services/common/language.service';
 
 interface LanguageSelectOption {
     locale: string | null;
