@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, effect, inject, input, model, OnInit, output, signal, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, ElementRef, inject, input, model, OnInit, output, signal, viewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Status } from 'src/app/models/status';
 import { StatusRequest } from 'src/app/models/status-request';
@@ -38,6 +38,7 @@ export class CommentReplyComponent implements OnInit {
     });
 
     private commentForm = viewChild<NgForm>('commentForm');
+    private commentTextArea = viewChild<ElementRef<HTMLTextAreaElement>>('commentTextArea');
 
     private statusesService = inject(StatusesService);
     private instanceService = inject(InstanceService);
@@ -52,6 +53,17 @@ export class CommentReplyComponent implements OnInit {
     ngOnInit(): void {
         this.maxStatusLength.set(this.instanceService.instance?.configuration?.statuses?.maxCharacters ?? 500);
         this.fillUserName(this.status());
+    }
+
+    public focusTextAreaAtEnd(): void {
+        const textAreaElement = this.commentTextArea()?.nativeElement;
+        if (!textAreaElement) {
+            return;
+        }
+
+        const cursorPosition = textAreaElement.value.length;
+        textAreaElement.focus();
+        textAreaElement.setSelectionRange(cursorPosition, cursorPosition);
     }
 
     protected async onSubmitComment(): Promise<void> {

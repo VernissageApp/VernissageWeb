@@ -59,19 +59,6 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
     protected user = model<User>(new User());
     protected isReady = signal(false);
     protected isSupporterFlagEnabled = model(false);
-    protected readonly languages = [
-        { locale: 'en_US', labelKey: 'pages.account.personalInformation.language.english' },
-        { locale: 'en_GB', labelKey: 'pages.account.personalInformation.language.englishGb' },
-        { locale: 'fi_FI', labelKey: 'pages.account.personalInformation.language.finnish' },
-        { locale: 'fr_FR', labelKey: 'pages.account.personalInformation.language.french' },
-        // { locale: 'es_ES', labelKey: 'pages.account.personalInformation.language.spanish' },
-        { locale: 'de_DE', labelKey: 'pages.account.personalInformation.language.german' },
-        // { locale: 'nb_NO', labelKey: 'pages.account.personalInformation.language.norwegian' },
-        { locale: 'pl_PL', labelKey: 'pages.account.personalInformation.language.polish' },
-        // { locale: 'pt_PT', labelKey: 'pages.account.personalInformation.language.portuguese' },
-        // { locale: 'sv_SE', labelKey: 'pages.account.personalInformation.language.swedish' },
-        // { locale: 'it_IT', labelKey: 'pages.account.personalInformation.language.italian' }
-    ];
 
     protected aliasDisplayedColumns = signal<string[]>(['alias', 'actions']);
     protected archivesDisplayedColumns = signal<string[]>([]);
@@ -214,19 +201,6 @@ export class AccountPage extends ResponsiveComponent implements OnInit {
 
     protected onLocaleChange(locale: string | null): void {
         this.user.update(user => Object.assign(new User(), user, { locale: locale ?? undefined }));
-    }
-
-    protected selectedLanguage(): { locale: string; labelKey: string } {
-        const normalizedUserLocale = this.normalizeLocale(this.user()?.locale);
-        return this.languages.find(language => this.normalizeLocale(language.locale) === normalizedUserLocale) ?? this.languages[0];
-    }
-
-    protected getLocaleFlag(locale: string): string {
-        return this.normalizeLocale(locale).split('-')[1] ?? locale;
-    }
-
-    private normalizeLocale(locale: string | null | undefined): string {
-        return locale?.toLowerCase().replace('_', '-') ?? '';
     }
 
     protected async onAvatarFormSubmit(): Promise<void> {

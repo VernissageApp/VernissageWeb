@@ -9,6 +9,7 @@ export class Article {
     public bodyHtml?: string;
     public color?: string;
     public alternativeAuthor?: string;
+    public language?: string | null;
     public user?: User;
     public mainArticleFileInfo?: ArticleFileInfo;
     public createdAt?: Date;

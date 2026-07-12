@@ -47,6 +47,7 @@ import { StatusTextAutocompleteComponent } from './widgets/status-text-autocompl
 import { TagComponent } from './widgets/tag/tag.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { PipesModule } from '../pipes/pipes.module';
+import { LanguageSelectComponent } from './widgets/language-select/language-select.component';
 
 @NgModule({
     declarations: [
@@ -86,6 +87,7 @@ import { PipesModule } from '../pipes/pipes.module';
         HomeCardsComponent,
         PopoverComponent,
         StatusTextAutocompleteComponent,
+        LanguageSelectComponent,
         TagComponent
     ],
     exports: [
@@ -102,6 +104,7 @@ import { PipesModule } from '../pipes/pipes.module';
         UploadPhotoComponent,
         UsersCardComponent,
         UserCardComponent,
+        UserPopoverComponent,
         UserSelectorComponent,
         FollowButtonsSectionComponent,
         GalleryComponent,
@@ -129,6 +132,7 @@ import { PipesModule } from '../pipes/pipes.module';
         HomeCardsComponent,
         PopoverComponent,
         StatusTextAutocompleteComponent,
+        LanguageSelectComponent,
         TagComponent,
         DirectivesModule
     ],

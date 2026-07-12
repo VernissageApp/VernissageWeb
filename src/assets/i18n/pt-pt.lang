@@ -270,6 +270,9 @@
         "start": "Início"
       }
     },
+    "languageSelect": {
+      "all": "Todos"
+    },
     "domainBlocks": {
       "messages": {
         "doYouWantToDeleteInstanceBlockedDomain": "Deseja eliminar o domínio bloqueado da instância?",
@@ -2082,6 +2085,9 @@
       "actions": {
         "openUserProfileAriaLabel": "Abrir perfil do utilizador",
         "refreshCurrentTimelineAriaLabel": "Atualizar linha do tempo atual"
+      },
+      "labels": {
+        "latest": "mais recente"
       },
       "title": "Notificações",
       "types": {

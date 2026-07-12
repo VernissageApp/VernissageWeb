@@ -270,6 +270,9 @@
         "start": "Start"
       }
     },
+    "languageSelect": {
+      "all": "Alle"
+    },
     "domainBlocks": {
       "messages": {
         "doYouWantToDeleteInstanceBlockedDomain": "Vil du slette forekomstblokkert domene?",
@@ -2082,6 +2085,9 @@
       "actions": {
         "openUserProfileAriaLabel": "Åpne brukerprofil",
         "refreshCurrentTimelineAriaLabel": "Oppdater gjeldende tidslinje"
+      },
+      "labels": {
+        "latest": "siste"
       },
       "title": "Varsler",
       "types": {

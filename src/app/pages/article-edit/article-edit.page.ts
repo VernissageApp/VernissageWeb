@@ -28,6 +28,7 @@ export class ArticleEditPage extends ResponsiveComponent implements OnInit, OnDe
     protected mainArticleFileInfoId = model<string | undefined>(undefined);
     protected articleFileInfos = signal<ArticleFileInfo[]>([]);
     protected alternativeAuthor = model('');
+    protected language = model<string | null>(null);
     protected showInNewsSignIn = model(false);
     protected showInNewsSignOut = model(false);
     protected showInHomeSignIn = model(false);
@@ -64,6 +65,7 @@ export class ArticleEditPage extends ResponsiveComponent implements OnInit, OnDe
                     this.color.set(article.color ?? '');
                     this.mainArticleFileInfoId.set(article.mainArticleFileInfo?.id);
                     this.alternativeAuthor.set(article.alternativeAuthor ?? '');
+                    this.language.set(article.language ?? null);
                     this.articleFileInfos.set(article.articleFileInfos ?? []);
 
                     for(const visibility of article.visibilities ?? []) {
@@ -108,6 +110,7 @@ export class ArticleEditPage extends ResponsiveComponent implements OnInit, OnDe
             article.title = this.title();
             article.body = this.body();
             article.color = this.color();
+            article.language = this.language();
             article.visibilities = [];
 
             if (this.alternativeAuthor()) {

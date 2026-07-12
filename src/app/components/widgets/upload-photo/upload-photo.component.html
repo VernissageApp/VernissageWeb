@@ -47,7 +47,8 @@
             #altTextInput="ngModel"
             [(ngModel)]="photo().description"
             [attr.aria-label]="'components.uploadPhoto.attrs.altText' | translate"
-        appMaxLength="2000"></textarea>
+            appMaxLength="2000">
+        </textarea>
 
         @if (altTextInput.invalid && altTextInput.errors?.appMaxLength) {
             <mat-error>{{ 'components.uploadPhoto.texts.tooLongAltText' | translate }}</mat-error>
