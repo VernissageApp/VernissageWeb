@@ -53,6 +53,7 @@ export class NotificationsPage extends ResponsiveComponent implements OnInit, On
     private routeParamsSubscription?: Subscription;
     private routeNavigationStartSubscription?: Subscription;
     private popoverSubscriptions = new Subscription();
+    private readonly maxVisibleGroupedNotifications = 10;
 
     private notificationsService = inject(NotificationsService);
     private loadingService = inject(LoadingService);
@@ -365,8 +366,8 @@ export class NotificationsPage extends ResponsiveComponent implements OnInit, On
             id: `group:${notifications.map(notification => this.getNotificationUniquenessKey(notification)).join('|')}`,
             notifications,
             representative,
-            visibleNotifications: notifications.slice(0, 7),
-            hiddenNotificationsCount: Math.max(0, notifications.length - 7),
+            visibleNotifications: notifications.slice(0, this.maxVisibleGroupedNotifications),
+            hiddenNotificationsCount: Math.max(0, notifications.length - this.maxVisibleGroupedNotifications),
             latestCreatedAt: this.getLatestCreatedAt(notifications),
             linkedStatus: this.getLinkedStatus(representative)
         };
