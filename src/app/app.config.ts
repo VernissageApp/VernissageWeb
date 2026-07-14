@@ -1,5 +1,5 @@
 import { isPlatformBrowser } from '@angular/common';
-import { HTTP_INTERCEPTORS, provideHttpClient, withFetch, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptors, withInterceptorsFromDi } from '@angular/common/http';
 import {
     ApplicationConfig,
     ErrorHandler,
@@ -32,7 +32,7 @@ import { BrowserTranslateLoader } from './common/browser-translate-loader';
 import { CustomReuseStrategy } from './common/custom-reuse-strategy';
 import { LocalizedTitleStrategy } from './common/localized-title-strategy';
 import { GlobalErrorHandler } from './handlers/global-error-handler';
-import { APIInterceptor } from './interceptors/api.interceptor';
+import { apiInterceptor } from './interceptors/api.interceptor';
 import { routes } from './pages/app.routes';
 import { AuthorizationService } from './services/authorization/authorization.service';
 import { CustomScriptsService } from './services/common/custom-scripts.service';
@@ -88,7 +88,6 @@ export const appConfig: ApplicationConfig = {
         provideAppInitializer(() => {
             inject(MatIconRegistry).setDefaultFontSetClass('material-symbols-outlined');
         }),
-        { provide: HTTP_INTERCEPTORS, useClass: APIInterceptor, multi: true },
         {
             provide: PersistenceService,
             useFactory: (platformId: object) => isPlatformBrowser(platformId)
@@ -111,7 +110,8 @@ export const appConfig: ApplicationConfig = {
                 ErrorParserService,
             ],
         },
-        provideHttpClient(withFetch(), withInterceptorsFromDi()),
+        // JwtModule registers its server-side JwtInterceptor through HTTP_INTERCEPTORS.
+        provideHttpClient(withInterceptors([apiInterceptor]), withInterceptorsFromDi()),
         provideClientHydration(withEventReplay(), withNoIncrementalHydration()),
         // The animations are required now only by ng-gallery library.
         provideAnimations(),

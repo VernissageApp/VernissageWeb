@@ -520,9 +520,8 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
             uploadPhoto.uploadProgress.set(0);
             uploadPhoto.uploadSubscription = this.attachmentsService.uploadAttachmentWithProgress(formData).subscribe({
                 next: (event) => {
-                    // Upload progress is working only when we delete withFetch() from HttpClient configuration.
-                    // However, it's strongly recommended to enable fetch for applications that use Server-Side
-                    // Rendering for better performance and compatibility (https://angular.dev/api/common/http/provideHttpClient).
+                    // The default Fetch backend does not emit upload progress events. The progress is set to 100%
+                    // after receiving the response below.
                     if (event.type === HttpEventType.UploadProgress) {
                         const total = event.total ?? fileToUpload?.size ?? 0;
                         if (total > 0) {
