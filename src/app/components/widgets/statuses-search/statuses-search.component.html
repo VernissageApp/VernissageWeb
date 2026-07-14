@@ -1,6 +1,6 @@
 <div animate.enter="fade-in">
     <!-- Image -->
-    <a [routerLink]="['/statuses', status().id]" [ariaLabel]="'Status added by: ' + mainStatus().user?.userName">
+    <a [routerLink]="['/statuses', status().id]" [ariaLabel]="'Status added by: ' + $safeNavigationMigration(mainStatus().user?.userName)">
         @if (mainStatus().sensitive && !alwaysShowNSFW) {
             <app-blurhash-image [horizontal]="false" [avatarVisible]="false" [status]="status()"></app-blurhash-image>
         } @else {

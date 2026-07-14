@@ -45,7 +45,7 @@ import { HomeCardsComponent } from './widgets/home-cards/home-cards.component';
 import { PopoverComponent } from './widgets/popover/popover.component';
 import { StatusTextAutocompleteComponent } from './widgets/status-text-autocomplete/status-text-autocomplete.component';
 import { TagComponent } from './widgets/tag/tag.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { PipesModule } from '../pipes/pipes.module';
 import { LanguageSelectComponent } from './widgets/language-select/language-select.component';
 
@@ -145,7 +145,7 @@ import { LanguageSelectComponent } from './widgets/language-select/language-sele
         ValidationsModule,
         NgOptimizedImage,
         DirectivesModule,
-        TranslateModule,
+        TranslatePipe,
         PipesModule
     ],
     providers: [

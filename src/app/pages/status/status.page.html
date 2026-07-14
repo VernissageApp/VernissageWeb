@@ -41,9 +41,9 @@
                                         <canvas class="blurhash show-or-hide" [class.is-visible]="!showSensitiveImage()" [class.is-hidden]="showSensitiveImage()" #canvas [width]="imageWidth()" [height]="imageHeight()"></canvas>
                                     }
 
-                                    <img class="link show-fade" [class.is-visible]="showSensitiveImage()" [src]="imagesInternally[0].data?.src" (click)="openInFullScreen()" (keydown.enter)="openInFullScreen()" tabindex="0" (load)="onImageLoaded()" [alt]="altStatus() ?? ('common.labels.statusImage' | translate)" />
+                                    <img class="link show-fade" [class.is-visible]="showSensitiveImage()" [src]="$safeNavigationMigration(imagesInternally[0].data?.src)" (click)="openInFullScreen()" (keydown.enter)="openInFullScreen()" tabindex="0" (load)="onImageLoaded()" [alt]="altStatus() ?? ('common.labels.statusImage' | translate)" />
                                 } @else {
-                                    <img class="link show-fade" [class.is-visible]="imageIsLoaded()" [src]="imagesInternally[0].data?.src" (click)="openInFullScreen()" (keydown.enter)="openInFullScreen()" tabindex="0" (load)="onImageLoaded()" [alt]="altStatus() ?? ('common.labels.statusImage' | translate)" />
+                                    <img class="link show-fade" [class.is-visible]="imageIsLoaded()" [src]="$safeNavigationMigration(imagesInternally[0].data?.src)" (click)="openInFullScreen()" (keydown.enter)="openInFullScreen()" tabindex="0" (load)="onImageLoaded()" [alt]="altStatus() ?? ('common.labels.statusImage' | translate)" />
                                 }
                             </div>
                         }
@@ -445,12 +445,12 @@
                                     @for (comment of comments(); track comment.status.id) {
                                         <div class="padding-top-10 comments">
                                             <div class="flex-row gap-8" [ngClass]="{ 'replies': !comment.showDivider, 'padding-top-15': comment.showDivider }">
-                                                <a [routerLink]="[ '/@' + comment.status.user?.userName ]" class="comment-avatar" [attr.aria-label]="'pages.status.actions.openProfileAriaLabel' | translate:{ userName: comment.status.user?.userName }">
+                                                <a [routerLink]="[ '/@' + $safeNavigationMigration(comment.status.user?.userName) ]" class="comment-avatar" [attr.aria-label]="'pages.status.actions.openProfileAriaLabel' | translate:{ userName: $safeNavigationMigration(comment.status.user?.userName) }">
                                                     <app-avatar [user]="comment.status.user" [size]="avatarSize.medium"></app-avatar>
                                                 </a>
                                                 <div class="comment-content">
                                                     <div class="comment-author-name">
-                                                        <a [routerLink]="[ '/@' + comment.status.user?.userName ]" class="margin-right-5 fw-600">{{ comment.status.user?.name }}</a>
+                                                        <a [routerLink]="[ '/@' + $safeNavigationMigration(comment.status.user?.userName) ]" class="margin-right-5 fw-600">{{ comment.status.user?.name }}</a>
                                                     </div>
                                                     <div class="comment-user-name">
                                                         <span class="fw-400 fs-90 text-muted">&#64;{{ comment.status.user?.userName }}</span>
