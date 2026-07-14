@@ -12,14 +12,24 @@ import { User } from 'src/app/models/user';
 import { LoadingService } from 'src/app/services/common/loading.service';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { SharedBusinessCardsService } from 'src/app/services/http/shared-business-cards.service';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { BusinessCardComponent } from '../../components/widgets/business-card/business-card.component';
+import { NgClass } from '@angular/common';
+import { MatDivider } from '@angular/material/list';
+import { AvatarComponent } from '../../components/widgets/avatar/avatar.component';
+import { MatButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { FormsModule } from '@angular/forms';
+import { MatFormField, MatSuffix } from '@angular/material/form-field';
+import { InputActivityDirective } from '../../directives/input-activity.directive';
+import { MatInput } from '@angular/material/input';
 
 @Component({
     selector: 'app-shared-card-public',
     templateUrl: './shared-card-public.page.html',
     styleUrls: ['./shared-card-public.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [BusinessCardComponent, NgClass, MatDivider, AvatarComponent, MatButton, MatIcon, FormsModule, MatFormField, InputActivityDirective, MatInput, MatSuffix, TranslatePipe]
 })
 export class SharedCardPublicPage extends ResponsiveComponent implements OnInit, OnDestroy {
     protected avatarSize = AvatarSize;

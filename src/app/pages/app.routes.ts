@@ -1,5 +1,4 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes } from '@angular/router';
 import { ConnectionLostPage } from 'src/app/pages/errors/connection-lost/connection-lost.page';
 import { UnexpectedErrorPage } from 'src/app/pages/errors/unexpected-error/unexpected-error.page';
 import { ProfilePage } from 'src/app/pages/profile/profile.page';
@@ -51,7 +50,7 @@ import { StatusEventItemsPage } from './status-event-items/status-event-items.pa
 import { ActivityPubEventsPage } from './activity-pub-events/activity-pub-events.page';
 import { ActivityPubEventItemsPage } from './activity-pub-event-items/activity-pub-event-items.page';
 
-const routes: Routes = [
+export const routes: Routes = [
     { path: 'login', component: LoginPage, canActivate: [ loggedOutGuard ], title: 'common.pageTitles.login' },
     { path: 'forgot-password', component: ForgotPasswordPage, canActivate: [ loggedOutGuard ], title: 'common.pageTitles.forgotPassword' },
     { path: 'login-callback', component: LoginCallbackPage, canActivate: [ loggedOutGuard ] },
@@ -113,9 +112,3 @@ const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
     { path: '**', component: PageNotFoundPage }
 ];
-
-@NgModule({
-    imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled', enableViewTransitions: true })],
-    exports: [RouterModule]
-})
-export class PagesRoutingModule { }

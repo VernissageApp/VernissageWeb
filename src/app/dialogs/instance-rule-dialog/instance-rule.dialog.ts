@@ -1,16 +1,23 @@
 import { ChangeDetectionStrategy, Component, inject, model, OnInit } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
 import { Rule } from 'src/app/models/rule';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { RulesService } from 'src/app/services/http/rules.service';
+import { FormsModule } from '@angular/forms';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { InputActivityDirective } from '../../directives/input-activity.directive';
+import { MatInput } from '@angular/material/input';
+import { MaxLengthValidatorDirective } from '../../validators/directives/max-length-validator.directive';
+import { MatButton } from '@angular/material/button';
 
 @Component({
     selector: 'app-instance-rule-dialog',
     templateUrl: 'instance-rule.dialog.html',
     styleUrls: ['instance-rule.dialog.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [FormsModule, MatDialogTitle, CdkScrollable, MatDialogContent, MatFormField, MatLabel, InputActivityDirective, MatInput, MatError, MaxLengthValidatorDirective, MatDialogActions, MatButton, TranslatePipe]
 })
 export class InstanceRuleDialog implements OnInit {
     protected order = model(0);

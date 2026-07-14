@@ -1,9 +1,17 @@
 import { ChangeDetectionStrategy, Component, ElementRef, inject, input, model, OnDestroy, signal, viewChild, viewChildren } from '@angular/core';
-import { ControlContainer, NgForm } from '@angular/forms';
+import { ControlContainer, NgForm, FormsModule } from '@angular/forms';
 import { AvatarSize } from '../avatar/avatar-size';
 import { Hashtag } from 'src/app/models/hashtag';
 import { User } from 'src/app/models/user';
 import { SearchService } from 'src/app/services/http/search.service';
+import { MatFormField, MatLabel, MatHint, MatError } from '@angular/material/form-field';
+import { InputActivityDirective } from '../../../directives/input-activity.directive';
+import { MatInput } from '@angular/material/input';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { MaxLengthValidatorDirective } from '../../../validators/directives/max-length-validator.directive';
+import { NgClass } from '@angular/common';
+import { AvatarComponent } from '../avatar/avatar.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 type StatusAutocompleteType = 'hashtags' | 'users';
 
@@ -28,7 +36,7 @@ interface StatusAutocompleteSuggestion {
     styleUrls: ['./status-text-autocomplete.component.scss'],
     viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [MatFormField, MatLabel, InputActivityDirective, MatInput, CdkTextareaAutosize, FormsModule, MaxLengthValidatorDirective, MatHint, MatError, NgClass, AvatarComponent, TranslatePipe]
 })
 export class StatusTextAutocompleteComponent implements OnDestroy {
     public name = input.required<string>();

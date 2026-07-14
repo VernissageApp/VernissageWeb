@@ -1,13 +1,20 @@
 import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { PersistenceService } from 'src/app/services/persistance/persistance.service';
+import { MatIcon } from '@angular/material/icon';
+import { MatProgressBar } from '@angular/material/progress-bar';
+import { MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, MatExpansionPanelContent } from '@angular/material/expansion';
+import { MatFormField } from '@angular/material/form-field';
+import { InputActivityDirective } from '../../../directives/input-activity.directive';
+import { MatInput } from '@angular/material/input';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-unexpected-error',
     templateUrl: './unexpected-error.page.html',
     styleUrls: ['./unexpected-error.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [MatIcon, RouterLink, MatProgressBar, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, MatExpansionPanelContent, MatFormField, InputActivityDirective, MatInput, TranslatePipe]
 })
 export class UnexpectedErrorPage implements OnInit, OnDestroy {
     protected value = signal(100);

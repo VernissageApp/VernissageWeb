@@ -13,9 +13,7 @@ import { FocusTrackerService } from '../services/common/focus-tracker.service';
         input[type=url],
         textarea,
         [contenteditable="true"]
-    `,
-    standalone: false
-})
+    ` })
 export class InputActivityDirective {
     private focusTrackerService = inject(FocusTrackerService);
 

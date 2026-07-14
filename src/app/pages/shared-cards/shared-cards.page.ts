@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { PageEvent } from '@angular/material/paginator';
-import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { PageEvent, MatPaginator } from '@angular/material/paginator';
+import { ActivatedRoute, NavigationExtras, Router, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { ConfirmationDialog } from 'src/app/dialogs/confirmation-dialog/confirmation.dialog';
@@ -13,15 +13,22 @@ import { MessagesService } from 'src/app/services/common/messages.service';
 import { RandomGeneratorService } from 'src/app/services/common/random-generator.service';
 import { BusinessCardsService } from 'src/app/services/http/business-cards.service';
 import { SharedBusinessCardsService } from 'src/app/services/http/shared-business-cards.service';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { NgClass } from '@angular/common';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
+import { FormsModule } from '@angular/forms';
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
+import { LocalizedDatePipe } from '../../pipes/localized-date.pipe';
 
 @Component({
     selector: 'app-shared-cards',
     templateUrl: './shared-cards.page.html',
     styleUrls: ['./shared-cards.page.scss'],
-
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [NgClass, MatButton, RouterLink, MatIcon, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatSlideToggle, FormsModule, MatIconButton, MatMenuTrigger, MatMenu, MatMenuItem, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator, TranslatePipe, LocalizedDatePipe]
 })
 export class SharedCardsPage extends ResponsiveComponent implements OnInit, OnDestroy {
     protected isReady = signal(false);

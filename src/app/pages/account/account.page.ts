@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject, model, OnInit, signal } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 import { ChangeEmailDialog } from 'src/app/dialogs/change-email-dialog/change-email.dialog';
@@ -32,7 +32,7 @@ import { FileSaverService } from 'ngx-filesaver';
 import { FollowingImportsService } from 'src/app/services/http/following-imports.service';
 import { PagedResult } from 'src/app/models/paged-result';
 import { FollowingImport } from 'src/app/models/following-import';
-import { PageEvent } from '@angular/material/paginator';
+import { PageEvent, MatPaginator } from '@angular/material/paginator';
 import { FollowingImportStatus } from 'src/app/models/following-import-status';
 import { FollowingImportAccountsDialog } from 'src/app/dialogs/following-import-accounts-dialog/following-import-accounts.dialog';
 import { FileSizeService } from 'src/app/services/common/file-size.service';
@@ -42,14 +42,32 @@ import { UserBlockedDomainDialog } from 'src/app/dialogs/user-blocked-domain-dia
 import { UserBlockedDomainDialogEntity } from 'src/app/dialogs/user-blocked-domain-dialog/user-blocked-domain-dialog-entity';
 import { MoveAccountDialog } from 'src/app/dialogs/move-account-dialog/move-account.dialog';
 import { RestoreAccountDialog } from 'src/app/dialogs/restore-account-dialog/restore-account.dialog';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { NgClass } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatCardActions, MatCardSubtitle } from '@angular/material/card';
+import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
+import { InputActivityDirective } from '../../directives/input-activity.directive';
+import { MatInput } from '@angular/material/input';
+import { MaxLengthValidatorDirective } from '../../validators/directives/max-length-validator.directive';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { LanguageSelectComponent } from '../../components/widgets/language-select/language-select.component';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatDivider } from '@angular/material/list';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
+import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { MatChipSet, MatChip } from '@angular/material/chips';
+import { MatIcon } from '@angular/material/icon';
+import { LocalizedDatePipe } from '../../pipes/localized-date.pipe';
 
 @Component({
     selector: 'app-account',
     templateUrl: './account.page.html',
     styleUrls: ['./account.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [NgClass, FormsModule, MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatFormField, MatLabel, InputActivityDirective, MatInput, MaxLengthValidatorDirective, MatError, CdkTextareaAutosize, LanguageSelectComponent, MatCheckbox, MatDivider, MatButton, MatSuffix, MatCardActions, MatCardSubtitle, MatProgressSpinner, MatSlideToggle, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatChipSet, MatChip, MatIcon, RouterLink, MatPaginator, MatIconButton, TranslatePipe, LocalizedDatePipe]
 })
 export class AccountPage extends ResponsiveComponent implements OnInit {
     protected readonly archiveStatus = ArchiveStatus;

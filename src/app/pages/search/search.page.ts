@@ -9,14 +9,25 @@ import { LoadingService } from 'src/app/services/common/loading.service';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { Hashtag } from 'src/app/models/hashtag';
 import { Status } from 'src/app/models/status';
-import { MatTabChangeEvent } from '@angular/material/tabs';
+import { MatTabChangeEvent, MatTabGroup, MatTab } from '@angular/material/tabs';
+import { NgClass } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { MatFormField, MatSuffix, MatHint } from '@angular/material/form-field';
+import { InputActivityDirective } from '../../directives/input-activity.directive';
+import { MatInput } from '@angular/material/input';
+import { MatButton } from '@angular/material/button';
+import { UsersCardComponent } from '../../components/widgets/users-card/users-card.component';
+import { HashtagsSearchComponent } from '../../components/widgets/hashtags-search/hashtags-search.component';
+import { StatusesSearchComponent } from '../../components/widgets/statuses-search/statuses-search.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-search',
     templateUrl: './search.page.html',
     styleUrls: ['./search.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [NgClass, FormsModule, MatCard, MatCardContent, MatFormField, InputActivityDirective, MatInput, MatButton, MatSuffix, MatHint, MatTabGroup, MatTab, UsersCardComponent, HashtagsSearchComponent, StatusesSearchComponent, TranslatePipe]
 })
 export class SearchPage extends ResponsiveComponent implements AfterViewInit, OnInit, OnDestroy {
     private routeParamsSubscription?: Subscription;

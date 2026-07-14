@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, HostListener, signal, ChangeDetectionStrategy, inject } from '@angular/core';
 import { TimelineService } from 'src/app/services/http/timeline.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { LoadingService } from 'src/app/services/common/loading.service';
 import { ContextTimeline } from 'src/app/models/context-timeline';
@@ -12,13 +12,18 @@ import { Article } from 'src/app/models/article';
 import { HomeCardsService } from 'src/app/services/http/home-cards.service';
 import { HomeCard } from 'src/app/models/home-card';
 import { LanguageService } from 'src/app/services/common/language.service';
+import { NgClass } from '@angular/common';
+import { ArticleInlineComponent } from '../article-inline/article-inline.component';
+import { MatCard, MatCardHeader, MatCardTitle, MatCardContent } from '@angular/material/card';
+import { GalleryComponent } from '../gallery/gallery.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-home-signout',
     templateUrl: './home-signout.component.html',
     styleUrls: ['./home-signout.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [NgClass, ArticleInlineComponent, MatCard, MatCardHeader, MatCardTitle, MatCardContent, RouterLink, GalleryComponent, TranslatePipe]
 })
 export class HomeSignoutComponent extends ReusableGalleryPageComponent implements OnInit, OnDestroy {
     protected isReady = signal(false);

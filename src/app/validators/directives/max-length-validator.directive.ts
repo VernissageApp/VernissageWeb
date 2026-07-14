@@ -7,8 +7,7 @@ import { NG_VALIDATORS, Validator, FormControl, ValidationErrors } from '@angula
             provide: NG_VALIDATORS,
             useExisting: MaxLengthValidatorDirective,
             multi: true
-        }],
-    standalone: false
+        }]
 })
 
 export class MaxLengthValidatorDirective implements Validator {

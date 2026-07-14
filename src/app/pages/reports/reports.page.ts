@@ -8,8 +8,8 @@ import { AuthorizationService } from 'src/app/services/authorization/authorizati
 import { ReportsService } from 'src/app/services/http/reports.service';
 import { Role } from 'src/app/models/role';
 import { PagedResult } from 'src/app/models/paged-result';
-import { PageEvent } from '@angular/material/paginator';
-import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { PageEvent, MatPaginator } from '@angular/material/paginator';
+import { ActivatedRoute, NavigationExtras, Router, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ReportDetailsDialog } from 'src/app/dialogs/report-details-dialog/report-details.dialog';
 import { MatDialog } from '@angular/material/dialog';
@@ -18,14 +18,24 @@ import { StatusesService } from 'src/app/services/http/statuses.service';
 import { ContentWarningDialog } from 'src/app/dialogs/content-warning-dialog/content-warning.dialog';
 import { RandomGeneratorService } from 'src/app/services/common/random-generator.service';
 import { ConfirmationDialog } from 'src/app/dialogs/confirmation-dialog/confirmation.dialog';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { NgClass } from '@angular/common';
+import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { MatChipSet, MatChipOption } from '@angular/material/chips';
+import { AvatarComponent } from '../../components/widgets/avatar/avatar.component';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { FormsModule } from '@angular/forms';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
+import { MatIcon } from '@angular/material/icon';
+import { LocalizedDatePipe } from '../../pipes/localized-date.pipe';
 
 @Component({
     selector: 'app-reports',
     templateUrl: './reports.page.html',
     styleUrls: ['./reports.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [NgClass, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatChipSet, MatChipOption, RouterLink, AvatarComponent, MatCheckbox, FormsModule, MatButton, MatIconButton, MatMenuTrigger, MatIcon, MatMenu, MatMenuItem, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator, TranslatePipe, LocalizedDatePipe]
 })
 export class ReportsPage extends ResponsiveComponent implements OnInit, OnDestroy {
     protected readonly avatarSize = AvatarSize;

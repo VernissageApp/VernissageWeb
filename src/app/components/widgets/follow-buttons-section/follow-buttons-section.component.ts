@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, effect, inject, input, OnDestroy, OnInit, output, signal } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { MatButtonToggleChange } from '@angular/material/button-toggle';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { MatButtonToggleChange, MatButtonToggleGroup, MatButtonToggle } from '@angular/material/button-toggle';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { MatDialog } from '@angular/material/dialog';
 import { MuteAccountDialog } from 'src/app/dialogs/mute-account-dialog/mute-account.dialog';
@@ -24,13 +24,17 @@ import { UserBlockedDomainDialogEntity } from 'src/app/dialogs/user-blocked-doma
 import { UnfollowAccountDialog } from 'src/app/dialogs/unfollow-account-dialog/unfollow-account.dialog';
 import { UserBlockedUserDialog } from 'src/app/dialogs/user-blocked-user-dialog/user-blocked-domain.dialog';
 import { UserPayload } from 'src/app/models/user-payload';
+import { MatButton } from '@angular/material/button';
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
+import { MatIcon } from '@angular/material/icon';
+import { MatDivider } from '@angular/material/list';
 
 @Component({
     selector: 'app-follow-buttons-section',
     templateUrl: './follow-buttons-section.component.html',
     styleUrls: ['./follow-buttons-section.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [MatButton, MatMenuTrigger, MatIcon, MatMenu, MatMenuItem, MatDivider, MatButtonToggleGroup, MatButtonToggle, TranslatePipe]
 })
 export class FollowButtonsSectionComponent implements OnInit, OnDestroy {
     public user = input.required<User>();

@@ -1,17 +1,21 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
 import { LinkableResult } from 'src/app/models/linkable-result';
 import { Relationship } from 'src/app/models/relationship';
 import { User } from 'src/app/models/user';
 import { StatusesService } from 'src/app/services/http/statuses.service';
 import { UsersDialogContext, UsersListType } from './users-dialog-context';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { UsersCardComponent } from '../../components/widgets/users-card/users-card.component';
+import { MatButton } from '@angular/material/button';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-users-dialog',
     templateUrl: 'users.dialog.html',
     styleUrls: ['./users.dialog.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, UsersCardComponent, MatDialogActions, MatButton, TranslatePipe]
 })
 export class UsersDialog implements OnInit {
     protected users = signal<LinkableResult<User> | undefined>(undefined);

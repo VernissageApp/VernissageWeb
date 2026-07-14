@@ -3,13 +3,20 @@ import { ResponsiveComponent } from 'src/app/common/responsive';
 import { PreferencesService } from 'src/app/services/common/preferences.service';
 import { RouteReuseStrategy } from '@angular/router';
 import { CustomReuseStrategy } from 'src/app/common/custom-reuse-strategy';
+import { NgClass } from '@angular/common';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { MatRadioGroup, MatRadioButton } from '@angular/material/radio';
+import { FormsModule } from '@angular/forms';
+import { MatDivider } from '@angular/material/list';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-preferences',
     templateUrl: './preferences.page.html',
     styleUrls: ['./preferences.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [NgClass, MatCard, MatCardContent, MatRadioGroup, FormsModule, MatRadioButton, MatDivider, MatSlideToggle, TranslatePipe]
 })
 export class PreferencesPage extends ResponsiveComponent implements OnInit {
     protected isReady = signal(false);

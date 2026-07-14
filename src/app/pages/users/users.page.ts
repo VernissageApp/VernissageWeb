@@ -6,8 +6,8 @@ import { ResponsiveComponent } from 'src/app/common/responsive';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 import { Role } from 'src/app/models/role';
 import { PagedResult } from 'src/app/models/paged-result';
-import { PageEvent } from '@angular/material/paginator';
-import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { PageEvent, MatPaginator } from '@angular/material/paginator';
+import { ActivatedRoute, NavigationExtras, Router, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { UsersService } from 'src/app/services/http/users.service';
@@ -16,14 +16,31 @@ import { AvatarSize } from 'src/app/components/widgets/avatar/avatar-size';
 import { UserRolesDialog } from 'src/app/dialogs/user-roles-dialog/user-roles.dialog';
 import { RandomGeneratorService } from 'src/app/services/common/random-generator.service';
 import { ConfirmationDialog } from 'src/app/dialogs/confirmation-dialog/confirmation.dialog';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { NgClass } from '@angular/common';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { FormsModule } from '@angular/forms';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { InputActivityDirective } from '../../directives/input-activity.directive';
+import { MatInput } from '@angular/material/input';
+import { MatSelect, MatOption } from '@angular/material/select';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatRadioGroup, MatRadioButton } from '@angular/material/radio';
+import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { AvatarComponent } from '../../components/widgets/avatar/avatar.component';
+import { MatChipSet, MatChipOption } from '@angular/material/chips';
+import { MatIcon } from '@angular/material/icon';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
+import { LocalizedDatePipe } from '../../pipes/localized-date.pipe';
 
 @Component({
     selector: 'app-users',
     templateUrl: './users.page.html',
     styleUrls: ['./users.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [NgClass, MatCard, MatCardContent, FormsModule, MatFormField, InputActivityDirective, MatInput, MatLabel, MatSelect, MatOption, MatButton, MatCheckbox, MatRadioGroup, MatRadioButton, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, RouterLink, AvatarComponent, MatChipSet, MatChipOption, MatIcon, MatTooltip, MatIconButton, MatMenuTrigger, MatMenu, MatMenuItem, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator, TranslatePipe, LocalizedDatePipe]
 })
 export class UsersPage extends ResponsiveComponent implements OnInit, OnDestroy {
     protected readonly avatarSize = AvatarSize

@@ -10,14 +10,26 @@ import { FileSizeService } from 'src/app/services/common/file-size.service';
 import { LoadingService } from 'src/app/services/common/loading.service';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { ArticlesService } from 'src/app/services/http/articles.service';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { NgClass } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { MatFormField, MatLabel, MatError, MatHint } from '@angular/material/form-field';
+import { InputActivityDirective } from '../../directives/input-activity.directive';
+import { MatInput } from '@angular/material/input';
+import { MaxLengthValidatorDirective } from '../../validators/directives/max-length-validator.directive';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { LanguageSelectComponent } from '../../components/widgets/language-select/language-select.component';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
     selector: 'app-article-edit',
     templateUrl: './article-edit.page.html',
     styleUrls: ['./article-edit.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [NgClass, FormsModule, MatCard, MatCardContent, MatFormField, MatLabel, InputActivityDirective, MatInput, MaxLengthValidatorDirective, MatError, CdkTextareaAutosize, MatHint, LanguageSelectComponent, MatCheckbox, MatButton, MatIcon, MatCardActions, TranslatePipe]
 })
 export class ArticleEditPage extends ResponsiveComponent implements OnInit, OnDestroy {
     protected isReady = signal(false);

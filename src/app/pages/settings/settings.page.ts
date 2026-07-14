@@ -8,13 +8,23 @@ import { LoadingService } from 'src/app/services/common/loading.service';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { User } from 'src/app/models/user';
 import { UsersService } from 'src/app/services/http/users.service';
+import { NgClass } from '@angular/common';
+import { MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, MatExpansionPanelDescription } from '@angular/material/expansion';
+import { MatIcon } from '@angular/material/icon';
+import { GeneralSettingsComponent } from '../../components/widgets/general-settings/general-settings.component';
+import { InstanceRulesComponent } from '../../components/widgets/instance-rules/instance-rules.component';
+import { DomainBlocksComponent } from '../../components/widgets/domain-blocks/domain-blocks.component';
+import { CategoryListComponent } from '../../components/widgets/category-list/category-list.component';
+import { LicenseListComponent } from '../../components/widgets/license-list/license-list.component';
+import { HomeCardsComponent } from '../../components/widgets/home-cards/home-cards.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-settings',
     templateUrl: './settings.page.html',
     styleUrls: ['./settings.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [NgClass, MatAccordion, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, MatExpansionPanelDescription, MatIcon, GeneralSettingsComponent, InstanceRulesComponent, DomainBlocksComponent, CategoryListComponent, LicenseListComponent, HomeCardsComponent, TranslatePipe]
 })
 export class SettingsPage extends ResponsiveComponent implements OnInit {
     protected isReady = signal(false);

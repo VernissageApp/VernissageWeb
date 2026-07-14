@@ -37,10 +37,7 @@ const getObserverBucket = (rootMargin: string): ObserverBucket => {
     return bucket;
 };
 
-@Directive({
-    selector: '[appViewportObserver]',
-    standalone: false
-})
+@Directive({ selector: '[appViewportObserver]' })
 export class ViewportObserverDirective implements AfterViewInit, OnDestroy {
     public rootMargin = input('0px');
     public leaveDelayMs = input(0);
