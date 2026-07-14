@@ -6,7 +6,6 @@ import { MAT_TOOLTIP_DEFAULT_OPTIONS, MatTooltipDefaultOptions } from '@angular/
 import { GlobalErrorHandler } from 'src/app/handlers/global-error-handler';
 import { InstanceService } from 'src/app/services/http/instance.service';
 import { appInitialization } from './app-initialization';
-import { HammerModule } from "@angular/platform-browser";
 import { provideAnimations } from '@angular/platform-browser/animations';
 
 import { RouteReuseStrategy, TitleStrategy } from '@angular/router';
@@ -27,7 +26,7 @@ import { RandomGeneratorService } from './services/common/random-generator.servi
 import { CustomScriptsService } from './services/common/custom-scripts.service';
 import { CustomStylesService } from './services/common/custom-styles.service';
 import { ErrorParserService } from './services/common/error-parser.service';
-import { TranslateCompiler, TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { provideTranslateCompiler, provideTranslateLoader, provideTranslateService } from '@ngx-translate/core';
 import { LanguageService } from './services/common/language.service';
 import { LocalizedTitleStrategy } from './common/localized-title-strategy';
 import { BrowserTranslateLoader } from './common/browser-translate-loader';
@@ -48,19 +47,7 @@ export const customTooltipDefaults: MatTooltipDefaultOptions = {
     bootstrap: [AppComponent],
     imports: [
         BrowserModule,
-        HammerModule,
         PagesModule,
-        TranslateModule.forRoot({
-            fallbackLang: 'en-us',
-            compiler: {
-                provide: TranslateCompiler,
-                useClass: TranslateMessageFormatCompiler
-            },
-            loader: {
-                provide: TranslateLoader,
-                useClass: BrowserTranslateLoader,
-            }
-        }),
         ServiceWorkerModule.register('service-worker.js', {
             enabled: !isDevMode(),
             // Register the ServiceWorker as soon as the application is stable
@@ -73,6 +60,11 @@ export const customTooltipDefaults: MatTooltipDefaultOptions = {
         { provide: TitleStrategy, useClass: LocalizedTitleStrategy },
         { provide: MAT_CHECKBOX_DEFAULT_OPTIONS, useValue: { clickAction: 'check' } as MatCheckboxDefaultOptions },
         { provide: MAT_TOOLTIP_DEFAULT_OPTIONS, useValue: customTooltipDefaults },
+        provideTranslateService({
+            fallbackLang: 'en-us',
+            compiler: provideTranslateCompiler(TranslateMessageFormatCompiler),
+            loader: provideTranslateLoader(BrowserTranslateLoader),
+        }),
         provideAppInitializer(() => {
             const initializerFn = (appInitialization)(inject(AuthorizationService), inject(InstanceService), inject(SettingsService), inject(CustomScriptsService), inject(CustomStylesService), inject(LanguageService));
             return initializerFn();
