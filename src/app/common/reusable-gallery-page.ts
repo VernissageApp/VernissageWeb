@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, OnInit, signal, ChangeDetectionStrategy } from "@angular/core";
+import { Component, inject, OnDestroy, OnInit, signal } from "@angular/core";
 import { ResponsiveComponent } from "./responsive";
 import { filter, Subscription } from "rxjs";
 import { NavigationEnd, NavigationStart, Router } from "@angular/router";
@@ -10,7 +10,6 @@ import { Status } from "../models/status";
     selector: 'app-reusable-gallery-page',
     template: '',
     styles: [],
-    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class ReusableGalleryPageComponent extends ResponsiveComponent implements OnInit, OnDestroy {

@@ -9,8 +9,8 @@ import { NgForm, NgModel } from '@angular/forms';
     standalone: false
 })
 export class PasswordComponent {
-    public passwordTextInput = input<string>(undefined, {alias: 'passwordText'});
-    public passwordText = linkedSignal(this.passwordTextInput);
+    public passwordText = input<string>();
+    public passwordValue = linkedSignal(this.passwordText);
     public passwordTextChange = output<string>();
 
     public form = input<NgForm | undefined>();
@@ -25,7 +25,7 @@ export class PasswordComponent {
     }
 
     protected passwordChanged(): void {
-        this.passwordTextChange.emit(this.passwordText() ?? '');
+        this.passwordTextChange.emit(this.passwordValue() ?? '');
         this.passwordValid.emit(this.password()?.valid ?? false);
     }
 }

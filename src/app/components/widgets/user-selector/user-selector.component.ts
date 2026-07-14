@@ -20,8 +20,8 @@ export class UserSelectorComponent implements OnInit, OnDestroy {
     public isRequired = input(false);
     public isReadOnly = input(false);
 
-    public selectedUserInput = input<User>(undefined, {alias: 'selectedUser'});
-    public selectedUser = linkedSignal(this.selectedUserInput);
+    public selectedUser = input<User>();
+    public selectedUserValue = linkedSignal(this.selectedUser);
     public selectedUserChange = output<User | undefined>();
 
     protected filteredUsers = signal<User[] | undefined>(undefined);
@@ -50,12 +50,12 @@ export class UserSelectorComponent implements OnInit, OnDestroy {
     }
 
     protected onSelectedUser(user: User): void {
-        this.selectedUser.set(user);
+        this.selectedUserValue.set(user);
         this.selectedUserChange.emit(user);
     }
 
     protected onChange(): void {
-        this.selectedUser.set(undefined);
+        this.selectedUserValue.set(undefined);
         this.selectedUserChange.emit(undefined);
     }
 
@@ -81,7 +81,7 @@ export class UserSelectorComponent implements OnInit, OnDestroy {
             return [];
         }
 
-        this.selectedUser.set(undefined);
+        this.selectedUserValue.set(undefined);
         this.selectedUserChange.emit(undefined);
 
         const result = await this.usersService.get(0, 40, value);
