@@ -1,3 +1,18 @@
+<!-- Always calculate category switch -->
+<div class="category-settings margin-bottom-20">
+    <mat-slide-toggle
+        name="alwaysCalculateCategory"
+        [ngModel]="alwaysCalculateCategory()"
+        [disabled]="isSavingAlwaysCalculateCategory()"
+        (ngModelChange)="onAlwaysCalculateCategoryChange($event)">
+        {{ 'components.categoryList.texts.alwaysRecalculateRemoteStatusCategory' | translate }}
+    </mat-slide-toggle>
+    <div class="text-muted fs-90 margin-left-10 margin-top-5">
+        {{ 'components.categoryList.texts.alwaysRecalculateRemoteStatusCategoryDescription' | translate }}
+    </div>
+</div>
+
+<!-- Categories list -->
 @if (categories(); as categoriesArray) {
     <table mat-table [dataSource]="categoriesArray.data">
 

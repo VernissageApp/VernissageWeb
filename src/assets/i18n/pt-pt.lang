@@ -244,6 +244,8 @@
         "doYouWantToDeleteCategory": "Deseja eliminar a categoria?"
       },
       "texts": {
+        "alwaysRecalculateRemoteStatusCategory": "Recalcular sempre a categoria dos estados remotos",
+        "alwaysRecalculateRemoteStatusCategoryDescription": "Quando esta opção está ativada, as categorias dos estados ActivityPub recebidos são recalculadas com base nas regras locais de categorias de hashtags. Se não for encontrada nenhuma regra correspondente, é utilizada a categoria fornecida pelo servidor remoto.",
         "categoryName": "Nome da categoria",
         "newCategory": "Nova categoria"
       }

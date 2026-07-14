@@ -244,6 +244,8 @@
         "doYouWantToDeleteCategory": "Voulez-vous supprimer la catégorie ?"
       },
       "texts": {
+        "alwaysRecalculateRemoteStatusCategory": "Toujours recalculer la catégorie des statuts distants",
+        "alwaysRecalculateRemoteStatusCategoryDescription": "Lorsque cette option est activée, les catégories des statuts ActivityPub entrants sont recalculées à partir des règles locales de catégorisation des hashtags. Si aucune règle correspondante n’est trouvée, la catégorie fournie par le serveur distant est utilisée.",
         "categoryName": "Nom de la catégorie",
         "newCategory": "Nouvelle catégorie"
       }

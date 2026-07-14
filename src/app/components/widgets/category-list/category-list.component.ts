@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, OnInit, signal } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
@@ -7,8 +7,10 @@ import { CategoryDialog } from 'src/app/dialogs/category-dialog/category.dialog'
 import { ConfirmationDialog } from 'src/app/dialogs/confirmation-dialog/confirmation.dialog';
 import { Category } from 'src/app/models/category';
 import { PagedResult } from 'src/app/models/paged-result';
+import { Settings } from 'src/app/models/settings';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { CategoriesService } from 'src/app/services/http/categories.service';
+import { SettingsService } from 'src/app/services/http/settings.service';
 
 @Component({
     selector: 'app-category-list',
@@ -18,8 +20,12 @@ import { CategoriesService } from 'src/app/services/http/categories.service';
     standalone: false
 })
 export class CategoryListComponent extends ResponsiveComponent implements OnInit {
+    public settings = input.required<Settings>();
+
     protected categories = signal<PagedResult<Category> | undefined>(undefined);
     protected displayedColumns = signal<string[]>([]);
+    protected alwaysCalculateCategory = signal(false);
+    protected isSavingAlwaysCalculateCategory = signal(false);
     protected pageIndex = signal(0);
 
     private pageSize = 10;
@@ -29,6 +35,7 @@ export class CategoryListComponent extends ResponsiveComponent implements OnInit
     private readonly displayedColumnsBrowser: string[] = ['categoryName', 'categoryEnabled', 'actions'];
 
     private categoriesService = inject(CategoriesService);
+    private settingsService = inject(SettingsService);
     private messageService = inject(MessagesService);
     private dialog = inject(MatDialog);
     private translateService = inject(TranslateService);
@@ -36,8 +43,31 @@ export class CategoryListComponent extends ResponsiveComponent implements OnInit
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
 
+        this.alwaysCalculateCategory.set(this.settings().alwaysCalculateCategory);
+
         const categoriesInternal = await this.categoriesService.get(this.pageIndex() + 1, this.pageSize);
         this.categories.set(categoriesInternal);
+    }
+
+    protected async onAlwaysCalculateCategoryChange(alwaysCalculateCategory: boolean): Promise<void> {
+        const previousValue = this.alwaysCalculateCategory();
+        this.alwaysCalculateCategory.set(alwaysCalculateCategory);
+        this.isSavingAlwaysCalculateCategory.set(true);
+
+        try {
+            const currentSettings = await this.settingsService.get();
+            currentSettings.alwaysCalculateCategory = alwaysCalculateCategory;
+
+            const savedSettings = await this.settingsService.put(currentSettings);
+            this.alwaysCalculateCategory.set(savedSettings.alwaysCalculateCategory);
+            this.settings().alwaysCalculateCategory = savedSettings.alwaysCalculateCategory;
+        } catch (error) {
+            this.alwaysCalculateCategory.set(previousValue);
+            console.error(error);
+            this.messageService.showServerError(error);
+        } finally {
+            this.isSavingAlwaysCalculateCategory.set(false);
+        }
     }
 
     protected async handlePageEvent(pageEvent: PageEvent): Promise<void> {
