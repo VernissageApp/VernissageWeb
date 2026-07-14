@@ -244,6 +244,8 @@
         "doYouWantToDeleteCategory": "Vill du ta bort kategori?"
       },
       "texts": {
+        "alwaysRecalculateRemoteStatusCategory": "Beräkna alltid om kategorin för fjärrstatusar",
+        "alwaysRecalculateRemoteStatusCategoryDescription": "När detta är aktiverat beräknas kategorierna för inkommande ActivityPub-statusar om utifrån de lokala reglerna för hashtaggskategorier. Om ingen matchande regel hittas används kategorin från fjärrservern.",
         "categoryName": "Kategorinamn",
         "newCategory": "Ny kategori"
       }

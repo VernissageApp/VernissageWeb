@@ -244,6 +244,8 @@
         "doYouWantToDeleteCategory": "Do you want to delete category?"
       },
       "texts": {
+        "alwaysRecalculateRemoteStatusCategory": "Always recalculate remote status category",
+        "alwaysRecalculateRemoteStatusCategoryDescription": "When enabled, categories for incoming ActivityPub statuses are recalculated from the local hashtag category rules. If no matching rule is found, the category provided by the remote server is used.",
         "categoryName": "Category name",
         "newCategory": "New category"
       }

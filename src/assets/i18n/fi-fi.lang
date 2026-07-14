@@ -244,6 +244,8 @@
         "doYouWantToDeleteCategory": "Haluatko poistaa luokan?"
       },
       "texts": {
+        "alwaysRecalculateRemoteStatusCategory": "Laske etäpalvelimelta tulevien tilapäivitysten luokka aina uudelleen",
+        "alwaysRecalculateRemoteStatusCategoryDescription": "Kun asetus on käytössä, saapuvien ActivityPub-tilapäivitysten luokat lasketaan uudelleen paikallisten aihetunnisteiden luokittelusääntöjen perusteella. Jos vastaavaa sääntöä ei löydy, käytetään etäpalvelimen ilmoittamaa luokkaa.",
         "categoryName": "Luokan nimi",
         "newCategory": "Uusi luokka"
       }

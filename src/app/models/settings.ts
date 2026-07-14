@@ -41,6 +41,7 @@ export class Settings {
     public showSharedBusinessCards = false;
     public minimumSecondsBetweenRegularStatuses = 0;
     public minimumSecondsBetweenSilentStatuses = 0;
+    public alwaysCalculateCategory = false;
 
     public isOpenAIEnabled = false;
     public openAIKey = '';
