@@ -3,9 +3,6 @@
   "version": 1,
   "cli": {
     "packageManager": "npm",
-    "cache": {
-      "enabled": false
-    },
     "schematicCollections": [
       "@angular-eslint/schematics"
     ],
