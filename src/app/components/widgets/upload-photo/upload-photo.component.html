@@ -13,7 +13,7 @@
             <div class="margin-top-10">
                 @if (photo().isUploading()) {
                     <div class="flex-row flex-align-center gap-10">
-                        <mat-spinner class="display-inline-block margin-right-10" [diameter]="18"></mat-spinner>
+                        <mat-spinner class="display-inline-block margin-right-10" [diameter]="18" />
                         <div class="text-muted">{{ 'components.uploadPhoto.texts.uploading' | translate }}</div>
                         <button type="button" matButton="text" (click)="onCancelUpload()">{{ 'common.actions.cancel' | translate }}</button>
                     </div>
@@ -22,7 +22,7 @@
 
             <div class="flex-row flex-right">
                 @if (describeInProgress()) {
-                    <mat-spinner class="margin-right-10 margin-top-10" [diameter]="18"></mat-spinner>
+                    <mat-spinner class="margin-right-10 margin-top-10" [diameter]="18" />
                 }
 
                 <button matButton="outlined" (click)="onGenerateDescription()" [disabled]="!photo().isUploaded() || describeInProgress()">
@@ -128,7 +128,7 @@
     </mat-form-field>
 
     <div class="margin-bottom-10 margin-top-20">
-        <mat-divider></mat-divider>
+        <mat-divider />
     </div>
 
     <div class="text-muted">{{ 'components.uploadPhoto.texts.exifMetadata' | translate }}</div>
@@ -296,7 +296,7 @@
     </div>
 
     <div class="margin-bottom-10 margin-top-20">
-        <mat-divider></mat-divider>
+        <mat-divider />
     </div>
 
     <div class="text-muted">
@@ -307,7 +307,7 @@
                 @if (photo().isHdrUploaded) {
                     <button matButton="tonal" class="small-button" (click)="onHdrDelete()">{{ 'components.uploadPhoto.texts.deleteHdrVersion' | translate }}</button>
                 } @else {
-                    <mat-spinner class="display-inline-block" [diameter]="18"></mat-spinner>
+                    <mat-spinner class="display-inline-block" [diameter]="18" />
                 }
             }
         </div>

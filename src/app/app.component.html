@@ -1,12 +1,12 @@
-<app-header></app-header>
+<app-header />
 <main class="content mat-app-background">
     @if (showLoader()) {
         <div animate.enter="fade-in" class="loading-shade">
             <div class="loading-shade-container">
-                <mat-spinner [diameter]="36"></mat-spinner>
+                <mat-spinner [diameter]="36" />
             </div>
         </div>
     }
 
-    <router-outlet></router-outlet>
+    <router-outlet />
 </main>

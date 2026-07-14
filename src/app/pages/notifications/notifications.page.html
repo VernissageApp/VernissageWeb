@@ -39,7 +39,7 @@
                                                             </span>
                                                         }
                                                         <a [routerLink]="[ '/@' + $safeNavigationMigration(item.notification.byUser?.userName) ]" [attr.aria-label]="'pages.notifications.actions.openUserProfileAriaLabel' | translate">
-                                                            <app-avatar [user]="item.notification.byUser" [size]="avatarSize.huge"></app-avatar>
+                                                            <app-avatar [user]="item.notification.byUser" [size]="avatarSize.huge" />
                                                         </a>
                                                     </div>
                                                     <div class="overflow-ellipsis">
@@ -105,7 +105,7 @@
                                                                                 (click)="$event.preventDefault(); $event.stopPropagation()"
                                                                                 (keydown.enter)="$event.preventDefault(); $event.stopPropagation()"
                                                                                 (keydown.space)="$event.preventDefault(); $event.stopPropagation()">
-                                                                                <app-user-popover [user]="groupedNotificationUser" [relationship]="popoverRelationship()"></app-user-popover>
+                                                                                <app-user-popover [user]="groupedNotificationUser" [relationship]="popoverRelationship()" />
                                                                             </div>
                                                                         </app-popover>
                                                                     }

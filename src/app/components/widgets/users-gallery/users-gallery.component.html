@@ -5,7 +5,7 @@
     @else if (users()?.data?.length) {
         @for (user of users()?.data; track user.userName) {
             <div>
-                <app-users-gallery-item [user]="user"></app-users-gallery-item>
+                <app-users-gallery-item [user]="user" />
             </div>
         }
     } @else {

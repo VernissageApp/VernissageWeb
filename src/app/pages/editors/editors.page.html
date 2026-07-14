@@ -38,13 +38,13 @@
 
         @if (selectedTab() === 'statuses') {
             @if (statuses(); as statusesArray) {
-                <app-gallery [statuses]="statusesArray" [startUrl]="pageUrl"></app-gallery>
+                <app-gallery [statuses]="statusesArray" [startUrl]="pageUrl" />
             }
         }
 
         @if (selectedTab() === 'users') {
             @if (users(); as usersArray) {
-                <app-users-gallery [users]="usersArray"></app-users-gallery>
+                <app-users-gallery [users]="usersArray" />
             }
         }
 

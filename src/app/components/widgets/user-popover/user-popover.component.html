@@ -3,7 +3,7 @@
         <mat-card-content>
             <div class="user-popover-layout">
                 <a [routerLink]="[ '/@' + userObject.userName ]" class="user-avatar" [attr.aria-label]="'common.actions.openProfileWithUserName' | translate: { userName: userObject.userName }">
-                    <app-avatar [user]="userObject" [size]="avatarSize.huge"></app-avatar>
+                    <app-avatar [user]="userObject" [size]="avatarSize.huge" />
                 </a>
 
                 <div class="user-popover-content">
@@ -21,12 +21,10 @@
                         </div>
 
                         @if (relationship(); as relationshipObject) {
-                            <app-follow-buttons-section
-                                class="user-popover-action"
+                            <app-follow-buttons-section class="user-popover-action"
                                 [user]="userObject"
                                 [relationship]="relationshipObject"
-                                [singleButton]="true">
-                            </app-follow-buttons-section>
+                                [singleButton]="true" />
                         }
                     </div>
 

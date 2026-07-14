@@ -25,9 +25,9 @@
                                         }
                                         @if (galleryStatus.inViewport()) {
                                             @if (getMainStatus(galleryStatus.status).sensitive && !alwaysShowNSFW()) {
-                                                <app-blurhash-image [horizontal]="false" [avatarVisible]="avatarVisible() && !hideAvatars()" [status]="galleryStatus.status"></app-blurhash-image>
+                                                <app-blurhash-image [horizontal]="false" [avatarVisible]="avatarVisible() && !hideAvatars()" [status]="galleryStatus.status" />
                                             } @else {
-                                                <app-image [horizontal]="false" [avatarVisible]="avatarVisible() && !hideAvatars()" [status]="galleryStatus.status" [priority]="galleryStatus.priority"></app-image>
+                                                <app-image [horizontal]="false" [avatarVisible]="avatarVisible() && !hideAvatars()" [status]="galleryStatus.status" [priority]="galleryStatus.priority" />
                                             }
                                         } @else {
                                             <div class="gallery-placeholder" aria-hidden="true"></div>

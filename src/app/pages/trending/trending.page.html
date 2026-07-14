@@ -53,19 +53,19 @@
 
         @if (selectedTrending() === 'statuses') {
             @if (statuses(); as statusesArray) {
-                <app-gallery [statuses]="statusesArray" [startUrl]="pageUrl"></app-gallery>
+                <app-gallery [statuses]="statusesArray" [startUrl]="pageUrl" />
             }
         }
 
         @if (selectedTrending() === 'users') {
             @if (users(); as usersArray) {
-                <app-users-gallery [users]="usersArray"></app-users-gallery>
+                <app-users-gallery [users]="usersArray" />
             }
         }
 
         @if (selectedTrending() === 'hashtags') {
             @if (hashtags(); as hashtagsArray) {
-                <app-hashtag-gallery [hashtags]="hashtagsArray"></app-hashtag-gallery>
+                <app-hashtag-gallery [hashtags]="hashtagsArray" />
             }
         }
     </div>

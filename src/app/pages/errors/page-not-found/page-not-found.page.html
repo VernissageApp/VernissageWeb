@@ -5,6 +5,6 @@
             {{ 'pages.errors.pageNotFound.description' | translate }}
             {{ 'common.errors.goBackPrefix' | translate }} <a routerLink="/home" [attr.aria-label]="'common.labels.homePage' | translate">{{ 'common.errors.goBackLink' | translate }}</a> {{ 'common.errors.goBackSuffix' | translate }}
         </p>
-        <mat-progress-bar mode="determinate" [value]="value()"></mat-progress-bar>
+        <mat-progress-bar mode="determinate" [value]="value()" />
     </div>
 </div>

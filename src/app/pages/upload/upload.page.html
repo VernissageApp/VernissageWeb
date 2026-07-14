@@ -55,7 +55,7 @@
                     @for (photo of photos(); track $index; let i = $index) {
                         <mat-step>
                             <ng-template matStepLabel>{{ 'pages.upload.stepper.imageData' | translate:{ index: i + 1 } }}</ng-template>
-                            <app-upload-photo #uploadPhoto [photo]="photo" [licenses]="licenses()" (cancelUpload)="onPhotoUploadCancel($event)"></app-upload-photo>
+                            <app-upload-photo #uploadPhoto [photo]="photo" [licenses]="licenses()" (cancelUpload)="onPhotoUploadCancel($event)" />
                             <div class="margin-top-15 flex-row flex-space-between">
                                 <div>
                                     @if (i > 0) {
@@ -65,7 +65,7 @@
                                 </div>
                                 <div>
                                     @if (photo.isDeleting()) {
-                                        <mat-spinner class="display-inline-block vertical-align-middle margin-right-10" [diameter]="18"></mat-spinner>
+                                        <mat-spinner class="display-inline-block vertical-align-middle margin-right-10" [diameter]="18" />
                                     }
                                     <button matButton="tonal" (click)="onPhotoDelete(photo)" [disabled]="!photo.isUploaded() || photo.isDeleting()">{{ 'common.actions.delete' | translate }}</button>
                                 </div>
@@ -94,7 +94,7 @@
                                         @if (isOpenAIEnabled()) {
                                             <div class="flex-row flex-end">
                                                 @if (hashtagsInProgress()) {
-                                                    <mat-spinner class="margin-top-10 margin-right-10" [diameter]="18"></mat-spinner>
+                                                    <mat-spinner class="margin-top-10 margin-right-10" [diameter]="18" />
                                                 }
                                                 <button matButton="outlined" (click)="onGenerateHashtags()" [disabled]="!allPhotosUploaded() || photos().length === 0 || hashtagsInProgress()">
                                                     <mat-icon>smart_toy</mat-icon> {{ 'pages.upload.actions.hashtags' | translate }}
@@ -107,14 +107,12 @@
                                     </div>
                                 </div>
 
-                                <app-status-text-autocomplete
-                                    name="statusText"
+                                <app-status-text-autocomplete name="statusText"
                                     [(text)]="statusText"
                                     (textChange)="onStatusTextChange()"
                                     [isRequired]="true"
                                     [maxLength]="maxStatusLength()"
-                                    [showPascalCaseHint]="!isHandset()">
-                                </app-status-text-autocomplete>
+                                    [showPascalCaseHint]="!isHandset()" />
 
                                 <mat-form-field appearance="outline" class=" margin-bottom-20">
                                     <mat-label>{{ 'common.labels.category' | translate }}</mat-label>
@@ -171,7 +169,7 @@
                                 </div>
                                 <div>
                                     @if (isCanceling()) {
-                                        <mat-spinner class="display-inline-block vertical-align-middle margin-right-10" [diameter]="18"></mat-spinner>
+                                        <mat-spinner class="display-inline-block vertical-align-middle margin-right-10" [diameter]="18" />
                                     }
                                     <button type="button" matButton="outlined" (click)="onCancel()" [disabled]="isCanceling()">{{ 'common.actions.cancel' | translate }}</button>
                                 </div>

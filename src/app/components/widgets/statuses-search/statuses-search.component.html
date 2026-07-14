@@ -2,14 +2,14 @@
     <!-- Image -->
     <a [routerLink]="['/statuses', status().id]" [ariaLabel]="'Status added by: ' + $safeNavigationMigration(mainStatus().user?.userName)">
         @if (mainStatus().sensitive && !alwaysShowNSFW) {
-            <app-blurhash-image [horizontal]="false" [avatarVisible]="false" [status]="status()"></app-blurhash-image>
+            <app-blurhash-image [horizontal]="false" [avatarVisible]="false" [status]="status()" />
         } @else {
-            <app-image [horizontal]="false" [avatarVisible]="false" [status]="status()"></app-image>
+            <app-image [horizontal]="false" [avatarVisible]="false" [status]="status()" />
         }
     </a>
 
     <!-- User card -->
-    <app-user-card [user]="mainStatus().user"></app-user-card>
+    <app-user-card [user]="mainStatus().user" />
 
     <!-- Note -->
     <div appHrefToRouterLink>
@@ -17,7 +17,7 @@
     </div>
 
     <!-- Status properties -->
-    <app-status-properties [status]="mainStatus()"></app-status-properties>
+    <app-status-properties [status]="mainStatus()" />
 
     <hr class="margin-bottom-30 margin-top-20" />
 </div>

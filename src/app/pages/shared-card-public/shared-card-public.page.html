@@ -1,7 +1,6 @@
 @if (isReady()) {
 
-    <app-business-card
-        [title]="title()"
+    <app-business-card [title]="title()"
         [fields]="fields()"
         [subtitle]="subtitle()"
         [body]="body()"
@@ -13,18 +12,17 @@
         [color3]="color3()"
         [avatarUrl]="avatarUrl()"
         [sharedBusinessCardCode]="sharedBusinessCardCode()"
-        [userName]="userName()">
-    </app-business-card>
+        [userName]="userName()" />
 
     <div animate.enter="fade-in" [class]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
         <div class="business-card-messages">
-            <mat-divider></mat-divider>
+            <mat-divider />
             <div class="margin-bottom-20"></div>
 
             @if (cardClientUser(); as internalUser) {
                 <div class="flex-row flex-align-center gap-8 margin-bottom-10">
                     <div>
-                        <app-avatar [user]="internalUser" [size]="avatarSize.verysmall"></app-avatar>
+                        <app-avatar [user]="internalUser" [size]="avatarSize.verysmall" />
                     </div>
                     <div class="flex-row flex-responsive username">
                         <div class="fullname">

@@ -23,7 +23,7 @@
                                     }
                                     @if (article.user; as userObject) {
                                         <mat-card-subtitle>
-                                            <app-mini-user-card [user]="userObject"></app-mini-user-card>
+                                            <app-mini-user-card [user]="userObject" />
                                         </mat-card-subtitle>
                                     }
                                 </mat-card-header>
@@ -38,14 +38,12 @@
                             </mat-card>
                         }
 
-                        <mat-paginator
-                            (page)="handlePageEvent($event)"
+                        <mat-paginator (page)="handlePageEvent($event)"
                             [length]="articlesArray.total"
                             [pageIndex]="pageIndex()"
                             [pageSize]="5"
                             [pageSizeOptions]="[5, 10, 25, 100]"
-                            [attr.aria-label]="'common.paginator.selectPage' | translate">
-                        </mat-paginator>
+                            [attr.aria-label]="'common.paginator.selectPage' | translate" />
                     } @else {
                         <div class="text-muted padding-top-30 text-center" [class]="isHandset() ? 'padding-left-10 padding-right-10' : 'padding-left-30 padding-right-30'">
                             <h2 class="empty-page">

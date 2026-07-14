@@ -4,7 +4,7 @@
     }
     @else if (hashtags()?.data?.length) {
         @for (hashtag of hashtags()?.data; track hashtag.name) {
-            <app-hashtag-gallery-item [hashtag]="hashtag"></app-hashtag-gallery-item>
+            <app-hashtag-gallery-item [hashtag]="hashtag" />
         }
     } @else {
         <div class="text-muted padding-top-30 width-100 text-center">

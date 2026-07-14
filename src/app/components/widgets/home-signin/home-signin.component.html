@@ -4,7 +4,7 @@
         @if (articles().length > 0) {
             <div [class]="{ 'padding-top-30': !isHandset(), 'padding-left-30': !isHandset(), 'padding-right-30': !isHandset(), 'padding-10': isHandset() }">
                 @for (article of articles(); track article) {
-                    <app-article-inline [article]="article" (dismiss)="onDismissArticle($event)"></app-article-inline>
+                    <app-article-inline [article]="article" (dismiss)="onDismissArticle($event)" />
                 }
             </div>
         }
@@ -62,7 +62,7 @@
         </div>
 
         @if (statuses(); as statusesArray) {
-            <app-gallery [statuses]="statusesArray" [startUrl]="pageUrl"></app-gallery>
+            <app-gallery [statuses]="statusesArray" [startUrl]="pageUrl" />
         }
     </div>
 }

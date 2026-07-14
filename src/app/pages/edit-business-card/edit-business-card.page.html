@@ -121,7 +121,7 @@
                                 </div>
 
                                 <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
-                                    <mat-divider></mat-divider>
+                                    <mat-divider />
                                 </div>
 
                                 <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20 padding-top-20">
@@ -177,8 +177,7 @@
 
             <div>
                 @if (user(); as userInternal) {
-                    <app-business-card
-                        [title]="title()"
+                    <app-business-card [title]="title()"
                         [fields]="fields()"
                         [subtitle]="subtitle()"
                         [body]="body()"
@@ -188,8 +187,7 @@
                         [color1]="color1()"
                         [color2]="color2()"
                         [color3]="color3()"
-                        [avatarUrl]="userInternal.avatarUrl ?? 'assets/avatar.svg'">
-                    </app-business-card>
+                        [avatarUrl]="userInternal.avatarUrl ?? 'assets/avatar.svg'" />
                 }
             </div>
         </div>

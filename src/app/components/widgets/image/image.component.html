@@ -38,7 +38,7 @@
         @if(showAvatar()) {
             @if (user(); as userObject) {
                 <div class="avatar" (mouseenter)="mouseenter.next()" (mouseleave)="mouseleave.next()">
-                    <app-mini-user-card [user]="userObject" [showUserName]="false" [whiteLink]="true" [size]="avatarSize.verysmall"></app-mini-user-card>
+                    <app-mini-user-card [user]="userObject" [showUserName]="false" [whiteLink]="true" [size]="avatarSize.verysmall" />
                 </div>
 
                 <app-popover [visible]="popoverVisible()">
@@ -49,7 +49,7 @@
                         (click)="$event.preventDefault(); $event.stopPropagation()"
                         (keydown.enter)="$event.preventDefault(); $event.stopPropagation()"
                         (keydown.space)="$event.preventDefault(); $event.stopPropagation()">
-                        <app-user-popover [user]="userObject" [relationship]="relationship()"></app-user-popover>
+                        <app-user-popover [user]="userObject" [relationship]="relationship()" />
                     </div>
                 </app-popover>
             }

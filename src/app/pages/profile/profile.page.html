@@ -54,7 +54,7 @@
 
                     @if (relationship(); as relationshipInternal) {
                         <div class="padding-top-10">
-                            <app-follow-buttons-section [user]="userInternal" [relationship]="relationshipInternal" (relationChanged)="onMainRelationChanged()"></app-follow-buttons-section>
+                            <app-follow-buttons-section [user]="userInternal" [relationship]="relationshipInternal" (relationChanged)="onMainRelationChanged()" />
                         </div>
                     }
 
@@ -104,7 +104,7 @@
                                             </div>
                                         </div>
                                         @if ((i + 1) < (userInternal.fields?.length ?? 0)) {
-                                            <mat-divider class="padding-bottom-5"></mat-divider>
+                                            <mat-divider class="padding-bottom-5" />
                                         }
                                     }
                                 </mat-card-content>
@@ -124,13 +124,11 @@
                                 <mat-card class="users-card" appearance="outlined">
                                     <mat-card-content>
                                         @if ((following()?.data?.length ?? 0) > 0) {
-                                            <app-users-card
-                                                [showLoadMore]="!allFollowingDisplayed()"
+                                            <app-users-card [showLoadMore]="!allFollowingDisplayed()"
                                                 [users]="$safeNavigationMigration(following()?.data)"
                                                 [relationships]="followingRelationships()"
                                                 (relationChanged)="onRelationChanged($event)"
-                                                (loadMore)="onLoadMoreFollowing()">
-                                            </app-users-card>
+                                                (loadMore)="onLoadMoreFollowing()" />
                                         } @else {
                                             @if (userInternal.isLocal) {
                                                 <div>{{ 'pages.profile.noData.local' | translate }}</div>
@@ -153,13 +151,11 @@
                                 <mat-card class="users-card" appearance="outlined">
                                     <mat-card-content>
                                         @if ((followers()?.data?.length ?? 0) > 0) {
-                                            <app-users-card
-                                                [showLoadMore]="!allFollowersDisplayed()"
+                                            <app-users-card [showLoadMore]="!allFollowersDisplayed()"
                                                 [users]="$safeNavigationMigration(followers()?.data)"
                                                 [relationships]="followersRelationships()"
                                                 (relationChanged)="onRelationChanged($event)"
-                                                (loadMore)="onLoadMoreFollowers()">
-                                            </app-users-card>
+                                                (loadMore)="onLoadMoreFollowers()" />
                                         } @else {
                                             @if (userInternal.isLocal) {
                                                 <div>{{ 'pages.profile.noData.local' | translate }}</div>
@@ -195,7 +191,7 @@
                         </div>
                     }
                     @if (statuses(); as statusesArray) {
-                        <app-gallery [statuses]="statusesArray" [startUrl]="pageUrl" [squareImages]="squareImages()" [hideAvatars]="true" [highlightPinnedStatuses]="true"></app-gallery>
+                        <app-gallery [statuses]="statusesArray" [startUrl]="pageUrl" [squareImages]="squareImages()" [hideAvatars]="true" [highlightPinnedStatuses]="true" />
                     }
                 </div>
             }

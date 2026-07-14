@@ -1,7 +1,7 @@
 @if (user(); as userObject) {
     <div class="flex-row flex-align-center gap-8">
         <div>
-            <app-avatar [user]="userObject" [size]="size()"></app-avatar>
+            <app-avatar [user]="userObject" [size]="size()" />
         </div>
         <div class="user-info username" [class.white]="whiteLink()">
             <div class="fullname">

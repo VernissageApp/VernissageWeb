@@ -46,7 +46,7 @@
                     @if (suggestion.type === 'users') {
                         @if (suggestion.user; as user) {
                             <div class="user-option-content">
-                                <app-avatar [user]="user" [size]="avatarSize.small"></app-avatar>
+                                <app-avatar [user]="user" [size]="avatarSize.small" />
                                 <div class="user-option-text">
                                     <div class="user-option-name">{{ user.name || user.userName }}</div>
                                     <div class="user-option-username">&#64;{{ user.userName }}</div>
