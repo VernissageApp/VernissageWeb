@@ -3,7 +3,7 @@ import { User } from 'src/app/models/user';
 import { AvatarSize } from './avatar-size';
 import { PreferencesService } from 'src/app/services/common/preferences.service';
 import { UserPayload } from 'src/app/models/user-payload';
-import { NgOptimizedImage, NgClass } from '@angular/common';
+import { NgOptimizedImage } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
@@ -11,7 +11,7 @@ import { TranslatePipe } from '@ngx-translate/core';
     templateUrl: './avatar.component.html',
     styleUrls: ['./avatar.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [NgOptimizedImage, NgClass, TranslatePipe]
+    imports: [NgOptimizedImage, TranslatePipe]
 })
 export class AvatarComponent implements OnInit {
     public user = input.required<User | UserPayload | undefined>();

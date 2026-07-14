@@ -9,7 +9,7 @@ import { InputActivityDirective } from '../../../directives/input-activity.direc
 import { MatInput } from '@angular/material/input';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { MaxLengthValidatorDirective } from '../../../validators/directives/max-length-validator.directive';
-import { NgClass } from '@angular/common';
+
 import { AvatarComponent } from '../avatar/avatar.component';
 import { TranslatePipe } from '@ngx-translate/core';
 
@@ -36,7 +36,7 @@ interface StatusAutocompleteSuggestion {
     styleUrls: ['./status-text-autocomplete.component.scss'],
     viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [MatFormField, MatLabel, InputActivityDirective, MatInput, CdkTextareaAutosize, FormsModule, MaxLengthValidatorDirective, MatHint, MatError, NgClass, AvatarComponent, TranslatePipe]
+    imports: [MatFormField, MatLabel, InputActivityDirective, MatInput, CdkTextareaAutosize, FormsModule, MaxLengthValidatorDirective, MatHint, MatError, AvatarComponent, TranslatePipe]
 })
 export class StatusTextAutocompleteComponent implements OnDestroy {
     public name = input.required<string>();

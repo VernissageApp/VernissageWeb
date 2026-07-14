@@ -33,7 +33,7 @@ import { ForbiddenError } from 'src/app/errors/forbidden-error';
 import { CanonExifService } from 'src/app/services/common/canon-exif.service';
 import { DeviceDetectorService, DeviceType } from 'ngx-device-detector';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
-import { NgClass } from '@angular/common';
+
 import { MatCard, MatCardHeader, MatCardTitle, MatCardContent } from '@angular/material/card';
 import { MatStepper, MatStep, MatStepLabel, MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { UploadPhotoComponent } from '../../components/widgets/upload-photo/upload-photo.component';
@@ -53,7 +53,7 @@ import { MatInput } from '@angular/material/input';
     templateUrl: './upload.page.html',
     styleUrls: ['./upload.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [NgClass, CdkDropList, CdkDrag, RouterLink, MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatStepper, MatStep, MatStepLabel, UploadPhotoComponent, MatButton, MatStepperPrevious, MatStepperNext, MatProgressSpinner, FormsModule, MatIcon, StatusTextAutocompleteComponent, MatFormField, MatLabel, MatSelect, MatOption, MatHint, MatCheckbox, InputActivityDirective, MatInput, TranslatePipe]
+    imports: [CdkDropList, CdkDrag, RouterLink, MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatStepper, MatStep, MatStepLabel, UploadPhotoComponent, MatButton, MatStepperPrevious, MatStepperNext, MatProgressSpinner, FormsModule, MatIcon, StatusTextAutocompleteComponent, MatFormField, MatLabel, MatSelect, MatOption, MatHint, MatCheckbox, InputActivityDirective, MatInput, TranslatePipe]
 })
 export class UploadPage extends ResponsiveComponent implements OnInit {
     protected readonly statusVisibility = StatusVisibility;

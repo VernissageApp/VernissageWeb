@@ -12,7 +12,7 @@ import { SettingsService } from 'src/app/services/http/settings.service';
 import { ForbiddenError } from 'src/app/errors/forbidden-error';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 import { LanguageService } from 'src/app/services/common/language.service';
-import { NgClass } from '@angular/common';
+
 import { MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardContent, MatCardFooter } from '@angular/material/card';
 import { MiniUserCardComponent } from '../../components/widgets/mini-user-card/mini-user-card.component';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -23,7 +23,7 @@ import { LocalizedDatePipe } from '../../pipes/localized-date.pipe';
     templateUrl: './news.page.html',
     styleUrls: ['./news.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [NgClass, MatCard, MatCardHeader, MatCardTitle, RouterLink, MatCardSubtitle, MiniUserCardComponent, MatCardContent, MatCardFooter, MatPaginator, TranslatePipe, LocalizedDatePipe]
+    imports: [MatCard, MatCardHeader, MatCardTitle, RouterLink, MatCardSubtitle, MiniUserCardComponent, MatCardContent, MatCardFooter, MatPaginator, TranslatePipe, LocalizedDatePipe]
 })
 export class NewsPage extends ResponsiveComponent implements OnInit, OnDestroy {
     protected articleVisibility = ArticleVisibility;

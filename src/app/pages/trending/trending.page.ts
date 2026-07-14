@@ -12,7 +12,7 @@ import { FocusTrackerService } from "src/app/services/common/focus-tracker.servi
 import { LoadingService } from "src/app/services/common/loading.service";
 import { SettingsService } from "src/app/services/http/settings.service";
 import { TrendingService } from "src/app/services/http/trending.service";
-import { NgClass } from "@angular/common";
+
 import { MatButtonToggleGroup, MatButtonToggle } from "@angular/material/button-toggle";
 import { FormsModule } from "@angular/forms";
 import { MatIcon } from "@angular/material/icon";
@@ -27,7 +27,7 @@ import { TranslatePipe } from "@ngx-translate/core";
     templateUrl: './trending.page.html',
     styleUrls: ['./trending.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [NgClass, MatButtonToggleGroup, FormsModule, MatButtonToggle, MatIcon, MatRadioGroup, MatRadioButton, GalleryComponent, UsersGalleryComponent, HashtagGalleryComponent, TranslatePipe]
+    imports: [MatButtonToggleGroup, FormsModule, MatButtonToggle, MatIcon, MatRadioGroup, MatRadioButton, GalleryComponent, UsersGalleryComponent, HashtagGalleryComponent, TranslatePipe]
 })
 export class TrendingPage extends ReusableGalleryPageComponent implements OnInit, OnDestroy {
     protected readonly trendingPeriod = TrendingPeriod;

@@ -19,7 +19,7 @@ import { ContentWarningDialog } from 'src/app/dialogs/content-warning-dialog/con
 import { RandomGeneratorService } from 'src/app/services/common/random-generator.service';
 import { ConfirmationDialog } from 'src/app/dialogs/confirmation-dialog/confirmation.dialog';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
-import { NgClass } from '@angular/common';
+
 import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { MatChipSet, MatChipOption } from '@angular/material/chips';
 import { AvatarComponent } from '../../components/widgets/avatar/avatar.component';
@@ -35,7 +35,7 @@ import { LocalizedDatePipe } from '../../pipes/localized-date.pipe';
     templateUrl: './reports.page.html',
     styleUrls: ['./reports.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [NgClass, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatChipSet, MatChipOption, RouterLink, AvatarComponent, MatCheckbox, FormsModule, MatButton, MatIconButton, MatMenuTrigger, MatIcon, MatMenu, MatMenuItem, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator, TranslatePipe, LocalizedDatePipe]
+    imports: [MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatChipSet, MatChipOption, RouterLink, AvatarComponent, MatCheckbox, FormsModule, MatButton, MatIconButton, MatMenuTrigger, MatIcon, MatMenu, MatMenuItem, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator, TranslatePipe, LocalizedDatePipe]
 })
 export class ReportsPage extends ResponsiveComponent implements OnInit, OnDestroy {
     protected readonly avatarSize = AvatarSize;

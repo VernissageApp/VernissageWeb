@@ -3,7 +3,7 @@
 }
 @else if (statusesExists()) {
     <div class="gallery-container" appInfiniteScroll [infiniteScrollDistance]="500" [infiniteScrollThrottle]="200" (scrolled)="onNearEndScroll()">
-        <div [ngClass]="{ 'image-gallery': !isHandsetPortrait() || squareImages(), 'image-column': isHandsetPortrait() && !squareImages(), 'square': squareImages() }">
+        <div [class]="{ 'image-gallery': !isHandsetPortrait() || squareImages(), 'image-column': isHandsetPortrait() && !squareImages(), 'square': squareImages() }">
             @for (column of galleryColumns(); track column.columnId) {
                 <div class="column">
                     @if(column.statuses.length > 0) {
@@ -45,7 +45,7 @@
     </div>
     
 } @else {
-    <div class="text-muted padding-top-30 text-center" [ngClass]="{ 'padding-left-30 padding-right-30': !isHandset(), 'padding-left-10 padding-right-10': isHandset() }">
+    <div class="text-muted padding-top-30 text-center" [class]="isHandset() ? 'padding-left-10 padding-right-10' : 'padding-left-30 padding-right-30'">
         <h2 class="empty-page">
             <div class="camera"></div>
             <div>{{ 'components.gallery.texts.sadlyThereSNothingToSeeHere' | translate }}</div>

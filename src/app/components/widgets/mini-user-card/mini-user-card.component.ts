@@ -3,7 +3,7 @@ import { User } from 'src/app/models/user';
 import { AvatarSize } from '../avatar/avatar-size';
 import { UserDisplayService } from 'src/app/services/common/user-display.service';
 import { AvatarComponent } from '../avatar/avatar.component';
-import { NgClass } from '@angular/common';
+
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -11,7 +11,7 @@ import { RouterLink } from '@angular/router';
     templateUrl: './mini-user-card.component.html',
     styleUrls: ['./mini-user-card.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [AvatarComponent, NgClass, RouterLink]
+    imports: [AvatarComponent, RouterLink]
 })
 export class MiniUserCardComponent {
     public user = input.required<User>();

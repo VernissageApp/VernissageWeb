@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
 import { ResponsiveComponent } from 'src/app/common/responsive';
-import { NgClass } from '@angular/common';
+
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
@@ -8,7 +8,7 @@ import { TranslatePipe } from '@ngx-translate/core';
     templateUrl: './frequently-asked-questions.page.html',
     styleUrls: ['./frequently-asked-questions.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [NgClass, TranslatePipe]
+    imports: [TranslatePipe]
 })
 export class FrequentlyAskedQuestionsPage extends ResponsiveComponent implements OnInit {
     protected isReady = signal(false);

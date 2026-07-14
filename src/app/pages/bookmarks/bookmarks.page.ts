@@ -8,7 +8,7 @@ import { AuthorizationService } from 'src/app/services/authorization/authorizati
 import { UserDisplayService } from 'src/app/services/common/user-display.service';
 import { ReusableGalleryPageComponent } from 'src/app/common/reusable-gallery-page';
 import { UserPayload } from 'src/app/models/user-payload';
-import { NgClass } from '@angular/common';
+
 import { GalleryComponent } from '../../components/widgets/gallery/gallery.component';
 import { TranslatePipe } from '@ngx-translate/core';
 
@@ -17,7 +17,7 @@ import { TranslatePipe } from '@ngx-translate/core';
     templateUrl: './bookmarks.page.html',
     styleUrls: ['./bookmarks.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [NgClass, RouterLink, GalleryComponent, TranslatePipe]
+    imports: [RouterLink, GalleryComponent, TranslatePipe]
 })
 export class BookmarksPage extends ReusableGalleryPageComponent implements OnInit, OnDestroy {
     protected isReady = signal(false);

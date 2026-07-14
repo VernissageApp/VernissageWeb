@@ -14,7 +14,7 @@ import { MessagesService } from 'src/app/services/common/messages.service';
 import { SharedBusinessCardsService } from 'src/app/services/http/shared-business-cards.service';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { BusinessCardComponent } from '../../components/widgets/business-card/business-card.component';
-import { NgClass } from '@angular/common';
+
 import { MatDivider } from '@angular/material/list';
 import { AvatarComponent } from '../../components/widgets/avatar/avatar.component';
 import { MatButton } from '@angular/material/button';
@@ -29,7 +29,7 @@ import { MatInput } from '@angular/material/input';
     templateUrl: './shared-card-public.page.html',
     styleUrls: ['./shared-card-public.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [BusinessCardComponent, NgClass, MatDivider, AvatarComponent, MatButton, MatIcon, FormsModule, MatFormField, InputActivityDirective, MatInput, MatSuffix, TranslatePipe]
+    imports: [BusinessCardComponent, MatDivider, AvatarComponent, MatButton, MatIcon, FormsModule, MatFormField, InputActivityDirective, MatInput, MatSuffix, TranslatePipe]
 })
 export class SharedCardPublicPage extends ResponsiveComponent implements OnInit, OnDestroy {
     protected avatarSize = AvatarSize;

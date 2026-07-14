@@ -9,7 +9,7 @@ import { Attachment } from 'src/app/models/attachment';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 import { StatusesService } from 'src/app/services/http/statuses.service';
 import { MessagesService } from 'src/app/services/common/messages.service';
-import { isPlatformBrowser, NgOptimizedImage, NgClass } from '@angular/common';
+import { isPlatformBrowser, NgOptimizedImage } from '@angular/common';
 import { delay, filter, of, Subject, Subscription, switchMap, takeUntil } from 'rxjs';
 import { NavigationStart, Router } from '@angular/router';
 import { Relationship } from 'src/app/models/relationship';
@@ -26,7 +26,7 @@ import { MatIcon } from '@angular/material/icon';
     templateUrl: './image.component.html',
     styleUrls: ['./image.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [NgOptimizedImage, NgClass, MiniUserCardComponent, PopoverComponent, UserPopoverComponent, MatTooltip, MatIcon, TranslatePipe]
+    imports: [NgOptimizedImage, MiniUserCardComponent, PopoverComponent, UserPopoverComponent, MatTooltip, MatIcon, TranslatePipe]
 })
 export class ImageComponent implements OnInit, OnDestroy, AfterViewInit {
     public avatarVisible = input(true);

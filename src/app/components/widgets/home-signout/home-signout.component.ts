@@ -12,7 +12,7 @@ import { Article } from 'src/app/models/article';
 import { HomeCardsService } from 'src/app/services/http/home-cards.service';
 import { HomeCard } from 'src/app/models/home-card';
 import { LanguageService } from 'src/app/services/common/language.service';
-import { NgClass } from '@angular/common';
+
 import { ArticleInlineComponent } from '../article-inline/article-inline.component';
 import { MatCard, MatCardHeader, MatCardTitle, MatCardContent } from '@angular/material/card';
 import { GalleryComponent } from '../gallery/gallery.component';
@@ -23,7 +23,7 @@ import { TranslatePipe } from '@ngx-translate/core';
     templateUrl: './home-signout.component.html',
     styleUrls: ['./home-signout.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [NgClass, ArticleInlineComponent, MatCard, MatCardHeader, MatCardTitle, MatCardContent, RouterLink, GalleryComponent, TranslatePipe]
+    imports: [ArticleInlineComponent, MatCard, MatCardHeader, MatCardTitle, MatCardContent, RouterLink, GalleryComponent, TranslatePipe]
 })
 export class HomeSignoutComponent extends ReusableGalleryPageComponent implements OnInit, OnDestroy {
     protected isReady = signal(false);

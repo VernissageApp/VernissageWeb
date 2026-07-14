@@ -1,6 +1,6 @@
 @if (isReady()) {
     <div animate.enter="fade-in">
-        <section [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
+        <section [class]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
             <h1>{{ 'pages.bookmarks.title' | translate }}</h1>
 
             @if (user(); as userInternal) {

@@ -17,7 +17,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { RandomGeneratorService } from 'src/app/services/common/random-generator.service';
 import { ErrorItemDialog } from 'src/app/dialogs/error-item-dialog/error-item.dialog';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
-import { NgClass } from '@angular/common';
+
 import { MatCard, MatCardContent } from '@angular/material/card';
 import { FormsModule } from '@angular/forms';
 import { MatFormField } from '@angular/material/form-field';
@@ -35,7 +35,7 @@ import { LocalizedDatePipe } from '../../pipes/localized-date.pipe';
     templateUrl: './error-items.page.html',
     styleUrls: ['./error-items.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [NgClass, MatCard, MatCardContent, FormsModule, MatFormField, InputActivityDirective, MatInput, MatButton, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatIcon, MatTooltip, MatIconButton, MatMenuTrigger, MatMenu, MatMenuItem, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator, TranslatePipe, LocalizedDatePipe]
+    imports: [MatCard, MatCardContent, FormsModule, MatFormField, InputActivityDirective, MatInput, MatButton, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatIcon, MatTooltip, MatIconButton, MatMenuTrigger, MatMenu, MatMenuItem, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator, TranslatePipe, LocalizedDatePipe]
 })
 export class ErrorItemsPage extends ResponsiveComponent implements OnInit, OnDestroy {
     protected readonly errorItemSource = ErrorItemSource;

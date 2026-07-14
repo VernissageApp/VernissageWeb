@@ -9,7 +9,7 @@ import { MessagesService } from 'src/app/services/common/messages.service';
 import { environment } from 'src/environments/environment';
 import { FileSizeService } from 'src/app/services/common/file-size.service';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
-import { NgClass } from '@angular/common';
+
 import { MatButton } from '@angular/material/button';
 import { MiniUserCardComponent } from '../../components/widgets/mini-user-card/mini-user-card.component';
 import { RouterLink } from '@angular/router';
@@ -19,7 +19,7 @@ import { RouterLink } from '@angular/router';
     templateUrl: './support.page.html',
     styleUrls: ['./support.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [NgClass, MatButton, MiniUserCardComponent, RouterLink, TranslatePipe]
+    imports: [MatButton, MiniUserCardComponent, RouterLink, TranslatePipe]
 })
 export class SupportPage extends ResponsiveComponent implements OnInit {
     protected readonly clientVersion = environment.version;

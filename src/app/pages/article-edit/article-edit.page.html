@@ -1,5 +1,5 @@
 @if (isReady()) {
-    <div animate.enter="fade-in" [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
+    <div animate.enter="fade-in" [class]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
         <div class="flex-row flex-space-around">
             <div class="article-container width-100">
                 <section>
@@ -39,7 +39,7 @@
                                 </mat-form-field>
                             </div>
 
-                            <div [ngClass]="{ 'margin-bottom-30': isHandsetPortrait(), 'margin-bottom-10': !isHandsetPortrait() }">
+                            <div [class]="{ 'margin-bottom-30': isHandsetPortrait(), 'margin-bottom-10': !isHandsetPortrait() }">
                                 <mat-form-field appearance="outline">
                                     <mat-label>{{ 'pages.articleEdit.form.color.label' | translate }}</mat-label>
                                     <input type="text" matInput name="color" #colorInput="ngModel" [(ngModel)]="color"
@@ -76,7 +76,7 @@
                                 <app-language-select [(value)]="language" [includeAll]="true"></app-language-select>
                             </div>
 
-                            <h3 [ngClass]="{ 'padding-top-10': isHandsetPortrait() }">{{ 'pages.articleEdit.visibilities.title' | translate }}</h3>
+                            <h3 [class.padding-top-10]="isHandsetPortrait()">{{ 'pages.articleEdit.visibilities.title' | translate }}</h3>
 
                             <div class="padding-bottom-20">
                                 <div>

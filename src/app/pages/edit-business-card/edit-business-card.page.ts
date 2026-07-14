@@ -11,7 +11,7 @@ import { MessagesService } from 'src/app/services/common/messages.service';
 import { BusinessCardsService } from 'src/app/services/http/business-cards.service';
 import { UsersService } from 'src/app/services/http/users.service';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
-import { NgClass } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
 import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
@@ -28,7 +28,7 @@ import { BusinessCardComponent } from '../../components/widgets/business-card/bu
     templateUrl: './edit-business-card.page.html',
     styleUrls: ['./edit-business-card.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [NgClass, FormsModule, MatCard, MatCardContent, MatFormField, MatLabel, InputActivityDirective, MatInput, MaxLengthValidatorDirective, MatError, CdkTextareaAutosize, MatDivider, MatButton, MatCardActions, BusinessCardComponent, TranslatePipe]
+    imports: [FormsModule, MatCard, MatCardContent, MatFormField, MatLabel, InputActivityDirective, MatInput, MaxLengthValidatorDirective, MatError, CdkTextareaAutosize, MatDivider, MatButton, MatCardActions, BusinessCardComponent, TranslatePipe]
 })
 export class EditBusinessCardPage extends ResponsiveComponent implements OnInit {
     protected user = signal<User | undefined>(undefined);

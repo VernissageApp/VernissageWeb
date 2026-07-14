@@ -1,4 +1,4 @@
-import { isPlatformBrowser, NgClass } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, input, PLATFORM_ID, signal } from '@angular/core';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { LinkableResult } from 'src/app/models/linkable-result';
@@ -11,7 +11,7 @@ import { TranslatePipe } from '@ngx-translate/core';
     templateUrl: './users-gallery.component.html',
     styleUrls: ['./users-gallery.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [NgClass, UsersGalleryItemComponent, TranslatePipe]
+    imports: [UsersGalleryItemComponent, TranslatePipe]
 })
 export class UsersGalleryComponent extends ResponsiveComponent {
     public users = input<LinkableResult<User>>();

@@ -11,7 +11,7 @@ import { StatusHashtagsService } from "src/app/services/common/status-hashtags.s
 import { HashtagsService } from "src/app/services/http/hashtags.service";
 import { TimelineService } from "src/app/services/http/timeline.service";
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
-import { NgClass } from "@angular/common";
+
 import { MatIcon } from "@angular/material/icon";
 import { MatButton } from "@angular/material/button";
 import { GalleryComponent } from "../../components/widgets/gallery/gallery.component";
@@ -21,7 +21,7 @@ import { GalleryComponent } from "../../components/widgets/gallery/gallery.compo
     templateUrl: './hashtag.page.html',
     styleUrls: ['./hashtag.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [NgClass, MatIcon, MatButton, GalleryComponent, TranslatePipe]
+    imports: [MatIcon, MatButton, GalleryComponent, TranslatePipe]
 })
 export class HashtagPage extends ReusableGalleryPageComponent implements OnInit, OnDestroy {
     protected isReady = signal(false);

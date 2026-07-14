@@ -10,7 +10,7 @@ import { ResponsiveComponent } from 'src/app/common/responsive';
 import { Hashtag } from 'src/app/models/hashtag';
 import { Status } from 'src/app/models/status';
 import { MatTabChangeEvent, MatTabGroup, MatTab } from '@angular/material/tabs';
-import { NgClass } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { MatCard, MatCardContent } from '@angular/material/card';
 import { MatFormField, MatSuffix, MatHint } from '@angular/material/form-field';
@@ -27,7 +27,7 @@ import { TranslatePipe } from '@ngx-translate/core';
     templateUrl: './search.page.html',
     styleUrls: ['./search.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [NgClass, FormsModule, MatCard, MatCardContent, MatFormField, InputActivityDirective, MatInput, MatButton, MatSuffix, MatHint, MatTabGroup, MatTab, UsersCardComponent, HashtagsSearchComponent, StatusesSearchComponent, TranslatePipe]
+    imports: [FormsModule, MatCard, MatCardContent, MatFormField, InputActivityDirective, MatInput, MatButton, MatSuffix, MatHint, MatTabGroup, MatTab, UsersCardComponent, HashtagsSearchComponent, StatusesSearchComponent, TranslatePipe]
 })
 export class SearchPage extends ResponsiveComponent implements AfterViewInit, OnInit, OnDestroy {
     private routeParamsSubscription?: Subscription;

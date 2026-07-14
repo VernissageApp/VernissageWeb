@@ -21,7 +21,7 @@ import { AuthorizationService } from 'src/app/services/authorization/authorizati
 import { UserPayload } from 'src/app/models/user-payload';
 import { NotificationAvatarPopoverRequest } from 'src/app/models/notification-avatar-popover-request';
 import { NotificationGroupItem, NotificationItem, NotificationListItem } from 'src/app/models/notification-list-item';
-import { NgClass } from '@angular/common';
+
 import { MatIconButton, MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatCard, MatCardContent } from '@angular/material/card';
@@ -35,7 +35,7 @@ import { AgoPipe } from '../../pipes/ago.pipe';
     templateUrl: './notifications.page.html',
     styleUrls: ['./notifications.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [NgClass, MatIconButton, MatIcon, MatButton, MatCard, MatCardContent, RouterLink, AvatarComponent, PopoverComponent, UserPopoverComponent, TranslatePipe, AgoPipe]
+    imports: [MatIconButton, MatIcon, MatButton, MatCard, MatCardContent, RouterLink, AvatarComponent, PopoverComponent, UserPopoverComponent, TranslatePipe, AgoPipe]
 })
 export class NotificationsPage extends ResponsiveComponent implements OnInit, OnDestroy, AfterViewInit {
     protected readonly notificationType = NotificationType;

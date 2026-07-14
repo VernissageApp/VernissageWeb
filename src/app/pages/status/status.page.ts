@@ -27,7 +27,7 @@ import { UsersDialogContext, UsersListType } from 'src/app/dialogs/users-dialog/
 import { License } from 'src/app/models/license';
 import { WindowService } from 'src/app/services/common/window.service';
 import { RoutingStateService } from 'src/app/services/common/routing-state.service';
-import { isPlatformBrowser, Location as NgLocation, NgClass, SlicePipe } from '@angular/common';
+import { isPlatformBrowser, Location as NgLocation, SlicePipe } from '@angular/common';
 import { Meta, SafeHtml, Title } from '@angular/platform-browser';
 import { LoadingService } from 'src/app/services/common/loading.service';
 import { DeviceDetectorService } from 'ngx-device-detector';
@@ -65,7 +65,7 @@ import { LocalizedDatePipe } from '../../pipes/localized-date.pipe';
     templateUrl: './status.page.html',
     styleUrls: ['./status.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [MatIcon, NgClass, MatButton, GalleryComponent, MatCard, MatCardContent, MatIconButton, MatTooltip, MatMenuTrigger, MatMenu, MatMenuItem, MatDivider, MatProgressSpinner, MiniUserCardComponent, UserCardComponent, HrefToRouterLinkDirective, NoteProcessorDirective, TagComponent, StatusPropertiesComponent, MatCardHeader, MatCardTitle, CommentReplyComponent_1, RouterLink, AvatarComponent, MatFormField, MatLabel, MatSelect, MatOption, SlicePipe, TranslatePipe, AgoPipe, LocalizedDatePipe]
+    imports: [MatIcon, MatButton, GalleryComponent, MatCard, MatCardContent, MatIconButton, MatTooltip, MatMenuTrigger, MatMenu, MatMenuItem, MatDivider, MatProgressSpinner, MiniUserCardComponent, UserCardComponent, HrefToRouterLinkDirective, NoteProcessorDirective, TagComponent, StatusPropertiesComponent, MatCardHeader, MatCardTitle, CommentReplyComponent_1, RouterLink, AvatarComponent, MatFormField, MatLabel, MatSelect, MatOption, SlicePipe, TranslatePipe, AgoPipe, LocalizedDatePipe]
 })
 export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy {
     protected readonly avatarSize = AvatarSize;

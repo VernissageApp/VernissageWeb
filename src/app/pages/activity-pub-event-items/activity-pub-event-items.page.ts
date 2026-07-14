@@ -13,7 +13,7 @@ import { StatusActivityPubEventItem } from 'src/app/models/status-activity-pub-e
 import { StatusEventErrorMessageDialog } from 'src/app/dialogs/status-event-error-message-dialog/status-event-error-message.dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { StatusActivityPubEventsService } from 'src/app/services/http/status-activity-pub-events.service';
-import { NgClass } from '@angular/common';
+
 import { MatCard, MatCardContent } from '@angular/material/card';
 import { FormsModule } from '@angular/forms';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
@@ -30,7 +30,7 @@ import { LocalizedDatePipe } from '../../pipes/localized-date.pipe';
     templateUrl: './activity-pub-event-items.page.html',
     styleUrls: ['./activity-pub-event-items.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [NgClass, MatCard, MatCardContent, FormsModule, MatFormField, MatLabel, MatSelect, MatOption, MatCheckbox, MatRadioGroup, MatRadioButton, MatButton, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator, TranslatePipe, LocalizedDatePipe]
+    imports: [MatCard, MatCardContent, FormsModule, MatFormField, MatLabel, MatSelect, MatOption, MatCheckbox, MatRadioGroup, MatRadioButton, MatButton, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator, TranslatePipe, LocalizedDatePipe]
 })
 export class ActivityPubEventItemsPage extends ResponsiveComponent implements OnInit, OnDestroy {
     protected readonly avatarSize = AvatarSize

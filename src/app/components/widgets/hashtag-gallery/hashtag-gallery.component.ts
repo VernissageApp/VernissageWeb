@@ -1,4 +1,4 @@
-import { isPlatformBrowser, NgClass } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, input, PLATFORM_ID, signal } from '@angular/core';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { Hashtag } from 'src/app/models/hashtag';
@@ -11,7 +11,7 @@ import { TranslatePipe } from '@ngx-translate/core';
     templateUrl: './hashtag-gallery.component.html',
     styleUrls: ['./hashtag-gallery.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [NgClass, HashtagGalleryItemComponent, TranslatePipe]
+    imports: [HashtagGalleryItemComponent, TranslatePipe]
 })
 export class HashtagGalleryComponent extends ResponsiveComponent {
     public hashtags = input<LinkableResult<Hashtag>>();

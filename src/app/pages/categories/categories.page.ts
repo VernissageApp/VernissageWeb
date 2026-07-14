@@ -7,7 +7,7 @@ import { AuthorizationService } from "src/app/services/authorization/authorizati
 import { LoadingService } from "src/app/services/common/loading.service";
 import { CategoriesService } from "src/app/services/http/categories.service";
 import { SettingsService } from "src/app/services/http/settings.service";
-import { NgClass } from "@angular/common";
+
 import { CategoryGalleryComponent } from "../../components/widgets/category-gallery/category-gallery.component";
 import { TranslatePipe } from "@ngx-translate/core";
 
@@ -16,7 +16,7 @@ import { TranslatePipe } from "@ngx-translate/core";
     templateUrl: './categories.page.html',
     styleUrls: ['./categories.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [NgClass, CategoryGalleryComponent, TranslatePipe]
+    imports: [CategoryGalleryComponent, TranslatePipe]
 })
 export class CategoriesPage extends ReusableGalleryPageComponent implements OnInit, OnDestroy {
     protected isReady = signal(false);

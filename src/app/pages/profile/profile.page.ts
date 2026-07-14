@@ -28,7 +28,7 @@ import { UserType } from 'src/app/models/user-type';
 import { Role } from 'src/app/models/role';
 import { UserPayload } from 'src/app/models/user-payload';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
-import { NgOptimizedImage, NgClass } from '@angular/common';
+import { NgOptimizedImage } from '@angular/common';
 import { MatChip } from '@angular/material/chips';
 import { MatIcon } from '@angular/material/icon';
 import { FollowButtonsSectionComponent } from '../../components/widgets/follow-buttons-section/follow-buttons-section.component';
@@ -45,7 +45,7 @@ import { LocalizedDatePipe } from '../../pipes/localized-date.pipe';
     templateUrl: './profile.page.html',
     styleUrls: ['./profile.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [NgOptimizedImage, MatChip, MatIcon, FollowButtonsSectionComponent, MatButton, RouterLink, MatTooltip, MatCard, MatCardContent, MatDivider, NgClass, UsersCardComponent, GalleryComponent, TranslatePipe, LocalizedDatePipe]
+    imports: [NgOptimizedImage, MatChip, MatIcon, FollowButtonsSectionComponent, MatButton, RouterLink, MatTooltip, MatCard, MatCardContent, MatDivider, UsersCardComponent, GalleryComponent, TranslatePipe, LocalizedDatePipe]
 })
 export class ProfilePage extends ReusableGalleryPageComponent implements OnInit, OnDestroy {
     protected readonly profilePageTab = ProfilePageTab;

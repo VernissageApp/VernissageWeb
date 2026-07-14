@@ -29,7 +29,7 @@
                     @if (images(); as imagesInternally) {
 
                         @if (imagesInternally.length === 1 || !showSensitiveImage() || !isBrowser()) {
-                            <div [ngClass]="{ 'photo-image-container-fixed': !isHandset() }">
+                            <div [class.photo-image-container-fixed]="!isHandset()">
                                 @if (mainStatusInternal.sensitive && !alwaysShowNSFW()) {
                                     @if (showSensitiveCanvas()) {
                                         <div class="content-warning show-fade" [class.is-visible]="!showSensitiveImage()">
@@ -52,7 +52,7 @@
                             <gallery
                                 id="mainGalleryId"
                                 class="custom-gallery"
-                                [ngClass]="{ 'custom-gallery-with-icons': showContextArrows() }"
+                                [class.custom-gallery-with-icons]="showContextArrows()"
                                 [style.width]="showContextArrows() ? 'calc(100% - 80px)' : '100%'"
                                 bullets
                                 bulletPosition="bottom"
@@ -444,7 +444,7 @@
                                 @if ((comments()?.length ?? 0) > 0) {
                                     @for (comment of comments(); track comment.status.id) {
                                         <div class="padding-top-10 comments">
-                                            <div class="flex-row gap-8" [ngClass]="{ 'replies': !comment.showDivider, 'padding-top-15': comment.showDivider }">
+                                            <div class="flex-row gap-8" [class]="{ 'replies': !comment.showDivider, 'padding-top-15': comment.showDivider }">
                                                 <a [routerLink]="[ '/@' + $safeNavigationMigration(comment.status.user?.userName) ]" class="comment-avatar" [attr.aria-label]="'pages.status.actions.openProfileAriaLabel' | translate:{ userName: $safeNavigationMigration(comment.status.user?.userName) }">
                                                     <app-avatar [user]="comment.status.user" [size]="avatarSize.medium"></app-avatar>
                                                 </a>
@@ -510,7 +510,7 @@
                                                 }
                                             </div>
 
-                                            <div class="flex-row flex-responsive gap-horizontal-16 margin-left-40" [ngClass]="{ 'replies': !comment.showDivider }">
+                                            <div class="flex-row flex-responsive gap-horizontal-16 margin-left-40" [class.replies]="!comment.showDivider">
                                                 <div class="text-muted fs-80">{{ comment.status.createdAt | ago }}</div>
                                                 <div class="text-muted fs-80" >
                                                     @if (comment.status.favouritesCount > 0) {

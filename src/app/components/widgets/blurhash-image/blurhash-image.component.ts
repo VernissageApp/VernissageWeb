@@ -9,7 +9,7 @@ import { Attachment } from 'src/app/models/attachment';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 import { StatusesService } from 'src/app/services/http/statuses.service';
 import { MessagesService } from 'src/app/services/common/messages.service';
-import { isPlatformBrowser, NgClass } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import { delay, filter, of, Subject, Subscription, switchMap, takeUntil } from 'rxjs';
 import { NavigationStart, Router } from '@angular/router';
 import { Relationship } from 'src/app/models/relationship';
@@ -26,7 +26,7 @@ import { MatIcon } from '@angular/material/icon';
     templateUrl: './blurhash-image.component.html',
     styleUrls: ['./blurhash-image.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [NgClass, MiniUserCardComponent, PopoverComponent, UserPopoverComponent, MatTooltip, MatIcon, TranslatePipe]
+    imports: [MiniUserCardComponent, PopoverComponent, UserPopoverComponent, MatTooltip, MatIcon, TranslatePipe]
 })
 export class BlurhashImageComponent implements AfterViewInit, OnInit, OnDestroy {
     public avatarVisible = input(true);

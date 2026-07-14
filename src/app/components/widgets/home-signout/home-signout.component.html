@@ -2,7 +2,7 @@
     <div animate.enter="fade-in">
 
         @if (articles().length > 0) {
-            <div [ngClass]="{ 'padding-top-30': !isHandset(), 'padding-left-30': !isHandset(), 'padding-right-30': !isHandset(), 'padding-10': isHandset() }">
+            <div [class]="{ 'padding-top-30': !isHandset(), 'padding-left-30': !isHandset(), 'padding-right-30': !isHandset(), 'padding-10': isHandset() }">
                 @for (article of articles(); track article) {
                     <app-article-inline [article]="article"></app-article-inline>
                 }

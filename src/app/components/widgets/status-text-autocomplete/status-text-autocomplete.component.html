@@ -40,7 +40,7 @@
                     tabindex="-1"
                     [attr.aria-selected]="autocompleteSelectedIndex() === i"
                     class="status-autocomplete-option"
-                    [ngClass]="{ 'active': autocompleteSelectedIndex() === i }"
+                    [class.active]="autocompleteSelectedIndex() === i"
                     (mousedown)="onAutocompleteSuggestionMouseDown($event, suggestion)"
                     (mouseenter)="onAutocompleteSuggestionHover(i)">
                     @if (suggestion.type === 'users') {

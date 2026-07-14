@@ -14,7 +14,7 @@ import { MessagesService } from 'src/app/services/common/messages.service';
 import { FocusTrackerService } from 'src/app/services/common/focus-tracker.service';
 import { RandomGeneratorService } from 'src/app/services/common/random-generator.service';
 import { LanguageService } from 'src/app/services/common/language.service';
-import { NgClass } from '@angular/common';
+
 import { ArticleInlineComponent } from '../article-inline/article-inline.component';
 import { MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
@@ -28,7 +28,7 @@ import { TranslatePipe } from '@ngx-translate/core';
     templateUrl: './home-signin.component.html',
     styleUrls: ['./home-signin.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [NgClass, ArticleInlineComponent, MatIconButton, MatIcon, MatButtonToggleGroup, FormsModule, MatButtonToggle, GalleryComponent, TranslatePipe]
+    imports: [ArticleInlineComponent, MatIconButton, MatIcon, MatButtonToggleGroup, FormsModule, MatButtonToggle, GalleryComponent, TranslatePipe]
 })
 export class HomeSigninComponent extends ReusableGalleryPageComponent implements OnInit, OnDestroy {
     protected timeline = model('private');

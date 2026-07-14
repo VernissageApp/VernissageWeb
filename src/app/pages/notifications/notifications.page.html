@@ -1,6 +1,6 @@
 @if(isReady()) {
     @if (notifications(); as notificationsArray) {
-        <div animate.enter="fade-in" [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
+        <div animate.enter="fade-in" [class]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
             <div class="flex-row flex-space-around">
                 <div class="notifications-container width-100">
                     <div class="flex-row flex-align-top flex-space-between margin-bottom-20">
@@ -34,7 +34,7 @@
                                                 <div class="notification-display-name">
                                                     <div class="user">
                                                         @if (!isHandsetPortrait()) {
-                                                            <span class="text-muted icon" [ngClass]="getNotificationIconClass(item.notification)">
+                                                            <span class="text-muted icon" [class]="getNotificationIconClass(item.notification)">
                                                                 <mat-icon class="fill-symbol">{{ getNotificationIcon(item.notification) }}</mat-icon>
                                                             </span>
                                                         }
@@ -78,7 +78,7 @@
                                             <div class="notification-wrapper notification-group-wrapper">
                                                 @if (!isHandsetPortrait()) {
                                                     <div class="notification-group-icon">
-                                                        <span class="text-muted icon" [ngClass]="getNotificationIconClass(item.representative)">
+                                                        <span class="text-muted icon" [class]="getNotificationIconClass(item.representative)">
                                                             <mat-icon class="fill-symbol">{{ getNotificationIcon(item.representative) }}</mat-icon>
                                                         </span>
                                                     </div>

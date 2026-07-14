@@ -3,7 +3,7 @@
         <div>
             <app-avatar [user]="userObject" [size]="size()"></app-avatar>
         </div>
-        <div class="user-info username" [ngClass]="{ 'white': whiteLink() }">
+        <div class="user-info username" [class.white]="whiteLink()">
             <div class="fullname">
                 <a [routerLink]="[ '/@' + userObject.userName ]" (click)="$event.stopPropagation();$event.preventDefault()" class="fw-400">{{ userDisplayService.displayName(userObject) }}</a>
             </div>

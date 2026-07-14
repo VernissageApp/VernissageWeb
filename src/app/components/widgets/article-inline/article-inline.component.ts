@@ -4,7 +4,7 @@ import { UserDisplayService } from 'src/app/services/common/user-display.service
 import { Article } from 'src/app/models/article';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 import { MatCard, MatCardHeader, MatCardTitle, MatCardContent } from '@angular/material/card';
-import { NgStyle } from '@angular/common';
+
 import { MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -14,7 +14,7 @@ import { TranslatePipe } from '@ngx-translate/core';
     templateUrl: './article-inline.component.html',
     styleUrls: ['./article-inline.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [MatCard, NgStyle, MatCardHeader, MatCardTitle, MatCardContent, MatIconButton, MatIcon, TranslatePipe]
+    imports: [MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatIconButton, MatIcon, TranslatePipe]
 })
 export class ArticleInlineComponent extends ResponsiveComponent {
     public article = input.required<Article>();

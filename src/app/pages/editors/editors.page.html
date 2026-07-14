@@ -1,6 +1,6 @@
 @if (isReady()) {
     <div animate.enter="fade-in">
-        <div class="flex-row flex-align-center flex-space-between margin-bottom-20" [ngClass]="{ 'padding-left-30 padding-right-30 padding-top-30': !isHandset(), 'padding-left-10 padding-right-10 padding-top-10': isHandset() }">
+        <div class="flex-row flex-align-center flex-space-between margin-bottom-20" [class]="isHandset() ? 'padding-left-10 padding-right-10 padding-top-10' : 'padding-left-30 padding-right-30 padding-top-30'">
             <h1>
                 <div>{{ 'pages.editors.title' | translate }}</div>
                 @if (!isHandset()) {

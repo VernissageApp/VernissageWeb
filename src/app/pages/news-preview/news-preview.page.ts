@@ -1,4 +1,4 @@
-import { formatDate, NgClass } from '@angular/common';
+import { formatDate } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit, signal, DOCUMENT } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
@@ -22,7 +22,7 @@ import { LocalizedDatePipe } from '../../pipes/localized-date.pipe';
     templateUrl: './news-preview.page.html',
     styleUrls: ['./news-preview.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [NgClass, MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MiniUserCardComponent, MatCardContent, MatCardFooter, LocalizedDatePipe]
+    imports: [MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MiniUserCardComponent, MatCardContent, MatCardFooter, LocalizedDatePipe]
 })
 export class NewsPreviewPage extends ResponsiveComponent implements OnInit, OnDestroy {
     protected isReady = signal(false);

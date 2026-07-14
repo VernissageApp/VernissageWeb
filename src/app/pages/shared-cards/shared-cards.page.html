@@ -1,9 +1,9 @@
 @if (isReady()) {
     @if (sharedBusinessCards(); as sharedBusinessCardsArray) {
-        <div animate.enter="fade-in" [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
+        <div animate.enter="fade-in" [class]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
             <div class="flex-row flex-space-around padding-left-10 padding-right-10">
                 <div class="width-100">
-                    <section class="flex-row flex-space-between flex-align-center margin-bottom-20" [ngClass]="{ 'flex-row': !isHandsetPortrait(), 'flex-column': isHandsetPortrait() }">
+                    <section class="flex-row flex-space-between flex-align-center margin-bottom-20" [class]="{ 'flex-row': !isHandsetPortrait(), 'flex-column': isHandsetPortrait() }">
                         <h1>
                             <div>{{ 'pages.sharedCards.title' | translate }}</div>
                             @if (!isHandset()) {

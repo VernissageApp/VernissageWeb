@@ -5,7 +5,7 @@ import { Rule } from 'src/app/models/rule';
 import { WindowService } from 'src/app/services/common/window.service';
 import { InstanceService } from 'src/app/services/http/instance.service';
 import { SettingsService } from 'src/app/services/http/settings.service';
-import { NgClass } from '@angular/common';
+
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
@@ -13,7 +13,7 @@ import { TranslatePipe } from '@ngx-translate/core';
     templateUrl: './privacy.page.html',
     styleUrls: ['./privacy.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [NgClass, TranslatePipe]
+    imports: [TranslatePipe]
 })
 export class PrivacyPage extends ResponsiveComponent implements OnInit {
     protected isReady = signal(false);

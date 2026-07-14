@@ -8,7 +8,7 @@ import { Attachment } from 'src/app/models/attachment';
 import { LoadingService } from 'src/app/services/common/loading.service';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
-import { isPlatformBrowser, NgClass } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import { GalleryStatus } from 'src/app/models/gallery-status';
 import { PreferencesService } from 'src/app/services/common/preferences.service';
 import { GalleryColumn } from 'src/app/models/gallery-column';
@@ -24,7 +24,7 @@ import { TranslatePipe } from '@ngx-translate/core';
     templateUrl: './gallery.component.html',
     styleUrls: ['./gallery.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [InfiniteScrollDirective, NgClass, ViewportObserverDirective, RouterLink, MatIcon, BlurhashImageComponent, ImageComponent, TranslatePipe]
+    imports: [InfiniteScrollDirective, ViewportObserverDirective, RouterLink, MatIcon, BlurhashImageComponent, ImageComponent, TranslatePipe]
 })
 export class GalleryComponent extends ResponsiveComponent implements OnInit, OnDestroy {
     public statuses = input.required<LinkableResult<Status>>();

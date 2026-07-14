@@ -1,9 +1,9 @@
 @if (isReady()) {
-    <div animate.enter="fade-in" [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
+    <div animate.enter="fade-in" [class]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
         <div class="business-card-messages">
 
             <div class="width-100 margin-bottom-20">
-                <section [ngClass]="{ 'flex-row': !isHandset(), 'flex-column': isHandset() }">
+                <section [class]="{ 'flex-row': !isHandset(), 'flex-column': isHandset() }">
                     <h1 class="width-100">
                         <div class="flex-row flex-space-between flex-align-center width-100">
                             <div>{{ cardTitle() }}</div>
