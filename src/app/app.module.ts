@@ -1,4 +1,4 @@
-import { BrowserModule, provideClientHydration, withEventReplay } from '@angular/platform-browser';
+import { BrowserModule, provideClientHydration, withEventReplay, withNoIncrementalHydration } from '@angular/platform-browser';
 import { NgModule, ErrorHandler, Injector, NgZone, isDevMode, PLATFORM_ID, inject, provideAppInitializer } from '@angular/core';
 import { HTTP_INTERCEPTORS, provideHttpClient, withFetch, withInterceptorsFromDi } from '@angular/common/http';
 import { MAT_CHECKBOX_DEFAULT_OPTIONS, MatCheckboxDefaultOptions } from '@angular/material/checkbox';
@@ -94,7 +94,7 @@ export const customTooltipDefaults: MatTooltipDefaultOptions = {
             provide: ErrorHandler, useClass: GlobalErrorHandler, deps: [PLATFORM_ID, Injector, NgZone, AuthorizationService, PersistenceService, LoadingService, ErrorItemsService, RandomGeneratorService, ErrorParserService]
         },
         provideHttpClient(withFetch(), withInterceptorsFromDi()),
-        provideClientHydration(withEventReplay()),
+        provideClientHydration(withEventReplay(), withNoIncrementalHydration()),
         // The animations are required now only by ng-gallery library.
         provideAnimations()
     ]

@@ -56,7 +56,7 @@
                     } @else {
                         <div class="hashtag-option-text">
                             <span>{{ suggestion.value }}</span>
-                            @if (suggestion.hashtag?.amount !== undefined && suggestion.hashtag?.amount !== null) {
+                            @if ($safeNavigationMigration(suggestion.hashtag?.amount) !== undefined && $safeNavigationMigration(suggestion.hashtag?.amount) !== null) {
                                 <span class="hashtag-option-amount">({{ suggestion.hashtag?.amount }})</span>
                             }
                         </div>

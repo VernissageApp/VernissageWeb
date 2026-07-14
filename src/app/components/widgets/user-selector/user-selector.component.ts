@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, input, model, output, signal, inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, input, output, signal, inject, linkedSignal } from '@angular/core';
 import { ControlContainer, NgForm } from '@angular/forms';
 import { Subject, Subscription } from 'rxjs';
 
@@ -20,7 +20,8 @@ export class UserSelectorComponent implements OnInit, OnDestroy {
     public isRequired = input(false);
     public isReadOnly = input(false);
 
-    public selectedUser = model<User>();
+    public selectedUserInput = input<User>(undefined, {alias: 'selectedUser'});
+    public selectedUser = linkedSignal(this.selectedUserInput);
     public selectedUserChange = output<User | undefined>();
 
     protected filteredUsers = signal<User[] | undefined>(undefined);

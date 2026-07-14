@@ -1,4 +1,4 @@
-import { Component, signal, output, model, viewChild, input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, signal, output, viewChild, input, ChangeDetectionStrategy, linkedSignal } from '@angular/core';
 import { NgForm, NgModel } from '@angular/forms';
 
 @Component({
@@ -9,7 +9,8 @@ import { NgForm, NgModel } from '@angular/forms';
     standalone: false
 })
 export class PasswordComponent {
-    public passwordText = model<string>();
+    public passwordTextInput = input<string>(undefined, {alias: 'passwordText'});
+    public passwordText = linkedSignal(this.passwordTextInput);
     public passwordTextChange = output<string>();
 
     public form = input<NgForm | undefined>();

@@ -1,5 +1,5 @@
 import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
-import { Component, inject, OnDestroy, OnInit, signal } from "@angular/core";
+import { Component, inject, OnDestroy, OnInit, signal, ChangeDetectionStrategy } from "@angular/core";
 import { Subscription } from "rxjs";
 
 export enum Resolution {
@@ -13,6 +13,7 @@ export enum Resolution {
     selector: 'app-base',
     template: '',
     styles: [],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class ResponsiveComponent implements OnInit, OnDestroy {

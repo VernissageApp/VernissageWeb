@@ -8,7 +8,7 @@
         <div class="flex-row flex-wrap gap-8">
             @for (status of statuses()?.data; track status.id) {
                 @if (getImageSrc(status)) {
-                    <a class="image-container" [routerLink]="['/statuses', status.id]" [ariaLabel]="'Status added by: ' + getMainStatus(status).user?.userName">
+                    <a class="image-container" [routerLink]="['/statuses', status.id]" [ariaLabel]="'Status added by: ' + $safeNavigationMigration(getMainStatus(status).user?.userName)">
                         <img class="image-item" [ngSrc]="getImageSrc(status)!" width="100" height="100" [alt]="getImageAlt(status) ?? 'Status image'" priority />
                     </a>
                 }
