@@ -5,7 +5,7 @@
         @if ((users()?.data?.length ?? 0) > 0) {
             <app-users-card
                 [showLoadMore]="!allUsersDisplayed()"
-                [users]="users()?.data"
+                [users]="$safeNavigationMigration(users()?.data)"
                 [relationships]="followingRelationships()"
                 (loadMore)="onLoadMoreFollowing()">
             </app-users-card>

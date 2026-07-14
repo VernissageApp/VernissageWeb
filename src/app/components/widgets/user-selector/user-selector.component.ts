@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, input, model, output, signal, inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, input, output, signal, inject, linkedSignal } from '@angular/core';
 import { ControlContainer, NgForm } from '@angular/forms';
 import { Subject, Subscription } from 'rxjs';
 
@@ -20,7 +20,8 @@ export class UserSelectorComponent implements OnInit, OnDestroy {
     public isRequired = input(false);
     public isReadOnly = input(false);
 
-    public selectedUser = model<User>();
+    public selectedUser = input<User>();
+    public selectedUserValue = linkedSignal(this.selectedUser);
     public selectedUserChange = output<User | undefined>();
 
     protected filteredUsers = signal<User[] | undefined>(undefined);
@@ -49,12 +50,12 @@ export class UserSelectorComponent implements OnInit, OnDestroy {
     }
 
     protected onSelectedUser(user: User): void {
-        this.selectedUser.set(user);
+        this.selectedUserValue.set(user);
         this.selectedUserChange.emit(user);
     }
 
     protected onChange(): void {
-        this.selectedUser.set(undefined);
+        this.selectedUserValue.set(undefined);
         this.selectedUserChange.emit(undefined);
     }
 
@@ -80,7 +81,7 @@ export class UserSelectorComponent implements OnInit, OnDestroy {
             return [];
         }
 
-        this.selectedUser.set(undefined);
+        this.selectedUserValue.set(undefined);
         this.selectedUserChange.emit(undefined);
 
         const result = await this.usersService.get(0, 40, value);

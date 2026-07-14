@@ -1,4 +1,4 @@
-import { Component, signal, output, model, viewChild, input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, signal, output, viewChild, input, ChangeDetectionStrategy, linkedSignal } from '@angular/core';
 import { NgForm, NgModel } from '@angular/forms';
 
 @Component({
@@ -9,7 +9,8 @@ import { NgForm, NgModel } from '@angular/forms';
     standalone: false
 })
 export class PasswordComponent {
-    public passwordText = model<string>();
+    public passwordText = input<string>();
+    public passwordValue = linkedSignal(this.passwordText);
     public passwordTextChange = output<string>();
 
     public form = input<NgForm | undefined>();
@@ -24,7 +25,7 @@ export class PasswordComponent {
     }
 
     protected passwordChanged(): void {
-        this.passwordTextChange.emit(this.passwordText() ?? '');
+        this.passwordTextChange.emit(this.passwordValue() ?? '');
         this.passwordValid.emit(this.password()?.valid ?? false);
     }
 }

@@ -126,7 +126,7 @@
                                         @if ((following()?.data?.length ?? 0) > 0) {
                                             <app-users-card
                                                 [showLoadMore]="!allFollowingDisplayed()"
-                                                [users]="following()?.data"
+                                                [users]="$safeNavigationMigration(following()?.data)"
                                                 [relationships]="followingRelationships()"
                                                 (relationChanged)="onRelationChanged($event)"
                                                 (loadMore)="onLoadMoreFollowing()">
@@ -155,7 +155,7 @@
                                         @if ((followers()?.data?.length ?? 0) > 0) {
                                             <app-users-card
                                                 [showLoadMore]="!allFollowersDisplayed()"
-                                                [users]="followers()?.data"
+                                                [users]="$safeNavigationMigration(followers()?.data)"
                                                 [relationships]="followersRelationships()"
                                                 (relationChanged)="onRelationChanged($event)"
                                                 (loadMore)="onLoadMoreFollowers()">
