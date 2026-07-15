@@ -12,6 +12,7 @@ import {
     provideZoneChangeDetection,
 } from '@angular/core';
 import { MAT_CHECKBOX_DEFAULT_OPTIONS, MatCheckboxDefaultOptions } from '@angular/material/checkbox';
+import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { MAT_TOOLTIP_DEFAULT_OPTIONS, MatTooltipDefaultOptions } from '@angular/material/tooltip';
 import { provideClientHydration, withEventReplay, withNoIncrementalHydration } from '@angular/platform-browser';
@@ -69,6 +70,7 @@ export const appConfig: ApplicationConfig = {
         { provide: TitleStrategy, useClass: LocalizedTitleStrategy },
         { provide: MAT_CHECKBOX_DEFAULT_OPTIONS, useValue: { clickAction: 'check' } as MatCheckboxDefaultOptions },
         { provide: MAT_TOOLTIP_DEFAULT_OPTIONS, useValue: customTooltipDefaults },
+        provideNativeDateAdapter(),
         provideTranslateService({
             fallbackLang: 'en-us',
             compiler: provideTranslateCompiler(TranslateMessageFormatCompiler),
