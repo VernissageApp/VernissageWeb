@@ -2,7 +2,7 @@
     <div class="user-wrapper">
         <div class="user-display-name">
             <a [routerLink]="[ '/@' + user.userName ]" class="user-avatar" [attr.aria-label]="'common.actions.openProfileWithUserName' | translate: { userName: user.userName }">
-                <app-avatar [user]="user" [size]="avatarSize.huge"></app-avatar>
+                <app-avatar [user]="user" [size]="avatarSize.huge" />
             </a>
     
             <div class="overflow-ellipsis width-100">
@@ -33,12 +33,10 @@
         </div>
     
         @if (getRelationship(user); as relationshipObject) {
-            <app-follow-buttons-section
-                [user]="user"
+            <app-follow-buttons-section [user]="user"
                 [relationship]="relationshipObject"
                 (relationChanged)="onRelationChanged($event)"
-                [singleButton]="true">
-            </app-follow-buttons-section>
+                [singleButton]="true" />
         }
     </div>
 }

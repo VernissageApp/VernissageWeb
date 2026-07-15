@@ -10,7 +10,7 @@
             <mat-form-field class="width-100" appearance="outline">
                 <mat-label>{{ 'common.labels.email' | translate }}</mat-label>
                 <input type="email" matInput name="email" [(ngModel)]="email" #emailInput="ngModel"
-                    pattern="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
+                    pattern="[A-Za-z0-9!#$%&'*+\/=?^_`\{\|\}~\-]+(?:\.[A-Za-z0-9!#$%&'*+\/=?^_`\{\|\}~\-]+)*@(?:[A-Za-z0-9](?:[A-Za-z0-9\-]*[A-Za-z0-9])?\.)+[A-Za-z0-9](?:[A-Za-z0-9\-]*[A-Za-z0-9])?"
                     [attr.aria-label]="'dialogs.changeEmail.attrs.email' | translate" appUniqueEmail required />
 
                 @if (emailInput.invalid && emailInput.errors?.required) {

@@ -1,5 +1,5 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, computed, effect, ElementRef, inject, input, OnDestroy, OnInit, PLATFORM_ID, signal, viewChild } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { decode } from 'blurhash';
 import { AvatarSize } from '../avatar/avatar-size';
 import { User } from 'src/app/models/user';
@@ -9,19 +9,24 @@ import { Attachment } from 'src/app/models/attachment';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 import { StatusesService } from 'src/app/services/http/statuses.service';
 import { MessagesService } from 'src/app/services/common/messages.service';
-import { isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser, NgOptimizedImage } from '@angular/common';
 import { delay, filter, of, Subject, Subscription, switchMap, takeUntil } from 'rxjs';
 import { NavigationStart, Router } from '@angular/router';
 import { Relationship } from 'src/app/models/relationship';
 import { RelationshipsService } from 'src/app/services/http/relationships.service';
 import { UserPayload } from 'src/app/models/user-payload';
+import { MiniUserCardComponent } from '../mini-user-card/mini-user-card.component';
+import { PopoverComponent } from '../popover/popover.component';
+import { UserPopoverComponent } from '../user-popover/user-popover.component';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
     selector: 'app-image',
     templateUrl: './image.component.html',
     styleUrls: ['./image.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [NgOptimizedImage, MiniUserCardComponent, PopoverComponent, UserPopoverComponent, MatTooltip, MatIcon, TranslatePipe]
 })
 export class ImageComponent implements OnInit, OnDestroy, AfterViewInit {
     public avatarVisible = input(true);

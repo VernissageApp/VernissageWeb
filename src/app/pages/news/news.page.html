@@ -1,6 +1,6 @@
 @if (isReady()) {
     @if (articles(); as articlesArray) {
-        <div animate.enter="fade-in" [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
+        <div animate.enter="fade-in" [class]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
             <div class="flex-row flex-space-around">
                 <div class="news-container width-100">
                     <section>
@@ -23,7 +23,7 @@
                                     }
                                     @if (article.user; as userObject) {
                                         <mat-card-subtitle>
-                                            <app-mini-user-card [user]="userObject"></app-mini-user-card>
+                                            <app-mini-user-card [user]="userObject" />
                                         </mat-card-subtitle>
                                     }
                                 </mat-card-header>
@@ -38,16 +38,14 @@
                             </mat-card>
                         }
 
-                        <mat-paginator
-                            (page)="handlePageEvent($event)"
+                        <mat-paginator (page)="handlePageEvent($event)"
                             [length]="articlesArray.total"
                             [pageIndex]="pageIndex()"
                             [pageSize]="5"
                             [pageSizeOptions]="[5, 10, 25, 100]"
-                            [attr.aria-label]="'common.paginator.selectPage' | translate">
-                        </mat-paginator>
+                            [attr.aria-label]="'common.paginator.selectPage' | translate" />
                     } @else {
-                        <div class="text-muted padding-top-30 text-center" [ngClass]="{ 'padding-left-30 padding-right-30': !isHandset(), 'padding-left-10 padding-right-10': isHandset() }">
+                        <div class="text-muted padding-top-30 text-center" [class]="isHandset() ? 'padding-left-10 padding-right-10' : 'padding-left-30 padding-right-30'">
                             <h2 class="empty-page">
                                 <div class="news"></div>
                                 <div>{{ 'pages.news.empty.noItems' | translate }}</div>

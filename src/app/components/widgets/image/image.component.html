@@ -10,7 +10,7 @@
                 @if (internalPriority()) {
                     <img
                         class="image-item img-vertical"
-                        [ngClass]="{ 'img-transform-hack': imageCutHackLoaded(), 'img-show': imageIsLoaded(), 'img-blur': !imageIsLoaded() }"
+                        [class]="{ 'img-transform-hack': imageCutHackLoaded(), 'img-show': imageIsLoaded(), 'img-blur': !imageIsLoaded() }"
                         [ngSrc]="imageSrcString"
                         [width]="width()"
                         [height]="height()"
@@ -21,7 +21,7 @@
                 } @else {
                     <img
                         class="image-item img-vertical"
-                        [ngClass]="{ 'img-transform-hack': imageCutHackLoaded(), 'img-show': imageIsLoaded(), 'img-blur': !imageIsLoaded() }"
+                        [class]="{ 'img-transform-hack': imageCutHackLoaded(), 'img-show': imageIsLoaded(), 'img-blur': !imageIsLoaded() }"
                         [ngSrc]="imageSrcString"
                         [width]="width()"
                         [height]="height()"
@@ -38,7 +38,7 @@
         @if(showAvatar()) {
             @if (user(); as userObject) {
                 <div class="avatar" (mouseenter)="mouseenter.next()" (mouseleave)="mouseleave.next()">
-                    <app-mini-user-card [user]="userObject" [showUserName]="false" [whiteLink]="true" [size]="avatarSize.verysmall"></app-mini-user-card>
+                    <app-mini-user-card [user]="userObject" [showUserName]="false" [whiteLink]="true" [size]="avatarSize.verysmall" />
                 </div>
 
                 <app-popover [visible]="popoverVisible()">
@@ -49,7 +49,7 @@
                         (click)="$event.preventDefault(); $event.stopPropagation()"
                         (keydown.enter)="$event.preventDefault(); $event.stopPropagation()"
                         (keydown.space)="$event.preventDefault(); $event.stopPropagation()">
-                        <app-user-popover [user]="userObject" [relationship]="relationship()"></app-user-popover>
+                        <app-user-popover [user]="userObject" [relationship]="relationship()" />
                     </div>
                 </app-popover>
             }

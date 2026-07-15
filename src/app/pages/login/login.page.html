@@ -56,7 +56,7 @@
                             <button type="submit" matButton="filled" [disabled]="isSubmitting()" [attr.aria-label]="'common.actions.login' | translate">{{ 'common.actions.login' | translate }}</button>
 
                             @if (isSubmitting()) {
-                                <mat-spinner [diameter]="18"></mat-spinner>
+                                <mat-spinner [diameter]="18" />
                             }
 
                             @if (errorMessage(); as errorMessageString) {
@@ -96,7 +96,7 @@
             }
 
             <!-- Footer with privacy policy. -->
-            <app-footer></app-footer>
+            <app-footer />
         </div>
     </div>
 </div>

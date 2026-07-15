@@ -35,7 +35,7 @@
                     }
 
                     @if (user() && isLoggedIn()) {
-                        <mat-divider></mat-divider>
+                        <mat-divider />
 
                         <a mat-menu-item [routerLink]="['/upload']" [attr.aria-label]="'common.actions.upload' | translate">
                             <mat-icon>arrow_upward</mat-icon>
@@ -174,7 +174,7 @@
         @if (user(); as userObject) {
             @if (isLoggedIn()) {
                 @if (deviceResolution() !== resolution.handsetPortrait) {
-                    <mat-divider class="menu-divider" [vertical]="true"></mat-divider>
+                    <mat-divider class="menu-divider" [vertical]="true" />
 
                     <a matIconButton [routerLink]="['/search']" [attr.aria-label]="'common.actions.search' | translate">
                         <mat-icon>search</mat-icon>
@@ -203,7 +203,7 @@
                             <mat-icon>face</mat-icon>
                             <span>{{ fullName() }}</span>
                         </a>
-                        <mat-divider></mat-divider>
+                        <mat-divider />
                         <a mat-menu-item [routerLink]="['/']" (click)="markClearReuseStrategy()" [attr.aria-label]="'components.header.navigation.home' | translate">
                             <mat-icon>home</mat-icon>
                             <span>{{ 'components.header.navigation.home' | translate }}</span>
@@ -223,7 +223,7 @@
                             </a>
                         }
 
-                        <mat-divider></mat-divider>
+                        <mat-divider />
                         <a mat-menu-item [routerLink]="['/account']" [attr.aria-label]="'components.header.navigation.account' | translate">
                             <mat-icon>account_circle</mat-icon>
                             <span>{{ 'components.header.navigation.account' | translate }}</span>
@@ -238,7 +238,7 @@
                         </a>
 
                         @if (isAdministrator() || isModerator()) {
-                            <mat-divider></mat-divider>
+                            <mat-divider />
 
                             <a mat-menu-item [routerLink]="['/users']" [attr.aria-label]="'components.header.navigation.users' | translate">
                                 <mat-icon>people</mat-icon>
@@ -269,7 +269,7 @@
                             </a>
                         }
 
-                        <mat-divider></mat-divider>
+                        <mat-divider />
                         <button mat-menu-item (click)="signOut()" [attr.aria-label]="'common.actions.signOut' | translate">
                             <mat-icon>exit_to_app</mat-icon>
                             <span>{{ 'common.actions.signOut' | translate }}</span>

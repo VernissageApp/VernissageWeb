@@ -1,11 +1,11 @@
-<div [ngClass]="{ 'padding-left-30 padding-right-30': !isHandset(), 'padding-left-10 padding-right-10': isHandset() }">
+<div [class]="isHandset() ? 'padding-left-10 padding-right-10' : 'padding-left-30 padding-right-30'">
     @if (!isBrowser()) {
         <div></div>
     }
     @else if (users()?.data?.length) {
         @for (user of users()?.data; track user.userName) {
             <div>
-                <app-users-gallery-item [user]="user"></app-users-gallery-item>
+                <app-users-gallery-item [user]="user" />
             </div>
         }
     } @else {

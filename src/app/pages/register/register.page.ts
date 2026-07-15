@@ -10,14 +10,30 @@ import { MessagesService } from 'src/app/services/common/messages.service';
 import { Router } from '@angular/router';
 import { Rule } from 'src/app/models/rule';
 import { SettingsService } from 'src/app/services/http/settings.service';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { FormsModule } from '@angular/forms';
+import { MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatCardActions } from '@angular/material/card';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { InputActivityDirective } from '../../directives/input-activity.directive';
+import { MatInput } from '@angular/material/input';
+import { UniqueUserNameValidatorDirective } from '../../validators/directives/unique-user-name-validator.directive';
+import { MaxLengthValidatorDirective } from '../../validators/directives/max-length-validator.directive';
+import { UniqueEmailValidatorDirective } from '../../validators/directives/unique-email-validator.directive';
+import { LanguageSelectComponent } from '../../components/widgets/language-select/language-select.component';
+import { PasswordComponent } from '../../components/widgets/password/password.component';
+import { MatDivider } from '@angular/material/list';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { MatButton } from '@angular/material/button';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { FooterComponent } from '../../components/core/footer/footer.component';
 
 @Component({
     selector: 'app-register',
     templateUrl: './register.page.html',
     styleUrls: ['./register.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [FormsModule, MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatFormField, MatLabel, InputActivityDirective, MatInput, UniqueUserNameValidatorDirective, MaxLengthValidatorDirective, MatError, UniqueEmailValidatorDirective, LanguageSelectComponent, PasswordComponent, MatDivider, MatCheckbox, CdkTextareaAutosize, MatButton, MatCardActions, MatProgressSpinner, FooterComponent, TranslatePipe]
 })
 export class RegisterPage implements OnInit {
     protected readonly registerMode = RegisterMode;

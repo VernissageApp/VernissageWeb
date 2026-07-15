@@ -6,12 +6,14 @@ import { WindowService } from 'src/app/services/common/window.service';
 import { InstanceService } from 'src/app/services/http/instance.service';
 import { SettingsService } from 'src/app/services/http/settings.service';
 
+import { TranslatePipe } from '@ngx-translate/core';
+
 @Component({
     selector: 'app-terms',
     templateUrl: './terms.page.html',
     styleUrls: ['./terms.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [TranslatePipe]
 })
 export class TermsPage extends ResponsiveComponent implements OnInit {
     protected isReady = signal(false);

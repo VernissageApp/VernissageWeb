@@ -1,25 +1,20 @@
-import { inject, Injectable, NgModule } from '@angular/core';
-import { ServerModule } from '@angular/platform-server';
-
-import { AppModule } from './app.module';
-import { AppComponent } from './app.component';
+import { ApplicationConfig, Injectable, inject, importProvidersFrom, mergeApplicationConfig } from '@angular/core';
+import { provideServerRendering } from '@angular/platform-server';
 import { JWT_OPTIONS, JwtModule } from '@auth0/angular-jwt';
-import { WindowService } from './services/common/window.service';
-import { SsrCookieService } from './services/common/ssr-cookie.service';
 import { TranslateLoader, TranslationObject } from '@ngx-translate/core';
-import { I18N_ASSETS_PATH } from './common/i18n-assets-path.token';
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { from, Observable } from 'rxjs';
 
-const jwtOptionsFactory = (cookieService: SsrCookieService, windowService: WindowService) => {
-    return {
-        tokenGetter: () => {
-            return cookieService.get('access-token');
-        },
-        allowedDomains: [windowService.apiService(), 'localhost']
-    };
-};
+import { appConfig } from './app.config';
+import { I18N_ASSETS_PATH } from './common/i18n-assets-path.token';
+import { SsrCookieService } from './services/common/ssr-cookie.service';
+import { WindowService } from './services/common/window.service';
+
+const jwtOptionsFactory = (cookieService: SsrCookieService, windowService: WindowService) => ({
+    tokenGetter: () => cookieService.get('access-token'),
+    allowedDomains: [windowService.apiService(), 'localhost'],
+});
 
 @Injectable()
 class ServerTranslateLoader implements TranslateLoader {
@@ -33,21 +28,18 @@ class ServerTranslateLoader implements TranslateLoader {
     }
 }
 
-@NgModule({
-    imports: [
-        AppModule,
-        ServerModule,
-        JwtModule.forRoot({
+const serverConfig: ApplicationConfig = {
+    providers: [
+        provideServerRendering(),
+        importProvidersFrom(JwtModule.forRoot({
             jwtOptionsProvider: {
                 provide: JWT_OPTIONS,
                 useFactory: jwtOptionsFactory,
                 deps: [SsrCookieService, WindowService],
-            }
-        }),
-    ],
-    providers: [
+            },
+        })),
         { provide: TranslateLoader, useClass: ServerTranslateLoader },
     ],
-    bootstrap: [AppComponent],
-})
-export class AppServerModule {}
+};
+
+export const config = mergeApplicationConfig(appConfig, serverConfig);

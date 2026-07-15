@@ -1,6 +1,9 @@
 import { ChangeDetectionStrategy, Component, computed, input, model } from '@angular/core';
 import type { Language } from 'src/app/models/language';
 import { getLanguageFlag, SUPPORTED_LANGUAGES } from 'src/app/services/common/language.service';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatSelect, MatSelectTrigger, MatOption } from '@angular/material/select';
+import { TranslatePipe } from '@ngx-translate/core';
 
 interface LanguageSelectOption {
     locale: string | null;
@@ -17,7 +20,7 @@ const allLanguageOption: LanguageSelectOption = {
     templateUrl: './language-select.component.html',
     styleUrls: ['./language-select.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [MatFormField, MatLabel, MatSelect, MatSelectTrigger, MatOption, TranslatePipe]
 })
 export class LanguageSelectComponent {
     public value = model<string | null>('en_US');

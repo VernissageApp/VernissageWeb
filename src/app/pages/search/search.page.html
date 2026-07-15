@@ -1,4 +1,4 @@
-<div animate.enter="fade-in" [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
+<div animate.enter="fade-in" [class]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
     <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
 
         <div class="flex-row flex-space-around">
@@ -8,7 +8,7 @@
                         <mat-form-field appearance="outline">
                             <input type="text" #queryInput matInput name="query" [(ngModel)]="search" cdkFocusInitial [attr.aria-label]="'common.labels.query' | translate" />
                             <button matSuffix matButton="outlined" type="submit" class="margin-right-10" [attr.aria-label]="'common.actions.search' | translate">{{ 'common.actions.search' | translate }}</button>
-                            <mat-hint class="text-muted"></mat-hint>
+                            <mat-hint class="text-muted" />
                         </mat-form-field>
                         <div class="text-muted fs-90 margin-left-10 margin-top-5">
                             {{ 'pages.search.hint' | translate }}
@@ -24,7 +24,7 @@
                                 <mat-tab [label]="'pages.search.tabs.users' | translate">
                                     @if (users().length > 0) {
                                         <div class="margin-top-20 margin-bottom-20">
-                                            <app-users-card [users]="users()" [relationships]="usersRelationships()" [showBio]="true"></app-users-card>
+                                            <app-users-card [users]="users()" [relationships]="usersRelationships()" [showBio]="true" />
                                         </div>
                                     }
 
@@ -38,7 +38,7 @@
                                     @if (hashtags().length > 0) {
                                         <div class="margin-top-20 margin-bottom-20">
                                             @for (hashtag of hashtags(); track hashtag.name) {
-                                                <app-hashtags-search [hashtag]="hashtag"></app-hashtags-search>
+                                                <app-hashtags-search [hashtag]="hashtag" />
                                             }
                                         </div>
                                     }
@@ -53,7 +53,7 @@
                                     @if (statuses().length > 0) {
                                         <div class="margin-top-20 margin-bottom-20">
                                             @for (status of statuses(); track status.id) {
-                                                <app-statuses-search [status]="status"></app-statuses-search>
+                                                <app-statuses-search [status]="status" />
                                             }
                                         </div>
                                     }

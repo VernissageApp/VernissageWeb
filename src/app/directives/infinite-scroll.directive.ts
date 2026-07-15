@@ -3,10 +3,7 @@ import { WindowService } from "../services/common/window.service";
 import { fromEvent, Subscription, tap, throttleTime } from "rxjs";
 import { MatDialog } from "@angular/material/dialog";
 
-@Directive({
-    selector: '[appInfiniteScroll]',
-    standalone: false
-})
+@Directive({ selector: '[appInfiniteScroll]' })
 export class InfiniteScrollDirective implements OnInit, OnDestroy {
     public scrolled = output();
   

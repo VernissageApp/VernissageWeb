@@ -4,7 +4,7 @@ import express from 'express';
 import helmet from 'helmet';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
-import AppServerModule from './src/main.server';
+import bootstrap from './src/main.server';
 import { REQUEST, RESPONSE } from 'express.tokens';
 import { I18N_ASSETS_PATH } from './src/app/common/i18n-assets-path.token';
 
@@ -94,7 +94,7 @@ export function app(): express.Express {
 
         commonEngine
             .render({
-                bootstrap: AppServerModule,
+                bootstrap,
                 documentFilePath: indexHtml,
                 url: `${protocol}://${headers.host}${originalUrl}`,
                 publicPath: browserDistFolder,

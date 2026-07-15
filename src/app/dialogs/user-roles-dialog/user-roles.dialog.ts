@@ -1,16 +1,20 @@
 import { ChangeDetectionStrategy, Component, inject, model, OnInit } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
 import { Role } from 'src/app/models/role';
 import { User } from 'src/app/models/user';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { UsersService } from 'src/app/services/http/users.service';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { FormsModule } from '@angular/forms';
+import { MatButton } from '@angular/material/button';
 
 @Component({
     selector: 'app-user-roles-dialog',
     templateUrl: 'user-roles.dialog.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, MatCheckbox, FormsModule, MatDialogActions, MatButton, TranslatePipe]
 })
 export class UserRolesDialog implements OnInit {
     protected isAdministrator = model(false);

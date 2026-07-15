@@ -1,6 +1,13 @@
 import { ChangeDetectionStrategy, Component, input, output } from "@angular/core";
-import { ControlContainer, NgForm } from "@angular/forms";
+import { ControlContainer, NgForm, FormsModule } from "@angular/forms";
 import { CategoryHashtag } from "src/app/models/category-hashtag";
+import { MatFormField, MatLabel, MatError, MatSuffix } from "@angular/material/form-field";
+import { InputActivityDirective } from "../../directives/input-activity.directive";
+import { MatInput } from "@angular/material/input";
+import { MaxLengthValidatorDirective } from "../../validators/directives/max-length-validator.directive";
+import { MatIconButton } from "@angular/material/button";
+import { MatIcon } from "@angular/material/icon";
+import { TranslatePipe } from "@ngx-translate/core";
 
 @Component({
     selector: 'app-category-hashtag-item',
@@ -8,7 +15,7 @@ import { CategoryHashtag } from "src/app/models/category-hashtag";
     styleUrls: ['category-hashtag-item.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
-    standalone: false
+    imports: [MatFormField, MatLabel, InputActivityDirective, MatInput, FormsModule, MaxLengthValidatorDirective, MatError, MatIconButton, MatSuffix, MatIcon, TranslatePipe]
 })
 export class CategoryHashtagItemComponent {
     public hashtag = input.required<CategoryHashtag>();

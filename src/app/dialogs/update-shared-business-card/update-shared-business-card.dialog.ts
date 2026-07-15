@@ -1,14 +1,22 @@
 import { ChangeDetectionStrategy, Component, inject, model, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
 import { SharedBusinessCard } from 'src/app/models/shared-business-card';
 import { SharedBusinessCardUpdateRequest } from 'src/app/models/shared-business-card-update-request';
 import { WindowService } from 'src/app/services/common/window.service';
+import { FormsModule } from '@angular/forms';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { InputActivityDirective } from '../../directives/input-activity.directive';
+import { MatInput } from '@angular/material/input';
+import { MaxLengthValidatorDirective } from '../../validators/directives/max-length-validator.directive';
+import { MatButton } from '@angular/material/button';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-update-shared-business-card-dialog',
     templateUrl: 'update-shared-business-card.dialog.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [FormsModule, MatDialogTitle, CdkScrollable, MatDialogContent, MatFormField, MatLabel, InputActivityDirective, MatInput, MaxLengthValidatorDirective, MatError, MatDialogActions, MatButton, TranslatePipe]
 })
 export class UpdateSharedBusinessCardDialog implements OnInit {
     protected name = model('');

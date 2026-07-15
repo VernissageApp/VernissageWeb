@@ -1,20 +1,27 @@
 import { ChangeDetectionStrategy, Component, computed, effect, ElementRef, inject, input, model, OnInit, output, signal, viewChild } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { Status } from 'src/app/models/status';
 import { StatusRequest } from 'src/app/models/status-request';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { StatusesService } from 'src/app/services/http/statuses.service';
 import { AvatarSize } from '../avatar/avatar-size';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormsModule } from '@angular/forms';
 import { InstanceService } from 'src/app/services/http/instance.service';
 import { UserPayload } from 'src/app/models/user-payload';
+import { AvatarComponent } from '../avatar/avatar.component';
+import { MatFormField, MatLabel, MatHint, MatError } from '@angular/material/form-field';
+import { InputActivityDirective } from '../../../directives/input-activity.directive';
+import { MatInput } from '@angular/material/input';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { MaxLengthValidatorDirective } from '../../../validators/directives/max-length-validator.directive';
+import { MatButton } from '@angular/material/button';
 
 @Component({
     selector: 'app-comment-reply',
     templateUrl: './comment-reply.component.html',
     styleUrls: ['./comment-reply.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [FormsModule, AvatarComponent, MatFormField, MatLabel, InputActivityDirective, MatInput, CdkTextareaAutosize, MaxLengthValidatorDirective, MatHint, MatError, MatButton, TranslatePipe]
 })
 export class CommentReplyComponent implements OnInit {
     public signedInUser = input.required<UserPayload>();

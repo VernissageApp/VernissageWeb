@@ -1,16 +1,24 @@
 import { ChangeDetectionStrategy, Component, inject, model, OnInit } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
 import { HomeCard } from 'src/app/models/home-card';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { HomeCardsService } from 'src/app/services/http/home-cards.service';
+import { FormsModule } from '@angular/forms';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { InputActivityDirective } from '../../directives/input-activity.directive';
+import { MatInput } from '@angular/material/input';
+import { MaxLengthValidatorDirective } from '../../validators/directives/max-length-validator.directive';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { MatButton } from '@angular/material/button';
 
 @Component({
     selector: 'app-home-card-dialog',
     templateUrl: 'home-card.dialog.html',
     styleUrls: ['home-card.dialog.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [FormsModule, MatDialogTitle, CdkScrollable, MatDialogContent, MatFormField, MatLabel, InputActivityDirective, MatInput, MaxLengthValidatorDirective, MatError, CdkTextareaAutosize, MatDialogActions, MatButton, TranslatePipe]
 })
 export class HomeCardDialog implements OnInit {
     protected title = model('');

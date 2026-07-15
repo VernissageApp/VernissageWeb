@@ -5,8 +5,7 @@ import { isPlatformBrowser } from '@angular/common';
     selector: 'app-popover',
     templateUrl: './popover.component.html',
     styleUrls: ['./popover.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PopoverComponent implements OnDestroy {
     public visible = input(false);

@@ -1,13 +1,10 @@
-import { Directive, Input, OnDestroy, ElementRef, NgZone, PLATFORM_ID, inject } from '@angular/core';
+import { Directive, OnDestroy, ElementRef, NgZone, PLATFORM_ID, inject, input } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
-@Directive({
-    selector: '[appNoteProcessor]',
-    standalone: false
-})
+@Directive({ selector: '[appNoteProcessor]' })
 export class NoteProcessorDirective implements OnDestroy {
 
-    @Input('appNoteProcessor') selector?: string;
+    readonly selector = input<string>(undefined, { alias: 'appNoteProcessor' });
     private observer: any;
 
     private zone = inject(NgZone);
@@ -18,7 +15,7 @@ export class NoteProcessorDirective implements OnDestroy {
         if (isPlatformBrowser(this.platformId)) {
             this.zone.runOutsideAngular(() => {
                 this.observer = new MutationObserver(() =>
-                    this.addBootstrapClass(this.selector)
+                    this.addBootstrapClass(this.selector())
                 );
 
                 this.observer.observe(this.element.nativeElement, {

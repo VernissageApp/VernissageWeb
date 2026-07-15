@@ -1,10 +1,20 @@
 import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, input, output, signal, inject, linkedSignal } from '@angular/core';
-import { ControlContainer, NgForm } from '@angular/forms';
+import { ControlContainer, NgForm, FormsModule } from '@angular/forms';
 import { Subject, Subscription } from 'rxjs';
 
 import { debounceTime, switchMap } from 'rxjs/operators';
 import { User } from 'src/app/models/user';
 import { UsersService } from 'src/app/services/http/users.service';
+import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
+import { InputActivityDirective } from '../../../directives/input-activity.directive';
+import { MatInput } from '@angular/material/input';
+import { MatAutocompleteTrigger, MatAutocomplete } from '@angular/material/autocomplete';
+import { AutocompleteValidDirective } from '../../../validators/directives/autocomplete-valid.directive';
+import { MatOption } from '@angular/material/select';
+import { MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-user-selector',
@@ -12,7 +22,7 @@ import { UsersService } from 'src/app/services/http/users.service';
     styleUrls: ['./user-selector.component.scss'],
     viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [MatFormField, MatLabel, InputActivityDirective, MatInput, FormsModule, MatAutocompleteTrigger, AutocompleteValidDirective, MatAutocomplete, MatOption, MatIconButton, MatSuffix, MatIcon, MatProgressSpinner, MatError, TranslatePipe]
 })
 export class UserSelectorComponent implements OnInit, OnDestroy {
     public name = input.required<string>();

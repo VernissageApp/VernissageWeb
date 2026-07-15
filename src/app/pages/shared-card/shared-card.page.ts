@@ -13,14 +13,23 @@ import { LoadingService } from 'src/app/services/common/loading.service';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { WindowService } from 'src/app/services/common/window.service';
 import { SharedBusinessCardsService } from 'src/app/services/http/shared-business-cards.service';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+
+import { AvatarComponent } from '../../components/widgets/avatar/avatar.component';
+import { MatButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { FormsModule } from '@angular/forms';
+import { MatFormField, MatSuffix } from '@angular/material/form-field';
+import { InputActivityDirective } from '../../directives/input-activity.directive';
+import { MatInput } from '@angular/material/input';
+import { LocalizedDatePipe } from '../../pipes/localized-date.pipe';
 
 @Component({
     selector: 'app-shared-card',
     templateUrl: './shared-card.page.html',
     styleUrls: ['./shared-card.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [AvatarComponent, MatButton, MatIcon, FormsModule, MatFormField, InputActivityDirective, MatInput, MatSuffix, TranslatePipe, LocalizedDatePipe]
 })
 export class SharedCardPage extends ResponsiveComponent implements OnInit, OnDestroy {
     protected avatarSize = AvatarSize;

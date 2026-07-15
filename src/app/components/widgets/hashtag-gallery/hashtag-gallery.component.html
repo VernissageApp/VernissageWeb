@@ -1,10 +1,10 @@
-<div [ngClass]="{ 'padding-left-30 padding-right-30': !isHandset(), 'padding-left-10 padding-right-10': isHandset() }">
+<div [class]="isHandset() ? 'padding-left-10 padding-right-10' : 'padding-left-30 padding-right-30'">
     @if (!isBrowser()) {
         <div></div>
     }
     @else if (hashtags()?.data?.length) {
         @for (hashtag of hashtags()?.data; track hashtag.name) {
-            <app-hashtag-gallery-item [hashtag]="hashtag"></app-hashtag-gallery-item>
+            <app-hashtag-gallery-item [hashtag]="hashtag" />
         }
     } @else {
         <div class="text-muted padding-top-30 width-100 text-center">

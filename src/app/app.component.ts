@@ -9,17 +9,19 @@ import { SettingsService } from './services/http/settings.service';
 import { WebServiceWorker } from './services/common/web-service-worker.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FocusTrackerService } from './services/common/focus-tracker.service';
-import { Router, RouteReuseStrategy } from '@angular/router';
+import { Router, RouteReuseStrategy, RouterOutlet } from '@angular/router';
 import { CustomReuseStrategy } from './common/custom-reuse-strategy';
 import { AuthorizationService } from './services/authorization/authorization.service';
 import { TranslateService } from '@ngx-translate/core';
+import { HeaderComponent } from './components/core/header/header.component';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [HeaderComponent, MatProgressSpinner, RouterOutlet]
 })
 export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     protected showLoader = signal(false);

@@ -1,7 +1,7 @@
 <div class="business-card-container">
-    <div class="top" [ngStyle]="{ background: 'linear-gradient(' + color1() + ', ' + color2() + ')' }">
+    <div class="top" [style.background]="'linear-gradient(' + color1() + ', ' + color2() + ')'">
         <img class="avatar-image" [alt]="'components.businessCard.attrs.avatarProfile' | translate" [ngSrc]="avatarUrl()" width="600" height="600" />
-        <div class="text-center" [ngStyle]="{ color: color3() }">
+        <div class="text-center" [style.color]="color3()">
             <h1>{{ title() }}</h1>
             <h4>{{ subtitle() }}</h4>
         </div>

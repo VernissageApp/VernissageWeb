@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, Renderer2, signal, computed, ChangeDetectionStrategy, inject } from '@angular/core';
-import { NavigationEnd, RouteReuseStrategy, Router } from '@angular/router';
+import { NavigationEnd, RouteReuseStrategy, Router, RouterLink } from '@angular/router';
 import { filter, Subscription } from 'rxjs';
 
 import { InstanceService } from 'src/app/services/http/instance.service';
@@ -14,14 +14,21 @@ import { SettingsService } from 'src/app/services/http/settings.service';
 import { PreferencesService } from 'src/app/services/common/preferences.service';
 import { UserPayload } from 'src/app/models/user-payload';
 import { getLanguageFlag, LanguageService, SUPPORTED_HEADER_LANGUAGES } from 'src/app/services/common/language.service';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { MatToolbar } from '@angular/material/toolbar';
+import { MatIconButton, MatButton } from '@angular/material/button';
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
+import { MatIcon } from '@angular/material/icon';
+import { MatDivider } from '@angular/material/list';
+import { MatBadge } from '@angular/material/badge';
+import { NgOptimizedImage } from '@angular/common';
 
 @Component({
     selector: 'app-header',
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [MatToolbar, MatIconButton, MatMenuTrigger, MatIcon, MatMenu, MatMenuItem, RouterLink, MatDivider, MatButton, MatBadge, NgOptimizedImage, TranslatePipe]
 })
 export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDestroy {
     protected readonly resolution = Resolution;

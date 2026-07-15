@@ -12,8 +12,7 @@ export enum Resolution {
 @Component({
     selector: 'app-base',
     template: '',
-    styles: [],
-    standalone: false
+    styles: []
 })
 export class ResponsiveComponent implements OnInit, OnDestroy {
     private breakpointSubscription: Subscription;

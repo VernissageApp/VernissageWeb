@@ -3,14 +3,14 @@ import { IdentityService } from 'src/app/services/http/identity.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IdentityToken } from 'src/app/models/identity-token';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-login-callback',
     templateUrl: './login-callback.page.html',
     styleUrls: ['./login-callback.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [TranslatePipe]
 })
 export class LoginCallbackPage implements OnInit {
     protected errorMessage = signal<string | undefined>(undefined);

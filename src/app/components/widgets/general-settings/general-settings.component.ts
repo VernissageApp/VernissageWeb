@@ -1,18 +1,28 @@
 import { ChangeDetectionStrategy, Component, inject, input, model, OnInit, signal } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { Settings } from 'src/app/models/settings';
 import { SettingsService } from 'src/app/services/http/settings.service';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { EventType } from 'src/app/models/event-type';
 import { InstanceService } from 'src/app/services/http/instance.service';
 import { User } from 'src/app/models/user';
+import { FormsModule } from '@angular/forms';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { InputActivityDirective } from '../../../directives/input-activity.directive';
+import { MatInput } from '@angular/material/input';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatDivider } from '@angular/material/list';
+import { UserSelectorComponent } from '../user-selector/user-selector.component';
+import { MatSelect, MatOption } from '@angular/material/select';
+import { MatButton } from '@angular/material/button';
 
 @Component({
     selector: 'app-general-settings',
     templateUrl: './general-settings.component.html',
     styleUrls: ['./general-settings.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [FormsModule, MatFormField, MatLabel, InputActivityDirective, MatInput, CdkTextareaAutosize, MatCheckbox, MatDivider, UserSelectorComponent, MatSelect, MatOption, MatButton, TranslatePipe]
 })
 export class GeneralSettingsComponent implements OnInit {
     public settings = input.required<Settings>();

@@ -1,6 +1,6 @@
 @if (isReady()) {
     @if (article(); as articleObject) {
-        <div animate.enter="fade-in" [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
+        <div animate.enter="fade-in" [class]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
 
             <div class="flex-row flex-space-around">
                 <div class="news-container width-100">
@@ -11,7 +11,7 @@
                             }
                             @if (articleObject.user; as userObject) {
                                 <mat-card-subtitle>
-                                    <app-mini-user-card [user]="userObject"></app-mini-user-card>
+                                    <app-mini-user-card [user]="userObject" />
                                 </mat-card-subtitle>
                             }
                         </mat-card-header>

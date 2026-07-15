@@ -1,4 +1,4 @@
-import { Directive, Input } from '@angular/core';
+import { Directive, input, numberAttribute } from '@angular/core';
 import { NG_VALIDATORS, Validator, FormControl, ValidationErrors } from '@angular/forms';
 
 @Directive({
@@ -7,24 +7,20 @@ import { NG_VALIDATORS, Validator, FormControl, ValidationErrors } from '@angula
             provide: NG_VALIDATORS,
             useExisting: MaxLengthValidatorDirective,
             multi: true
-        }],
-    standalone: false
+        }]
 })
 
 export class MaxLengthValidatorDirective implements Validator {
 
-    private lenght?: number;
-
-    @Input('appMaxLength') set maxLength(value: string) {
-        this.lenght = Number(value);
-    }
+    readonly maxLength = input(0, { alias: 'appMaxLength', transform: numberAttribute });
 
     validate(formControl: FormControl): ValidationErrors | null {
-        if (!formControl.value || !this.lenght) {
+        const maxLength = this.maxLength();
+        if (!formControl.value || !maxLength) {
             return null;
         }
 
-        const isCorrect = formControl.value.length > this.lenght ? false : true;
+        const isCorrect = formControl.value.length > maxLength ? false : true;
         return isCorrect ? null : { appMaxLength: { valid: false } };
     }
 }

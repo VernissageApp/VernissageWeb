@@ -7,12 +7,15 @@ import { ContextTimeline } from "src/app/models/context-timeline";
 import { LoadingService } from "src/app/services/common/loading.service";
 import { TimelineService } from "src/app/services/http/timeline.service";
 
+import { MatIcon } from "@angular/material/icon";
+import { GalleryComponent } from "../../components/widgets/gallery/gallery.component";
+
 @Component({
     selector: 'app-category',
     templateUrl: './category.page.html',
     styleUrls: ['./category.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [MatIcon, GalleryComponent]
 })
 export class CategoryPage extends ReusableGalleryPageComponent implements OnInit, OnDestroy {
     protected isReady = signal(false);

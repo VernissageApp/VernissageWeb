@@ -27,8 +27,7 @@ registerLocaleData(localeSv, 'sv-SE');
 
 @Pipe({
     name: 'localizedDate',
-    pure: false,
-    standalone: false
+    pure: false
 })
 export class LocalizedDatePipe implements PipeTransform {
     private languageService = inject(LanguageService);

@@ -1,7 +1,7 @@
 <form name="form" (ngSubmit)="commentForm.form.valid && onSubmitComment()" #commentForm="ngForm" novalidate>
     <div class="flex-row gap-8 comment-add small-text-input">
         <div>
-            <app-avatar [user]="signedInUser()" [size]="avatarSize.big"></app-avatar>
+            <app-avatar [user]="signedInUser()" [size]="avatarSize.big" />
         </div>
         <div class="flex-grow-1 comment-main">
             <mat-form-field appearance="outline" class="width-100">

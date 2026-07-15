@@ -1,10 +1,7 @@
 import { inject, Pipe, PipeTransform } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
 
-@Pipe({
-	name:'ago',
-	standalone: false
-})
+@Pipe({ name: 'ago' })
 export class AgoPipe implements PipeTransform {
     private readonly intervals: { unit: Intl.RelativeTimeFormatUnitSingular; seconds: number }[] = [
         { unit: 'day', seconds: 86400 },

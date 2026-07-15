@@ -28,11 +28,11 @@
             </mat-form-field>
         </div>
 
-        <mat-divider></mat-divider>
+        <mat-divider />
         <h3>{{ 'common.labels.hashtags' | translate }}</h3>
 
         @for (hashtag of hashtags(); track $index; let i = $index) {
-            <app-category-hashtag-item [hashtag]="hashtag" [index]="i" (delete)="onHashtagDelete($event)"></app-category-hashtag-item>
+            <app-category-hashtag-item [hashtag]="hashtag" [index]="i" (delete)="onHashtagDelete($event)" />
         }
 
         <button type="button" matButton="outlined" (click)="onNewHashtag()">{{ 'dialogs.category.texts.newHashtag' | translate }}</button>

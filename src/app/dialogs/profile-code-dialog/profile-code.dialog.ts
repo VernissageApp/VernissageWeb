@@ -1,13 +1,14 @@
 import { ChangeDetectionStrategy, Component, ElementRef, inject, OnInit, signal, viewChild } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogContent } from '@angular/material/dialog';
 import QRCodeStyling from 'qr-code-styling';
+import { CdkScrollable } from '@angular/cdk/scrolling';
 
 @Component({
     selector: 'app-profile-code-dialog',
     templateUrl: 'profile-code.dialog.html',
     styleUrls: ['profile-code.dialog.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [CdkScrollable, MatDialogContent]
 })
 export class ProfileCodeDialog implements OnInit {
     protected profileUrl = signal('');

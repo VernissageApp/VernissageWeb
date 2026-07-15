@@ -10,14 +10,18 @@ import { MessagesService } from "src/app/services/common/messages.service";
 import { StatusHashtagsService } from "src/app/services/common/status-hashtags.service";
 import { HashtagsService } from "src/app/services/http/hashtags.service";
 import { TimelineService } from "src/app/services/http/timeline.service";
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+
+import { MatIcon } from "@angular/material/icon";
+import { MatButton } from "@angular/material/button";
+import { GalleryComponent } from "../../components/widgets/gallery/gallery.component";
 
 @Component({
     selector: 'app-hashtag',
     templateUrl: './hashtag.page.html',
     styleUrls: ['./hashtag.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [MatIcon, MatButton, GalleryComponent, TranslatePipe]
 })
 export class HashtagPage extends ReusableGalleryPageComponent implements OnInit, OnDestroy {
     protected isReady = signal(false);

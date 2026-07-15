@@ -1,9 +1,9 @@
 @if (isReady()) {
     @if (users(); as usersArray) {
-        <div animate.enter="fade-in" [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
+        <div animate.enter="fade-in" [class]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
             <div class="flex-row flex-space-around padding-left-10 padding-right-10">
                 <div class="width-100">
-                    <section class="flex-row flex-space-between flex-align-center margin-bottom-20" [ngClass]="{ 'flex-row': !isHandset(), 'flex-column': isHandset() }">
+                    <section class="flex-row flex-space-between flex-align-center margin-bottom-20" [class]="{ 'flex-row': !isHandset(), 'flex-column': isHandset() }">
                         <h1>
                             <div>{{ 'pages.users.title' | translate }}</div>
                             @if (!isHandset()) {
@@ -60,7 +60,7 @@
                             <td mat-cell *matCellDef="let element">
                                 <div class="flex-row gap-8 flex-align-center">
                                     <a [routerLink]="['/@' + element.userName ]" class="user-avatar" [attr.aria-label]="'pages.users.actions.openProfileAriaLabel' | translate:{ userName: element.userName }">
-                                        <app-avatar [user]="element" [size]="avatarSize.medium"></app-avatar>
+                                        <app-avatar [user]="element" [size]="avatarSize.medium" />
                                     </a>
                                     @if (!isHandset()) {
                                         <mat-chip-set [attr.aria-label]="'pages.users.rolesAriaLabel' | translate">
@@ -107,8 +107,7 @@
                         <ng-container matColumnDef="isLocal">
                             <th mat-header-cell *matHeaderCellDef>{{ 'common.labels.local' | translate }}</th>
                             <td mat-cell *matCellDef="let element">
-                                <mat-checkbox [disableRipple]="true" [ngModel]="element.isLocal" disabled>
-                                </mat-checkbox>
+                                <mat-checkbox [disableRipple]="true" [ngModel]="element.isLocal" disabled />
                             </td>
                         </ng-container>
 
@@ -118,8 +117,7 @@
                             <td mat-cell *matCellDef="let element">
                                 <div class="flex-row flex-align-center">
                                     @if (element.isLocal) {
-                                        <mat-checkbox [disableRipple]="true" [ngModel]="element.isApproved" disabled>
-                                        </mat-checkbox>
+                                        <mat-checkbox [disableRipple]="true" [ngModel]="element.isApproved" disabled />
                                         @if (!element.isApproved) {
                                             <mat-icon [matTooltip]="element.reason">info</mat-icon>
                                         }
@@ -133,8 +131,7 @@
                             <th mat-header-cell *matHeaderCellDef>{{ 'common.labels.emailConfirmed' | translate }}</th>
                             <td mat-cell *matCellDef="let element">
                                 @if (element.isLocal) {
-                                    <mat-checkbox [disableRipple]="true" [ngModel]="element.emailWasConfirmed" disabled>
-                                    </mat-checkbox>
+                                    <mat-checkbox [disableRipple]="true" [ngModel]="element.emailWasConfirmed" disabled />
                                 }
                             </td>
                         </ng-container>
@@ -255,14 +252,12 @@
                         <tr mat-header-row *matHeaderRowDef="displayedColumns()"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumns();"></tr>
                     </table>
-                    <mat-paginator
-                        (page)="handlePageEvent($event)"
+                    <mat-paginator (page)="handlePageEvent($event)"
                         [length]="usersArray.total"
                         [pageIndex]="pageIndex()"
                         [pageSize]="10"
                         [pageSizeOptions]="[10, 25, 100]"
-                        [attr.aria-label]="'common.paginator.selectPage' | translate">
-                    </mat-paginator>
+                        [attr.aria-label]="'common.paginator.selectPage' | translate" />
                 </div>
             </div>
         </div>

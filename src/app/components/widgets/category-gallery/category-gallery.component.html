@@ -4,7 +4,7 @@
 @else if (categories().length) {
     @for (category of categories(); track category.id) {
         <div>
-            <app-category-gallery-item [category]="category"></app-category-gallery-item>
+            <app-category-gallery-item [category]="category" />
         </div>        
     }
 } @else {

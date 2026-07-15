@@ -1,17 +1,24 @@
 import { ChangeDetectionStrategy, Component, ElementRef, inject, model, OnInit, signal, viewChild } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
 import QRCodeStyling from 'qr-code-styling';
 import { TwoFactorToken } from 'src/app/models/two-factor-token';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { AccountService } from 'src/app/services/http/account.service';
+import { FormsModule } from '@angular/forms';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { InputActivityDirective } from '../../directives/input-activity.directive';
+import { MatInput } from '@angular/material/input';
+import { MatDivider } from '@angular/material/list';
+import { MatButton } from '@angular/material/button';
 
 @Component({
     selector: 'app-enable-two-factor-token-dialog',
     templateUrl: 'enable-two-factor-token.dialog.html',
     styleUrls: ['enable-two-factor-token.dialog.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [FormsModule, MatDialogTitle, CdkScrollable, MatDialogContent, MatFormField, MatLabel, InputActivityDirective, MatInput, MatError, MatDivider, MatDialogActions, MatButton, TranslatePipe]
 })
 export class EnableTwoFactorTokenDialog implements OnInit {
     protected twoFactorToken = signal<TwoFactorToken | undefined>(undefined);

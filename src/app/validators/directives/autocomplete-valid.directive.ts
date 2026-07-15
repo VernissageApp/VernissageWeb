@@ -7,8 +7,7 @@ import { NG_VALIDATORS, Validator, UntypedFormControl, ValidationErrors } from '
             provide: NG_VALIDATORS,
             useExisting: AutocompleteValidDirective,
             multi: true
-        }],
-    standalone: false
+        }]
 })
 
 export class AutocompleteValidDirective implements Validator {

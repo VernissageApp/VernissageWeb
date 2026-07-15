@@ -6,13 +6,18 @@ import { Status } from 'src/app/models/status';
 import { ContextStatusesService } from 'src/app/services/common/context-statuses.service';
 import { PreferencesService } from 'src/app/services/common/preferences.service';
 import { TimelineService } from 'src/app/services/http/timeline.service';
+import { LazyLoadDirective } from '../../../directives/lazy-load.directive';
+import { RouterLink } from '@angular/router';
+import { MatIcon } from '@angular/material/icon';
+import { BlurhashImageComponent } from '../blurhash-image/blurhash-image.component';
+import { ImageComponent } from '../image/image.component';
 
 @Component({
     selector: 'app-category-gallery-item',
     templateUrl: './category-gallery-item.component.html',
     styleUrls: ['./category-gallery-item.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [LazyLoadDirective, RouterLink, MatIcon, BlurhashImageComponent, ImageComponent]
 })
 export class CategoryGalleryItemComponent extends ResponsiveComponent implements OnInit {
     public category = input.required<Category>();

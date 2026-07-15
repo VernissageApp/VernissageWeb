@@ -33,7 +33,7 @@
     }
 
     @if (isUsersLoading()) {
-        <mat-spinner matSuffix [diameter]="16"></mat-spinner>
+        <mat-spinner matSuffix [diameter]="16" />
     }
 
     @if (userSelector.invalid && userSelector.errors?.required) {
