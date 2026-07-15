@@ -16,9 +16,9 @@ export function appInitialization(
     return async () => {
         try {
             await languageService.initializeLanguage();
-            await authorizationService.refreshAccessToken();
 
             await Promise.all([
+                authorizationService.refreshAccessToken(),
                 instanceService.load(),
                 settingsService.load()
             ]);
