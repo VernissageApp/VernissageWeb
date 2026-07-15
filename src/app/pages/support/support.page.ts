@@ -8,14 +8,18 @@ import { Health } from 'src/app/models/health';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { environment } from 'src/environments/environment';
 import { FileSizeService } from 'src/app/services/common/file-size.service';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+
+import { MatButton } from '@angular/material/button';
+import { MiniUserCardComponent } from '../../components/widgets/mini-user-card/mini-user-card.component';
+import { RouterLink } from '@angular/router';
 
 @Component({
     selector: 'app-support',
     templateUrl: './support.page.html',
     styleUrls: ['./support.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [MatButton, MiniUserCardComponent, RouterLink, TranslatePipe]
 })
 export class SupportPage extends ResponsiveComponent implements OnInit {
     protected readonly clientVersion = environment.version;

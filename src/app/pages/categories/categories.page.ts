@@ -8,12 +8,15 @@ import { LoadingService } from "src/app/services/common/loading.service";
 import { CategoriesService } from "src/app/services/http/categories.service";
 import { SettingsService } from "src/app/services/http/settings.service";
 
+import { CategoryGalleryComponent } from "../../components/widgets/category-gallery/category-gallery.component";
+import { TranslatePipe } from "@ngx-translate/core";
+
 @Component({
     selector: 'app-categories',
     templateUrl: './categories.page.html',
     styleUrls: ['./categories.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [CategoryGalleryComponent, TranslatePipe]
 })
 export class CategoriesPage extends ReusableGalleryPageComponent implements OnInit, OnDestroy {
     protected isReady = signal(false);

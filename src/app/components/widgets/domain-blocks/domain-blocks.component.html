@@ -38,14 +38,12 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns()"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns();"></tr>
     </table>
-    <mat-paginator
-        (page)="handlePageEvent($event)"
+    <mat-paginator (page)="handlePageEvent($event)"
         [length]="domainArray.total"
         [pageIndex]="pageIndex"
         [pageSize]="10"
         [pageSizeOptions]="[10, 25, 100]"
-        [attr.aria-label]="'common.paginator.selectPage' | translate">
-    </mat-paginator>
+        [attr.aria-label]="'common.paginator.selectPage' | translate" />
 
     <button matButton="filled" (click)="openInstanceBlockedDomainDialog(undefined)">{{ 'components.domainBlocks.texts.newDomain' | translate }}</button>
 }

@@ -10,8 +10,7 @@ import { RegisterService } from 'src/app/services/http/register.service';
     selector: '[appUniqueUserName]',
     providers: [
         { provide: NG_ASYNC_VALIDATORS, useExisting: UniqueUserNameValidatorDirective, multi: true }
-    ],
-    standalone: false
+    ]
 })
 export class UniqueUserNameValidatorDirective implements AsyncValidator {
     private registerService = inject(RegisterService);

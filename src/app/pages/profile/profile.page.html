@@ -54,7 +54,7 @@
 
                     @if (relationship(); as relationshipInternal) {
                         <div class="padding-top-10">
-                            <app-follow-buttons-section [user]="userInternal" [relationship]="relationshipInternal" (relationChanged)="onMainRelationChanged()"></app-follow-buttons-section>
+                            <app-follow-buttons-section [user]="userInternal" [relationship]="relationshipInternal" (relationChanged)="onMainRelationChanged()" />
                         </div>
                     }
 
@@ -104,7 +104,7 @@
                                             </div>
                                         </div>
                                         @if ((i + 1) < (userInternal.fields?.length ?? 0)) {
-                                            <mat-divider class="padding-bottom-5"></mat-divider>
+                                            <mat-divider class="padding-bottom-5" />
                                         }
                                     }
                                 </mat-card-content>
@@ -112,10 +112,10 @@
                         }
                     </div>
 
-                    <div class="flex-row flex-center padding-top-20" [ngClass]="{ 'gap-8': isHandsetPortrait(), 'gap-24': !isHandsetPortrait() }">
-                        <div><span class="fw-500">{{ userInternal.photosCount }}</span><span class="fw-200 margin-left-5" [ngClass]="{ 'dashed': selectedProfilePageTab() === profilePageTab.Statuses}"><a [routerLink]="['posts']">{{ 'common.labels.photosLabel' | translate: { count: userInternal.photosCount } }}</a></span></div>
-                        <div><span class="fw-500">{{ userInternal.followersCount }}</span><span class="fw-200 margin-left-5" [ngClass]="{ 'dashed': selectedProfilePageTab() === profilePageTab.Followers}"><a [routerLink]="['followers']">{{ 'common.labels.followers' | translate: { followersCount: userInternal.followersCount } }}</a></span></div>
-                        <div><span class="fw-500">{{ userInternal.followingCount }}</span><span class="fw-200 margin-left-5" [ngClass]="{ 'dashed': selectedProfilePageTab() === profilePageTab.Following}"><a [routerLink]="['following']">{{ 'common.labels.following' | translate: { followingCount: userInternal.followingCount } }}</a></span></div>
+                    <div class="flex-row flex-center padding-top-20" [class]="{ 'gap-8': isHandsetPortrait(), 'gap-24': !isHandsetPortrait() }">
+                        <div><span class="fw-500">{{ userInternal.photosCount }}</span><span class="fw-200 margin-left-5" [class.dashed]="selectedProfilePageTab() === profilePageTab.Statuses"><a [routerLink]="['posts']">{{ 'common.labels.photosLabel' | translate: { count: userInternal.photosCount } }}</a></span></div>
+                        <div><span class="fw-500">{{ userInternal.followersCount }}</span><span class="fw-200 margin-left-5" [class.dashed]="selectedProfilePageTab() === profilePageTab.Followers"><a [routerLink]="['followers']">{{ 'common.labels.followers' | translate: { followersCount: userInternal.followersCount } }}</a></span></div>
+                        <div><span class="fw-500">{{ userInternal.followingCount }}</span><span class="fw-200 margin-left-5" [class.dashed]="selectedProfilePageTab() === profilePageTab.Following"><a [routerLink]="['following']">{{ 'common.labels.following' | translate: { followingCount: userInternal.followingCount } }}</a></span></div>
                     </div>
 
                     @if (selectedProfilePageTab() === profilePageTab.Following) {
@@ -124,13 +124,11 @@
                                 <mat-card class="users-card" appearance="outlined">
                                     <mat-card-content>
                                         @if ((following()?.data?.length ?? 0) > 0) {
-                                            <app-users-card
-                                                [showLoadMore]="!allFollowingDisplayed()"
+                                            <app-users-card [showLoadMore]="!allFollowingDisplayed()"
                                                 [users]="$safeNavigationMigration(following()?.data)"
                                                 [relationships]="followingRelationships()"
                                                 (relationChanged)="onRelationChanged($event)"
-                                                (loadMore)="onLoadMoreFollowing()">
-                                            </app-users-card>
+                                                (loadMore)="onLoadMoreFollowing()" />
                                         } @else {
                                             @if (userInternal.isLocal) {
                                                 <div>{{ 'pages.profile.noData.local' | translate }}</div>
@@ -153,13 +151,11 @@
                                 <mat-card class="users-card" appearance="outlined">
                                     <mat-card-content>
                                         @if ((followers()?.data?.length ?? 0) > 0) {
-                                            <app-users-card
-                                                [showLoadMore]="!allFollowersDisplayed()"
+                                            <app-users-card [showLoadMore]="!allFollowersDisplayed()"
                                                 [users]="$safeNavigationMigration(followers()?.data)"
                                                 [relationships]="followersRelationships()"
                                                 (relationChanged)="onRelationChanged($event)"
-                                                (loadMore)="onLoadMoreFollowers()">
-                                            </app-users-card>
+                                                (loadMore)="onLoadMoreFollowers()" />
                                         } @else {
                                             @if (userInternal.isLocal) {
                                                 <div>{{ 'pages.profile.noData.local' | translate }}</div>
@@ -195,7 +191,7 @@
                         </div>
                     }
                     @if (statuses(); as statusesArray) {
-                        <app-gallery [statuses]="statusesArray" [startUrl]="pageUrl" [squareImages]="squareImages()" [hideAvatars]="true" [highlightPinnedStatuses]="true"></app-gallery>
+                        <app-gallery [statuses]="statusesArray" [startUrl]="pageUrl" [squareImages]="squareImages()" [hideAvatars]="true" [highlightPinnedStatuses]="true" />
                     }
                 </div>
             }

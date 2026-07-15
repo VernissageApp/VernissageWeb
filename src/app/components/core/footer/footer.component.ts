@@ -1,13 +1,15 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from "@angular/core";
 import { ResponsiveComponent } from "src/app/common/responsive";
 import { WindowService } from "src/app/services/common/window.service";
+import { RouterLink } from "@angular/router";
+import { TranslatePipe } from "@ngx-translate/core";
 
 @Component({
     selector: 'app-footer',
     templateUrl: './footer.component.html',
     styleUrls: ['./footer.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [RouterLink, TranslatePipe]
 })
 export class FooterComponent extends ResponsiveComponent implements OnInit {
     protected currentYear = signal('');

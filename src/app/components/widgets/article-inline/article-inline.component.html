@@ -1,4 +1,4 @@
-<mat-card class="margin-bottom-10" [ngStyle]="{ 'background-color': article().color }" appearance="outlined">
+<mat-card class="margin-bottom-10" [style.background-color]="article().color" appearance="outlined">
     @if (article().title; as inlineTitle) {
         <mat-card-header>
             <mat-card-title>{{ inlineTitle }}</mat-card-title>

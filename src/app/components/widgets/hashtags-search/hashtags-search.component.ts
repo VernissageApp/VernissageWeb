@@ -1,17 +1,20 @@
-import { isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser, NgOptimizedImage } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, input, PLATFORM_ID, signal } from '@angular/core';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { Hashtag } from 'src/app/models/hashtag';
 import { LinkableResult } from 'src/app/models/linkable-result';
 import { Status } from 'src/app/models/status';
 import { TimelineService } from 'src/app/services/http/timeline.service';
+import { LazyLoadDirective } from '../../../directives/lazy-load.directive';
+import { RouterLink } from '@angular/router';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
     selector: 'app-hashtags-search',
     templateUrl: './hashtags-search.component.html',
     styleUrls: ['./hashtags-search.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [LazyLoadDirective, RouterLink, MatIcon, NgOptimizedImage]
 })
 export class HashtagsSearchComponent extends ResponsiveComponent {
     public hashtag = input.required<Hashtag>();

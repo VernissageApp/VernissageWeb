@@ -11,12 +11,19 @@ import { LoadingService } from "src/app/services/common/loading.service";
 import { SettingsService } from "src/app/services/http/settings.service";
 import { TimelineService } from "src/app/services/http/timeline.service";
 
+import { MatButtonToggleGroup, MatButtonToggle } from "@angular/material/button-toggle";
+import { FormsModule } from "@angular/forms";
+import { MatIcon } from "@angular/material/icon";
+import { GalleryComponent } from "../../components/widgets/gallery/gallery.component";
+import { UsersGalleryComponent } from "../../components/widgets/users-gallery/users-gallery.component";
+import { TranslatePipe } from "@ngx-translate/core";
+
 @Component({
     selector: 'app-editors',
     templateUrl: './editors.page.html',
     styleUrls: ['./editors.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [MatButtonToggleGroup, FormsModule, MatButtonToggle, MatIcon, GalleryComponent, UsersGalleryComponent, TranslatePipe]
 })
 export class EditorsPage extends ReusableGalleryPageComponent implements OnInit, OnDestroy {
     protected users = signal<LinkableResult<User> | undefined>(undefined);

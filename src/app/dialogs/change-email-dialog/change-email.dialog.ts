@@ -1,16 +1,23 @@
 import { ChangeDetectionStrategy, Component, inject, model } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
 import { ChangeEmail } from 'src/app/models/change-email';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { WindowService } from 'src/app/services/common/window.service';
 import { AccountService } from 'src/app/services/http/account.service';
+import { FormsModule } from '@angular/forms';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { InputActivityDirective } from '../../directives/input-activity.directive';
+import { MatInput } from '@angular/material/input';
+import { UniqueEmailValidatorDirective } from '../../validators/directives/unique-email-validator.directive';
+import { MatButton } from '@angular/material/button';
 
 @Component({
     selector: 'app-change-email-dialog',
     templateUrl: 'change-email.dialog.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [FormsModule, MatDialogTitle, CdkScrollable, MatDialogContent, MatFormField, MatLabel, InputActivityDirective, MatInput, UniqueEmailValidatorDirective, MatError, MatDialogActions, MatButton, TranslatePipe]
 })
 export class ChangeEmailDialog {
     protected email = model('');

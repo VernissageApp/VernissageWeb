@@ -1,4 +1,4 @@
-<div [hidden]="!isReady()" animate.enter="fade-in" [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
+<div [hidden]="!isReady()" animate.enter="fade-in" [class]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
     <section>
         <h1>{{ 'pages.account.title' | translate }}</h1>
     </section>
@@ -42,7 +42,7 @@
                 </div>
 
                 <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-10">
-                    <app-language-select [value]="user().locale ?? null" (valueChange)="onLocaleChange($event)"></app-language-select>
+                    <app-language-select [value]="user().locale ?? null" (valueChange)="onLocaleChange($event)" />
                     <div></div>
                 </div>
 
@@ -77,7 +77,7 @@
                 </div>
 
                 <div class="flex-row flex-responsive flex-stretch gap-16 margin-bottom-20">
-                    <mat-divider></mat-divider>
+                    <mat-divider />
                     <div></div>
                 </div>
 
@@ -182,7 +182,7 @@
                     <button type="submit" matButton="filled" [attr.aria-label]="'common.actions.save' | translate" class="margin-right-10" [disabled]="!avatarFileSelected() || uploadingAvatarFile()">{{ 'common.actions.save' | translate }}</button>
                     <button type="button" matButton="elevated" [attr.aria-label]="'pages.account.avatar.removeAriaLabel' | translate" (click)="onRemoveAvatar()" [disabled]="!avatarFileAlreadySet()">{{ 'common.actions.remove' | translate }}</button>
                     @if (uploadingAvatarFile()) {
-                        <mat-spinner class="display-inline-block vertical-align-middle margin-left-20 margin-top-5" [diameter]="18"></mat-spinner>
+                        <mat-spinner class="display-inline-block vertical-align-middle margin-left-20 margin-top-5" [diameter]="18" />
                     }
                 </div>
             </mat-card-actions>
@@ -213,7 +213,7 @@
                     <button type="submit" matButton="filled" [attr.aria-label]="'common.actions.save' | translate" class="margin-right-10" [disabled]="!headerFileSelected() || uploadingHeaderFile()">{{ 'common.actions.save' | translate }}</button>
                     <button type="button" matButton="elevated" [attr.aria-label]="'pages.account.header.removeAriaLabel' | translate" (click)="onRemoveHeader()" [disabled]="!headerFileAlreadySet()">{{ 'common.actions.remove' | translate }}</button>
                     @if (uploadingHeaderFile()) {
-                        <mat-spinner class="display-inline-block vertical-align-middle margin-left-20 margin-top-5" [diameter]="18"></mat-spinner>
+                        <mat-spinner class="display-inline-block vertical-align-middle margin-left-20 margin-top-5" [diameter]="18" />
                     }
                 </div>
             </mat-card-actions>
@@ -591,14 +591,12 @@
                         <tr mat-header-row *matHeaderRowDef="followingImportsDisplayedColumns()"></tr>
                         <tr mat-row *matRowDef="let row; columns: followingImportsDisplayedColumns();"></tr>
                     </table>
-                    <mat-paginator
-                        (page)="handleFollowingImportsPageEvent($event)"
+                    <mat-paginator (page)="handleFollowingImportsPageEvent($event)"
                         [length]="followingImportsArray.total"
                         [pageIndex]="followingImportsPageIndex()"
                         [pageSize]="followingImportsPageSize()"
                         [pageSizeOptions]="[10, 25, 100]"
-                        [attr.aria-label]="'common.paginator.selectPage' | translate">
-                    </mat-paginator>
+                        [attr.aria-label]="'common.paginator.selectPage' | translate" />
                 }
             }
 
@@ -662,14 +660,12 @@
                         <tr mat-header-row *matHeaderRowDef="userBlockedDomainsDisplayedColumns()"></tr>
                         <tr mat-row *matRowDef="let row; columns: userBlockedDomainsDisplayedColumns();"></tr>
                     </table>
-                    <mat-paginator
-                        (page)="handleUserBlockedDomainsPageEvent($event)"
+                    <mat-paginator (page)="handleUserBlockedDomainsPageEvent($event)"
                         [length]="userBlockedDomainsArray.total"
                         [pageIndex]="userBlockedDomainsPageIndex()"
                         [pageSize]="userBlockedDomainsPageSize()"
                         [pageSizeOptions]="[10, 25, 100]"
-                        [attr.aria-label]="'common.paginator.selectPage' | translate">
-                    </mat-paginator>
+                        [attr.aria-label]="'common.paginator.selectPage' | translate" />
                 }
             }
 

@@ -3,13 +3,15 @@ import { ChangeDetectionStrategy, Component, inject, input, PLATFORM_ID, signal 
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { LinkableResult } from 'src/app/models/linkable-result';
 import { User } from 'src/app/models/user';
+import { UsersGalleryItemComponent } from '../users-gallery-item/users-gallery-item.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-users-gallery',
     templateUrl: './users-gallery.component.html',
     styleUrls: ['./users-gallery.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [UsersGalleryItemComponent, TranslatePipe]
 })
 export class UsersGalleryComponent extends ResponsiveComponent {
     public users = input<LinkableResult<User>>();

@@ -1,5 +1,5 @@
 <div appLazyLoad (lazyLoad)="lazyLoadData()">
-    <app-user-card [user]="user()"></app-user-card>
+    <app-user-card [user]="user()" />
     <div class="images-container">
         <div class="flex-row">
             @if (statuses(); as statusesArray) {
@@ -8,11 +8,11 @@
                         <a animate.enter="slow-fade-in" [routerLink]="['/statuses', status.id]" [ariaLabel]="'Status added by: ' + $safeNavigationMigration(getMainStatus(status).user?.userName)" (click)="onStatusClick()">
                             @if (getMainStatus(status).sensitive && !alwaysShowNSFW()) {
                                 <div class="blurhash">
-                                    <app-blurhash-image [horizontal]="true" [status]="status" [avatarVisible]="false"></app-blurhash-image>
+                                    <app-blurhash-image [horizontal]="true" [status]="status" [avatarVisible]="false" />
                                 </div>
                             } @else {
                                 <div class="image">
-                                    <app-image [horizontal]="true" [status]="status" [avatarVisible]="false"></app-image>
+                                    <app-image [horizontal]="true" [status]="status" [avatarVisible]="false" />
                                 </div>
                             }
                         </a>

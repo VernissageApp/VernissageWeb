@@ -29,7 +29,7 @@
                     @if (images(); as imagesInternally) {
 
                         @if (imagesInternally.length === 1 || !showSensitiveImage() || !isBrowser()) {
-                            <div [ngClass]="{ 'photo-image-container-fixed': !isHandset() }">
+                            <div [class.photo-image-container-fixed]="!isHandset()">
                                 @if (mainStatusInternal.sensitive && !alwaysShowNSFW()) {
                                     @if (showSensitiveCanvas()) {
                                         <div class="content-warning show-fade" [class.is-visible]="!showSensitiveImage()">
@@ -49,10 +49,9 @@
                         }
 
                         @if (imagesInternally.length > 1 && showSensitiveImage() && isBrowser()) {
-                            <gallery
-                                id="mainGalleryId"
+                            <gallery id="mainGalleryId"
                                 class="custom-gallery"
-                                [ngClass]="{ 'custom-gallery-with-icons': showContextArrows() }"
+                                [class.custom-gallery-with-icons]="showContextArrows()"
                                 [style.width]="showContextArrows() ? 'calc(100% - 80px)' : '100%'"
                                 bullets
                                 bulletPosition="bottom"
@@ -63,8 +62,7 @@
                                 [autoplay]="autoScrollGalleryImages()"
                                 [autoplayInterval]="6000"
                                 (itemClick)="openInFullScreen()"
-                                (indexChange)="onImageIndexChange($event)">
-                            </gallery>
+                                (indexChange)="onImageIndexChange($event)" />
                         }
                     }
                 </div>
@@ -180,7 +178,7 @@
                                             <mat-icon class="fill-symbol">grade</mat-icon>
                                             <span>{{ 'pages.status.menu.favouritedBy' | translate }}</span>
                                         </button>
-                                        <mat-divider></mat-divider>
+                                        <mat-divider />
                                         @if (!mainStatusInternal.isLocal) {
                                             <button mat-menu-item (click)="onOpenOriginalPage()">
                                                 <mat-icon class="fill-symbol">export_notes</mat-icon>
@@ -204,7 +202,7 @@
                                                 </button>
                                             }
                                         }
-                                        <mat-divider></mat-divider>
+                                        <mat-divider />
                                         <button mat-menu-item (click)="onReportDialog(mainStatusInternal)">
                                             <mat-icon class="outline-symbol">report</mat-icon>
                                             <span>{{ 'pages.status.menu.report' | translate }}</span>
@@ -230,7 +228,7 @@
                                     </mat-menu>
 
                                     @if (isDuringBoostProcessing() || isDuringFavouriteProcessing() || isDuringBookmarkProcessing() || isDuringFeatureProcessing() || isDuringPinProcessing()) {
-                                        <mat-spinner class="display-inline-block" [diameter]="18"></mat-spinner>
+                                        <mat-spinner class="display-inline-block" [diameter]="18" />
                                     }
                                 }
 
@@ -241,13 +239,13 @@
                                 @if (status()?.user; as userObject) {
                                     <div class="reblog-user-row flex-row flex-align-center gap-8">
                                         <mat-icon class="text-muted">repeat</mat-icon>
-                                        <app-mini-user-card [user]="userObject"></app-mini-user-card>
+                                        <app-mini-user-card [user]="userObject" />
                                     </div>
                                 }
                             }
 
                             <!-- User card -->
-                            <app-user-card [user]="mainStatusInternal.user"></app-user-card>
+                            <app-user-card [user]="mainStatusInternal.user" />
 
                             <!-- Note -->
                             <div appHrefToRouterLink>
@@ -427,7 +425,7 @@
                             }
 
                             <!-- Status properties -->
-                            <app-status-properties [status]="mainStatusInternal"></app-status-properties>
+                            <app-status-properties [status]="mainStatusInternal" />
                         </mat-card-content>
                     </mat-card>
 
@@ -438,15 +436,15 @@
                             </mat-card-header>
                             <mat-card-content>
                                 @if (signedInUser(); as signedInUserInternal) {
-                                    <app-comment-reply [signedInUser]="signedInUserInternal" [status]="mainStatusInternal" [disabled]="isInVersionMode()" (added)="onCommentAdded()"></app-comment-reply>
+                                    <app-comment-reply [signedInUser]="signedInUserInternal" [status]="mainStatusInternal" [disabled]="isInVersionMode()" (added)="onCommentAdded()" />
                                 }
 
                                 @if ((comments()?.length ?? 0) > 0) {
                                     @for (comment of comments(); track comment.status.id) {
                                         <div class="padding-top-10 comments">
-                                            <div class="flex-row gap-8" [ngClass]="{ 'replies': !comment.showDivider, 'padding-top-15': comment.showDivider }">
+                                            <div class="flex-row gap-8" [class]="{ 'replies': !comment.showDivider, 'padding-top-15': comment.showDivider }">
                                                 <a [routerLink]="[ '/@' + $safeNavigationMigration(comment.status.user?.userName) ]" class="comment-avatar" [attr.aria-label]="'pages.status.actions.openProfileAriaLabel' | translate:{ userName: $safeNavigationMigration(comment.status.user?.userName) }">
-                                                    <app-avatar [user]="comment.status.user" [size]="avatarSize.medium"></app-avatar>
+                                                    <app-avatar [user]="comment.status.user" [size]="avatarSize.medium" />
                                                 </a>
                                                 <div class="comment-content">
                                                     <div class="comment-author-name">
@@ -494,7 +492,7 @@
                                                                 <mat-icon>reply</mat-icon>
                                                                 <span>{{ 'pages.status.comments.actions.reply' | translate }}</span>
                                                             </button>
-                                                            <mat-divider></mat-divider>
+                                                            <mat-divider />
                                                             <button mat-menu-item (click)="onReportDialog(comment.status)">
                                                                 <mat-icon>warning</mat-icon>
                                                                 <span>{{ 'pages.status.comments.actions.report' | translate }}</span>
@@ -510,7 +508,7 @@
                                                 }
                                             </div>
 
-                                            <div class="flex-row flex-responsive gap-horizontal-16 margin-left-40" [ngClass]="{ 'replies': !comment.showDivider }">
+                                            <div class="flex-row flex-responsive gap-horizontal-16 margin-left-40" [class.replies]="!comment.showDivider">
                                                 <div class="text-muted fs-80">{{ comment.status.createdAt | ago }}</div>
                                                 <div class="text-muted fs-80" >
                                                     @if (comment.status.favouritesCount > 0) {
@@ -524,7 +522,7 @@
                                             @if (replyStatus()?.id === comment.status.id) {
                                                 @if (signedInUser(); as signedInUserInternal) {
                                                     <div class="text-right padding-top-5">
-                                                        <app-comment-reply [signedInUser]="signedInUserInternal" [status]="comment.status" [showCancel]="true" (clickCancel)="onReply(undefined)" (added)="onCommentAdded()"></app-comment-reply>
+                                                        <app-comment-reply [signedInUser]="signedInUserInternal" [status]="comment.status" [showCancel]="true" (clickCancel)="onReply(undefined)" (added)="onCommentAdded()" />
                                                     </div>
                                                 }
                                             }

@@ -110,7 +110,7 @@ Request handling is centered around:
 
 ### Routing Model
 
-Routes are defined in [`src/app/pages/pages-routing.module.ts`](src/app/pages/pages-routing.module.ts). The application mixes public pages and authenticated areas:
+Routes are defined in [`src/app/pages/app.routes.ts`](src/app/pages/app.routes.ts). The application mixes public pages and authenticated areas:
 
 - public: home, news, public profiles, status pages, FAQ, terms, privacy
 - authenticated: upload, notifications, invitations, account, settings, reports, shared cards, moderation views
@@ -120,8 +120,8 @@ Several gallery-like views use route reuse and shared context state to preserve 
 ## Repository Layout
 
 - `src/main.ts` and `src/main.server.ts` - browser and server bootstrap
-- `src/app/app.module.ts` - root module, hydration, service worker, interceptors, global error handler
-- `src/app/pages/pages.module.ts` - all route-level page declarations
+- `src/app/app.config.ts` - shared standalone providers, routing, hydration, service worker, interceptors, and global error handler
+- `src/app/app.config.server.ts` - server-only providers for SSR, JWT, and translations
 - `src/styles` - global SCSS variables, fonts, utilities, and layout helpers
 - `src/assets` - icons, fonts, screenshots, and bundled client assets
 - `Dockerfile` - multi-stage SSR image build

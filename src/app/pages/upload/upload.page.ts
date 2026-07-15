@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, ElementRef, inject, model, OnInit, signal, viewChild } from '@angular/core';
 import { HttpEventType } from '@angular/common/http';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { encode } from 'blurhash';
 import * as ExifReader from 'exifreader';
 import { StatusRequest } from 'src/app/models/status-request';
@@ -19,7 +19,7 @@ import { LicensesService } from 'src/app/services/http/licenses.service';
 import { InstanceService } from 'src/app/services/http/instance.service';
 import { SettingsService } from 'src/app/services/http/settings.service';
 import { RandomGeneratorService } from 'src/app/services/common/random-generator.service';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray, CdkDropList, CdkDrag } from '@angular/cdk/drag-drop';
 import { WindowService } from 'src/app/services/common/window.service';
 import { StatusTextDialog } from 'src/app/dialogs/status-text-template-dialog/status-text-template.dialog';
 import { MatDialog } from '@angular/material/dialog';
@@ -32,14 +32,28 @@ import { AuthorizationService } from 'src/app/services/authorization/authorizati
 import { ForbiddenError } from 'src/app/errors/forbidden-error';
 import { CanonExifService } from 'src/app/services/common/canon-exif.service';
 import { DeviceDetectorService, DeviceType } from 'ngx-device-detector';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+
+import { MatCard, MatCardHeader, MatCardTitle, MatCardContent } from '@angular/material/card';
+import { MatStepper, MatStep, MatStepLabel, MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
+import { UploadPhotoComponent } from '../../components/widgets/upload-photo/upload-photo.component';
+import { MatButton } from '@angular/material/button';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { FormsModule } from '@angular/forms';
+import { MatIcon } from '@angular/material/icon';
+import { StatusTextAutocompleteComponent } from '../../components/widgets/status-text-autocomplete/status-text-autocomplete.component';
+import { MatFormField, MatLabel, MatHint } from '@angular/material/form-field';
+import { MatSelect, MatOption } from '@angular/material/select';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { InputActivityDirective } from '../../directives/input-activity.directive';
+import { MatInput } from '@angular/material/input';
 
 @Component({
     selector: 'app-upload',
     templateUrl: './upload.page.html',
     styleUrls: ['./upload.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [CdkDropList, CdkDrag, RouterLink, MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatStepper, MatStep, MatStepLabel, UploadPhotoComponent, MatButton, MatStepperPrevious, MatStepperNext, MatProgressSpinner, FormsModule, MatIcon, StatusTextAutocompleteComponent, MatFormField, MatLabel, MatSelect, MatOption, MatHint, MatCheckbox, InputActivityDirective, MatInput, TranslatePipe]
 })
 export class UploadPage extends ResponsiveComponent implements OnInit {
     protected readonly statusVisibility = StatusVisibility;
@@ -506,9 +520,8 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
             uploadPhoto.uploadProgress.set(0);
             uploadPhoto.uploadSubscription = this.attachmentsService.uploadAttachmentWithProgress(formData).subscribe({
                 next: (event) => {
-                    // Upload progress is working only when we delete withFetch() from HttpClient configuration.
-                    // However, it's strongly recommended to enable fetch for applications that use Server-Side
-                    // Rendering for better performance and compatibility (https://angular.dev/api/common/http/provideHttpClient).
+                    // The default Fetch backend does not emit upload progress events. The progress is set to 100%
+                    // after receiving the response below.
                     if (event.type === HttpEventType.UploadProgress) {
                         const total = event.total ?? fileToUpload?.size ?? 0;
                         if (total > 0) {

@@ -5,8 +5,8 @@ import { ResponsiveComponent } from 'src/app/common/responsive';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 import { Role } from 'src/app/models/role';
 import { PagedResult } from 'src/app/models/paged-result';
-import { PageEvent } from '@angular/material/paginator';
-import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { PageEvent, MatPaginator } from '@angular/material/paginator';
+import { ActivatedRoute, NavigationExtras, Router, RouterLink } from '@angular/router';
 import { combineLatest, map, Subscription } from 'rxjs';
 import { AvatarSize } from 'src/app/components/widgets/avatar/avatar-size';
 import { StatusesService } from 'src/app/services/http/statuses.service';
@@ -14,12 +14,22 @@ import { StatusActivityPubEvent } from 'src/app/models/status-activity-pub-event
 import { MatDialog } from '@angular/material/dialog';
 import { StatusEventErrorMessageDialog } from 'src/app/dialogs/status-event-error-message-dialog/status-event-error-message.dialog';
 
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { FormsModule } from '@angular/forms';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatSelect, MatOption } from '@angular/material/select';
+import { MatButton } from '@angular/material/button';
+import { MatRadioGroup, MatRadioButton } from '@angular/material/radio';
+import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { TranslatePipe } from '@ngx-translate/core';
+import { LocalizedDatePipe } from '../../pipes/localized-date.pipe';
+
 @Component({
     selector: 'app-status-events',
     templateUrl: './status-events.page.html',
     styleUrls: ['./status-events.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [RouterLink, MatCard, MatCardContent, FormsModule, MatFormField, MatLabel, MatSelect, MatOption, MatButton, MatRadioGroup, MatRadioButton, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator, TranslatePipe, LocalizedDatePipe]
 })
 export class StatusEventsPage extends ResponsiveComponent implements OnInit, OnDestroy {
     protected readonly avatarSize = AvatarSize

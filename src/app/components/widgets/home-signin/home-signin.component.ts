@@ -15,12 +15,20 @@ import { FocusTrackerService } from 'src/app/services/common/focus-tracker.servi
 import { RandomGeneratorService } from 'src/app/services/common/random-generator.service';
 import { LanguageService } from 'src/app/services/common/language.service';
 
+import { ArticleInlineComponent } from '../article-inline/article-inline.component';
+import { MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { MatButtonToggleGroup, MatButtonToggle } from '@angular/material/button-toggle';
+import { FormsModule } from '@angular/forms';
+import { GalleryComponent } from '../gallery/gallery.component';
+import { TranslatePipe } from '@ngx-translate/core';
+
 @Component({
     selector: 'app-home-signin',
     templateUrl: './home-signin.component.html',
     styleUrls: ['./home-signin.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [ArticleInlineComponent, MatIconButton, MatIcon, MatButtonToggleGroup, FormsModule, MatButtonToggle, GalleryComponent, TranslatePipe]
 })
 export class HomeSigninComponent extends ReusableGalleryPageComponent implements OnInit, OnDestroy {
     protected timeline = model('private');

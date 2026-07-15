@@ -6,13 +6,18 @@ import { User } from 'src/app/models/user';
 import { ContextStatusesService } from 'src/app/services/common/context-statuses.service';
 import { PreferencesService } from 'src/app/services/common/preferences.service';
 import { UsersService } from 'src/app/services/http/users.service';
+import { LazyLoadDirective } from '../../../directives/lazy-load.directive';
+import { UserCardComponent } from '../user-card/user-card.component';
+import { RouterLink } from '@angular/router';
+import { BlurhashImageComponent } from '../blurhash-image/blurhash-image.component';
+import { ImageComponent } from '../image/image.component';
 
 @Component({
     selector: 'app-users-gallery-item',
     templateUrl: './users-gallery-item.component.html',
     styleUrls: ['./users-gallery-item.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [LazyLoadDirective, UserCardComponent, RouterLink, BlurhashImageComponent, ImageComponent]
 })
 export class UsersGalleryItemComponent extends ResponsiveComponent implements OnInit {
     public user = input.required<User>();

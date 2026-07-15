@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit, signal, DOCUMENT } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, NavigationStart } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, NavigationStart, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/models/user';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
@@ -27,14 +27,25 @@ import { ConfirmationDialog } from 'src/app/dialogs/confirmation-dialog/confirma
 import { UserType } from 'src/app/models/user-type';
 import { Role } from 'src/app/models/role';
 import { UserPayload } from 'src/app/models/user-payload';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { NgOptimizedImage } from '@angular/common';
+import { MatChip } from '@angular/material/chips';
+import { MatIcon } from '@angular/material/icon';
+import { FollowButtonsSectionComponent } from '../../components/widgets/follow-buttons-section/follow-buttons-section.component';
+import { MatButton } from '@angular/material/button';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { MatDivider } from '@angular/material/list';
+import { UsersCardComponent } from '../../components/widgets/users-card/users-card.component';
+import { GalleryComponent } from '../../components/widgets/gallery/gallery.component';
+import { LocalizedDatePipe } from '../../pipes/localized-date.pipe';
 
 @Component({
     selector: 'app-profile',
     templateUrl: './profile.page.html',
     styleUrls: ['./profile.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [NgOptimizedImage, MatChip, MatIcon, FollowButtonsSectionComponent, MatButton, RouterLink, MatTooltip, MatCard, MatCardContent, MatDivider, UsersCardComponent, GalleryComponent, TranslatePipe, LocalizedDatePipe]
 })
 export class ProfilePage extends ReusableGalleryPageComponent implements OnInit, OnDestroy {
     protected readonly profilePageTab = ProfilePageTab;

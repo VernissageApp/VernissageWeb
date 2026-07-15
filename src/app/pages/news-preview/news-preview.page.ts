@@ -13,13 +13,16 @@ import { WindowService } from 'src/app/services/common/window.service';
 import { ArticlesService } from 'src/app/services/http/articles.service';
 import { SettingsService } from 'src/app/services/http/settings.service';
 import { TranslateService } from '@ngx-translate/core';
+import { MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardContent, MatCardFooter } from '@angular/material/card';
+import { MiniUserCardComponent } from '../../components/widgets/mini-user-card/mini-user-card.component';
+import { LocalizedDatePipe } from '../../pipes/localized-date.pipe';
 
 @Component({
     selector: 'app-news-preview',
     templateUrl: './news-preview.page.html',
     styleUrls: ['./news-preview.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MiniUserCardComponent, MatCardContent, MatCardFooter, LocalizedDatePipe]
 })
 export class NewsPreviewPage extends ResponsiveComponent implements OnInit, OnDestroy {
     protected isReady = signal(false);

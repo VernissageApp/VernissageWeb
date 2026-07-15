@@ -10,9 +10,9 @@ import { SwPush } from '@angular/service-worker';
 import { SettingsService } from 'src/app/services/http/settings.service';
 import { NotificationSettingsDialog } from 'src/app/dialogs/notification-settings-dialog/notification-settings.dialog';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, NavigationExtras, NavigationStart, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, NavigationStart, Router, RouterLink } from '@angular/router';
 import { RandomGeneratorService } from 'src/app/services/common/random-generator.service';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { delay, filter, of, Subject, Subscription, switchMap, takeUntil } from 'rxjs';
 import { User } from 'src/app/models/user';
 import { Relationship } from 'src/app/models/relationship';
@@ -22,12 +22,20 @@ import { UserPayload } from 'src/app/models/user-payload';
 import { NotificationAvatarPopoverRequest } from 'src/app/models/notification-avatar-popover-request';
 import { NotificationGroupItem, NotificationItem, NotificationListItem } from 'src/app/models/notification-list-item';
 
+import { MatIconButton, MatButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { AvatarComponent } from '../../components/widgets/avatar/avatar.component';
+import { PopoverComponent } from '../../components/widgets/popover/popover.component';
+import { UserPopoverComponent } from '../../components/widgets/user-popover/user-popover.component';
+import { AgoPipe } from '../../pipes/ago.pipe';
+
 @Component({
     selector: 'app-notifications',
     templateUrl: './notifications.page.html',
     styleUrls: ['./notifications.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [MatIconButton, MatIcon, MatButton, MatCard, MatCardContent, RouterLink, AvatarComponent, PopoverComponent, UserPopoverComponent, TranslatePipe, AgoPipe]
 })
 export class NotificationsPage extends ResponsiveComponent implements OnInit, OnDestroy, AfterViewInit {
     protected readonly notificationType = NotificationType;

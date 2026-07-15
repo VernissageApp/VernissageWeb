@@ -1,5 +1,5 @@
 @if(isReady()) {
-    <div animate.enter="fade-in" [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
+    <div animate.enter="fade-in" [class]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
         <div class="flex-row flex-space-around">
             <div class="preferences-container width-100">
                 <section>
@@ -20,7 +20,7 @@
                             </mat-radio-group>
                         </div>
 
-                        <mat-divider></mat-divider>
+                        <mat-divider />
 
                         <div class="margin-top-20">
                             <h4>{{ 'pages.preferences.avatar.title' | translate }}</h4>
@@ -37,7 +37,7 @@
                             </mat-radio-group>
                         </div>
 
-                        <mat-divider></mat-divider>
+                        <mat-divider />
 
                         <div class="margin-top-20">
                             <h4>{{ 'pages.preferences.gallery.title' | translate }}</h4>
@@ -54,7 +54,7 @@
                             </mat-radio-group>
                         </div>
 
-                        <mat-divider></mat-divider>
+                        <mat-divider />
 
                         <div class="margin-top-20">
                             <h4>{{ 'pages.preferences.media.title' | translate }}</h4>

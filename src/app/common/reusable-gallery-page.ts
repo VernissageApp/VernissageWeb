@@ -9,8 +9,7 @@ import { Status } from "../models/status";
 @Component({
     selector: 'app-reusable-gallery-page',
     template: '',
-    styles: [],
-    standalone: false
+    styles: []
 })
 export class ReusableGalleryPageComponent extends ResponsiveComponent implements OnInit, OnDestroy {
     protected statuses = signal<LinkableResult<Status> | undefined>(undefined);

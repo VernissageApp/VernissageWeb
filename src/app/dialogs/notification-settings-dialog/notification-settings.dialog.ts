@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, model, OnInit, signal } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
 import { SwPush } from '@angular/service-worker';
 import { firstValueFrom } from 'rxjs';
 import { PushSubscription as PushSubscriptionDto } from 'src/app/models/push-subscription';
@@ -10,13 +10,18 @@ import { LoadingService } from 'src/app/services/common/loading.service';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { PushSubscriptionsService } from 'src/app/services/http/push-subscriptions.service';
 import { SettingsService } from 'src/app/services/http/settings.service';
+import { FormsModule } from '@angular/forms';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatButton } from '@angular/material/button';
 
 @Component({
     selector: 'app-notification-settings-dialog',
     templateUrl: 'notification-settings.dialog.html',
     styleUrls: ['notification-settings.dialog.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [FormsModule, MatDialogTitle, MatSlideToggle, CdkScrollable, MatDialogContent, MatCheckbox, MatDialogActions, MatButton, TranslatePipe]
 })
 export class NotificationSettingsDialog implements OnInit {
     protected notificationsEnabled = model(false);

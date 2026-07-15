@@ -11,11 +11,11 @@
                     <a animate.enter="slow-fade-in" [routerLink]="['/statuses', status.id]" [ariaLabel]="'Status added by: ' + $safeNavigationMigration(getMainStatus(status).user?.userName)" (click)="onStatusClick()">
                         @if (getMainStatus(status).sensitive && !alwaysShowNSFW()) {
                             <div class="blurhash">
-                                <app-blurhash-image [horizontal]="true" [status]="status"></app-blurhash-image>
+                                <app-blurhash-image [horizontal]="true" [status]="status" />
                             </div>
                         } @else {
                             <div class="image">
-                                <app-image [horizontal]="true" [status]="status"></app-image>
+                                <app-image [horizontal]="true" [status]="status" />
                             </div>
                         }
                     </a>
