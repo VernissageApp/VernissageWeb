@@ -45,7 +45,7 @@ import { ContentCredentialsDialog } from 'src/app/dialogs/content-credentials-di
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { MatIcon } from '@angular/material/icon';
 import { MatButton, MatIconButton } from '@angular/material/button';
-import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
+import { MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
 import { MatDivider } from '@angular/material/list';
@@ -68,7 +68,7 @@ import { LocalizedDatePipe } from '../../pipes/localized-date.pipe';
     templateUrl: './status.page.html',
     styleUrls: ['./status.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [MatIcon, MatButton, GalleryComponent, MatCard, MatCardContent, MatIconButton, MatTooltip, MatMenuTrigger, MatMenu, MatMenuItem, MatDivider, MatProgressSpinner, MiniUserCardComponent, UserCardComponent, HrefToRouterLinkDirective, NoteProcessorDirective, TagComponent, StatusPropertiesComponent, MatCardHeader, MatCardTitle, CommentReplyComponent_1, RouterLink, AvatarComponent, MatFormField, MatLabel, MatSelect, MatOption, SlicePipe, TranslatePipe, AgoPipe, LocalizedDatePipe]
+    imports: [MatIcon, MatButton, GalleryComponent, MatCard, MatCardContent, MatIconButton, MatTooltip, MatMenuTrigger, MatMenu, MatMenuItem, MatDivider, MatProgressSpinner, MiniUserCardComponent, UserCardComponent, HrefToRouterLinkDirective, NoteProcessorDirective, TagComponent, StatusPropertiesComponent, MatCardHeader, MatCardTitle, CommentReplyComponent_1, RouterLink, AvatarComponent, MatFormField, MatLabel, MatSelect, MatOption, SlicePipe, TranslatePipe, AgoPipe, LocalizedDatePipe, MatCardActions]
 })
 export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy {
     protected readonly avatarSize = AvatarSize;
