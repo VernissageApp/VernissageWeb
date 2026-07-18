@@ -79,17 +79,17 @@ export class ArticlesService {
         await firstValueFrom(event$);
     }
 
-    public async count(): Promise<ArticlesCountDto> {
-        const event$ = this.httpClient.get<ArticlesCountDto>(this.windowService.apiUrl() +  `/api/v1/articles/count`);
+    public async count(language: string): Promise<ArticlesCountDto> {
+        const event$ = this.httpClient.get<ArticlesCountDto>(this.windowService.apiUrl() +  `/api/v1/articles/count/${encodeURIComponent(language)}`);
         return await firstValueFrom(event$);
     }
 
-    public async marker(articleId: string): Promise<void> {
+    public async marker(articleId: string, language: string): Promise<void> {
         if (!this.isBrowser) {
             return;
         }
 
-        const event$ = this.httpClient.post(this.windowService.apiUrl() +  `/api/v1/articles/marker/${articleId}`, null);
+        const event$ = this.httpClient.post(this.windowService.apiUrl() +  `/api/v1/articles/marker/${articleId}/${encodeURIComponent(language)}`, null);
         await firstValueFrom(event$);
     }
 }

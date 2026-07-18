@@ -425,7 +425,11 @@
                             }
 
                             <!-- Status properties -->
-                            <app-status-properties [status]="mainStatusInternal" />
+                            <app-status-properties
+                                [status]="mainStatusInternal"
+                                [userListsEnabled]="isLoggedIn() && !isInVersionMode()"
+                                (boostedByClick)="onBoostedByDialog()"
+                                (favouritedByClick)="onFavouritedByDialog()" />
                         </mat-card-content>
                     </mat-card>
 

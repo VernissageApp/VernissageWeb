@@ -20,9 +20,21 @@
         <mat-icon class="margin-right-15" [matTooltip]="status().application" [attr.aria-label]="'components.statusProperties.attrs.application' | translate">settings_applications</mat-icon>
     }
     
-    <mat-icon [matTooltip]="'components.statusProperties.attrs.numberOfBoosts' | translate" [attr.aria-label]="'components.statusProperties.attrs.numberOfBoosts' | translate">rocket</mat-icon>
+    @if (userListsEnabled()) {
+        <button type="button" class="property-action" (click)="boostedByClick.emit()" [matTooltip]="'components.statusProperties.attrs.numberOfBoosts' | translate" [attr.aria-label]="'pages.status.menu.boostedBy' | translate">
+            <mat-icon>rocket</mat-icon>
+        </button>
+    } @else {
+        <mat-icon [matTooltip]="'components.statusProperties.attrs.numberOfBoosts' | translate" [attr.aria-label]="'components.statusProperties.attrs.numberOfBoosts' | translate">rocket</mat-icon>
+    }
     <div  class="margin-right-15">{{ status().reblogsCount }}</div>
-    
-    <mat-icon [matTooltip]="'components.statusProperties.attrs.numberOfLikes' | translate" [attr.aria-label]="'components.statusProperties.attrs.numberOfLikes' | translate">star</mat-icon>
+
+    @if (userListsEnabled()) {
+        <button type="button" class="property-action" (click)="favouritedByClick.emit()" [matTooltip]="'components.statusProperties.attrs.numberOfLikes' | translate" [attr.aria-label]="'pages.status.menu.favouritedBy' | translate">
+            <mat-icon>star</mat-icon>
+        </button>
+    } @else {
+        <mat-icon [matTooltip]="'components.statusProperties.attrs.numberOfLikes' | translate" [attr.aria-label]="'components.statusProperties.attrs.numberOfLikes' | translate">star</mat-icon>
+    }
     <div>{{ status().favouritesCount }}</div>
 </div>

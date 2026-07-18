@@ -452,7 +452,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
 
     protected async onBoostedByDialog(): Promise<void> {
         const internalMainStatus = this.mainStatus();
-        if (!internalMainStatus?.id) {
+        if (!this.isLoggedIn() || this.isInVersionMode() || !internalMainStatus?.id) {
             return;
         }
 
@@ -464,7 +464,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
 
     protected async onFavouritedByDialog(): Promise<void> {
         const internalMainStatus = this.mainStatus();
-        if (!internalMainStatus?.id) {
+        if (!this.isLoggedIn() || this.isInVersionMode() || !internalMainStatus?.id) {
             return;
         }
 

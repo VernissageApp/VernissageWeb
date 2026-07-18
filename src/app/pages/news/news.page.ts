@@ -68,10 +68,11 @@ export class NewsPage extends ResponsiveComponent implements OnInit, OnDestroy {
 
             this.pageIndex.set(page);
             const articlesVisibility = isLoggedIn ? ArticleVisibility.SignInNews : ArticleVisibility.SignOutNews;
+            const articleLanguage = this.getArticleLanguage();
 
-            const downloadedArticles = await this.articlesService.all(page + 1, size, articlesVisibility, true, this.getArticleLanguage());
+            const downloadedArticles = await this.articlesService.all(page + 1, size, articlesVisibility, true, articleLanguage);
             this.articles.set(downloadedArticles);
-            await this.updateArticleMarker(isLoggedIn, page, downloadedArticles.data[0]);
+            await this.updateArticleMarker(isLoggedIn, page, downloadedArticles.data[0], articleLanguage);
 
             this.isReady.set(true);
             this.loadingService.hideLoader();
@@ -96,13 +97,13 @@ export class NewsPage extends ResponsiveComponent implements OnInit, OnDestroy {
         return this.languageService.getCurrentLanguageLocale().replace('-', '_');
     }
 
-    private async updateArticleMarker(isLoggedIn: boolean, page: number, firstArticle?: Article): Promise<void> {
+    private async updateArticleMarker(isLoggedIn: boolean, page: number, firstArticle: Article | undefined, language: string): Promise<void> {
         if (!isLoggedIn || page !== 0 || !firstArticle?.id) {
             return;
         }
 
         try {
-            await this.articlesService.marker(firstArticle.id);
+            await this.articlesService.marker(firstArticle.id, language);
             this.articlesService.changes.next(0);
         } catch (error) {
             console.error(error);
