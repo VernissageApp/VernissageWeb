@@ -12,7 +12,9 @@ export enum Resolution {
 @Component({
     selector: 'app-base',
     template: '',
-    styles: []
+    styles: [],
+    // The server cannot know the viewport, so the client must rebuild responsive templates.
+    host: { ngSkipHydration: 'true' }
 })
 export class ResponsiveComponent implements OnInit, OnDestroy {
     private breakpointSubscription: Subscription;
