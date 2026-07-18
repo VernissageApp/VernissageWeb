@@ -1,6 +1,6 @@
-import { Component, OnInit, OnDestroy, Renderer2, signal, computed, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, Renderer2, signal, computed, ChangeDetectionStrategy, inject, PLATFORM_ID } from '@angular/core';
 import { NavigationEnd, RouteReuseStrategy, Router, RouterLink } from '@angular/router';
-import { filter, Subscription } from 'rxjs';
+import { filter, interval, Subscription } from 'rxjs';
 
 import { InstanceService } from 'src/app/services/http/instance.service';
 import { AuthorizationService } from '../../../services/authorization/authorization.service';
@@ -21,7 +21,8 @@ import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
 import { MatIcon } from '@angular/material/icon';
 import { MatDivider } from '@angular/material/list';
 import { MatBadge } from '@angular/material/badge';
-import { NgOptimizedImage } from '@angular/common';
+import { isPlatformBrowser, NgOptimizedImage } from '@angular/common';
+import { ArticlesService } from 'src/app/services/http/articles.service';
 
 @Component({
     selector: 'app-header',
@@ -33,6 +34,7 @@ import { NgOptimizedImage } from '@angular/common';
 export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDestroy {
     protected readonly resolution = Resolution;
     protected notificationCounter = signal(0);
+    protected articleCounter = signal(0);
     protected user = signal<UserPayload | undefined>(undefined);
     protected avatarUrl = computed(() => this.user()?.avatarUrl ?? 'assets/avatar.svg');
     protected fullName = computed(() => this.userDisplayService.displayName(this.user()));
@@ -49,13 +51,19 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
     private clearReuseStrategyAfterNavigationEnds = false;
     private userChangeSubscription?: Subscription;
     private notificationChangeSubscription?: Subscription;
+    private articleChangeSubscription?: Subscription;
+    private articleCountRefreshSubscription?: Subscription;
     private messagesSubscription?: Subscription;
     private routeNavigationEndSubscription?: Subscription;
     private languageChangeSubscription?: Subscription;
+    private isLoadingArticleCount = false;
+    private articleCounterVersion = 0;
+    private readonly articleCountRefreshInterval = 5 * 60 * 1000;
 
     private authorizationService = inject(AuthorizationService);
     private instanceService = inject(InstanceService);
     private notificationsService = inject(NotificationsService);
+    private articlesService = inject(ArticlesService);
     private settingsService = inject(SettingsService);
     private userDisplayService = inject(UserDisplayService);
     private routeReuseStrategy = inject(RouteReuseStrategy);
@@ -65,6 +73,7 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
     private languageService = inject(LanguageService);
     private translateService = inject(TranslateService);
     private renderer = inject(Renderer2);
+    private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
@@ -108,6 +117,7 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
             });
 
             await this.loadNotificationCount();
+            await this.loadArticleCount();
             this.clearReuseStrategyState();
         });
 
@@ -124,6 +134,17 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
             this.notificationCounter.set(count);
             this.notificationsService.setApplicationBadge(count);
         });
+
+        this.articleChangeSubscription = this.articlesService.changes.subscribe((count) => {
+            this.articleCounterVersion++;
+            this.articleCounter.set(count);
+        });
+
+        if (this.isBrowser) {
+            this.articleCountRefreshSubscription = interval(this.articleCountRefreshInterval).subscribe(() => {
+                void this.loadArticleCount();
+            });
+        }
     }
 
     override ngOnDestroy(): void {
@@ -131,6 +152,8 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
 
         this.userChangeSubscription?.unsubscribe();
         this.notificationChangeSubscription?.unsubscribe();
+        this.articleChangeSubscription?.unsubscribe();
+        this.articleCountRefreshSubscription?.unsubscribe();
         this.messagesSubscription?.unsubscribe();
         this.routeNavigationEndSubscription?.unsubscribe();
         this.languageChangeSubscription?.unsubscribe();
@@ -191,6 +214,33 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
             }
         } catch(error) {
             console.error(error);
+        }
+    }
+
+    private async loadArticleCount(): Promise<void> {
+        const userId = this.user()?.id;
+        if (!userId || !this.showNews()) {
+            this.articleCounterVersion++;
+            this.articleCounter.set(0);
+            return;
+        }
+
+        if (this.isLoadingArticleCount) {
+            return;
+        }
+
+        this.isLoadingArticleCount = true;
+        const articleCounterVersion = this.articleCounterVersion;
+
+        try {
+            const articleCount = await this.articlesService.count();
+            if (this.user()?.id === userId && this.articleCounterVersion === articleCounterVersion) {
+                this.articleCounter.set(articleCount.amount);
+            }
+        } catch(error) {
+            console.error(error);
+        } finally {
+            this.isLoadingArticleCount = false;
         }
     }
 

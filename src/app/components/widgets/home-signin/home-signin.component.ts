@@ -22,6 +22,10 @@ import { MatButtonToggleGroup, MatButtonToggle } from '@angular/material/button-
 import { FormsModule } from '@angular/forms';
 import { GalleryComponent } from '../gallery/gallery.component';
 import { TranslatePipe } from '@ngx-translate/core';
+import { TimelineKind } from 'src/app/models/timeline-kind';
+import { LinkableResult } from 'src/app/models/linkable-result';
+import { TimelineMarkersService } from 'src/app/services/http/timeline-markers.service';
+import { Status } from 'src/app/models/status';
 
 @Component({
     selector: 'app-home-signin',
@@ -49,6 +53,7 @@ export class HomeSigninComponent extends ReusableGalleryPageComponent implements
     private focusTrackerService = inject(FocusTrackerService);
     private randomGeneratorService = inject(RandomGeneratorService);
     private languageService = inject(LanguageService);
+    private timelineMarkersService = inject(TimelineMarkersService);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
@@ -162,25 +167,30 @@ export class HomeSigninComponent extends ReusableGalleryPageComponent implements
             case 'local': {
                 this.timeline.set('local');
                 const statuses = await this.timelineService.public(undefined, undefined, undefined, undefined, true);
-                statuses.context = ContextTimeline.local;
+                this.updateTimelineMarker(TimelineKind.local, statuses);
 
+                statuses.context = ContextTimeline.local;
                 this.statuses.set(statuses);
+
                 break;
             }
             case 'global': {
                 this.timeline.set('global');
                 const statuses = await this.timelineService.public(undefined, undefined, undefined, undefined, false);
-                statuses.context = ContextTimeline.global;
+                this.updateTimelineMarker(TimelineKind.federated, statuses);
 
+                statuses.context = ContextTimeline.global;
                 this.statuses.set(statuses);
+
                 break;
             }
             default:
                 if (this.isLoggedIn()) {
                     this.timeline.set('private');
                     const statuses = await this.timelineService.home();
-                    statuses.context = ContextTimeline.home;
+                    this.updateTimelineMarker(TimelineKind.signInPrivate, statuses);
 
+                    statuses.context = ContextTimeline.home;
                     this.statuses.set(statuses);
                 } else {
                     this.timeline.set('local');
@@ -215,5 +225,22 @@ export class HomeSigninComponent extends ReusableGalleryPageComponent implements
         }
 
         return false;
+    }
+
+    private async updateTimelineMarker(timelineKind: TimelineKind, statuses: LinkableResult<Status>): Promise<void> {
+        if (!this.isLoggedIn()) {
+            return;
+        }
+
+        if (statuses.data.length === 0) {
+            return;
+        }
+
+        try {
+            const firstStatus = statuses.data[0];
+            await this.timelineMarkersService.post(timelineKind, firstStatus.id);
+        } catch (error) {
+            console.error(error);
+        }
     }
 }

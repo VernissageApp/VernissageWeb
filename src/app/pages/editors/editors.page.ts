@@ -17,6 +17,9 @@ import { MatIcon } from "@angular/material/icon";
 import { GalleryComponent } from "../../components/widgets/gallery/gallery.component";
 import { UsersGalleryComponent } from "../../components/widgets/users-gallery/users-gallery.component";
 import { TranslatePipe } from "@ngx-translate/core";
+import { TimelineKind } from "src/app/models/timeline-kind";
+import { Status } from "src/app/models/status";
+import { TimelineMarkersService } from "src/app/services/http/timeline-markers.service";
 
 @Component({
     selector: 'app-editors',
@@ -43,6 +46,7 @@ export class EditorsPage extends ReusableGalleryPageComponent implements OnInit,
     private authorizationService = inject(AuthorizationService);
     private activatedRoute = inject(ActivatedRoute);
     private focusTrackerService = inject(FocusTrackerService);
+    private timelineMarkersService = inject(TimelineMarkersService);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
@@ -107,8 +111,9 @@ export class EditorsPage extends ReusableGalleryPageComponent implements OnInit,
 
     private async loadStatuses(): Promise<void> {
         const downloadedStatuses = await this.timelineService.featuredStatuses(undefined, undefined, undefined, undefined);
-        downloadedStatuses.context = ContextTimeline.editors;
+        this.updateTimelineMarker(TimelineKind.featured, downloadedStatuses);
 
+        downloadedStatuses.context = ContextTimeline.editors;
         this.statuses.set(downloadedStatuses);
     }
 
@@ -169,5 +174,23 @@ export class EditorsPage extends ReusableGalleryPageComponent implements OnInit,
         }
 
         return 'statuses';
+    }
+
+    private async updateTimelineMarker(timelineKind: TimelineKind, statuses: LinkableResult<Status>): Promise<void> {
+        const isLoggedIn = await this.authorizationService.isLoggedIn();
+        if (!isLoggedIn) {
+            return;
+        }
+
+        if (statuses.data.length === 0) {
+            return;
+        }
+
+        try {
+            const firstStatus = statuses.data[0];
+            await this.timelineMarkersService.post(timelineKind, firstStatus.id);
+        } catch (error) {
+            console.error(error);
+        }
     }
 }
