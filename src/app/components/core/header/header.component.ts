@@ -57,6 +57,7 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
     private routeNavigationEndSubscription?: Subscription;
     private languageChangeSubscription?: Subscription;
     private isLoadingArticleCount = false;
+    private isArticleCountRefreshPending = false;
     private articleCounterVersion = 0;
     private readonly articleCountRefreshInterval = 5 * 60 * 1000;
 
@@ -88,6 +89,8 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
 
         this.languageChangeSubscription = this.translateService.onLangChange.subscribe(() => {
             this.currentLanguage.set(this.languageService.getCurrentLanguage());
+            this.articleCounterVersion++;
+            void this.loadArticleCount();
         });
 
         this.userChangeSubscription = this.authorizationService.changes.subscribe(async (user) => {
@@ -226,22 +229,33 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
         }
 
         if (this.isLoadingArticleCount) {
+            this.isArticleCountRefreshPending = true;
             return;
         }
 
         this.isLoadingArticleCount = true;
         const articleCounterVersion = this.articleCounterVersion;
+        const articleLanguage = this.getArticleLanguage();
 
         try {
-            const articleCount = await this.articlesService.count();
-            if (this.user()?.id === userId && this.articleCounterVersion === articleCounterVersion) {
+            const articleCount = await this.articlesService.count(articleLanguage);
+            if (this.user()?.id === userId && this.getArticleLanguage() === articleLanguage && this.articleCounterVersion === articleCounterVersion) {
                 this.articleCounter.set(articleCount.amount);
             }
         } catch(error) {
             console.error(error);
         } finally {
             this.isLoadingArticleCount = false;
+
+            if (this.isArticleCountRefreshPending) {
+                this.isArticleCountRefreshPending = false;
+                void this.loadArticleCount();
+            }
         }
+    }
+
+    private getArticleLanguage(): string {
+        return this.languageService.getCurrentLanguageLocale().replace('-', '_');
     }
 
     private clearReuseStrategyState(): void {
