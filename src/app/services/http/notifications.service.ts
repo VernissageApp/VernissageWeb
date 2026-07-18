@@ -33,6 +33,10 @@ export class NotificationsService {
     }
 
     public async marker(notificationId: string): Promise<void> {
+        if (!this.isBrowser) {
+            return;
+        }
+
         const event$ = this.httpClient.post(this.windowService.apiUrl() +  `/api/v1/notifications/marker/${notificationId}`, null);
         await firstValueFrom(event$);
     }
