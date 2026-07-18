@@ -1,16 +1,21 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { firstValueFrom } from 'rxjs';
+import { BehaviorSubject, firstValueFrom } from 'rxjs';
+import { isPlatformBrowser } from '@angular/common';
 import { WindowService } from '../common/window.service';
 import { PagedResult } from 'src/app/models/paged-result';
 import { Article } from 'src/app/models/article';
 import { ArticleVisibility } from 'src/app/models/article-visibility';
 import { ArticleFileInfo } from 'src/app/models/article-file-info';
+import { ArticlesCountDto } from 'src/app/models/articles-count';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ArticlesService {
+    public changes = new BehaviorSubject<number>(0);
+
+    private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
     private httpClient = inject(HttpClient);
     private windowService = inject(WindowService);
 
@@ -71,6 +76,20 @@ export class ArticlesService {
 
     public async dismiss(id: string): Promise<void> {
         const event$ = this.httpClient.post(this.windowService.apiUrl() + `/api/v1/articles/${id}/dismiss`, null);
+        await firstValueFrom(event$);
+    }
+
+    public async count(): Promise<ArticlesCountDto> {
+        const event$ = this.httpClient.get<ArticlesCountDto>(this.windowService.apiUrl() +  `/api/v1/articles/count`);
+        return await firstValueFrom(event$);
+    }
+
+    public async marker(articleId: string): Promise<void> {
+        if (!this.isBrowser) {
+            return;
+        }
+
+        const event$ = this.httpClient.post(this.windowService.apiUrl() +  `/api/v1/articles/marker/${articleId}`, null);
         await firstValueFrom(event$);
     }
 }

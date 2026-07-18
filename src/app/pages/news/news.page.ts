@@ -71,6 +71,7 @@ export class NewsPage extends ResponsiveComponent implements OnInit, OnDestroy {
 
             const downloadedArticles = await this.articlesService.all(page + 1, size, articlesVisibility, true, this.getArticleLanguage());
             this.articles.set(downloadedArticles);
+            await this.updateArticleMarker(isLoggedIn, page, downloadedArticles.data[0]);
 
             this.isReady.set(true);
             this.loadingService.hideLoader();
@@ -93,5 +94,18 @@ export class NewsPage extends ResponsiveComponent implements OnInit, OnDestroy {
 
     private getArticleLanguage(): string {
         return this.languageService.getCurrentLanguageLocale().replace('-', '_');
+    }
+
+    private async updateArticleMarker(isLoggedIn: boolean, page: number, firstArticle?: Article): Promise<void> {
+        if (!isLoggedIn || page !== 0 || !firstArticle?.id) {
+            return;
+        }
+
+        try {
+            await this.articlesService.marker(firstArticle.id);
+            this.articlesService.changes.next(0);
+        } catch (error) {
+            console.error(error);
+        }
     }
 }

@@ -103,7 +103,7 @@
 
                 @if (showNews()) {
                     <a matButton="text" [routerLink]="['/news']" (click)="markClearReuseStrategy()" [attr.aria-label]="'components.header.navigation.news' | translate" class="margin-right-5">
-                        <mat-icon>news</mat-icon> {{ 'components.header.navigation.news' | translate }}
+                        <mat-icon class="news-icon" [class.news-icon-unread]="articleCounter() > 0">news</mat-icon> {{ 'components.header.navigation.news' | translate }}
                     </a>
                 }
             }
