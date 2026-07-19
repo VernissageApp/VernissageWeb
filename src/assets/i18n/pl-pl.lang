@@ -244,6 +244,8 @@
         "doYouWantToDeleteCategory": "Czy chcesz usunąć kategorię?"
       },
       "texts": {
+        "alwaysRecalculateRemoteStatusCategory": "Zawsze przeliczaj kategorię zdalnego statusu",
+        "alwaysRecalculateRemoteStatusCategoryDescription": "Gdy opcja jest włączona, kategorie przychodzących statusów ActivityPub są ponownie wyznaczane na podstawie lokalnych reguł kategorii hashtagów. Jeśli nie zostanie znaleziona pasująca reguła, używana jest kategoria przekazana przez zdalny serwer.",
         "categoryName": "Nazwa kategorii",
         "newCategory": "Nowa kategoria"
       }

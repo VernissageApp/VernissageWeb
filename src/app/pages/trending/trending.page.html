@@ -1,7 +1,7 @@
 @if (isReady()) {
     <div animate.enter="fade-in">
 
-        <div class="flex-row flex-align-center flex-space-between margin-bottom-10" [ngClass]="{ 'padding-left-30 padding-right-30 padding-top-30': !isHandset(), 'padding-left-10 padding-right-10 padding-top-10': isHandset() }">
+        <div class="flex-row flex-align-center flex-space-between margin-bottom-10" [class]="isHandset() ? 'padding-left-10 padding-right-10 padding-top-10' : 'padding-left-30 padding-right-30 padding-top-30'">
             <h1>
                 <div>{{ 'pages.trending.title' | translate }}</div>
                 @if (!isHandset()) {
@@ -43,7 +43,7 @@
             </section>
         </div>
 
-        <div class="flex-row flex-end padding-bottom-10" [ngClass]="{ 'padding-right-30': !isHandset(), 'padding-right-10': isHandset() }">
+        <div class="flex-row flex-end padding-bottom-10" [class]="{ 'padding-right-30': !isHandset(), 'padding-right-10': isHandset() }">
             <mat-radio-group [(ngModel)]="period" (ngModelChange)="onSelectionChange()" [attr.aria-label]="'pages.trending.period.ariaLabel' | translate">
                 <mat-radio-button [disableRipple]="true" [value]="trendingPeriod.Daily">{{ 'pages.trending.period.daily' | translate }}</mat-radio-button>
                 <mat-radio-button [disableRipple]="true" [value]="trendingPeriod.Monthly">{{ 'pages.trending.period.monthly' | translate }}</mat-radio-button>
@@ -53,19 +53,19 @@
 
         @if (selectedTrending() === 'statuses') {
             @if (statuses(); as statusesArray) {
-                <app-gallery [statuses]="statusesArray" [startUrl]="pageUrl"></app-gallery>
+                <app-gallery [statuses]="statusesArray" [startUrl]="pageUrl" />
             }
         }
 
         @if (selectedTrending() === 'users') {
             @if (users(); as usersArray) {
-                <app-users-gallery [users]="usersArray"></app-users-gallery>
+                <app-users-gallery [users]="usersArray" />
             }
         }
 
         @if (selectedTrending() === 'hashtags') {
             @if (hashtags(); as hashtagsArray) {
-                <app-hashtag-gallery [hashtags]="hashtagsArray"></app-hashtag-gallery>
+                <app-hashtag-gallery [hashtags]="hashtagsArray" />
             }
         }
     </div>

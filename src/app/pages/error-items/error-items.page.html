@@ -1,9 +1,9 @@
 @if (isReady()) {
     @if (errorItems(); as errorItemsArray) {
-        <div animate.enter="fade-in" [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
+        <div animate.enter="fade-in" [class]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
             <div class="flex-row flex-space-around padding-left-10 padding-right-10">
                 <div class="width-100">
-                    <section class="flex-row flex-space-between flex-align-center margin-bottom-20" [ngClass]="{ 'flex-row': !isHandset(), 'flex-column': isHandset() }">
+                    <section class="flex-row flex-space-between flex-align-center margin-bottom-20" [class]="{ 'flex-row': !isHandset(), 'flex-column': isHandset() }">
                         <h1>
                             <div>{{ 'pages.errorItems.title' | translate }}</div>
                             @if (!isHandset()) {
@@ -118,14 +118,12 @@
                         <tr mat-header-row *matHeaderRowDef="displayedColumns()"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumns();"></tr>
                     </table>
-                    <mat-paginator
-                        (page)="handlePageEvent($event)"
+                    <mat-paginator (page)="handlePageEvent($event)"
                         [length]="errorItemsArray.total"
                         [pageIndex]="pageIndex()"
                         [pageSize]="10"
                         [pageSizeOptions]="[10, 25, 100]"
-                        [attr.aria-label]="'common.paginator.selectPage' | translate">
-                    </mat-paginator>
+                        [attr.aria-label]="'common.paginator.selectPage' | translate" />
                 </div>
             </div>
         </div>

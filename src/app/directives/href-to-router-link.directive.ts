@@ -2,10 +2,7 @@ import { Directive, HostListener, inject } from "@angular/core";
 import { Router } from "@angular/router";
 import { WindowService } from "../services/common/window.service";
 
-@Directive({
-    selector: '[appHrefToRouterLink]',
-    standalone: false
-})
+@Directive({ selector: '[appHrefToRouterLink]' })
   export class HrefToRouterLinkDirective {
     private router = inject(Router);
     private windowService = inject(WindowService);

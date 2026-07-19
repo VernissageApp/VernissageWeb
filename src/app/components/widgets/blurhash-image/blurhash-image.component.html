@@ -6,13 +6,13 @@
         }
     </div>
     <canvas class="blurhash" #canvas width="32" height="32"></canvas>
-    <img class="image-item" [ngClass]="{ 'img-vertical': !horizontal(), 'img-horizontal': horizontal() }" [src]="imageSrc()" [alt]="alt() ?? 'Status image'" />
+    <img class="image-item" [class]="{ 'img-vertical': !horizontal(), 'img-horizontal': horizontal() }" [src]="imageSrc()" [alt]="alt() ?? 'Status image'" />
 
     @if (canvasIsLoaded()) {
         @if (showAvatar()) {
             @if (user(); as userObject) {
                 <div class="avatar" (mouseenter)="mouseenter.next()" (mouseleave)="mouseleave.next()">
-                    <app-mini-user-card [user]="userObject" [showUserName]="false" [whiteLink]="true" [size]="avatarSize.verysmall"></app-mini-user-card>
+                    <app-mini-user-card [user]="userObject" [showUserName]="false" [whiteLink]="true" [size]="avatarSize.verysmall" />
                 </div>
 
                 <app-popover [visible]="popoverVisible()">
@@ -23,7 +23,7 @@
                         (click)="$event.preventDefault(); $event.stopPropagation()"
                         (keydown.enter)="$event.preventDefault(); $event.stopPropagation()"
                         (keydown.space)="$event.preventDefault(); $event.stopPropagation()">
-                        <app-user-popover [user]="userObject" [relationship]="relationship()"></app-user-popover>
+                        <app-user-popover [user]="userObject" [relationship]="relationship()" />
                     </div>
                 </app-popover>
             }

@@ -36,7 +36,7 @@
                             <mat-form-field appearance="outline">
                                 <mat-label>{{ 'common.labels.email' | translate }}</mat-label>
                                 <input type="email" matInput name="email" [(ngModel)]="email" #emailInput="ngModel"
-                                    pattern="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
+                                    pattern="[A-Za-z0-9!#$%&'*+\/=?^_`\{\|\}~\-]+(?:\.[A-Za-z0-9!#$%&'*+\/=?^_`\{\|\}~\-]+)*@(?:[A-Za-z0-9](?:[A-Za-z0-9\-]*[A-Za-z0-9])?\.)+[A-Za-z0-9](?:[A-Za-z0-9\-]*[A-Za-z0-9])?"
                                     [attr.aria-label]="'common.labels.email' | translate" appUniqueEmail required />
 
                                 @if (emailInput.invalid && emailInput.errors?.required) {
@@ -73,14 +73,14 @@
                         </div>
 
                         <div class="margin-bottom-20">
-                            <app-language-select [(value)]="locale"></app-language-select>
+                            <app-language-select [(value)]="locale" />
                         </div>
 
                         <div class="margin-bottom-20">
-                            <app-password [(passwordText)]="password" (passwordValid)="onPasswordValid($event)" [form]="f"></app-password>
+                            <app-password [(passwordText)]="password" (passwordValid)="onPasswordValid($event)" [form]="f" />
                         </div>
 
-                        <mat-divider class="padding-bottom-20"></mat-divider>
+                        <mat-divider class="padding-bottom-20" />
 
                         <div>
                             <h4>{{ 'pages.register.serverRules.title' | translate }}</h4>
@@ -98,7 +98,7 @@
                         </div>
 
                         @if (isRegistrationByInvitationsOpened() || isRegistrationByApprovalOpened() || isQuickCaptchaEnabled()) {
-                            <mat-divider class="padding-bottom-20"></mat-divider>
+                            <mat-divider class="padding-bottom-20" />
                         }
 
                         @if (isRegistrationByInvitationsOpened()) {
@@ -171,7 +171,7 @@
                             <button type="submit" matButton="filled" (click)="onRegisterClick()" [disabled]="isSubmittingMode()" [attr.aria-label]="'common.actions.register' | translate">{{ 'common.actions.register' | translate }}</button>
                                                         
                             @if (isSubmittingMode()) {
-                                <mat-spinner [diameter]="18" class="margin-left-10 margin-top-5"></mat-spinner>
+                                <mat-spinner [diameter]="18" class="margin-left-10 margin-top-5" />
                             }
 
                             @if (isErrorMode()) {
@@ -183,7 +183,7 @@
             </form>
 
             <!-- Footer with privacy policy. -->
-            <app-footer></app-footer>
+            <app-footer />
         </div>
     </div>
 </div>

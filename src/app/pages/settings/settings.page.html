@@ -1,6 +1,6 @@
 @if (isReady()) {
     @if (settings(); as settingsObject) {
-        <div animate.enter="fade-in" [ngClass]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
+        <div animate.enter="fade-in" [class]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
             <div class="flex-row flex-space-around">
                 <div class="settings-container width-100">
                     <section>
@@ -22,7 +22,7 @@
                                     </mat-panel-description>
                                 }
                             </mat-expansion-panel-header>
-                            <app-general-settings [settings]="settingsObject" [webContactUser]="webContactUser()" [systemDefaultUser]="systemDefaultUser()"></app-general-settings>
+                            <app-general-settings [settings]="settingsObject" [webContactUser]="webContactUser()" [systemDefaultUser]="systemDefaultUser()" />
                         </mat-expansion-panel>
 
                         <!-- Instance rules. -->
@@ -38,7 +38,7 @@
                                     </mat-panel-description>
                                 }
                             </mat-expansion-panel-header>
-                            <app-instance-rules></app-instance-rules>
+                            <app-instance-rules />
                         </mat-expansion-panel>
 
                         <!-- Domain blocks panel. -->
@@ -54,7 +54,7 @@
                                     </mat-panel-description>
                                 }
                             </mat-expansion-panel-header>
-                            <app-domain-blocks></app-domain-blocks>
+                            <app-domain-blocks />
                         </mat-expansion-panel>
 
                         <!-- Categories. -->
@@ -70,7 +70,7 @@
                                     </mat-panel-description>
                                 }
                             </mat-expansion-panel-header>
-                            <app-category-list></app-category-list>
+                            <app-category-list [settings]="settingsObject" />
                         </mat-expansion-panel>
 
                         <!-- Licenses. -->
@@ -86,7 +86,7 @@
                                     </mat-panel-description>
                                 }
                             </mat-expansion-panel-header>
-                            <app-license-list></app-license-list>
+                            <app-license-list />
                         </mat-expansion-panel>
 
                         <!-- Home cards. -->
@@ -102,7 +102,7 @@
                                     </mat-panel-description>
                                 }
                             </mat-expansion-panel-header>
-                            <app-home-cards></app-home-cards>
+                            <app-home-cards />
                         </mat-expansion-panel>
 
                     </mat-accordion>

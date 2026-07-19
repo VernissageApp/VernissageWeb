@@ -3,7 +3,7 @@ import { Clipboard } from '@angular/cdk/clipboard';
 import { decode } from 'blurhash';
 import { combineLatest, firstValueFrom, map, Subscription } from 'rxjs';
 import { StatusesService } from 'src/app/services/http/statuses.service';
-import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router, RouterLink } from '@angular/router';
 import { Status } from 'src/app/models/status';
 import { Exif } from 'src/app/models/exif';
 import { Location } from 'src/app/models/location';
@@ -16,7 +16,7 @@ import { ReportDialog } from 'src/app/dialogs/report-dialog/report.dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { ReportData } from 'src/app/dialogs/report-dialog/report-data';
 import { ReportsService } from 'src/app/services/http/reports.service';
-import { Gallery, GalleryItem, ImageItem } from 'ng-gallery';
+import { Gallery, GalleryItem, ImageItem, GalleryComponent } from 'ng-gallery';
 import { Lightbox } from 'ng-gallery/lightbox';
 import { ContextStatusesService } from 'src/app/services/common/context-statuses.service';
 import { Role } from 'src/app/models/role';
@@ -27,7 +27,7 @@ import { UsersDialogContext, UsersListType } from 'src/app/dialogs/users-dialog/
 import { License } from 'src/app/models/license';
 import { WindowService } from 'src/app/services/common/window.service';
 import { RoutingStateService } from 'src/app/services/common/routing-state.service';
-import { isPlatformBrowser, Location as NgLocation } from '@angular/common';
+import { isPlatformBrowser, Location as NgLocation, SlicePipe } from '@angular/common';
 import { Meta, SafeHtml, Title } from '@angular/platform-browser';
 import { LoadingService } from 'src/app/services/common/loading.service';
 import { DeviceDetectorService } from 'ngx-device-detector';
@@ -39,14 +39,33 @@ import { UserPayload } from 'src/app/models/user-payload';
 import { ConfirmationDialog } from 'src/app/dialogs/confirmation-dialog/confirmation.dialog';
 import { CommentReplyComponent } from 'src/app/components/widgets/comment-reply/comment-reply.component';
 import { StatusHashtagsService } from 'src/app/services/common/status-hashtags.service';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { MatIcon } from '@angular/material/icon';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
+import { MatDivider } from '@angular/material/list';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MiniUserCardComponent } from '../../components/widgets/mini-user-card/mini-user-card.component';
+import { UserCardComponent } from '../../components/widgets/user-card/user-card.component';
+import { HrefToRouterLinkDirective } from '../../directives/href-to-router-link.directive';
+import { NoteProcessorDirective } from '../../directives/note-processor.directive';
+import { TagComponent } from '../../components/widgets/tag/tag.component';
+import { StatusPropertiesComponent } from '../../components/widgets/status-properties/status-properties.component';
+import { CommentReplyComponent as CommentReplyComponent_1 } from '../../components/widgets/comment-reply/comment-reply.component';
+import { AvatarComponent } from '../../components/widgets/avatar/avatar.component';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatSelect, MatOption } from '@angular/material/select';
+import { AgoPipe } from '../../pipes/ago.pipe';
+import { LocalizedDatePipe } from '../../pipes/localized-date.pipe';
 
 @Component({
     selector: 'app-status',
     templateUrl: './status.page.html',
     styleUrls: ['./status.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [MatIcon, MatButton, GalleryComponent, MatCard, MatCardContent, MatIconButton, MatTooltip, MatMenuTrigger, MatMenu, MatMenuItem, MatDivider, MatProgressSpinner, MiniUserCardComponent, UserCardComponent, HrefToRouterLinkDirective, NoteProcessorDirective, TagComponent, StatusPropertiesComponent, MatCardHeader, MatCardTitle, CommentReplyComponent_1, RouterLink, AvatarComponent, MatFormField, MatLabel, MatSelect, MatOption, SlicePipe, TranslatePipe, AgoPipe, LocalizedDatePipe]
 })
 export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy {
     protected readonly avatarSize = AvatarSize;
@@ -414,7 +433,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
 
     protected async onBoostedByDialog(): Promise<void> {
         const internalMainStatus = this.mainStatus();
-        if (!internalMainStatus?.id) {
+        if (!this.isLoggedIn() || this.isInVersionMode() || !internalMainStatus?.id) {
             return;
         }
 
@@ -426,7 +445,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
 
     protected async onFavouritedByDialog(): Promise<void> {
         const internalMainStatus = this.mainStatus();
-        if (!internalMainStatus?.id) {
+        if (!this.isLoggedIn() || this.isInVersionMode() || !internalMainStatus?.id) {
             return;
         }
 

@@ -13,12 +13,21 @@ import { LoadingService } from "src/app/services/common/loading.service";
 import { SettingsService } from "src/app/services/http/settings.service";
 import { TrendingService } from "src/app/services/http/trending.service";
 
+import { MatButtonToggleGroup, MatButtonToggle } from "@angular/material/button-toggle";
+import { FormsModule } from "@angular/forms";
+import { MatIcon } from "@angular/material/icon";
+import { MatRadioGroup, MatRadioButton } from "@angular/material/radio";
+import { GalleryComponent } from "../../components/widgets/gallery/gallery.component";
+import { UsersGalleryComponent } from "../../components/widgets/users-gallery/users-gallery.component";
+import { HashtagGalleryComponent } from "../../components/widgets/hashtag-gallery/hashtag-gallery.component";
+import { TranslatePipe } from "@ngx-translate/core";
+
 @Component({
     selector: 'app-trending',
     templateUrl: './trending.page.html',
     styleUrls: ['./trending.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [MatButtonToggleGroup, FormsModule, MatButtonToggle, MatIcon, MatRadioGroup, MatRadioButton, GalleryComponent, UsersGalleryComponent, HashtagGalleryComponent, TranslatePipe]
 })
 export class TrendingPage extends ReusableGalleryPageComponent implements OnInit, OnDestroy {
     protected readonly trendingPeriod = TrendingPeriod;

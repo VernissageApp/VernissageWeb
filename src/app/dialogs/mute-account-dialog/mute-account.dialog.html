@@ -37,15 +37,15 @@
                 </mat-checkbox>
             </div>
 
-            <mat-divider></mat-divider>
+            <mat-divider />
 
             <div class="padding-top-20">
                 <mat-form-field class="width-100">
                     <mat-label>{{ 'dialogs.muteAccount.texts.muteEndDate' | translate }}</mat-label>
                     <input type="text" name="muteEnd"  matInput [matDatepicker]="picker" [(ngModel)]="muteEnd" [disabled]="!(muteStatuses() || muteReblogs() ||muteNotifications())">
                     <mat-hint>{{ 'dialogs.muteAccount.texts.optionalDateWhenMutingWillEnd' | translate }}</mat-hint>
-                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker" />
+                    <mat-datepicker #picker />
                   </mat-form-field>
             </div>
         </div>

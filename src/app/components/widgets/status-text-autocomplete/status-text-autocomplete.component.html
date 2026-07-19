@@ -40,13 +40,13 @@
                     tabindex="-1"
                     [attr.aria-selected]="autocompleteSelectedIndex() === i"
                     class="status-autocomplete-option"
-                    [ngClass]="{ 'active': autocompleteSelectedIndex() === i }"
+                    [class.active]="autocompleteSelectedIndex() === i"
                     (mousedown)="onAutocompleteSuggestionMouseDown($event, suggestion)"
                     (mouseenter)="onAutocompleteSuggestionHover(i)">
                     @if (suggestion.type === 'users') {
                         @if (suggestion.user; as user) {
                             <div class="user-option-content">
-                                <app-avatar [user]="user" [size]="avatarSize.small"></app-avatar>
+                                <app-avatar [user]="user" [size]="avatarSize.small" />
                                 <div class="user-option-text">
                                     <div class="user-option-name">{{ user.name || user.userName }}</div>
                                     <div class="user-option-username">&#64;{{ user.userName }}</div>
@@ -56,7 +56,7 @@
                     } @else {
                         <div class="hashtag-option-text">
                             <span>{{ suggestion.value }}</span>
-                            @if (suggestion.hashtag?.amount !== undefined && suggestion.hashtag?.amount !== null) {
+                            @if ($safeNavigationMigration(suggestion.hashtag?.amount) !== undefined && $safeNavigationMigration(suggestion.hashtag?.amount) !== null) {
                                 <span class="hashtag-option-amount">({{ suggestion.hashtag?.amount }})</span>
                             }
                         </div>

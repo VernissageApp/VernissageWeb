@@ -6,7 +6,7 @@
         [id]="name() + '-input'"
         matInput
         (change)="onChange()"
-        [ngModel]="selectedUser()"
+        [ngModel]="selectedUserValue()"
         (ngModelChange)="onModelChange($event)"
         #userSelector="ngModel"
         [attr.aria-label]="label() || ('common.labels.user' | translate)"
@@ -26,14 +26,14 @@
         }
     </mat-autocomplete>
 
-    @if (selectedUser() && !isReadOnly) {
+    @if (selectedUserValue() && !isReadOnly) {
         <button [name]="name + '-clear'" [id]="name + '-clear'" type="button" matSuffix matIconButton [attr.aria-label]="'common.actions.clear' | translate" (click)="onChange()">
             <mat-icon class="text-muted">backspace</mat-icon>
         </button>
     }
 
     @if (isUsersLoading()) {
-        <mat-spinner matSuffix [diameter]="16"></mat-spinner>
+        <mat-spinner matSuffix [diameter]="16" />
     }
 
     @if (userSelector.invalid && userSelector.errors?.required) {

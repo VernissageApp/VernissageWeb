@@ -20,7 +20,7 @@
             <mat-form-field appearance="outline" class="width-100 padding-top-10">
                 <mat-label>{{ 'dialogs.updateSharedBusinessCard.texts.yourEmail' | translate }}</mat-label>
                 <input type="email" matInput name="email" #emailInput="ngModel" [(ngModel)]="email"
-                    pattern="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
+                    pattern="[A-Za-z0-9!#$%&'*+\/=?^_`\{\|\}~\-]+(?:\.[A-Za-z0-9!#$%&'*+\/=?^_`\{\|\}~\-]+)*@(?:[A-Za-z0-9](?:[A-Za-z0-9\-]*[A-Za-z0-9])?\.)+[A-Za-z0-9](?:[A-Za-z0-9\-]*[A-Za-z0-9])?"
                     [placeholder]="'dialogs.updateSharedBusinessCard.attrs.yourEmail' | translate" [attr.aria-label]="'dialogs.updateSharedBusinessCard.attrs.yourEmail' | translate" appMaxLength="500" autocomplete="off" />
 
                 @if (emailInput.invalid && emailInput.errors?.pattern) {

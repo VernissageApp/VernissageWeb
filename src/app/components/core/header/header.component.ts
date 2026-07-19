@@ -1,6 +1,6 @@
-import { Component, OnInit, OnDestroy, Renderer2, signal, computed, ChangeDetectionStrategy, inject } from '@angular/core';
-import { NavigationEnd, RouteReuseStrategy, Router } from '@angular/router';
-import { filter, Subscription } from 'rxjs';
+import { Component, OnInit, OnDestroy, Renderer2, signal, computed, ChangeDetectionStrategy, inject, PLATFORM_ID } from '@angular/core';
+import { NavigationEnd, RouteReuseStrategy, Router, RouterLink } from '@angular/router';
+import { filter, interval, Subscription } from 'rxjs';
 
 import { InstanceService } from 'src/app/services/http/instance.service';
 import { AuthorizationService } from '../../../services/authorization/authorization.service';
@@ -14,18 +14,27 @@ import { SettingsService } from 'src/app/services/http/settings.service';
 import { PreferencesService } from 'src/app/services/common/preferences.service';
 import { UserPayload } from 'src/app/models/user-payload';
 import { getLanguageFlag, LanguageService, SUPPORTED_HEADER_LANGUAGES } from 'src/app/services/common/language.service';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { MatToolbar } from '@angular/material/toolbar';
+import { MatIconButton, MatButton } from '@angular/material/button';
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
+import { MatIcon } from '@angular/material/icon';
+import { MatDivider } from '@angular/material/list';
+import { MatBadge } from '@angular/material/badge';
+import { isPlatformBrowser, NgOptimizedImage } from '@angular/common';
+import { ArticlesService } from 'src/app/services/http/articles.service';
 
 @Component({
     selector: 'app-header',
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [MatToolbar, MatIconButton, MatMenuTrigger, MatIcon, MatMenu, MatMenuItem, RouterLink, MatDivider, MatButton, MatBadge, NgOptimizedImage, TranslatePipe]
 })
 export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDestroy {
     protected readonly resolution = Resolution;
     protected notificationCounter = signal(0);
+    protected articleCounter = signal(0);
     protected user = signal<UserPayload | undefined>(undefined);
     protected avatarUrl = computed(() => this.user()?.avatarUrl ?? 'assets/avatar.svg');
     protected fullName = computed(() => this.userDisplayService.displayName(this.user()));
@@ -42,13 +51,20 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
     private clearReuseStrategyAfterNavigationEnds = false;
     private userChangeSubscription?: Subscription;
     private notificationChangeSubscription?: Subscription;
+    private articleChangeSubscription?: Subscription;
+    private articleCountRefreshSubscription?: Subscription;
     private messagesSubscription?: Subscription;
     private routeNavigationEndSubscription?: Subscription;
     private languageChangeSubscription?: Subscription;
+    private isLoadingArticleCount = false;
+    private isArticleCountRefreshPending = false;
+    private articleCounterVersion = 0;
+    private readonly articleCountRefreshInterval = 5 * 60 * 1000;
 
     private authorizationService = inject(AuthorizationService);
     private instanceService = inject(InstanceService);
     private notificationsService = inject(NotificationsService);
+    private articlesService = inject(ArticlesService);
     private settingsService = inject(SettingsService);
     private userDisplayService = inject(UserDisplayService);
     private routeReuseStrategy = inject(RouteReuseStrategy);
@@ -58,6 +74,7 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
     private languageService = inject(LanguageService);
     private translateService = inject(TranslateService);
     private renderer = inject(Renderer2);
+    private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
@@ -72,6 +89,8 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
 
         this.languageChangeSubscription = this.translateService.onLangChange.subscribe(() => {
             this.currentLanguage.set(this.languageService.getCurrentLanguage());
+            this.articleCounterVersion++;
+            void this.loadArticleCount();
         });
 
         this.userChangeSubscription = this.authorizationService.changes.subscribe(async (user) => {
@@ -101,6 +120,7 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
             });
 
             await this.loadNotificationCount();
+            await this.loadArticleCount();
             this.clearReuseStrategyState();
         });
 
@@ -117,6 +137,17 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
             this.notificationCounter.set(count);
             this.notificationsService.setApplicationBadge(count);
         });
+
+        this.articleChangeSubscription = this.articlesService.changes.subscribe((count) => {
+            this.articleCounterVersion++;
+            this.articleCounter.set(count);
+        });
+
+        if (this.isBrowser) {
+            this.articleCountRefreshSubscription = interval(this.articleCountRefreshInterval).subscribe(() => {
+                void this.loadArticleCount();
+            });
+        }
     }
 
     override ngOnDestroy(): void {
@@ -124,6 +155,8 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
 
         this.userChangeSubscription?.unsubscribe();
         this.notificationChangeSubscription?.unsubscribe();
+        this.articleChangeSubscription?.unsubscribe();
+        this.articleCountRefreshSubscription?.unsubscribe();
         this.messagesSubscription?.unsubscribe();
         this.routeNavigationEndSubscription?.unsubscribe();
         this.languageChangeSubscription?.unsubscribe();
@@ -185,6 +218,44 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
         } catch(error) {
             console.error(error);
         }
+    }
+
+    private async loadArticleCount(): Promise<void> {
+        const userId = this.user()?.id;
+        if (!userId || !this.showNews()) {
+            this.articleCounterVersion++;
+            this.articleCounter.set(0);
+            return;
+        }
+
+        if (this.isLoadingArticleCount) {
+            this.isArticleCountRefreshPending = true;
+            return;
+        }
+
+        this.isLoadingArticleCount = true;
+        const articleCounterVersion = this.articleCounterVersion;
+        const articleLanguage = this.getArticleLanguage();
+
+        try {
+            const articleCount = await this.articlesService.count(articleLanguage);
+            if (this.user()?.id === userId && this.getArticleLanguage() === articleLanguage && this.articleCounterVersion === articleCounterVersion) {
+                this.articleCounter.set(articleCount.amount);
+            }
+        } catch(error) {
+            console.error(error);
+        } finally {
+            this.isLoadingArticleCount = false;
+
+            if (this.isArticleCountRefreshPending) {
+                this.isArticleCountRefreshPending = false;
+                void this.loadArticleCount();
+            }
+        }
+    }
+
+    private getArticleLanguage(): string {
+        return this.languageService.getCurrentLanguageLocale().replace('-', '_');
     }
 
     private clearReuseStrategyState(): void {

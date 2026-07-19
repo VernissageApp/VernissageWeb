@@ -3,12 +3,10 @@
 
     <div class="flex-col gap-0 margin-top-5">
         @if ((users()?.data?.length ?? 0) > 0) {
-            <app-users-card
-                [showLoadMore]="!allUsersDisplayed()"
-                [users]="users()?.data"
+            <app-users-card [showLoadMore]="!allUsersDisplayed()"
+                [users]="$safeNavigationMigration(users()?.data)"
                 [relationships]="followingRelationships()"
-                (loadMore)="onLoadMoreFollowing()">
-            </app-users-card>
+                (loadMore)="onLoadMoreFollowing()" />
         } @else {
             <h2 class="empty-page text-center">
                 <div class="face"></div>

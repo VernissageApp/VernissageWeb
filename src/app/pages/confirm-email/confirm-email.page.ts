@@ -1,18 +1,21 @@
 import { ChangeDetectionStrategy, Component, computed, inject, OnInit, PLATFORM_ID, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 
 import { ConfirmEmail } from 'src/app/models/confirm-email';
 import { ConfirmEmailMode } from 'src/app/models/confirm-email-mode';
 import { RegisterService } from 'src/app/services/http/register.service';
 import { isPlatformBrowser } from '@angular/common';
 import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
+import { MatCard, MatCardHeader, MatCardTitle, MatCardContent } from '@angular/material/card';
+import { MatIcon } from '@angular/material/icon';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-confirm-email',
     templateUrl: './confirm-email.page.html',
     styleUrls: ['./confirm-email.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [MatCard, MatCardHeader, MatCardTitle, MatIcon, MatCardContent, RouterLink, TranslatePipe]
 })
 export class ConfirmEmailPage implements OnInit {
     protected isLoggedIn = signal(false);

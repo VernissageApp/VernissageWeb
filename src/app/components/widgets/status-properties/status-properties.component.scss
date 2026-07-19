@@ -6,4 +6,17 @@
     mat-icon {
         transform: scale(0.75);
     }
+
+    .property-action {
+        display: inline-flex;
+        padding: 0;
+        border: 0;
+        color: inherit;
+        background: transparent;
+        cursor: pointer;
+
+        &:hover {
+            color: var(--mat-sys-primary);
+        }
+    }
 }

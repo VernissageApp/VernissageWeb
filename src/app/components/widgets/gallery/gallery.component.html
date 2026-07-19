@@ -3,7 +3,7 @@
 }
 @else if (statusesExists()) {
     <div class="gallery-container" appInfiniteScroll [infiniteScrollDistance]="500" [infiniteScrollThrottle]="200" (scrolled)="onNearEndScroll()">
-        <div [ngClass]="{ 'image-gallery': !isHandsetPortrait() || squareImages(), 'image-column': isHandsetPortrait() && !squareImages(), 'square': squareImages() }">
+        <div [class]="{ 'image-gallery': !isHandsetPortrait() || squareImages(), 'image-column': isHandsetPortrait() && !squareImages(), 'square': squareImages() }">
             @for (column of galleryColumns(); track column.columnId) {
                 <div class="column">
                     @if(column.statuses.length > 0) {
@@ -16,7 +16,7 @@
                                 [observeKey]="viewportRefreshToken()"
                                 (viewportChange)="onViewportChange(galleryStatus, $event)">
                                 <div class="gallery-item" [style.aspect-ratio]="squareImages() ? '1 / 1' : galleryStatus.aspectRatio">
-                                    <a class="gallery-link" [routerLink]="['/statuses', galleryStatus.status.id]" [state]="{ ci: galleryStatus.contextIndex }" [ariaLabel]="'Status added by: ' + getMainStatus(galleryStatus.status).user?.userName">
+                                    <a class="gallery-link" [routerLink]="['/statuses', galleryStatus.status.id]" [state]="{ ci: galleryStatus.contextIndex }" [ariaLabel]="'Status added by: ' + $safeNavigationMigration(getMainStatus(galleryStatus.status).user?.userName)">
                                         @if (highlightPinnedStatuses() && !!getMainStatus(galleryStatus.status).pinnedAt) {
                                             <div class="pinned-tag">
                                                 <mat-icon class="fill-symbol">keep</mat-icon>
@@ -25,9 +25,9 @@
                                         }
                                         @if (galleryStatus.inViewport()) {
                                             @if (getMainStatus(galleryStatus.status).sensitive && !alwaysShowNSFW()) {
-                                                <app-blurhash-image [horizontal]="false" [avatarVisible]="avatarVisible() && !hideAvatars()" [status]="galleryStatus.status"></app-blurhash-image>
+                                                <app-blurhash-image [horizontal]="false" [avatarVisible]="avatarVisible() && !hideAvatars()" [status]="galleryStatus.status" />
                                             } @else {
-                                                <app-image [horizontal]="false" [avatarVisible]="avatarVisible() && !hideAvatars()" [status]="galleryStatus.status" [priority]="galleryStatus.priority"></app-image>
+                                                <app-image [horizontal]="false" [avatarVisible]="avatarVisible() && !hideAvatars()" [status]="galleryStatus.status" [priority]="galleryStatus.priority" />
                                             }
                                         } @else {
                                             <div class="gallery-placeholder" aria-hidden="true"></div>
@@ -45,7 +45,7 @@
     </div>
     
 } @else {
-    <div class="text-muted padding-top-30 text-center" [ngClass]="{ 'padding-left-30 padding-right-30': !isHandset(), 'padding-left-10 padding-right-10': isHandset() }">
+    <div class="text-muted padding-top-30 text-center" [class]="isHandset() ? 'padding-left-10 padding-right-10' : 'padding-left-30 padding-right-30'">
         <h2 class="empty-page">
             <div class="camera"></div>
             <div>{{ 'components.gallery.texts.sadlyThereSNothingToSeeHere' | translate }}</div>

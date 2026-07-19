@@ -2,7 +2,7 @@
     <div class="flex-row flex-space-between padding-bottom-10 padding-top-10">
         <div class="flex-row flex-align-center gap-8">
             <a [routerLink]="[ '/@' + userInternal.userName ]" class="user-avatar" [attr.aria-label]="'common.actions.openProfileWithUserName' | translate: { userName: userInternal.userName }">
-                <app-avatar [user]="userInternal" [size]="avatarSize.huge"></app-avatar>
+                <app-avatar [user]="userInternal" [size]="avatarSize.huge" />
             </a>
             <div class="user-card-content">
                 <div class="user-identity">

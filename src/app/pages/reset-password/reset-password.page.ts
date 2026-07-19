@@ -1,19 +1,24 @@
 import { Component, OnInit, OnDestroy, signal, computed, ChangeDetectionStrategy, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { ResetPassword } from 'src/app/models/reset-password';
 import { ResetPasswordMode } from 'src/app/models/reset-password-mode';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { ForgotPasswordService } from 'src/app/services/http/forgot-password.service';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { FormsModule } from '@angular/forms';
+import { MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardContent, MatCardActions } from '@angular/material/card';
+import { PasswordComponent } from '../../components/widgets/password/password.component';
+import { MatButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
     selector: 'app-reset-password',
     templateUrl: './reset-password.page.html',
     styleUrls: ['./reset-password.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [FormsModule, MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardContent, PasswordComponent, MatCardActions, MatButton, RouterLink, MatIcon, TranslatePipe]
 })
 export class ResetPasswordPage implements OnInit, OnDestroy {
     protected password = signal('');

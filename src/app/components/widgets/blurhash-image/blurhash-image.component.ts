@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, PLATFORM_ID, OnInit, OnDestroy, input, computed, viewChild, signal, ChangeDetectionStrategy, effect, inject } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { decode } from 'blurhash';
 import { AvatarSize } from '../avatar/avatar-size';
 import { User } from 'src/app/models/user';
@@ -15,13 +15,18 @@ import { NavigationStart, Router } from '@angular/router';
 import { Relationship } from 'src/app/models/relationship';
 import { RelationshipsService } from 'src/app/services/http/relationships.service';
 import { UserPayload } from 'src/app/models/user-payload';
+import { MiniUserCardComponent } from '../mini-user-card/mini-user-card.component';
+import { PopoverComponent } from '../popover/popover.component';
+import { UserPopoverComponent } from '../user-popover/user-popover.component';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
     selector: 'app-blurhash-image',
     templateUrl: './blurhash-image.component.html',
     styleUrls: ['./blurhash-image.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [MiniUserCardComponent, PopoverComponent, UserPopoverComponent, MatTooltip, MatIcon, TranslatePipe]
 })
 export class BlurhashImageComponent implements AfterViewInit, OnInit, OnDestroy {
     public avatarVisible = input(true);

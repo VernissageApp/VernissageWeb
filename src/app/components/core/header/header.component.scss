@@ -39,6 +39,22 @@ nav {
     margin-right: 12px;
 }
 
+.news-icon {
+    position: relative;
+    overflow: visible;
+
+    &.news-icon-unread::after {
+        position: absolute;
+        top: 0;
+        right: -2px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: var(--mat-sys-error);
+        content: '';
+    }
+}
+
 .avatar {
     border-radius: 50%;
 }

@@ -244,6 +244,8 @@
         "doYouWantToDeleteCategory": "Vil du slette kategorien?"
       },
       "texts": {
+        "alwaysRecalculateRemoteStatusCategory": "Beregn alltid kategorien for eksterne statuser på nytt",
+        "alwaysRecalculateRemoteStatusCategoryDescription": "Når dette er aktivert, beregnes kategoriene for innkommende ActivityPub-statuser på nytt ut fra de lokale reglene for emneknaggkategorier. Hvis ingen samsvarende regel blir funnet, brukes kategorien fra den eksterne serveren.",
         "categoryName": "Kategorinavn",
         "newCategory": "Ny kategori"
       }

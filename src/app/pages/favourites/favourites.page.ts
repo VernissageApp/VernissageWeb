@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, signal, ChangeDetectionStrategy, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { LoadingService } from 'src/app/services/common/loading.service';
 import { ContextTimeline } from 'src/app/models/context-timeline';
@@ -9,12 +9,15 @@ import { AuthorizationService } from 'src/app/services/authorization/authorizati
 import { ReusableGalleryPageComponent } from 'src/app/common/reusable-gallery-page';
 import { UserPayload } from 'src/app/models/user-payload';
 
+import { GalleryComponent } from '../../components/widgets/gallery/gallery.component';
+import { TranslatePipe } from '@ngx-translate/core';
+
 @Component({
     selector: 'app-favourites',
     templateUrl: './favourites.page.html',
     styleUrls: ['./favourites.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [RouterLink, GalleryComponent, TranslatePipe]
 })
 export class FavouritesPage extends ReusableGalleryPageComponent implements OnInit, OnDestroy {
     protected isReady = signal(false);

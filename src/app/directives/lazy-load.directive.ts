@@ -1,9 +1,6 @@
 import { AfterViewInit, Directive, ElementRef, inject, OnDestroy, output } from '@angular/core';
 
-@Directive({
-    selector: '[appLazyLoad]',
-    standalone: false
-})
+@Directive({ selector: '[appLazyLoad]' })
 export class LazyLoadDirective implements AfterViewInit, OnDestroy {
     public lazyLoad = output<boolean>();
 

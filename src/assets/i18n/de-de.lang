@@ -244,6 +244,8 @@
         "doYouWantToDeleteCategory": "Möchten Sie die Kategorie löschen?"
       },
       "texts": {
+        "alwaysRecalculateRemoteStatusCategory": "Kategorie für Remote-Status immer neu berechnen",
+        "alwaysRecalculateRemoteStatusCategoryDescription": "Wenn diese Option aktiviert ist, werden die Kategorien eingehender ActivityPub-Statusmeldungen anhand der lokalen Regeln für Hashtag-Kategorien neu berechnet. Wird keine passende Regel gefunden, wird die vom Remote-Server bereitgestellte Kategorie verwendet.",
         "categoryName": "Name der Kategorie",
         "newCategory": "Neue Kategorie"
       }

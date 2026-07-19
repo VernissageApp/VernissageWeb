@@ -3,13 +3,17 @@ import { ResponsiveComponent } from 'src/app/common/responsive';
 import { BusinessCardField } from 'src/app/models/business-card-field';
 import { WindowService } from 'src/app/services/common/window.service';
 import { SharedBusinessCardsService } from 'src/app/services/http/shared-business-cards.service';
+import { NgOptimizedImage, UpperCasePipe } from '@angular/common';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { MatButton } from '@angular/material/button';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-business-card',
     templateUrl: './business-card.component.html',
     styleUrls: ['./business-card.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [NgOptimizedImage, MatCard, MatCardContent, MatButton, UpperCasePipe, TranslatePipe]
 })
 export class BusinessCardComponent extends ResponsiveComponent {
     public fields = input.required<BusinessCardField[]>();

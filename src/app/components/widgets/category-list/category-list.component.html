@@ -1,3 +1,18 @@
+<!-- Always calculate category switch -->
+<div class="category-settings margin-bottom-20">
+    <mat-slide-toggle
+        name="alwaysCalculateCategory"
+        [ngModel]="alwaysCalculateCategory()"
+        [disabled]="isSavingAlwaysCalculateCategory()"
+        (ngModelChange)="onAlwaysCalculateCategoryChange($event)">
+        {{ 'components.categoryList.texts.alwaysRecalculateRemoteStatusCategory' | translate }}
+    </mat-slide-toggle>
+    <div class="text-muted fs-90 margin-left-10 margin-top-5">
+        {{ 'components.categoryList.texts.alwaysRecalculateRemoteStatusCategoryDescription' | translate }}
+    </div>
+</div>
+
+<!-- Categories list -->
 @if (categories(); as categoriesArray) {
     <table mat-table [dataSource]="categoriesArray.data">
 
@@ -14,7 +29,7 @@
         <ng-container matColumnDef="categoryEnabled">
             <th mat-header-cell *matHeaderCellDef> {{ 'common.labels.enabled' | translate }} </th>
             <td mat-cell *matCellDef="let element">
-                <mat-slide-toggle name="alwaysShowNSFW" [ngModel]="element.isEnabled" (ngModelChange)="onEnabledChange(element.id, $event)"></mat-slide-toggle>
+                <mat-slide-toggle name="alwaysShowNSFW" [ngModel]="element.isEnabled" (ngModelChange)="onEnabledChange(element.id, $event)" />
             </td>
         </ng-container>
         
@@ -44,14 +59,12 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns()"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns();"></tr>
     </table>
-    <mat-paginator
-        (page)="handlePageEvent($event)"
+    <mat-paginator (page)="handlePageEvent($event)"
         [length]="categoriesArray.total"
         [pageIndex]="pageIndex"
         [pageSize]="10"
         [pageSizeOptions]="[10, 25, 100]"
-        [attr.aria-label]="'common.paginator.selectPage' | translate">
-    </mat-paginator>
+        [attr.aria-label]="'common.paginator.selectPage' | translate" />
 
     <button matButton="filled" (click)="openCategoryDialog(undefined)">{{ 'components.categoryList.texts.newCategory' | translate }}</button>
 }

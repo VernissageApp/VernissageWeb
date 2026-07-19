@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, model, OnInit, signal } from '@angular/core';
-import { Router, ActivatedRoute, RouteReuseStrategy } from '@angular/router';
+import { Router, ActivatedRoute, RouteReuseStrategy, RouterLink } from '@angular/router';
 
 import { Login } from 'src/app/models/login';
 import { LoginMode } from 'src/app/models/login-mode';
@@ -13,14 +13,24 @@ import { WindowService } from 'src/app/services/common/window.service';
 import { CustomReuseStrategy } from 'src/app/common/custom-reuse-strategy';
 import { AlwaysErrorStateMatcher } from 'src/app/common/always-error-state-mather';
 import { PushSubscriptionsService } from 'src/app/services/http/push-subscriptions.service';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import { FormsModule } from '@angular/forms';
+import { MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardContent, MatCardActions, MatCardFooter } from '@angular/material/card';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { InputActivityDirective } from '../../directives/input-activity.directive';
+import { MatInput } from '@angular/material/input';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatButton } from '@angular/material/button';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { FooterComponent } from '../../components/core/footer/footer.component';
+import { SanitizeHtmlPipe } from '../../pipes/sanitize-html.pipe';
 
 @Component({
     selector: 'app-login',
     templateUrl: './login.page.html',
     styleUrls: ['./login.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [FormsModule, MatCard, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCardContent, MatFormField, MatLabel, InputActivityDirective, MatInput, MatError, RouterLink, MatCheckbox, MatCardActions, MatButton, MatProgressSpinner, MatCardFooter, FooterComponent, TranslatePipe, SanitizeHtmlPipe]
 })
 export class LoginPage implements OnInit {
     protected readonly loginMode = LoginMode;
