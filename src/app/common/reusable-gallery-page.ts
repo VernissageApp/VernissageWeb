@@ -1,3 +1,4 @@
+import { ViewportScroller } from "@angular/common";
 import { Component, inject, OnDestroy, OnInit, signal } from "@angular/core";
 import { ResponsiveComponent } from "./responsive";
 import { filter, Subscription } from "rxjs";
@@ -21,6 +22,10 @@ export class ReusableGalleryPageComponent extends ResponsiveComponent implements
 
     private routeNavigationEndSubscription?: Subscription;
     private routeNavigationStartSubscription?: Subscription;
+    private scrollPosition?: [number, number];
+    private shouldRestoreScrollPosition = false;
+
+    private viewportScroller = inject(ViewportScroller);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
@@ -34,6 +39,11 @@ export class ReusableGalleryPageComponent extends ResponsiveComponent implements
                 if (navigationEndEvent.urlAfterRedirects.startsWith(this.pageUrl)) {
                     this.contextStatusesService.setContextStatuses(this.statuses());
                     this.isPageVisible = true;
+
+                    if (this.shouldRestoreScrollPosition && this.scrollPosition) {
+                        this.restoreScrollPosition(this.scrollPosition);
+                        this.shouldRestoreScrollPosition = false;
+                    }
                 }
 
                 this.onRouteNavigationEnd(navigationEndEvent);
@@ -43,7 +53,13 @@ export class ReusableGalleryPageComponent extends ResponsiveComponent implements
             .pipe(filter(event => event instanceof NavigationStart))  
             .subscribe(async (event) => {
                 const navigationStarEvent = event as NavigationStart;
+
+                this.shouldRestoreScrollPosition = navigationStarEvent.url.startsWith(this.pageUrl)
+                    && navigationStarEvent.navigationTrigger === 'popstate'
+                    && this.scrollPosition !== undefined;
+
                 if (!navigationStarEvent.url.startsWith(this.pageUrl) && this.isPageVisible) {
+                    this.scrollPosition = this.viewportScroller.getScrollPosition();
                     this.statuses.set(this.contextStatusesService.statuses);
                     this.isPageVisible = false;
                 }
@@ -65,5 +81,28 @@ export class ReusableGalleryPageComponent extends ResponsiveComponent implements
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function
     onRouteNavigationEnd(_navigationEndEvent: NavigationEnd): void {
+    }
+
+    private restoreScrollPosition(position: [number, number]): void {
+        this.viewportScroller.scrollToPosition(position);
+
+        if (typeof requestAnimationFrame === 'undefined') {
+            return;
+        }
+
+        // Reattaching the responsive gallery triggers another layout pass on mobile.
+        // Repeat after two frames so browser scroll anchoring cannot move the viewport again.
+        requestAnimationFrame(() => {
+            if (!this.isPageVisible) {
+                return;
+            }
+
+            this.viewportScroller.scrollToPosition(position);
+            requestAnimationFrame(() => {
+                if (this.isPageVisible) {
+                    this.viewportScroller.scrollToPosition(position);
+                }
+            });
+        });
     }
 }
