@@ -1,7 +1,7 @@
 import { ViewportScroller } from '@angular/common';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { TestBed } from '@angular/core/testing';
-import { NavigationEnd, NavigationStart, Router, Scroll } from '@angular/router';
+import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { of, Subject } from 'rxjs';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
@@ -13,10 +13,10 @@ describe('ReusableGalleryPageComponent', () => {
     const scrollToPosition = vi.fn<(position: [number, number]) => void>();
 
     let component: ReusableGalleryPageComponent;
-    let routerEvents: Subject<NavigationStart | NavigationEnd | Scroll>;
+    let routerEvents: Subject<NavigationStart | NavigationEnd>;
 
     beforeEach(() => {
-        routerEvents = new Subject<NavigationStart | NavigationEnd | Scroll>();
+        routerEvents = new Subject<NavigationStart | NavigationEnd>();
         getScrollPosition.mockReset();
         scrollToPosition.mockReset();
 
@@ -58,11 +58,6 @@ describe('ReusableGalleryPageComponent', () => {
         routerEvents.next(new NavigationEnd(1, '/statuses/123', '/statuses/123'));
         routerEvents.next(new NavigationStart(2, '/home?t=private', 'popstate', { navigationId: 1 }));
         routerEvents.next(new NavigationEnd(2, '/home?t=private', '/home?t=private'));
-        routerEvents.next(new Scroll(
-            new NavigationEnd(2, '/home?t=private', '/home?t=private'),
-            null,
-            null
-        ));
 
         expect(scrollToPosition).toHaveBeenCalledOnce();
         expect(scrollToPosition).toHaveBeenCalledWith([0, 2400]);
@@ -75,11 +70,6 @@ describe('ReusableGalleryPageComponent', () => {
         routerEvents.next(new NavigationEnd(1, '/statuses/123', '/statuses/123'));
         routerEvents.next(new NavigationStart(2, '/home?t=private', 'imperative'));
         routerEvents.next(new NavigationEnd(2, '/home?t=private', '/home?t=private'));
-        routerEvents.next(new Scroll(
-            new NavigationEnd(2, '/home?t=private', '/home?t=private'),
-            null,
-            null
-        ));
 
         expect(scrollToPosition).not.toHaveBeenCalled();
     });

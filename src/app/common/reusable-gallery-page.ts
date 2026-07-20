@@ -2,7 +2,7 @@ import { ViewportScroller } from "@angular/common";
 import { Component, inject, OnDestroy, OnInit, signal } from "@angular/core";
 import { ResponsiveComponent } from "./responsive";
 import { filter, Subscription } from "rxjs";
-import { NavigationEnd, NavigationStart, Router, Scroll } from "@angular/router";
+import { NavigationEnd, NavigationStart, Router } from "@angular/router";
 import { ContextStatusesService } from "../services/common/context-statuses.service";
 import { LinkableResult } from "../models/linkable-result";
 import { Status } from "../models/status";
@@ -22,7 +22,6 @@ export class ReusableGalleryPageComponent extends ResponsiveComponent implements
 
     private routeNavigationEndSubscription?: Subscription;
     private routeNavigationStartSubscription?: Subscription;
-    private routeScrollSubscription?: Subscription;
     private scrollPosition?: [number, number];
     private shouldRestoreScrollPosition = false;
 
@@ -40,6 +39,11 @@ export class ReusableGalleryPageComponent extends ResponsiveComponent implements
                 if (navigationEndEvent.urlAfterRedirects.startsWith(this.pageUrl)) {
                     this.contextStatusesService.setContextStatuses(this.statuses());
                     this.isPageVisible = true;
+
+                    if (this.shouldRestoreScrollPosition && this.scrollPosition) {
+                        this.restoreScrollPosition(this.scrollPosition);
+                        this.shouldRestoreScrollPosition = false;
+                    }
                 }
 
                 this.onRouteNavigationEnd(navigationEndEvent);
@@ -62,20 +66,6 @@ export class ReusableGalleryPageComponent extends ResponsiveComponent implements
 
                 this.onRouteNavigationStart(navigationStarEvent);
             });
-
-        // The detached route stays alive, but Angular's built-in scroll restoration can lose
-        // its navigation entry when the route is lazy loaded and reused. Restore after the
-        // router emits Scroll, so this runs after the built-in handler and after reattachment.
-        this.routeScrollSubscription = this.router.events
-            .pipe(filter(event => event instanceof Scroll))
-            .subscribe(() => {
-                if (!this.shouldRestoreScrollPosition || !this.scrollPosition || !this.isPageVisible) {
-                    return;
-                }
-
-                this.restoreScrollPosition(this.scrollPosition);
-                this.shouldRestoreScrollPosition = false;
-            });
     }
 
     override ngOnDestroy(): void {
@@ -83,7 +73,6 @@ export class ReusableGalleryPageComponent extends ResponsiveComponent implements
 
         this.routeNavigationStartSubscription?.unsubscribe();
         this.routeNavigationEndSubscription?.unsubscribe();
-        this.routeScrollSubscription?.unsubscribe();
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function
