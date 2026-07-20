@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Renderer2, signal, computed, ChangeDetectionStrategy, inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, OnDestroy, Renderer2, signal, computed, ChangeDetectionStrategy, inject, NgZone, PLATFORM_ID } from '@angular/core';
 import { NavigationEnd, RouteReuseStrategy, Router, RouterLink } from '@angular/router';
 import { filter, interval, Subscription } from 'rxjs';
 
@@ -74,6 +74,7 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
     private languageService = inject(LanguageService);
     private translateService = inject(TranslateService);
     private renderer = inject(Renderer2);
+    private ngZone = inject(NgZone);
     private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
     override async ngOnInit(): Promise<void> {
@@ -144,8 +145,13 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
         });
 
         if (this.isBrowser) {
-            this.articleCountRefreshSubscription = interval(this.articleCountRefreshInterval).subscribe(() => {
-                void this.loadArticleCount();
+            // A recurring task created inside Angular's zone prevents ApplicationRef from
+            // becoming stable. During hydration RouterScroller waits for that stability
+            // before it starts emitting scroll restoration events.
+            this.ngZone.runOutsideAngular(() => {
+                this.articleCountRefreshSubscription = interval(this.articleCountRefreshInterval).subscribe(() => {
+                    this.ngZone.run(() => void this.loadArticleCount());
+                });
             });
         }
     }
