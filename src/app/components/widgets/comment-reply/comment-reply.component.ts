@@ -73,6 +73,18 @@ export class CommentReplyComponent implements OnInit {
         textAreaElement.setSelectionRange(cursorPosition, cursorPosition);
     }
 
+    protected onCommentKeyDown(event: KeyboardEvent): void {
+        if (event.key !== 'Enter' || (!event.ctrlKey && !event.metaKey) || event.isComposing) {
+            return;
+        }
+
+        event.preventDefault();
+
+        if (this.commentForm()?.valid && this.commentEntered() && !this.isDuringSave()) {
+            void this.onSubmitComment();
+        }
+    }
+
     protected async onSubmitComment(): Promise<void> {
         try {
             if (this.status != null) {

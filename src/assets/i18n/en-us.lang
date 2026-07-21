@@ -1996,8 +1996,10 @@
         "statusDetailShortcuts": {
           "bookmark": "Save the status to bookmarks",
           "boost": "Boost the status",
+          "closePhotoPreview": "Close photo preview",
           "like": "Like the status",
           "nextStatus": "View the next status",
+          "openPhotoPreview": "Open photo preview",
           "previousStatus": "View the previous status"
         },
         "statusDetailShortcutsTitle": "On a Status Detail Page:",

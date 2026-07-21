@@ -277,6 +277,9 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
             case 's':
                 this.toggleBookmark();
                 break;
+            case 'o':
+                this.openInFullScreen();
+                break;
         }
     }
 

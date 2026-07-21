@@ -1996,8 +1996,10 @@
         "statusDetailShortcuts": {
           "bookmark": "Enregistrer le statut dans les signets",
           "boost": "Boostez le statut",
+          "closePhotoPreview": "Fermer l’aperçu de la photo",
           "like": "Aimer le statut",
           "nextStatus": "Afficher le statut suivant",
+          "openPhotoPreview": "Ouvrir l’aperçu de la photo",
           "previousStatus": "Afficher le statut précédent"
         },
         "statusDetailShortcutsTitle": "Sur une page de détails de statut :",
