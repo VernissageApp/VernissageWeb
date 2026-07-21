@@ -1996,8 +1996,10 @@
         "statusDetailShortcuts": {
           "bookmark": "Lagre statusen i bokmerker",
           "boost": "Øk statusen",
+          "closePhotoPreview": "Lukk forhåndsvisning av bilde",
           "like": "Liker statusen",
           "nextStatus": "Se neste status",
+          "openPhotoPreview": "Åpne forhåndsvisning av bilde",
           "previousStatus": "Se forrige status"
         },
         "statusDetailShortcutsTitle": "På en statusdetaljside:",

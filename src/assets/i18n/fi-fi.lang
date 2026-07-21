@@ -1996,8 +1996,10 @@
         "statusDetailShortcuts": {
           "bookmark": "Tallenna päivitys kirjanmerkkeihin",
           "boost": "Tehosta päivitystä",
+          "closePhotoPreview": "Sulje kuvan esikatselu",
           "like": "Tykkää päivityksestä",
           "nextStatus": "Katso seuraava päivitys",
+          "openPhotoPreview": "Avaa kuvan esikatselu",
           "previousStatus": "Näytä edellinen päivitys"
         },
         "statusDetailShortcutsTitle": "Päivityksen tiedot -sivulla:",

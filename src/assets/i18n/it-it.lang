@@ -1996,8 +1996,10 @@
         "statusDetailShortcuts": {
           "bookmark": "Salva lo status nei segnalibri",
           "boost": "Condividi lo status",
+          "closePhotoPreview": "Chiudi l'anteprima della foto",
           "like": "Metti mi piace allo status",
           "nextStatus": "Visualizza lo status successivo",
+          "openPhotoPreview": "Apri l'anteprima della foto",
           "previousStatus": "Visualizza lo status precedente"
         },
         "statusDetailShortcutsTitle": "Nella pagina dei dettagli dello status:",

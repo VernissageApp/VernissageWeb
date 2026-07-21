@@ -1996,8 +1996,10 @@
         "statusDetailShortcuts": {
           "bookmark": "Guardar o estado nos marcadores",
           "boost": "Impulsionar o estado",
+          "closePhotoPreview": "Fechar a pré-visualização da fotografia",
           "like": "Gostar do estado",
           "nextStatus": "Ver estado seguinte",
+          "openPhotoPreview": "Abrir a pré-visualização da fotografia",
           "previousStatus": "Ver estado anterior"
         },
         "statusDetailShortcutsTitle": "Numa página de detalhe do estado:",
