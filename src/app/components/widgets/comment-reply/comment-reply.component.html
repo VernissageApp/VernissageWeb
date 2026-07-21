@@ -16,6 +16,7 @@
                     [(ngModel)]="comment"
                     [disabled]="disabled()"
                     [attr.aria-label]="'components.commentReply.attrs.leaveAComment' | translate"
+                    (keydown)="onCommentKeyDown($event)"
                     [appMaxLength]="maxStatusLength().toString()">
                 </textarea>
 

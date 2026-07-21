@@ -29,7 +29,9 @@
                     @if (images(); as imagesInternally) {
 
                         @if (imagesInternally.length === 1 || !showSensitiveImage() || !isBrowser()) {
-                            <div [class.photo-image-container-fixed]="!isHandset()">
+                            <div class="photo-image-container" [class.photo-image-container-fixed]="!isHandset()" [style.--image-aspect-ratio]="imageAspectRatio()" [style.--image-width-at-max-height]="imageWidthAtMaxHeight()">
+                                <canvas class="blurhash show-or-hide" [class.is-hidden]="imageIsLoaded() && showSensitiveImage()" #canvas [width]="imageWidth()" [height]="imageHeight()"></canvas>
+
                                 @if (mainStatusInternal.sensitive && !alwaysShowNSFW()) {
                                     @if (showSensitiveCanvas()) {
                                         <div class="content-warning show-fade" [class.is-visible]="!showSensitiveImage()">
@@ -38,7 +40,6 @@
                                             }
                                             <button matButton="filled" (click)="onShowSensitiveImageClick()">{{ 'pages.status.showImage' | translate }}</button>
                                         </div>
-                                        <canvas class="blurhash show-or-hide" [class.is-visible]="!showSensitiveImage()" [class.is-hidden]="showSensitiveImage()" #canvas [width]="imageWidth()" [height]="imageHeight()"></canvas>
                                     }
 
                                     <img class="link show-fade" [class.is-visible]="showSensitiveImage()" [src]="$safeNavigationMigration(imagesInternally[0].data?.src)" (click)="openInFullScreen()" (keydown.enter)="openInFullScreen()" tabindex="0" (load)="onImageLoaded()" [alt]="altStatus() ?? ('common.labels.statusImage' | translate)" />
