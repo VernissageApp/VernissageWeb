@@ -107,7 +107,8 @@
             matInput
             [formControl]="citiesControl"
             [appAutocompleteValid]="true"
-            [matAutocomplete]="auto">
+            [matAutocomplete]="auto"
+            #cityAutocompleteTrigger="matAutocompleteTrigger">
         <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayCityFn" (optionSelected)="selectedCity($event.option.value)">
             @for (option of cities$ | async; track option) {
                 <mat-option [value]="option">
@@ -117,13 +118,19 @@
         </mat-autocomplete>
 
         @if (currentCity()) {
-            <button matSuffix matIconButton [attr.aria-label]="'common.actions.clear' | translate" (click)="onCityClear()">
+            <button matSuffix matIconButton [attr.aria-label]="'common.actions.clear' | translate" (click)="onCityClear(cityAutocompleteTrigger)">
                 <mat-icon>close</mat-icon>
             </button>
         }
 
         @if (citiesControl.hasError('appAutocompleteValid')) {
             <mat-error>{{ 'components.uploadPhoto.texts.chooseCityFromList' | translate }}</mat-error>
+        }
+
+        @if (mapsUrl(); as url) {
+            <mat-hint align="end">
+                <a class="dashed" target="_blank" rel="noopener noreferrer" [href]="url">{{ 'common.actions.open' | translate }}</a>
+            </mat-hint>
         }
     </mat-form-field>
 
