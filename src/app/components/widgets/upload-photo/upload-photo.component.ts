@@ -1,8 +1,6 @@
-import { ChangeDetectionStrategy, Component, inject, input, model, OnInit, output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, model, OnInit, output, signal } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, startWith } from 'rxjs';
-import { Observable } from 'rxjs/internal/Observable';
-import { map, switchMap } from 'rxjs/operators';
+import { debounce, defer, distinctUntilChanged, map, Observable, of, startWith, switchMap, timer } from 'rxjs';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { Country } from 'src/app/models/country';
 import { License } from 'src/app/models/license';
@@ -10,6 +8,7 @@ import { Location } from 'src/app/models/location';
 import { UploadPhoto } from 'src/app/models/upload-photo';
 import { FileSizeService } from 'src/app/services/common/file-size.service';
 import { MessagesService } from 'src/app/services/common/messages.service';
+import { RecentLocationsService } from 'src/app/services/common/recent-locations.service';
 import { AttachmentsService } from 'src/app/services/http/attachments.service';
 import { CountriesService } from 'src/app/services/http/countries.service';
 import { InstanceService } from 'src/app/services/http/instance.service';
@@ -20,7 +19,7 @@ import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
-import { MatFormField, MatLabel, MatError, MatSuffix, MatPrefix } from '@angular/material/form-field';
+import { MatFormField, MatLabel, MatError, MatHint, MatSuffix, MatPrefix } from '@angular/material/form-field';
 import { InputActivityDirective } from '../../../directives/input-activity.directive';
 import { MatInput } from '@angular/material/input';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
@@ -39,7 +38,7 @@ import { AsyncPipe } from '@angular/common';
     templateUrl: './upload-photo.component.html',
     styleUrls: ['./upload-photo.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [MatProgressSpinner, MatButton, MatIcon, MatFormField, MatLabel, InputActivityDirective, MatInput, CdkTextareaAutosize, FormsModule, MaxLengthValidatorDirective, MatError, MatSelect, MatOption, MatAutocompleteTrigger, ReactiveFormsModule, AutocompleteValidDirective, MatAutocomplete, MatIconButton, MatSuffix, MatDivider, MatCheckbox, MatPrefix, MatDatepickerInput, MatDatepicker, MatDatepickerToggle, MatTimepickerInput, MatTimepicker, MatTimepickerToggle, AsyncPipe, TranslatePipe]
+    imports: [MatProgressSpinner, MatButton, MatIcon, MatFormField, MatLabel, InputActivityDirective, MatInput, CdkTextareaAutosize, FormsModule, MaxLengthValidatorDirective, MatError, MatHint, MatSelect, MatOption, MatAutocompleteTrigger, ReactiveFormsModule, AutocompleteValidDirective, MatAutocomplete, MatIconButton, MatSuffix, MatDivider, MatCheckbox, MatPrefix, MatDatepickerInput, MatDatepicker, MatDatepickerToggle, MatTimepickerInput, MatTimepicker, MatTimepickerToggle, AsyncPipe, TranslatePipe]
 })
 export class UploadPhotoComponent extends ResponsiveComponent implements OnInit {
     public photo = model.required<UploadPhoto>();
@@ -54,6 +53,15 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
     protected describeInProgress = signal(false);
     protected currentCountry = signal<Country | undefined>(undefined);
     protected currentCity = signal<Location | undefined>(undefined);
+    protected mapsUrl = computed(() => {
+        const latitude = this.currentCity()?.latitude?.trim().replace(',', '.');
+        const longitude = this.currentCity()?.longitude?.trim().replace(',', '.');
+        if (!latitude || !longitude) {
+            return undefined;
+        }
+
+        return `https://www.openstreetmap.org/?mlat=${latitude}&mlon=${longitude}#map=10/${latitude}/${longitude}`;
+    });
     protected hdrFileSizeString = signal('');
     protected maxFileSizeString = signal('');
     protected openAIProviderName = signal('');
@@ -77,6 +85,7 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
     private fileSizeService = inject(FileSizeService);
     private instanceService = inject(InstanceService);
     private translateService = inject(TranslateService);
+    private recentLocationsService = inject(RecentLocationsService);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
@@ -101,6 +110,8 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
                     if (typeof value === 'string') {
                         this.currentCountry.set(undefined);
                         this.storeCountryInCache(undefined);
+                    } else {
+                        this.currentCountry.set(value ?? undefined);
                     }
 
                     this.citiesControl.setValue('');
@@ -117,17 +128,29 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
             }),
         );
 
-        this.cities$ = this.citiesControl.valueChanges.pipe(
-            distinctUntilChanged(),
-            debounceTime(1000),
-            switchMap(value => {
-                const query = typeof value === 'string' ? value : value?.name;
+        this.cities$ = defer(() => this.citiesControl.valueChanges.pipe(
+            startWith(this.citiesControl.value)
+        )).pipe(
+            map(value => ({ value, country: this.currentCountry() })),
+            distinctUntilChanged((previous, current) =>
+                previous.value === current.value
+                && previous.country?.id === current.country?.id
+                && previous.country?.code === current.country?.code),
+            debounce(({ value }) => typeof value === 'string' && value.trim()
+                ? timer(1000)
+                : of(0)),
+            switchMap(({ value, country }) => {
+                const query = typeof value === 'string' ? value.trim() : '';
 
                 if (typeof value === 'string') {
                     this.clearSelectedCity();
                 }
 
-                return this.locationService.search(this.currentCountry()?.code ?? "GB", query)
+                if (!query) {
+                    return of(this.recentLocationsService.get(country));
+                }
+
+                return this.locationService.search(country?.code ?? 'GB', query);
             })
         );
 
@@ -187,6 +210,7 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
     protected selectedCity(location?: Location): void {
         this.currentCity.set(location);
         this.storeCityInCache(location);
+        this.recentLocationsService.add(this.currentCountry(), location);
 
         this.photo.update((photo) => {
             photo.locationId = this.currentCity()?.id;
@@ -194,7 +218,7 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
         });
     }
 
-    protected onCityClear(): void {
+    protected onCityClear(autocompleteTrigger?: MatAutocompleteTrigger): void {
         this.citiesControl.setValue('');
         this.currentCity.set(undefined);
         this.storeCityInCache(undefined);
@@ -203,6 +227,10 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
             photo.locationId = this.currentCity()?.id;
             return photo;
         });
+
+        if (autocompleteTrigger) {
+            setTimeout(() => autocompleteTrigger.openPanel());
+        }
     }
 
     protected onLicenseChange(): void {
@@ -362,6 +390,7 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
         if (persistedLocation) {
             this.currentCity.set(persistedLocation);
             this.citiesControl.setValue(persistedLocation);
+            this.recentLocationsService.add(this.currentCountry(), persistedLocation);
 
             this.photo.update((photo) => {
                 photo.locationId = this.currentCity()?.id;
