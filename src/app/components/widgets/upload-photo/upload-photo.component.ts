@@ -53,15 +53,10 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
     protected describeInProgress = signal(false);
     protected currentCountry = signal<Country | undefined>(undefined);
     protected currentCity = signal<Location | undefined>(undefined);
-    protected mapsUrl = computed(() => {
-        const latitude = this.currentCity()?.latitude?.trim().replace(',', '.');
-        const longitude = this.currentCity()?.longitude?.trim().replace(',', '.');
-        if (!latitude || !longitude) {
-            return undefined;
-        }
-
-        return `https://www.openstreetmap.org/?mlat=${latitude}&mlon=${longitude}#map=10/${latitude}/${longitude}`;
-    });
+    protected mapsUrl = computed(() => this.createMapsUrl(
+        this.currentCity()?.latitude,
+        this.currentCity()?.longitude
+    ));
     protected hdrFileSizeString = signal('');
     protected maxFileSizeString = signal('');
     protected openAIProviderName = signal('');
@@ -237,6 +232,10 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
         this.storeLicenseInCache(this.photo().licenseId);
     }
 
+    protected gpsMapsUrl(): string | undefined {
+        return this.createMapsUrl(this.photo().latitude, this.photo().longitude);
+    }
+
     protected async onGenerateDescription(): Promise<void> {
         try {
             this.describeInProgress.set(true);
@@ -320,6 +319,16 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
     private filterCountry(value: string): Country[] {
         const filterValue = value.toLowerCase();
         return this.allCountries.filter(option => option.name?.toLowerCase().includes(filterValue));
+    }
+
+    private createMapsUrl(latitudeValue?: string, longitudeValue?: string): string | undefined {
+        const latitude = latitudeValue?.trim().replace(',', '.');
+        const longitude = longitudeValue?.trim().replace(',', '.');
+        if (!latitude || !longitude) {
+            return undefined;
+        }
+
+        return `https://www.openstreetmap.org/?mlat=${latitude}&mlon=${longitude}#map=10/${latitude}/${longitude}`;
     }
 
     private setPhotoData(): void {

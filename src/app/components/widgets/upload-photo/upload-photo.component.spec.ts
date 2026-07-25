@@ -121,4 +121,24 @@ describe('UploadPhotoComponent', () => {
 
         fixture.destroy();
     });
+
+    it('creates an OpenStreetMap URL from manually entered GPS coordinates', async () => {
+        const photo = new UploadPhoto('photo-1');
+        const fixture = TestBed.createComponent(UploadPhotoComponent);
+        fixture.componentRef.setInput('photo', photo);
+        fixture.componentRef.setInput('licenses', []);
+
+        const component = fixture.componentInstance;
+        await component.ngOnInit();
+
+        expect(component['gpsMapsUrl']()).toBeUndefined();
+
+        photo.latitude = '51,1';
+        photo.longitude = '17,03333';
+
+        expect(component['gpsMapsUrl']())
+            .toBe('https://www.openstreetmap.org/?mlat=51.1&mlon=17.03333#map=10/51.1/17.03333');
+
+        fixture.destroy();
+    });
 });
