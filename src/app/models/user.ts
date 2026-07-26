@@ -8,6 +8,7 @@ export class User {
     public url?: string;
     public isLocal?: boolean;
     public isBlocked?: boolean;
+    public isSuppressed?: boolean;
     public isApproved?: boolean;
     public userName?: string;
     public account?: string;

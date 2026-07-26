@@ -51,6 +51,7 @@ export class UsersPage extends ResponsiveComponent implements OnInit, OnDestroy 
     protected sortDirection = model('descending');
     protected onlyLocal = model(false);
     protected onlyBlocked = model(false);
+    protected onlySuppressed = model(false);
     protected isReady = signal(false);
     protected users = signal<PagedResult<User> | undefined>(undefined);
     protected pageIndex = signal(0);
@@ -87,6 +88,7 @@ export class UsersPage extends ResponsiveComponent implements OnInit, OnDestroy 
             const query = params['query'] as string;
             const local = params['onlyLocal'] as string;
             const blocked = params['onlyBlocked'] as string;
+            const suppressed = params['onlySuppressed'] as string;
             const sortColumn = params['sortColumn'] as string;
             const sortDirection = params['sortDirection'] as string;
 
@@ -97,10 +99,11 @@ export class UsersPage extends ResponsiveComponent implements OnInit, OnDestroy 
             this.search.set(query);
             this.onlyLocal.set(local === 'true');
             this.onlyBlocked.set(blocked === 'true');
+            this.onlySuppressed.set(suppressed === 'true');
             this.sortColumn.set(sortColumn ?? 'createdAt');
             this.sortDirection.set(sortDirection === 'ascending' ? 'ascending' : 'descending');
 
-            const downloadedUsers = await this.usersService.get(page + 1, size, query, this.onlyLocal(), this.onlyBlocked(), this.sortColumn(), this.sortDirection());
+            const downloadedUsers = await this.usersService.get(page + 1, size, query, this.onlyLocal(), this.onlyBlocked(), this.onlySuppressed(), this.sortColumn(), this.sortDirection());
             this.users.set(downloadedUsers);
 
             this.isReady.set(true);
@@ -119,6 +122,7 @@ export class UsersPage extends ResponsiveComponent implements OnInit, OnDestroy 
                 query: this.search(),
                 onlyLocal: this.onlyLocal(),
                 onlyBlocked: this.onlyBlocked(),
+                onlySuppressed: this.onlySuppressed(),
                 sortColumn: this.sortColumn(),
                 sortDirection: this.sortDirection() 
             },
@@ -169,6 +173,34 @@ export class UsersPage extends ResponsiveComponent implements OnInit, OnDestroy 
                 this.messageService.showSuccess(user.isLocal
                     ? this.translateService.instant('pages.users.messages.accountDisabled')
                     : this.translateService.instant('pages.users.messages.userBlocked'));
+            }
+        } catch (error) {
+            console.error(error);
+            this.messageService.showServerError(error);
+        }
+    }
+
+    protected async onSuppress(user: User): Promise<void> {
+        try {
+            if (user.userName) {
+                await this.usersService.suppress(user.userName);
+
+                user.isSuppressed = true;
+                this.messageService.showSuccess(this.translateService.instant('pages.users.messages.accountSuppressed'));
+            }
+        } catch (error) {
+            console.error(error);
+            this.messageService.showServerError(error);
+        }
+    }
+
+    protected async onUnsuppress(user: User): Promise<void> {
+        try {
+            if (user.userName) {
+                await this.usersService.unsuppress(user.userName);
+
+                user.isSuppressed = false;
+                this.messageService.showSuccess(this.translateService.instant('pages.users.messages.accountUnsuppressed'));
             }
         } catch (error) {
             console.error(error);

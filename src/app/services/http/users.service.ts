@@ -20,8 +20,8 @@ export class UsersService {
     private httpClient = inject(HttpClient);
     private windowService = inject(WindowService);
 
-    public async get(page: number, size: number, query: string, onlyLocal = false, onlyBlocked = false, sortColumn = 'createdAt', sortDirection = 'descending'): Promise<PagedResult<User>> {
-        const event$ = this.httpClient.get<PagedResult<User>>(this.windowService.apiUrl() + `/api/v1/users?page=${page}&size=${size}&query=${query ?? ''}&onlyLocal=${onlyLocal}&onlyBlocked=${onlyBlocked}&sortColumn=${sortColumn}&sortDirection=${sortDirection}`);
+    public async get(page: number, size: number, query: string, onlyLocal = false, onlyBlocked = false, onlySuppressed = false, sortColumn = 'createdAt', sortDirection = 'descending'): Promise<PagedResult<User>> {
+        const event$ = this.httpClient.get<PagedResult<User>>(this.windowService.apiUrl() + `/api/v1/users?page=${page}&size=${size}&query=${query ?? ''}&onlyLocal=${onlyLocal}&onlyBlocked=${onlyBlocked}&onlySuppressed=${onlySuppressed}&sortColumn=${sortColumn}&sortDirection=${sortDirection}`);
         return await firstValueFrom(event$);
     }
 
@@ -102,6 +102,16 @@ export class UsersService {
 
     public async disable(userName: string): Promise<void> {
         const event$ = this.httpClient.post(this.windowService.apiUrl() + '/api/v1/users/@' + userName + '/disable', null);
+        await firstValueFrom(event$);
+    }
+
+    public async suppress(userName: string): Promise<void> {
+        const event$ = this.httpClient.post(this.windowService.apiUrl() + '/api/v1/users/@' + userName + '/suppress', null);
+        await firstValueFrom(event$);
+    }
+
+    public async unsuppress(userName: string): Promise<void> {
+        const event$ = this.httpClient.post(this.windowService.apiUrl() + '/api/v1/users/@' + userName + '/unsuppress', null);
         await firstValueFrom(event$);
     }
 

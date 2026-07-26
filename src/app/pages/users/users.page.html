@@ -40,6 +40,9 @@
                                         <mat-checkbox name="isBlocked" [disableRipple]="true" [(ngModel)]="onlyBlocked">
                                             {{ 'pages.users.filters.onlyBlocked' | translate }}
                                         </mat-checkbox>
+                                        <mat-checkbox name="isSuppressed" [disableRipple]="true" [(ngModel)]="onlySuppressed">
+                                            {{ 'pages.users.filters.onlySuppressed' | translate }}
+                                        </mat-checkbox>
                                         @if (!isHandset()) {
                                             <mat-radio-group name="sortDirection" class="margin-left-20" [(ngModel)]="sortDirection" [attr.aria-label]="'pages.activityPubEvents.filters.sortDirection.label' | translate">
                                                 <mat-radio-button value="ascending">{{ 'common.sort.ascending' | translate }}</mat-radio-button>
@@ -74,6 +77,10 @@
 
                                             @if (element.isBlocked === true) {
                                                 <mat-chip-option [disableRipple]="true" disabled>{{ element.isLocal ? ('common.actions.disable' | translate) : ('common.actions.block' | translate) }}</mat-chip-option>
+                                            }
+
+                                            @if (element.isSuppressed === true) {
+                                                <mat-chip-option [disableRipple]="true" disabled>{{ 'common.actions.suppressed' | translate }}</mat-chip-option>
                                             }
                                         </mat-chip-set>
 
@@ -233,6 +240,18 @@
                                             <button (click)="onSetDisable(element)" mat-menu-item>
                                                 <mat-icon class="outline-symbol">person_cancel</mat-icon>
                                                 <span>{{ 'common.actions.block' | translate }}</span>
+                                            </button>
+                                        }
+
+                                        @if (element.isSuppressed) {
+                                            <button (click)="onUnsuppress(element)" mat-menu-item>
+                                                <mat-icon class="outline-symbol">image</mat-icon>
+                                                <span>{{ 'common.actions.unsuppress' | translate }}</span>
+                                            </button>
+                                        } @else {
+                                            <button (click)="onSuppress(element)" mat-menu-item>
+                                                <mat-icon class="outline-symbol">hide_image</mat-icon>
+                                                <span>{{ 'common.actions.suppress' | translate }}</span>
                                             </button>
                                         }
 
