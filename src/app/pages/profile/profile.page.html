@@ -39,6 +39,24 @@
                             </div>
                         }
 
+                        @if (userInternal.isLocal === false && (userInternal.isBlocked === true || userInternal.isSuppressed === true)) {
+                            <div class="moderation-notice" [class.is-blocked]="userInternal.isBlocked === true" role="note">
+                                @if (userInternal.isBlocked === true) {
+                                    <div class="moderation-notice-item blocked">
+                                        <mat-icon aria-hidden="true">block</mat-icon>
+                                        <div>{{ 'pages.profile.accountModeration.blocked' | translate }}</div>
+                                    </div>
+                                }
+
+                                @if (userInternal.isSuppressed === true) {
+                                    <div class="moderation-notice-item suppressed">
+                                        <mat-icon aria-hidden="true">hide_image</mat-icon>
+                                        <div>{{ 'pages.profile.accountModeration.suppressed' | translate }}</div>
+                                    </div>
+                                }
+                            </div>
+                        }
+
                         <div class="bio" [innerHTML]="userInternal.bioHtml"></div>
                     </div>
 

@@ -41,9 +41,12 @@
       "show": "Zeigen",
       "signOut": "Abmelden",
       "signUp": "Anmelden",
+      "suppress": "Stummschalten",
+      "suppressed": "Stummgeschaltet",
       "tryAgain": "Noch einmal",
       "unblock": "Entsperren",
       "unfollow": "Entfolgen",
+      "unsuppress": "Stummschaltung aufheben",
       "update": "Aktualisieren",
       "upload": "Hochladen"
     },
@@ -2176,6 +2179,10 @@
         "profileQrCodeAriaLabel": "Profil QR-Code",
         "shareBusinessCardAriaLabel": "Visitenkarte teilen"
       },
+      "accountModeration": {
+        "blocked": "Dieses Konto wurde von einem Servermoderator gesperrt. Es kann auf diesem Server weder anderen Konten folgen noch selbst gefolgt werden. Seine Beiträge werden hier nicht angezeigt.",
+        "suppressed": "Dieses Konto wurde von einem Servermoderator stummgeschaltet. Es kann weiterhin Konten auf diesem Server folgen und von ihnen gefolgt werden, aber neu veröffentlichte Fotos dieses Kontos werden nirgendwo auf dieser Website angezeigt."
+      },
       "confirmations": {
         "createBusinessCard": "Sie haben noch keine Visitenkarte erstellt. Möchten Sie diese jetzt erstellen?"
       },
@@ -2643,7 +2650,8 @@
       },
       "filters": {
         "onlyBlocked": "Nur blockiert",
-        "onlyLocal": "Nur lokal"
+        "onlyLocal": "Nur lokal",
+        "onlySuppressed": "Nur stummgeschaltete"
       },
       "messages": {
         "accountApproved": "Das Konto wurde genehmigt.",
@@ -2654,6 +2662,8 @@
         "accountMarkedAsSupporter": "Das Konto wurde als Unterstützer markiert.",
         "accountRefreshed": "Das Konto wurde aktualisiert.",
         "accountRejected": "Konto wurde abgelehnt.",
+        "accountSuppressed": "Der Benutzer wurde stummgeschaltet.",
+        "accountUnsuppressed": "Die Stummschaltung des Benutzers wurde aufgehoben.",
         "twoFactorDisabled": "2FA wurde deaktiviert.",
         "userBlocked": "Der Benutzer wurde blockiert.",
         "userUnblocked": "Der Benutzer wurde entsperrt."

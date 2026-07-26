@@ -41,9 +41,12 @@
       "show": "Mostra",
       "signOut": "Esci",
       "signUp": "Iscriviti",
+      "suppress": "Silenzia",
+      "suppressed": "Silenziato",
       "tryAgain": "di nuovo",
       "unblock": "Sblocca",
       "unfollow": "Smetti di seguire",
+      "unsuppress": "Rimuovi silenziamento",
       "update": "Aggiorna",
       "upload": "Carica"
     },
@@ -2176,6 +2179,10 @@
         "profileQrCodeAriaLabel": "Codice profilo QR",
         "shareBusinessCardAriaLabel": "Condividi il biglietto da visita"
       },
+      "accountModeration": {
+        "blocked": "Questo account è stato bloccato da un moderatore del server. Non può seguire né essere seguito dagli account di questo server e i suoi post non vengono mostrati qui.",
+        "suppressed": "Questo account è stato silenziato da un moderatore del server. Può ancora seguire ed essere seguito dagli account di questo server, ma le nuove foto che pubblicherà non appariranno in nessuna parte del sito."
+      },
       "confirmations": {
         "createBusinessCard": "Non hai ancora creato un biglietto da visita. Vorresti crearlo adesso?"
       },
@@ -2643,7 +2650,8 @@
       },
       "filters": {
         "onlyBlocked": "Solo bloccato",
-        "onlyLocal": "Solo locale"
+        "onlyLocal": "Solo locale",
+        "onlySuppressed": "Solo silenziati"
       },
       "messages": {
         "accountApproved": "L'account è stato approvato.",
@@ -2654,6 +2662,8 @@
         "accountMarkedAsSupporter": "L'account è stato contrassegnato come sostenitore.",
         "accountRefreshed": "L'account è stato aggiornato.",
         "accountRejected": "L'account è stato rifiutato.",
+        "accountSuppressed": "L'utente è stato silenziato.",
+        "accountUnsuppressed": "L'utente non è più silenziato.",
         "twoFactorDisabled": "La 2FA è stato disabilitata.",
         "userBlocked": "L'utente è stato bloccato.",
         "userUnblocked": "L'utente è stato sbloccato."

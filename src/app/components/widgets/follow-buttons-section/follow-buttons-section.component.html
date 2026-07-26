@@ -7,7 +7,7 @@
         @if (!isDuringRelationshipAction()) {
             @if (showChangeRelationshipButton()) {
                 @if (showFollowButton()) {
-                    <button animate.enter="fade-in" type="button" (click)="onFollow()" matButton="filled" [attr.aria-label]="'common.actions.follow' | translate">{{ updatedRelationship().followedBy ? ('components.followButtons.actions.followBack' | translate) : ('common.actions.follow' | translate) }}</button>
+                    <button animate.enter="fade-in" type="button" (click)="onFollow()" matButton="filled" [disabled]="updatedUser().isBlocked === true" [attr.aria-label]="'common.actions.follow' | translate">{{ updatedRelationship().followedBy ? ('components.followButtons.actions.followBack' | translate) : ('common.actions.follow' | translate) }}</button>
                 } @else {
                     <button animate.enter="fade-in" type="button" (click)="onUnfollow()" matButton="tonal" [attr.aria-label]="'common.actions.unfollow' | translate">{{ updatedRelationship().following ? ('common.actions.unfollow' | translate) : ('components.followButtons.actions.cancelRequest' | translate) }}</button>
                 }
@@ -82,7 +82,7 @@
     <mat-button-toggle-group [hideSingleSelectionIndicator]="true" (change)="toggleChange($event)">
         @if (showChangeRelationshipButton()) {
             @if (showFollowButton()) {
-                <mat-button-toggle (click)="onFollow()">{{ updatedRelationship().followedBy ? ('components.followButtons.actions.followBack' | translate) : ('common.actions.follow' | translate) }}</mat-button-toggle>
+                <mat-button-toggle (click)="onFollow()" [disabled]="updatedUser().isBlocked === true">{{ updatedRelationship().followedBy ? ('components.followButtons.actions.followBack' | translate) : ('common.actions.follow' | translate) }}</mat-button-toggle>
             } @else {
                 <mat-button-toggle (click)="onUnfollow()">{{ updatedRelationship().following ? ('common.actions.unfollow' | translate) : ('components.followButtons.actions.cancelRequest' | translate) }}</mat-button-toggle>
             }

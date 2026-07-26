@@ -41,9 +41,12 @@
       "show": "Show",
       "signOut": "Sign out",
       "signUp": "Sign up",
+      "suppress": "Suppress",
+      "suppressed": "Suppressed",
       "tryAgain": "again",
       "unblock": "Unblock",
       "unfollow": "Unfollow",
+      "unsuppress": "Unsuppress",
       "update": "Update",
       "upload": "Upload"
     },
@@ -2176,6 +2179,10 @@
         "profileQrCodeAriaLabel": "Profile QR code",
         "shareBusinessCardAriaLabel": "Share business card"
       },
+      "accountModeration": {
+        "blocked": "This account has been blocked by a server moderator. It cannot follow or be followed by accounts on this server, and its posts are not shown here.",
+        "suppressed": "This account has been silenced by a server moderator. It can still follow and be followed by accounts on this server, but any new photos it publishes will not appear anywhere on this site."
+      },
       "confirmations": {
         "createBusinessCard": "You haven't created a business card yet. Would you like to create it now?"
       },
@@ -2643,7 +2650,8 @@
       },
       "filters": {
         "onlyBlocked": "Only blocked",
-        "onlyLocal": "Only local"
+        "onlyLocal": "Only local",
+        "onlySuppressed": "Only suppressed"
       },
       "messages": {
         "accountApproved": "Account has been approved.",
@@ -2654,6 +2662,8 @@
         "accountMarkedAsSupporter": "Account has been mark as supporter.",
         "accountRefreshed": "Account has been refreshed.",
         "accountRejected": "Account has been rejected.",
+        "accountSuppressed": "User has been suppressed.",
+        "accountUnsuppressed": "User has been unsuppressed.",
         "twoFactorDisabled": "2FA has been disabled.",
         "userBlocked": "User has been blocked.",
         "userUnblocked": "User has been unblocked."

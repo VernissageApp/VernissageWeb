@@ -41,9 +41,12 @@
       "show": "Pokaż",
       "signOut": "Wyloguj się",
       "signUp": "Zarejestruj się",
+      "suppress": "Wycisz",
+      "suppressed": "Wyciszony",
       "tryAgain": "ponownie",
       "unblock": "Odblokuj",
       "unfollow": "Nie obserwuj",
+      "unsuppress": "Cofnij wyciszenie",
       "update": "Aktualizuj",
       "upload": "Wyślij"
     },
@@ -2176,6 +2179,10 @@
         "profileQrCodeAriaLabel": "Kod QR profilu",
         "shareBusinessCardAriaLabel": "Udostępnij wizytówkę"
       },
+      "accountModeration": {
+        "blocked": "To konto zostało zablokowane przez moderatora serwera. Nie może obserwować kont z tego serwera ani być przez nie obserwowane, a jego wpisy nie są tutaj wyświetlane.",
+        "suppressed": "To konto zostało wyciszone przez moderatora serwera. Nadal może obserwować konta z tego serwera i być przez nie obserwowane, ale publikowane przez nie nowe zdjęcia nie będą wyświetlane nigdzie w serwisie."
+      },
       "confirmations": {
         "createBusinessCard": "Nie utworzyłeś jeszcze wizytówki. Czy chcesz ją teraz utworzyć?"
       },
@@ -2643,7 +2650,8 @@
       },
       "filters": {
         "onlyBlocked": "Tylko zablokowani",
-        "onlyLocal": "Tylko lokalni"
+        "onlyLocal": "Tylko lokalni",
+        "onlySuppressed": "Tylko wyciszeni"
       },
       "messages": {
         "accountApproved": "Konto zostało zatwierdzone.",
@@ -2654,6 +2662,8 @@
         "accountMarkedAsSupporter": "Konto zostało oznaczone jako wspierające.",
         "accountRefreshed": "Konto zostało odświeżone.",
         "accountRejected": "Konto zostało odrzucone.",
+        "accountSuppressed": "Użytkownik został wyciszony.",
+        "accountUnsuppressed": "Wyciszenie użytkownika zostało cofnięte.",
         "twoFactorDisabled": "2FA zostało wyłączone.",
         "userBlocked": "Użytkownik został zablokowany.",
         "userUnblocked": "Użytkownik został odblokowany."

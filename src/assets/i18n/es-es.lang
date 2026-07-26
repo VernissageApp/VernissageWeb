@@ -41,9 +41,12 @@
       "show": "Mostrar",
       "signOut": "Cerrar sesión",
       "signUp": "Registro",
+      "suppress": "Silenciar",
+      "suppressed": "Silenciado",
       "tryAgain": "otra vez",
       "unblock": "Desbloquear",
       "unfollow": "Dejar de seguir",
+      "unsuppress": "Dejar de silenciar",
       "update": "Actualizar",
       "upload": "Subir"
     },
@@ -2176,6 +2179,10 @@
         "profileQrCodeAriaLabel": "Código QR de perfil",
         "shareBusinessCardAriaLabel": "Compartir tarjeta de visita"
       },
+      "accountModeration": {
+        "blocked": "Esta cuenta ha sido bloqueada por un moderador del servidor. No puede seguir ni ser seguida por cuentas de este servidor, y sus publicaciones no se muestran aquí.",
+        "suppressed": "Esta cuenta ha sido silenciada por un moderador del servidor. Todavía puede seguir y ser seguida por cuentas de este servidor, pero las fotos nuevas que publique no aparecerán en ningún lugar del sitio."
+      },
       "confirmations": {
         "createBusinessCard": "Aún no has creado una tarjeta de presentación. ¿Quieres crearlo ahora?"
       },
@@ -2643,7 +2650,8 @@
       },
       "filters": {
         "onlyBlocked": "Sólo bloqueado",
-        "onlyLocal": "Sólo locales"
+        "onlyLocal": "Sólo locales",
+        "onlySuppressed": "Sólo silenciados"
       },
       "messages": {
         "accountApproved": "La cuenta ha sido aprobada.",
@@ -2654,6 +2662,8 @@
         "accountMarkedAsSupporter": "La cuenta ha sido marcada como colaboradora.",
         "accountRefreshed": "La cuenta ha sido actualizada.",
         "accountRejected": "La cuenta ha sido rechazada.",
+        "accountSuppressed": "El usuario ha sido silenciado.",
+        "accountUnsuppressed": "El usuario ha dejado de estar silenciado.",
         "twoFactorDisabled": "2FA ha sido deshabilitado.",
         "userBlocked": "El usuario ha sido bloqueado.",
         "userUnblocked": "El usuario ha sido desbloqueado."
