@@ -41,9 +41,12 @@
       "show": "Vis",
       "signOut": "Logg ut",
       "signUp": "Registrer deg",
+      "suppress": "Demp",
+      "suppressed": "Dempet",
       "tryAgain": "igjen",
       "unblock": "Fjern blokkering",
       "unfollow": "Slutt å følge",
+      "unsuppress": "Opphev demping",
       "update": "Oppdater",
       "upload": "Last opp"
     },
@@ -2176,6 +2179,10 @@
         "profileQrCodeAriaLabel": "ProfilQR-kode",
         "shareBusinessCardAriaLabel": "Del visittkort"
       },
+      "accountModeration": {
+        "blocked": "Denne kontoen er blokkert av en servermoderator. Den kan ikke følge eller bli fulgt av kontoer på denne serveren, og innleggene vises ikke her.",
+        "suppressed": "Denne kontoen er dempet av en servermoderator. Den kan fortsatt følge og bli fulgt av kontoer på denne serveren, men nye bilder som den publiserer, vil ikke vises noe sted på nettstedet."
+      },
       "confirmations": {
         "createBusinessCard": "Du har ikke opprettet et visittkort ennå. Vil du lage den nå?"
       },
@@ -2643,7 +2650,8 @@
       },
       "filters": {
         "onlyBlocked": "Bare blokkert",
-        "onlyLocal": "Kun lokalt"
+        "onlyLocal": "Kun lokalt",
+        "onlySuppressed": "Bare dempede"
       },
       "messages": {
         "accountApproved": "Kontoen er godkjent.",
@@ -2654,6 +2662,8 @@
         "accountMarkedAsSupporter": "Kontoen har blitt markert som støttespiller.",
         "accountRefreshed": "Kontoen er oppdatert.",
         "accountRejected": "Kontoen er avvist.",
+        "accountSuppressed": "Brukeren er dempet.",
+        "accountUnsuppressed": "Dempingen av brukeren er opphevet.",
         "twoFactorDisabled": "2FAer deaktivert.",
         "userBlocked": "Brukeren er blokkert.",
         "userUnblocked": "Brukeren er opphevet blokkeringen."

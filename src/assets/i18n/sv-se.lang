@@ -41,9 +41,12 @@
       "show": "Visa",
       "signOut": "Logga ut",
       "signUp": "Anmäl dig",
+      "suppress": "Tysta",
+      "suppressed": "Tystad",
       "tryAgain": "igen",
       "unblock": "Avblockera",
       "unfollow": "Sluta följa",
+      "unsuppress": "Ta bort tystning",
       "update": "Uppdatering",
       "upload": "Ladda upp"
     },
@@ -2176,6 +2179,10 @@
         "profileQrCodeAriaLabel": "ProfilQR-kod",
         "shareBusinessCardAriaLabel": "Dela visitkort"
       },
+      "accountModeration": {
+        "blocked": "Det här kontot har blockerats av en servermoderator. Det kan inte följa eller följas av konton på den här servern, och dess inlägg visas inte här.",
+        "suppressed": "Det här kontot har tystats av en servermoderator. Det kan fortfarande följa och följas av konton på den här servern, men nya bilder som det publicerar kommer inte att visas någonstans på webbplatsen."
+      },
       "confirmations": {
         "createBusinessCard": "Du har inte skapat ett visitkort än. Vill du skapa den nu?"
       },
@@ -2643,7 +2650,8 @@
       },
       "filters": {
         "onlyBlocked": "Endast blockerad",
-        "onlyLocal": "Endast lokalt"
+        "onlyLocal": "Endast lokalt",
+        "onlySuppressed": "Endast tystade"
       },
       "messages": {
         "accountApproved": "Kontot har godkänts.",
@@ -2654,6 +2662,8 @@
         "accountMarkedAsSupporter": "Kontot har markerats som supporter.",
         "accountRefreshed": "Kontot har uppdaterats.",
         "accountRejected": "Kontot har avvisats.",
+        "accountSuppressed": "Användaren har tystats.",
+        "accountUnsuppressed": "Användaren är inte längre tystad.",
         "twoFactorDisabled": "2FAhar inaktiverats.",
         "userBlocked": "Användaren har blockerats.",
         "userUnblocked": "Användaren har avblockerats."

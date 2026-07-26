@@ -41,9 +41,12 @@
       "show": "Afficher",
       "signOut": "Se déconnecter",
       "signUp": "Inscrivez-vous",
+      "suppress": "Masquer",
+      "suppressed": "Masqué",
       "tryAgain": "réessayer",
       "unblock": "Débloquer",
       "unfollow": "Se désabonner",
+      "unsuppress": "Ne plus masquer",
       "update": "Mise à jour",
       "upload": "Envoyer"
     },
@@ -2176,6 +2179,10 @@
         "profileQrCodeAriaLabel": "QR code du profil",
         "shareBusinessCardAriaLabel": "Partager la carte de visite"
       },
+      "accountModeration": {
+        "blocked": "Ce compte a été bloqué par un modérateur du serveur. Il ne peut ni suivre des comptes de ce serveur ni être suivi par eux, et ses publications ne sont pas affichées ici.",
+        "suppressed": "Ce compte a été masqué par un modérateur du serveur. Il peut toujours suivre des comptes de ce serveur et être suivi par eux, mais les nouvelles photos qu’il publiera n’apparaîtront nulle part sur ce site."
+      },
       "confirmations": {
         "createBusinessCard": "Vous n’avez pas encore créé de carte de visite. Souhaitez-vous le créer maintenant ?"
       },
@@ -2643,7 +2650,8 @@
       },
       "filters": {
         "onlyBlocked": "Bloqués seulement",
-        "onlyLocal": "Locaux seulement"
+        "onlyLocal": "Locaux seulement",
+        "onlySuppressed": "Masqués seulement"
       },
       "messages": {
         "accountApproved": "Le compte a été approuvé.",
@@ -2654,6 +2662,8 @@
         "accountMarkedAsSupporter": "Le compte a été marqué comme supporteur.",
         "accountRefreshed": "Le compte a été actualisé.",
         "accountRejected": "Le compte a été rejeté.",
+        "accountSuppressed": "L’utilisateur a été masqué.",
+        "accountUnsuppressed": "L’utilisateur n’est plus masqué.",
         "twoFactorDisabled": "2FA a été désactivé.",
         "userBlocked": "L’utilisateur a été bloqué.",
         "userUnblocked": "L’utilisateur a été débloqué."

@@ -41,9 +41,12 @@
       "show": "Näytä",
       "signOut": "Kirjaudu ulos",
       "signUp": "Rekisteröidy",
+      "suppress": "Hiljennä",
+      "suppressed": "Hiljennetty",
       "tryAgain": "uudelleen",
       "unblock": "Kumoa esto",
       "unfollow": "Lopeta seuraaminen",
+      "unsuppress": "Poista hiljennys",
       "update": "Päivitä",
       "upload": "Lataa"
     },
@@ -2176,6 +2179,10 @@
         "profileQrCodeAriaLabel": "Profiilin QR-koodi",
         "shareBusinessCardAriaLabel": "Jaa käyntikortti"
       },
+      "accountModeration": {
+        "blocked": "Palvelimen moderaattori on estänyt tämän tilin. Se ei voi seurata tämän palvelimen tilejä eikä sitä voi seurata, eikä sen julkaisuja näytetä täällä.",
+        "suppressed": "Palvelimen moderaattori on hiljentänyt tämän tilin. Se voi edelleen seurata tämän palvelimen tilejä ja sitä voi seurata, mutta sen julkaisemia uusia kuvia ei näytetä missään palvelussa."
+      },
       "confirmations": {
         "createBusinessCard": "Et ole vielä luonut käyntikorttia. Haluatko luoda sen nyt?"
       },
@@ -2643,7 +2650,8 @@
       },
       "filters": {
         "onlyBlocked": "Vain estetyt",
-        "onlyLocal": "Vain paikalliset"
+        "onlyLocal": "Vain paikalliset",
+        "onlySuppressed": "Vain hiljennetyt"
       },
       "messages": {
         "accountApproved": "Tili on hyväksytty.",
@@ -2654,6 +2662,8 @@
         "accountMarkedAsSupporter": "Tili on merkitty tukijaksi.",
         "accountRefreshed": "Tili on päivitetty.",
         "accountRejected": "Tili on hylätty.",
+        "accountSuppressed": "Käyttäjä on hiljennetty.",
+        "accountUnsuppressed": "Käyttäjän hiljennys on poistettu.",
         "twoFactorDisabled": "Kaksivaiheinen tunnistautuminen on poistettu käytöstä.",
         "userBlocked": "Käyttäjä on estetty.",
         "userUnblocked": "Käyttäjän esto on kumottu."
