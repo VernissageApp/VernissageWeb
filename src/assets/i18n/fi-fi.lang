@@ -158,6 +158,10 @@
       "articles": "Vernissage - Artikkelit",
       "bookmarks": "Vernissage - Kirjanmerkit",
       "categories": "Vernissage - Luokat",
+      "cameras": "Vernissage - Kamerat",
+      "explore": "Vernissage - Tutustu",
+      "films": "Vernissage - Filmit",
+      "lenses": "Vernissage - Objektiivit",
       "confirmEmail": "Vernissage - Vahvista sähköposti",
       "connectionLost": "Vernissage - Yhteys katkesi",
       "createArticle": "Vernissage - Luo artikkeli",
@@ -502,6 +506,9 @@
         "isRegistrationOpened": "Onko rekisteröinti avattu",
         "isWebPushEnabled": "Ovatko WebPush-ilmoitukset käytössä",
         "showCategoriesForAnonymous": "Näytä luokat anonyymille käyttäjälle",
+        "showCamerasForAnonymous": "Näytä kamerat anonyymille käyttäjälle",
+        "showLensesForAnonymous": "Näytä objektiivit anonyymille käyttäjälle",
+        "showFilmsForAnonymous": "Näytä filmit anonyymille käyttäjälle",
         "showEditorsStatusesChoiceForAnonymous": "Näytä editorin tilavalinta anonyymille käyttäjälle",
         "showEditorsUsersChoiceForAnonymous": "Näytä editorin käyttäjien valinta anonyymille käyttäjälle",
         "showHashtagsForAnonymous": "Näytä hashtagit anonyymille käyttäjälle",
@@ -523,7 +530,7 @@
       "navigation": {
         "account": "Tili",
         "articles": "Artikkelit",
-        "categories": "Luokat",
+        "explore": "Tutustu",
         "editorsChoice": "Toimittajan valinta",
         "errors": "Virheet",
         "events": "Tapahtumat",
@@ -1817,9 +1824,22 @@
     "bookmarks": {
       "title": "Kirjanmerkit"
     },
-    "categories": {
-      "subtitle": "Luettelo palvelimella olevista luokista ja niihin liitetyistä kuvista.",
-      "title": "Luokat"
+    "explore": {
+      "searchCriteria": "Hakuehdot",
+      "subtitles": {
+        "cameras": "Selaa kuvia niiden ottamiseen käytettyjen kameroiden mukaan.",
+        "categories": "Selaa kuvia palvelimella käytettävissä olevien luokkien mukaan.",
+        "films": "Selaa kuvia niiden kuvaamiseen käytettyjen filmien mukaan.",
+        "lenses": "Selaa kuvia niiden ottamiseen käytettyjen objektiivien mukaan."
+      },
+      "tabAriaLabel": "Tutustumistyyppi",
+      "tabs": {
+        "cameras": "Kamerat",
+        "categories": "Luokat",
+        "films": "Filmit",
+        "lenses": "Objektiivit"
+      },
+      "title": "Tutustu"
     },
     "confirmEmail": {
       "error": {
@@ -1986,7 +2006,7 @@
         "description": "Kyllä. Vernissage tarjoaa käyttäjille laajan näppäimistönavigoinnin, joka auttaa sinua siirtymään nopeasti sivujen, aikajanan ja toimintojen välillä.",
         "footer": "Nämä pikanäppäimet on suunniteltu parantamaan käytettävyyttä ja nopeuttamaan selaamista – erityisen hyödyllistä näppäimistökeskeisille käyttäjille.",
         "globalShortcuts": {
-          "categories": "Näytä luokat",
+          "explore": "Avaa Tutustu",
           "editorsChoice": "Avaa Toimittajan valinnat -aikajana",
           "faq": "Avaa tämä UKK-sivu",
           "home": "Siirry kotiaikajanalle",

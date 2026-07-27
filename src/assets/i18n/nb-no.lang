@@ -158,6 +158,10 @@
       "articles": "Vernissage - Artikler",
       "bookmarks": "Vernissage - Bokmerker",
       "categories": "Vernissage - Kategorier",
+      "cameras": "Vernissage - Kameraer",
+      "explore": "Vernissage - Utforsk",
+      "films": "Vernissage - Filmer",
+      "lenses": "Vernissage - Linser",
       "confirmEmail": "Vernissage - Bekreft e-post",
       "connectionLost": "Vernissage - Forbindelsen mistet",
       "createArticle": "Vernissage - Lag artikkel",
@@ -502,6 +506,9 @@
         "isRegistrationOpened": "Er registreringen åpnet",
         "isWebPushEnabled": "ErWebPush-varsler aktivert",
         "showCategoriesForAnonymous": "Vis kategorier for anonym bruker",
+        "showCamerasForAnonymous": "Vis kameraer for anonym bruker",
+        "showLensesForAnonymous": "Vis linser for anonym bruker",
+        "showFilmsForAnonymous": "Vis filmer for anonym bruker",
         "showEditorsStatusesChoiceForAnonymous": "Vis redaktørens statusvalg for anonym bruker",
         "showEditorsUsersChoiceForAnonymous": "Vis redaktørens brukervalg for anonym bruker",
         "showHashtagsForAnonymous": "Vis hashtags for anonym bruker",
@@ -523,7 +530,7 @@
       "navigation": {
         "account": "Konto",
         "articles": "Artikler",
-        "categories": "Kategorier",
+        "explore": "Utforsk",
         "editorsChoice": "Redaktørens valg",
         "errors": "Feil",
         "events": "Hendelser",
@@ -1817,9 +1824,22 @@
     "bookmarks": {
       "title": "Bokmerker"
     },
-    "categories": {
-      "subtitle": "En liste over kategorier på serveren sammen med bildene som er tildelt dem.",
-      "title": "Kategorier"
+    "explore": {
+      "searchCriteria": "Søkekriterier",
+      "subtitles": {
+        "cameras": "Bla gjennom bilder gruppert etter kameraene de ble tatt med.",
+        "categories": "Bla gjennom bilder gruppert etter kategoriene som er tilgjengelige på denne serveren.",
+        "films": "Bla gjennom bilder gruppert etter filmene de ble tatt på.",
+        "lenses": "Bla gjennom bilder gruppert etter linsene de ble tatt med."
+      },
+      "tabAriaLabel": "Utforskningstype",
+      "tabs": {
+        "cameras": "Kameraer",
+        "categories": "Kategorier",
+        "films": "Filmer",
+        "lenses": "Linser"
+      },
+      "title": "Utforsk"
     },
     "confirmEmail": {
       "error": {
@@ -1986,7 +2006,7 @@
         "description": "Ja.Vernissagetilbyr omfattende tastaturnavigering for brukere for å hjelpe deg raskt mellom sider, tidslinjer og handlinger.",
         "footer": "Disse snarveiene er utformet for å forbedre tilgjengeligheten og øke hastigheten på surfingen din – spesielt nyttig for tastatursentrerte brukere.",
         "globalShortcuts": {
-          "categories": "Vis kategorier",
+          "explore": "Åpne Utforsk",
           "editorsChoice": "Åpne tidslinjen for Editor's Choice",
           "faq": "Åpne denne FAQ-siden",
           "home": "Gå til tidslinjen Hjem",

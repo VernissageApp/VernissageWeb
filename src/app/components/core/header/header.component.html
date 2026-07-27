@@ -1,7 +1,7 @@
 <nav>
     <mat-toolbar>
         @if (deviceResolution() === resolution.handsetPortrait) {
-            @if (showTrending() || showEditorsChoice() || showCategories()) {
+            @if (showTrending() || showEditorsChoice() || showExplore()) {
                 <button matIconButton [matMenuTriggerFor]="discover" class="hamburger-menu" [attr.aria-label]="'common.labels.moreOptions' | translate">
                     <mat-icon>menu</mat-icon>
                 </button>
@@ -20,10 +20,10 @@
                         </a>
                     }
 
-                    @if (showCategories()) {
-                        <a mat-menu-item [routerLink]="['/categories']" (click)="markClearReuseStrategy()" [attr.aria-label]="'components.header.navigation.categories' | translate">
-                            <mat-icon>loyalty</mat-icon>
-                            <span>{{ 'components.header.navigation.categories' | translate }}</span>
+                    @if (showExplore()) {
+                        <a mat-menu-item [routerLink]="['/explore']" (click)="markClearReuseStrategy()" [attr.aria-label]="'components.header.navigation.explore' | translate">
+                            <mat-icon>explore</mat-icon>
+                            <span>{{ 'components.header.navigation.explore' | translate }}</span>
                         </a>
                     }
 
@@ -69,9 +69,9 @@
                     </a>
                 }
 
-                @if (showCategories()) {
-                    <a matIconButton [routerLink]="['/categories']" (click)="markClearReuseStrategy()" [attr.aria-label]="'components.header.navigation.categories' | translate">
-                        <mat-icon>loyalty</mat-icon>
+                @if (showExplore()) {
+                    <a matIconButton [routerLink]="['/explore']" (click)="markClearReuseStrategy()" [attr.aria-label]="'components.header.navigation.explore' | translate">
+                        <mat-icon>explore</mat-icon>
                     </a>
                 }
 
@@ -95,9 +95,9 @@
                     </a>
                 }
 
-                @if (showCategories()) {
-                    <a matButton="text" [routerLink]="['/categories']" (click)="markClearReuseStrategy()" [attr.aria-label]="'components.header.navigation.categories' | translate" class="margin-right-5">
-                        <mat-icon>loyalty</mat-icon> {{ 'components.header.navigation.categories' | translate }}
+                @if (showExplore()) {
+                    <a matButton="text" [routerLink]="['/explore']" (click)="markClearReuseStrategy()" [attr.aria-label]="'components.header.navigation.explore' | translate" class="margin-right-5">
+                        <mat-icon>explore</mat-icon> {{ 'components.header.navigation.explore' | translate }}
                     </a>
                 }
 
