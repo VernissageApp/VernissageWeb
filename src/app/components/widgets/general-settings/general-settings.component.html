@@ -247,6 +247,22 @@
                 {{ 'components.generalSettings.toggles.showCategoriesForAnonymous' | translate }}
             </mat-checkbox>
         </div>
+
+        <div>
+            <mat-checkbox name="showCamerasForAnonymous" [disableRipple]="true" [(ngModel)]="settings().showCamerasForAnonymous">
+                {{ 'components.generalSettings.toggles.showCamerasForAnonymous' | translate }}
+            </mat-checkbox>
+        </div>
+        <div>
+            <mat-checkbox name="showLensesForAnonymous" [disableRipple]="true" [(ngModel)]="settings().showLensesForAnonymous">
+                {{ 'components.generalSettings.toggles.showLensesForAnonymous' | translate }}
+            </mat-checkbox>
+        </div>
+        <div>
+            <mat-checkbox name="showFilmsForAnonymous" [disableRipple]="true" [(ngModel)]="settings().showFilmsForAnonymous">
+                {{ 'components.generalSettings.toggles.showFilmsForAnonymous' | translate }}
+            </mat-checkbox>
+        </div>
     </div>
 
     <mat-divider />

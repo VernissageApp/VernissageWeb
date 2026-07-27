@@ -158,6 +158,10 @@
       "articles": "Vernissage - Articles",
       "bookmarks": "Vernissage - Signets",
       "categories": "Vernissage - Catégories",
+      "cameras": "Vernissage - Appareils photo",
+      "explore": "Vernissage - Explorer",
+      "films": "Vernissage - Pellicules",
+      "lenses": "Vernissage - Objectifs",
       "confirmEmail": "Vernissage - Confirmer l’e-mail",
       "connectionLost": "Vernissage - Connexion perdue",
       "createArticle": "Vernissage - Créer un article",
@@ -502,6 +506,9 @@
         "isRegistrationOpened": "Inscriptions ouvertes",
         "isWebPushEnabled": "Notifications WebPush actives",
         "showCategoriesForAnonymous": "Afficher les catégories pour les utilisateurs anonymes",
+        "showCamerasForAnonymous": "Afficher les appareils photo pour les utilisateurs anonymes",
+        "showLensesForAnonymous": "Afficher les objectifs pour les utilisateurs anonymes",
+        "showFilmsForAnonymous": "Afficher les pellicules pour les utilisateurs anonymes",
         "showEditorsStatusesChoiceForAnonymous": "Afficher les statuts sélectionnés par l’édito pour les utilisateurs anonymes",
         "showEditorsUsersChoiceForAnonymous": "Afficher les utilisateurs sélectionnés par l’édito pour les utilisateurs anonymes",
         "showHashtagsForAnonymous": "Afficher les hashtags pour les utilisateurs anonymes",
@@ -523,7 +530,7 @@
       "navigation": {
         "account": "Compte",
         "articles": "Articles",
-        "categories": "Catégories",
+        "explore": "Explorer",
         "editorsChoice": "Sélection de l’Édito",
         "errors": "Erreurs",
         "events": "Événements",
@@ -1817,9 +1824,22 @@
     "bookmarks": {
       "title": "Signets"
     },
-    "categories": {
-      "subtitle": "Une liste des catégories sur le serveur ainsi que les photos qui leur sont attribuées.",
-      "title": "Catégories"
+    "explore": {
+      "searchCriteria": "Critères de recherche",
+      "subtitles": {
+        "cameras": "Parcourez les photos regroupées selon les appareils photo utilisés.",
+        "categories": "Parcourez les photos regroupées selon les catégories disponibles sur ce serveur.",
+        "films": "Parcourez les photos regroupées selon les pellicules utilisées.",
+        "lenses": "Parcourez les photos regroupées selon les objectifs utilisés."
+      },
+      "tabAriaLabel": "Type d’exploration",
+      "tabs": {
+        "cameras": "Appareils photo",
+        "categories": "Catégories",
+        "films": "Pellicules",
+        "lenses": "Objectifs"
+      },
+      "title": "Explorer"
     },
     "confirmEmail": {
       "error": {
@@ -1986,7 +2006,7 @@
         "description": "Oui. Vernissage offre aux utilisateurs une navigation au clavier pour vous aider à vous déplacer rapidement entre les pages, les flux et les actions.",
         "footer": "Ces raccourcis sont conçus pour améliorer l’accessibilité et accélérer votre navigation – particulièrement utiles pour les utilisateurs préférant le clavier.",
         "globalShortcuts": {
-          "categories": "Voir les catégories",
+          "explore": "Ouvrir Explorer",
           "editorsChoice": "Ouvrir le flux Sélection de l’Édito",
           "faq": "Ouvrir cette page FAQ",
           "home": "Aller au flux d’accueil",

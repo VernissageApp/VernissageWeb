@@ -158,6 +158,10 @@
       "articles": "Vernissage - Artiklar",
       "bookmarks": "Vernissage - Bokmärken",
       "categories": "Vernissage - Kategorier",
+      "cameras": "Vernissage - Kameror",
+      "explore": "Vernissage - Utforska",
+      "films": "Vernissage - Filmer",
+      "lenses": "Vernissage - Objektiv",
       "confirmEmail": "Vernissage - Bekräfta e-post",
       "connectionLost": "Vernissage - Anslutningen förlorad",
       "createArticle": "Vernissage - Skapa artikel",
@@ -502,6 +506,9 @@
         "isRegistrationOpened": "Är registreringen öppen",
         "isWebPushEnabled": "ÄrWebPush-aviseringar aktiverade",
         "showCategoriesForAnonymous": "Visa kategorier för anonym användare",
+        "showCamerasForAnonymous": "Visa kameror för anonym användare",
+        "showLensesForAnonymous": "Visa objektiv för anonym användare",
+        "showFilmsForAnonymous": "Visa filmer för anonym användare",
         "showEditorsStatusesChoiceForAnonymous": "Visa redaktörens statusval för anonym användare",
         "showEditorsUsersChoiceForAnonymous": "Visa redaktörens användares val för anonym användare",
         "showHashtagsForAnonymous": "Visa hashtags för anonym användare",
@@ -523,7 +530,7 @@
       "navigation": {
         "account": "konto",
         "articles": "Artiklar",
-        "categories": "Kategorier",
+        "explore": "Utforska",
         "editorsChoice": "Redaktörens val",
         "errors": "Fel",
         "events": "Händelser",
@@ -1817,9 +1824,22 @@
     "bookmarks": {
       "title": "Bokmärken"
     },
-    "categories": {
-      "subtitle": "En lista över kategorier på servern tillsammans med bilderna som tilldelats dem.",
-      "title": "Kategorier"
+    "explore": {
+      "searchCriteria": "Sökkriterier",
+      "subtitles": {
+        "cameras": "Utforska bilder grupperade efter kamerorna de togs med.",
+        "categories": "Utforska bilder grupperade efter kategorierna som finns på den här servern.",
+        "films": "Utforska bilder grupperade efter filmerna de fotograferades på.",
+        "lenses": "Utforska bilder grupperade efter objektiven de togs med."
+      },
+      "tabAriaLabel": "Utforskningstyp",
+      "tabs": {
+        "cameras": "Kameror",
+        "categories": "Kategorier",
+        "films": "Filmer",
+        "lenses": "Objektiv"
+      },
+      "title": "Utforska"
     },
     "confirmEmail": {
       "error": {
@@ -1986,7 +2006,7 @@
         "description": "Ja.Vernissageerbjuder omfattande tangentbordsnavigering för användare som hjälper dig att snabbt flytta mellan sidor, tidslinjer och åtgärder.",
         "footer": "Dessa genvägar är utformade för att förbättra tillgängligheten och påskynda din surfning - särskilt användbara för tangentbordscentrerade användare.",
         "globalShortcuts": {
-          "categories": "Visa kategorier",
+          "explore": "Öppna Utforska",
           "editorsChoice": "Öppna tidslinjen för Editor's Choice",
           "faq": "Öppna denna FAQ-sida",
           "home": "Gå till tidslinjen Hem",

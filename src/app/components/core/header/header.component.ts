@@ -41,7 +41,7 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
     protected isLoggedIn = signal(false);
     protected showTrending = signal(false);
     protected showEditorsChoice = signal(false);
-    protected showCategories = signal(false);
+    protected showExplore = signal(false);
     protected showNews = signal(false);
     protected showSharedBusinessCards = signal(false);
     protected isLightTheme = signal(false);
@@ -102,7 +102,11 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
 
             this.showTrending.set(isLoggedInInternal || (this.settingsService.publicSettings?.showTrendingForAnonymous ?? false));
             this.showEditorsChoice.set(isLoggedInInternal || ((this.settingsService.publicSettings?.showEditorsChoiceForAnonymous ?? false) || (this.settingsService.publicSettings?.showEditorsUsersChoiceForAnonymous ?? false)));
-            this.showCategories.set(isLoggedInInternal || (this.settingsService.publicSettings?.showCategoriesForAnonymous ?? false));
+            this.showExplore.set(isLoggedInInternal
+                || (this.settingsService.publicSettings?.showCategoriesForAnonymous ?? false)
+                || (this.settingsService.publicSettings?.showCamerasForAnonymous ?? false)
+                || (this.settingsService.publicSettings?.showLensesForAnonymous ?? false)
+                || (this.settingsService.publicSettings?.showFilmsForAnonymous ?? false));
             this.showSharedBusinessCards.set(this.settingsService.publicSettings?.showSharedBusinessCards ?? false);
 
             this.showNews.set(false);

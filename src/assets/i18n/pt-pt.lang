@@ -158,6 +158,10 @@
       "articles": "Vernissage - Artigos",
       "bookmarks": "Vernissage - Marcadores",
       "categories": "Vernissage - Categorias",
+      "cameras": "Vernissage - Câmaras",
+      "explore": "Vernissage - Explorar",
+      "films": "Vernissage - Filmes",
+      "lenses": "Vernissage - Lentes",
       "confirmEmail": "Vernissage - Confirmar email",
       "connectionLost": "Vernissage - Ligação perdida",
       "createArticle": "Vernissage - Criar artigo",
@@ -502,6 +506,9 @@
         "isRegistrationOpened": "Registo aberto",
         "isWebPushEnabled": "Notificações WebPush ativadas",
         "showCategoriesForAnonymous": "Mostrar categorias para utilizador anónimo",
+        "showCamerasForAnonymous": "Mostrar câmaras para utilizador anónimo",
+        "showLensesForAnonymous": "Mostrar lentes para utilizador anónimo",
+        "showFilmsForAnonymous": "Mostrar filmes para utilizador anónimo",
         "showEditorsStatusesChoiceForAnonymous": "Mostrar a escolha de estados do editor para utilizadores anónimos",
         "showEditorsUsersChoiceForAnonymous": "Mostrar a escolha de utilizadores do editor para utilizadores anónimos",
         "showHashtagsForAnonymous": "Mostrar hashtags para utilizador anónimo",
@@ -523,7 +530,7 @@
       "navigation": {
         "account": "Conta",
         "articles": "Artigos",
-        "categories": "Categorias",
+        "explore": "Explorar",
         "editorsChoice": "Escolha do editor",
         "errors": "Erros",
         "events": "Eventos",
@@ -1817,9 +1824,22 @@
     "bookmarks": {
       "title": "Marcadores"
     },
-    "categories": {
-      "subtitle": "Uma lista das categorias no servidor, juntamente com as fotos atribuídas a elas.",
-      "title": "Categorias"
+    "explore": {
+      "searchCriteria": "Critérios de pesquisa",
+      "subtitles": {
+        "cameras": "Explore fotografias agrupadas pelas câmaras com que foram tiradas.",
+        "categories": "Explore fotografias agrupadas pelas categorias disponíveis neste servidor.",
+        "films": "Explore fotografias agrupadas pelos filmes em que foram captadas.",
+        "lenses": "Explore fotografias agrupadas pelas lentes com que foram tiradas."
+      },
+      "tabAriaLabel": "Tipo de exploração",
+      "tabs": {
+        "cameras": "Câmaras",
+        "categories": "Categorias",
+        "films": "Filmes",
+        "lenses": "Lentes"
+      },
+      "title": "Explorar"
     },
     "confirmEmail": {
       "error": {
@@ -1986,7 +2006,7 @@
         "description": "Sim. O Vernissage oferece navegação extensa por teclado para ajudar os utilizadores a moverem-se rapidamente entre páginas, linhas do tempo e ações.",
         "footer": "Estes atalhos foram concebidos para melhorar a acessibilidade e acelerar a navegação — especialmente úteis para utilizadores que preferem o teclado.",
         "globalShortcuts": {
-          "categories": "Ver categorias",
+          "explore": "Abrir Explorar",
           "editorsChoice": "Abrir a linha do tempo Escolha do editor",
           "faq": "Abrir esta página de FAQ",
           "home": "Ir para a linha do tempo inicial",
