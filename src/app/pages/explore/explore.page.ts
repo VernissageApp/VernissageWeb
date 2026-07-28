@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, model, OnDestroy, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, HostListener, inject, model, OnDestroy, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonToggle, MatButtonToggleGroup } from '@angular/material/button-toggle';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
@@ -15,7 +15,9 @@ import { ExploreType } from 'src/app/models/explore-type';
 import { Film } from 'src/app/models/film';
 import { Lens } from 'src/app/models/lens';
 import { AuthorizationService } from "src/app/services/authorization/authorization.service";
+import { FocusTrackerService } from "src/app/services/common/focus-tracker.service";
 import { LoadingService } from "src/app/services/common/loading.service";
+import { PreferencesService } from "src/app/services/common/preferences.service";
 import { CamerasService } from 'src/app/services/http/cameras.service';
 import { CategoriesService } from "src/app/services/http/categories.service";
 import { FilmsService } from 'src/app/services/http/films.service';
@@ -62,6 +64,8 @@ export class ExplorePage extends ReusableGalleryPageComponent implements OnInit,
     private settingsService = inject(SettingsService);
     private authorizationService = inject(AuthorizationService);
     private activatedRoute = inject(ActivatedRoute);
+    private focusTrackerService = inject(FocusTrackerService);
+    private preferencesService = inject(PreferencesService);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
@@ -75,7 +79,8 @@ export class ExplorePage extends ReusableGalleryPageComponent implements OnInit,
             }
 
             this.loadingService.showLoader();
-            const exploreType = this.resolveExploreType(params['type'] as string | undefined);
+            const requestedType = params['type'] as string | undefined ?? this.preferencesService.exploreTab;
+            const exploreType = this.resolveExploreType(requestedType);
             this.explore.set(exploreType);
             this.selectedExplore.set(exploreType);
             await this.loadExploreType(exploreType);
@@ -91,7 +96,35 @@ export class ExplorePage extends ReusableGalleryPageComponent implements OnInit,
         this.routeParamsSubscription?.unsubscribe();
     }
 
+    @HostListener('window:keydown', ['$event'])
+    handleKeyDown(event: KeyboardEvent): void {
+        if (this.focusTrackerService.isCurrentlyFocused || event.repeat || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) {
+            return;
+        }
+
+        switch (event.key) {
+            case '1':
+                this.preferencesService.exploreTab = 'categories';
+                this.router.navigate(['/explore'], { queryParams: { type: 'categories' } });
+                break;
+            case '2':
+                this.preferencesService.exploreTab = 'cameras';
+                this.router.navigate(['/explore'], { queryParams: { type: 'cameras' } });
+                break;
+            case '3':
+                this.preferencesService.exploreTab = 'lenses';
+                this.router.navigate(['/explore'], { queryParams: { type: 'lenses' } });
+                break;
+            case '4':
+                this.preferencesService.exploreTab = 'films';
+                this.router.navigate(['/explore'], { queryParams: { type: 'films' } });
+                break;
+        }
+    }
+
     protected onSelectionChange(): void {
+        this.preferencesService.exploreTab = this.explore();
+
         const navigationExtras: NavigationExtras = {
             queryParams: { type: this.explore() },
             queryParamsHandling: 'merge'

@@ -10,6 +10,7 @@ import { User } from "src/app/models/user";
 import { AuthorizationService } from "src/app/services/authorization/authorization.service";
 import { FocusTrackerService } from "src/app/services/common/focus-tracker.service";
 import { LoadingService } from "src/app/services/common/loading.service";
+import { PreferencesService } from "src/app/services/common/preferences.service";
 import { SettingsService } from "src/app/services/http/settings.service";
 import { TrendingService } from "src/app/services/http/trending.service";
 
@@ -50,6 +51,7 @@ export class TrendingPage extends ReusableGalleryPageComponent implements OnInit
     private authorizationService = inject(AuthorizationService);
     private activatedRoute = inject(ActivatedRoute);
     private focusTrackerService = inject(FocusTrackerService);
+    private preferencesService = inject(PreferencesService);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
@@ -62,8 +64,9 @@ export class TrendingPage extends ReusableGalleryPageComponent implements OnInit
 
             this.loadingService.showLoader();
             const internalPeriod = params['period'] as TrendingPeriod ?? TrendingPeriod.Daily;
-            const internalTrending  = params['trending'] as string ?? 'statuses';
             this.showHashtags.set(this.hasAccessToHashtags());
+            const requestedTrending = params['trending'] as string | undefined ?? this.preferencesService.trendingTab;
+            const internalTrending = this.resolveTrending(requestedTrending);
 
             switch(internalTrending) {
                 case 'statuses':
@@ -100,18 +103,23 @@ export class TrendingPage extends ReusableGalleryPageComponent implements OnInit
 
         switch (event.key) {
             case '1':
+                this.preferencesService.trendingTab = 'statuses';
                 this.router.navigate(['/trending'], { queryParams: { trending: 'statuses', period: 'daily' } });
                 break;
             case '2':
+                this.preferencesService.trendingTab = 'users';
                 this.router.navigate(['/trending'], { queryParams: { trending: 'users', period: 'daily' } });
                 break;
             case '3':
+                this.preferencesService.trendingTab = 'hashtags';
                 this.router.navigate(['/trending'], { queryParams: { trending: 'hashtags', period: 'daily' } });
                 break;
         }
     }
 
     protected onSelectionChange(): void {
+        this.preferencesService.trendingTab = this.trending();
+
         const navigationExtras: NavigationExtras = {
             queryParams: { trending: this.trending(), period: this.period() },
             queryParamsHandling: 'merge'
@@ -208,5 +216,17 @@ export class TrendingPage extends ReusableGalleryPageComponent implements OnInit
         }
 
         return false;
+    }
+
+    private resolveTrending(requestedTrending: string): string {
+        if (requestedTrending === 'statuses' || requestedTrending === 'users') {
+            return requestedTrending;
+        }
+
+        if (requestedTrending === 'hashtags' && this.showHashtags()) {
+            return requestedTrending;
+        }
+
+        return 'statuses';
     }
 }
