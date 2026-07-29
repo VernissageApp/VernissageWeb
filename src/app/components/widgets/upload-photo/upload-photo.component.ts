@@ -1,8 +1,11 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input, model, OnInit, output, signal } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { debounce, defer, distinctUntilChanged, map, Observable, of, startWith, switchMap, timer } from 'rxjs';
+import { catchError, debounce, debounceTime, defer, distinctUntilChanged, from, map, Observable, of, startWith, Subject, switchMap, timer } from 'rxjs';
 import { ResponsiveComponent } from 'src/app/common/responsive';
+import { Camera } from 'src/app/models/camera';
 import { Country } from 'src/app/models/country';
+import { Film } from 'src/app/models/film';
+import { Lens } from 'src/app/models/lens';
 import { License } from 'src/app/models/license';
 import { Location } from 'src/app/models/location';
 import { UploadPhoto } from 'src/app/models/upload-photo';
@@ -10,8 +13,11 @@ import { FileSizeService } from 'src/app/services/common/file-size.service';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { RecentLocationsService } from 'src/app/services/common/recent-locations.service';
 import { AttachmentsService } from 'src/app/services/http/attachments.service';
+import { CamerasService } from 'src/app/services/http/cameras.service';
 import { CountriesService } from 'src/app/services/http/countries.service';
+import { FilmsService } from 'src/app/services/http/films.service';
 import { InstanceService } from 'src/app/services/http/instance.service';
+import { LensesService } from 'src/app/services/http/lenses.service';
 import { LocationsService } from 'src/app/services/http/locations.service';
 import { SettingsService } from 'src/app/services/http/settings.service';
 import { PersistenceService } from 'src/app/services/persistance/persistance.service';
@@ -49,6 +55,10 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
     protected citiesControl = new FormControl<string | Location>('');
     protected filteredCountries$?: Observable<Country[]>;
     protected countriesControl = new FormControl<string | Country>('');    
+    protected cameraMakes$?: Observable<Camera[]>;
+    protected cameraModels$?: Observable<Camera[]>;
+    protected lenses$?: Observable<Lens[]>;
+    protected films$?: Observable<Film[]>;
     protected isOpenAIEnabled = signal(false);
     protected describeInProgress = signal(false);
     protected currentCountry = signal<Country | undefined>(undefined);
@@ -67,12 +77,22 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
     private readonly defaultCountryCacheKey = 'default-country';
     private readonly defaultLocationCacheKey = 'default-location';
     private readonly defaultLicenseCacheKey = 'default-license';
+    private readonly metadataAutocompleteDebounce = 400;
+    private readonly metadataAutocompleteMinimumLength = 2;
+    private readonly metadataAutocompletePageSize = 10;
 
     private allCountries: Country[] = [];
     private initialized = false;
+    private cameraMakeQuery = new Subject<string>();
+    private cameraModelQuery = new Subject<string>();
+    private lensQuery = new Subject<string>();
+    private filmQuery = new Subject<string>();
 
     private countriesService = inject(CountriesService);
     private locationService = inject(LocationsService);
+    private camerasService = inject(CamerasService);
+    private lensesService = inject(LensesService);
+    private filmsService = inject(FilmsService);
     private attachmentsService = inject(AttachmentsService);
     private messageService = inject(MessagesService);
     private settingsService = inject(SettingsService);
@@ -147,6 +167,23 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
 
                 return this.locationService.search(country?.code ?? 'GB', query);
             })
+        );
+
+        this.cameraMakes$ = this.createMetadataSuggestions(
+            this.cameraMakeQuery,
+            query => this.camerasService.get(query, 1, this.metadataAutocompletePageSize)
+        );
+        this.cameraModels$ = this.createMetadataSuggestions(
+            this.cameraModelQuery,
+            query => this.camerasService.get(query, 1, this.metadataAutocompletePageSize)
+        );
+        this.lenses$ = this.createMetadataSuggestions(
+            this.lensQuery,
+            query => this.lensesService.get(query, 1, this.metadataAutocompletePageSize)
+        );
+        this.films$ = this.createMetadataSuggestions(
+            this.filmQuery,
+            query => this.filmsService.get(query, 1, this.metadataAutocompletePageSize)
         );
 
         if (!this.photo().id) {
@@ -230,6 +267,22 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
 
     protected onLicenseChange(): void {
         this.storeLicenseInCache(this.photo().licenseId);
+    }
+
+    protected onCameraMakeChange(value: string): void {
+        this.cameraMakeQuery.next(value);
+    }
+
+    protected onCameraModelChange(value: string): void {
+        this.cameraModelQuery.next(value);
+    }
+
+    protected onLensChange(value: string): void {
+        this.lensQuery.next(value);
+    }
+
+    protected onFilmChange(value: string): void {
+        this.filmQuery.next(value);
     }
 
     protected gpsMapsUrl(): string | undefined {
@@ -319,6 +372,27 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
     private filterCountry(value: string): Country[] {
         const filterValue = value.toLowerCase();
         return this.allCountries.filter(option => option.name?.toLowerCase().includes(filterValue));
+    }
+
+    private createMetadataSuggestions<T>(
+        query$: Observable<string>,
+        search: (query: string) => Promise<{ data: T[] }>
+    ): Observable<T[]> {
+        return query$.pipe(
+            map(value => value.trim()),
+            debounceTime(this.metadataAutocompleteDebounce),
+            distinctUntilChanged(),
+            switchMap(query => {
+                if (query.length < this.metadataAutocompleteMinimumLength) {
+                    return of([]);
+                }
+
+                return from(search(query)).pipe(
+                    map(result => result.data),
+                    catchError(() => of([]))
+                );
+            })
+        );
     }
 
     private createMapsUrl(latitudeValue?: string, longitudeValue?: string): string | undefined {

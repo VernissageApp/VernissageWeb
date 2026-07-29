@@ -151,6 +151,7 @@ export class ProfilePage extends ReusableGalleryPageComponent implements OnInit,
             const downloadedLatestFollowers = await this.usersService.followers(this.userName, undefined, undefined, undefined, 10);
             this.latestFollowers.set(downloadedLatestFollowers);
 
+            this.clearUserLink();
             downloadUser.fields?.forEach(field => {
                 if (field.value) {
                     const loweCasedValue = field.value.toLowerCase();
@@ -177,7 +178,7 @@ export class ProfilePage extends ReusableGalleryPageComponent implements OnInit,
         super.ngOnDestroy();
 
         this.clearCardMetaTags();
-        this.removeUserLink();
+        this.clearUserLink();
         this.removeFeedLinks();
         this.clearNoIndexMeta();
 
@@ -384,25 +385,17 @@ export class ProfilePage extends ReusableGalleryPageComponent implements OnInit,
     }
 
     private createLink(url: string): void {
-        const userLinkMe = this.document.querySelector('link[id="userLinkMe"]');
+        const link: HTMLLinkElement = this.document.createElement('link');
+        link.setAttribute('href', url);
+        link.setAttribute('rel', 'me');
+        link.setAttribute('name', 'userLinkMe');
 
-        if (userLinkMe) {
-            userLinkMe.setAttribute('href', url);
-        } else {
-            const link: HTMLLinkElement = this.document.createElement('link');
-            link.setAttribute('href', url);
-            link.setAttribute('rel', 'me');
-            link.setAttribute('id', 'userLinkMe');
-
-            this.document.head.appendChild(link);
-        }
+        this.document.head.appendChild(link);
     }
 
-    private removeUserLink(): void {
-        const userLinkMe = this.document.querySelector('link[id="userLinkMe"]');
-        if (userLinkMe) {
-            this.document.head.removeChild(userLinkMe);
-        }
+    private clearUserLink(): void {
+        const userLinksMe = this.document.querySelectorAll('link[name="userLinkMe"]');
+        userLinksMe.forEach(userLinkMe => userLinkMe.remove());
     }
 
     private setCardMetaTags(): void {

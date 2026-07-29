@@ -1,0 +1,100 @@
+@if (isReady()) {
+    <div animate.enter="fade-in" [class]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
+        <section class="explore-header">
+            <h1>
+                {{ 'pages.explore.title' | translate }}
+                @if (!isHandset()) {
+                    @switch (selectedExplore()) {
+                        @case ('categories') {
+                            <div class="fs-60 text-muted">{{ 'pages.explore.subtitles.categories' | translate }}</div>
+                        }
+                        @case ('cameras') {
+                            <div class="fs-60 text-muted">{{ 'pages.explore.subtitles.cameras' | translate }}</div>
+                        }
+                        @case ('lenses') {
+                            <div class="fs-60 text-muted">{{ 'pages.explore.subtitles.lenses' | translate }}</div>
+                        }
+                        @case ('films') {
+                            <div class="fs-60 text-muted">{{ 'pages.explore.subtitles.films' | translate }}</div>
+                        }
+                    }
+                }
+            </h1>
+
+            <div class="explore-controls">
+                <div class="explore-type">
+                    <mat-button-toggle-group [(ngModel)]="explore" (ngModelChange)="onSelectionChange()" [hideSingleSelectionIndicator]="true" [attr.aria-label]="'pages.explore.tabAriaLabel' | translate">
+                        @if (showCategories()) {
+                            <mat-button-toggle value="categories">
+                                <mat-icon>loyalty</mat-icon>
+                                @if (!isHandset()) {
+                                    <span> {{ 'pages.explore.tabs.categories' | translate }}</span>
+                                }
+                            </mat-button-toggle>
+                        }
+                        @if (showCameras()) {
+                            <mat-button-toggle value="cameras">
+                                <mat-icon>photo_camera</mat-icon>
+                                @if (!isHandset()) {
+                                    <span> {{ 'pages.explore.tabs.cameras' | translate }}</span>
+                                }
+                            </mat-button-toggle>
+                        }
+                        @if (showLenses()) {
+                            <mat-button-toggle value="lenses">
+                                <mat-icon>camera</mat-icon>
+                                @if (!isHandset()) {
+                                    <span> {{ 'pages.explore.tabs.lenses' | translate }}</span>
+                                }
+                            </mat-button-toggle>
+                        }
+                        @if (showFilms()) {
+                            <mat-button-toggle value="films">
+                                <mat-icon>camera_roll</mat-icon>
+                                @if (!isHandset()) {
+                                    <span> {{ 'pages.explore.tabs.films' | translate }}</span>
+                                }
+                            </mat-button-toggle>
+                        }
+                    </mat-button-toggle-group>
+                </div>
+
+                @if (!isHandset()) {
+                    <mat-form-field class="explore-filter small" appearance="outline" subscriptSizing="dynamic">
+                        <mat-label>{{ 'pages.explore.searchCriteria' | translate }}</mat-label>
+                        <input
+                            matInput
+                            type="text"
+                            [(ngModel)]="filterText"
+                            [placeholder]="'pages.explore.searchCriteria' | translate"
+                            [attr.aria-label]="'pages.explore.searchCriteria' | translate"
+                            [attr.title]="'pages.explore.searchCriteria' | translate" />
+                    </mat-form-field>
+                }
+            </div>
+        </section>
+
+        @switch (selectedExplore()) {
+            @case ('categories') {
+                @if (filteredCategories(); as categoriesArray) {
+                    <app-category-gallery [categories]="categoriesArray" />
+                }
+            }
+            @case ('cameras') {
+                @if (filteredCameras(); as camerasArray) {
+                    <app-camera-gallery [cameras]="camerasArray" />
+                }
+            }
+            @case ('lenses') {
+                @if (filteredLenses(); as lensesArray) {
+                    <app-lens-gallery [lenses]="lensesArray" />
+                }
+            }
+            @case ('films') {
+                @if (filteredFilms(); as filmsArray) {
+                    <app-film-gallery [films]="filmsArray" />
+                }
+            }
+        }
+    </div>
+}

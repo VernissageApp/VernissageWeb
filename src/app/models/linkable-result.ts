@@ -8,6 +8,9 @@ export class LinkableResult<T>  {
     public context = ContextTimeline.unknown;
     public hashtag?: string;
     public category?: string;
+    public camera?: string;
+    public lens?: string;
+    public film?: string;
     public user?: string;
 
     public static copy<T>(value: LinkableResult<T>): LinkableResult<T> {
@@ -19,6 +22,9 @@ export class LinkableResult<T>  {
         newValue.context = value.context;
         newValue.hashtag = value.hashtag;
         newValue.category = value.category;
+        newValue.camera = value.camera;
+        newValue.lens = value.lens;
+        newValue.film = value.film;
         newValue.user = value.user;
 
         return newValue;

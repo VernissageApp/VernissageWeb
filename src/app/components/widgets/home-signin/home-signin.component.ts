@@ -14,6 +14,7 @@ import { MessagesService } from 'src/app/services/common/messages.service';
 import { FocusTrackerService } from 'src/app/services/common/focus-tracker.service';
 import { RandomGeneratorService } from 'src/app/services/common/random-generator.service';
 import { LanguageService } from 'src/app/services/common/language.service';
+import { PreferencesService } from 'src/app/services/common/preferences.service';
 
 import { ArticleInlineComponent } from '../article-inline/article-inline.component';
 import { MatIconButton } from '@angular/material/button';
@@ -54,6 +55,7 @@ export class HomeSigninComponent extends ReusableGalleryPageComponent implements
     private randomGeneratorService = inject(RandomGeneratorService);
     private languageService = inject(LanguageService);
     private timelineMarkersService = inject(TimelineMarkersService);
+    private preferencesService = inject(PreferencesService);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
@@ -66,7 +68,7 @@ export class HomeSigninComponent extends ReusableGalleryPageComponent implements
 
             this.loadingService.showLoader();
 
-            const pageType = params['t'] as string;
+            const pageType = params['t'] as string | undefined ?? this.preferencesService.homeTab;
             await Promise.all([
                 this.loadData(pageType),
                 this.loadArticles()
@@ -114,12 +116,15 @@ export class HomeSigninComponent extends ReusableGalleryPageComponent implements
 
         switch (event.key) {
             case '1':
+                this.preferencesService.homeTab = 'private';
                 this.router.navigate(['/home'], { queryParams: { t: 'private' } });
                 break;
             case '2':
+                this.preferencesService.homeTab = 'local';
                 this.router.navigate(['/home'], { queryParams: { t: 'local' } });
                 break;
             case '3':
+                this.preferencesService.homeTab = 'global';
                 this.router.navigate(['/home'], { queryParams: { t: 'global' } });
                 break;
         }
@@ -135,6 +140,8 @@ export class HomeSigninComponent extends ReusableGalleryPageComponent implements
     }
 
     protected onTimelineChange(): void {
+        this.preferencesService.homeTab = this.timeline();
+
         const navigationExtras: NavigationExtras = {
             queryParams: {
                 t: this.timeline()
@@ -163,7 +170,7 @@ export class HomeSigninComponent extends ReusableGalleryPageComponent implements
 
         this.lastRefreshTime = new Date();
 
-        switch(pageType) {
+        switch(this.resolveTimeline(pageType)) {
             case 'local': {
                 this.timeline.set('local');
                 const statuses = await this.timelineService.public(undefined, undefined, undefined, undefined, true);
@@ -201,6 +208,18 @@ export class HomeSigninComponent extends ReusableGalleryPageComponent implements
                 }
                 break;
         }
+    }
+
+    private resolveTimeline(requestedTimeline: string): string {
+        if (requestedTimeline === 'private' && this.isLoggedIn()) {
+            return requestedTimeline;
+        }
+
+        if (requestedTimeline === 'local' || requestedTimeline === 'global') {
+            return requestedTimeline;
+        }
+
+        return this.isLoggedIn() ? 'private' : 'local';
     }
 
     private async loadArticles(): Promise<void> {

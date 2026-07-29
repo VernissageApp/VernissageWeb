@@ -1,0 +1,16 @@
+@if (!isBrowser()) {
+    <div></div>
+} @else if (lenses().length) {
+    @for (lens of lenses(); track lens.id) {
+        <div>
+            <app-lens-gallery-item [lens]="lens" />
+        </div>
+    }
+} @else {
+    <div class="text-muted padding-top-30 width-100 text-center">
+        <h2 class="empty-page">
+            <div class="camera"></div>
+            <div>{{ 'components.categoryGallery.texts.sadlyThereSNothingToSeeHere' | translate }}</div>
+        </h2>
+    </div>
+}

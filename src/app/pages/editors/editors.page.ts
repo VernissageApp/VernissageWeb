@@ -8,6 +8,7 @@ import { User } from "src/app/models/user";
 import { AuthorizationService } from "src/app/services/authorization/authorization.service";
 import { FocusTrackerService } from "src/app/services/common/focus-tracker.service";
 import { LoadingService } from "src/app/services/common/loading.service";
+import { PreferencesService } from "src/app/services/common/preferences.service";
 import { SettingsService } from "src/app/services/http/settings.service";
 import { TimelineService } from "src/app/services/http/timeline.service";
 
@@ -47,6 +48,7 @@ export class EditorsPage extends ReusableGalleryPageComponent implements OnInit,
     private activatedRoute = inject(ActivatedRoute);
     private focusTrackerService = inject(FocusTrackerService);
     private timelineMarkersService = inject(TimelineMarkersService);
+    private preferencesService = inject(PreferencesService);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
@@ -59,7 +61,8 @@ export class EditorsPage extends ReusableGalleryPageComponent implements OnInit,
             }
 
             this.loadingService.showLoader();
-            const internalTab  = params['tab'] as string ?? this.getDefaultTab();
+            const requestedTab = params['tab'] as string | undefined ?? this.preferencesService.editorsTab;
+            const internalTab = this.resolveTab(requestedTab);
 
             switch(internalTab) {
                 case 'statuses':
@@ -92,15 +95,19 @@ export class EditorsPage extends ReusableGalleryPageComponent implements OnInit,
 
         switch (event.key) {
             case '1':
+                this.preferencesService.editorsTab = 'statuses';
                 this.router.navigate(['/editors'], { queryParams: { tab: 'statuses' } });
                 break;
             case '2':
+                this.preferencesService.editorsTab = 'users';
                 this.router.navigate(['/editors'], { queryParams: { tab: 'users' } });
                 break;
         }
     }
 
     protected onSelectionChange(): void {
+        this.preferencesService.editorsTab = this.tab();
+
         const navigationExtras: NavigationExtras = {
             queryParams: { tab: this.tab() },
             queryParamsHandling: 'merge'
@@ -174,6 +181,18 @@ export class EditorsPage extends ReusableGalleryPageComponent implements OnInit,
         }
 
         return 'statuses';
+    }
+
+    private resolveTab(requestedTab: string): string {
+        if (requestedTab === 'statuses' && this.showStatusesButton()) {
+            return requestedTab;
+        }
+
+        if (requestedTab === 'users' && this.showUsersButton()) {
+            return requestedTab;
+        }
+
+        return this.getDefaultTab();
     }
 
     private async updateTimelineMarker(timelineKind: TimelineKind, statuses: LinkableResult<Status>): Promise<void> {

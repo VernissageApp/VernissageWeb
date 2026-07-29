@@ -1,0 +1,11 @@
+@if (isReady()) {
+    <div animate.enter="fade-in">
+        <section [class]="{ 'padding-30': !isHandset(), 'padding-10': isHandset() }">
+            <h1><mat-icon>photo_camera</mat-icon> {{ camera() }}</h1>
+        </section>
+
+        @if (statuses(); as statusesArray) {
+            <app-gallery [statuses]="statusesArray" [startUrl]="pageUrl" />
+        }
+    </div>
+}

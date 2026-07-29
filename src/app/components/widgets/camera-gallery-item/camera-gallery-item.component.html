@@ -1,0 +1,28 @@
+<div appLazyLoad (lazyLoad)="lazyLoadData()">
+    <div class="camera-header">
+        <a [routerLink]="['/cameras', camera().name]">
+            <mat-icon>photo_camera</mat-icon> {{ camera().name }}
+        </a>
+    </div>
+    <div class="images-container">
+        <div class="flex-row">
+            @if (statuses(); as statusesArray) {
+                @if (statusesArray.data) {
+                    @for (status of statusesArray.data; track status.id) {
+                        <a animate.enter="slow-fade-in" [routerLink]="['/statuses', status.id]" [ariaLabel]="'Status added by: ' + $safeNavigationMigration(getMainStatus(status).user?.userName)" (click)="onStatusClick()">
+                            @if (getMainStatus(status).sensitive && !alwaysShowNSFW()) {
+                                <div class="blurhash">
+                                    <app-blurhash-image [horizontal]="true" [status]="status" />
+                                </div>
+                            } @else {
+                                <div class="image">
+                                    <app-image [horizontal]="true" [status]="status" />
+                                </div>
+                            }
+                        </a>
+                    }
+                }
+            }
+        </div>
+    </div>
+</div>

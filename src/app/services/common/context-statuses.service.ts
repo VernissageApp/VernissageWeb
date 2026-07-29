@@ -197,6 +197,18 @@ export class ContextStatusesService {
             return await this.timelineService.category(this.statuses.category, minId, maxId, undefined, undefined);
         }
 
+        if (this.statuses?.context === ContextTimeline.camera && this.statuses.camera) {
+            return await this.timelineService.camera(this.statuses.camera, minId, maxId, undefined, undefined);
+        }
+
+        if (this.statuses?.context === ContextTimeline.lens && this.statuses.lens) {
+            return await this.timelineService.lens(this.statuses.lens, minId, maxId, undefined, undefined);
+        }
+
+        if (this.statuses?.context === ContextTimeline.film && this.statuses.film) {
+            return await this.timelineService.film(this.statuses.film, minId, maxId, undefined, undefined);
+        }
+
         if (this.statuses?.context === ContextTimeline.user && this.statuses.user) {
             return await this.usersService.statuses(this.statuses.user, minId, maxId, undefined, undefined);
         }

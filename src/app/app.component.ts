@@ -98,7 +98,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
                 this.router.navigate(['/editors']);
                 break;
             case 'c':
-                this.router.navigate(['/categories']);
+                this.router.navigate(['/explore']);
                 break;
             case 'n':
                 this.router.navigate(['/news']);

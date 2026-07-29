@@ -121,6 +121,38 @@ export class PreferencesService {
         this.cookieService.set('language', language, { expires: this.longFuture, path: '/' });
     }
 
+    public get homeTab(): string {
+        return this.cookieService.get('homeTab') || 'private';
+    }
+
+    public set homeTab(homeTab: string) {
+        this.cookieService.set('homeTab', homeTab, { expires: this.longFuture, path: '/' });
+    }
+
+    public get editorsTab(): string {
+        return this.cookieService.get('editorsTab') || 'statuses';
+    }
+
+    public set editorsTab(editorsTab: string) {
+        this.cookieService.set('editorsTab', editorsTab, { expires: this.longFuture, path: '/' });
+    }
+
+    public get exploreTab(): string {
+        return this.cookieService.get('exploreTab') || 'categories';
+    }
+
+    public set exploreTab(exploreTab: string) {
+        this.cookieService.set('exploreTab', exploreTab, { expires: this.longFuture, path: '/' });
+    }
+
+    public get trendingTab(): string {
+        return this.cookieService.get('trendingTab') || 'statuses';
+    }
+
+    public set trendingTab(trendingTab: string) {
+        this.cookieService.set('trendingTab', trendingTab, { expires: this.longFuture, path: '/' });
+    }
+
     public toggleTheme(renderer: Renderer2): void {
         const isLightThemeInternal = this.isLightTheme;
         this.isLightTheme = !isLightThemeInternal;
