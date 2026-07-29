@@ -9,8 +9,11 @@ import { FileSizeService } from 'src/app/services/common/file-size.service';
 import { MessagesService } from 'src/app/services/common/messages.service';
 import { RecentLocationsService } from 'src/app/services/common/recent-locations.service';
 import { AttachmentsService } from 'src/app/services/http/attachments.service';
+import { CamerasService } from 'src/app/services/http/cameras.service';
 import { CountriesService } from 'src/app/services/http/countries.service';
+import { FilmsService } from 'src/app/services/http/films.service';
 import { InstanceService } from 'src/app/services/http/instance.service';
+import { LensesService } from 'src/app/services/http/lenses.service';
 import { LocationsService } from 'src/app/services/http/locations.service';
 import { SettingsService } from 'src/app/services/http/settings.service';
 import { PersistenceService } from 'src/app/services/persistance/persistance.service';
@@ -63,6 +66,9 @@ describe('UploadPhotoComponent', () => {
                 },
                 { provide: CountriesService, useValue: { all: vi.fn(async () => [poland, france]) } },
                 { provide: LocationsService, useValue: { search: vi.fn(async () => []) } },
+                { provide: CamerasService, useValue: { get: vi.fn(async () => ({ data: [] })) } },
+                { provide: LensesService, useValue: { get: vi.fn(async () => ({ data: [] })) } },
+                { provide: FilmsService, useValue: { get: vi.fn(async () => ({ data: [] })) } },
                 { provide: AttachmentsService, useValue: {} },
                 { provide: MessagesService, useValue: {} },
                 { provide: SettingsService, useValue: { publicSettings: undefined } },
@@ -140,5 +146,50 @@ describe('UploadPhotoComponent', () => {
             .toBe('https://www.openstreetmap.org/?mlat=51.1&mlon=17.03333#map=10/51.1/17.03333');
 
         fixture.destroy();
+    });
+
+    it('searches camera suggestions after two characters and a debounce', async () => {
+        vi.useFakeTimers();
+
+        try {
+            const camerasService = TestBed.inject(CamerasService);
+            const getSpy = vi.spyOn(camerasService, 'get').mockResolvedValue({
+                page: 1,
+                size: 10,
+                total: 1,
+                data: [{ id: 'camera-1', name: 'Canon AE-1', make: 'Canon', model: 'AE-1', amount: 1 }]
+            });
+            const fixture = TestBed.createComponent(UploadPhotoComponent);
+            fixture.componentRef.setInput('photo', new UploadPhoto('photo-1'));
+            fixture.componentRef.setInput('licenses', []);
+
+            const component = fixture.componentInstance;
+            await component.ngOnInit();
+
+            const suggestions: string[][] = [];
+            const subscription = component['cameraMakes$']?.subscribe(cameras => {
+                suggestions.push(cameras.map(camera => camera.name));
+            });
+
+            component['onCameraMakeChange']('C');
+            await vi.advanceTimersByTimeAsync(400);
+            expect(getSpy).not.toHaveBeenCalled();
+
+            component['onCameraMakeChange']('Ca');
+            await vi.advanceTimersByTimeAsync(200);
+
+            component['onCameraMakeChange']('Can');
+            await vi.advanceTimersByTimeAsync(399);
+            expect(getSpy).not.toHaveBeenCalled();
+
+            await vi.advanceTimersByTimeAsync(1);
+            expect(getSpy).toHaveBeenCalledWith('Can', 1, 10);
+            expect(suggestions.at(-1)).toEqual(['Canon AE-1']);
+
+            subscription?.unsubscribe();
+            fixture.destroy();
+        } finally {
+            vi.useRealTimers();
+        }
     });
 });

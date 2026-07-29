@@ -12,8 +12,8 @@ export class CamerasService {
     private httpClient = inject(HttpClient);
     private windowService = inject(WindowService);
 
-    public async get(page: number, size: number): Promise<PagedResult<Camera>> {
-        const event$ = this.httpClient.get<PagedResult<Camera>>(this.windowService.apiUrl() + `/api/v1/cameras?page=${page}&size=${size}`);
+    public async get(query = '', page: number, size: number): Promise<PagedResult<Camera>> {
+        const event$ = this.httpClient.get<PagedResult<Camera>>(this.windowService.apiUrl() + `/api/v1/cameras?query=${query}&page=${page}&size=${size}`);
         return await firstValueFrom(event$);
     }
 }

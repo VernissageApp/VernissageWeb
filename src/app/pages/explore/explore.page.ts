@@ -142,19 +142,19 @@ export class ExplorePage extends ReusableGalleryPageComponent implements OnInit,
                 break;
             case 'cameras':
                 if (!this.cameras()) {
-                    const camerasPage = await this.camerasService.get(1, this.metadataPageSize);
+                    const camerasPage = await this.camerasService.get('', 1, this.metadataPageSize);
                     this.cameras.set(camerasPage.data);
                 }
                 break;
             case 'lenses':
                 if (!this.lenses()) {
-                    const lensesPage = await this.lensesService.get(1, this.metadataPageSize);
+                    const lensesPage = await this.lensesService.get('', 1, this.metadataPageSize);
                     this.lenses.set(lensesPage.data);
                 }
                 break;
             case 'films':
                 if (!this.films()) {
-                    const filmsPage = await this.filmsService.get(1, this.metadataPageSize);
+                    const filmsPage = await this.filmsService.get('', 1, this.metadataPageSize);
                     this.films.set(filmsPage.data);
                 }
                 break;
