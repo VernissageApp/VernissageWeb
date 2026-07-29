@@ -12,8 +12,8 @@ export class LensesService {
     private httpClient = inject(HttpClient);
     private windowService = inject(WindowService);
 
-    public async get(page: number, size: number): Promise<PagedResult<Lens>> {
-        const event$ = this.httpClient.get<PagedResult<Lens>>(this.windowService.apiUrl() + `/api/v1/lenses?page=${page}&size=${size}`);
+    public async get(query = '', page: number, size: number): Promise<PagedResult<Lens>> {
+        const event$ = this.httpClient.get<PagedResult<Lens>>(this.windowService.apiUrl() + `/api/v1/lenses?query=${query}&page=${page}&size=${size}`);
         return await firstValueFrom(event$);
     }
 }
