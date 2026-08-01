@@ -41,9 +41,12 @@
       "show": "Show",
       "signOut": "Sign out",
       "signUp": "Sign up",
+      "suppress": "Suppress",
+      "suppressed": "Suppressed",
       "tryAgain": "again",
       "unblock": "Unblock",
       "unfollow": "Unfollow",
+      "unsuppress": "Unsuppress",
       "update": "Update",
       "upload": "Upload"
     },
@@ -155,6 +158,10 @@
       "articles": "Vernissage - Articles",
       "bookmarks": "Vernissage - Bookmarks",
       "categories": "Vernissage - Categories",
+      "cameras": "Vernissage - Cameras",
+      "explore": "Vernissage - Explore",
+      "films": "Vernissage - Films",
+      "lenses": "Vernissage - Lenses",
       "confirmEmail": "Vernissage - Confirm email",
       "connectionLost": "Vernissage - Connection lost",
       "createArticle": "Vernissage - Create article",
@@ -499,6 +506,9 @@
         "isRegistrationOpened": "Is registration opened",
         "isWebPushEnabled": "Are WebPush notifications enabled",
         "showCategoriesForAnonymous": "Show categories for anonymous user",
+        "showCamerasForAnonymous": "Show cameras for anonymous user",
+        "showLensesForAnonymous": "Show lenses for anonymous user",
+        "showFilmsForAnonymous": "Show films for anonymous user",
         "showEditorsStatusesChoiceForAnonymous": "Show editor's statuses choice for anonymous user",
         "showEditorsUsersChoiceForAnonymous": "Show editor's users choice for anonymous user",
         "showHashtagsForAnonymous": "Show hashtags for anonymous user",
@@ -520,7 +530,7 @@
       "navigation": {
         "account": "Account",
         "articles": "Articles",
-        "categories": "Categories",
+        "explore": "Explore",
         "editorsChoice": "Editor's choice",
         "errors": "Errors",
         "events": "Events",
@@ -1814,9 +1824,22 @@
     "bookmarks": {
       "title": "Bookmarks"
     },
-    "categories": {
-      "subtitle": "A list of categories on the server along with the photos assigned to them.",
-      "title": "Categories"
+    "explore": {
+      "searchCriteria": "Search criteria",
+      "subtitles": {
+        "cameras": "Browse photos grouped by the cameras used to take them.",
+        "categories": "Browse photos grouped by the categories available on this server.",
+        "films": "Browse photos grouped by the films used to take them.",
+        "lenses": "Browse photos grouped by the lenses used to take them."
+      },
+      "tabAriaLabel": "Explore type",
+      "tabs": {
+        "cameras": "Cameras",
+        "categories": "Categories",
+        "films": "Films",
+        "lenses": "Lenses"
+      },
+      "title": "Explore"
     },
     "confirmEmail": {
       "error": {
@@ -1983,7 +2006,7 @@
         "description": "Yes. Vernissage offers extensive keyboard navigation for users to help you move quickly between pages, timelines, and actions.",
         "footer": "These shortcuts are designed to enhance accessibility and speed up your browsing - especially helpful for keyboard-centric users.",
         "globalShortcuts": {
-          "categories": "View Categories",
+          "explore": "Open Explore",
           "editorsChoice": "Open the Editor's Choice timeline",
           "faq": "Open this FAQ page",
           "home": "Go to the Home timeline",
@@ -1996,8 +2019,10 @@
         "statusDetailShortcuts": {
           "bookmark": "Save the status to bookmarks",
           "boost": "Boost the status",
+          "closePhotoPreview": "Close photo preview",
           "like": "Like the status",
           "nextStatus": "View the next status",
+          "openPhotoPreview": "Open photo preview",
           "previousStatus": "View the previous status"
         },
         "statusDetailShortcutsTitle": "On a Status Detail Page:",
@@ -2173,6 +2198,10 @@
       "actions": {
         "profileQrCodeAriaLabel": "Profile QR code",
         "shareBusinessCardAriaLabel": "Share business card"
+      },
+      "accountModeration": {
+        "blocked": "This account has been blocked by a server moderator. It cannot follow or be followed by accounts on this server, and its posts are not shown here.",
+        "suppressed": "This account has been silenced by a server moderator. It can still follow and be followed by accounts on this server, but any new photos it publishes will not appear anywhere on this site."
       },
       "confirmations": {
         "createBusinessCard": "You haven't created a business card yet. Would you like to create it now?"
@@ -2641,7 +2670,8 @@
       },
       "filters": {
         "onlyBlocked": "Only blocked",
-        "onlyLocal": "Only local"
+        "onlyLocal": "Only local",
+        "onlySuppressed": "Only suppressed"
       },
       "messages": {
         "accountApproved": "Account has been approved.",
@@ -2652,6 +2682,8 @@
         "accountMarkedAsSupporter": "Account has been mark as supporter.",
         "accountRefreshed": "Account has been refreshed.",
         "accountRejected": "Account has been rejected.",
+        "accountSuppressed": "User has been suppressed.",
+        "accountUnsuppressed": "User has been unsuppressed.",
         "twoFactorDisabled": "2FA has been disabled.",
         "userBlocked": "User has been blocked.",
         "userUnblocked": "User has been unblocked."

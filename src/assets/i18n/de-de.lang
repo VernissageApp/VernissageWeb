@@ -41,9 +41,12 @@
       "show": "Zeigen",
       "signOut": "Abmelden",
       "signUp": "Anmelden",
+      "suppress": "Stummschalten",
+      "suppressed": "Stummgeschaltet",
       "tryAgain": "Noch einmal",
       "unblock": "Entsperren",
       "unfollow": "Entfolgen",
+      "unsuppress": "Stummschaltung aufheben",
       "update": "Aktualisieren",
       "upload": "Hochladen"
     },
@@ -155,6 +158,10 @@
       "articles": "Vernissage - Artikel",
       "bookmarks": "Vernissage - Lesezeichen",
       "categories": "Vernissage - Kategorien",
+      "cameras": "Vernissage - Kameras",
+      "explore": "Vernissage - Entdecken",
+      "films": "Vernissage - Filme",
+      "lenses": "Vernissage - Objektive",
       "confirmEmail": "Vernissage - E-Mail-Adresse bestätigen",
       "connectionLost": "Vernissage - Verbindung verloren",
       "createArticle": "Vernissage - Artikel erstellen",
@@ -499,6 +506,9 @@
         "isRegistrationOpened": "Ist die Registrierung aktiv?",
         "isWebPushEnabled": "Sind WebPush-Benachrichtigungen aktiviert?",
         "showCategoriesForAnonymous": "Kategorien für anonyme Benutzer anzeigen",
+        "showCamerasForAnonymous": "Kameras für anonyme Benutzer anzeigen",
+        "showLensesForAnonymous": "Objektive für anonyme Benutzer anzeigen",
+        "showFilmsForAnonymous": "Filme für anonyme Benutzer anzeigen",
         "showEditorsStatusesChoiceForAnonymous": "Statusauswahl des Editors für anonyme Benutzer anzeigen",
         "showEditorsUsersChoiceForAnonymous": "Benutzerauswahl des Editors für anonyme Benutzer anzeigen",
         "showHashtagsForAnonymous": "Hashtags für anonyme Benutzer anzeigen",
@@ -520,7 +530,7 @@
       "navigation": {
         "account": "Konto",
         "articles": "Artikel",
-        "categories": "Kategorien",
+        "explore": "Entdecken",
         "editorsChoice": "Empfehlung der Redaktion",
         "errors": "Fehler",
         "events": "Veranstaltungen",
@@ -1814,9 +1824,22 @@
     "bookmarks": {
       "title": "Lesezeichen"
     },
-    "categories": {
-      "subtitle": "Eine Liste der Kategorien auf dem Server zusammen mit den ihnen zugeordneten Fotos.",
-      "title": "Kategorien"
+    "explore": {
+      "searchCriteria": "Suchkriterien",
+      "subtitles": {
+        "cameras": "Durchsuche Fotos nach den Kameras, mit denen sie aufgenommen wurden.",
+        "categories": "Durchsuche Fotos nach den auf diesem Server verfügbaren Kategorien.",
+        "films": "Durchsuche Fotos nach den Filmen, auf denen sie aufgenommen wurden.",
+        "lenses": "Durchsuche Fotos nach den Objektiven, mit denen sie aufgenommen wurden."
+      },
+      "tabAriaLabel": "Entdeckungsart",
+      "tabs": {
+        "cameras": "Kameras",
+        "categories": "Kategorien",
+        "films": "Filme",
+        "lenses": "Objektive"
+      },
+      "title": "Entdecken"
     },
     "confirmEmail": {
       "error": {
@@ -1983,7 +2006,7 @@
         "description": "Ja. Vernissage bietet Benutzern eine umfassende Tastaturnavigation, damit Sie schnell zwischen Seiten, Zeitleisten und Aktionen wechseln können.",
         "footer": "Diese Verknüpfungen sollen die Zugänglichkeit verbessern und das Surfen beschleunigen – besonders hilfreich für Benutzer, die sich auf die Tastatur konzentrieren.",
         "globalShortcuts": {
-          "categories": "Kategorien anzeigen",
+          "explore": "Entdecken öffnen",
           "editorsChoice": "Öffnen Sie die Editor's Choice-Timeline",
           "faq": "Öffnen Sie diese FAQ-Seite",
           "home": "Gehen Sie zur Home-Timeline",
@@ -1996,8 +2019,10 @@
         "statusDetailShortcuts": {
           "bookmark": "Speichern Sie den Status in den Lesezeichen",
           "boost": "Boosten Sie den Status",
+          "closePhotoPreview": "Foto-Vorschau schließen",
           "like": "Liken Sie den  Status",
           "nextStatus": "Den nächsten Status anzeigen",
+          "openPhotoPreview": "Foto-Vorschau öffnen",
           "previousStatus": "Den vorherigen Status anzeigen"
         },
         "statusDetailShortcutsTitle": "Auf einer Status-Detailseite:",
@@ -2173,6 +2198,10 @@
       "actions": {
         "profileQrCodeAriaLabel": "Profil QR-Code",
         "shareBusinessCardAriaLabel": "Visitenkarte teilen"
+      },
+      "accountModeration": {
+        "blocked": "Dieses Konto wurde von einem Servermoderator gesperrt. Es kann auf diesem Server weder anderen Konten folgen noch selbst gefolgt werden. Seine Beiträge werden hier nicht angezeigt.",
+        "suppressed": "Dieses Konto wurde von einem Servermoderator stummgeschaltet. Es kann weiterhin Konten auf diesem Server folgen und von ihnen gefolgt werden, aber neu veröffentlichte Fotos dieses Kontos werden nirgendwo auf dieser Website angezeigt."
       },
       "confirmations": {
         "createBusinessCard": "Sie haben noch keine Visitenkarte erstellt. Möchten Sie diese jetzt erstellen?"
@@ -2641,7 +2670,8 @@
       },
       "filters": {
         "onlyBlocked": "Nur blockiert",
-        "onlyLocal": "Nur lokal"
+        "onlyLocal": "Nur lokal",
+        "onlySuppressed": "Nur stummgeschaltete"
       },
       "messages": {
         "accountApproved": "Das Konto wurde genehmigt.",
@@ -2652,6 +2682,8 @@
         "accountMarkedAsSupporter": "Das Konto wurde als Unterstützer markiert.",
         "accountRefreshed": "Das Konto wurde aktualisiert.",
         "accountRejected": "Konto wurde abgelehnt.",
+        "accountSuppressed": "Der Benutzer wurde stummgeschaltet.",
+        "accountUnsuppressed": "Die Stummschaltung des Benutzers wurde aufgehoben.",
         "twoFactorDisabled": "2FA wurde deaktiviert.",
         "userBlocked": "Der Benutzer wurde blockiert.",
         "userUnblocked": "Der Benutzer wurde entsperrt."

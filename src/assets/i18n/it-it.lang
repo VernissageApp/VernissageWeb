@@ -41,9 +41,12 @@
       "show": "Mostra",
       "signOut": "Esci",
       "signUp": "Iscriviti",
+      "suppress": "Silenzia",
+      "suppressed": "Silenziato",
       "tryAgain": "di nuovo",
       "unblock": "Sblocca",
       "unfollow": "Smetti di seguire",
+      "unsuppress": "Rimuovi silenziamento",
       "update": "Aggiorna",
       "upload": "Carica"
     },
@@ -155,6 +158,10 @@
       "articles": "Vernissage - Articoli",
       "bookmarks": "Vernissage - Segnalibri",
       "categories": "Vernissage - Categorie",
+      "cameras": "Vernissage - Fotocamere",
+      "explore": "Vernissage - Esplora",
+      "films": "Vernissage - Pellicole",
+      "lenses": "Vernissage - Obiettivi",
       "confirmEmail": "Vernissage - Conferma l'email",
       "connectionLost": "Vernissage - Connessione persa",
       "createArticle": "Vernissage - Crea articolo",
@@ -499,6 +506,9 @@
         "isRegistrationOpened": "Registrazione aperta",
         "isWebPushEnabled": "Le notifiche WebPush sono abilitate",
         "showCategoriesForAnonymous": "Mostra categorie per utente anonimo",
+        "showCamerasForAnonymous": "Mostra fotocamere per utente anonimo",
+        "showLensesForAnonymous": "Mostra obiettivi per utente anonimo",
+        "showFilmsForAnonymous": "Mostra pellicole per utente anonimo",
         "showEditorsStatusesChoiceForAnonymous": "Mostra gli status scelti dall'editor per l'utente anonimo",
         "showEditorsUsersChoiceForAnonymous": "Mostra gli utenti scelti dall'editor per l'utente anonimo",
         "showHashtagsForAnonymous": "Mostra gli hashtag per utente anonimo",
@@ -520,7 +530,7 @@
       "navigation": {
         "account": "Account",
         "articles": "Articoli",
-        "categories": "Categorie",
+        "explore": "Esplora",
         "editorsChoice": "Scelti dell'editor",
         "errors": "Errori",
         "events": "Eventi",
@@ -1814,9 +1824,22 @@
     "bookmarks": {
       "title": "Segnalibri"
     },
-    "categories": {
-      "subtitle": "Un elenco di categorie sul server insieme alle foto ad esse assegnate.",
-      "title": "Categorie"
+    "explore": {
+      "searchCriteria": "Criteri di ricerca",
+      "subtitles": {
+        "cameras": "Sfoglia le foto raggruppate in base alle fotocamere con cui sono state scattate.",
+        "categories": "Sfoglia le foto raggruppate in base alle categorie disponibili su questo server.",
+        "films": "Sfoglia le foto raggruppate in base alle pellicole su cui sono state scattate.",
+        "lenses": "Sfoglia le foto raggruppate in base agli obiettivi con cui sono state scattate."
+      },
+      "tabAriaLabel": "Tipo di esplorazione",
+      "tabs": {
+        "cameras": "Fotocamere",
+        "categories": "Categorie",
+        "films": "Pellicole",
+        "lenses": "Obiettivi"
+      },
+      "title": "Esplora"
     },
     "confirmEmail": {
       "error": {
@@ -1983,7 +2006,7 @@
         "description": "Sì. Vernissage offre agli utenti un'ampia navigazione da tastiera per aiutarti a muoverti rapidamente tra pagine, timeline e azioni.",
         "footer": "Queste scorciatoie sono progettate per migliorare l'accessibilità e velocizzare la navigazione, particolarmente utili per gli utenti che utilizzano principalmente la tastiera.",
         "globalShortcuts": {
-          "categories": "Visualizza categorie",
+          "explore": "Apri Esplora",
           "editorsChoice": "Apri la timeline Scelta dell'editore",
           "faq": "Apri questa pagina delle domande frequenti",
           "home": "Vai alla timeline principale",
@@ -1996,8 +2019,10 @@
         "statusDetailShortcuts": {
           "bookmark": "Salva lo status nei segnalibri",
           "boost": "Condividi lo status",
+          "closePhotoPreview": "Chiudi l'anteprima della foto",
           "like": "Metti mi piace allo status",
           "nextStatus": "Visualizza lo status successivo",
+          "openPhotoPreview": "Apri l'anteprima della foto",
           "previousStatus": "Visualizza lo status precedente"
         },
         "statusDetailShortcutsTitle": "Nella pagina dei dettagli dello status:",
@@ -2173,6 +2198,10 @@
       "actions": {
         "profileQrCodeAriaLabel": "Codice profilo QR",
         "shareBusinessCardAriaLabel": "Condividi il biglietto da visita"
+      },
+      "accountModeration": {
+        "blocked": "Questo account è stato bloccato da un moderatore del server. Non può seguire né essere seguito dagli account di questo server e i suoi post non vengono mostrati qui.",
+        "suppressed": "Questo account è stato silenziato da un moderatore del server. Può ancora seguire ed essere seguito dagli account di questo server, ma le nuove foto che pubblicherà non appariranno in nessuna parte del sito."
       },
       "confirmations": {
         "createBusinessCard": "Non hai ancora creato un biglietto da visita. Vorresti crearlo adesso?"
@@ -2641,7 +2670,8 @@
       },
       "filters": {
         "onlyBlocked": "Solo bloccato",
-        "onlyLocal": "Solo locale"
+        "onlyLocal": "Solo locale",
+        "onlySuppressed": "Solo silenziati"
       },
       "messages": {
         "accountApproved": "L'account è stato approvato.",
@@ -2652,6 +2682,8 @@
         "accountMarkedAsSupporter": "L'account è stato contrassegnato come sostenitore.",
         "accountRefreshed": "L'account è stato aggiornato.",
         "accountRejected": "L'account è stato rifiutato.",
+        "accountSuppressed": "L'utente è stato silenziato.",
+        "accountUnsuppressed": "L'utente non è più silenziato.",
         "twoFactorDisabled": "La 2FA è stato disabilitata.",
         "userBlocked": "L'utente è stato bloccato.",
         "userUnblocked": "L'utente è stato sbloccato."

@@ -89,6 +89,8 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     protected autoScrollGalleryImages = signal(true);
     protected imageWidth = signal(32);
     protected imageHeight = signal(32);
+    protected imageAspectRatio = computed(() => this.imageWidth() / this.imageHeight());
+    protected imageWidthAtMaxHeight = computed(() => `${600 * this.imageAspectRatio()}px`);
     protected isLoggedIn = signal(false);
     protected rendered = signal<SafeHtml>('');
     protected hasHdrSupport = signal(false);
@@ -274,6 +276,9 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
                 break;
             case 's':
                 this.toggleBookmark();
+                break;
+            case 'o':
+                this.openInFullScreen();
                 break;
         }
     }

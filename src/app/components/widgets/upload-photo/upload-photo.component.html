@@ -107,7 +107,8 @@
             matInput
             [formControl]="citiesControl"
             [appAutocompleteValid]="true"
-            [matAutocomplete]="auto">
+            [matAutocomplete]="auto"
+            #cityAutocompleteTrigger="matAutocompleteTrigger">
         <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayCityFn" (optionSelected)="selectedCity($event.option.value)">
             @for (option of cities$ | async; track option) {
                 <mat-option [value]="option">
@@ -117,13 +118,19 @@
         </mat-autocomplete>
 
         @if (currentCity()) {
-            <button matSuffix matIconButton [attr.aria-label]="'common.actions.clear' | translate" (click)="onCityClear()">
+            <button matSuffix matIconButton [attr.aria-label]="'common.actions.clear' | translate" (click)="onCityClear(cityAutocompleteTrigger)">
                 <mat-icon>close</mat-icon>
             </button>
         }
 
         @if (citiesControl.hasError('appAutocompleteValid')) {
             <mat-error>{{ 'components.uploadPhoto.texts.chooseCityFromList' | translate }}</mat-error>
+        }
+
+        @if (mapsUrl(); as url) {
+            <mat-hint align="end">
+                <a class="dashed" target="_blank" rel="noopener noreferrer" [href]="url">{{ 'common.actions.open' | translate }}</a>
+            </mat-hint>
         }
     </mat-form-field>
 
@@ -134,7 +141,7 @@
     <div class="text-muted">{{ 'components.uploadPhoto.texts.exifMetadata' | translate }}</div>
     <div class="exif-values">
 
-        <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-10">
+        <div class="flex-row flex-responsive flex-stretch gap-16 small-text-input margin-bottom-20">
             <mat-checkbox class="exif-label" [name]="'gpsCoordination' + internalIndex" [disableRipple]="true" [(ngModel)]="photo().showGpsCoordination">
                 <span class="text-muted">{{ 'components.uploadPhoto.texts.gpsCoordinates' | translate }}</span>
             </mat-checkbox>
@@ -144,6 +151,12 @@
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="width-100">
                     <input type="text" matInput [name]="'inputGpsLongitude' + internalIndex" [(ngModel)]="photo().longitude" [disabled]="!photo().showGpsCoordination" [attr.aria-label]="'components.uploadPhoto.attrs.gpsLongitude' | translate" />
+
+                    @if (gpsMapsUrl(); as url) {
+                        <mat-hint align="end">
+                            <a class="dashed" target="_blank" rel="noopener noreferrer" [href]="url">{{ 'common.actions.open' | translate }}</a>
+                        </mat-hint>
+                    }
                 </mat-form-field>
             </div>
         </div>
@@ -157,7 +170,12 @@
                 <span class="text-muted">{{ 'components.uploadPhoto.texts.manufacturer' | translate }}</span>
             </mat-checkbox>
             <mat-form-field appearance="outline" class="flex-grow-2">
-                <input type="text" matInput [name]="'inputMake' + internalIndex" [(ngModel)]="photo().make" [disabled]="!photo().showMake" [attr.aria-label]="'components.uploadPhoto.attrs.manufacturer' | translate" />
+                <input type="text" matInput [name]="'inputMake' + internalIndex" [(ngModel)]="photo().make" (ngModelChange)="onCameraMakeChange($event)" [matAutocomplete]="autoMake" [disabled]="!photo().showMake" [attr.aria-label]="'components.uploadPhoto.attrs.manufacturer' | translate" />
+                <mat-autocomplete autoActiveFirstOption #autoMake="matAutocomplete">
+                    @for (option of cameraMakes$ | async; track option.id ?? option.name) {
+                        <mat-option [value]="option.make">{{ option.name }}</mat-option>
+                    }
+                </mat-autocomplete>
             </mat-form-field>
         </div>
 
@@ -166,7 +184,12 @@
                 <span class="text-muted">{{ 'components.uploadPhoto.texts.model' | translate }}</span>
             </mat-checkbox>
             <mat-form-field appearance="outline" class="flex-grow-2">
-                <input type="text" matInput [name]="'inputModel' + internalIndex" [(ngModel)]="photo().model" [disabled]="!photo().showModel" [attr.aria-label]="'components.uploadPhoto.attrs.model' | translate" />
+                <input type="text" matInput [name]="'inputModel' + internalIndex" [(ngModel)]="photo().model" (ngModelChange)="onCameraModelChange($event)" [matAutocomplete]="autoModel" [disabled]="!photo().showModel" [attr.aria-label]="'components.uploadPhoto.attrs.model' | translate" />
+                <mat-autocomplete autoActiveFirstOption #autoModel="matAutocomplete">
+                    @for (option of cameraModels$ | async; track option.id ?? option.name) {
+                        <mat-option [value]="option.model">{{ option.name }}</mat-option>
+                    }
+                </mat-autocomplete>
             </mat-form-field>
         </div>
 
@@ -175,7 +198,12 @@
                 <span class="text-muted">{{ 'components.uploadPhoto.texts.lens' | translate }}</span>
             </mat-checkbox>
             <mat-form-field appearance="outline" class="flex-grow-2">
-                <input type="text" matInput [name]="'inputLens' + internalIndex" [(ngModel)]="photo().lens" [disabled]="!photo().showLens" [attr.aria-label]="'components.uploadPhoto.attrs.lens' | translate" />
+                <input type="text" matInput [name]="'inputLens' + internalIndex" [(ngModel)]="photo().lens" (ngModelChange)="onLensChange($event)" [matAutocomplete]="autoLens" [disabled]="!photo().showLens" [attr.aria-label]="'components.uploadPhoto.attrs.lens' | translate" />
+                <mat-autocomplete autoActiveFirstOption #autoLens="matAutocomplete">
+                    @for (option of lenses$ | async; track option.id ?? option.name) {
+                        <mat-option [value]="option.name">{{ option.name }}</mat-option>
+                    }
+                </mat-autocomplete>
             </mat-form-field>
         </div>
 
@@ -250,7 +278,12 @@
                 <span class="text-muted">{{ 'components.uploadPhoto.texts.film' | translate }}</span>
             </mat-checkbox>
             <mat-form-field appearance="outline" class="flex-grow-2">
-                <input type="text" matInput [name]="'inputFilm' + internalIndex" [(ngModel)]="photo().film" [disabled]="!photo().showFilm" [attr.aria-label]="'components.uploadPhoto.attrs.film' | translate" />
+                <input type="text" matInput [name]="'inputFilm' + internalIndex" [(ngModel)]="photo().film" (ngModelChange)="onFilmChange($event)" [matAutocomplete]="autoFilm" [disabled]="!photo().showFilm" [attr.aria-label]="'components.uploadPhoto.attrs.film' | translate" />
+                <mat-autocomplete autoActiveFirstOption #autoFilm="matAutocomplete">
+                    @for (option of films$ | async; track option.id ?? option.name) {
+                        <mat-option [value]="option.name">{{ option.name }}</mat-option>
+                    }
+                </mat-autocomplete>
             </mat-form-field>
         </div>
 

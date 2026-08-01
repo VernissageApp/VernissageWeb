@@ -41,9 +41,12 @@
       "show": "Vis",
       "signOut": "Logg ut",
       "signUp": "Registrer deg",
+      "suppress": "Demp",
+      "suppressed": "Dempet",
       "tryAgain": "igjen",
       "unblock": "Fjern blokkering",
       "unfollow": "Slutt å følge",
+      "unsuppress": "Opphev demping",
       "update": "Oppdater",
       "upload": "Last opp"
     },
@@ -155,6 +158,10 @@
       "articles": "Vernissage - Artikler",
       "bookmarks": "Vernissage - Bokmerker",
       "categories": "Vernissage - Kategorier",
+      "cameras": "Vernissage - Kameraer",
+      "explore": "Vernissage - Utforsk",
+      "films": "Vernissage - Filmer",
+      "lenses": "Vernissage - Linser",
       "confirmEmail": "Vernissage - Bekreft e-post",
       "connectionLost": "Vernissage - Forbindelsen mistet",
       "createArticle": "Vernissage - Lag artikkel",
@@ -499,6 +506,9 @@
         "isRegistrationOpened": "Er registreringen åpnet",
         "isWebPushEnabled": "ErWebPush-varsler aktivert",
         "showCategoriesForAnonymous": "Vis kategorier for anonym bruker",
+        "showCamerasForAnonymous": "Vis kameraer for anonym bruker",
+        "showLensesForAnonymous": "Vis linser for anonym bruker",
+        "showFilmsForAnonymous": "Vis filmer for anonym bruker",
         "showEditorsStatusesChoiceForAnonymous": "Vis redaktørens statusvalg for anonym bruker",
         "showEditorsUsersChoiceForAnonymous": "Vis redaktørens brukervalg for anonym bruker",
         "showHashtagsForAnonymous": "Vis hashtags for anonym bruker",
@@ -520,7 +530,7 @@
       "navigation": {
         "account": "Konto",
         "articles": "Artikler",
-        "categories": "Kategorier",
+        "explore": "Utforsk",
         "editorsChoice": "Redaktørens valg",
         "errors": "Feil",
         "events": "Hendelser",
@@ -1814,9 +1824,22 @@
     "bookmarks": {
       "title": "Bokmerker"
     },
-    "categories": {
-      "subtitle": "En liste over kategorier på serveren sammen med bildene som er tildelt dem.",
-      "title": "Kategorier"
+    "explore": {
+      "searchCriteria": "Søkekriterier",
+      "subtitles": {
+        "cameras": "Bla gjennom bilder gruppert etter kameraene de ble tatt med.",
+        "categories": "Bla gjennom bilder gruppert etter kategoriene som er tilgjengelige på denne serveren.",
+        "films": "Bla gjennom bilder gruppert etter filmene de ble tatt på.",
+        "lenses": "Bla gjennom bilder gruppert etter linsene de ble tatt med."
+      },
+      "tabAriaLabel": "Utforskningstype",
+      "tabs": {
+        "cameras": "Kameraer",
+        "categories": "Kategorier",
+        "films": "Filmer",
+        "lenses": "Linser"
+      },
+      "title": "Utforsk"
     },
     "confirmEmail": {
       "error": {
@@ -1983,7 +2006,7 @@
         "description": "Ja.Vernissagetilbyr omfattende tastaturnavigering for brukere for å hjelpe deg raskt mellom sider, tidslinjer og handlinger.",
         "footer": "Disse snarveiene er utformet for å forbedre tilgjengeligheten og øke hastigheten på surfingen din – spesielt nyttig for tastatursentrerte brukere.",
         "globalShortcuts": {
-          "categories": "Vis kategorier",
+          "explore": "Åpne Utforsk",
           "editorsChoice": "Åpne tidslinjen for Editor's Choice",
           "faq": "Åpne denne FAQ-siden",
           "home": "Gå til tidslinjen Hjem",
@@ -1996,8 +2019,10 @@
         "statusDetailShortcuts": {
           "bookmark": "Lagre statusen i bokmerker",
           "boost": "Øk statusen",
+          "closePhotoPreview": "Lukk forhåndsvisning av bilde",
           "like": "Liker statusen",
           "nextStatus": "Se neste status",
+          "openPhotoPreview": "Åpne forhåndsvisning av bilde",
           "previousStatus": "Se forrige status"
         },
         "statusDetailShortcutsTitle": "På en statusdetaljside:",
@@ -2173,6 +2198,10 @@
       "actions": {
         "profileQrCodeAriaLabel": "ProfilQR-kode",
         "shareBusinessCardAriaLabel": "Del visittkort"
+      },
+      "accountModeration": {
+        "blocked": "Denne kontoen er blokkert av en servermoderator. Den kan ikke følge eller bli fulgt av kontoer på denne serveren, og innleggene vises ikke her.",
+        "suppressed": "Denne kontoen er dempet av en servermoderator. Den kan fortsatt følge og bli fulgt av kontoer på denne serveren, men nye bilder som den publiserer, vil ikke vises noe sted på nettstedet."
       },
       "confirmations": {
         "createBusinessCard": "Du har ikke opprettet et visittkort ennå. Vil du lage den nå?"
@@ -2641,7 +2670,8 @@
       },
       "filters": {
         "onlyBlocked": "Bare blokkert",
-        "onlyLocal": "Kun lokalt"
+        "onlyLocal": "Kun lokalt",
+        "onlySuppressed": "Bare dempede"
       },
       "messages": {
         "accountApproved": "Kontoen er godkjent.",
@@ -2652,6 +2682,8 @@
         "accountMarkedAsSupporter": "Kontoen har blitt markert som støttespiller.",
         "accountRefreshed": "Kontoen er oppdatert.",
         "accountRejected": "Kontoen er avvist.",
+        "accountSuppressed": "Brukeren er dempet.",
+        "accountUnsuppressed": "Dempingen av brukeren er opphevet.",
         "twoFactorDisabled": "2FAer deaktivert.",
         "userBlocked": "Brukeren er blokkert.",
         "userUnblocked": "Brukeren er opphevet blokkeringen."

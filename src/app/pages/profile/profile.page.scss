@@ -52,6 +52,50 @@
         }
     }
 
+    .moderation-notice {
+        max-width: 600px;
+        margin: 0 auto 16px;
+        padding: 12px 14px;
+        border: 1px solid color-mix(in srgb, var(--mat-sys-primary) 45%, transparent);
+        border-left-width: 4px;
+        border-right-width: 4px;
+        border-radius: 8px;
+        background-color: color-mix(in srgb, var(--mat-sys-primary) 8%, transparent);
+        text-align: left;
+
+        &.is-blocked {
+            border-color: color-mix(in srgb, var(--mat-sys-error) 45%, transparent);
+            background-color: color-mix(in srgb, var(--mat-sys-error) 8%, transparent);
+        }
+
+        .moderation-notice-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 14px;
+            line-height: 1.45;
+
+            & + .moderation-notice-item {
+                margin-top: 10px;
+                padding-top: 10px;
+                border-top: 1px solid color-mix(in srgb, var(--mat-sys-on-surface) 15%, transparent);
+            }
+
+            mat-icon {
+                flex: 0 0 auto;
+                margin-top: 1px;
+            }
+
+            &.blocked mat-icon {
+                color: var(--mat-sys-error);
+            }
+
+            &.suppressed mat-icon {
+                color: var(--mat-sys-primary);
+            }
+        }
+    }
+
     .bio {
         margin-left: auto;
         margin-right: auto;

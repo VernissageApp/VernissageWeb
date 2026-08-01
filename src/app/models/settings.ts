@@ -67,6 +67,9 @@ export class Settings {
     public showEditorsUsersChoiceForAnonymous = false;
     public showHashtagsForAnonymous = false;
     public showCategoriesForAnonymous = false;
+    public showCamerasForAnonymous = false;
+    public showLensesForAnonymous = false;
+    public showFilmsForAnonymous = false;
 
     // Privacy and Terms of Service.
     public privacyPolicyUpdatedAt = '';

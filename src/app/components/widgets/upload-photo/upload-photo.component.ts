@@ -1,18 +1,23 @@
-import { ChangeDetectionStrategy, Component, inject, input, model, OnInit, output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, model, OnInit, output, signal } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, startWith } from 'rxjs';
-import { Observable } from 'rxjs/internal/Observable';
-import { map, switchMap } from 'rxjs/operators';
+import { catchError, debounce, debounceTime, defer, distinctUntilChanged, from, map, Observable, of, startWith, Subject, switchMap, timer } from 'rxjs';
 import { ResponsiveComponent } from 'src/app/common/responsive';
+import { Camera } from 'src/app/models/camera';
 import { Country } from 'src/app/models/country';
+import { Film } from 'src/app/models/film';
+import { Lens } from 'src/app/models/lens';
 import { License } from 'src/app/models/license';
 import { Location } from 'src/app/models/location';
 import { UploadPhoto } from 'src/app/models/upload-photo';
 import { FileSizeService } from 'src/app/services/common/file-size.service';
 import { MessagesService } from 'src/app/services/common/messages.service';
+import { RecentLocationsService } from 'src/app/services/common/recent-locations.service';
 import { AttachmentsService } from 'src/app/services/http/attachments.service';
+import { CamerasService } from 'src/app/services/http/cameras.service';
 import { CountriesService } from 'src/app/services/http/countries.service';
+import { FilmsService } from 'src/app/services/http/films.service';
 import { InstanceService } from 'src/app/services/http/instance.service';
+import { LensesService } from 'src/app/services/http/lenses.service';
 import { LocationsService } from 'src/app/services/http/locations.service';
 import { SettingsService } from 'src/app/services/http/settings.service';
 import { PersistenceService } from 'src/app/services/persistance/persistance.service';
@@ -20,7 +25,7 @@ import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
-import { MatFormField, MatLabel, MatError, MatSuffix, MatPrefix } from '@angular/material/form-field';
+import { MatFormField, MatLabel, MatError, MatHint, MatSuffix, MatPrefix } from '@angular/material/form-field';
 import { InputActivityDirective } from '../../../directives/input-activity.directive';
 import { MatInput } from '@angular/material/input';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
@@ -39,7 +44,7 @@ import { AsyncPipe } from '@angular/common';
     templateUrl: './upload-photo.component.html',
     styleUrls: ['./upload-photo.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [MatProgressSpinner, MatButton, MatIcon, MatFormField, MatLabel, InputActivityDirective, MatInput, CdkTextareaAutosize, FormsModule, MaxLengthValidatorDirective, MatError, MatSelect, MatOption, MatAutocompleteTrigger, ReactiveFormsModule, AutocompleteValidDirective, MatAutocomplete, MatIconButton, MatSuffix, MatDivider, MatCheckbox, MatPrefix, MatDatepickerInput, MatDatepicker, MatDatepickerToggle, MatTimepickerInput, MatTimepicker, MatTimepickerToggle, AsyncPipe, TranslatePipe]
+    imports: [MatProgressSpinner, MatButton, MatIcon, MatFormField, MatLabel, InputActivityDirective, MatInput, CdkTextareaAutosize, FormsModule, MaxLengthValidatorDirective, MatError, MatHint, MatSelect, MatOption, MatAutocompleteTrigger, ReactiveFormsModule, AutocompleteValidDirective, MatAutocomplete, MatIconButton, MatSuffix, MatDivider, MatCheckbox, MatPrefix, MatDatepickerInput, MatDatepicker, MatDatepickerToggle, MatTimepickerInput, MatTimepicker, MatTimepickerToggle, AsyncPipe, TranslatePipe]
 })
 export class UploadPhotoComponent extends ResponsiveComponent implements OnInit {
     public photo = model.required<UploadPhoto>();
@@ -50,10 +55,18 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
     protected citiesControl = new FormControl<string | Location>('');
     protected filteredCountries$?: Observable<Country[]>;
     protected countriesControl = new FormControl<string | Country>('');    
+    protected cameraMakes$?: Observable<Camera[]>;
+    protected cameraModels$?: Observable<Camera[]>;
+    protected lenses$?: Observable<Lens[]>;
+    protected films$?: Observable<Film[]>;
     protected isOpenAIEnabled = signal(false);
     protected describeInProgress = signal(false);
     protected currentCountry = signal<Country | undefined>(undefined);
     protected currentCity = signal<Location | undefined>(undefined);
+    protected mapsUrl = computed(() => this.createMapsUrl(
+        this.currentCity()?.latitude,
+        this.currentCity()?.longitude
+    ));
     protected hdrFileSizeString = signal('');
     protected maxFileSizeString = signal('');
     protected openAIProviderName = signal('');
@@ -64,12 +77,22 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
     private readonly defaultCountryCacheKey = 'default-country';
     private readonly defaultLocationCacheKey = 'default-location';
     private readonly defaultLicenseCacheKey = 'default-license';
+    private readonly metadataAutocompleteDebounce = 400;
+    private readonly metadataAutocompleteMinimumLength = 2;
+    private readonly metadataAutocompletePageSize = 10;
 
     private allCountries: Country[] = [];
     private initialized = false;
+    private cameraMakeQuery = new Subject<string>();
+    private cameraModelQuery = new Subject<string>();
+    private lensQuery = new Subject<string>();
+    private filmQuery = new Subject<string>();
 
     private countriesService = inject(CountriesService);
     private locationService = inject(LocationsService);
+    private camerasService = inject(CamerasService);
+    private lensesService = inject(LensesService);
+    private filmsService = inject(FilmsService);
     private attachmentsService = inject(AttachmentsService);
     private messageService = inject(MessagesService);
     private settingsService = inject(SettingsService);
@@ -77,6 +100,7 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
     private fileSizeService = inject(FileSizeService);
     private instanceService = inject(InstanceService);
     private translateService = inject(TranslateService);
+    private recentLocationsService = inject(RecentLocationsService);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
@@ -101,6 +125,8 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
                     if (typeof value === 'string') {
                         this.currentCountry.set(undefined);
                         this.storeCountryInCache(undefined);
+                    } else {
+                        this.currentCountry.set(value ?? undefined);
                     }
 
                     this.citiesControl.setValue('');
@@ -117,18 +143,47 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
             }),
         );
 
-        this.cities$ = this.citiesControl.valueChanges.pipe(
-            distinctUntilChanged(),
-            debounceTime(1000),
-            switchMap(value => {
-                const query = typeof value === 'string' ? value : value?.name;
+        this.cities$ = defer(() => this.citiesControl.valueChanges.pipe(
+            startWith(this.citiesControl.value)
+        )).pipe(
+            map(value => ({ value, country: this.currentCountry() })),
+            distinctUntilChanged((previous, current) =>
+                previous.value === current.value
+                && previous.country?.id === current.country?.id
+                && previous.country?.code === current.country?.code),
+            debounce(({ value }) => typeof value === 'string' && value.trim()
+                ? timer(1000)
+                : of(0)),
+            switchMap(({ value, country }) => {
+                const query = typeof value === 'string' ? value.trim() : '';
 
                 if (typeof value === 'string') {
                     this.clearSelectedCity();
                 }
 
-                return this.locationService.search(this.currentCountry()?.code ?? "GB", query)
+                if (!query) {
+                    return of(this.recentLocationsService.get(country));
+                }
+
+                return this.locationService.search(country?.code ?? 'GB', query);
             })
+        );
+
+        this.cameraMakes$ = this.createMetadataSuggestions(
+            this.cameraMakeQuery,
+            query => this.camerasService.get(query, 1, this.metadataAutocompletePageSize)
+        );
+        this.cameraModels$ = this.createMetadataSuggestions(
+            this.cameraModelQuery,
+            query => this.camerasService.get(query, 1, this.metadataAutocompletePageSize)
+        );
+        this.lenses$ = this.createMetadataSuggestions(
+            this.lensQuery,
+            query => this.lensesService.get(query, 1, this.metadataAutocompletePageSize)
+        );
+        this.films$ = this.createMetadataSuggestions(
+            this.filmQuery,
+            query => this.filmsService.get(query, 1, this.metadataAutocompletePageSize)
         );
 
         if (!this.photo().id) {
@@ -187,6 +242,7 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
     protected selectedCity(location?: Location): void {
         this.currentCity.set(location);
         this.storeCityInCache(location);
+        this.recentLocationsService.add(this.currentCountry(), location);
 
         this.photo.update((photo) => {
             photo.locationId = this.currentCity()?.id;
@@ -194,7 +250,7 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
         });
     }
 
-    protected onCityClear(): void {
+    protected onCityClear(autocompleteTrigger?: MatAutocompleteTrigger): void {
         this.citiesControl.setValue('');
         this.currentCity.set(undefined);
         this.storeCityInCache(undefined);
@@ -203,10 +259,34 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
             photo.locationId = this.currentCity()?.id;
             return photo;
         });
+
+        if (autocompleteTrigger) {
+            setTimeout(() => autocompleteTrigger.openPanel());
+        }
     }
 
     protected onLicenseChange(): void {
         this.storeLicenseInCache(this.photo().licenseId);
+    }
+
+    protected onCameraMakeChange(value: string): void {
+        this.cameraMakeQuery.next(value);
+    }
+
+    protected onCameraModelChange(value: string): void {
+        this.cameraModelQuery.next(value);
+    }
+
+    protected onLensChange(value: string): void {
+        this.lensQuery.next(value);
+    }
+
+    protected onFilmChange(value: string): void {
+        this.filmQuery.next(value);
+    }
+
+    protected gpsMapsUrl(): string | undefined {
+        return this.createMapsUrl(this.photo().latitude, this.photo().longitude);
     }
 
     protected async onGenerateDescription(): Promise<void> {
@@ -294,6 +374,37 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
         return this.allCountries.filter(option => option.name?.toLowerCase().includes(filterValue));
     }
 
+    private createMetadataSuggestions<T>(
+        query$: Observable<string>,
+        search: (query: string) => Promise<{ data: T[] }>
+    ): Observable<T[]> {
+        return query$.pipe(
+            map(value => value.trim()),
+            debounceTime(this.metadataAutocompleteDebounce),
+            distinctUntilChanged(),
+            switchMap(query => {
+                if (query.length < this.metadataAutocompleteMinimumLength) {
+                    return of([]);
+                }
+
+                return from(search(query)).pipe(
+                    map(result => result.data),
+                    catchError(() => of([]))
+                );
+            })
+        );
+    }
+
+    private createMapsUrl(latitudeValue?: string, longitudeValue?: string): string | undefined {
+        const latitude = latitudeValue?.trim().replace(',', '.');
+        const longitude = longitudeValue?.trim().replace(',', '.');
+        if (!latitude || !longitude) {
+            return undefined;
+        }
+
+        return `https://www.openstreetmap.org/?mlat=${latitude}&mlon=${longitude}#map=10/${latitude}/${longitude}`;
+    }
+
     private setPhotoData(): void {
         const photoHdrFile = this.photo().photoHdrFile
         if (!photoHdrFile) {
@@ -362,6 +473,7 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
         if (persistedLocation) {
             this.currentCity.set(persistedLocation);
             this.citiesControl.setValue(persistedLocation);
+            this.recentLocationsService.add(this.currentCountry(), persistedLocation);
 
             this.photo.update((photo) => {
                 photo.locationId = this.currentCity()?.id;

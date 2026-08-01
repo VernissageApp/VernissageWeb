@@ -1,0 +1,16 @@
+@if (!isBrowser()) {
+    <div></div>
+} @else if (films().length) {
+    @for (film of films(); track film.id) {
+        <div>
+            <app-film-gallery-item [film]="film" />
+        </div>
+    }
+} @else {
+    <div class="text-muted padding-top-30 width-100 text-center">
+        <h2 class="empty-page">
+            <div class="camera"></div>
+            <div>{{ 'components.categoryGallery.texts.sadlyThereSNothingToSeeHere' | translate }}</div>
+        </h2>
+    </div>
+}

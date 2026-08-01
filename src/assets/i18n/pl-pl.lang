@@ -41,9 +41,12 @@
       "show": "Pokaż",
       "signOut": "Wyloguj się",
       "signUp": "Zarejestruj się",
+      "suppress": "Wycisz",
+      "suppressed": "Wyciszony",
       "tryAgain": "ponownie",
       "unblock": "Odblokuj",
       "unfollow": "Nie obserwuj",
+      "unsuppress": "Cofnij wyciszenie",
       "update": "Aktualizuj",
       "upload": "Wyślij"
     },
@@ -155,6 +158,10 @@
       "articles": "Vernissage - Artykuły",
       "bookmarks": "Vernissage - Zakładki",
       "categories": "Vernissage - Kategorie",
+      "cameras": "Vernissage - Aparaty",
+      "explore": "Vernissage - Odkrywaj",
+      "films": "Vernissage - Filmy",
+      "lenses": "Vernissage - Obiektywy",
       "confirmEmail": "Vernissage - Potwierdzenie e-maila",
       "connectionLost": "Vernissage - Utracono połączenie",
       "createArticle": "Vernissage - Tworzenie artykułu",
@@ -499,6 +506,9 @@
         "isRegistrationOpened": "Czy rejestracja jest otwarta",
         "isWebPushEnabled": "Czy powiadomienia WebPush są włączone",
         "showCategoriesForAnonymous": "Pokaż kategorie dla niezalogowanych użytkowników",
+        "showCamerasForAnonymous": "Pokaż aparaty dla niezalogowanych użytkowników",
+        "showLensesForAnonymous": "Pokaż obiektywy dla niezalogowanych użytkowników",
+        "showFilmsForAnonymous": "Pokaż filmy dla niezalogowanych użytkowników",
         "showEditorsStatusesChoiceForAnonymous": "Pokaż wybór statusów redakcji dla niezalogowanych użytkowników",
         "showEditorsUsersChoiceForAnonymous": "Pokaż wybór użytkowników redakcji dla niezalogowanych użytkowników",
         "showHashtagsForAnonymous": "Pokaż hashtagi dla niezalogowanych użytkowników",
@@ -520,7 +530,7 @@
       "navigation": {
         "account": "Konto",
         "articles": "Artykuły",
-        "categories": "Kategorie",
+        "explore": "Odkrywaj",
         "editorsChoice": "Wybór redakcji",
         "errors": "Błędy",
         "events": "Zdarzenia",
@@ -1814,9 +1824,22 @@
     "bookmarks": {
       "title": "Zakładki"
     },
-    "categories": {
-      "subtitle": "Lista kategorii na serwerze wraz ze zdjęciami przypisanymi do nich.",
-      "title": "Kategorie"
+    "explore": {
+      "searchCriteria": "Kryteria wyszukiwania",
+      "subtitles": {
+        "cameras": "Przeglądaj zdjęcia pogrupowane według aparatów, którymi zostały wykonane.",
+        "categories": "Przeglądaj zdjęcia pogrupowane według kategorii dostępnych na tym serwerze.",
+        "films": "Przeglądaj zdjęcia pogrupowane według filmów fotograficznych, na których zostały wykonane.",
+        "lenses": "Przeglądaj zdjęcia pogrupowane według obiektywów, którymi zostały wykonane."
+      },
+      "tabAriaLabel": "Typ przeglądanych danych",
+      "tabs": {
+        "cameras": "Aparaty",
+        "categories": "Kategorie",
+        "films": "Filmy",
+        "lenses": "Obiektywy"
+      },
+      "title": "Odkrywaj"
     },
     "confirmEmail": {
       "error": {
@@ -1983,7 +2006,7 @@
         "description": "Tak. Vernissage oferuje rozbudowaną nawigację klawiaturą, dzięki której możesz szybko poruszać się między stronami, osiami czasu i akcjami.",
         "footer": "Te skróty zwiększają dostępność i przyspieszają przeglądanie, szczególnie dla użytkowników preferujących klawiaturę.",
         "globalShortcuts": {
-          "categories": "Pokaż kategorie",
+          "explore": "Otwórz Odkrywaj",
           "editorsChoice": "Otwórz oś czasu Wybór redakcji",
           "faq": "Otwórz tę stronę FAQ",
           "home": "Przejdź do osi czasu Strona główna",
@@ -1996,8 +2019,10 @@
         "statusDetailShortcuts": {
           "bookmark": "Zapisz status w zakładkach",
           "boost": "Podbij status",
+          "closePhotoPreview": "Zamknij podgląd zdjęcia",
           "like": "Polub status",
           "nextStatus": "Pokaż następny status",
+          "openPhotoPreview": "Otwórz podgląd zdjęcia",
           "previousStatus": "Pokaż poprzedni status"
         },
         "statusDetailShortcutsTitle": "Na stronie szczegółów statusu:",
@@ -2173,6 +2198,10 @@
       "actions": {
         "profileQrCodeAriaLabel": "Kod QR profilu",
         "shareBusinessCardAriaLabel": "Udostępnij wizytówkę"
+      },
+      "accountModeration": {
+        "blocked": "To konto zostało zablokowane przez moderatora serwera. Nie może obserwować kont z tego serwera ani być przez nie obserwowane, a jego wpisy nie są tutaj wyświetlane.",
+        "suppressed": "To konto zostało wyciszone przez moderatora serwera. Nadal może obserwować konta z tego serwera i być przez nie obserwowane, ale publikowane przez nie nowe zdjęcia nie będą wyświetlane nigdzie w serwisie."
       },
       "confirmations": {
         "createBusinessCard": "Nie utworzyłeś jeszcze wizytówki. Czy chcesz ją teraz utworzyć?"
@@ -2641,7 +2670,8 @@
       },
       "filters": {
         "onlyBlocked": "Tylko zablokowani",
-        "onlyLocal": "Tylko lokalni"
+        "onlyLocal": "Tylko lokalni",
+        "onlySuppressed": "Tylko wyciszeni"
       },
       "messages": {
         "accountApproved": "Konto zostało zatwierdzone.",
@@ -2652,6 +2682,8 @@
         "accountMarkedAsSupporter": "Konto zostało oznaczone jako wspierające.",
         "accountRefreshed": "Konto zostało odświeżone.",
         "accountRejected": "Konto zostało odrzucone.",
+        "accountSuppressed": "Użytkownik został wyciszony.",
+        "accountUnsuppressed": "Wyciszenie użytkownika zostało cofnięte.",
         "twoFactorDisabled": "2FA zostało wyłączone.",
         "userBlocked": "Użytkownik został zablokowany.",
         "userUnblocked": "Użytkownik został odblokowany."
