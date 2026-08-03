@@ -210,6 +210,15 @@ export class NotificationsPage extends ResponsiveComponent implements OnInit, On
         return notification.mainStatus ?? notification.status;
     }
 
+    protected getStatusQueryParams(notification: Notification): { highlight: string } | undefined {
+        const commentId = notification.status?.id;
+        if (!this.isFavouriteCommentNotification(notification) || !commentId) {
+            return undefined;
+        }
+
+        return { highlight: commentId };
+    }
+
     protected openNotificationsSettings(): void {
         this.dialog.open(NotificationSettingsDialog, {
             width: '500px'
@@ -387,7 +396,7 @@ export class NotificationsPage extends ResponsiveComponent implements OnInit, On
                 return notification.notificationType;
             case NotificationType.Favourite:
             case NotificationType.Reblog: {
-                const linkedStatusId = this.getLinkedStatus(notification)?.id;
+                const linkedStatusId = this.getNotificationSubjectStatusId(notification);
 
                 if (!linkedStatusId) {
                     return undefined;
@@ -398,6 +407,20 @@ export class NotificationsPage extends ResponsiveComponent implements OnInit, On
             default:
                 return undefined;
         }
+    }
+
+    private getNotificationSubjectStatusId(notification: Notification): string | undefined {
+        if (this.isFavouriteCommentNotification(notification)) {
+            return notification.status?.id;
+        }
+
+        return this.getLinkedStatus(notification)?.id;
+    }
+
+    private isFavouriteCommentNotification(notification: Notification): boolean {
+        return notification.notificationType === NotificationType.Favourite
+            && !!notification.mainStatus
+            && !!notification.status?.id;
     }
 
     private getNotificationUniquenessKey(notification: Notification): string {
