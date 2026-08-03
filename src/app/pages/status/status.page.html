@@ -446,7 +446,13 @@
 
                                 @if ((comments()?.length ?? 0) > 0) {
                                     @for (comment of comments(); track comment.status.id) {
-                                        <div class="padding-top-10 comments">
+                                        <div
+                                            appViewportObserver
+                                            class="padding-top-10 comments"
+                                            [attr.id]="'comment-' + comment.status.id"
+                                            [observeKey]="pendingHighlightedCommentId() === comment.status.id ? 1 : 0"
+                                            [class.highlighted-comment]="highlightedCommentId() === comment.status.id"
+                                            (viewportChange)="onCommentViewportChange(comment.status.id, $event)">
                                             <div class="flex-row gap-8" [class]="{ 'replies': !comment.showDivider, 'padding-top-15': comment.showDivider }">
                                                 <a [routerLink]="[ '/@' + $safeNavigationMigration(comment.status.user?.userName) ]" class="comment-avatar" [attr.aria-label]="'pages.status.actions.openProfileAriaLabel' | translate:{ userName: $safeNavigationMigration(comment.status.user?.userName) }">
                                                     <app-avatar [user]="comment.status.user" [size]="avatarSize.medium" />
@@ -497,6 +503,10 @@
                                                                 <mat-icon>reply</mat-icon>
                                                                 <span>{{ 'pages.status.comments.actions.reply' | translate }}</span>
                                                             </button>
+                                                            <button mat-menu-item (click)="onCommentFavouritedByDialog(comment.status)">
+                                                                <mat-icon class="fill-symbol">grade</mat-icon>
+                                                                <span>{{ 'pages.status.menu.favouritedBy' | translate }}</span>
+                                                            </button>
                                                             <mat-divider />
                                                             <button mat-menu-item (click)="onReportDialog(comment.status)">
                                                                 <mat-icon>warning</mat-icon>
@@ -515,8 +525,15 @@
 
                                             <div class="flex-row flex-responsive gap-horizontal-16 margin-left-40" [class.replies]="!comment.showDivider">
                                                 <div class="text-muted fs-80">{{ comment.status.createdAt | ago }}</div>
-                                                <div class="text-muted fs-80" >
+                                                <div class="comment-favourites text-muted fs-80">
                                                     @if (comment.status.favouritesCount > 0) {
+                                                        @if (isLoggedIn() && !isInVersionMode()) {
+                                                            <button type="button" class="comment-favourites-action" (click)="onCommentFavouritedByDialog(comment.status)" [matTooltip]="'components.statusProperties.attrs.numberOfLikes' | translate" [attr.aria-label]="'pages.status.menu.favouritedBy' | translate">
+                                                                <mat-icon>star</mat-icon>
+                                                            </button>
+                                                        } @else {
+                                                            <mat-icon [matTooltip]="'components.statusProperties.attrs.numberOfLikes' | translate" [attr.aria-label]="'components.statusProperties.attrs.numberOfLikes' | translate">star</mat-icon>
+                                                        }
                                                         <span>
                                                             {{ 'pages.status.comments.likedByPrefix' | translate: { count: comment.status.favouritesCount } }}
                                                         </span>
