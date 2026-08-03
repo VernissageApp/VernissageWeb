@@ -420,6 +420,12 @@
 }
 
 .comments {
+    &.highlighted-comment {
+        .comment-favourites mat-icon {
+            animation: comment-favourite-pulse 1s ease-in-out 5;
+        }
+    }
+
     .comment-avatar {
         display: inline-flex;
         text-decoration: none;
@@ -443,6 +449,28 @@
     .comment-content {
         flex: 1 1 auto;
         min-width: 0;
+    }
+
+    .comment-favourites {
+        display: flex;
+        align-items: center;
+
+        mat-icon {
+            transform: scale(0.75);
+        }
+
+        .comment-favourites-action {
+            display: inline-flex;
+            padding: 0;
+            border: 0;
+            color: inherit;
+            background: transparent;
+            cursor: pointer;
+
+            &:hover {
+                color: var(--mat-sys-primary);
+            }
+        }
     }
 
     .comment-author-name,
@@ -484,6 +512,20 @@
             height: 80px;
             margin-right: 8px;
         }
+    }
+}
+
+@keyframes comment-favourite-pulse {
+    0% {
+        transform: scale(0.75) rotate(0deg);
+    }
+
+    50% {
+        transform: scale(1) rotate(36deg);
+    }
+
+    100% {
+        transform: scale(0.75) rotate(72deg);
     }
 }
 

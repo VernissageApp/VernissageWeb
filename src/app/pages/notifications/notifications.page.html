@@ -56,14 +56,14 @@
 
                                                 @if (item.notification.mainStatus && getAttachmentUrl(item.notification.mainStatus)) {
                                                     <div class="status">
-                                                        <a [routerLink]="['/statuses', item.notification.mainStatus.id]">
+                                                        <a [routerLink]="['/statuses', item.notification.mainStatus.id]" [queryParams]="getStatusQueryParams(item.notification)">
                                                             <img [src]="getAttachmentUrl(item.notification.mainStatus)" class="" [alt]="getAttachmentAlt(item.notification.mainStatus) ?? ('common.labels.statusImage' | translate)" />
                                                         </a>
                                                     </div>
                                                 }
                                                 @else if (item.notification.status && getAttachmentUrl(item.notification.status)) {
                                                     <div class="status">
-                                                        <a [routerLink]="['/statuses', item.notification.status.id]">
+                                                        <a [routerLink]="['/statuses', item.notification.status.id]" [queryParams]="getStatusQueryParams(item.notification)">
                                                             <img [src]="getAttachmentUrl(item.notification.status)" class="" [alt]="getAttachmentAlt(item.notification.status) ?? ('common.labels.statusImage' | translate)" />
                                                         </a>
                                                     </div>
@@ -133,7 +133,7 @@
 
                                                 @if (item.linkedStatus && getAttachmentUrl(item.linkedStatus)) {
                                                     <div class="status">
-                                                        <a [routerLink]="['/statuses', item.linkedStatus.id]">
+                                                        <a [routerLink]="['/statuses', item.linkedStatus.id]" [queryParams]="getStatusQueryParams(item.representative)">
                                                             <img [src]="getAttachmentUrl(item.linkedStatus)" class="" [alt]="getAttachmentAlt(item.linkedStatus) ?? ('common.labels.statusImage' | translate)" />
                                                         </a>
                                                     </div>

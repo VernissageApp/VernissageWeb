@@ -59,13 +59,14 @@ import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatSelect, MatOption } from '@angular/material/select';
 import { AgoPipe } from '../../pipes/ago.pipe';
 import { LocalizedDatePipe } from '../../pipes/localized-date.pipe';
+import { ViewportObserverDirective } from '../../directives/viewport-observer.directive';
 
 @Component({
     selector: 'app-status',
     templateUrl: './status.page.html',
     styleUrls: ['./status.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [MatIcon, MatButton, GalleryComponent, MatCard, MatCardContent, MatIconButton, MatTooltip, MatMenuTrigger, MatMenu, MatMenuItem, MatDivider, MatProgressSpinner, MiniUserCardComponent, UserCardComponent, HrefToRouterLinkDirective, NoteProcessorDirective, TagComponent, StatusPropertiesComponent, MatCardHeader, MatCardTitle, CommentReplyComponent_1, RouterLink, AvatarComponent, MatFormField, MatLabel, MatSelect, MatOption, SlicePipe, TranslatePipe, AgoPipe, LocalizedDatePipe]
+    imports: [MatIcon, MatButton, GalleryComponent, MatCard, MatCardContent, MatIconButton, MatTooltip, MatMenuTrigger, MatMenu, MatMenuItem, MatDivider, MatProgressSpinner, MiniUserCardComponent, UserCardComponent, HrefToRouterLinkDirective, NoteProcessorDirective, TagComponent, StatusPropertiesComponent, MatCardHeader, MatCardTitle, CommentReplyComponent_1, RouterLink, AvatarComponent, MatFormField, MatLabel, MatSelect, MatOption, SlicePipe, TranslatePipe, AgoPipe, LocalizedDatePipe, ViewportObserverDirective]
 })
 export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy {
     protected readonly avatarSize = AvatarSize;
@@ -94,6 +95,8 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     protected isLoggedIn = signal(false);
     protected rendered = signal<SafeHtml>('');
     protected hasHdrSupport = signal(false);
+    protected pendingHighlightedCommentId = signal<string | undefined>(undefined);
+    protected highlightedCommentId = signal<string | undefined>(undefined);
 
     protected versionId = model<string>('');
     protected versions = signal<Status[]>([]);
@@ -121,6 +124,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
     private commentReplies = viewChildren(CommentReplyComponent);
     private routeParamsSubscription?: Subscription;
     private routeNavigationEndSubscription?: Subscription;
+    private commentHighlightEndTimeout?: ReturnType<typeof setTimeout>;
     private readonly oneSecond = 1000;
     private readonly maxImagesInComments = 4;
     private imageIndexForOpenGraph = 0;
@@ -178,7 +182,10 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
             .subscribe(async params => {
                 const statusId = params.routeParams['id'] as string;
                 const requestedPhotoIndex = this.getPhotoIndexFromQuery(params.queryParams.get('photo'));
+                const highlightedCommentId = params.queryParams.get('highlight');
                 const contextStatusIndex = this.getContextStatusIndexFromState();
+
+                this.clearCommentHighlight();
 
                 if (params.queryParams.has('version')) {
                     const internalVersionId = params.queryParams.get('version');
@@ -214,6 +221,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
 
                 this.loadingService.hideLoader();
                 this.isReady.set(true);
+                this.queueCommentHighlight(highlightedCommentId);
 
                 if (!this.firstCanvasInitialization) {
                     setTimeout(() => {
@@ -227,6 +235,7 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         super.ngOnDestroy();
 
         this.clearNoIndexMeta();
+        this.clearCommentHighlight();
         this.routeParamsSubscription?.unsubscribe();
         this.routeNavigationEndSubscription?.unsubscribe();
     }
@@ -457,6 +466,17 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         this.dialog.open(UsersDialog, {
             width: '500px',
             data: new UsersDialogContext(internalMainStatus.id, UsersListType.favourited, this.translateService.instant('pages.status.menu.favouritedBy'))
+        });
+    }
+
+    protected onCommentFavouritedByDialog(status: Status): void {
+        if (!this.isLoggedIn() || this.isInVersionMode() || !status.id) {
+            return;
+        }
+
+        this.dialog.open(UsersDialog, {
+            width: '500px',
+            data: new UsersDialogContext(status.id, UsersListType.favourited, this.translateService.instant('pages.status.menu.favouritedBy'))
         });
     }
 
@@ -770,6 +790,22 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
             const downloadedComments = await this.getAllReplies(internalMainStatus.id);
             this.comments.set(downloadedComments);
         }
+    }
+
+    protected onCommentViewportChange(commentId: string, isVisible: boolean): void {
+        if (!isVisible || this.pendingHighlightedCommentId() !== commentId) {
+            return;
+        }
+
+        this.pendingHighlightedCommentId.set(undefined);
+        this.highlightedCommentId.set(commentId);
+
+        clearTimeout(this.commentHighlightEndTimeout);
+        this.commentHighlightEndTimeout = setTimeout(() => {
+            if (this.highlightedCommentId() === commentId) {
+                this.highlightedCommentId.set(undefined);
+            }
+        }, 5000);
     }
 
     protected getCleanFocalLength(focalLength: string): string {
@@ -1274,6 +1310,21 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         }
 
         return photoNumber - 1;
+    }
+
+    private queueCommentHighlight(commentId: string | null): void {
+        if (!this.isBrowser() || !commentId || !this.comments()?.some(comment => comment.status.id === commentId)) {
+            return;
+        }
+
+        this.pendingHighlightedCommentId.set(commentId);
+    }
+
+    private clearCommentHighlight(): void {
+        clearTimeout(this.commentHighlightEndTimeout);
+        this.commentHighlightEndTimeout = undefined;
+        this.pendingHighlightedCommentId.set(undefined);
+        this.highlightedCommentId.set(undefined);
     }
 
     private getContextStatusIndexFromState(): number | undefined {
