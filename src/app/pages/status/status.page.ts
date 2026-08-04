@@ -207,15 +207,20 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
                 // Load status information.
                 await this.loadPageData(statusId, requestedPhotoIndex);
 
+                const images = this.images() ?? [];
+
                 // Load images to gallery (and reset gallery state).
                 const mainGallery = this.gallery.ref(this.mainGalleryId);
-                mainGallery.load(this.images() ?? []);
-                mainGallery.set(0);
+                mainGallery.load(images);
 
                 // Load images to popup gallery.
                 const popupGallery = this.gallery.ref(this.popupGalleryId);
-                popupGallery.load(this.images() ?? []);
-                popupGallery.set(0);
+                popupGallery.load(images);
+
+                if (images.length > 0) {
+                    mainGallery.set(0);
+                    popupGallery.set(0);
+                }
 
                 this.setNoIndexMeta();
 
