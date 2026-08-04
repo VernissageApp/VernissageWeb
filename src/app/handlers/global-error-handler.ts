@@ -37,13 +37,21 @@ export class GlobalErrorHandler implements ErrorHandler {
 
     async handleError(error: any): Promise<void> {
         await this.zone.run(async () => {
-            console.error(error);
+            const httpResponse = this.getErrorResponse(error);
+            const isNotFoundError = this.isObjectNotFoundError(error)
+                || this.isPageNotFoundError(error)
+                || httpResponse?.status === HttpStatusCode.NotFound;
+
+            if (this.isBrowser || !isNotFoundError) {
+                console.error(error);
+            }
+
             const stringified = this.errorParserService.getStringFromError(error);
             this.persistenceService.set('exception', stringified.trim());
 
             this.loadingService.hideLoader();
 
-            if (this.isObjectNotFoundError(error) || this.isPageNotFoundError(error)) {
+            if (isNotFoundError) {
                 await this.router.navigate(['/page-not-found']);
                 return;
             }
@@ -53,14 +61,10 @@ export class GlobalErrorHandler implements ErrorHandler {
                 return;
             }
 
-            const httpResponse = this.getErrorResponse(error);
             if (httpResponse) {
                 switch (httpResponse.status) {
                     case 0:
                         await this.router.navigate(['/connection-lost'], { skipLocationChange: true });
-                        break;
-                    case HttpStatusCode.NotFound:
-                        await this.router.navigate(['/page-not-found']);
                         break;
                     case HttpStatusCode.Forbidden:
                         await this.router.navigate(['/access-forbidden']);
@@ -101,7 +105,7 @@ export class GlobalErrorHandler implements ErrorHandler {
             return error;
         }
 
-        return error.rejection;
+        return error?.rejection;
     }
 
     private isObjectNotFoundError(error: any): boolean {
