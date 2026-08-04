@@ -28,7 +28,7 @@
                 <div class="photo-content-cell">
                     @if (images(); as imagesInternally) {
 
-                        @if (imagesInternally.length === 1 || !showSensitiveImage() || !isBrowser()) {
+                        @if (imagesInternally.length > 0 && (imagesInternally.length === 1 || !showSensitiveImage() || !isBrowser())) {
                             <div class="photo-image-container" [class.photo-image-container-fixed]="!isHandset()" [style.--image-aspect-ratio]="imageAspectRatio()" [style.--image-width-at-max-height]="imageWidthAtMaxHeight()">
                                 <canvas class="blurhash show-or-hide" [class.is-hidden]="imageIsLoaded() && showSensitiveImage()" #canvas [width]="imageWidth()" [height]="imageHeight()"></canvas>
 
