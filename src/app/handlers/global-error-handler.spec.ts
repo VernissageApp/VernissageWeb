@@ -30,4 +30,31 @@ describe('GlobalErrorHandler', () => {
         expect(navigate).toHaveBeenCalledWith(['/page-not-found']);
         consoleError.mockRestore();
     });
+
+    it('does not log expected HTTP 401 responses during SSR', async () => {
+        const navigate = vi.fn(async () => true);
+        const consoleError = vi.spyOn(console, 'error').mockImplementation(() => undefined);
+        const handler = new GlobalErrorHandler(
+            'server' as unknown as object,
+            { get: vi.fn(() => ({ navigate })) } as never,
+            { run: vi.fn(async (callback) => await callback()) } as never,
+            {} as never,
+            { set: vi.fn() } as never,
+            { hideLoader: vi.fn() } as never,
+            {} as never,
+            {} as never,
+            { getStringFromError: vi.fn(() => 'unauthorized') } as never
+        );
+        const error = new HttpErrorResponse({
+            status: 401,
+            statusText: 'Unauthorized',
+            url: 'https://vernissage.photos/api/v1/notifications'
+        });
+
+        await handler.handleError(error);
+
+        expect(consoleError).not.toHaveBeenCalled();
+        expect(navigate).toHaveBeenCalledWith(['/login']);
+        consoleError.mockRestore();
+    });
 });

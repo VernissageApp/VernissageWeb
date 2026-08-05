@@ -118,6 +118,9 @@ export class AccountService {
             return null;
         }
 
-        return new RefreshToken(refreshToken, false);
+        // During SSR cookies returned by this internal HTTP call cannot update the
+        // incoming Express request. Returning the JWT in the response body lets
+        // the current render use it for its subsequent API calls.
+        return new RefreshToken(refreshToken, false, false);
     }
 }
