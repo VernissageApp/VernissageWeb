@@ -41,8 +41,9 @@ export class GlobalErrorHandler implements ErrorHandler {
             const isNotFoundError = this.isObjectNotFoundError(error)
                 || this.isPageNotFoundError(error)
                 || httpResponse?.status === HttpStatusCode.NotFound;
+            const isUnauthorizedError = httpResponse?.status === HttpStatusCode.Unauthorized;
 
-            if (this.isBrowser || !isNotFoundError) {
+            if (this.isBrowser || (!isNotFoundError && !isUnauthorizedError)) {
                 console.error(error);
             }
 
