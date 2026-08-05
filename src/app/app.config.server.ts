@@ -10,9 +10,10 @@ import { appConfig } from './app.config';
 import { I18N_ASSETS_PATH } from './common/i18n-assets-path.token';
 import { SsrCookieService } from './services/common/ssr-cookie.service';
 import { WindowService } from './services/common/window.service';
+import { SsrAccessTokenService } from './services/authorization/ssr-access-token.service';
 
-const jwtOptionsFactory = (cookieService: SsrCookieService, windowService: WindowService) => ({
-    tokenGetter: () => cookieService.get('access-token'),
+const jwtOptionsFactory = (cookieService: SsrCookieService, windowService: WindowService, ssrAccessTokenService: SsrAccessTokenService) => ({
+    tokenGetter: () => ssrAccessTokenService.get() ?? cookieService.get('access-token'),
     allowedDomains: [windowService.apiService(), 'localhost'],
 });
 
@@ -35,7 +36,7 @@ const serverConfig: ApplicationConfig = {
             jwtOptionsProvider: {
                 provide: JWT_OPTIONS,
                 useFactory: jwtOptionsFactory,
-                deps: [SsrCookieService, WindowService],
+                deps: [SsrCookieService, WindowService, SsrAccessTokenService],
             },
         })),
         { provide: TranslateLoader, useClass: ServerTranslateLoader },

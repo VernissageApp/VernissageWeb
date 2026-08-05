@@ -220,6 +220,10 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
     }
 
     private async loadNotificationCount(): Promise<void> {
+        if (!this.isBrowser) {
+            return;
+        }
+
         try {
             if (this.user()) {
                 const notificationCount = await this.notificationsService.count();
@@ -231,6 +235,10 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
     }
 
     private async loadArticleCount(): Promise<void> {
+        if (!this.isBrowser) {
+            return;
+        }
+
         const userId = this.user()?.id;
         if (!userId || !this.showNews()) {
             this.articleCounterVersion++;

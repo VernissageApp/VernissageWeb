@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 
 import { loggedOutGuard } from '../services/authorization/logged-out-guard.service';
 import { authorizationGuard } from '../services/authorization/authorization-guard.service';
+import { numericStatusIdCanMatch } from '../common/numeric-status-id-can-match';
 
 
 export const routes: Routes = [
@@ -62,11 +63,11 @@ export const routes: Routes = [
         { path: 'following', loadComponent: () => import('./profile/profile.page').then(m => m.ProfilePage) },
         { path: 'followers', loadComponent: () => import('./profile/profile.page').then(m => m.ProfilePage) }
     ]},
-    { path: ':userName/:id', loadComponent: () => import('./status/status.page').then(m => m.StatusPage) },
+    { path: ':userName/:id', loadComponent: () => import('./status/status.page').then(m => m.StatusPage), canMatch: [ numericStatusIdCanMatch ] },
     { path: 'statuses/:id/edit', loadComponent: () => import('./upload/upload.page').then(m => m.UploadPage), canActivate: [ authorizationGuard ], title: 'common.pageTitles.uploadImages' },
     { path: 'statuses/:id/events', loadComponent: () => import('./status-events/status-events.page').then(m => m.StatusEventsPage), canActivate: [ authorizationGuard ], title: 'common.pageTitles.statusEvents' },
     { path: 'statuses/:id/events/:eventId/items', loadComponent: () => import('./status-event-items/status-event-items.page').then(m => m.StatusEventItemsPage), canActivate: [ authorizationGuard ], title: 'common.pageTitles.eventRecipients' },
-    { path: 'statuses/:id', loadComponent: () => import('./status/status.page').then(m => m.StatusPage) },
+    { path: 'statuses/:id', loadComponent: () => import('./status/status.page').then(m => m.StatusPage), canMatch: [ numericStatusIdCanMatch ] },
     { path: '', redirectTo: '/home', pathMatch: 'full' },
     { path: '**', loadComponent: () => import('./errors/page-not-found/page-not-found.page').then(m => m.PageNotFoundPage) }
 ];

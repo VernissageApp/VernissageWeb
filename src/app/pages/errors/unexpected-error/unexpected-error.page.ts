@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit, PLATFORM_ID, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { PersistenceService } from 'src/app/services/persistance/persistance.service';
 import { MatIcon } from '@angular/material/icon';
@@ -24,6 +25,7 @@ export class UnexpectedErrorPage implements OnInit, OnDestroy {
     private errorExpanded = false;
     private interval: NodeJS.Timeout | undefined;
 
+    private platformId = inject(PLATFORM_ID);
     private persistenceService = inject(PersistenceService);
     private router = inject(Router);
     private activatedRoute = inject(ActivatedRoute);
@@ -34,24 +36,26 @@ export class UnexpectedErrorPage implements OnInit, OnDestroy {
             this.code.set(codeFromQuery);
         }
 
-        this.interval = setInterval(async ()=> {
-            if (this.errorExpanded) {
-                if (this.interval) {
-                    clearInterval(this.interval);
+        if (isPlatformBrowser(this.platformId)) {
+            this.interval = setInterval(async ()=> {
+                if (this.errorExpanded) {
+                    if (this.interval) {
+                        clearInterval(this.interval);
+                    }
+
+                    return;
                 }
 
-                return;
-            }
+                this.value.update(progress => {
+                    progress = progress - 10;
+                    if (progress < 0) {
+                        this.router.navigate(['/']);
+                    }
 
-            this.value.update(progress => {
-                progress = progress - 10;
-                if (progress < 0) {
-                    this.router.navigate(['/']);
-                }
-
-                return progress;
-            });
-        }, 500);
+                    return progress;
+                });
+            }, 500);
+        }
 
         const errorObject = this.persistenceService.get('exception');
         if (errorObject) {

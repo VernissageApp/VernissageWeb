@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit, PLATFORM_ID, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
 import { MatProgressBar } from '@angular/material/progress-bar';
@@ -15,9 +16,14 @@ export class AccessForbiddenPage implements OnInit, OnDestroy {
     protected value = signal(100);
     private interval: NodeJS.Timeout | undefined;
 
+    private platformId = inject(PLATFORM_ID);
     private router = inject(Router);
 
-    async ngOnInit(): Promise<void> {
+    ngOnInit(): void {
+        if (!isPlatformBrowser(this.platformId)) {
+            return;
+        }
+
         this.interval = setInterval(async ()=> {
             this.value.update(progress => {
                 progress = progress - 10;
