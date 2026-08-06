@@ -1,5 +1,6 @@
 import { isPlatformBrowser } from '@angular/common';
 import { inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { DateAdapter } from '@angular/material/core';
 import { TranslateService } from '@ngx-translate/core';
 import { firstValueFrom } from 'rxjs';
 import type { Request } from 'express';
@@ -53,6 +54,7 @@ export class LanguageService {
     private request: Request | null = inject(REQUEST, { optional: true });
     private preferencesService = inject(PreferencesService);
     private translateService = inject(TranslateService);
+    private dateAdapter = inject(DateAdapter<Date>);
 
     async initializeLanguage(): Promise<void> {
         const languageFromPreferences = this.normalizeLanguage(this.preferencesService.language);
@@ -94,6 +96,7 @@ export class LanguageService {
         this.translateService.addLangs(this.supportedLanguages);
         await firstValueFrom(this.translateService.setFallbackLang(this.defaultLanguage));
         await firstValueFrom(this.translateService.use(normalizedLanguage));
+        this.dateAdapter.setLocale(this.mapLanguageToLocale(normalizedLanguage));
 
         if (persist) {
             this.preferencesService.language = normalizedLanguage;
