@@ -12,7 +12,7 @@ import {
     provideZoneChangeDetection,
 } from '@angular/core';
 import { MAT_CHECKBOX_DEFAULT_OPTIONS, MatCheckboxDefaultOptions } from '@angular/material/checkbox';
-import { provideNativeDateAdapter } from '@angular/material/core';
+import { DateAdapter, provideNativeDateAdapter } from '@angular/material/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { MAT_TOOLTIP_DEFAULT_OPTIONS, MatTooltipDefaultOptions } from '@angular/material/tooltip';
 import { provideClientHydration, withEventReplay, withNoIncrementalHydration } from '@angular/platform-browser';
@@ -31,6 +31,7 @@ import { TranslateMessageFormatCompiler } from 'ngx-translate-messageformat-comp
 import { appInitialization } from './app-initialization';
 import { BrowserTranslateLoader } from './common/browser-translate-loader';
 import { CustomReuseStrategy } from './common/custom-reuse-strategy';
+import { LocalizedNativeDateAdapter } from './common/localized-native-date-adapter';
 import { LocalizedTitleStrategy } from './common/localized-title-strategy';
 import { GlobalErrorHandler } from './handlers/global-error-handler';
 import { apiInterceptor } from './interceptors/api.interceptor';
@@ -71,6 +72,7 @@ export const appConfig: ApplicationConfig = {
         { provide: MAT_CHECKBOX_DEFAULT_OPTIONS, useValue: { clickAction: 'check' } as MatCheckboxDefaultOptions },
         { provide: MAT_TOOLTIP_DEFAULT_OPTIONS, useValue: customTooltipDefaults },
         provideNativeDateAdapter(),
+        { provide: DateAdapter, useClass: LocalizedNativeDateAdapter },
         provideTranslateService({
             fallbackLang: 'en-us',
             compiler: provideTranslateCompiler(TranslateMessageFormatCompiler),

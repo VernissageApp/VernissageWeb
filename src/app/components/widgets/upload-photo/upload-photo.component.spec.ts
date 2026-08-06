@@ -1,6 +1,8 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { DateAdapter, provideNativeDateAdapter } from '@angular/material/core';
+import { MatDatepickerInput } from '@angular/material/datepicker';
 import { TestBed } from '@angular/core/testing';
-import { provideNativeDateAdapter } from '@angular/material/core';
+import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { Country } from 'src/app/models/country';
@@ -18,6 +20,7 @@ import { LocationsService } from 'src/app/services/http/locations.service';
 import { SettingsService } from 'src/app/services/http/settings.service';
 import { PersistenceService } from 'src/app/services/persistance/persistance.service';
 import { TranslateService } from '@ngx-translate/core';
+import { LocalizedNativeDateAdapter } from 'src/app/common/localized-native-date-adapter';
 import { UploadPhotoComponent } from './upload-photo.component';
 
 class PersistenceServiceStub implements PersistenceService {
@@ -54,6 +57,7 @@ describe('UploadPhotoComponent', () => {
             imports: [UploadPhotoComponent],
             providers: [
                 provideNativeDateAdapter(),
+                { provide: DateAdapter, useClass: LocalizedNativeDateAdapter },
                 FileSizeService,
                 RecentLocationsService,
                 { provide: PersistenceService, useClass: PersistenceServiceStub },
@@ -73,7 +77,13 @@ describe('UploadPhotoComponent', () => {
                 { provide: MessagesService, useValue: {} },
                 { provide: SettingsService, useValue: { publicSettings: undefined } },
                 { provide: InstanceService, useValue: { instance: undefined } },
-                { provide: TranslateService, useValue: { instant: vi.fn() } }
+                {
+                    provide: TranslateService,
+                    useValue: {
+                        instant: vi.fn(),
+                        translate: vi.fn((key: string) => () => key)
+                    }
+                }
             ]
         });
     });
@@ -144,6 +154,29 @@ describe('UploadPhotoComponent', () => {
 
         expect(component['gpsMapsUrl']())
             .toBe('https://www.openstreetmap.org/?mlat=51.1&mlon=17.03333#map=10/51.1/17.03333');
+
+        fixture.destroy();
+    });
+
+    it('updates the photo date from a manually entered localized date', async () => {
+        const photo = new UploadPhoto('photo-1');
+        photo.createDate = new Date(2025, 0, 1);
+        const dateAdapter = TestBed.inject(DateAdapter<Date>);
+        dateAdapter.setLocale('pl-PL');
+
+        const fixture = TestBed.createComponent(UploadPhotoComponent);
+        fixture.componentRef.setInput('photo', photo);
+        fixture.componentRef.setInput('licenses', []);
+        await fixture.componentInstance.ngOnInit();
+        fixture.detectChanges();
+
+        const dateInput = fixture.debugElement.query(By.directive(MatDatepickerInput)).nativeElement as HTMLInputElement;
+        dateInput.value = '1.08.2026';
+        dateInput.dispatchEvent(new Event('input'));
+
+        expect(photo.createDate?.getFullYear()).toBe(2026);
+        expect(photo.createDate?.getMonth()).toBe(7);
+        expect(photo.createDate?.getDate()).toBe(1);
 
         fixture.destroy();
     });
