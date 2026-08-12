@@ -714,6 +714,7 @@
         "software": "Oprogramowanie:",
         "tooLongAltText": "Za długi tekst alternatywny.",
         "uploading": "Przesyłanie...",
+        "useGeohash": "Użyj Geohash",
         "warning": "Ostrzeżenie:",
         "withoutALicense": "Bez licencji"
       }
@@ -863,6 +864,15 @@
         "followingImportAccounts": "Konta z importu obserwowanych",
         "notProcessed": "Nieprzetworzone",
         "requestSent": "Prośba wysłana"
+      }
+    },
+    "geohash": {
+      "texts": {
+        "enterGeohash": "Wpisz geohash",
+        "geohash": "Geohash",
+        "geohashIsNotValid": "Geohash jest nieprawidłowy",
+        "latitude": "Szerokość geograficzna",
+        "longitude": "Długość geograficzna"
       }
     },
     "homeCard": {

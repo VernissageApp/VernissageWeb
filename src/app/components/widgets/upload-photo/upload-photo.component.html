@@ -152,16 +152,19 @@
                 <mat-form-field appearance="outline" class="width-100">
                     <input type="text" matInput [name]="'inputGpsLongitude' + internalIndex" [(ngModel)]="photo().longitude" [disabled]="!photo().showGpsCoordination" [attr.aria-label]="'components.uploadPhoto.attrs.gpsLongitude' | translate" />
 
+                    <mat-hint align="start">
+                        <button type="button" class="dashed gps-action" [disabled]="!photo().showGpsCoordination" [attr.tabindex]="photo().showGpsCoordination ? 0 : -1" (click)="openGeohashDialog()">{{ 'components.uploadPhoto.texts.useGeohash' | translate }}</button>
+                    </mat-hint>
                     @if (gpsMapsUrl(); as url) {
                         <mat-hint align="end">
-                            <a class="dashed" target="_blank" rel="noopener noreferrer" [href]="url">{{ 'common.actions.open' | translate }}</a>
+                            <a class="dashed gps-action" target="_blank" rel="noopener noreferrer" [class.disabled]="!photo().showGpsCoordination" [attr.aria-disabled]="!photo().showGpsCoordination" [attr.tabindex]="photo().showGpsCoordination ? 0 : -1" [href]="photo().showGpsCoordination ? url : null">{{ 'common.actions.open' | translate }}</a>
                         </mat-hint>
                     }
                 </mat-form-field>
             </div>
         </div>
 
-        <div class="margin-bottom-20 margin-left-10 width-100 text-muted fs-90">
+        <div class="margin-bottom-20 margin-left-10 padding-top-5 width-100 text-muted fs-90">
             <strong>{{ 'components.uploadPhoto.texts.warning' | translate }}</strong> {{ 'components.uploadPhoto.texts.geolocationDisclosureWarning' | translate }}
         </div>
 

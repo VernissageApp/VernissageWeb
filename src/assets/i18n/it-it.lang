@@ -123,7 +123,7 @@
       "reports": "Segnalazioni",
       "server": "Server",
       "serverVersion": "Versione del server",
-      "status": "Stato",
+      "status": "Status",
       "statusImage": "Immagine di stato",
       "subtitle": "Sottotitolo",
       "support": "Supporto",
@@ -188,7 +188,7 @@
       "settings": "Vernissage - Impostazioni",
       "sharedBusinessCard": "Vernissage - Biglietto da visita condiviso",
       "sharedBusinessCards": "Vernissage - Biglietti da visita condivisi",
-      "statusEvents": "Vernissage - Eventi di stato",
+      "statusEvents": "Vernissage - Eventi di status",
       "support": "Vernissage - Supporto",
       "tags": "Vernissage - Tag",
       "terms": "Vernissage - Termini",
@@ -251,8 +251,8 @@
         "doYouWantToDeleteCategory": "Vuoi eliminare la categoria?"
       },
       "texts": {
-        "alwaysRecalculateRemoteStatusCategory": "Ricalcola sempre la categoria degli stati remoti",
-        "alwaysRecalculateRemoteStatusCategoryDescription": "Quando questa opzione è abilitata, le categorie degli stati ActivityPub in arrivo vengono ricalcolate in base alle regole locali per le categorie degli hashtag. Se non viene trovata alcuna regola corrispondente, viene utilizzata la categoria fornita dal server remoto.",
+        "alwaysRecalculateRemoteStatusCategory": "Ricalcola sempre la categoria degli status remoti",
+        "alwaysRecalculateRemoteStatusCategoryDescription": "Quando questa opzione è abilitata, le categorie per gli status ActivityPub in entrata vengono ricalcolate in base alle regole locali per le categorie degli hashtag. Se non viene trovata alcuna regola corrispondente, viene utilizzata la categoria fornita dal server remoto.",
         "categoryName": "Nome della categoria",
         "newCategory": "Nuova categoria"
       }
@@ -531,7 +531,7 @@
         "account": "Account",
         "articles": "Articoli",
         "explore": "Esplora",
-        "editorsChoice": "Scelti dell'editor",
+        "editorsChoice": "Scelte dell'editor",
         "errors": "Errori",
         "events": "Eventi",
         "home": "Home",
@@ -714,6 +714,7 @@
         "software": "Software:",
         "tooLongAltText": "Testo alternativo troppo lungo.",
         "uploading": "In caricamento...",
+        "useGeohash": "Usa Geohash",
         "warning": "Attenzione:",
         "withoutALicense": "Senza licenza"
       }
@@ -863,6 +864,15 @@
         "followingImportAccounts": "Importazione degli account che segui",
         "notProcessed": "Non elaborato",
         "requestSent": "Richiesta inviata"
+      }
+    },
+    "geohash": {
+      "texts": {
+        "enterGeohash": "Inserisci il geohash",
+        "geohash": "Geohash",
+        "geohashIsNotValid": "Il geohash non è valido",
+        "latitude": "Latitudine",
+        "longitude": "Longitudine"
       }
     },
     "homeCard": {
@@ -1306,7 +1316,7 @@
     "followRequest": {
       "missingFollowEntity": "L'entità Segui (sourceUserId: {sourceUserId}, targetUserId: {targetUserId}) non esiste nel database locale.",
       "missingSourceUser": "L’utente di origine {userId} manca nel database.",
-      "missingTargetUser": "L'utente di destinazione {userId} manca nel database.",
+      "missingTargetUser": "L'utente di destinazione '{userId}' manca nel database.",
       "missingActivityPubActionId": "L’Id azione Activity Pub manca nella richiesta di follow.",
       "missingPrivateKey": "La chiave privata per l'utente {userName} non esiste nel database locale.",
       "accountHasBeenMoved": "L'account di destinazione è stato spostato e non può accettare nuovi follower.",
@@ -2588,8 +2598,8 @@
     "trending": {
       "period": {
         "ariaLabel": "Seleziona periodo",
-        "daily": "Giornalmente",
-        "monthly": "Mensilmente",
+        "daily": "Oggi",
+        "monthly": "nell'ultimo mese",
         "yearly": "Annualmente"
       },
       "subtitles": {

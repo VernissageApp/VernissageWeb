@@ -714,6 +714,7 @@
         "software": "Programvara:",
         "tooLongAltText": "För lång alt-text.",
         "uploading": "Laddar upp...",
+        "useGeohash": "Använd Geohash",
         "warning": "Varning:",
         "withoutALicense": "Utan licens"
       }
@@ -863,6 +864,15 @@
         "followingImportAccounts": "Följande importkonton",
         "notProcessed": "Ej bearbetad",
         "requestSent": "Begäran har skickats"
+      }
+    },
+    "geohash": {
+      "texts": {
+        "enterGeohash": "Ange geohash",
+        "geohash": "Geohash",
+        "geohashIsNotValid": "Geohash är inte giltig",
+        "latitude": "Latitud",
+        "longitude": "Longitud"
       }
     },
     "homeCard": {

@@ -714,6 +714,7 @@
         "software": "Programvare:",
         "tooLongAltText": "For lang alt-tekst.",
         "uploading": "Laster opp...",
+        "useGeohash": "Bruk Geohash",
         "warning": "Advarsel:",
         "withoutALicense": "Uten lisens"
       }
@@ -863,6 +864,15 @@
         "followingImportAccounts": "Følgende importkontoer",
         "notProcessed": "Ikke behandlet",
         "requestSent": "Forespørsel sendt"
+      }
+    },
+    "geohash": {
+      "texts": {
+        "enterGeohash": "Skriv inn geohash",
+        "geohash": "Geohash",
+        "geohashIsNotValid": "Geohash er ikke gyldig",
+        "latitude": "Breddegrad",
+        "longitude": "Lengdegrad"
       }
     },
     "homeCard": {
