@@ -24,3 +24,23 @@
         width: 64px;
     }
 }
+
+.gps-action {
+    appearance: none;
+    background: none;
+    border-left: 0;
+    border-right: 0;
+    border-top: 0;
+    color: var(--mat-sys-primary);
+    cursor: pointer;
+    font: inherit;
+    padding: 0;
+
+    &:disabled,
+    &.disabled {
+        color: var(--mat-sys-on-surface);
+        cursor: default;
+        opacity: 0.38;
+        pointer-events: none;
+    }
+}

@@ -1,6 +1,7 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { DateAdapter, provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerInput } from '@angular/material/datepicker';
+import { MatDialog } from '@angular/material/dialog';
 import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
@@ -154,6 +155,64 @@ describe('UploadPhotoComponent', () => {
 
         expect(component['gpsMapsUrl']())
             .toBe('https://www.openstreetmap.org/?mlat=51.1&mlon=17.03333#map=10/51.1/17.03333');
+
+        fixture.destroy();
+    });
+
+    it('updates GPS coordinates with the result returned by the geohash dialog', async () => {
+        const photo = new UploadPhoto('photo-1');
+        photo.showGpsCoordination = true;
+        const fixture = TestBed.createComponent(UploadPhotoComponent);
+        fixture.componentRef.setInput('photo', photo);
+        fixture.componentRef.setInput('licenses', []);
+
+        const dialog = TestBed.inject(MatDialog);
+        const markForCheckSpy = vi.spyOn(fixture.componentInstance['changeDetectorRef'], 'markForCheck');
+        vi.spyOn(dialog, 'open').mockReturnValue({
+            afterClosed: () => of({ latitude: '57.64911063', longitude: '10.40743969' })
+        } as any);
+
+        await fixture.componentInstance.ngOnInit();
+        fixture.componentInstance['openGeohashDialog']();
+
+        expect(photo.latitude).toBe('57.64911063');
+        expect(photo.longitude).toBe('10.40743969');
+        expect(markForCheckSpy).toHaveBeenCalledOnce();
+
+        fixture.destroy();
+    });
+
+    it('does not open the geohash dialog when GPS coordinates are disabled', async () => {
+        const photo = new UploadPhoto('photo-1');
+        photo.showGpsCoordination = false;
+        const fixture = TestBed.createComponent(UploadPhotoComponent);
+        fixture.componentRef.setInput('photo', photo);
+        fixture.componentRef.setInput('licenses', []);
+
+        const dialog = TestBed.inject(MatDialog);
+        const openSpy = vi.spyOn(dialog, 'open');
+
+        await fixture.componentInstance.ngOnInit();
+        fixture.componentInstance['openGeohashDialog']();
+
+        expect(openSpy).not.toHaveBeenCalled();
+
+        fixture.destroy();
+    });
+
+    it('includes the enabled geohash button in keyboard tab order', async () => {
+        const photo = new UploadPhoto('photo-1');
+        photo.showGpsCoordination = true;
+        const fixture = TestBed.createComponent(UploadPhotoComponent);
+        fixture.componentRef.setInput('photo', photo);
+        fixture.componentRef.setInput('licenses', []);
+
+        await fixture.componentInstance.ngOnInit();
+        fixture.detectChanges();
+
+        const geohashButton = fixture.nativeElement.querySelector('.gps-action') as HTMLButtonElement;
+        expect(geohashButton.disabled).toBe(false);
+        expect(geohashButton.tabIndex).toBe(0);
 
         fixture.destroy();
     });
