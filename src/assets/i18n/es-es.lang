@@ -714,6 +714,7 @@
         "software": "Software:",
         "tooLongAltText": "Texto alternativo demasiado largo.",
         "uploading": "Subiendo...",
+        "useGeohash": "Usar Geohash",
         "warning": "Advertencia:",
         "withoutALicense": "Sin licencia"
       }
@@ -863,6 +864,15 @@
         "followingImportAccounts": "Siguientes cuentas de importación",
         "notProcessed": "No procesado",
         "requestSent": "Solicitud enviada"
+      }
+    },
+    "geohash": {
+      "texts": {
+        "enterGeohash": "Introduce el geohash",
+        "geohash": "Geohash",
+        "geohashIsNotValid": "El geohash no es válido",
+        "latitude": "Latitud",
+        "longitude": "Longitud"
       }
     },
     "homeCard": {
@@ -2019,10 +2029,10 @@
         "statusDetailShortcuts": {
           "bookmark": "Guardar el estado en favoritos",
           "boost": "Impulsar el estado",
-          "closePhotoPreview": "Cerrar la vista previa de la foto",
+          "closePhotoPreview": "Cerrar vista previa de la foto",
           "like": "Como el estado",
           "nextStatus": "Ver el siguiente estado",
-          "openPhotoPreview": "Abrir la vista previa de la foto",
+          "openPhotoPreview": "Abrir vista previa de la foto",
           "previousStatus": "Ver el estado anterior"
         },
         "statusDetailShortcutsTitle": "En una Página de Detalles de Estado:",
