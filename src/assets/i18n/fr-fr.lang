@@ -11,6 +11,7 @@
       "clear": "Effacer",
       "close": "Fermer",
       "copy": "Copier",
+      "copyDetails": "Copier les détails",
       "delete": "Supprimer",
       "disable": "Désactiver",
       "dismiss": "Fermer",
@@ -2639,6 +2640,8 @@
         "tooManyFilesSelectedSingular": "Trop de fichiers sélectionnés. Vous pouvez ajouter encore une image.",
         "tooManyFilesSelectedPlural": "Trop de fichiers sélectionnés. Vous pouvez ajouter encore {count} images.",
         "unableToResize": "Impossible de redimensionner l’image avant l’envoi.",
+        "uploadFailed": "Impossible d’envoyer cette image. Vérifiez votre connexion et essayez d’ajouter à nouveau le fichier.",
+        "uploadFailedTitle": "Échec de l’envoi de l’image",
         "unsupportedFileType": "Ce type de fichier n’est pas pris en charge. Veuillez envoyer une image JPG, PNG ou WEBP.",
         "verifyEmailBeforePublish": "Pour publier un statut, veuillez d’abord vérifier votre adresse e-mail."
       },

@@ -3,6 +3,40 @@
     margin-top: 8px;
 }
 
+.upload-error {
+    align-items: flex-start;
+    background-color: color-mix(in srgb, var(--mat-sys-error) 10%, transparent);
+    border: 1px solid color-mix(in srgb, var(--mat-sys-error) 45%, transparent);
+    border-radius: 8px;
+    color: var(--mat-sys-error);
+    display: grid;
+    gap: 10px;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    margin-bottom: 10px;
+    padding: 12px;
+
+    mat-icon {
+        flex: 0 0 auto;
+    }
+
+    .upload-error-content {
+        min-width: 0;
+    }
+
+    .copy-error-details {
+        align-self: center;
+        color: inherit;
+        white-space: nowrap;
+    }
+}
+
+@media (max-width: 600px) {
+    .upload-error .copy-error-details {
+        grid-column: 2 / -1;
+        justify-self: start;
+    }
+}
+
 .exif-values {
     ::ng-deep .mat-mdc-form-field-subscript-wrapper {
         height: 0;

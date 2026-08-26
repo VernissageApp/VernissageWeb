@@ -20,12 +20,12 @@ export class MessagesService {
         });
     }
 
-    showError(message: string, error?: any): void {
+    showError(message: string, error?: any, details?: string): void {
         if (error !== undefined) {
             this.matSnackBar.openFromComponent(ErrorMessageSnackbarComponent, {
                 data: {
                     message: message,
-                    details: this.errorParserService.getStringFromError(error),
+                    details: details ?? this.getErrorDetails(error),
                     detailsLabel: this.translateService.instant('common.labels.details'),
                     copyLabel: this.translateService.instant('common.actions.copy'),
                     dismiss: this.translateService.instant('common.actions.dismiss')
@@ -52,7 +52,7 @@ export class MessagesService {
         });
     }
 
-    private getServerErrorMessage(error: any): string {
+    getServerErrorMessage(error: any): string {
         const response = error?.error;
         const identifier = this.normalizeTranslationKeySegment(response?.identifier);
         const code = this.normalizeTranslationKeySegment(response?.code);
@@ -67,6 +67,10 @@ export class MessagesService {
         }
 
         return response?.reason ?? this.translateService.instant('common.messages.unknownError');
+    }
+
+    getErrorDetails(error: any): string {
+        return this.errorParserService.getStringFromError(error);
     }
 
     private normalizeTranslationKeySegment(value: unknown): string | null {

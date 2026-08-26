@@ -11,6 +11,7 @@
       "clear": "Pulisci",
       "close": "Chiudi",
       "copy": "Copia",
+      "copyDetails": "Copia dettagli",
       "delete": "Elimina",
       "disable": "Disabilita",
       "dismiss": "Ignora",
@@ -2639,6 +2640,8 @@
         "tooManyFilesSelectedSingular": "Troppi file selezionati. Puoi aggiungere ancora un’immagine.",
         "tooManyFilesSelectedPlural": "Troppi file selezionati. Puoi aggiungere ancora {count} immagini.",
         "unableToResize": "Impossibile ridimensionare l'immagine prima del caricamento.",
+        "uploadFailed": "Impossibile caricare questa immagine. Controlla la connessione e prova ad aggiungere nuovamente il file.",
+        "uploadFailedTitle": "Caricamento dell’immagine non riuscito",
         "unsupportedFileType": "Questo tipo di file non è supportato. Carica un'immagine JPG, PNG o WEBP.",
         "verifyEmailBeforePublish": "Per pubblicare uno status, verifica prima il tuo indirizzo e-mail."
       },

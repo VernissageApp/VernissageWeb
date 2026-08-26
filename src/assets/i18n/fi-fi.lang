@@ -11,6 +11,7 @@
       "clear": "Tyhjennä",
       "close": "Sulje",
       "copy": "Kopioi",
+      "copyDetails": "Kopioi tiedot",
       "delete": "Poista",
       "disable": "Poista käytöstä",
       "dismiss": "Ohita",
@@ -2639,6 +2640,8 @@
         "tooManyFilesSelectedSingular": "Liian monta tiedostoa valittu. Voit lisätä vielä yhden kuvan.",
         "tooManyFilesSelectedPlural": "Liian monta tiedostoa valittu. Voit lisätä vielä {count} kuvaa.",
         "unableToResize": "Kuvan kokoa ei voi muuttaa ennen latausta.",
+        "uploadFailed": "Kuvaa ei voitu ladata. Tarkista verkkoyhteys ja yritä lisätä tiedosto uudelleen.",
+        "uploadFailedTitle": "Kuvan lataus epäonnistui",
         "unsupportedFileType": "Tätä tiedostotyyppiä ei tueta. Lataa JPG-, PNG- tai WEBP-kuva.",
         "verifyEmailBeforePublish": "Jos haluat julkaista päivityksen, vahvista ensin sähköpostiosoitteesi."
       },
