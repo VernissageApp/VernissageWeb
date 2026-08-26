@@ -11,6 +11,7 @@
       "clear": "Klar",
       "close": "Schließen",
       "copy": "Kopieren",
+      "copyDetails": "Details kopieren",
       "delete": "Löschen",
       "disable": "Deaktivieren",
       "dismiss": "Entlassen",
@@ -2639,6 +2640,8 @@
         "tooManyFilesSelectedSingular": "Zu viele Dateien ausgewählt. Sie können noch ein weiteres Bild hinzufügen.",
         "tooManyFilesSelectedPlural": "Zu viele Dateien ausgewählt. Sie können noch {count} weitere Bilder hinzufügen.",
         "unableToResize": "Die Bildgröße kann vor dem Hochladen nicht geändert werden.",
+        "uploadFailed": "Dieses Bild konnte nicht hochgeladen werden. Überprüfe deine Verbindung und füge die Datei erneut hinzu.",
+        "uploadFailedTitle": "Bild-Upload fehlgeschlagen",
         "unsupportedFileType": "Dieser Dateityp wird nicht unterstützt. Bitte laden Sie ein JPG-, PNG- oder WEBP-Bild hoch.",
         "verifyEmailBeforePublish": "Um einen Status zu veröffentlichen, verifizieren Sie bitte zunächst Ihre E-Mail-Adresse."
       },

@@ -11,6 +11,7 @@
       "clear": "Klart",
       "close": "Lukk",
       "copy": "Kopier",
+      "copyDetails": "Kopier detaljer",
       "delete": "Slett",
       "disable": "Deaktiver",
       "dismiss": "Avvis",
@@ -2639,6 +2640,8 @@
         "tooManyFilesSelectedSingular": "For mange filer er valgt. Du kan legge til ett bilde til.",
         "tooManyFilesSelectedPlural": "For mange filer er valgt. Du kan legge til {count} bilder til.",
         "unableToResize": "Kan ikke endre størrelse på bildet før opplasting.",
+        "uploadFailed": "Bildet kunne ikke lastes opp. Kontroller tilkoblingen og prøv å legge til filen på nytt.",
+        "uploadFailedTitle": "Bildeopplastingen mislyktes",
         "unsupportedFileType": "Denne filtypen støttes ikke. Last opp etJPG-,PNG- eller WEBP-bilde.",
         "verifyEmailBeforePublish": "For å publisere en status, vennligst bekrefte e-postadressen din først."
       },

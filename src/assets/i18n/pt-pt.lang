@@ -11,6 +11,7 @@
       "clear": "Limpar",
       "close": "Fechar",
       "copy": "Copiar",
+      "copyDetails": "Copiar detalhes",
       "delete": "Eliminar",
       "disable": "Desativar",
       "dismiss": "Ignorar",
@@ -2639,6 +2640,8 @@
         "tooManyFilesSelectedSingular": "Demasiados ficheiros selecionados. Pode adicionar mais uma imagem.",
         "tooManyFilesSelectedPlural": "Demasiados ficheiros selecionados. Pode adicionar mais {count} imagens.",
         "unableToResize": "Unable para resize imagem antes carregar.",
+        "uploadFailed": "Não foi possível carregar esta imagem. Verifique a ligação e tente adicionar o ficheiro novamente.",
+        "uploadFailedTitle": "Falha ao carregar a imagem",
         "unsupportedFileType": "Este tipo de ficheiro não é suportado. Carregue uma imagem JPG, PNG ou WEBP.",
         "verifyEmailBeforePublish": "Para publicar um estado, verifique primeiro o seu endereço de email."
       },

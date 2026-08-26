@@ -11,6 +11,7 @@
       "clear": "Wyczyść",
       "close": "Zamknij",
       "copy": "Kopiuj",
+      "copyDetails": "Kopiuj szczegóły",
       "delete": "Usuń",
       "disable": "Wyłącz",
       "dismiss": "Zamknij",
@@ -2639,6 +2640,8 @@
         "tooManyFilesSelectedSingular": "Wybrano zbyt wiele plików. Możesz dodać jeszcze jeden.",
         "tooManyFilesSelectedPlural": "Wybrano zbyt wiele plików. Możesz dodać jeszcze {count}.",
         "unableToResize": "Nie udało się zmienić rozmiaru obrazu przed wysłaniem.",
+        "uploadFailed": "Nie udało się przesłać tego obrazu. Sprawdź połączenie i spróbuj ponownie dodać plik.",
+        "uploadFailedTitle": "Przesyłanie obrazu nie powiodło się",
         "unsupportedFileType": "Ten typ pliku nie jest obsługiwany. Prześlij obraz JPG, PNG lub WEBP.",
         "verifyEmailBeforePublish": "Aby opublikować status, najpierw potwierdź adres e-mail."
       },

@@ -11,6 +11,7 @@
       "clear": "Clear",
       "close": "Close",
       "copy": "Copy",
+      "copyDetails": "Copy details",
       "delete": "Delete",
       "disable": "Disable",
       "dismiss": "Dismiss",
@@ -2639,6 +2640,8 @@
         "tooManyFilesSelectedSingular": "Too many files selected. You can add one more image.",
         "tooManyFilesSelectedPlural": "Too many files selected. You can add {count} more images.",
         "unableToResize": "Unable to resize image before upload.",
+        "uploadFailed": "This image could not be uploaded. Check your connection and try adding the file again.",
+        "uploadFailedTitle": "Image upload failed",
         "unsupportedFileType": "This file type is not supported. Please upload a JPG, PNG or WEBP image.",
         "verifyEmailBeforePublish": "To publish a status, please verify your email address first."
       },
