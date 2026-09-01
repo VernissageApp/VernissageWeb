@@ -11,6 +11,7 @@
       "clear": "Tyhjennä",
       "close": "Sulje",
       "copy": "Kopioi",
+      "copyDetails": "Kopioi tiedot",
       "delete": "Poista",
       "disable": "Poista käytöstä",
       "dismiss": "Ohita",
@@ -41,12 +42,12 @@
       "show": "Näytä",
       "signOut": "Kirjaudu ulos",
       "signUp": "Rekisteröidy",
-      "suppress": "Hiljennä",
-      "suppressed": "Hiljennetty",
+      "suppress": "Rajoita",
+      "suppressed": "Rajoitettu",
       "tryAgain": "uudelleen",
       "unblock": "Kumoa esto",
       "unfollow": "Lopeta seuraaminen",
-      "unsuppress": "Poista hiljennys",
+      "unsuppress": "Poista rajoitus",
       "update": "Päivitä",
       "upload": "Lataa"
     },
@@ -159,7 +160,7 @@
       "bookmarks": "Vernissage - Kirjanmerkit",
       "categories": "Vernissage - Luokat",
       "cameras": "Vernissage - Kamerat",
-      "explore": "Vernissage - Tutustu",
+      "explore": "Vernissage - Selaa",
       "films": "Vernissage - Filmit",
       "lenses": "Vernissage - Objektiivit",
       "confirmEmail": "Vernissage - Vahvista sähköposti",
@@ -714,6 +715,7 @@
         "software": "Ohjelmisto:",
         "tooLongAltText": "Liian pitkä vaihtoehtoinen teksti.",
         "uploading": "Ladataan...",
+        "useGeohash": "Käytä Geohashia",
         "warning": "Varoitus:",
         "withoutALicense": "Ilman lisenssiä"
       }
@@ -863,6 +865,15 @@
         "followingImportAccounts": "Seurataan tuontitilejä",
         "notProcessed": "Ei käsitelty",
         "requestSent": "Pyyntö lähetetty"
+      }
+    },
+    "geohash": {
+      "texts": {
+        "enterGeohash": "Syötä geohash",
+        "geohash": "Geohash",
+        "geohashIsNotValid": "Geohash ei kelpaa",
+        "latitude": "Leveysaste",
+        "longitude": "Pituusaste"
       }
     },
     "homeCard": {
@@ -1832,14 +1843,14 @@
         "films": "Selaa kuvia niiden kuvaamiseen käytettyjen filmien mukaan.",
         "lenses": "Selaa kuvia niiden ottamiseen käytettyjen objektiivien mukaan."
       },
-      "tabAriaLabel": "Tutustumistyyppi",
+      "tabAriaLabel": "Hakutyyppi",
       "tabs": {
         "cameras": "Kamerat",
         "categories": "Luokat",
         "films": "Filmit",
         "lenses": "Objektiivit"
       },
-      "title": "Tutustu"
+      "title": "Selaa"
     },
     "confirmEmail": {
       "error": {
@@ -2006,7 +2017,7 @@
         "description": "Kyllä. Vernissage tarjoaa käyttäjille laajan näppäimistönavigoinnin, joka auttaa sinua siirtymään nopeasti sivujen, aikajanan ja toimintojen välillä.",
         "footer": "Nämä pikanäppäimet on suunniteltu parantamaan käytettävyyttä ja nopeuttamaan selaamista – erityisen hyödyllistä näppäimistökeskeisille käyttäjille.",
         "globalShortcuts": {
-          "explore": "Avaa Tutustu",
+          "explore": "Avaa Selaus",
           "editorsChoice": "Avaa Toimittajan valinnat -aikajana",
           "faq": "Avaa tämä UKK-sivu",
           "home": "Siirry kotiaikajanalle",
@@ -2114,7 +2125,7 @@
         "refreshCurrentTimelineAriaLabel": "Päivitä nykyinen aikajana"
       },
       "labels": {
-        "latest": "viimeisin"
+        "latest": "uusin"
       },
       "title": "Ilmoitukset",
       "types": {
@@ -2200,8 +2211,8 @@
         "shareBusinessCardAriaLabel": "Jaa käyntikortti"
       },
       "accountModeration": {
-        "blocked": "Palvelimen moderaattori on estänyt tämän tilin. Se ei voi seurata tämän palvelimen tilejä eikä sitä voi seurata, eikä sen julkaisuja näytetä täällä.",
-        "suppressed": "Palvelimen moderaattori on hiljentänyt tämän tilin. Se voi edelleen seurata tämän palvelimen tilejä ja sitä voi seurata, mutta sen julkaisemia uusia kuvia ei näytetä missään palvelussa."
+        "blocked": "Palvelimen moderaattori on estänyt tämän tilin. Se ei voi seurata tämän palvelimen tilejä, sitä voi seurata, eikä sen julkaisuja näytetä täällä.",
+        "suppressed": "Palvelimen moderaattori on hiljentänyt tämän tilin. Se voi edelleen seurata tämän palvelimen tilejä ja sitä voi seurata, mutta sen julkaisemia uusia kuvia ei näytetä tällä sivustolla."
       },
       "confirmations": {
         "createBusinessCard": "Et ole vielä luonut käyntikorttia. Haluatko luoda sen nyt?"
@@ -2629,6 +2640,8 @@
         "tooManyFilesSelectedSingular": "Liian monta tiedostoa valittu. Voit lisätä vielä yhden kuvan.",
         "tooManyFilesSelectedPlural": "Liian monta tiedostoa valittu. Voit lisätä vielä {count} kuvaa.",
         "unableToResize": "Kuvan kokoa ei voi muuttaa ennen latausta.",
+        "uploadFailed": "Kuvaa ei voitu ladata. Tarkista verkkoyhteys ja yritä lisätä tiedosto uudelleen.",
+        "uploadFailedTitle": "Kuvan lataus epäonnistui",
         "unsupportedFileType": "Tätä tiedostotyyppiä ei tueta. Lataa JPG-, PNG- tai WEBP-kuva.",
         "verifyEmailBeforePublish": "Jos haluat julkaista päivityksen, vahvista ensin sähköpostiosoitteesi."
       },
@@ -2671,7 +2684,7 @@
       "filters": {
         "onlyBlocked": "Vain estetyt",
         "onlyLocal": "Vain paikalliset",
-        "onlySuppressed": "Vain hiljennetyt"
+        "onlySuppressed": "Vain rajoitetut"
       },
       "messages": {
         "accountApproved": "Tili on hyväksytty.",
@@ -2682,8 +2695,8 @@
         "accountMarkedAsSupporter": "Tili on merkitty tukijaksi.",
         "accountRefreshed": "Tili on päivitetty.",
         "accountRejected": "Tili on hylätty.",
-        "accountSuppressed": "Käyttäjä on hiljennetty.",
-        "accountUnsuppressed": "Käyttäjän hiljennys on poistettu.",
+        "accountSuppressed": "Käyttäjä on rajoitettu.",
+        "accountUnsuppressed": "Käyttäjän rajoitus on poistettu.",
         "twoFactorDisabled": "Kaksivaiheinen tunnistautuminen on poistettu käytöstä.",
         "userBlocked": "Käyttäjä on estetty.",
         "userUnblocked": "Käyttäjän esto on kumottu."

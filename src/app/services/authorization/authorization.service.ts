@@ -8,6 +8,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { PersistenceService } from '../persistance/persistance.service';
 import { UserPayload } from 'src/app/models/user-payload';
 import { LanguageService } from '../common/language.service';
+import { SsrAccessTokenService } from './ssr-access-token.service';
 
 @Injectable({
     providedIn: 'root'
@@ -25,6 +26,7 @@ export class AuthorizationService {
     private accountService = inject(AccountService);
     private persistenceService = inject(PersistenceService);
     private languageService = inject(LanguageService);
+    private ssrAccessTokenService = inject(SsrAccessTokenService);
     private zone = inject(NgZone);
 
     constructor() {
@@ -77,6 +79,13 @@ export class AuthorizationService {
             return false;
         }
 
+        // An authenticated SSR state without a bearer token would make guards
+        // pass and all protected API calls fail with 401.
+        if (!this.isBrowser && !userPayloadToken.accessToken) {
+            await this.signOut();
+            return false;
+        }
+
         const tokenExpirationTime = new Date(userPayloadToken.expirationDate);
         if (!tokenExpirationTime) {
             await this.signOut();
@@ -90,7 +99,16 @@ export class AuthorizationService {
         }
 
         this.userPayloadToken = userPayloadToken;
-        this.persistenceService.set(this.xsrfTokenName, userPayloadToken.xsrfToken);
+        if (userPayloadToken.xsrfToken) {
+            this.persistenceService.set(this.xsrfTokenName, userPayloadToken.xsrfToken);
+        } else {
+            this.persistenceService.remove(this.xsrfTokenName);
+        }
+
+        if (!this.isBrowser && userPayloadToken.accessToken) {
+            this.ssrAccessTokenService.set(userPayloadToken.accessToken);
+        }
+
         await this.languageService.setLanguageFromLocale(userPayloadToken.userPayload.locale);
 
         const expirationTime = tokenExpirationTime.getTime();
@@ -98,7 +116,9 @@ export class AuthorizationService {
         const nowSeconds = Math.round(now.getTime() / this.oneSecond);
 
         const sessionTimeout = (tokenExpirationSeconds - nowSeconds) - this.tokenProcessingTime;
-        this.initSessionTimeout(sessionTimeout);
+        if (this.isBrowser) {
+            this.initSessionTimeout(sessionTimeout);
+        }
 
         this.changes.next(this.userPayloadToken.userPayload);
         return true;
@@ -106,6 +126,7 @@ export class AuthorizationService {
 
     async signOut(): Promise<void> {
         this.cancelSessionTimeout();
+        this.ssrAccessTokenService.clear();
         
         if (this.isBrowser && this.userPayloadToken)  {
             this.userPayloadToken = undefined;

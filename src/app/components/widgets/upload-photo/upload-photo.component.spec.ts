@@ -1,6 +1,10 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { Clipboard } from '@angular/cdk/clipboard';
+import { DateAdapter, provideNativeDateAdapter } from '@angular/material/core';
+import { MatDatepickerInput } from '@angular/material/datepicker';
+import { MatDialog } from '@angular/material/dialog';
 import { TestBed } from '@angular/core/testing';
-import { provideNativeDateAdapter } from '@angular/material/core';
+import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { Country } from 'src/app/models/country';
@@ -18,6 +22,7 @@ import { LocationsService } from 'src/app/services/http/locations.service';
 import { SettingsService } from 'src/app/services/http/settings.service';
 import { PersistenceService } from 'src/app/services/persistance/persistance.service';
 import { TranslateService } from '@ngx-translate/core';
+import { LocalizedNativeDateAdapter } from 'src/app/common/localized-native-date-adapter';
 import { UploadPhotoComponent } from './upload-photo.component';
 
 class PersistenceServiceStub implements PersistenceService {
@@ -54,8 +59,10 @@ describe('UploadPhotoComponent', () => {
             imports: [UploadPhotoComponent],
             providers: [
                 provideNativeDateAdapter(),
+                { provide: DateAdapter, useClass: LocalizedNativeDateAdapter },
                 FileSizeService,
                 RecentLocationsService,
+                { provide: Clipboard, useValue: { copy: vi.fn(() => true) } },
                 { provide: PersistenceService, useClass: PersistenceServiceStub },
                 {
                     provide: BreakpointObserver,
@@ -73,9 +80,38 @@ describe('UploadPhotoComponent', () => {
                 { provide: MessagesService, useValue: {} },
                 { provide: SettingsService, useValue: { publicSettings: undefined } },
                 { provide: InstanceService, useValue: { instance: undefined } },
-                { provide: TranslateService, useValue: { instant: vi.fn() } }
+                {
+                    provide: TranslateService,
+                    useValue: {
+                        instant: vi.fn(),
+                        translate: vi.fn((key: string) => () => key)
+                    }
+                }
             ]
         });
+    });
+
+    it('shows a persistent upload error above the photo metadata fields', async () => {
+        const photo = new UploadPhoto('photo-1');
+        photo.uploadError.set('The server rejected this image.');
+        photo.uploadErrorDetails.set('{"status": 413}');
+        const fixture = TestBed.createComponent(UploadPhotoComponent);
+        fixture.componentRef.setInput('photo', photo);
+        fixture.componentRef.setInput('licenses', []);
+
+        await fixture.componentInstance.ngOnInit();
+        fixture.detectChanges();
+
+        const error = fixture.nativeElement.querySelector('.upload-error') as HTMLElement;
+        expect(error.getAttribute('role')).toBe('alert');
+        expect(error.textContent).toContain('The server rejected this image.');
+
+        const clipboard = TestBed.inject(Clipboard);
+        const copyButton = error.querySelector('.copy-error-details') as HTMLButtonElement;
+        copyButton.click();
+        expect(clipboard.copy).toHaveBeenCalledWith('{"status": 413}');
+
+        fixture.destroy();
     });
 
     it('refreshes recent locations when the country changes and the city field stays empty', async () => {
@@ -144,6 +180,87 @@ describe('UploadPhotoComponent', () => {
 
         expect(component['gpsMapsUrl']())
             .toBe('https://www.openstreetmap.org/?mlat=51.1&mlon=17.03333#map=10/51.1/17.03333');
+
+        fixture.destroy();
+    });
+
+    it('updates GPS coordinates with the result returned by the geohash dialog', async () => {
+        const photo = new UploadPhoto('photo-1');
+        photo.showGpsCoordination = true;
+        const fixture = TestBed.createComponent(UploadPhotoComponent);
+        fixture.componentRef.setInput('photo', photo);
+        fixture.componentRef.setInput('licenses', []);
+
+        const dialog = TestBed.inject(MatDialog);
+        const markForCheckSpy = vi.spyOn(fixture.componentInstance['changeDetectorRef'], 'markForCheck');
+        vi.spyOn(dialog, 'open').mockReturnValue({
+            afterClosed: () => of({ latitude: '57.64911063', longitude: '10.40743969' })
+        } as any);
+
+        await fixture.componentInstance.ngOnInit();
+        fixture.componentInstance['openGeohashDialog']();
+
+        expect(photo.latitude).toBe('57.64911063');
+        expect(photo.longitude).toBe('10.40743969');
+        expect(markForCheckSpy).toHaveBeenCalledOnce();
+
+        fixture.destroy();
+    });
+
+    it('does not open the geohash dialog when GPS coordinates are disabled', async () => {
+        const photo = new UploadPhoto('photo-1');
+        photo.showGpsCoordination = false;
+        const fixture = TestBed.createComponent(UploadPhotoComponent);
+        fixture.componentRef.setInput('photo', photo);
+        fixture.componentRef.setInput('licenses', []);
+
+        const dialog = TestBed.inject(MatDialog);
+        const openSpy = vi.spyOn(dialog, 'open');
+
+        await fixture.componentInstance.ngOnInit();
+        fixture.componentInstance['openGeohashDialog']();
+
+        expect(openSpy).not.toHaveBeenCalled();
+
+        fixture.destroy();
+    });
+
+    it('includes the enabled geohash button in keyboard tab order', async () => {
+        const photo = new UploadPhoto('photo-1');
+        photo.showGpsCoordination = true;
+        const fixture = TestBed.createComponent(UploadPhotoComponent);
+        fixture.componentRef.setInput('photo', photo);
+        fixture.componentRef.setInput('licenses', []);
+
+        await fixture.componentInstance.ngOnInit();
+        fixture.detectChanges();
+
+        const geohashButton = fixture.nativeElement.querySelector('.gps-action') as HTMLButtonElement;
+        expect(geohashButton.disabled).toBe(false);
+        expect(geohashButton.tabIndex).toBe(0);
+
+        fixture.destroy();
+    });
+
+    it('updates the photo date from a manually entered localized date', async () => {
+        const photo = new UploadPhoto('photo-1');
+        photo.createDate = new Date(2025, 0, 1);
+        const dateAdapter = TestBed.inject(DateAdapter<Date>);
+        dateAdapter.setLocale('pl-PL');
+
+        const fixture = TestBed.createComponent(UploadPhotoComponent);
+        fixture.componentRef.setInput('photo', photo);
+        fixture.componentRef.setInput('licenses', []);
+        await fixture.componentInstance.ngOnInit();
+        fixture.detectChanges();
+
+        const dateInput = fixture.debugElement.query(By.directive(MatDatepickerInput)).nativeElement as HTMLInputElement;
+        dateInput.value = '1.08.2026';
+        dateInput.dispatchEvent(new Event('input'));
+
+        expect(photo.createDate?.getFullYear()).toBe(2026);
+        expect(photo.createDate?.getMonth()).toBe(7);
+        expect(photo.createDate?.getDate()).toBe(1);
 
         fixture.destroy();
     });

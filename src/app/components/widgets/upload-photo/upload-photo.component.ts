@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, input, model, OnInit, output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, computed, inject, input, model, OnInit, output, signal } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { catchError, debounce, debounceTime, defer, distinctUntilChanged, from, map, Observable, of, startWith, Subject, switchMap, timer } from 'rxjs';
 import { ResponsiveComponent } from 'src/app/common/responsive';
@@ -29,6 +29,7 @@ import { MatFormField, MatLabel, MatError, MatHint, MatSuffix, MatPrefix } from 
 import { InputActivityDirective } from '../../../directives/input-activity.directive';
 import { MatInput } from '@angular/material/input';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { Clipboard } from '@angular/cdk/clipboard';
 import { MaxLengthValidatorDirective } from '../../../validators/directives/max-length-validator.directive';
 import { MatSelect, MatOption } from '@angular/material/select';
 import { MatAutocompleteTrigger, MatAutocomplete } from '@angular/material/autocomplete';
@@ -38,6 +39,8 @@ import { MatCheckbox } from '@angular/material/checkbox';
 import { MatDatepickerInput, MatDatepicker, MatDatepickerToggle } from '@angular/material/datepicker';
 import { MatTimepickerInput, MatTimepicker, MatTimepickerToggle } from '@angular/material/timepicker';
 import { AsyncPipe } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { GeohashDialog, GeohashDialogResult } from 'src/app/dialogs/geohash-dialog/geohash.dialog';
 
 @Component({
     selector: 'app-upload-photo',
@@ -101,6 +104,9 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
     private instanceService = inject(InstanceService);
     private translateService = inject(TranslateService);
     private recentLocationsService = inject(RecentLocationsService);
+    private dialog = inject(MatDialog);
+    private changeDetectorRef = inject(ChangeDetectorRef);
+    private clipboard = inject(Clipboard);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
@@ -210,6 +216,13 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
         return this.countriesControl.valid && this.citiesControl.valid && descriptionLength <= this.maxDescriptionLength;
     }
 
+    protected copyUploadErrorDetails(): void {
+        const details = this.photo().uploadErrorDetails();
+        if (details) {
+            this.clipboard.copy(details);
+        }
+    }
+
     protected displayCountryFn(country: Country | string): string {
         if (typeof country === 'string') {
             return country;
@@ -287,6 +300,29 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
 
     protected gpsMapsUrl(): string | undefined {
         return this.createMapsUrl(this.photo().latitude, this.photo().longitude);
+    }
+
+    protected openGeohashDialog(): void {
+        if (!this.photo().showGpsCoordination) {
+            return;
+        }
+
+        const dialogRef = this.dialog.open<GeohashDialog, undefined, GeohashDialogResult>(GeohashDialog, {
+            width: '500px'
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            if (!result) {
+                return;
+            }
+
+            this.photo.update(photo => {
+                photo.latitude = result.latitude;
+                photo.longitude = result.longitude;
+                return photo;
+            });
+            this.changeDetectorRef.markForCheck();
+        });
     }
 
     protected async onGenerateDescription(): Promise<void> {

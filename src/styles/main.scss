@@ -110,7 +110,7 @@ html {
 
     .cdk-overlay-pane {
         .mat-mdc-menu-panel {
-            background-color: $light-toolbar-background-color;
+            background-color: rgba($light-toolbar-background-color, 0.7);
             -webkit-backdrop-filter: blur(16px);
             backdrop-filter: blur(16px);
         }

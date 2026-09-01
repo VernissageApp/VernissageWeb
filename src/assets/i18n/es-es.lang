@@ -11,6 +11,7 @@
       "clear": "Borrar",
       "close": "Cerrar",
       "copy": "Copiar",
+      "copyDetails": "Copiar detalles",
       "delete": "Eliminar",
       "disable": "Deshabilitar",
       "dismiss": "Descartar",
@@ -714,6 +715,7 @@
         "software": "Software:",
         "tooLongAltText": "Texto alternativo demasiado largo.",
         "uploading": "Subiendo...",
+        "useGeohash": "Usar Geohash",
         "warning": "Advertencia:",
         "withoutALicense": "Sin licencia"
       }
@@ -863,6 +865,15 @@
         "followingImportAccounts": "Siguientes cuentas de importación",
         "notProcessed": "No procesado",
         "requestSent": "Solicitud enviada"
+      }
+    },
+    "geohash": {
+      "texts": {
+        "enterGeohash": "Introduce el geohash",
+        "geohash": "Geohash",
+        "geohashIsNotValid": "El geohash no es válido",
+        "latitude": "Latitud",
+        "longitude": "Longitud"
       }
     },
     "homeCard": {
@@ -2019,10 +2030,10 @@
         "statusDetailShortcuts": {
           "bookmark": "Guardar el estado en favoritos",
           "boost": "Impulsar el estado",
-          "closePhotoPreview": "Cerrar la vista previa de la foto",
+          "closePhotoPreview": "Cerrar vista previa de la foto",
           "like": "Como el estado",
           "nextStatus": "Ver el siguiente estado",
-          "openPhotoPreview": "Abrir la vista previa de la foto",
+          "openPhotoPreview": "Abrir vista previa de la foto",
           "previousStatus": "Ver el estado anterior"
         },
         "statusDetailShortcutsTitle": "En una Página de Detalles de Estado:",
@@ -2629,6 +2640,8 @@
         "tooManyFilesSelectedSingular": "Demasiados archivos seleccionados. Puedes agregar una imagen más.",
         "tooManyFilesSelectedPlural": "Demasiados archivos seleccionados. Puedes agregar {count} imágenes más.",
         "unableToResize": "No se puede cambiar el tamaño de la imagen antes de cargarla.",
+        "uploadFailed": "No se pudo subir esta imagen. Comprueba tu conexión e intenta añadir el archivo de nuevo.",
+        "uploadFailedTitle": "Error al subir la imagen",
         "unsupportedFileType": "Este tipo de archivo no es compatible. Carga una imagen JPG, PNG o WEBP.",
         "verifyEmailBeforePublish": "Para publicar un estado, primero verifica tu dirección de correo electrónico."
       },

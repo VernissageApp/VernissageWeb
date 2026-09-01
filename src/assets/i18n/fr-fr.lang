@@ -11,6 +11,7 @@
       "clear": "Effacer",
       "close": "Fermer",
       "copy": "Copier",
+      "copyDetails": "Copier les détails",
       "delete": "Supprimer",
       "disable": "Désactiver",
       "dismiss": "Fermer",
@@ -714,6 +715,7 @@
         "software": "Logiciel :",
         "tooLongAltText": "Texte alternatif trop long.",
         "uploading": "Envoi en cours...",
+        "useGeohash": "Utiliser Geohash",
         "warning": "Attention :",
         "withoutALicense": "Sans licence"
       }
@@ -863,6 +865,15 @@
         "followingImportAccounts": "Import des abonnements",
         "notProcessed": "Non traité",
         "requestSent": "Demande envoyée"
+      }
+    },
+    "geohash": {
+      "texts": {
+        "enterGeohash": "Saisir le géohash",
+        "geohash": "Geohash",
+        "geohashIsNotValid": "Le géohash n’est pas valide",
+        "latitude": "Latitude",
+        "longitude": "Longitude"
       }
     },
     "homeCard": {
@@ -2629,6 +2640,8 @@
         "tooManyFilesSelectedSingular": "Trop de fichiers sélectionnés. Vous pouvez ajouter encore une image.",
         "tooManyFilesSelectedPlural": "Trop de fichiers sélectionnés. Vous pouvez ajouter encore {count} images.",
         "unableToResize": "Impossible de redimensionner l’image avant l’envoi.",
+        "uploadFailed": "Impossible d’envoyer cette image. Vérifiez votre connexion et essayez d’ajouter à nouveau le fichier.",
+        "uploadFailedTitle": "Échec de l’envoi de l’image",
         "unsupportedFileType": "Ce type de fichier n’est pas pris en charge. Veuillez envoyer une image JPG, PNG ou WEBP.",
         "verifyEmailBeforePublish": "Pour publier un statut, veuillez d’abord vérifier votre adresse e-mail."
       },

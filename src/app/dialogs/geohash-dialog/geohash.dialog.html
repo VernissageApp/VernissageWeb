@@ -1,0 +1,39 @@
+<form name="geohashForm" (ngSubmit)="onSubmit()" #form="ngForm" novalidate>
+    <div mat-dialog-title>{{ 'dialogs.geohash.texts.geohash' | translate }}</div>
+    <div mat-dialog-content>
+        <div class="flex-col gap-0 padding-top-10">
+            <mat-form-field appearance="outline" class="width-100">
+                <mat-label>{{ 'dialogs.geohash.texts.enterGeohash' | translate }}</mat-label>
+                <input
+                    type="text"
+                    matInput
+                    name="geohash"
+                    [(ngModel)]="geohash"
+                    (ngModelChange)="onGeohashChange($event)"
+                    #geohashInput="ngModel"
+                    [attr.aria-label]="'dialogs.geohash.texts.enterGeohash' | translate"
+                    [appGeohashValid]="true"
+                    cdkFocusInitial />
+
+                @if (form.submitted && geohashInput.invalid) {
+                    <mat-error>{{ 'dialogs.geohash.texts.geohashIsNotValid' | translate }}</mat-error>
+                }
+            </mat-form-field>
+
+            <div class="coordinate-fields gap-10">
+                <div class="coordinate-field">
+                    <span class="text-muted">{{ 'dialogs.geohash.texts.latitude' | translate }}:</span>
+                    <span>{{ latitude() }}</span>
+                </div>
+                <div class="coordinate-field">
+                    <span class="text-muted">{{ 'dialogs.geohash.texts.longitude' | translate }}:</span>
+                    <span>{{ longitude() }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div mat-dialog-actions>
+        <button matButton="text" type="button" (click)="onCancel()">{{ 'common.actions.cancel' | translate }}</button>
+        <button matButton="filled" type="submit">{{ 'common.actions.ok' | translate }}</button>
+    </div>
+</form>

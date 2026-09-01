@@ -11,6 +11,7 @@
       "clear": "Clear",
       "close": "Close",
       "copy": "Copy",
+      "copyDetails": "Copy details",
       "delete": "Delete",
       "disable": "Disable",
       "dismiss": "Dismiss",
@@ -714,6 +715,7 @@
         "software": "Software:",
         "tooLongAltText": "Too long alt text.",
         "uploading": "Uploading...",
+        "useGeohash": "Use Geohash",
         "warning": "Warning:",
         "withoutALicense": "Without a license"
       }
@@ -863,6 +865,15 @@
         "followingImportAccounts": "Following import accounts",
         "notProcessed": "Not processed",
         "requestSent": "Request sent"
+      }
+    },
+    "geohash": {
+      "texts": {
+        "enterGeohash": "Enter geohash",
+        "geohash": "Geohash",
+        "geohashIsNotValid": "Geohash is not valid",
+        "latitude": "Latitude",
+        "longitude": "Longitude"
       }
     },
     "homeCard": {
@@ -2629,6 +2640,8 @@
         "tooManyFilesSelectedSingular": "Too many files selected. You can add one more image.",
         "tooManyFilesSelectedPlural": "Too many files selected. You can add {count} more images.",
         "unableToResize": "Unable to resize image before upload.",
+        "uploadFailed": "This image could not be uploaded. Check your connection and try adding the file again.",
+        "uploadFailedTitle": "Image upload failed",
         "unsupportedFileType": "This file type is not supported. Please upload a JPG, PNG or WEBP image.",
         "verifyEmailBeforePublish": "To publish a status, please verify your email address first."
       },

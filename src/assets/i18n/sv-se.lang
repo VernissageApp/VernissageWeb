@@ -11,6 +11,7 @@
       "clear": "Rensa",
       "close": "Stäng",
       "copy": "Kopiera",
+      "copyDetails": "Kopiera detaljer",
       "delete": "Ta bort",
       "disable": "Inaktivera",
       "dismiss": "Avvisa",
@@ -714,6 +715,7 @@
         "software": "Programvara:",
         "tooLongAltText": "För lång alt-text.",
         "uploading": "Laddar upp...",
+        "useGeohash": "Använd Geohash",
         "warning": "Varning:",
         "withoutALicense": "Utan licens"
       }
@@ -863,6 +865,15 @@
         "followingImportAccounts": "Följande importkonton",
         "notProcessed": "Ej bearbetad",
         "requestSent": "Begäran har skickats"
+      }
+    },
+    "geohash": {
+      "texts": {
+        "enterGeohash": "Ange geohash",
+        "geohash": "Geohash",
+        "geohashIsNotValid": "Geohash är inte giltig",
+        "latitude": "Latitud",
+        "longitude": "Longitud"
       }
     },
     "homeCard": {
@@ -2629,6 +2640,8 @@
         "tooManyFilesSelectedSingular": "För många filer har valts. Du kan lägga till en bild till.",
         "tooManyFilesSelectedPlural": "För många filer har valts. Du kan lägga till {count} bilder till.",
         "unableToResize": "Det gick inte att ändra storlek på bilden före uppladdning.",
+        "uploadFailed": "Det gick inte att ladda upp bilden. Kontrollera anslutningen och försök lägga till filen igen.",
+        "uploadFailedTitle": "Bilduppladdningen misslyckades",
         "unsupportedFileType": "Denna filtyp stöds inte. Ladda upp enJPG-,PNG- eller WEBP-bild.",
         "verifyEmailBeforePublish": "För att publicera en status, vänligen verifiera din e-postadress först."
       },
