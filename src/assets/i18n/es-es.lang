@@ -1,7 +1,7 @@
 {
   "common": {
     "actions": {
-      "addField": "Agregar campo",
+      "addField": "Añadir campo",
       "approve": "Aprobar",
       "assignRoles": "Asignar roles",
       "back": "Atrás",
@@ -19,17 +19,17 @@
       "edit": "Editar",
       "enable": "Habilitar",
       "follow": "Seguir",
-      "forgotPassword": "¿Contraseña olvidada?",
+      "forgotPassword": "¿Olvidaste la contraseña?",
       "import": "Importar",
       "loadMore": "Cargar más",
       "loadMoreEllipsis": "Cargar más...",
       "login": "Iniciar sesión",
       "next": "Siguiente",
       "ok": "OK",
-      "open": "Abierto",
+      "open": "Abrir",
       "openProfileWithUserName": "Abrir perfil @{userName}",
       "refresh": "Recargar",
-      "register": "Registrar",
+      "register": "Registrarse",
       "reject": "Rechazar",
       "reload": "Recargar",
       "remove": "Eliminar",
@@ -147,7 +147,7 @@
       "website": "Sitio web"
     },
     "messages": {
-      "newVersionAvailable": "Está disponible una nueva versión de Vernissage. Actualice la página para obtener la última versión.",
+      "newVersionAvailable": "Hay una nueva versión de Vernissage. Por favor, recargue la página para usar la última versión.",
       "unknownError": "Error desconocido.",
       "unrecoverableState": "Se produjo un error y no se puede recuperar el estado de la aplicación. Por favor, recarga la página."
     },
@@ -241,7 +241,7 @@
     },
     "categoryGallery": {
       "texts": {
-        "sadlyThereSNothingToSeeHere": "Lamentablemente, todavía no hay nada que ver aquí."
+        "sadlyThereSNothingToSeeHere": "Qué pena, aún no hay nada que ver aquí."
       }
     },
     "categoryList": {
@@ -249,12 +249,12 @@
         "categoryHasBeenDeleted": "La categoría ha sido eliminada.",
         "categoryHasBeenDisabled": "La categoría ha sido deshabilitada.",
         "categoryHasBeenEnabled": "La categoría ha sido habilitada.",
-        "doYouWantToDeleteCategory": "¿Quieres eliminar categoría?"
+        "doYouWantToDeleteCategory": "¿Quieres eliminar la categoría?"
       },
       "texts": {
         "alwaysRecalculateRemoteStatusCategory": "Recalcular siempre la categoría de los estados remotos",
         "alwaysRecalculateRemoteStatusCategoryDescription": "Cuando esta opción está activada, las categorías de los estados de ActivityPub entrantes se recalculan según las reglas locales de categorías de hashtags. Si no se encuentra ninguna regla coincidente, se utiliza la categoría proporcionada por el servidor remoto.",
-        "categoryName": "Nombre de categoría",
+        "categoryName": "Nombre de la categoría",
         "newCategory": "Nueva categoría"
       }
     },
@@ -300,7 +300,7 @@
         "cancelRequest": "Cancelar solicitud",
         "copyProfileLink": "Copiar enlace al perfil",
         "feature": "Característica",
-        "followBack": "Volver atrás",
+        "followBack": "Seguir también",
         "mute": "Silenciar",
         "openOriginalProfile": "Abrir perfil original",
         "rejectFollow": "Rechazar seguimiento",
@@ -972,11 +972,11 @@
       "texts": {
         "muteAccount": "Silenciar cuenta",
         "muteDialogHeader": "Las publicaciones y los impulsos silenciados no aparecerán en la mayoría de las líneas de tiempo del sistema.",
-        "muteEndDate": "Silenciar fecha de finalización",
+        "muteEndDate": "Fecha de fin del silencio",
         "muteNewStatuses": "Silenciar nuevos estados",
         "muteNotifications": "Silenciar notificaciones",
         "muteReblogs": "Silenciar republicaciones",
-        "optionalDateWhenMutingWillEnd": "Fecha opcional en la que finalizará el silenciamiento.",
+        "optionalDateWhenMutingWillEnd": "Fecha opcional en la que finalizará el silencio.",
         "removeUsersReblogsFromYourTimeline": "Eliminar las republicaciones del usuario de tu línea de tiempo",
         "removeUsersStatusesFromYourTimeline": "Eliminar los estados del usuario de tu línea de tiempo"
       }
@@ -2132,12 +2132,12 @@
         "adminReport": "ha sido reportado",
         "adminSignUp": "es un nuevo usuario",
         "favouriteComment": "favorito tu comentario",
-        "favouriteStatus": "favoritos tu foto",
+        "favouriteStatus": "les gustó tu foto",
         "follow": "te ha seguido",
         "followRequest": "quiere seguirte",
         "mention": "te mencioné",
         "newComment": "escribió un nuevo comentario",
-        "reblog": "Mejoró tu foto",
+        "reblog": "impulsaron tu foto",
         "status": "foto publicada",
         "update": "foto editada"
       }
@@ -2640,8 +2640,8 @@
         "tooManyFilesSelectedSingular": "Demasiados archivos seleccionados. Puedes agregar una imagen más.",
         "tooManyFilesSelectedPlural": "Demasiados archivos seleccionados. Puedes agregar {count} imágenes más.",
         "unableToResize": "No se puede cambiar el tamaño de la imagen antes de cargarla.",
-        "uploadFailed": "No se pudo subir esta imagen. Comprueba tu conexión e intenta añadir el archivo de nuevo.",
-        "uploadFailedTitle": "Error al subir la imagen",
+        "uploadFailed": "Esta imagen no se pudo subir. Comprueba tu conexión e inténtalo de nuevo.",
+        "uploadFailedTitle": "Fallo subiendo imagen",
         "unsupportedFileType": "Este tipo de archivo no es compatible. Carga una imagen JPG, PNG o WEBP.",
         "verifyEmailBeforePublish": "Para publicar un estado, primero verifica tu dirección de correo electrónico."
       },

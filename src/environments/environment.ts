@@ -4,7 +4,7 @@
 
 export const environment = {
     production: false,
-    version: '1.43.0-buildx'
+    version: '1.44.0-buildx'
 };
 
 /*
