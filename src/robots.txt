@@ -1,6 +1,6 @@
 # See http://www.robotstxt.org/robotstxt.html for documentation on how to use the robots.txt file
 
-# AI training and dataset crawlers
+# AI training, dataset and AI index crawlers
 # OpenAI, Anthropic, Meta, Google, Apple, Common Crawl and others
 User-agent: GPTBot
 User-agent: ClaudeBot
@@ -22,6 +22,16 @@ User-agent: img2dataset
 User-agent: omgili
 User-agent: omgilibot
 User-agent: Webzio-Extended
+User-agent: Brightbot
+User-agent: Reflectionbot
+User-agent: AIWebIndex
+User-agent: AionBot
+Disallow: /
+
+# Commercial SEO crawlers
+User-agent: AhrefsBot
+User-agent: SemrushBot
+User-agent: QlyzeBot
 Disallow: /
 
 # Regular crawlers
