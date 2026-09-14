@@ -23,7 +23,7 @@
 
             <div class="explore-controls">
                 <div class="explore-type">
-                    <mat-button-toggle-group [(ngModel)]="explore" (ngModelChange)="onSelectionChange()" [hideSingleSelectionIndicator]="true" [attr.aria-label]="'pages.explore.tabAriaLabel' | translate">
+                    <mat-button-toggle-group appReleaseFocusOnPointerClick [(ngModel)]="explore" (ngModelChange)="onSelectionChange()" [hideSingleSelectionIndicator]="true" [attr.aria-label]="'pages.explore.tabAriaLabel' | translate">
                         @if (showCategories()) {
                             <mat-button-toggle value="categories">
                                 <mat-icon>loyalty</mat-icon>

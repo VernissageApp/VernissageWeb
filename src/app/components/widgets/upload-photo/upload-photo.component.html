@@ -2,6 +2,22 @@
 
 <div class="flex-col gap-0 margin-top-5">
 
+    @if (photo().uploadError(); as uploadError) {
+        <div class="upload-error" role="alert">
+            <mat-icon>error</mat-icon>
+            <div class="upload-error-content">
+                <strong>{{ 'pages.upload.messages.uploadFailedTitle' | translate }}</strong>
+                <div>{{ uploadError }}</div>
+            </div>
+            @if (photo().uploadErrorDetails()) {
+                <button type="button" matButton="text" class="copy-error-details" (click)="copyUploadErrorDetails()">
+                    <mat-icon>content_copy</mat-icon>
+                    {{ 'common.actions.copyDetails' | translate }}
+                </button>
+            }
+        </div>
+    }
+
     @if (photo().photoResizedFile) {
         <div class="margin-bottom-10 width-100 text-warning fs-90">
             <strong>{{ 'components.uploadPhoto.texts.information' | translate }}</strong> {{ 'components.uploadPhoto.texts.imageExceededLimitAndWasResized' | translate: { maxFileSize: maxFileSizeString() } }}

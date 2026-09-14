@@ -29,6 +29,7 @@ import { MatFormField, MatLabel, MatError, MatHint, MatSuffix, MatPrefix } from 
 import { InputActivityDirective } from '../../../directives/input-activity.directive';
 import { MatInput } from '@angular/material/input';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { Clipboard } from '@angular/cdk/clipboard';
 import { MaxLengthValidatorDirective } from '../../../validators/directives/max-length-validator.directive';
 import { MatSelect, MatOption } from '@angular/material/select';
 import { MatAutocompleteTrigger, MatAutocomplete } from '@angular/material/autocomplete';
@@ -105,6 +106,7 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
     private recentLocationsService = inject(RecentLocationsService);
     private dialog = inject(MatDialog);
     private changeDetectorRef = inject(ChangeDetectorRef);
+    private clipboard = inject(Clipboard);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
@@ -212,6 +214,13 @@ export class UploadPhotoComponent extends ResponsiveComponent implements OnInit 
     public isValid(): boolean {
         const descriptionLength = this.photo().description?.length ?? 0;
         return this.countriesControl.valid && this.citiesControl.valid && descriptionLength <= this.maxDescriptionLength;
+    }
+
+    protected copyUploadErrorDetails(): void {
+        const details = this.photo().uploadErrorDetails();
+        if (details) {
+            this.clipboard.copy(details);
+        }
     }
 
     protected displayCountryFn(country: Country | string): string {

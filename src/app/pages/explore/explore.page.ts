@@ -27,13 +27,14 @@ import { CameraGalleryComponent } from '../../components/widgets/camera-gallery/
 import { CategoryGalleryComponent } from "../../components/widgets/category-gallery/category-gallery.component";
 import { FilmGalleryComponent } from '../../components/widgets/film-gallery/film-gallery.component';
 import { LensGalleryComponent } from '../../components/widgets/lens-gallery/lens-gallery.component';
+import { ReleaseFocusOnPointerClickDirective } from 'src/app/directives/release-focus-on-pointer-click.directive';
 
 @Component({
     selector: 'app-explore',
     templateUrl: './explore.page.html',
     styleUrls: ['./explore.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [MatButtonToggleGroup, MatButtonToggle, MatFormField, MatLabel, InputActivityDirective, MatInput, MatIcon, FormsModule, CategoryGalleryComponent, CameraGalleryComponent, LensGalleryComponent, FilmGalleryComponent, TranslatePipe]
+    imports: [MatButtonToggleGroup, MatButtonToggle, MatFormField, MatLabel, InputActivityDirective, MatInput, MatIcon, FormsModule, CategoryGalleryComponent, CameraGalleryComponent, LensGalleryComponent, FilmGalleryComponent, TranslatePipe, ReleaseFocusOnPointerClickDirective]
 })
 export class ExplorePage extends ReusableGalleryPageComponent implements OnInit, OnDestroy {
     protected isReady = signal(false);

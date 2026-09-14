@@ -3,3 +3,7 @@
     width: 100%;
     top: 64px;
 }
+
+.content[appRouteFocus]:focus {
+    outline: none;
+}

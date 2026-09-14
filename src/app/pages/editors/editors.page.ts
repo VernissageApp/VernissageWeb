@@ -21,13 +21,14 @@ import { TranslatePipe } from "@ngx-translate/core";
 import { TimelineKind } from "src/app/models/timeline-kind";
 import { Status } from "src/app/models/status";
 import { TimelineMarkersService } from "src/app/services/http/timeline-markers.service";
+import { ReleaseFocusOnPointerClickDirective } from "src/app/directives/release-focus-on-pointer-click.directive";
 
 @Component({
     selector: 'app-editors',
     templateUrl: './editors.page.html',
     styleUrls: ['./editors.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [MatButtonToggleGroup, FormsModule, MatButtonToggle, MatIcon, GalleryComponent, UsersGalleryComponent, TranslatePipe]
+    imports: [MatButtonToggleGroup, FormsModule, MatButtonToggle, MatIcon, GalleryComponent, UsersGalleryComponent, TranslatePipe, ReleaseFocusOnPointerClickDirective]
 })
 export class EditorsPage extends ReusableGalleryPageComponent implements OnInit, OnDestroy {
     protected users = signal<LinkableResult<User> | undefined>(undefined);

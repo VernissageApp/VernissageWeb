@@ -1,4 +1,5 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { Clipboard } from '@angular/cdk/clipboard';
 import { DateAdapter, provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerInput } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
@@ -61,6 +62,7 @@ describe('UploadPhotoComponent', () => {
                 { provide: DateAdapter, useClass: LocalizedNativeDateAdapter },
                 FileSizeService,
                 RecentLocationsService,
+                { provide: Clipboard, useValue: { copy: vi.fn(() => true) } },
                 { provide: PersistenceService, useClass: PersistenceServiceStub },
                 {
                     provide: BreakpointObserver,
@@ -87,6 +89,29 @@ describe('UploadPhotoComponent', () => {
                 }
             ]
         });
+    });
+
+    it('shows a persistent upload error above the photo metadata fields', async () => {
+        const photo = new UploadPhoto('photo-1');
+        photo.uploadError.set('The server rejected this image.');
+        photo.uploadErrorDetails.set('{"status": 413}');
+        const fixture = TestBed.createComponent(UploadPhotoComponent);
+        fixture.componentRef.setInput('photo', photo);
+        fixture.componentRef.setInput('licenses', []);
+
+        await fixture.componentInstance.ngOnInit();
+        fixture.detectChanges();
+
+        const error = fixture.nativeElement.querySelector('.upload-error') as HTMLElement;
+        expect(error.getAttribute('role')).toBe('alert');
+        expect(error.textContent).toContain('The server rejected this image.');
+
+        const clipboard = TestBed.inject(Clipboard);
+        const copyButton = error.querySelector('.copy-error-details') as HTMLButtonElement;
+        copyButton.click();
+        expect(clipboard.copy).toHaveBeenCalledWith('{"status": 413}');
+
+        fixture.destroy();
     });
 
     it('refreshes recent locations when the country changes and the city field stays empty', async () => {
