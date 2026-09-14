@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Renderer2, signal, computed, ChangeDetectionStrategy, inject, NgZone, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, OnDestroy, Renderer2, signal, computed, ChangeDetectionStrategy, ElementRef, inject, NgZone, PLATFORM_ID } from '@angular/core';
 import { NavigationEnd, RouteReuseStrategy, Router, RouterLink } from '@angular/router';
 import { filter, interval, Subscription } from 'rxjs';
 
@@ -75,6 +75,7 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
     private translateService = inject(TranslateService);
     private renderer = inject(Renderer2);
     private ngZone = inject(NgZone);
+    private headerElement = inject<ElementRef<HTMLElement>>(ElementRef);
     private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
     override async ngOnInit(): Promise<void> {
@@ -214,7 +215,7 @@ export class HeaderComponent extends ResponsiveComponent implements OnInit, OnDe
 
     protected onUserMenuClosed(): void {
         const activeElement = document.activeElement;
-        if (activeElement instanceof HTMLElement) {
+        if (activeElement instanceof HTMLElement && this.headerElement.nativeElement.contains(activeElement)) {
             activeElement.blur();
         }
     }

@@ -36,7 +36,7 @@
             </h1>
 
             <section class="small-button-toggle">
-                <mat-button-toggle-group [(ngModel)]="timeline" (ngModelChange)="onTimelineChange()" [hideSingleSelectionIndicator]="true" [attr.aria-label]="'components.homeSignin.attrs.timelineType' | translate">
+                <mat-button-toggle-group appReleaseFocusOnPointerClick [(ngModel)]="timeline" (ngModelChange)="onTimelineChange()" [hideSingleSelectionIndicator]="true" [attr.aria-label]="'components.homeSignin.attrs.timelineType' | translate">
 
                     @if (isLoggedIn()) {
                         <mat-button-toggle value="private">

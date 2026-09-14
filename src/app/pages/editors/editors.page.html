@@ -16,7 +16,7 @@
             </h1>
 
             <section class="small-button-toggle">
-                <mat-button-toggle-group [(ngModel)]="tab" (ngModelChange)="onSelectionChange()" [hideSingleSelectionIndicator]="true" [attr.aria-label]="'pages.editors.tabAriaLabel' | translate">
+                <mat-button-toggle-group appReleaseFocusOnPointerClick [(ngModel)]="tab" (ngModelChange)="onSelectionChange()" [hideSingleSelectionIndicator]="true" [attr.aria-label]="'pages.editors.tabAriaLabel' | translate">
                     @if (showStatusesButton()) {
                         <mat-button-toggle value="statuses"><mat-icon>insert_photo</mat-icon>
                             @if (!isHandset()) {
