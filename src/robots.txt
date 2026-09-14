@@ -26,6 +26,7 @@ User-agent: Brightbot
 User-agent: Reflectionbot
 User-agent: AIWebIndex
 User-agent: AionBot
+User-agent: ExaSearchBot
 Disallow: /
 
 # Commercial SEO crawlers
