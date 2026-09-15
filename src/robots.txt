@@ -34,6 +34,7 @@ Disallow: /
 User-agent: AhrefsBot
 User-agent: SemrushBot
 User-agent: QlyzeBot
+User-agent: dotbot
 Disallow: /
 
 # Resource-intensive search crawlers
