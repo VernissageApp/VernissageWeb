@@ -27,12 +27,20 @@ User-agent: Reflectionbot
 User-agent: AIWebIndex
 User-agent: AionBot
 User-agent: ExaSearchBot
+User-agent: ShapBot
 Disallow: /
 
 # Commercial SEO crawlers
 User-agent: AhrefsBot
 User-agent: SemrushBot
 User-agent: QlyzeBot
+Disallow: /
+
+# Resource-intensive search crawlers
+# Their JavaScript rendering triggers SSR and API requests, while the Angular
+# service worker causes them to download the entire application bundle.
+User-agent: Baiduspider
+User-agent: PetalBot
 Disallow: /
 
 # Regular crawlers
