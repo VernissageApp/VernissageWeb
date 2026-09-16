@@ -29,6 +29,7 @@ User-agent: AionBot
 User-agent: ExaSearchBot
 User-agent: ShapBot
 User-agent: LinkupBot
+User-agent: Lightpanda
 Disallow: /
 
 # Commercial SEO crawlers
