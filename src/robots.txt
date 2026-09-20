@@ -49,6 +49,11 @@ Disallow: /
 # service worker causes them to download the entire application bundle.
 User-agent: Baiduspider
 User-agent: PetalBot
+User-agent: Sogou web spider
+User-agent: Sogou inst spider
+User-agent: 360Spider
+User-agent: 360Spider-Image
+User-agent: 360Spider-Video
 Disallow: /
 
 # Regular crawlers
