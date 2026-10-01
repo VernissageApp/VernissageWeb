@@ -34,6 +34,8 @@
                             cdkAutosizeMaxRows="10" [placeholder]="'common.labels.bio' | translate" #bio="ngModel" [(ngModel)]="user().bio"
                             [attr.aria-label]="'common.labels.bio' | translate" appMaxLength="500"></textarea>
 
+                        <mat-hint class="text-muted" align="end">{{ user().bio?.length ?? 0 }}/500</mat-hint>
+
                         @if (bio.invalid && bio.errors?.appMaxLength) {
                             <mat-error>{{ 'pages.account.personalInformation.errors.bioTooLong' | translate }}</mat-error>
                         }
