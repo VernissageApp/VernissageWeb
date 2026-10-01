@@ -33,6 +33,8 @@ User-agent: ExaSearchBot
 User-agent: ShapBot
 User-agent: LinkupBot
 User-agent: Lightpanda
+User-agent: PerplexityBot
+User-agent: KeenableBot
 Disallow: /
 
 # Commercial SEO crawlers
@@ -42,6 +44,7 @@ User-agent: QlyzeBot
 User-agent: dotbot
 User-agent: Barkrowler
 User-agent: MJ12bot
+User-agent: SERankingBacklinksBot
 Disallow: /
 
 # Resource-intensive search crawlers
