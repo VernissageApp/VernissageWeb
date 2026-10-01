@@ -71,6 +71,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
     protected contentWarning = model('');
     protected selectedIndex = model(0);
     protected isCanceling = signal(false);
+    protected isPhotoDragOver = signal(false);
     protected emailHasBeenVerified = signal(false);
     protected accountHasBeenMoved = signal(false);
 
@@ -153,6 +154,39 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
         const input = event.target as HTMLInputElement | null;
         const files = input?.files ? Array.from(input.files) : [];
 
+        await this.processSelectedPhotos(files);
+    }
+
+    protected onPhotoDragOver(event: DragEvent): void {
+        if (!event.dataTransfer?.types.includes('Files')) {
+            return;
+        }
+
+        event.preventDefault();
+        event.stopPropagation();
+        event.dataTransfer.dropEffect = 'copy';
+        this.isPhotoDragOver.set(true);
+    }
+
+    protected onPhotoDragLeave(event: DragEvent): void {
+        const dropzone = event.currentTarget as HTMLElement;
+        if (event.relatedTarget && dropzone.contains(event.relatedTarget as Node)) {
+            return;
+        }
+
+        this.isPhotoDragOver.set(false);
+    }
+
+    protected async onPhotoDrop(event: DragEvent): Promise<void> {
+        event.preventDefault();
+        event.stopPropagation();
+        this.isPhotoDragOver.set(false);
+
+        const files = event.dataTransfer?.files ? Array.from(event.dataTransfer.files) : [];
+        await this.processSelectedPhotos(files);
+    }
+
+    private async processSelectedPhotos(files: File[]): Promise<void> {
         if (files.length === 0) {
             return;
         }

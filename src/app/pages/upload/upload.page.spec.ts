@@ -51,6 +51,98 @@ describe('stripCameraModel', () => {
     });
 });
 
+describe('photo drag and drop', () => {
+    function createPage(): any {
+        const page = Object.create(UploadPage.prototype) as any;
+        page.photos = signal<UploadPhoto[]>([]);
+        page.maxMediaAttachments = signal(4);
+        page.isPhotoDragOver = signal(false);
+        page.processSelectedPhoto = vi.fn().mockResolvedValue(undefined);
+        page.resetPhotoFileUpload = vi.fn();
+        page.messageService = { showError: vi.fn() };
+        page.translateService = { instant: vi.fn((key: string) => key) };
+        return page;
+    }
+
+    function createDragEvent(files: File[] = [], types = ['Files']): DragEvent {
+        return {
+            dataTransfer: { files, types, dropEffect: 'none' },
+            preventDefault: vi.fn(),
+            stopPropagation: vi.fn()
+        } as unknown as DragEvent;
+    }
+
+    it('allows file drops and highlights the dropzone', () => {
+        const page = createPage();
+        const event = createDragEvent();
+
+        page.onPhotoDragOver(event);
+
+        expect(event.preventDefault).toHaveBeenCalledOnce();
+        expect(event.stopPropagation).toHaveBeenCalledOnce();
+        expect(event.dataTransfer?.dropEffect).toBe('copy');
+        expect(page.isPhotoDragOver()).toBe(true);
+    });
+
+    it('ignores dragged text', () => {
+        const page = createPage();
+        const event = createDragEvent([], ['text/plain']);
+
+        page.onPhotoDragOver(event);
+
+        expect(event.preventDefault).not.toHaveBeenCalled();
+        expect(page.isPhotoDragOver()).toBe(false);
+    });
+
+    it('keeps the highlight when moving over children and clears it when leaving', () => {
+        const page = createPage();
+        const dropzone = document.createElement('div');
+        const plus = document.createElement('span');
+        dropzone.appendChild(plus);
+        page.isPhotoDragOver.set(true);
+
+        page.onPhotoDragLeave({ currentTarget: dropzone, relatedTarget: plus } as unknown as DragEvent);
+        expect(page.isPhotoDragOver()).toBe(true);
+
+        page.onPhotoDragLeave({ currentTarget: dropzone, relatedTarget: null } as unknown as DragEvent);
+        expect(page.isPhotoDragOver()).toBe(false);
+    });
+
+    it('processes all dropped files and prevents the browser from opening them', async () => {
+        const page = createPage();
+        const files = [new File(['photo'], 'photo.jpg'), new File(['photo'], 'photo.png')];
+        const event = createDragEvent(files);
+        page.isPhotoDragOver.set(true);
+
+        await page.onPhotoDrop(event);
+
+        expect(event.preventDefault).toHaveBeenCalledOnce();
+        expect(event.stopPropagation).toHaveBeenCalledOnce();
+        expect(page.isPhotoDragOver()).toBe(false);
+        expect(page.processSelectedPhoto).toHaveBeenNthCalledWith(1, files[0]);
+        expect(page.processSelectedPhoto).toHaveBeenNthCalledWith(2, files[1]);
+    });
+
+    it('rejects drops exceeding the remaining attachment slots', async () => {
+        const page = createPage();
+        page.photos.set([new UploadPhoto('1'), new UploadPhoto('2'), new UploadPhoto('3')]);
+
+        await page.onPhotoDrop(createDragEvent([new File(['photo'], 'photo.jpg'), new File(['photo'], 'photo.png')]));
+
+        expect(page.processSelectedPhoto).not.toHaveBeenCalled();
+        expect(page.messageService.showError).toHaveBeenCalledWith('pages.upload.messages.tooManyFilesSelectedSingular');
+    });
+
+    it('ignores drops without files', async () => {
+        const page = createPage();
+
+        await page.onPhotoDrop(createDragEvent());
+
+        expect(page.processSelectedPhoto).not.toHaveBeenCalled();
+        expect(page.messageService.showError).not.toHaveBeenCalled();
+    });
+});
+
 describe('photo upload errors', () => {
     function createPage(uploadEvents: Observable<unknown>): any {
         const page = Object.create(UploadPage.prototype) as any;
