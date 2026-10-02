@@ -114,11 +114,13 @@
                             </mat-slide-toggle>
                         </div>
 
-                        <div class="margin-bottom-20">
-                            <mat-slide-toggle name="hideAiFeatures" [(ngModel)]="hideAiFeatures" (ngModelChange)="onHideAiFeaturesChange()">
-                                {{ 'pages.preferences.media.hideAiFeatures.title' | translate }} <div class="text-muted fs-90">{{ 'pages.preferences.media.hideAiFeatures.description' | translate }}</div>
-                            </mat-slide-toggle>
-                        </div>
+                        @if (isOpenAIEnabled()) {
+                            <div class="margin-bottom-20">
+                                <mat-slide-toggle name="hideAiFeatures" [(ngModel)]="hideAiFeatures" (ngModelChange)="onHideAiFeaturesChange()">
+                                    {{ 'pages.preferences.media.hideAiFeatures.title' | translate }} <div class="text-muted fs-90">{{ 'pages.preferences.media.hideAiFeatures.description' | translate }}</div>
+                                </mat-slide-toggle>
+                            </div>
+                        }
                     </mat-card-content>
                 </mat-card>
             </div>

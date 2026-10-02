@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, model, OnInit, Renderer2, signal } from '@angular/core';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { PreferencesService } from 'src/app/services/common/preferences.service';
+import { SettingsService } from 'src/app/services/http/settings.service';
 import { RouteReuseStrategy } from '@angular/router';
 import { CustomReuseStrategy } from 'src/app/common/custom-reuse-strategy';
 
@@ -20,6 +21,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 })
 export class PreferencesPage extends ResponsiveComponent implements OnInit {
     protected isReady = signal(false);
+    protected isOpenAIEnabled = signal(false);
 
     protected isLightTheme = model(true);
     protected isCircleAvatar = model(true);
@@ -36,12 +38,14 @@ export class PreferencesPage extends ResponsiveComponent implements OnInit {
     protected hideAiFeatures = model(false);
 
     private preferencesService = inject(PreferencesService);
+    private settingsService = inject(SettingsService);
     private routeReuseStrategy = inject(RouteReuseStrategy);
     private renderer = inject(Renderer2);
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
 
+        this.isOpenAIEnabled.set(this.settingsService.publicSettings?.isOpenAIEnabled ?? false);
         this.isLightTheme.set(this.preferencesService.isLightTheme);
         this.isCircleAvatar.set(this.preferencesService.isCircleAvatar);
         this.isSquareImages.set(this.preferencesService.isSquareImages);
