@@ -9,6 +9,7 @@ import { StatusVisibility } from 'src/app/models/status-visibility';
 import { TemporaryAttachment } from 'src/app/models/temporary-attachment';
 import { UploadPhoto } from 'src/app/models/upload-photo';
 import { MessagesService } from 'src/app/services/common/messages.service';
+import { PreferencesService } from 'src/app/services/common/preferences.service';
 import { AttachmentsService } from 'src/app/services/http/attachments.service';
 import { StatusesService } from 'src/app/services/http/statuses.service';
 import { CategoriesService } from 'src/app/services/http/categories.service';
@@ -58,6 +59,7 @@ import { MatInput } from '@angular/material/input';
 })
 export class UploadPage extends ResponsiveComponent implements OnInit {
     protected readonly statusVisibility = StatusVisibility;
+    protected preferencesService = inject(PreferencesService);
 
     protected photos = signal<UploadPhoto[]>([]);
     protected categories = signal<Category[]>([]);

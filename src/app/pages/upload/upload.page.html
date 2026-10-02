@@ -104,7 +104,7 @@
                                         </button>
                                     </div>
                                     <div>
-                                        @if (isOpenAIEnabled()) {
+                                        @if (isOpenAIEnabled() && !preferencesService.hideAiFeatures) {
                                             <div class="flex-row flex-end">
                                                 @if (hashtagsInProgress()) {
                                                     <mat-spinner class="margin-top-10 margin-right-10" [diameter]="18" />
