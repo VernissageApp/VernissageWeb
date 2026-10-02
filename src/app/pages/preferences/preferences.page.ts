@@ -33,6 +33,7 @@ export class PreferencesPage extends ResponsiveComponent implements OnInit {
     protected showAltIcon = model(false);
     protected alwaysShowSdrPhoto = model(false);
     protected autoScrollGalleryImages = model(false);
+    protected hideAiFeatures = model(false);
 
     private preferencesService = inject(PreferencesService);
     private routeReuseStrategy = inject(RouteReuseStrategy);
@@ -53,6 +54,7 @@ export class PreferencesPage extends ResponsiveComponent implements OnInit {
         this.showAltIcon.set(this.preferencesService.showAltIcon);
         this.alwaysShowSdrPhoto.set(this.preferencesService.alwaysShowSdrPhoto);
         this.autoScrollGalleryImages.set(this.preferencesService.autoScrollGalleryImages);
+        this.hideAiFeatures.set(this.preferencesService.hideAiFeatures);
 
         this.isReady.set(true);
     }
@@ -110,6 +112,10 @@ export class PreferencesPage extends ResponsiveComponent implements OnInit {
 
     protected onAutoScrollGalleryImagesChange(): void {
         this.preferencesService.autoScrollGalleryImages = this.autoScrollGalleryImages();
+    }
+
+    protected onHideAiFeaturesChange(): void {
+        this.preferencesService.hideAiFeatures = this.hideAiFeatures();
     }
 
     private clearReuseStrategyState(): void {

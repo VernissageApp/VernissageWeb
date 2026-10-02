@@ -2168,6 +2168,10 @@
           "description": "Wechselt automatisch alle 6 Sekunden durch die Statusbilder.",
           "title": "Bilder in der Statusgalerie automatisch scrollen"
         },
+        "hideAiFeatures": {
+          "description": "Blendet KI-Schaltflächen und zugehörige Hinweise beim Hinzufügen von Fotos aus.",
+          "title": "KI-Funktionen ausblenden"
+        },
         "showAlternativeText": {
           "description": "Alternativtext (falls vorhanden) auf dem Status-Detailscreen anzeigen.",
           "title": "Alternativtext anzeigen"

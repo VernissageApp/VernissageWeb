@@ -2168,6 +2168,10 @@
           "description": "Faire défiler les images de status toutes les 6 secondes.",
           "title": "Faire défiler les images dans la galerie de statut"
         },
+        "hideAiFeatures": {
+          "description": "Masque les boutons liés à l’IA et leurs mentions lors de l’ajout de photos.",
+          "title": "Masquer les fonctionnalités d’IA"
+        },
         "showAlternativeText": {
           "description": "Afficher le texte alternatif s’il existe sur l’écran des détails du statut.",
           "title": "Afficher le texte alternatif"
