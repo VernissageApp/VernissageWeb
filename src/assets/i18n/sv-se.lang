@@ -2168,6 +2168,10 @@
           "description": "Går automatiskt igenom statusbilder var sjätte sekund.",
           "title": "Rulla bilder automatiskt i statusgalleriet"
         },
+        "hideAiFeatures": {
+          "description": "Döljer AI-knappar och tillhörande texter när du lägger till foton.",
+          "title": "Dölj AI-funktioner"
+        },
         "showAlternativeText": {
           "description": "Visa alternativ text om den finns på skärmen med statusdetaljer.",
           "title": "Visa alternativ text"

@@ -2168,6 +2168,10 @@
           "description": "Går automatisk gjennom statusbildene hvert 6. sekund.",
           "title": "Rull bilder automatisk i statusgalleriet"
         },
+        "hideAiFeatures": {
+          "description": "Skjuler KI-knapper og tilhørende tekster når du legger til bilder.",
+          "title": "Skjul KI-funksjoner"
+        },
         "showAlternativeText": {
           "description": "Vis alternativ tekst hvis den er til stede på statusdetaljer-skjermen.",
           "title": "Vis alternativ tekst"

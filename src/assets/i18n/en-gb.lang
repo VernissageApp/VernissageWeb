@@ -2168,6 +2168,10 @@
           "description": "Automatically cycles through status images every 6 seconds.",
           "title": "Auto-scroll images in status gallery"
         },
+        "hideAiFeatures": {
+          "description": "Hide AI buttons and related notes when adding photos.",
+          "title": "Hide AI features"
+        },
         "showAlternativeText": {
           "description": "Show alternative text if present on status details screen.",
           "title": "Show alternative text"

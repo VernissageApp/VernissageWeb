@@ -6,6 +6,9 @@ import { ResponsiveComponent } from 'src/app/common/responsive';
 import { Article } from 'src/app/models/article';
 import { ArticleFileInfo } from 'src/app/models/article-file-info';
 import { ArticleVisibility } from 'src/app/models/article-visibility';
+import { Role } from 'src/app/models/role';
+import { ForbiddenError } from 'src/app/errors/forbidden-error';
+import { AuthorizationService } from 'src/app/services/authorization/authorization.service';
 import { FileSizeService } from 'src/app/services/common/file-size.service';
 import { LoadingService } from 'src/app/services/common/loading.service';
 import { MessagesService } from 'src/app/services/common/messages.service';
@@ -51,6 +54,7 @@ export class ArticleEditPage extends ResponsiveComponent implements OnInit, OnDe
     private routeParamsSubscription?: Subscription;
 
     private messageService = inject(MessagesService);
+    private authorizationService = inject(AuthorizationService);
     private articlesService = inject(ArticlesService);
     private activatedRoute = inject(ActivatedRoute);
     private loadingService = inject(LoadingService);
@@ -61,6 +65,11 @@ export class ArticleEditPage extends ResponsiveComponent implements OnInit, OnDe
 
     override async ngOnInit(): Promise<void> {
         super.ngOnInit();
+
+        if (!this.authorizationService.hasRole(Role.Administrator) && !this.authorizationService.hasRole(Role.Moderator)) {
+            throw new ForbiddenError();
+        }
+
         this.maxArticleFileSizeString.set(this.fileSizeService.getHumanFileSize(this.defaultArticleMaxFileSize, 0));
 
         this.routeParamsSubscription = this.activatedRoute.params.subscribe(async params => {

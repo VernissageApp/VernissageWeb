@@ -22,13 +22,14 @@ import { GalleryComponent } from "../../components/widgets/gallery/gallery.compo
 import { UsersGalleryComponent } from "../../components/widgets/users-gallery/users-gallery.component";
 import { HashtagGalleryComponent } from "../../components/widgets/hashtag-gallery/hashtag-gallery.component";
 import { TranslatePipe } from "@ngx-translate/core";
+import { ReleaseFocusOnPointerClickDirective } from "src/app/directives/release-focus-on-pointer-click.directive";
 
 @Component({
     selector: 'app-trending',
     templateUrl: './trending.page.html',
     styleUrls: ['./trending.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [MatButtonToggleGroup, FormsModule, MatButtonToggle, MatIcon, MatRadioGroup, MatRadioButton, GalleryComponent, UsersGalleryComponent, HashtagGalleryComponent, TranslatePipe]
+    imports: [MatButtonToggleGroup, FormsModule, MatButtonToggle, MatIcon, MatRadioGroup, MatRadioButton, GalleryComponent, UsersGalleryComponent, HashtagGalleryComponent, TranslatePipe, ReleaseFocusOnPointerClickDirective]
 })
 export class TrendingPage extends ReusableGalleryPageComponent implements OnInit, OnDestroy {
     protected readonly trendingPeriod = TrendingPeriod;

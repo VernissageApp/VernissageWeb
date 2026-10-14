@@ -15,13 +15,14 @@ import { AuthorizationService } from './services/authorization/authorization.ser
 import { TranslateService } from '@ngx-translate/core';
 import { HeaderComponent } from './components/core/header/header.component';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { RouteFocusDirective } from './directives/route-focus.directive';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [HeaderComponent, MatProgressSpinner, RouterOutlet]
+    imports: [HeaderComponent, MatProgressSpinner, RouterOutlet, RouteFocusDirective]
 })
 export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     protected showLoader = signal(false);

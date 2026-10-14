@@ -2168,6 +2168,10 @@
           "description": "Automatycznie przełącza obrazy statusu co 6 sekund.",
           "title": "Automatyczne przewijanie obrazów w galerii statusu"
         },
+        "hideAiFeatures": {
+          "description": "Ukrywa przyciski AI i ich podpisy podczas dodawania zdjęć.",
+          "title": "Ukryj funkcjonalności AI"
+        },
         "showAlternativeText": {
           "description": "Pokazuj tekst alternatywny, jeśli jest dostępny na ekranie szczegółów statusu.",
           "title": "Pokaż tekst alternatywny"

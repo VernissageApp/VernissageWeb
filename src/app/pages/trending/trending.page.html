@@ -20,7 +20,7 @@
             </h1>
 
             <section class="small-button-toggle">
-                <mat-button-toggle-group [(ngModel)]="trending" (ngModelChange)="onSelectionChange()" [hideSingleSelectionIndicator]="true" [attr.aria-label]="'pages.trending.tabAriaLabel' | translate">
+                <mat-button-toggle-group appReleaseFocusOnPointerClick [(ngModel)]="trending" (ngModelChange)="onSelectionChange()" [hideSingleSelectionIndicator]="true" [attr.aria-label]="'pages.trending.tabAriaLabel' | translate">
                     <mat-button-toggle value="statuses"><mat-icon>insert_photo</mat-icon>
                         @if (!isHandset()) {
                             <span> {{ 'common.labels.photosLabel' | translate: { count: 2 } }}</span>
@@ -44,7 +44,7 @@
         </div>
 
         <div class="flex-row flex-end padding-bottom-10" [class]="{ 'padding-right-30': !isHandset(), 'padding-right-10': isHandset() }">
-            <mat-radio-group [(ngModel)]="period" (ngModelChange)="onSelectionChange()" [attr.aria-label]="'pages.trending.period.ariaLabel' | translate">
+            <mat-radio-group appReleaseFocusOnPointerClick [(ngModel)]="period" (ngModelChange)="onSelectionChange()" [attr.aria-label]="'pages.trending.period.ariaLabel' | translate">
                 <mat-radio-button [disableRipple]="true" [value]="trendingPeriod.Daily">{{ 'pages.trending.period.daily' | translate }}</mat-radio-button>
                 <mat-radio-button [disableRipple]="true" [value]="trendingPeriod.Monthly">{{ 'pages.trending.period.monthly' | translate }}</mat-radio-button>
                 <mat-radio-button [disableRipple]="true" [value]="trendingPeriod.Yearly">{{ 'pages.trending.period.yearly' | translate }}</mat-radio-button>

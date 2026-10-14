@@ -12,13 +12,21 @@ export const apiInterceptor: HttpInterceptorFn = (request, next) => {
     const authorizationService = inject(AuthorizationService);
     const languageService = inject(LanguageService);
 
-    const authorizedRequest = request.clone({
+    let authorizedRequest = request.clone({
         withCredentials: true,
         setHeaders: {
             'X-XSRF-TOKEN': authorizationService.getXsrfToken(),
             'Accept-Language': languageService.getAcceptLanguage(),
         },
     });
+
+    // Safari can drop the contents of disk-backed files when a multipart request is forwarded
+    // through a service worker. Let the browser send FormData requests directly to the network.
+    if (isBrowser && request.body instanceof FormData) {
+        authorizedRequest = authorizedRequest.clone({
+            params: authorizedRequest.params.set('ngsw-bypass', 'true'),
+        });
+    }
 
     // Executing original request.
     return next(authorizedRequest).pipe(catchError(error => {

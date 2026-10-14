@@ -13,6 +13,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { PersistenceService } from '../services/persistance/persistance.service';
 import { environment } from 'src/environments/environment';
 import { ErrorParserService } from '../services/common/error-parser.service';
+import { RESPONSE } from 'express.tokens';
 
 export class GlobalErrorHandler implements ErrorHandler {
     private isBrowser = false;
@@ -53,6 +54,7 @@ export class GlobalErrorHandler implements ErrorHandler {
             this.loadingService.hideLoader();
 
             if (isNotFoundError) {
+                this.setServerResponseStatus(HttpStatusCode.NotFound);
                 await this.router.navigate(['/page-not-found']);
                 return;
             }
@@ -119,5 +121,13 @@ export class GlobalErrorHandler implements ErrorHandler {
 
     private isForbiddenError(error: any): boolean {
         return error instanceof ForbiddenError || (error.rejection && error.rejection instanceof ForbiddenError);
+    }
+
+    private setServerResponseStatus(status: HttpStatusCode): void {
+        if (this.isBrowser) {
+            return;
+        }
+
+        this.injector.get(RESPONSE, null)?.status(status);
     }
 }

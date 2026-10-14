@@ -21,6 +21,13 @@
     width: 100%;
 }
 
+.dropzone.drag-over {
+    border-color: var(--mat-sys-primary);
+    background-color: var(--mat-sys-primary-container);
+    outline: 2px solid var(--mat-sys-primary);
+    outline-offset: 2px;
+}
+
 .edit-template {
     min-width: 24px;
     padding-left: 8px;

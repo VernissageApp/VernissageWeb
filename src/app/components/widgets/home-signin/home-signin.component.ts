@@ -27,13 +27,14 @@ import { TimelineKind } from 'src/app/models/timeline-kind';
 import { LinkableResult } from 'src/app/models/linkable-result';
 import { TimelineMarkersService } from 'src/app/services/http/timeline-markers.service';
 import { Status } from 'src/app/models/status';
+import { ReleaseFocusOnPointerClickDirective } from 'src/app/directives/release-focus-on-pointer-click.directive';
 
 @Component({
     selector: 'app-home-signin',
     templateUrl: './home-signin.component.html',
     styleUrls: ['./home-signin.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [ArticleInlineComponent, MatIconButton, MatIcon, MatButtonToggleGroup, FormsModule, MatButtonToggle, GalleryComponent, TranslatePipe]
+    imports: [ArticleInlineComponent, MatIconButton, MatIcon, MatButtonToggleGroup, FormsModule, MatButtonToggle, GalleryComponent, TranslatePipe, ReleaseFocusOnPointerClickDirective]
 })
 export class HomeSigninComponent extends ReusableGalleryPageComponent implements OnInit, OnDestroy {
     protected timeline = model('private');

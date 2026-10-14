@@ -11,6 +11,7 @@ import { Location } from 'src/app/models/location';
 import { UploadPhoto } from 'src/app/models/upload-photo';
 import { FileSizeService } from 'src/app/services/common/file-size.service';
 import { MessagesService } from 'src/app/services/common/messages.service';
+import { PreferencesService } from 'src/app/services/common/preferences.service';
 import { RecentLocationsService } from 'src/app/services/common/recent-locations.service';
 import { AttachmentsService } from 'src/app/services/http/attachments.service';
 import { CamerasService } from 'src/app/services/http/cameras.service';
@@ -50,6 +51,7 @@ import { GeohashDialog, GeohashDialogResult } from 'src/app/dialogs/geohash-dial
     imports: [MatProgressSpinner, MatButton, MatIcon, MatFormField, MatLabel, InputActivityDirective, MatInput, CdkTextareaAutosize, FormsModule, MaxLengthValidatorDirective, MatError, MatHint, MatSelect, MatOption, MatAutocompleteTrigger, ReactiveFormsModule, AutocompleteValidDirective, MatAutocomplete, MatIconButton, MatSuffix, MatDivider, MatCheckbox, MatPrefix, MatDatepickerInput, MatDatepicker, MatDatepickerToggle, MatTimepickerInput, MatTimepicker, MatTimepickerToggle, AsyncPipe, TranslatePipe]
 })
 export class UploadPhotoComponent extends ResponsiveComponent implements OnInit {
+    protected preferencesService = inject(PreferencesService);
     public photo = model.required<UploadPhoto>();
     public licenses = input.required<License[]>();
     public cancelUpload = output<UploadPhoto>();

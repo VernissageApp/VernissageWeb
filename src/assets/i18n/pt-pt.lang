@@ -2168,6 +2168,10 @@
           "description": "Alterna automaticamente entre imagens do estado a cada 6 segundos.",
           "title": "Auto-scroll imagens em estado gallery"
         },
+        "hideAiFeatures": {
+          "description": "Oculta os botões de IA e as respetivas notas ao adicionar fotografias.",
+          "title": "Ocultar funcionalidades de IA"
+        },
         "showAlternativeText": {
           "description": "Mostrar texto alternativo, se existir, no ecrã de detalhes do estado.",
           "title": "Mostrar alternative text"
