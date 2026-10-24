@@ -152,6 +152,7 @@
       "unrecoverableState": "Tapahtui virhe, eikä sovelluksen tilaa voi palauttaa. Lataa sivu uudelleen."
     },
     "pageTitles": {
+      "directMessages": "Yksityisviestit",
       "accessForbidden": "Vernissage - Pääsy kielletty",
       "account": "Vernissage - Tili",
       "activityPubEventRecipients": "Vernissage - ActivityPub-tapahtuman vastaanottajat",
@@ -294,6 +295,7 @@
     },
     "followButtons": {
       "actions": {
+        "directMessage": "Yksityisviesti",
         "approveFollow": "Hyväksy seuraaminen",
         "blockDomain": "Estä verkkotunnus",
         "blockUser": "Estä käyttäjä",
@@ -529,6 +531,7 @@
       "applicationLogo": "Sovelluksen logo",
       "menuWithActions": "Valikko toiminnoilla",
       "navigation": {
+        "directMessages": "Yksityisviestit",
         "account": "Tili",
         "articles": "Artikkelit",
         "explore": "Tutustu",
@@ -990,6 +993,7 @@
         "webPushPublicKeyIsNotSet": "Web pushin julkista avainta ei ole asetettu."
       },
       "texts": {
+        "newDirectMessage": "Uusi yksityisviesti",
         "boostedStatus": "Päivitystä tehostettu",
         "newCommentAdded": "Uusi kommentti lisätty",
         "newFollowRequest": "Uusi seurantapyyntö",
@@ -1513,6 +1517,40 @@
     }
   },
   "pages": {
+    "directMessages": {
+      "like": "Tykkää viestistä",
+      "unlike": "Poista tykkäys viestistä",
+      "liked": "Tykkätty viesti",
+      "deleteMessage": "Poista viesti",
+      "confirmDelete": "Haluatko varmasti poistaa tämän viestin?",
+      "deletedMessage": "Käyttäjä poisti tämän viestin.",
+      "privacyNotice": "Yksityisviestejä ei ole päästä päähän salattu. Älä jaa arkaluonteisia tietoja.",
+      "title": "Yksityisviestit",
+      "subtitle": "Yksityisiä keskusteluja fediversumissa.",
+      "newMessage": "Uusi viesti",
+      "conversations": "Keskustelut",
+      "searchConversations": "Hae keskusteluja",
+      "image": "Kuva",
+      "unread": "Lukemattomat viestit",
+      "loadError": "Viestien lataaminen epäonnistui. Yritä uudelleen.",
+      "noResults": "Hakua vastaavia keskusteluja ei löytynyt.",
+      "noConversations": "Ei vielä keskusteluja.",
+      "removeRecipient": "Poista vastaanottaja",
+      "participants": "{count, plural, one {# osallistuja} other {# osallistujaa}}",
+      "searchUser": "Hae vastaanottajaa",
+      "add": "Lisää",
+      "mute": "Mykistä keskustelu",
+      "unmute": "Poista keskustelun mykistys",
+      "history": "Viestihistoria",
+      "olderMessages": "Lataa vanhempia viestejä",
+      "chooseRecipients": "Hae käyttäjää ja aloita keskustelu napsauttamalla Lisää.",
+      "removeImage": "Poista kuva",
+      "writeMessage": "Kirjoita viesti...",
+      "addImage": "Lisää kuva",
+      "selectConversation": "Valitse keskustelu tai aloita uusi viesti.",
+      "invalidImage": "Valitse tuetussa muodossa oleva kuva, joka ei ylitä palvelimen tiedostokokorajoitusta.",
+      "emailVerificationRequired": "Vahvista sähköpostiosoitteesi ennen viestin lähettämistä."
+    },
     "account": {
       "avatar": {
         "removeAriaLabel": "Poista avatar",
@@ -2121,6 +2159,7 @@
     },
     "notifications": {
       "actions": {
+        "openConversation": "Avaa keskustelu",
         "openUserProfileAriaLabel": "Avaa käyttäjäprofiili",
         "refreshCurrentTimelineAriaLabel": "Päivitä nykyinen aikajana"
       },
@@ -2129,6 +2168,8 @@
       },
       "title": "Ilmoitukset",
       "types": {
+        "directMessage": "lähetti sinulle yksityisviestin",
+        "favouriteConversationComment": "tykkäsi kommentistasi keskustelussa",
         "adminReport": "on raportoitu",
         "adminSignUp": "on uusi käyttäjä",
         "favouriteComment": "lisäsi kommenttisi suosikkeihin",
@@ -2269,6 +2310,7 @@
         "emailRequired": "Anna sähköpostiosoite.",
         "emailTaken": "Valitse toinen sähköpostiosoite, tämä on jo yhdistetty eri tiliin.",
         "invalidCaptchaCode": "Captcha-koodi on virheellinen. Yritä uudelleen.",
+        "registrationIsDisabled": "Rekisteröityminen ilman kutsukoodia tai liittymisen syytä on poistettu käytöstä.",
         "invitationCodeRequired": "Syötä kutsukoodi.",
         "invitationCodeTooLong": "Kutsukoodi on liian pitkä.",
         "invitationTokenInvalid": "Kutsutunnus on virheellinen.",

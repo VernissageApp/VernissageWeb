@@ -37,6 +37,7 @@ export class NotificationSettingsDialog implements OnInit {
     protected webPushAdminSignUpEnabled = model(true);
     protected webPushAdminReportEnabled = model(true);
     protected webPushNewCommentEnabled = model(true);
+    protected webPushDirectMessageEnabled = model(true);
 
     private endpoint?: string;
     private p256dh?: string;
@@ -71,6 +72,7 @@ export class NotificationSettingsDialog implements OnInit {
             this.webPushAdminSignUpEnabled.set(currentSubscription.webPushAdminSignUpEnabled);
             this.webPushAdminReportEnabled.set(currentSubscription.webPushAdminReportEnabled);
             this.webPushNewCommentEnabled.set(currentSubscription.webPushNewCommentEnabled);
+            this.webPushDirectMessageEnabled.set(currentSubscription.webPushDirectMessageEnabled ?? true);
         }
 
         this.switchDisabled.set(Notification.permission == 'denied');
@@ -122,6 +124,7 @@ export class NotificationSettingsDialog implements OnInit {
             pusSubscription.webPushAdminSignUpEnabled = this.webPushAdminSignUpEnabled();
             pusSubscription.webPushAdminReportEnabled = this.webPushAdminReportEnabled();
             pusSubscription.webPushNewCommentEnabled = this.webPushNewCommentEnabled();
+            pusSubscription.webPushDirectMessageEnabled = this.webPushDirectMessageEnabled();
 
             await this.pushSubscriptionsService.create(pusSubscription);
             this.messageService.showSuccess(this.translateService.instant('dialogs.notificationSettings.messages.notificationSettingsHasBeenSaved'));

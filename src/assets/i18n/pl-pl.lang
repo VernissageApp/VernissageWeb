@@ -152,6 +152,7 @@
       "unrecoverableState": "Wystąpił błąd i nie można przywrócić stanu aplikacji. Przeładuj stronę."
     },
     "pageTitles": {
+      "directMessages": "Wiadomości prywatne",
       "accessForbidden": "Vernissage - Brak dostępu",
       "account": "Vernissage - Konto",
       "activityPubEventRecipients": "Vernissage - Odbiorcy zdarzenia ActivityPub",
@@ -294,6 +295,7 @@
     },
     "followButtons": {
       "actions": {
+        "directMessage": "Wiadomość prywatna",
         "approveFollow": "Zaakceptuj obserwację",
         "blockDomain": "Zablokuj domenę",
         "blockUser": "Zablokuj użytkownika",
@@ -529,6 +531,7 @@
       "applicationLogo": "Logo aplikacji",
       "menuWithActions": "Menu z akcjami",
       "navigation": {
+        "directMessages": "Wiadomości prywatne",
         "account": "Konto",
         "articles": "Artykuły",
         "explore": "Odkrywaj",
@@ -990,6 +993,7 @@
         "webPushPublicKeyIsNotSet": "Klucz publiczny Web Push nie jest ustawiony."
       },
       "texts": {
+        "newDirectMessage": "Nowa wiadomość prywatna",
         "boostedStatus": "Status został podbity",
         "newCommentAdded": "Dodano nowy komentarz",
         "newFollowRequest": "Nowa prośba o obserwowanie",
@@ -1513,6 +1517,40 @@
     }
   },
   "pages": {
+    "directMessages": {
+      "emailVerificationRequired": "Nie możesz wysłać wiadomości, dopóki nie zweryfikujesz adresu e-mail.",
+      "like": "Polub wiadomość",
+      "unlike": "Cofnij polubienie wiadomości",
+      "liked": "Polubiona wiadomość",
+      "deleteMessage": "Usuń wiadomość",
+      "confirmDelete": "Czy na pewno chcesz usunąć wiadomość?",
+      "deletedMessage": "Wiadomość została usunięta przez użytkownika.",
+      "privacyNotice": "Wiadomości prywatne nie są szyfrowane end-to-end. Nie przesyłaj w nich poufnych informacji.",
+      "title": "Wiadomości prywatne",
+      "subtitle": "Prywatne rozmowy w fediwersum.",
+      "newMessage": "Nowa wiadomość",
+      "conversations": "Rozmowy",
+      "searchConversations": "Szukaj rozmów",
+      "image": "Zdjęcie",
+      "unread": "Nieprzeczytane wiadomości",
+      "loadError": "Nie udało się wczytać wiadomości. Spróbuj ponownie.",
+      "noResults": "Brak pasujących rozmów.",
+      "noConversations": "Nie masz jeszcze żadnych rozmów.",
+      "removeRecipient": "Usuń odbiorcę",
+      "participants": "{count, plural, one {# uczestnik} few {# uczestnicy} many {# uczestników} other {# uczestnika}}",
+      "searchUser": "Wyszukaj odbiorcę",
+      "add": "Dodaj",
+      "mute": "Wycisz rozmowę",
+      "unmute": "Wyłącz wyciszenie",
+      "history": "Historia wiadomości",
+      "olderMessages": "Wczytaj starsze wiadomości",
+      "chooseRecipients": "Wyszukaj użytkownika i kliknij Dodaj, aby rozpocząć rozmowę.",
+      "removeImage": "Usuń zdjęcie",
+      "writeMessage": "Napisz wiadomość...",
+      "addImage": "Dodaj zdjęcie",
+      "selectConversation": "Wybierz rozmowę lub utwórz nową wiadomość.",
+      "invalidImage": "Wybierz zdjęcie w obsługiwanym formacie i mieszczące się w limicie rozmiaru pliku serwera."
+    },
     "account": {
       "avatar": {
         "removeAriaLabel": "Usuń awatar",
@@ -2121,6 +2159,7 @@
     },
     "notifications": {
       "actions": {
+        "openConversation": "Otwórz konwersację",
         "openUserProfileAriaLabel": "Otwórz profil użytkownika",
         "refreshCurrentTimelineAriaLabel": "Odśwież bieżącą oś czasu"
       },
@@ -2131,7 +2170,9 @@
       "types": {
         "adminReport": "został(a) zgłoszony(a)",
         "adminSignUp": "jest nowym użytkownikiem",
+        "directMessage": "wysłał(a) Ci wiadomość prywatną",
         "favouriteComment": "polubił(a) Twój komentarz",
+        "favouriteConversationComment": "polubił(a) Twój komentarz w konwersacji",
         "favouriteStatus": "polubił(a) Twoje zdjęcie",
         "follow": "obserwuje Cię",
         "followRequest": "chce Cię obserwować",
@@ -2269,6 +2310,7 @@
         "emailRequired": "Wpisz adres e-mail.",
         "emailTaken": "Wybierz inny adres e-mail, ten jest już powiązany z innym kontem.",
         "invalidCaptchaCode": "Kod captcha jest nieprawidłowy. Spróbuj ponownie.",
+        "registrationIsDisabled": "Rejestracja bez kodu zaproszenia lub podania powodu rejestracji jest wyłączona.",
         "invitationCodeRequired": "Wpisz kod zaproszenia.",
         "invitationCodeTooLong": "Kod zaproszenia jest za długi.",
         "invitationTokenInvalid": "Token zaproszenia jest nieprawidłowy.",

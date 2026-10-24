@@ -152,6 +152,7 @@
       "unrecoverableState": "Ocorreu um erro e o estado da aplicação não pode ser recuperado. Por favor, recarregue a página."
     },
     "pageTitles": {
+      "directMessages": "Mensagens privadas",
       "accessForbidden": "Vernissage - Acesso proibido",
       "account": "Vernissage - Conta",
       "activityPubEventRecipients": "Vernissage - Destinatários de eventos ActivityPub",
@@ -294,6 +295,7 @@
     },
     "followButtons": {
       "actions": {
+        "directMessage": "Mensagem privada",
         "approveFollow": "Aprovar seguir",
         "blockDomain": "Bloquear domínio",
         "blockUser": "Bloquear utilizador",
@@ -529,6 +531,7 @@
       "applicationLogo": "Logótipo da aplicação",
       "menuWithActions": "Menu com ações",
       "navigation": {
+        "directMessages": "Mensagens privadas",
         "account": "Conta",
         "articles": "Artigos",
         "explore": "Explorar",
@@ -990,6 +993,7 @@
         "webPushPublicKeyIsNotSet": "A chave pública Web Push não está definida."
       },
       "texts": {
+        "newDirectMessage": "Nova mensagem privada",
         "boostedStatus": "Estado impulsionado",
         "newCommentAdded": "Novo comentário adicionado",
         "newFollowRequest": "Novo pedido de seguimento",
@@ -1513,6 +1517,40 @@
     }
   },
   "pages": {
+    "directMessages": {
+      "like": "Gostar da mensagem",
+      "unlike": "Deixar de gostar da mensagem",
+      "liked": "Mensagem com gostos",
+      "deleteMessage": "Eliminar mensagem",
+      "confirmDelete": "Tem a certeza de que pretende eliminar esta mensagem?",
+      "deletedMessage": "Esta mensagem foi eliminada pelo utilizador.",
+      "privacyNotice": "As mensagens privadas não são cifradas de ponta a ponta. Não partilhe informações sensíveis.",
+      "title": "Mensagens privadas",
+      "subtitle": "Conversas privadas no fediverso.",
+      "newMessage": "Nova mensagem",
+      "conversations": "Conversas",
+      "searchConversations": "Pesquisar conversas",
+      "image": "Imagem",
+      "unread": "Mensagens não lidas",
+      "loadError": "Não foi possível carregar as mensagens. Tente novamente.",
+      "noResults": "Nenhuma conversa correspondente.",
+      "noConversations": "Ainda não há conversas.",
+      "removeRecipient": "Remover destinatário",
+      "participants": "{count, plural, one {# participante} other {# participantes}}",
+      "searchUser": "Pesquisar um destinatário",
+      "add": "Adicionar",
+      "mute": "Silenciar conversa",
+      "unmute": "Reativar notificações da conversa",
+      "history": "Histórico de mensagens",
+      "olderMessages": "Carregar mensagens anteriores",
+      "chooseRecipients": "Pesquise um utilizador e clique em Adicionar para iniciar uma conversa.",
+      "removeImage": "Remover imagem",
+      "writeMessage": "Escreva uma mensagem...",
+      "addImage": "Adicionar imagem",
+      "selectConversation": "Selecione uma conversa ou comece uma nova mensagem.",
+      "invalidImage": "Escolha uma imagem num formato suportado que respeite o limite de tamanho de ficheiro do servidor.",
+      "emailVerificationRequired": "Verifique o seu endereço de e-mail antes de enviar uma mensagem."
+    },
     "account": {
       "avatar": {
         "removeAriaLabel": "Remover avatar",
@@ -2121,6 +2159,7 @@
     },
     "notifications": {
       "actions": {
+        "openConversation": "Abrir conversa",
         "openUserProfileAriaLabel": "Abrir perfil do utilizador",
         "refreshCurrentTimelineAriaLabel": "Atualizar linha do tempo atual"
       },
@@ -2129,6 +2168,8 @@
       },
       "title": "Notificações",
       "types": {
+        "directMessage": "enviou-lhe uma mensagem privada",
+        "favouriteConversationComment": "gostou do seu comentário numa conversa",
         "adminReport": "foi denunciado",
         "adminSignUp": "é um novo utilizador",
         "favouriteComment": "favorited seu comentário",
@@ -2269,6 +2310,7 @@
         "emailRequired": "Introduza o email.",
         "emailTaken": "Escolha outro endereço de email. Este já está associado a outra conta.",
         "invalidCaptchaCode": "Captcha código é inválido. por favor tente novamente.",
+        "registrationIsDisabled": "O registo sem um código de convite ou um motivo para se registar está desativado.",
         "invitationCodeRequired": "Introduza invitation code.",
         "invitationCodeTooLong": "Invitation code é demasiado longo.",
         "invitationTokenInvalid": "Invitation token é inválido.",

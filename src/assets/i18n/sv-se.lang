@@ -152,6 +152,7 @@
       "unrecoverableState": "Ett fel uppstod och programtillståndet kan inte återställas. Vänligen ladda om sidan."
     },
     "pageTitles": {
+      "directMessages": "Privata meddelanden",
       "accessForbidden": "Vernissage - Tillgång förbjuden",
       "account": "Vernissage - Konto",
       "activityPubEventRecipients": "Vernissage - ActivityPub-händelsemottagare",
@@ -294,6 +295,7 @@
     },
     "followButtons": {
       "actions": {
+        "directMessage": "Privat meddelande",
         "approveFollow": "Godkänn följ",
         "blockDomain": "Blockera domän",
         "blockUser": "Blockera användare",
@@ -529,6 +531,7 @@
       "applicationLogo": "Applikationslogotyp",
       "menuWithActions": "Meny med åtgärder",
       "navigation": {
+        "directMessages": "Privata meddelanden",
         "account": "konto",
         "articles": "Artiklar",
         "explore": "Utforska",
@@ -990,6 +993,7 @@
         "webPushPublicKeyIsNotSet": "Den offentliga webbnyckeln är inte inställd."
       },
       "texts": {
+        "newDirectMessage": "Nytt privat meddelande",
         "boostedStatus": "Boostad status",
         "newCommentAdded": "Ny kommentar tillagd",
         "newFollowRequest": "Ny följningsförfrågan",
@@ -1513,6 +1517,40 @@
     }
   },
   "pages": {
+    "directMessages": {
+      "like": "Gilla meddelande",
+      "unlike": "Ta bort gilla-markering från meddelandet",
+      "liked": "Gillat meddelande",
+      "deleteMessage": "Ta bort meddelande",
+      "confirmDelete": "Är du säker på att du vill ta bort det här meddelandet?",
+      "deletedMessage": "Det här meddelandet har tagits bort av användaren.",
+      "privacyNotice": "Privata meddelanden är inte totalsträckskrypterade. Dela inte känslig information.",
+      "title": "Privata meddelanden",
+      "subtitle": "Privata samtal i fediversum.",
+      "newMessage": "Nytt meddelande",
+      "conversations": "Samtal",
+      "searchConversations": "Sök bland samtal",
+      "image": "Bild",
+      "unread": "Olästa meddelanden",
+      "loadError": "Det gick inte att läsa in meddelandena. Försök igen.",
+      "noResults": "Inga matchande samtal.",
+      "noConversations": "Inga samtal ännu.",
+      "removeRecipient": "Ta bort mottagare",
+      "participants": "{count, plural, one {# deltagare} other {# deltagare}}",
+      "searchUser": "Sök efter en mottagare",
+      "add": "Lägg till",
+      "mute": "Tysta samtal",
+      "unmute": "Slå på aviseringar för samtalet",
+      "history": "Meddelandehistorik",
+      "olderMessages": "Läs in äldre meddelanden",
+      "chooseRecipients": "Sök efter en användare och klicka på Lägg till för att starta ett samtal.",
+      "removeImage": "Ta bort bild",
+      "writeMessage": "Skriv ett meddelande...",
+      "addImage": "Lägg till bild",
+      "selectConversation": "Välj ett samtal eller börja på ett nytt meddelande.",
+      "invalidImage": "Välj en bild i ett format som stöds och som inte överskrider serverns filstorleksgräns.",
+      "emailVerificationRequired": "Verifiera din e-postadress innan du skickar ett meddelande."
+    },
     "account": {
       "avatar": {
         "removeAriaLabel": "Ta bort avatar",
@@ -2121,6 +2159,7 @@
     },
     "notifications": {
       "actions": {
+        "openConversation": "Öppna samtal",
         "openUserProfileAriaLabel": "Öppna användarprofilen",
         "refreshCurrentTimelineAriaLabel": "Uppdatera aktuell tidslinje"
       },
@@ -2129,6 +2168,8 @@
       },
       "title": "Aviseringar",
       "types": {
+        "directMessage": "skickade ett privat meddelande till dig",
+        "favouriteConversationComment": "gillade din kommentar i ett samtal",
         "adminReport": "har rapporterats",
         "adminSignUp": "är en ny användare",
         "favouriteComment": "favoriserade din kommentar",
@@ -2269,6 +2310,7 @@
         "emailRequired": "Ange e-post.",
         "emailTaken": "Välj annan e-postadress, den här är redan kopplad till ett annat konto.",
         "invalidCaptchaCode": "Captcha-koden är ogiltig. Försök igen.",
+        "registrationIsDisabled": "Registrering utan inbjudningskod eller en anledning till att gå med är inaktiverad.",
         "invitationCodeRequired": "Ange inbjudningskoden.",
         "invitationCodeTooLong": "Inbjudningskoden är för lång.",
         "invitationTokenInvalid": "Inbjudanstoken är ogiltig.",

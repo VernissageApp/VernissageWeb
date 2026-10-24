@@ -54,7 +54,12 @@
                                                     </div>
                                                 </div>
 
-                                                @if (item.notification.mainStatus && getAttachmentUrl(item.notification.mainStatus)) {
+                                                @if (isConversationNotification(item.notification)) {
+                                                    <a matButton="text" [routerLink]="['/direct-messages']" [queryParams]="{ conversationId: item.notification.conversationId }">
+                                                        {{ 'pages.notifications.actions.openConversation' | translate }}
+                                                    </a>
+                                                }
+                                                @else if (item.notification.mainStatus && getAttachmentUrl(item.notification.mainStatus)) {
                                                     <div class="status">
                                                         <a [routerLink]="['/statuses', item.notification.mainStatus.id]" [queryParams]="getStatusQueryParams(item.notification)">
                                                             <img [src]="getAttachmentUrl(item.notification.mainStatus)" class="" [alt]="getAttachmentAlt(item.notification.mainStatus) ?? ('common.labels.statusImage' | translate)" />

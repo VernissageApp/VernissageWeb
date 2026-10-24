@@ -152,6 +152,7 @@
       "unrecoverableState": "Se produjo un error y no se puede recuperar el estado de la aplicación. Por favor, recarga la página."
     },
     "pageTitles": {
+      "directMessages": "Mensajes privados",
       "accessForbidden": "Vernissage - Acceso prohibido",
       "account": "Vernissage - Cuenta",
       "activityPubEventRecipients": "Vernissage - Destinatarios del evento ActivityPub",
@@ -294,6 +295,7 @@
     },
     "followButtons": {
       "actions": {
+        "directMessage": "Mensaje privado",
         "approveFollow": "Aprobar seguimiento",
         "blockDomain": "Bloquear dominio",
         "blockUser": "Bloquear usuario",
@@ -529,6 +531,7 @@
       "applicationLogo": "Logotipo de la aplicación",
       "menuWithActions": "Menú con acciones",
       "navigation": {
+        "directMessages": "Mensajes privados",
         "account": "Cuenta",
         "articles": "Artículos",
         "explore": "Explorar",
@@ -990,6 +993,7 @@
         "webPushPublicKeyIsNotSet": "La clave pública de Web Push no está configurada."
       },
       "texts": {
+        "newDirectMessage": "Nuevo mensaje privado",
         "boostedStatus": "Estado impulsado",
         "newCommentAdded": "Nuevo comentario añadido",
         "newFollowRequest": "Nueva solicitud de seguimiento",
@@ -1513,6 +1517,40 @@
     }
   },
   "pages": {
+    "directMessages": {
+      "like": "Me gusta este mensaje",
+      "unlike": "Quitar Me gusta del mensaje",
+      "liked": "Mensaje con Me gusta",
+      "deleteMessage": "Eliminar mensaje",
+      "confirmDelete": "¿Seguro que quieres eliminar este mensaje?",
+      "deletedMessage": "El usuario ha eliminado este mensaje.",
+      "privacyNotice": "Los mensajes privados no están cifrados de extremo a extremo. No compartas información confidencial.",
+      "title": "Mensajes privados",
+      "subtitle": "Conversaciones privadas en el fediverso.",
+      "newMessage": "Nuevo mensaje",
+      "conversations": "Conversaciones",
+      "searchConversations": "Buscar conversaciones",
+      "image": "Imagen",
+      "unread": "Mensajes sin leer",
+      "loadError": "No se pudieron cargar los mensajes. Inténtalo de nuevo.",
+      "noResults": "No hay conversaciones que coincidan.",
+      "noConversations": "Todavía no hay conversaciones.",
+      "removeRecipient": "Eliminar destinatario",
+      "participants": "{count, plural, one {# participante} other {# participantes}}",
+      "searchUser": "Buscar un destinatario",
+      "add": "Añadir",
+      "mute": "Silenciar conversación",
+      "unmute": "Dejar de silenciar la conversación",
+      "history": "Historial de mensajes",
+      "olderMessages": "Cargar mensajes anteriores",
+      "chooseRecipients": "Busca un usuario y pulsa Añadir para iniciar una conversación.",
+      "removeImage": "Eliminar imagen",
+      "writeMessage": "Escribe un mensaje...",
+      "addImage": "Añadir imagen",
+      "selectConversation": "Selecciona una conversación o empieza un mensaje nuevo.",
+      "invalidImage": "Elige una imagen en un formato compatible que no supere el límite de tamaño del servidor.",
+      "emailVerificationRequired": "Verifica tu dirección de correo electrónico antes de enviar un mensaje."
+    },
     "account": {
       "avatar": {
         "removeAriaLabel": "Eliminar avatar",
@@ -2121,6 +2159,7 @@
     },
     "notifications": {
       "actions": {
+        "openConversation": "Abrir conversación",
         "openUserProfileAriaLabel": "Abrir perfil de usuario",
         "refreshCurrentTimelineAriaLabel": "Actualizar línea de tiempo actual"
       },
@@ -2129,6 +2168,8 @@
       },
       "title": "Notificaciones",
       "types": {
+        "directMessage": "te ha enviado un mensaje privado",
+        "favouriteConversationComment": "ha indicado que le gusta tu comentario en una conversación",
         "adminReport": "ha sido reportado",
         "adminSignUp": "es un nuevo usuario",
         "favouriteComment": "favorito tu comentario",
@@ -2269,6 +2310,7 @@
         "emailRequired": "Introduce el correo electrónico.",
         "emailTaken": "Elige otro correo electrónico, este ya está conectado a una cuenta diferente.",
         "invalidCaptchaCode": "El código captcha no es válido. Por favor inténtalo de nuevo.",
+        "registrationIsDisabled": "El registro sin un código de invitación o un motivo para registrarse está deshabilitado.",
         "invitationCodeRequired": "Introduce el código de invitación.",
         "invitationCodeTooLong": "El código de invitación es demasiado largo.",
         "invitationTokenInvalid": "El token de invitación no es válido.",

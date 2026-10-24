@@ -19,11 +19,15 @@
             }
         }
 
-        @if (showOpenOriginalProfileButton() || showCopyProfileUrlButton() || showMuteButton() || showUnmuteButton() || showFeatureButton() || showUnfeatureButton() || showReportButton()) {
+        @if (showDirectMessage() || showOpenOriginalProfileButton() || showCopyProfileUrlButton() || showMuteButton() || showUnmuteButton() || showFeatureButton() || showUnfeatureButton() || showReportButton()) {
             <button class="more-button" matButton="outlined" [matMenuTriggerFor]="dropdownMenuOne2" [attr.aria-label]="'common.labels.moreOptions' | translate">
                 <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #dropdownMenuOne2="matMenu" xPosition="before">
+                @if (showDirectMessage()) {
+                    <a mat-menu-item [routerLink]="['/direct-messages']" [queryParams]="{ recipientId: updatedUser().id }"><mat-icon>forum</mat-icon> {{ 'components.followButtons.actions.directMessage' | translate }}</a>
+                    <mat-divider />
+                }
                 @if (showOpenOriginalProfileButton()) {
                     <button (click)="onOriginalProfile()" mat-menu-item><mat-icon>public</mat-icon> {{ 'components.followButtons.actions.openOriginalProfile' | translate }}</button>
                 }

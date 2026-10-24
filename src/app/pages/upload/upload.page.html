@@ -142,7 +142,6 @@
                                         <mat-option [value]="statusVisibility.Public">{{ 'pages.upload.visibility.public' | translate }}</mat-option>
                                         <mat-option [value]="statusVisibility.QuietPublic">{{ 'pages.upload.visibility.quietPublic' | translate }}</mat-option>
                                         <mat-option [value]="statusVisibility.Followers">{{ 'pages.upload.visibility.followers' | translate }}</mat-option>
-                                        <mat-option [value]="statusVisibility.Mentioned">{{ 'pages.upload.visibility.mentioned' | translate }}</mat-option>
                                     </mat-select>
                                     <mat-hint class="text-muted">
                                         @if (!isHandsetPortrait()) {
@@ -155,9 +154,6 @@
                                                 }
                                                 @case (statusVisibility.Followers) {
                                                     <span>{{ 'pages.upload.visibilityHints.followers' | translate }}</span>
-                                                }
-                                                @case (statusVisibility.Mentioned) {
-                                                    <span>{{ 'pages.upload.visibilityHints.mentioned' | translate }}</span>
                                                 }
                                             }
                                         }

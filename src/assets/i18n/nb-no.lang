@@ -152,6 +152,7 @@
       "unrecoverableState": "Det oppstod en feil og applikasjonstilstanden kan ikke gjenopprettes. Last inn siden på nytt."
     },
     "pageTitles": {
+      "directMessages": "Private meldinger",
       "accessForbidden": "Vernissage - Access forbidden",
       "account": "Vernissage - Konto",
       "activityPubEventRecipients": "Vernissage - ActivityPubevent recipients",
@@ -294,6 +295,7 @@
     },
     "followButtons": {
       "actions": {
+        "directMessage": "Privat melding",
         "approveFollow": "Godkjenne følg",
         "blockDomain": "Blokker domene",
         "blockUser": "Blokker bruker",
@@ -529,6 +531,7 @@
       "applicationLogo": "Applikasjonslogo",
       "menuWithActions": "Meny med handlinger",
       "navigation": {
+        "directMessages": "Private meldinger",
         "account": "Konto",
         "articles": "Artikler",
         "explore": "Utforsk",
@@ -990,6 +993,7 @@
         "webPushPublicKeyIsNotSet": "Web-push offentlig nøkkel er ikke angitt."
       },
       "texts": {
+        "newDirectMessage": "Ny privat melding",
         "boostedStatus": "Forsterket status",
         "newCommentAdded": "Ny kommentar lagt til",
         "newFollowRequest": "Ny følgeforespørsel",
@@ -1513,6 +1517,40 @@
     }
   },
   "pages": {
+    "directMessages": {
+      "like": "Lik melding",
+      "unlike": "Fjern likerklikk fra meldingen",
+      "liked": "Melding som er likt",
+      "deleteMessage": "Slett melding",
+      "confirmDelete": "Er du sikker på at du vil slette denne meldingen?",
+      "deletedMessage": "Denne meldingen ble slettet av brukeren.",
+      "privacyNotice": "Private meldinger er ikke ende-til-ende-kryptert. Ikke del sensitive opplysninger.",
+      "title": "Private meldinger",
+      "subtitle": "Private samtaler i fødiverset.",
+      "newMessage": "Ny melding",
+      "conversations": "Samtaler",
+      "searchConversations": "Søk i samtaler",
+      "image": "Bilde",
+      "unread": "Uleste meldinger",
+      "loadError": "Kunne ikke laste inn meldingene. Prøv igjen.",
+      "noResults": "Ingen samsvarende samtaler.",
+      "noConversations": "Ingen samtaler ennå.",
+      "removeRecipient": "Fjern mottaker",
+      "participants": "{count, plural, one {# deltaker} other {# deltakere}}",
+      "searchUser": "Søk etter en mottaker",
+      "add": "Legg til",
+      "mute": "Demp samtale",
+      "unmute": "Slå på varsler for samtalen",
+      "history": "Meldingshistorikk",
+      "olderMessages": "Last inn eldre meldinger",
+      "chooseRecipients": "Søk etter en bruker og klikk på Legg til for å starte en samtale.",
+      "removeImage": "Fjern bilde",
+      "writeMessage": "Skriv en melding...",
+      "addImage": "Legg til bilde",
+      "selectConversation": "Velg en samtale eller start en ny melding.",
+      "invalidImage": "Velg et bilde i et støttet format som ikke overskrider serverens grense for filstørrelse.",
+      "emailVerificationRequired": "Bekreft e-postadressen din før du sender en melding."
+    },
     "account": {
       "avatar": {
         "removeAriaLabel": "Fjern avatar",
@@ -2121,6 +2159,7 @@
     },
     "notifications": {
       "actions": {
+        "openConversation": "Åpne samtale",
         "openUserProfileAriaLabel": "Åpne brukerprofil",
         "refreshCurrentTimelineAriaLabel": "Oppdater gjeldende tidslinje"
       },
@@ -2129,6 +2168,8 @@
       },
       "title": "Varsler",
       "types": {
+        "directMessage": "sendte deg en privat melding",
+        "favouriteConversationComment": "likte kommentaren din i en samtale",
         "adminReport": "har blitt rapportert",
         "adminSignUp": "er en ny bruker",
         "favouriteComment": "merket kommentaren din som favoritt",
@@ -2269,6 +2310,7 @@
         "emailRequired": "Skriv inn e-post.",
         "emailTaken": "Velg en annen e-postadresse, denne er allerede koblet til en annen konto.",
         "invalidCaptchaCode": "Captcha-koden er ugyldig. Vennligst prøv igjen.",
+        "registrationIsDisabled": "Registrering uten invitasjonskode eller en begrunnelse for å bli med er deaktivert.",
         "invitationCodeRequired": "Skriv inn invitasjonskoden.",
         "invitationCodeTooLong": "Invitasjonskoden er for lang.",
         "invitationTokenInvalid": "Invitasjonstoken er ugyldig.",
