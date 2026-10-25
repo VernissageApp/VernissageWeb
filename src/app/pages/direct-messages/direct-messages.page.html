@@ -179,6 +179,7 @@
                 <div class="composer-input">
                     <textarea name="message" rows="1" cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="10"
                         [ngModel]="note()" (ngModelChange)="note.set($event)" [maxlength]="maxCharacters"
+                        (keydown)="onMessageKeyDown($event)"
                         [disabled]="emailHasBeenVerified() !== true || sending() || !recipients().length" [placeholder]="'pages.directMessages.writeMessage' | translate"
                         [attr.aria-label]="'pages.directMessages.writeMessage' | translate"></textarea>
                     <input #photoInput type="file" hidden multiple [disabled]="emailHasBeenVerified() !== true" [accept]="acceptedTypes" (change)="upload($event)" />

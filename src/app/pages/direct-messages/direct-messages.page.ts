@@ -412,6 +412,16 @@ export class DirectMessagesPage implements OnInit, OnDestroy {
         }
     }
 
+    protected onMessageKeyDown(event: KeyboardEvent): void {
+        if (event.key !== 'Enter' || (!event.ctrlKey && !event.metaKey) || event.isComposing) {
+            return;
+        }
+
+        event.preventDefault();
+
+        void this.send();
+    }
+
     protected async send(): Promise<void> {
         if (!this.canSend()) {
             return;
