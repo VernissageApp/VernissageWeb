@@ -22,7 +22,9 @@ import { AvatarSize } from '../../components/widgets/avatar/avatar-size';
 import { UserSelectorComponent } from '../../components/widgets/user-selector/user-selector.component';
 import { ViewportObserverDirective } from '../../directives/viewport-observer.directive';
 import { InputActivityDirective } from '../../directives/input-activity.directive';
+import { HrefToRouterLinkDirective } from '../../directives/href-to-router-link.directive';
 import { LocalizedDatePipe } from '../../pipes/localized-date.pipe';
+import { LocalMentionsPipe } from '../../pipes/local-mentions.pipe';
 import { DirectConversation } from '../../models/direct-conversation';
 import { DirectMessage } from '../../models/direct-message';
 import { TemporaryAttachment } from '../../models/temporary-attachment';
@@ -39,8 +41,8 @@ import { InstanceService } from '../../services/http/instance.service';
     styleUrls: ['./direct-messages-sidebar.scss', './direct-messages.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { subscriptSizing: 'dynamic' } }],
-    imports: [FormsModule, CdkTextareaAutosize, LocalizedDatePipe, TranslatePipe, MatButton, MatIconButton, MatIcon, MatMenu, MatMenuItem,
-        MatMenuTrigger, MatProgressSpinner, AvatarComponent, UserSelectorComponent, ViewportObserverDirective, InputActivityDirective, RouterLink]
+    imports: [FormsModule, CdkTextareaAutosize, LocalizedDatePipe, LocalMentionsPipe, TranslatePipe, MatButton, MatIconButton, MatIcon, MatMenu, MatMenuItem,
+        MatMenuTrigger, MatProgressSpinner, AvatarComponent, UserSelectorComponent, ViewportObserverDirective, InputActivityDirective, HrefToRouterLinkDirective, RouterLink]
 })
 export class DirectMessagesPage implements OnInit, OnDestroy {
     protected readonly avatarSize = AvatarSize;
@@ -80,6 +82,16 @@ export class DirectMessagesPage implements OnInit, OnDestroy {
 
     protected readonly busy = computed(() => this.sending() || this.uploading() || this.removing());
 
+    protected readonly recipientMentions = computed(() => {
+        const mentions = this.recipients().map(user => {
+            const account = user.isLocal === false ? user.account ?? user.userName : user.userName ?? user.account;
+
+            return account ? `@${account.replace(/^@/, '')}` : '';
+        }).filter(Boolean);
+
+        return mentions.length ? mentions.join(' ') + ' ' : '';
+    });
+
     protected readonly filteredConversations = computed(() => {
         const query = this.query().trim().toLocaleLowerCase();
 
@@ -102,7 +114,7 @@ export class DirectMessagesPage implements OnInit, OnDestroy {
         && !this.messagesError()
         && (this.creating() || !!this.selected())
         && this.recipients().length > 0
-        && (!!this.note().trim() || this.attachments().length > 0)
+        && ((!!this.note().trim() && this.note().trim() !== this.recipientMentions().trim()) || this.attachments().length > 0)
         && this.note().length <= this.maxCharacters);
 
     private readonly galleryId = 'directMessagesGallery';
@@ -276,6 +288,7 @@ export class DirectMessagesPage implements OnInit, OnDestroy {
         this.creating.set(false);
         this.selected.set(conversation);
         this.recipients.set(this.others(conversation));
+        this.note.set(this.recipientMentions());
         this.panelOpen.set(true);
         await this.loadMessages(true);
     }
@@ -295,7 +308,10 @@ export class DirectMessagesPage implements OnInit, OnDestroy {
             return;
         }
 
+        const previousMentions = this.recipientMentions();
+
         this.recipients.update(users => [...users, user]);
+        this.updateRecipientMentions(previousMentions);
         this.candidate.set(undefined);
     }
 
@@ -304,7 +320,10 @@ export class DirectMessagesPage implements OnInit, OnDestroy {
             return;
         }
 
+        const previousMentions = this.recipientMentions();
+
         this.recipients.update(users => users.filter(item => item.id !== user.id));
+        this.updateRecipientMentions(previousMentions);
     }
 
     protected async loadMessages(reset = false): Promise<void> {
@@ -438,7 +457,7 @@ export class DirectMessagesPage implements OnInit, OnDestroy {
 
             // The upload belongs to the sent status now, even if the inbox refresh fails.
             this.attachments.set([]);
-            this.note.set('');
+            this.note.set(this.recipientMentions());
 
             if (this.destroyed) {
                 return;
@@ -645,6 +664,7 @@ export class DirectMessagesPage implements OnInit, OnDestroy {
 
                 if (user.id && user.id !== this.currentUser?.id) {
                     this.recipients.set([user]);
+                    this.updateRecipientMentions('');
                 }
             } catch (error) {
                 if (!this.destroyed && version === this.routeSelectionVersion && generation === this.generation) {
@@ -751,6 +771,15 @@ export class DirectMessagesPage implements OnInit, OnDestroy {
             }
         } finally {
             ids.forEach(id => this.reading.delete(id));
+        }
+    }
+
+    private updateRecipientMentions(previousMentions: string): void {
+        // Refresh the default prefix without replacing the draft or manually edited mentions.
+        const note = this.note();
+
+        if (note.startsWith(previousMentions)) {
+            this.note.set(this.recipientMentions() + note.slice(previousMentions.length));
         }
     }
 
