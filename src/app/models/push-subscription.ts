@@ -14,4 +14,5 @@ export class PushSubscription {
     public webPushAdminSignUpEnabled = true;
     public webPushAdminReportEnabled = true;
     public webPushNewCommentEnabled = true;
+    public webPushDirectMessageEnabled = true;
 }

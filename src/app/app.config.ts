@@ -22,6 +22,7 @@ import {
     TitleStrategy,
     provideRouter,
     withInMemoryScrolling,
+    withRouterConfig,
     withViewTransitions,
 } from '@angular/router';
 import { provideServiceWorker } from '@angular/service-worker';
@@ -65,6 +66,9 @@ export const appConfig: ApplicationConfig = {
         provideRouter(
             routes,
             withInMemoryScrolling({ scrollPositionRestoration: 'enabled' }),
+            // Write history before the asynchronous view-transition callback so
+            // navigation stays close to the user interaction in Safari.
+            withRouterConfig({ urlUpdateStrategy: 'eager', canceledNavigationResolution: 'computed' }),
             withViewTransitions(),
         ),
         { provide: RouteReuseStrategy, useClass: CustomReuseStrategy },

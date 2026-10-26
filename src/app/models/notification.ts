@@ -8,5 +8,6 @@ export class Notification {
     public byUser?: User;
     public status?: Status;
     public mainStatus?: Status;
+    public conversationId?: string;
     public createdAt = '';
 }

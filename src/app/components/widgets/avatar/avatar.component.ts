@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, input, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, OnInit, signal } from '@angular/core';
 import { User } from 'src/app/models/user';
 import { AvatarSize } from './avatar-size';
 import { PreferencesService } from 'src/app/services/common/preferences.service';
@@ -16,13 +16,16 @@ import { TranslatePipe } from '@ngx-translate/core';
 export class AvatarComponent implements OnInit {
     public user = input.required<User | UserPayload | undefined>();
     public size = input<AvatarSize>(AvatarSize.huge);
+    public shape = input<'circle' | 'rectangle'>();
 
     protected readonly avatarSize = AvatarSize;
-    protected isCircle = signal(false);
+    protected readonly isCircle = computed(() => this.shape() ? this.shape() === 'circle' : this.preferredCircle());
+
+    private readonly preferredCircle = signal(false);
 
     private preferencesService = inject(PreferencesService);
 
     ngOnInit(): void {
-        this.isCircle.set(this.preferencesService.isCircleAvatar);
+        this.preferredCircle.set(this.preferencesService.isCircleAvatar);
     }
 }

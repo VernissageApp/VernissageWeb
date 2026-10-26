@@ -61,10 +61,22 @@ export class EditorsPage extends ReusableGalleryPageComponent implements OnInit,
                 return;
             }
 
-            this.loadingService.showLoader();
             const requestedTab = params['tab'] as string | undefined ?? this.preferencesService.editorsTab;
             const internalTab = this.resolveTab(requestedTab);
 
+            // Store the resolved tab in this history entry. Otherwise returning to
+            // /editors reads the latest preference instead of the original selection.
+            if (params['tab'] !== internalTab) {
+                await this.router.navigate([], {
+                    relativeTo: this.activatedRoute,
+                    queryParams: { tab: internalTab },
+                    queryParamsHandling: 'merge',
+                    replaceUrl: true
+                });
+                return;
+            }
+
+            this.loadingService.showLoader();
             switch(internalTab) {
                 case 'statuses':
                     await this.loadStatuses();

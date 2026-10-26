@@ -113,6 +113,14 @@ export class PreferencesService {
         this.cookieService.set('autoScrollGalleryImages', autoScrollGalleryImages ? 'true' : 'false', { expires: this.longFuture });
     }
 
+    public get hideAiFeatures(): boolean {
+        return (this.cookieService.get('hideAiFeatures') ?? 'false') === 'true';
+    }
+
+    public set hideAiFeatures(hideAiFeatures: boolean) {
+        this.cookieService.set('hideAiFeatures', hideAiFeatures ? 'true' : 'false', { expires: this.longFuture, path: '/' });
+    }
+
     public get language(): string | null {
         return this.cookieService.get('language') || null;
     }

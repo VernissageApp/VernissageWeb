@@ -4,15 +4,18 @@
 # OpenAI, Anthropic, Meta, Google, Apple, Common Crawl and others
 User-agent: GPTBot
 User-agent: ClaudeBot
+User-agent: Claude-SearchBot
 User-agent: anthropic-ai
 User-agent: Claude-Web
 User-agent: meta-externalagent
+User-agent: meta-webindexer
 User-agent: FacebookBot
 User-agent: Google-Extended
 User-agent: Applebot-Extended
 User-agent: CCBot
 User-agent: Bytespider
 User-agent: Amazonbot
+User-agent: Amzn-SearchBot
 User-agent: cohere-ai
 User-agent: AI2Bot
 User-agent: Ai2Bot-Dolma
@@ -30,6 +33,8 @@ User-agent: ExaSearchBot
 User-agent: ShapBot
 User-agent: LinkupBot
 User-agent: Lightpanda
+User-agent: PerplexityBot
+User-agent: KeenableBot
 Disallow: /
 
 # Commercial SEO crawlers
@@ -39,6 +44,7 @@ User-agent: QlyzeBot
 User-agent: dotbot
 User-agent: Barkrowler
 User-agent: MJ12bot
+User-agent: SERankingBacklinksBot
 Disallow: /
 
 # Resource-intensive search crawlers
@@ -46,6 +52,11 @@ Disallow: /
 # service worker causes them to download the entire application bundle.
 User-agent: Baiduspider
 User-agent: PetalBot
+User-agent: Sogou web spider
+User-agent: Sogou inst spider
+User-agent: 360Spider
+User-agent: 360Spider-Image
+User-agent: 360Spider-Video
 Disallow: /
 
 # Regular crawlers

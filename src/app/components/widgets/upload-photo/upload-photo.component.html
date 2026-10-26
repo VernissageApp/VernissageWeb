@@ -24,18 +24,18 @@
         </div>
     }
 
-    @if (isOpenAIEnabled()) {
-        <div class="flex-row flex-space-between">
-            <div class="margin-top-10">
-                @if (photo().isUploading()) {
-                    <div class="flex-row flex-align-center gap-10">
-                        <mat-spinner class="display-inline-block margin-right-10" [diameter]="18" />
-                        <div class="text-muted">{{ 'components.uploadPhoto.texts.uploading' | translate }}</div>
-                        <button type="button" matButton="text" (click)="onCancelUpload()">{{ 'common.actions.cancel' | translate }}</button>
-                    </div>
-                }
-            </div>
+    <div class="flex-row flex-space-between">
+        <div class="margin-top-10">
+            @if (photo().isUploading()) {
+                <div class="flex-row flex-align-center gap-10">
+                    <mat-spinner class="display-inline-block margin-right-10" [diameter]="18" />
+                    <div class="text-muted">{{ 'components.uploadPhoto.texts.uploading' | translate }}</div>
+                    <button type="button" matButton="text" (click)="onCancelUpload()">{{ 'common.actions.cancel' | translate }}</button>
+                </div>
+            }
+        </div>
 
+        @if (isOpenAIEnabled() && !preferencesService.hideAiFeatures) {
             <div class="flex-row flex-right">
                 @if (describeInProgress()) {
                     <mat-spinner class="margin-right-10 margin-top-10" [diameter]="18" />
@@ -45,8 +45,10 @@
                     <mat-icon>smart_toy</mat-icon> {{ 'components.uploadPhoto.texts.generate' | translate }}
                 </button>
             </div>
-        </div>
+        }
+    </div>
 
+    @if (isOpenAIEnabled() && !preferencesService.hideAiFeatures) {
         <div class="text-right text-muted fs-80">
             {{ 'components.uploadPhoto.texts.featurePoweredBy' | translate: { providerName: openAIProviderName() } }}
         </div>

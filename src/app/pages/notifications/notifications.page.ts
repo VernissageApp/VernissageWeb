@@ -244,7 +244,9 @@ export class NotificationsPage extends ResponsiveComponent implements OnInit, On
             case NotificationType.FollowRequest:
                 return this.translateService.instant('pages.notifications.types.followRequest');
             case NotificationType.Favourite:
-                if (!notification.mainStatus) {
+                if (notification.conversationId) {
+                    return this.translateService.instant('pages.notifications.types.favouriteConversationComment');
+                } else if (!notification.mainStatus) {
                     return this.translateService.instant('pages.notifications.types.favouriteStatus');
                 } else {
                     return this.translateService.instant('pages.notifications.types.favouriteComment');
@@ -257,9 +259,16 @@ export class NotificationsPage extends ResponsiveComponent implements OnInit, On
                 return this.translateService.instant('pages.notifications.types.adminReport');
             case NotificationType.NewComment:
                 return this.translateService.instant('pages.notifications.types.newComment');
+            case NotificationType.DirectMessage:
+                return this.translateService.instant('pages.notifications.types.directMessage');
             default:
                 return '';
         }
+    }
+
+    protected isConversationNotification(notification: Notification): boolean {
+        return notification.notificationType === NotificationType.DirectMessage
+            || (notification.notificationType === NotificationType.Favourite && !!notification.conversationId);
     }
 
     protected getNotificationIcon(notification: Notification): string {
@@ -284,6 +293,8 @@ export class NotificationsPage extends ResponsiveComponent implements OnInit, On
                 return 'report_problem';
             case NotificationType.NewComment:
                 return 'chat_bubble';
+            case NotificationType.DirectMessage:
+                return 'forum';
             default:
                 return '';
         }
@@ -311,6 +322,8 @@ export class NotificationsPage extends ResponsiveComponent implements OnInit, On
                 return 'admin-report';
             case NotificationType.NewComment:
                 return 'new-comments';
+            case NotificationType.DirectMessage:
+                return 'direct-message';
             default:
                 return '';
         }
@@ -396,6 +409,7 @@ export class NotificationsPage extends ResponsiveComponent implements OnInit, On
                 return notification.notificationType;
             case NotificationType.Favourite:
             case NotificationType.Reblog: {
+                if (this.isConversationNotification(notification)) return undefined;
                 const linkedStatusId = this.getNotificationSubjectStatusId(notification);
 
                 if (!linkedStatusId) {

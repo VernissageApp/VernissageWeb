@@ -28,18 +28,20 @@ import { MatButton } from '@angular/material/button';
 import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
 import { MatIcon } from '@angular/material/icon';
 import { MatDivider } from '@angular/material/list';
+import { RouterLink } from '@angular/router';
 
 @Component({
     selector: 'app-follow-buttons-section',
     templateUrl: './follow-buttons-section.component.html',
     styleUrls: ['./follow-buttons-section.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [MatButton, MatMenuTrigger, MatIcon, MatMenu, MatMenuItem, MatDivider, MatButtonToggleGroup, MatButtonToggle, TranslatePipe]
+    imports: [MatButton, MatMenuTrigger, MatIcon, MatMenu, MatMenuItem, MatDivider, MatButtonToggleGroup, MatButtonToggle, TranslatePipe, RouterLink]
 })
 export class FollowButtonsSectionComponent implements OnInit, OnDestroy {
     public user = input.required<User>();
     public relationship = input.required<Relationship>();
     public singleButton = input(false);
+    public showDirectMessage = input(false);
     public relationChanged = output<Relationship>();
 
     protected updatedRelationship = computed(() => this.relationshipAfterAction() || this.relationship());
