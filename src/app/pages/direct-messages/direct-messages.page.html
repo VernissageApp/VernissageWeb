@@ -69,7 +69,7 @@
                 <div class="conversation-details">
                     @if (creating()) {
                         <form class="recipient-search" (ngSubmit)="addRecipient()">
-                            <app-user-selector name="recipient" [label]="'pages.directMessages.searchUser' | translate" [showLabel]="false"
+                            <app-user-selector name="recipient" [label]="'pages.directMessages.searchUser' | translate" [showLabel]="false" [useSearchApi]="true"
                                 [selectedUser]="candidate()" (selectedUserChange)="candidate.set($event)" [isReadOnly]="busy()" />
                             <button matButton="outlined" type="submit" [disabled]="!canAdd()">{{ 'pages.directMessages.add' | translate }}</button>
                         </form>
