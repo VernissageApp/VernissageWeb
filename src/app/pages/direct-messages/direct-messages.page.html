@@ -136,7 +136,7 @@
                                 <div class="message-body">
                                     <div class="message-payload">
                                         @if (status.noteHtml) {
-                                            <div class="message-bubble message-html" [innerHTML]="status.noteHtml"></div>
+                                            <div class="message-bubble message-html" appHrefToRouterLink [innerHTML]="status.noteHtml | localMentions"></div>
                                         } @else if (status.note) {
                                             <div class="message-bubble">{{ status.note }}</div>
                                         }
