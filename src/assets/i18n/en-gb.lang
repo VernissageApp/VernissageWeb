@@ -152,6 +152,7 @@
       "unrecoverableState": "An error occurred and the application state cannot be recovered. Please reload the page."
     },
     "pageTitles": {
+      "directMessages": "Direct messages",
       "accessForbidden": "Vernissage - Access forbidden",
       "account": "Vernissage - Account",
       "activityPubEventRecipients": "Vernissage - ActivityPub event recipients",
@@ -294,6 +295,7 @@
     },
     "followButtons": {
       "actions": {
+        "directMessage": "Direct message",
         "approveFollow": "Approve follow",
         "blockDomain": "Block domain",
         "blockUser": "Block user",
@@ -529,6 +531,7 @@
       "applicationLogo": "Application logo",
       "menuWithActions": "Menu with actions",
       "navigation": {
+        "directMessages": "Direct messages",
         "account": "Account",
         "articles": "Articles",
         "explore": "Explore",
@@ -990,6 +993,7 @@
         "webPushPublicKeyIsNotSet": "Web push public key is not set."
       },
       "texts": {
+        "newDirectMessage": "New direct message",
         "boostedStatus": "Boosted status",
         "newCommentAdded": "New comment added",
         "newFollowRequest": "New follow request",
@@ -1513,6 +1517,40 @@
     }
   },
   "pages": {
+    "directMessages": {
+      "emailVerificationRequired": "Verify your email address before sending a message.",
+      "like": "Like message",
+      "unlike": "Unlike message",
+      "liked": "Liked message",
+      "deleteMessage": "Delete message",
+      "confirmDelete": "Are you sure you want to delete this message?",
+      "deletedMessage": "This message was deleted by the user.",
+      "privacyNotice": "Direct messages are not end-to-end encrypted. Do not share sensitive information.",
+      "title": "Direct messages",
+      "subtitle": "Private conversations across the fediverse.",
+      "newMessage": "New message",
+      "conversations": "Conversations",
+      "searchConversations": "Search conversations",
+      "image": "Image",
+      "unread": "Unread messages",
+      "loadError": "Could not load messages. Please try again.",
+      "noResults": "No matching conversations.",
+      "noConversations": "No conversations yet.",
+      "removeRecipient": "Remove recipient",
+      "participants": "{count, plural, one {# participant} other {# participants}}",
+      "searchUser": "Search for a recipient",
+      "add": "Add",
+      "mute": "Mute conversation",
+      "unmute": "Unmute conversation",
+      "history": "Message history",
+      "olderMessages": "Load older messages",
+      "chooseRecipients": "Search for a user and click Add to start a conversation.",
+      "removeImage": "Remove image",
+      "writeMessage": "Write a message...",
+      "addImage": "Add image",
+      "selectConversation": "Select a conversation or start a new message.",
+      "invalidImage": "Choose a supported image within the server file size limit."
+    },
     "account": {
       "avatar": {
         "removeAriaLabel": "Remove avatar",
@@ -2121,6 +2159,7 @@
     },
     "notifications": {
       "actions": {
+        "openConversation": "Open conversation",
         "openUserProfileAriaLabel": "Open user profile",
         "refreshCurrentTimelineAriaLabel": "Refresh current timeline"
       },
@@ -2131,7 +2170,9 @@
       "types": {
         "adminReport": "has been reported",
         "adminSignUp": "is a new user",
+        "directMessage": "sent you a direct message",
         "favouriteComment": "favourited your comment",
+        "favouriteConversationComment": "favourited your comment in a conversation",
         "favouriteStatus": "favourited your photo",
         "follow": "followed you",
         "followRequest": "wants to follow you",
@@ -2269,6 +2310,7 @@
         "emailRequired": "Enter email.",
         "emailTaken": "Choose another email address. This one is already connected to a different account.",
         "invalidCaptchaCode": "Captcha code is invalid. Please try again.",
+        "registrationIsDisabled": "Registration without an invitation code or a reason for joining is disabled.",
         "invitationCodeRequired": "Enter invitation code.",
         "invitationCodeTooLong": "Invitation code is too long.",
         "invitationTokenInvalid": "Invitation token is invalid.",

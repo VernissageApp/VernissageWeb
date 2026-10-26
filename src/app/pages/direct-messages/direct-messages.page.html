@@ -1,0 +1,201 @@
+<header class="page-heading">
+    <h1>{{ 'pages.directMessages.title' | translate }}</h1>
+    <p>
+        <span class="privacy-notice" role="note">
+            <mat-icon aria-hidden="true">warning</mat-icon>
+            <span>{{ 'pages.directMessages.privacyNotice' | translate }}</span>
+        </span>
+    </p>
+    <button matButton="filled" (click)="newMessage()" [disabled]="busy()">
+        <mat-icon>edit_square</mat-icon>{{ 'pages.directMessages.newMessage' | translate }}
+    </button>
+</header>
+
+<div class="inbox" [class.panel-open]="panelOpen()">
+    <aside class="conversation-sidebar" [attr.aria-label]="'pages.directMessages.conversations' | translate">
+        <div class="conversation-search">
+            <mat-icon>search</mat-icon>
+            <input type="search" [ngModel]="query()" (ngModelChange)="query.set($event)"
+                [placeholder]="'pages.directMessages.searchConversations' | translate"
+                [attr.aria-label]="'pages.directMessages.searchConversations' | translate" />
+            <button matIconButton (click)="loadConversations(true)" [disabled]="loadingList()"
+                [attr.aria-label]="'common.actions.refresh' | translate"><mat-icon>refresh</mat-icon></button>
+        </div>
+        <div class="conversation-list" tabindex="0" [attr.aria-label]="'pages.directMessages.conversations' | translate" [attr.aria-busy]="loadingList()">
+            @for (conversation of filteredConversations(); track conversation.id) {
+                <button type="button" class="conversation" [class.active]="selected()?.id === conversation.id"
+                    [class.unread]="conversation.hasUnreadMessages" [attr.aria-current]="selected()?.id === conversation.id ? 'true' : null"
+                    [disabled]="busy()" (click)="openConversation(conversation)">
+                    <span class="avatar-stack">
+                        @for (user of others(conversation).slice(0, 2); track user.id) {
+                            <app-avatar [user]="user" [size]="avatarSize.huge" shape="circle" />
+                        }
+                        @if (others(conversation).length > 2) {
+                            <span class="avatar-count">+{{ others(conversation).length - 2 }}</span>
+                        }
+                    </span>
+                    <span class="conversation-copy">
+                        <span class="conversation-title">{{ title(conversation) }}</span>
+                        <span class="conversation-summary">{{ conversation.lastMessageDeletedAt ? ('pages.directMessages.deletedMessage' | translate) : (conversation.summary || ('pages.directMessages.image' | translate)) }}</span>
+                    </span>
+                    <span class="conversation-meta">
+                        <time>{{ conversation.lastActivityAt | localizedDate:'short' }}</time>
+                        @if (conversation.hasUnreadMessages) {
+                            <span class="unread-dot" [attr.aria-label]="'pages.directMessages.unread' | translate"></span>
+                        }
+                        @if (conversation.isMuted) { <mat-icon>notifications_off</mat-icon> }
+                    </span>
+                </button>
+            }
+            @if (loadingList()) {
+                <div class="loading"><mat-spinner [diameter]="28" /></div>
+            } @else if (listError()) {
+                <div class="empty-state"><p>{{ 'pages.directMessages.loadError' | translate }}</p>
+                    <button matButton (click)="loadConversations(true)">{{ 'common.actions.reload' | translate }}</button></div>
+            } @else if (!filteredConversations().length) {
+                <p class="empty-state">{{ (query() ? 'pages.directMessages.noResults' : 'pages.directMessages.noConversations') | translate }}</p>
+            }
+            @if (moreConversations()) {
+                <button matButton class="load-more" (click)="loadConversations()" [disabled]="loadingList()">{{ 'common.actions.loadMore' | translate }}</button>
+            }
+        </div>
+    </aside>
+
+    <section class="message-panel" [attr.aria-label]="'pages.directMessages.title' | translate">
+        @if (creating() || selected()) {
+            <header class="conversation-header">
+                <button matIconButton class="mobile-back" (click)="back()" [disabled]="busy()"
+                    [attr.aria-label]="'common.actions.back' | translate"><mat-icon>arrow_back</mat-icon></button>
+                <div class="conversation-details">
+                    @if (creating()) {
+                        <form class="recipient-search" (ngSubmit)="addRecipient()">
+                            <app-user-selector name="recipient" [label]="'pages.directMessages.searchUser' | translate" [showLabel]="false"
+                                [selectedUser]="candidate()" (selectedUserChange)="candidate.set($event)" [isReadOnly]="busy()" />
+                            <button matButton="outlined" type="submit" [disabled]="!canAdd()">{{ 'pages.directMessages.add' | translate }}</button>
+                        </form>
+                    }
+                    <div class="recipient-tags">
+                        @if (!creating()) {
+                            <span class="recipient-tag">
+                                <a class="recipient-profile" [routerLink]="['/@' + currentUser?.userName]">
+                                    <app-avatar [user]="currentUser" [size]="avatarSize.small" shape="circle" />
+                                    <span class="recipient-name">{{ display.displayName(currentUser) }}</span>
+                                </a>
+                            </span>
+                        }
+                        @for (user of recipients(); track user.id) {
+                            <span class="recipient-tag" [title]="user.account || display.displayName(user)">
+                                <a class="recipient-profile" [routerLink]="[profileLink(user)]">
+                                    <app-avatar [user]="user" [size]="avatarSize.small" shape="circle" />
+                                    <span class="recipient-name">{{ display.displayName(user) }}</span>
+                                </a>
+                                @if (creating()) {
+                                    <button type="button" class="remove-recipient" (click)="removeRecipient(user)" [disabled]="busy()"
+                                        [attr.aria-label]="('pages.directMessages.removeRecipient' | translate) + ': ' + display.displayName(user)">
+                                        <mat-icon>close</mat-icon>
+                                    </button>
+                                }
+                            </span>
+                        }
+                    </div>
+                </div>
+                @if (!creating()) {
+                    <button matIconButton [matMenuTriggerFor]="conversationMenu" [attr.aria-label]="'common.labels.moreOptions' | translate"><mat-icon>more_vert</mat-icon></button>
+                    <mat-menu #conversationMenu="matMenu">
+                        <button mat-menu-item (click)="loadMessages(true)" [disabled]="loadingMessages() || busy()"><mat-icon>refresh</mat-icon>{{ 'common.actions.refresh' | translate }}</button>
+                        <button mat-menu-item (click)="toggleMute()" [disabled]="muting()"><mat-icon>notifications_off</mat-icon>{{ (selected()?.isMuted ? 'pages.directMessages.unmute' : 'pages.directMessages.mute') | translate }}</button>
+                    </mat-menu>
+                }
+            </header>
+            <div #history class="message-history" tabindex="0" [attr.aria-label]="'pages.directMessages.history' | translate" [attr.aria-busy]="loadingMessages()">
+                @if (moreMessages()) {
+                    <button matButton class="load-more" (click)="loadMessages()" [disabled]="loadingMessages()">{{ 'pages.directMessages.olderMessages' | translate }}</button>
+                }
+                @if (loadingMessages()) { <div class="loading"><mat-spinner [diameter]="28" /></div> }
+                @if (messagesError()) {
+                    <div class="empty-state"><p>{{ 'pages.directMessages.loadError' | translate }}</p>
+                        <button matButton (click)="loadMessages(true)">{{ 'common.actions.reload' | translate }}</button></div>
+                }
+                @for (message of messages(); track message.id) {
+                    <article class="message" [class.own]="messageAuthor(message)?.id === currentUser?.id"
+                        appViewportObserver (viewportChange)="onVisible(message, $event)">
+                        <app-avatar [user]="messageAuthor(message)" [size]="avatarSize.huge" shape="circle" />
+                        <div class="message-content">
+                            <div class="message-meta">
+                                @if (messageAuthor(message)?.id !== currentUser?.id) {
+                                    <span>{{ display.displayName(messageAuthor(message)) }}</span>
+                                }
+                                <time>{{ (message.publishedAt || message.status?.publishedAt || message.status?.createdAt) | localizedDate:'short' }}</time>
+                                @if (!message.deletedAt && (message.status?.favouritesCount || message.status?.favourited)) {
+                                    <span class="message-liked" [attr.aria-label]="'pages.directMessages.liked' | translate"><mat-icon class="fill-symbol">star</mat-icon>{{ message.status?.favouritesCount || 1 }}</span>
+                                }
+                            </div>
+                            @if (message.deletedAt) {
+                                <div class="message-bubble deleted-message">{{ 'pages.directMessages.deletedMessage' | translate }}</div>
+                            } @else if (message.status; as status) {
+                                <div class="message-body">
+                                    <div class="message-payload">
+                                        @if (status.noteHtml) {
+                                            <div class="message-bubble message-html" [innerHTML]="status.noteHtml"></div>
+                                        } @else if (status.note) {
+                                            <div class="message-bubble">{{ status.note }}</div>
+                                        }
+                                        @if (status.attachments?.length) {
+                                            <div class="message-images">
+                                                @for (attachment of status.attachments; track attachment.id) {
+                                                    <button type="button" (click)="openImages(message, $index)" [attr.aria-label]="attachment.description || ('pages.directMessages.image' | translate)">
+                                                        <img [src]="attachment.smallFile?.url || attachment.originalFile?.url" [alt]="attachment.description || ('pages.directMessages.image' | translate)" loading="lazy" />
+                                                    </button>
+                                                }
+                                            </div>
+                                        }
+                                    </div>
+                                    <div class="message-actions">
+                                        @if (messageAuthor(message)?.id === currentUser?.id) {
+                                            <button matIconButton type="button" (click)="deleteMessage(message)" [disabled]="messageActionsPending().has(message.id)" [attr.aria-label]="'pages.directMessages.deleteMessage' | translate"><mat-icon>delete</mat-icon></button>
+                                        } @else {
+                                            <button matIconButton type="button" (click)="toggleLike(message)" [disabled]="messageActionsPending().has(message.id)" [attr.aria-pressed]="status.favourited" [attr.aria-label]="(status.favourited ? 'pages.directMessages.unlike' : 'pages.directMessages.like') | translate"><mat-icon [class.fill-symbol]="status.favourited">star</mat-icon></button>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </article>
+                }
+                @if (creating() && !recipients().length) {
+                    <div class="empty-state"><mat-icon>group_add</mat-icon><p>{{ 'pages.directMessages.chooseRecipients' | translate }}</p></div>
+                }
+            </div>
+            <form class="composer" (ngSubmit)="send()">
+                @if (attachments().length) {
+                    <div class="attachment-previews">
+                        @for (attachment of attachments(); track attachment.id) {
+                            <button type="button" class="attachment-preview" (click)="removeAttachment(attachment)" [disabled]="busy()" [attr.aria-label]="'pages.directMessages.removeImage' | translate">
+                                <img [src]="attachment.previewUrl || attachment.url" [alt]="'pages.directMessages.image' | translate" /><mat-icon>close</mat-icon>
+                            </button>
+                        }
+                    </div>
+                }
+                <div class="composer-input">
+                    <textarea name="message" rows="1" cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="10"
+                        [ngModel]="note()" (ngModelChange)="note.set($event)" [maxlength]="maxCharacters"
+                        (keydown)="onMessageKeyDown($event)"
+                        [disabled]="emailHasBeenVerified() !== true || sending() || !recipients().length" [placeholder]="'pages.directMessages.writeMessage' | translate"
+                        [attr.aria-label]="'pages.directMessages.writeMessage' | translate"></textarea>
+                    <input #photoInput type="file" hidden multiple [disabled]="emailHasBeenVerified() !== true" [accept]="acceptedTypes" (change)="upload($event)" />
+                    @if (uploading()) { <mat-spinner [diameter]="22" /> }
+                    <button matIconButton type="button" (click)="photoInput.click()" [disabled]="emailHasBeenVerified() !== true || busy() || !recipients().length || attachments().length >= maxAttachments"
+                        [attr.aria-label]="'pages.directMessages.addImage' | translate"><mat-icon>image</mat-icon></button>
+                </div>
+                <button matIconButton class="send-button" type="submit" [disabled]="!canSend()" [attr.aria-label]="'common.actions.send' | translate">
+                    @if (sending()) { <mat-spinner [diameter]="24" /> } @else { <mat-icon>send</mat-icon> }
+                </button>
+                @if (emailHasBeenVerified() === false) {
+                    <p class="composer-error text-error" role="alert">{{ 'pages.directMessages.emailVerificationRequired' | translate }}</p>
+                }
+            </form>
+        } @else {
+            <div class="empty-state select-conversation"><mat-icon>forum</mat-icon><p>{{ 'pages.directMessages.selectConversation' | translate }}</p></div>
+        }
+    </section>
+</div>

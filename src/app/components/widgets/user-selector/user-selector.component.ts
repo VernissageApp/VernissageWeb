@@ -27,6 +27,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 export class UserSelectorComponent implements OnInit, OnDestroy {
     public name = input.required<string>();
     public label = input('');
+    public showLabel = input(true);
     public isRequired = input(false);
     public isReadOnly = input(false);
 

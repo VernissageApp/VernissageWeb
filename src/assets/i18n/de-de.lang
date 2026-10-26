@@ -152,6 +152,7 @@
       "unrecoverableState": "Es ist ein Fehler aufgetreten und der Anwendungsstatus kann nicht wiederhergestellt werden. Bitte laden Sie die Seite neu."
     },
     "pageTitles": {
+      "directMessages": "Direktnachrichten",
       "accessForbidden": "Vernissage - Zugriff verboten",
       "account": "Vernissage - Konto",
       "activityPubEventRecipients": "Vernissage - ActivityPub-Ereignisempfänger",
@@ -294,6 +295,7 @@
     },
     "followButtons": {
       "actions": {
+        "directMessage": "Direktnachricht",
         "approveFollow": "Bestätigen Sie das Folgen",
         "blockDomain": "Domain blockieren",
         "blockUser": "Benutzer blockieren",
@@ -529,6 +531,7 @@
       "applicationLogo": "Anwendungslogo",
       "menuWithActions": "Menü mit Aktionen",
       "navigation": {
+        "directMessages": "Direktnachrichten",
         "account": "Konto",
         "articles": "Artikel",
         "explore": "Entdecken",
@@ -990,6 +993,7 @@
         "webPushPublicKeyIsNotSet": "Der Public Key für den WebPush-Dienst ist nicht hinterlegt."
       },
       "texts": {
+        "newDirectMessage": "Neue Direktnachricht",
         "boostedStatus": "Geboosteter Status",
         "newCommentAdded": "Neuer Kommentar hinzugefügt",
         "newFollowRequest": "Neue Folgeanfrage",
@@ -1513,6 +1517,40 @@
     }
   },
   "pages": {
+    "directMessages": {
+      "like": "Nachricht mit „Gefällt mir“ markieren",
+      "unlike": "„Gefällt mir“ zurücknehmen",
+      "liked": "Mit „Gefällt mir“ markierte Nachricht",
+      "deleteMessage": "Nachricht löschen",
+      "confirmDelete": "Möchten Sie diese Nachricht wirklich löschen?",
+      "deletedMessage": "Diese Nachricht wurde vom Benutzer gelöscht.",
+      "privacyNotice": "Direktnachrichten sind nicht Ende-zu-Ende-verschlüsselt. Teilen Sie keine vertraulichen Informationen.",
+      "title": "Direktnachrichten",
+      "subtitle": "Private Unterhaltungen im Fediverse.",
+      "newMessage": "Neue Nachricht",
+      "conversations": "Unterhaltungen",
+      "searchConversations": "Unterhaltungen suchen",
+      "image": "Bild",
+      "unread": "Ungelesene Nachrichten",
+      "loadError": "Nachrichten konnten nicht geladen werden. Bitte versuchen Sie es erneut.",
+      "noResults": "Keine passenden Unterhaltungen.",
+      "noConversations": "Noch keine Unterhaltungen.",
+      "removeRecipient": "Empfänger entfernen",
+      "participants": "{count, plural, one {# Teilnehmer} other {# Teilnehmer}}",
+      "searchUser": "Empfänger suchen",
+      "add": "Hinzufügen",
+      "mute": "Unterhaltung stummschalten",
+      "unmute": "Stummschaltung der Unterhaltung aufheben",
+      "history": "Nachrichtenverlauf",
+      "olderMessages": "Ältere Nachrichten laden",
+      "chooseRecipients": "Suchen Sie einen Benutzer und klicken Sie auf Hinzufügen, um eine Unterhaltung zu beginnen.",
+      "removeImage": "Bild entfernen",
+      "writeMessage": "Nachricht schreiben...",
+      "addImage": "Bild hinzufügen",
+      "selectConversation": "Wählen Sie eine Unterhaltung aus oder beginnen Sie eine neue Nachricht.",
+      "invalidImage": "Wählen Sie ein unterstütztes Bild, das die Dateigrößenbeschränkung des Servers einhält.",
+      "emailVerificationRequired": "Bestätige deine E-Mail-Adresse, bevor du eine Nachricht sendest."
+    },
     "account": {
       "avatar": {
         "removeAriaLabel": "Avatar entfernen",
@@ -2121,6 +2159,7 @@
     },
     "notifications": {
       "actions": {
+        "openConversation": "Unterhaltung öffnen",
         "openUserProfileAriaLabel": "Benutzerprofil öffnen",
         "refreshCurrentTimelineAriaLabel": "Aktuelle Timeline aktualisieren"
       },
@@ -2129,6 +2168,8 @@
       },
       "title": "Benachrichtigungen",
       "types": {
+        "directMessage": "hat Ihnen eine Direktnachricht gesendet",
+        "favouriteConversationComment": "hat Ihren Kommentar in einer Unterhaltung mit „Gefällt mir“ markiert",
         "adminReport": "wurde gemeldet",
         "adminSignUp": "ist ein neuer Benutzer",
         "favouriteComment": "hat Ihren Kommentar favorisiert",
@@ -2269,6 +2310,7 @@
         "emailRequired": "Geben Sie Ihre E-Mail-Adresse ein.",
         "emailTaken": "Wählen Sie eine andere E-Mail-Adresse. Diese ist bereits mit einem anderen Konto verknüpft.",
         "invalidCaptchaCode": "Der CAPTCHA-Code ist ungültig. Bitte versuchen Sie es erneut.",
+        "registrationIsDisabled": "Die Registrierung ohne Einladungscode oder Angabe eines Registrierungsgrundes ist deaktiviert.",
         "invitationCodeRequired": "Geben Sie den Einladungscode ein.",
         "invitationCodeTooLong": "Der Einladungs-Code ist zu lang.",
         "invitationTokenInvalid": "Das Einladungs-Token ist ungültig.",

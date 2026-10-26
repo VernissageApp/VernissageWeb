@@ -63,12 +63,24 @@ export class TrendingPage extends ReusableGalleryPageComponent implements OnInit
                 return;
             }
 
-            this.loadingService.showLoader();
             const internalPeriod = params['period'] as TrendingPeriod ?? TrendingPeriod.Daily;
             this.showHashtags.set(this.hasAccessToHashtags());
             const requestedTrending = params['trending'] as string | undefined ?? this.preferencesService.trendingTab;
             const internalTrending = this.resolveTrending(requestedTrending);
 
+            // Keep the initial selection in history instead of resolving it from
+            // a preference that may have changed by the time the user goes back.
+            if (params['trending'] !== internalTrending) {
+                await this.router.navigate([], {
+                    relativeTo: this.activatedRoute,
+                    queryParams: { trending: internalTrending },
+                    queryParamsHandling: 'merge',
+                    replaceUrl: true
+                });
+                return;
+            }
+
+            this.loadingService.showLoader();
             switch(internalTrending) {
                 case 'statuses':
                     await this.loadTrendingStatuses(internalPeriod);
