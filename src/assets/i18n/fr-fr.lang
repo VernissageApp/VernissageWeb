@@ -49,7 +49,8 @@
       "unfollow": "Se désabonner",
       "unsuppress": "Ne plus masquer",
       "update": "Mise à jour",
-      "upload": "Envoyer"
+      "upload": "Envoyer",
+      "toTheTop": "Retour en haut"
     },
     "articleVisibility": {
       "homeSignIn": "Accueil - connexion",
