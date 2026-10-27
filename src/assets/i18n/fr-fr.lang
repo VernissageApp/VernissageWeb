@@ -1519,6 +1519,7 @@
   },
   "pages": {
     "directMessages": {
+      "emailVerificationRequired": "Vérifiez votre adresse e-mail avant d’envoyer un message.",
       "like": "Aimer le message",
       "unlike": "Ne plus aimer le message",
       "liked": "Message aimé",
@@ -1549,8 +1550,7 @@
       "writeMessage": "Écrivez un message...",
       "addImage": "Ajouter une image",
       "selectConversation": "Sélectionnez une conversation ou commencez un nouveau message.",
-      "invalidImage": "Choisissez une image dans un format pris en charge et respectant la limite de taille du serveur.",
-      "emailVerificationRequired": "Vérifiez votre adresse e-mail avant d’envoyer un message."
+      "invalidImage": "Choisissez une image dans un format pris en charge et respectant la limite de taille du serveur."
     },
     "account": {
       "avatar": {
@@ -2169,11 +2169,11 @@
       },
       "title": "Notifications",
       "types": {
-        "directMessage": "vous a envoyé un message privé",
-        "favouriteConversationComment": "a aimé votre commentaire dans une conversation",
         "adminReport": "a été signalé",
         "adminSignUp": "est un nouvel utilisateur",
+        "directMessage": "vous a envoyé un message privé",
         "favouriteComment": "a aimé votre commentaire",
+        "favouriteConversationComment": "a aimé votre commentaire dans une conversation",
         "favouriteStatus": "a aimé votre photo",
         "follow": "s’est abonné",
         "followRequest": "veut s’abonner",

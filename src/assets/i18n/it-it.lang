@@ -510,9 +510,9 @@
         "isRegistrationOpened": "Registrazione aperta",
         "isWebPushEnabled": "Le notifiche WebPush sono abilitate",
         "showCategoriesForAnonymous": "Mostra categorie per utente anonimo",
-        "showCamerasForAnonymous": "Mostra fotocamere per utente anonimo",
-        "showLensesForAnonymous": "Mostra obiettivi per utente anonimo",
-        "showFilmsForAnonymous": "Mostra pellicole per utente anonimo",
+        "showCamerasForAnonymous": "Mostra fotocamere per l'utente anonimo",
+        "showLensesForAnonymous": "Mostra obiettivi per l'utente anonimo",
+        "showFilmsForAnonymous": "Mostra pellicole per l'utente anonimo",
         "showEditorsStatusesChoiceForAnonymous": "Mostra gli status scelti dall'editor per l'utente anonimo",
         "showEditorsUsersChoiceForAnonymous": "Mostra gli utenti scelti dall'editor per l'utente anonimo",
         "showHashtagsForAnonymous": "Mostra gli hashtag per utente anonimo",
@@ -1322,7 +1322,7 @@
     "followRequest": {
       "missingFollowEntity": "L'entità Segui (sourceUserId: {sourceUserId}, targetUserId: {targetUserId}) non esiste nel database locale.",
       "missingSourceUser": "L’utente di origine {userId} manca nel database.",
-      "missingTargetUser": "L’utente di destinazione {userId} manca nel database.",
+      "missingTargetUser": "L'utente di destinazione '{userId}' manca nel database.",
       "missingActivityPubActionId": "L’Id azione Activity Pub manca nella richiesta di follow.",
       "missingPrivateKey": "La chiave privata per l'utente {userName} non esiste nel database locale.",
       "accountHasBeenMoved": "L'account di destinazione è stato spostato e non può accettare nuovi follower.",
@@ -1519,6 +1519,7 @@
   },
   "pages": {
     "directMessages": {
+      "emailVerificationRequired": "Verifica il tuo indirizzo e-mail prima di inviare un messaggio.",
       "like": "Metti Mi piace al messaggio",
       "unlike": "Rimuovi Mi piace dal messaggio",
       "liked": "Messaggio con Mi piace",
@@ -1549,8 +1550,7 @@
       "writeMessage": "Scrivi un messaggio...",
       "addImage": "Aggiungi immagine",
       "selectConversation": "Seleziona una conversazione o inizia un nuovo messaggio.",
-      "invalidImage": "Scegli un’immagine in un formato supportato che rispetti il limite di dimensione del server.",
-      "emailVerificationRequired": "Verifica il tuo indirizzo e-mail prima di inviare un messaggio."
+      "invalidImage": "Scegli un’immagine in un formato supportato che rispetti il limite di dimensione del server."
     },
     "account": {
       "avatar": {
@@ -1877,12 +1877,12 @@
     "explore": {
       "searchCriteria": "Criteri di ricerca",
       "subtitles": {
-        "cameras": "Sfoglia le foto raggruppate in base alle fotocamere con cui sono state scattate.",
+        "cameras": "Sfoglia le foto raggruppate in base alle fotocamere usate per scattarle.",
         "categories": "Sfoglia le foto raggruppate in base alle categorie disponibili su questo server.",
-        "films": "Sfoglia le foto raggruppate in base alle pellicole su cui sono state scattate.",
-        "lenses": "Sfoglia le foto raggruppate in base agli obiettivi con cui sono state scattate."
+        "films": "Sfoglia le foto raggruppate in base alle pellicole usate per scattarle.",
+        "lenses": "Sfoglia le foto raggruppate in base agli obiettivi usati per scattarle."
       },
-      "tabAriaLabel": "Tipo di esplorazione",
+      "tabAriaLabel": "Esplora tipo",
       "tabs": {
         "cameras": "Fotocamere",
         "categories": "Categorie",
@@ -2169,11 +2169,11 @@
       },
       "title": "Notifiche",
       "types": {
-        "directMessage": "ti ha inviato un messaggio privato",
-        "favouriteConversationComment": "ha messo Mi piace al tuo commento in una conversazione",
         "adminReport": "è stato segnalato",
         "adminSignUp": "è un nuovo utente",
+        "directMessage": "ti ha inviato un messaggio privato",
         "favouriteComment": "ha aggiunto il tuo commento ai preferiti",
+        "favouriteConversationComment": "ha messo Mi piace al tuo commento in una conversazione",
         "favouriteStatus": "ha aggiunto la tua foto ai preferiti",
         "follow": "ti ha seguito",
         "followRequest": "vuole seguirti",
@@ -2211,7 +2211,7 @@
           "title": "Scorrimento automatico delle immagini nella galleria degli status"
         },
         "hideAiFeatures": {
-          "description": "Nasconde i pulsanti IA e le relative note durante l’aggiunta di foto.",
+          "description": "Nascondi i pulsanti IA e le note correlate quando aggiungi foto.",
           "title": "Nascondi le funzionalità IA"
         },
         "showAlternativeText": {

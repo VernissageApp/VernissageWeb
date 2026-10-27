@@ -50,7 +50,7 @@
       "unsuppress": "Deixar de silenciar",
       "update": "Atualizar",
       "upload": "Carregar",
-      "toTheTop": "Voltar ao topo"
+      "toTheTop": "To the top"
     },
     "articleVisibility": {
       "homeSignIn": "Home - iniciar sessão",
@@ -1519,6 +1519,7 @@
   },
   "pages": {
     "directMessages": {
+      "emailVerificationRequired": "Verifique o seu endereço de e-mail antes de enviar uma mensagem.",
       "like": "Gostar da mensagem",
       "unlike": "Deixar de gostar da mensagem",
       "liked": "Mensagem com gostos",
@@ -1549,8 +1550,7 @@
       "writeMessage": "Escreva uma mensagem...",
       "addImage": "Adicionar imagem",
       "selectConversation": "Selecione uma conversa ou comece uma nova mensagem.",
-      "invalidImage": "Escolha uma imagem num formato suportado que respeite o limite de tamanho de ficheiro do servidor.",
-      "emailVerificationRequired": "Verifique o seu endereço de e-mail antes de enviar uma mensagem."
+      "invalidImage": "Escolha uma imagem num formato suportado que respeite o limite de tamanho de ficheiro do servidor."
     },
     "account": {
       "avatar": {
@@ -2169,11 +2169,11 @@
       },
       "title": "Notificações",
       "types": {
-        "directMessage": "enviou-lhe uma mensagem privada",
-        "favouriteConversationComment": "gostou do seu comentário numa conversa",
         "adminReport": "foi denunciado",
         "adminSignUp": "é um novo utilizador",
+        "directMessage": "enviou-lhe uma mensagem privada",
         "favouriteComment": "favorited seu comentário",
+        "favouriteConversationComment": "gostou do seu comentário numa conversa",
         "favouriteStatus": "favorited a sua foto",
         "follow": "seguido você",
         "followRequest": "wants para seguir você",

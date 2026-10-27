@@ -1519,6 +1519,7 @@
   },
   "pages": {
     "directMessages": {
+      "emailVerificationRequired": "Bestätige deine E-Mail-Adresse, bevor du eine Nachricht sendest.",
       "like": "Nachricht mit „Gefällt mir“ markieren",
       "unlike": "„Gefällt mir“ zurücknehmen",
       "liked": "Mit „Gefällt mir“ markierte Nachricht",
@@ -1549,8 +1550,7 @@
       "writeMessage": "Nachricht schreiben...",
       "addImage": "Bild hinzufügen",
       "selectConversation": "Wählen Sie eine Unterhaltung aus oder beginnen Sie eine neue Nachricht.",
-      "invalidImage": "Wählen Sie ein unterstütztes Bild, das die Dateigrößenbeschränkung des Servers einhält.",
-      "emailVerificationRequired": "Bestätige deine E-Mail-Adresse, bevor du eine Nachricht sendest."
+      "invalidImage": "Wählen Sie ein unterstütztes Bild, das die Dateigrößenbeschränkung des Servers einhält."
     },
     "account": {
       "avatar": {
@@ -2169,11 +2169,11 @@
       },
       "title": "Benachrichtigungen",
       "types": {
-        "directMessage": "hat Ihnen eine Direktnachricht gesendet",
-        "favouriteConversationComment": "hat Ihren Kommentar in einer Unterhaltung mit „Gefällt mir“ markiert",
         "adminReport": "wurde gemeldet",
         "adminSignUp": "ist ein neuer Benutzer",
+        "directMessage": "hat Ihnen eine Direktnachricht gesendet",
         "favouriteComment": "hat Ihren Kommentar favorisiert",
+        "favouriteConversationComment": "hat Ihren Kommentar in einer Unterhaltung mit „Gefällt mir“ markiert",
         "favouriteStatus": "hat Ihr Foto zu Favoriten hinzugefügt",
         "follow": "ist Ihnen gefolgt",
         "followRequest": "möchte Ihnen folgen",

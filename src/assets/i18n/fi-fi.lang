@@ -978,11 +978,11 @@
         "muteDialogHeader": "Mykistetyt julkaisut ja tehostukset eivät näy useimmilla järjestelmän aikajanoilla.",
         "muteEndDate": "Mykistyksen loppuaika",
         "muteNewStatuses": "Hiljennä uudet päivitykset",
-        "muteNotifications": "Mykistä ilmoitukset",
+        "muteNotifications": "Hiljennä ilmoitukset",
         "muteReblogs": "Mykistä tehostukset",
         "optionalDateWhenMutingWillEnd": "Valinnainen päivämäärä, jolloin mykistys päättyy.",
         "removeUsersReblogsFromYourTimeline": "Poista käyttäjän tehostukset aikajanaltasi",
-        "removeUsersStatusesFromYourTimeline": "Poista käyttäjän päivitykset aikajanaltasi"
+        "removeUsersStatusesFromYourTimeline": "Poista käyttäjän julkaisut aikajanaltasi"
       }
     },
     "notificationSettings": {
@@ -1519,6 +1519,7 @@
   },
   "pages": {
     "directMessages": {
+      "emailVerificationRequired": "Vahvista sähköpostiosoitteesi ennen viestin lähettämistä.",
       "like": "Tykkää viestistä",
       "unlike": "Poista tykkäys viestistä",
       "liked": "Tykkätty viesti",
@@ -1549,8 +1550,7 @@
       "writeMessage": "Kirjoita viesti...",
       "addImage": "Lisää kuva",
       "selectConversation": "Valitse keskustelu tai aloita uusi viesti.",
-      "invalidImage": "Valitse tuetussa muodossa oleva kuva, joka ei ylitä palvelimen tiedostokokorajoitusta.",
-      "emailVerificationRequired": "Vahvista sähköpostiosoitteesi ennen viestin lähettämistä."
+      "invalidImage": "Valitse tuetussa muodossa oleva kuva, joka ei ylitä palvelimen tiedostokokorajoitusta."
     },
     "account": {
       "avatar": {
@@ -2169,11 +2169,11 @@
       },
       "title": "Ilmoitukset",
       "types": {
-        "directMessage": "lähetti sinulle yksityisviestin",
-        "favouriteConversationComment": "tykkäsi kommentistasi keskustelussa",
         "adminReport": "on raportoitu",
         "adminSignUp": "on uusi käyttäjä",
+        "directMessage": "lähetti sinulle yksityisviestin",
         "favouriteComment": "lisäsi kommenttisi suosikkeihin",
+        "favouriteConversationComment": "tykkäsi kommentistasi keskustelussa",
         "favouriteStatus": "lisäsi valokuvasi suosikkeihin",
         "follow": "seurannut sinua",
         "followRequest": "haluaa seurata sinua",
@@ -2519,7 +2519,7 @@
         "title": "Kommentit"
       },
       "confirmations": {
-        "changeStatusWithEnteredComment": "Olet kirjoittanut kommentin. Haluatko silti vaihtaa tilaa?"
+        "changeStatusWithEnteredComment": "Olet kirjoittanut kommentin. Haluatko silti siirtyä pois?"
       },
       "followedTagsInThisStatus": "Päivityksen aihetunnisteita seurataan nyt",
       "hashtagsAriaLabel": "Aihetunnisteet",

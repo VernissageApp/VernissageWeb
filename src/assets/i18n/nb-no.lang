@@ -1519,6 +1519,7 @@
   },
   "pages": {
     "directMessages": {
+      "emailVerificationRequired": "Bekreft e-postadressen din før du sender en melding.",
       "like": "Lik melding",
       "unlike": "Fjern likerklikk fra meldingen",
       "liked": "Melding som er likt",
@@ -1549,8 +1550,7 @@
       "writeMessage": "Skriv en melding...",
       "addImage": "Legg til bilde",
       "selectConversation": "Velg en samtale eller start en ny melding.",
-      "invalidImage": "Velg et bilde i et støttet format som ikke overskrider serverens grense for filstørrelse.",
-      "emailVerificationRequired": "Bekreft e-postadressen din før du sender en melding."
+      "invalidImage": "Velg et bilde i et støttet format som ikke overskrider serverens grense for filstørrelse."
     },
     "account": {
       "avatar": {
@@ -2169,11 +2169,11 @@
       },
       "title": "Varsler",
       "types": {
-        "directMessage": "sendte deg en privat melding",
-        "favouriteConversationComment": "likte kommentaren din i en samtale",
         "adminReport": "har blitt rapportert",
         "adminSignUp": "er en ny bruker",
+        "directMessage": "sendte deg en privat melding",
         "favouriteComment": "merket kommentaren din som favoritt",
+        "favouriteConversationComment": "likte kommentaren din i en samtale",
         "favouriteStatus": "merket bildet ditt som favoritt",
         "follow": "fulgte deg",
         "followRequest": "ønsker å følge deg",
