@@ -261,6 +261,17 @@
     min-width: 0;
 }
 
+.message-avatar {
+    display: flex;
+    flex-shrink: 0;
+    border-radius: 50%;
+}
+
+.message-author {
+    color: var(--mat-sys-primary);
+    text-decoration: none;
+}
+
 .message-body {
     display: flex;
     align-items: center;
