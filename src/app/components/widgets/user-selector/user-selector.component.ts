@@ -41,7 +41,7 @@ export class UserSelectorComponent implements OnInit, OnDestroy {
     protected isUsersLoading = signal(false);
 
     private usersSubscription?: Subscription;
-    private textChanged = new Subject<string>();
+    private textChanged = new Subject<string | User>();
 
     private usersService = inject(UsersService);
     private searchService = inject(SearchService);
@@ -73,7 +73,13 @@ export class UserSelectorComponent implements OnInit, OnDestroy {
         this.selectedUserChange.emit(undefined);
     }
 
-    protected onModelChange(value: string): void {
+    protected onModelChange(value: string | User): void {
+        // Only text edits invalidate the selection. Native change events can also
+        // fire when Enter commits an autocomplete value or submits its form.
+        if (typeof value === 'string') {
+            this.onChange();
+        }
+
         this.textChanged.next(value);
     }
 
@@ -89,14 +95,11 @@ export class UserSelectorComponent implements OnInit, OnDestroy {
         return `@${user.userName}`;
     };
 
-    private async filterUsers(value: string): Promise<User[] | undefined> {
+    private async filterUsers(value: string | User): Promise<User[] | undefined> {
 
         if (typeof value !== 'string') {
             return [];
         }
-
-        this.selectedUserValue.set(undefined);
-        this.selectedUserChange.emit(undefined);
 
         if (this.useSearchApi()) {
             const query = value.trim().replace(/^@/, '');
