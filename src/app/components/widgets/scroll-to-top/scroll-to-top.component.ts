@@ -4,6 +4,7 @@ import { MatIcon } from '@angular/material/icon';
 import { MatTooltip } from '@angular/material/tooltip';
 import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
+import { DEVICES, DeviceDetectorService } from 'ngx-device-detector';
 import { Subscription } from 'rxjs';
 import { WindowService } from '../../../services/common/window.service';
 
@@ -23,6 +24,7 @@ export class ScrollToTopComponent implements AfterViewInit, OnDestroy {
     private router = inject(Router);
     private windowService = inject(WindowService);
     private platformId = inject(PLATFORM_ID);
+    private deviceDetectorService = inject(DeviceDetectorService);
     private observer?: IntersectionObserver;
     private navigationSubscription?: Subscription;
     private frameId?: number;
@@ -30,6 +32,11 @@ export class ScrollToTopComponent implements AfterViewInit, OnDestroy {
 
     ngAfterViewInit(): void {
         if (!isPlatformBrowser(this.platformId) || typeof IntersectionObserver === 'undefined') {
+            return;
+        }
+
+        // Skip observation entirely on iPhone, rather than just hiding the button.
+        if (this.deviceDetectorService.device() === DEVICES.IPHONE) {
             return;
         }
 
