@@ -49,7 +49,8 @@
       "unfollow": "Nie obserwuj",
       "unsuppress": "Cofnij wyciszenie",
       "update": "Aktualizuj",
-      "upload": "Wyślij"
+      "upload": "Wyślij",
+      "toTheTop": "Na górę"
     },
     "articleVisibility": {
       "homeSignIn": "Strona główna - zalogowany",

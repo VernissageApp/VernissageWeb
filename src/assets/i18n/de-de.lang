@@ -49,7 +49,8 @@
       "unfollow": "Entfolgen",
       "unsuppress": "Stummschaltung aufheben",
       "update": "Aktualisieren",
-      "upload": "Hochladen"
+      "upload": "Hochladen",
+      "toTheTop": "Nach oben"
     },
     "articleVisibility": {
       "homeSignIn": "Startseite – Anmelden",

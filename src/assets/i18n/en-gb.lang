@@ -49,7 +49,8 @@
       "unfollow": "Unfollow",
       "unsuppress": "Unsuppress",
       "update": "Update",
-      "upload": "Upload"
+      "upload": "Upload",
+      "toTheTop": "To the top"
     },
     "articleVisibility": {
       "homeSignIn": "Home - sign in",
