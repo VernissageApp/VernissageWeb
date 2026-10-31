@@ -54,6 +54,11 @@
     }
 
     .bio {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 10;
+        max-height: 10lh;
+        overflow: hidden;
         opacity: 0.7;
 
         ::ng-deep p {
