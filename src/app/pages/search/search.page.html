@@ -50,6 +50,11 @@
                                     }
                                 </mat-tab>
                                 <mat-tab [label]="'pages.search.tabs.statuses' | translate">
+                                    <div class="margin-top-20 margin-bottom-20">
+                                        <mat-slide-toggle name="onlyCurrentUser" [ngModel]="onlyCurrentUser()" (ngModelChange)="onOnlyCurrentUserChange($event)">
+                                            {{ 'pages.search.showOnlyMyStatuses' | translate }}
+                                        </mat-slide-toggle>
+                                    </div>
                                     @if (statuses().length > 0) {
                                         <div class="margin-top-20 margin-bottom-20">
                                             @for (status of statuses(); track status.id) {

@@ -2427,6 +2427,7 @@
         "users": "Nenhum utilizador encontrado."
       },
       "hint": "Pesquisa para a utilizador, estado, ou hashtag, ou paste a URL para a estado ou utilizador perfil.",
+      "showOnlyMyStatuses": "Mostrar apenas os meus estados",
       "tabs": {
         "hashtags": "Etiquetas",
         "statuses": "Estados",

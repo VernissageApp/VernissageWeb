@@ -2427,6 +2427,7 @@
         "users": "Käyttäjiä ei löytynyt."
       },
       "hint": "Etsi käyttäjä, tila tai aihetunniste, tai lisää päivityksen tai käyttäjätilin URL.",
+      "showOnlyMyStatuses": "Näytä vain omat tilapäivitykseni",
       "tabs": {
         "hashtags": "Aihetunnisteet",
         "statuses": "Päivitykset",
