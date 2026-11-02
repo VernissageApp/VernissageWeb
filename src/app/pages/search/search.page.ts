@@ -10,6 +10,7 @@ import { ResponsiveComponent } from 'src/app/common/responsive';
 import { Hashtag } from 'src/app/models/hashtag';
 import { Status } from 'src/app/models/status';
 import { MatTabChangeEvent, MatTabGroup, MatTab } from '@angular/material/tabs';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
 
 import { FormsModule } from '@angular/forms';
 import { MatCard, MatCardContent } from '@angular/material/card';
@@ -27,7 +28,7 @@ import { TranslatePipe } from '@ngx-translate/core';
     templateUrl: './search.page.html',
     styleUrls: ['./search.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [FormsModule, MatCard, MatCardContent, MatFormField, InputActivityDirective, MatInput, MatButton, MatSuffix, MatHint, MatTabGroup, MatTab, UsersCardComponent, HashtagsSearchComponent, StatusesSearchComponent, TranslatePipe]
+    imports: [FormsModule, MatCard, MatCardContent, MatFormField, InputActivityDirective, MatInput, MatButton, MatSuffix, MatHint, MatTabGroup, MatTab, MatSlideToggle, UsersCardComponent, HashtagsSearchComponent, StatusesSearchComponent, TranslatePipe]
 })
 export class SearchPage extends ResponsiveComponent implements AfterViewInit, OnInit, OnDestroy {
     private routeParamsSubscription?: Subscription;
@@ -36,6 +37,7 @@ export class SearchPage extends ResponsiveComponent implements AfterViewInit, On
     protected search = model('');
     protected selectedIndex = signal(0);
     protected searchExecuted = signal(false);
+    protected onlyCurrentUser = signal(false);
 
     protected users = signal<User[]>([]);
     protected hashtags = signal<Hashtag[]>([]);
@@ -56,6 +58,7 @@ export class SearchPage extends ResponsiveComponent implements AfterViewInit, On
 
             const type = params['type'];
             this.search.set(params['query']);
+            this.onlyCurrentUser.set(params['onlyCurrentUser'] === 'true');
 
             if (!this.search) {
                 this.searchExecuted.set(false);
@@ -83,7 +86,7 @@ export class SearchPage extends ResponsiveComponent implements AfterViewInit, On
                     break;
             }
 
-            const searchResults = await this.searchService.search(this.search(), type);
+            const searchResults = await this.searchService.search(this.search(), type, type === 'statuses' && this.onlyCurrentUser());
 
             if (searchResults.users && searchResults.users.length !== 0) {                
                 const relationships = await this.relationshipsService.getAll(searchResults.users?.map(x => x.id ?? ''));
@@ -124,6 +127,14 @@ export class SearchPage extends ResponsiveComponent implements AfterViewInit, On
         }
 
         this.router.navigate([], { relativeTo: this.activatedRoute, queryParams: { query: this.search(), type: selectedType }, queryParamsHandling: 'merge' });
+    }
+
+    protected onOnlyCurrentUserChange(onlyCurrentUser: boolean): void {
+        this.router.navigate([], {
+            relativeTo: this.activatedRoute,
+            queryParams: { onlyCurrentUser: onlyCurrentUser ? true : null },
+            queryParamsHandling: 'merge'
+        });
     }
 
     protected async onSubmit(): Promise<void> {

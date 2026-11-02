@@ -11,9 +11,10 @@ export class SearchService {
     private httpClient = inject(HttpClient);
     private windowService = inject(WindowService);
 
-    public async search(query: string, type: string): Promise<SearchResults> {
+    public async search(query: string, type: string, onlyCurrentUser = false): Promise<SearchResults> {
         const queryWithoutHashtags = query.replaceAll('#', '');
-        const event$ = this.httpClient.get<SearchResults>(this.windowService.apiUrl() + '/api/v1/search?query=' + queryWithoutHashtags + '&type=' + type);
+        const currentUserFilter = onlyCurrentUser ? '&onlyCurrentUser=true' : '';
+        const event$ = this.httpClient.get<SearchResults>(this.windowService.apiUrl() + '/api/v1/search?query=' + queryWithoutHashtags + '&type=' + type + currentUserFilter);
         return await firstValueFrom(event$);
     }
 }

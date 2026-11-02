@@ -2427,6 +2427,7 @@
         "users": "Ingen brukere funnet."
       },
       "hint": "Søk etter en bruker, status eller hashtag, eller lim inn enURLtil en status eller brukerprofil.",
+      "showOnlyMyStatuses": "Vis bare mine statuser",
       "tabs": {
         "hashtags": "Hashtags",
         "statuses": "Statuser",

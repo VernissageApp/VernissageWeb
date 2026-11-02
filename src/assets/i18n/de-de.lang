@@ -2427,6 +2427,7 @@
         "users": "Keine Benutzer gefunden."
       },
       "hint": "Suchen Sie nach einem Benutzer, Status oder Hashtag oder fügen Sie eine URL in einen Status oder ein Benutzerprofil ein.",
+      "showOnlyMyStatuses": "Nur meine Statusmeldungen anzeigen",
       "tabs": {
         "hashtags": "Hashtags",
         "statuses": "Status",

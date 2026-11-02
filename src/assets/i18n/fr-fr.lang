@@ -2427,6 +2427,7 @@
         "users": "Aucun utilisateur trouvé."
       },
       "hint": "Recherchez un utilisateur, un statut, un hashtag ou collez une URL vers un statut ou un profil utilisateur.",
+      "showOnlyMyStatuses": "Afficher uniquement mes statuts",
       "tabs": {
         "hashtags": "Hashtags",
         "statuses": "Statuts",
