@@ -73,6 +73,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
     protected contentWarning = model('');
     protected selectedIndex = model(0);
     protected isCanceling = signal(false);
+    protected isSubmitting = signal(false);
     protected isPhotoDragOver = signal(false);
     protected emailHasBeenVerified = signal(false);
     protected accountHasBeenMoved = signal(false);
@@ -363,6 +364,10 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
     }
 
     protected async onSubmit(): Promise<void> {
+        if (this.isSubmitting()) {
+            return;
+        }
+
         if (!this.emailHasBeenVerified()) {
             this.messageService.showError(this.translateService.instant('pages.upload.messages.verifyEmailBeforePublish'));
             return;
@@ -373,6 +378,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
             return;
         }
 
+        this.isSubmitting.set(true);
         try {
             const internalPhotos = this.photos();
 
@@ -473,6 +479,8 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
         } catch (error) {
             console.error(error);
             this.messageService.showServerError(error);
+        } finally {
+            this.isSubmitting.set(false);
         }
     }
 
