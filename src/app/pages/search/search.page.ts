@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, OnDestroy, model, signal, viewChild, ChangeDetectionStrategy, inject } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, OnDestroy, computed, model, signal, viewChild, ChangeDetectionStrategy, inject } from '@angular/core';
 import { User } from 'src/app/models/user';
 import { Relationship } from 'src/app/models/relationship';
 import { SearchService } from 'src/app/services/http/search.service';
@@ -23,6 +23,8 @@ import { HashtagsSearchComponent } from '../../components/widgets/hashtags-searc
 import { StatusesSearchComponent } from '../../components/widgets/statuses-search/statuses-search.component';
 import { TranslatePipe } from '@ngx-translate/core';
 
+const searchTypes = ['users', 'hashtags', 'statuses'] as const;
+
 @Component({
     selector: 'app-search',
     templateUrl: './search.page.html',
@@ -32,12 +34,21 @@ import { TranslatePipe } from '@ngx-translate/core';
 })
 export class SearchPage extends ResponsiveComponent implements AfterViewInit, OnInit, OnDestroy {
     private routeParamsSubscription?: Subscription;
+    private searchRequestId = 0;
+    private submittedQuery = signal('');
     private queryInput = viewChild<ElementRef<HTMLInputElement>>('queryInput');
 
     protected search = model('');
-    protected selectedIndex = signal(0);
+    protected selectedIndex = signal(searchTypes.indexOf('statuses'));
     protected searchExecuted = signal(false);
     protected onlyCurrentUser = signal(false);
+    protected showStatusFilter = computed(() => {
+        if (!this.search().trim() || this.search() !== this.submittedQuery()) {
+            return this.getSearchType() === 'statuses';
+        }
+
+        return searchTypes[this.selectedIndex()] === 'statuses';
+    });
 
     protected users = signal<User[]>([]);
     protected hashtags = signal<Hashtag[]>([]);
@@ -53,18 +64,21 @@ export class SearchPage extends ResponsiveComponent implements AfterViewInit, On
     override ngOnInit(): void {
         super.ngOnInit();
 
-        this.routeParamsSubscription = this.activatedRoute.queryParams.subscribe(async params => {
-            this.loadingService.showLoader();
-
-            const type = params['type'];
-            this.search.set(params['query']);
-            this.onlyCurrentUser.set(params['onlyCurrentUser'] === 'true');
-
-            if (!this.search) {
-                this.searchExecuted.set(false);
+        this.routeParamsSubscription = this.activatedRoute.queryParamMap.subscribe(async params => {
+            const requestId = ++this.searchRequestId;
+            const query = params.get('query') ?? '';
+            if (query !== this.submittedQuery()) {
+                this.search.set(query);
+                this.submittedQuery.set(query);
             }
 
-            if ((this.search()?.trim().length ?? 0) === 0) {
+            const selectedIndex = searchTypes.findIndex(type => type === params.get('type'));
+            const type = searchTypes[selectedIndex] ?? (query.trim() ? 'users' : 'statuses');
+            this.selectedIndex.set(searchTypes.indexOf(type));
+            this.onlyCurrentUser.set(params.get('onlyCurrentUser') === 'true');
+
+            if (!query.trim()) {
+                this.searchExecuted.set(false);
                 this.usersRelationships.set([]);
                 this.users.set([]);
                 this.hashtags.set([]);
@@ -74,31 +88,31 @@ export class SearchPage extends ResponsiveComponent implements AfterViewInit, On
                 return;
             }
 
-            switch (type) {
-                case 'users':
-                    this.selectedIndex.set(0);
-                    break;
-                case 'hashtags':
-                    this.selectedIndex.set(1);
-                    break;
-                case 'statuses':
-                    this.selectedIndex.set(2);
-                    break;
-            }
+            this.loadingService.showLoader();
+            try {
+                const searchResults = await this.searchService.search(query, type, type === 'statuses' && this.onlyCurrentUser());
+                if (requestId !== this.searchRequestId) {
+                    return;
+                }
 
-            const searchResults = await this.searchService.search(this.search(), type, type === 'statuses' && this.onlyCurrentUser());
+                const users = searchResults.users ?? [];
+                const relationships = users.length > 0
+                    ? await this.relationshipsService.getAll(users.map(user => user.id ?? ''))
+                    : [];
+                if (requestId !== this.searchRequestId) {
+                    return;
+                }
 
-            if (searchResults.users && searchResults.users.length !== 0) {                
-                const relationships = await this.relationshipsService.getAll(searchResults.users?.map(x => x.id ?? ''));
                 this.usersRelationships.set(relationships);
+                this.users.set(users);
+                this.hashtags.set(searchResults.hashtags ?? []);
+                this.statuses.set(searchResults.statuses ?? []);
+                this.searchExecuted.set(true);
+            } finally {
+                if (requestId === this.searchRequestId) {
+                    this.loadingService.hideLoader();
+                }
             }
-    
-            this.users.set(searchResults.users ?? []);
-            this.hashtags.set(searchResults.hashtags ?? []);
-            this.statuses.set(searchResults.statuses ?? []);
-
-            this.searchExecuted.set(true);
-            this.loadingService.hideLoader();
         });
     }
 
@@ -113,23 +127,19 @@ export class SearchPage extends ResponsiveComponent implements AfterViewInit, On
     }
 
     protected onSelectedTabChange(event: MatTabChangeEvent): void {
-        let selectedType = '';
-        switch (event.index) {
-            case 0: 
-                selectedType = 'users';
-                break;
-            case 1:
-                selectedType = 'hashtags';
-                break;
-            case 2:
-                selectedType = 'statuses';
-                break;
+        if (event.index === this.selectedIndex()) {
+            return;
         }
 
-        this.router.navigate([], { relativeTo: this.activatedRoute, queryParams: { query: this.search(), type: selectedType }, queryParamsHandling: 'merge' });
+        this.router.navigate([], { relativeTo: this.activatedRoute, queryParams: { type: searchTypes[event.index] }, queryParamsHandling: 'merge' });
     }
 
     protected onOnlyCurrentUserChange(onlyCurrentUser: boolean): void {
+        if (this.search() !== this.submittedQuery()) {
+            this.onlyCurrentUser.set(onlyCurrentUser);
+            return;
+        }
+
         this.router.navigate([], {
             relativeTo: this.activatedRoute,
             queryParams: { onlyCurrentUser: onlyCurrentUser ? true : null },
@@ -139,7 +149,11 @@ export class SearchPage extends ResponsiveComponent implements AfterViewInit, On
 
     protected async onSubmit(): Promise<void> {
         const type = this.getSearchType();
-        this.router.navigate([], { relativeTo: this.activatedRoute, queryParams: { query: this.search(), type: type }, queryParamsHandling: 'merge' });
+        this.router.navigate([], {
+            relativeTo: this.activatedRoute,
+            queryParams: { query: this.search(), type, onlyCurrentUser: this.onlyCurrentUser() ? true : null },
+            queryParamsHandling: 'merge'
+        });
     }
 
     private getSearchType(): string {
