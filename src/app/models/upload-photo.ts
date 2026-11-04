@@ -16,6 +16,7 @@ export class UploadPhoto {
     public blurhash?: string;
     public photoFile?: Blob;
     public photoResizedFile?: Blob;
+    public useOriginalImage = false;
     public photoHdrFile?: Blob;
     public photoHdrSrc?: string;
     public isHdrUploaded = false;

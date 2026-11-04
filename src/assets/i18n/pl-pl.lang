@@ -737,6 +737,44 @@
     }
   },
   "dialogs": {
+    "preserveContentCredentials": {
+      "originalTitle": "Przesłać oryginalne zdjęcie?",
+      "originalPrompt": "Czy chcesz przesłać plik „{fileName}” w oryginalnej formie? Zachowane zostaną wszystkie metadane, również dane EXIF z lokalizacją, jeśli są zapisane.",
+      "originalBenefits": "Oryginalny plik zachowuje dokładnie te same dane obrazu, profil kolorów i szczegóły, co może mieć znaczenie na przykład w astrofotografii.",
+      "standardProcessing": "Wybierz Nie, aby usunąć metadane i ponownie wyeksportować zdjęcie do JPEG. Dane C2PA, jeśli są obecne, nie zostaną zachowane.",
+      "title": "Zachować dane uwierzytelniające C2PA?",
+      "detected": "Plik „{fileName}” zawiera dane uwierzytelniające C2PA.",
+      "metadata": "Aby je zachować, oryginalny plik musi zostać zapisany i rozesłany ze wszystkimi zawartymi w nim metadanymi, również lokalizacją, jeśli jest zapisana.",
+      "privacy": "Kontynuuj tylko wtedy, gdy masz pewność, że plik nie zawiera informacji, których nie chcesz udostępniać lub które mogłyby narazić Twoją prywatność. Oryginalny plik wraz ze wszystkimi metadanymi zostanie wysłany do Twoich obserwujących na ich serwery.",
+      "no": "Nie",
+      "yes": "Tak, mam pewność"
+    },
+    "contentCredentials": {
+      "labels": {
+        "actions": "Akcje",
+        "format": "Format",
+        "ingredients": "Składniki",
+        "producedWith": "Utworzono w",
+        "signedAt": "Podpisano",
+        "signedBy": "Podpis",
+        "title": "Tytuł",
+        "identity": "Tożsamość",
+        "actionsCount": "Liczba akcji",
+        "verify": "Weryfikacja",
+        "appOrDeviceUsed": "App or device used"
+      },
+      "texts": {
+        "verifiedSummary": "Zdjęcie zawiera prawidłowy manifest C2PA i przeszło walidację po stronie klienta.",
+        "validationCaution": "Nie oznacza to automatycznie fałszerstwa. Ponowny eksport lub przetworzenie zdjęcia przez inny serwer również mogą naruszyć zgodność danych.",
+        "validationErrors": "Szczegóły błędów walidacji",
+        "signatureMismatch": "Podpis C2PA jest nieprawidłowy.",
+        "hashMismatch": "Hash danych zdjęcia lub składnika nie zgadza się z manifestem C2PA."
+      },
+      "title": "Content Credentials",
+      "actions": {
+        "openOnVerifySite": "Otwórz w Verify Site"
+      }
+    },
     "category": {
       "attrs": {
         "categoryName": "Nazwa kategorii",
@@ -2198,6 +2236,10 @@
         "title": "Galeria profilu użytkownika"
       },
       "media": {
+        "alwaysAskToUploadOriginalImage": {
+          "title": "Zawsze pytaj o przesłanie oryginalnego zdjęcia",
+          "description": "Przed każdym przesłaniem wybierz, czy usunąć metadane i ponownie wyeksportować zdjęcie do JPEG, czy zachować oryginalny plik ze wszystkimi metadanymi, w tym lokalizacją EXIF, jeśli jest zapisana."
+        },
         "alwaysShowNsfw": {
           "description": "Wymuszaj wyświetlanie wszystkich mediów NSFW (wrażliwych) bez ostrzeżeń.",
           "title": "Zawsze pokazuj NSFW"
@@ -2521,6 +2563,23 @@
       },
       "confirmations": {
         "changeStatusWithEnteredComment": "Wpisałeś komentarz. Czy mimo to chcesz zmienić status?"
+      },
+      "contentCredentials": {
+        "label": "Content Credentials",
+        "verified": "Content Credentials verified",
+        "title": "Content Credentials",
+        "author": "Autor",
+        "equipmentOrApplication": "Sprzęt/Aplikacja",
+        "details": "Szczegóły",
+        "appOrDeviceUsed": "App or device used",
+        "aiGenerated": "AI Generated",
+        "validation": {
+          "verified": "Integralność i zaufanie do podpisu C2PA potwierdzone",
+          "untrusted": "Integralność potwierdzona. Wystawca certyfikatu niezweryfikowany",
+          "invalid": "Nie udało się potwierdzić integralności danych C2PA",
+          "unknown": "Nie udało się ustalić wyniku weryfikacji C2PA"
+        },
+        "unverifiedMetadata": "Poniższe dane o autorze, urządzeniu i historii zdjęcia są niezweryfikowane."
       },
       "followedTagsInThisStatus": "Obserwowane tagi w tym statusie",
       "hashtagsAriaLabel": "Hashtagi",
