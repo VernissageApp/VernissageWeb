@@ -436,7 +436,9 @@
 
                     <!-- Content Credentials -->
                     @if (contentCredentials(); as contentCredentialsInternal) {
-                        <mat-card class="content-credentials-card margin-bottom-20" appearance="outlined">
+                        <mat-card class="content-credentials-card margin-bottom-20" appearance="outlined"
+                            [class.content-credentials-invalid]="contentCredentialsInternal.verificationStatus === 'invalid'"
+                            [class.content-credentials-neutral]="contentCredentialsInternal.verificationStatus === 'unknown'">
                             <mat-card-header class="content-credentials-card-header">
                                 <mat-card-title class="status-panel-card-title content-credentials-card-title">
                                     <span class="content-credentials-title">
@@ -449,6 +451,17 @@
                                 </mat-card-title>
                             </mat-card-header>
                             <mat-card-content>
+                                @if (contentCredentialsInternal.verificationStatus !== 'untrusted') {
+                                    <div class="content-credentials-validation margin-bottom-10">
+                                        @if (contentCredentialsInternal.verificationStatus === 'invalid') {
+                                            <mat-icon aria-hidden="true">warning</mat-icon>
+                                        }
+                                        <span>{{ ('pages.status.contentCredentials.validation.' + contentCredentialsInternal.verificationStatus) | translate }}</span>
+                                    </div>
+                                }
+                                @if (contentCredentialsInternal.verificationStatus === 'invalid' || contentCredentialsInternal.verificationStatus === 'unknown') {
+                                    <p class="text-muted">{{ 'pages.status.contentCredentials.unverifiedMetadata' | translate }}</p>
+                                }
                                 <div class="flex-col gap-8">
                                     @if (contentCredentialsInternal.author || contentCredentialsInternal.signatureIssuer) {
                                         <div>
@@ -471,9 +484,12 @@
                                         </div>
                                     }
 
+                                    @if (contentCredentialsInternal.verificationStatus === 'untrusted') {
+                                        <div class="text-muted fs-90">{{ 'pages.status.contentCredentials.validation.untrusted' | translate }}</div>
+                                    }
                                 </div>
                             </mat-card-content>
-                            @if (contentCredentialsInternal.aiGenerated) {
+                            @if (contentCredentialsInternal.aiGenerated && (contentCredentialsInternal.verificationStatus === 'verified' || contentCredentialsInternal.verificationStatus === 'untrusted')) {
                                 <mat-card-actions class="content-credentials-card-footer">
                                     <div class="ai-generated-tag">
                                         <mat-icon>smart_toy</mat-icon>

@@ -48,6 +48,7 @@ export function app(): express.Express {
                         imgSrc: ["'self'","data:", "blob:", cspImg],
                         scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
                         scriptSrcAttr: ["'self'", "'unsafe-inline'"],
+                        workerSrc: ["'self'", "blob:"],
                         styleSrc: ["'self'", "'unsafe-inline'"],
                         manifestSrc: ["'self'"],
                         blockAllMixedContent: [],

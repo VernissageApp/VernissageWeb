@@ -179,6 +179,28 @@
     border-color: #9acd00;
 }
 
+.content-credentials-invalid {
+    border: 2px solid var(--mat-sys-error);
+
+    .content-credentials-validation {
+        color: var(--mat-sys-error);
+    }
+}
+
+.content-credentials-neutral {
+    border-color: var(--mat-sys-outline);
+}
+
+.content-credentials-validation {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    mat-icon {
+        flex-shrink: 0;
+    }
+}
+
 .content-credentials-card-header {
     ::ng-deep .mat-mdc-card-header-text {
         width: 100%;

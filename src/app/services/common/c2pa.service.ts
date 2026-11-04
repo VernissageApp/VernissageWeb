@@ -5,6 +5,8 @@ import { C2paContentCredentials } from 'src/app/models/c2pa-content-credentials'
 import { C2paManifest } from 'src/app/models/c2pa-manifest';
 import { C2paManifestStore } from 'src/app/models/c2pa-manifest-store';
 import { C2paValidationStatus } from 'src/app/models/c2pa-validation-status';
+import { C2paValidationResults } from 'src/app/models/c2pa-validation-results';
+import { ImageMimeTypeService } from './image-mime-type.service';
 
 /**
  * Reads and normalizes C2PA Content Credentials metadata from image assets in the browser.
@@ -60,8 +62,31 @@ export class C2paService {
     ];
 
     private platformId = inject(PLATFORM_ID);
+    private imageMimeTypeService = inject(ImageMimeTypeService);
+    private readonly initializationTimeoutMs = 15000;
     private c2paPromise?: Promise<C2paSdk>;
     private manifestInfoByUrl = new Map<string, Promise<C2paContentCredentials | undefined>>();
+
+    public async hasContentCredentials(file: Blob, mimeType = file.type): Promise<boolean> {
+        if (!isPlatformBrowser(this.platformId)) {
+            return false;
+        }
+
+        let reader: Reader | null = null;
+        try {
+            const c2pa = await this.getC2paInstance();
+            // Upload consent depends on presence, not signature validity or trust.
+            reader = await c2pa.reader.fromBlob(await this.imageMimeTypeService.resolveImageMimeType(file, mimeType), file, {
+                verify: { verifyAfterReading: false, verifyTrust: false }
+            });
+            return reader !== null;
+        } catch {
+            // Never preserve all metadata without an explicit confirmation.
+            return false;
+        } finally {
+            await reader?.free();
+        }
+    }
 
     public async getContentCredentials(imageUrl?: string): Promise<C2paContentCredentials | undefined> {
         if (!imageUrl || !isPlatformBrowser(this.platformId)) {
@@ -87,11 +112,44 @@ export class C2paService {
 
     private async getC2paInstance(): Promise<C2paSdk> {
         if (!this.c2paPromise) {
-            const { createC2pa } = await import('@contentauth/c2pa-web/inline');
-            this.c2paPromise = createC2pa();
+            this.c2paPromise = this.initializeC2pa().catch(error => {
+                this.c2paPromise = undefined;
+                throw error;
+            });
         }
 
         return this.c2paPromise;
+    }
+
+    private async initializeC2pa(): Promise<C2paSdk> {
+        let timedOut = false;
+        let timeout: ReturnType<typeof setTimeout> | undefined;
+        const initialization = (async () => {
+            const sdk = await this.loadC2paSdk();
+            if (timedOut) {
+                sdk.dispose();
+            }
+            return sdk;
+        })();
+
+        try {
+            return await Promise.race([
+                initialization,
+                new Promise<never>((_, reject) => {
+                    timeout = setTimeout(() => {
+                        timedOut = true;
+                        reject(new Error('C2PA initialization timed out.'));
+                    }, this.initializationTimeoutMs);
+                })
+            ]);
+        } finally {
+            clearTimeout(timeout);
+        }
+    }
+
+    private async loadC2paSdk(): Promise<C2paSdk> {
+        const { createC2pa } = await import('@contentauth/c2pa-web/inline');
+        return createC2pa();
     }
 
     private async readContentCredentials(imageUrl: string): Promise<C2paContentCredentials | undefined> {
@@ -108,7 +166,7 @@ export class C2paService {
 
             const blob = await response.blob();
             const c2pa = await this.getC2paInstance();
-            reader = await c2pa.reader.fromBlob(blob.type, blob);
+            reader = await c2pa.reader.fromBlob(await this.imageMimeTypeService.resolveImageMimeType(blob), blob);
             if (!reader) {
                 return undefined;
             }
@@ -120,9 +178,23 @@ export class C2paService {
                 ...(activeManifest?.validation_status ?? [])
             ];
 
-            if (!activeManifest || this.hasValidationErrors(validationStatuses)) {
+            if (!activeManifest) {
                 return undefined;
             }
+
+            const validationState = manifestStore?.validation_state;
+            const failures = [
+                ...validationStatuses.filter(status => status.success === false),
+                ...this.getValidationFailures(manifestStore?.validation_results),
+                ...this.getValidationFailures(activeManifest.validation_results)
+            ].filter(status => status.code !== 'signingCredential.untrusted');
+            const validationErrors = failures.filter((status, index) =>
+                failures.findIndex(other => other.code === status.code && other.explanation === status.explanation) === index);
+            const verificationStatus = validationState === 'Invalid' || validationErrors.length > 0
+                ? 'invalid'
+                : validationState === 'Trusted'
+                    ? 'verified'
+                    : validationState === 'Valid' ? 'untrusted' : 'unknown';
 
             return {
                 author: this.getAuthor(activeManifest),
@@ -139,6 +211,8 @@ export class C2paService {
                 ingredientsCount: activeManifest.ingredients?.length ?? 0,
                 actionsCount: this.getActionsCount(activeManifest),
                 validationStatuses,
+                verificationStatus,
+                validationErrors,
                 validationState: manifestStore?.validation_state ?? undefined,
                 verifyUrl: this.getVerifyUrl(imageUrl),
                 manifest: activeManifest
@@ -369,14 +443,10 @@ export class C2paService {
         return typeof value === 'object' && value !== null && propertyName in value;
     }
 
-    private hasValidationErrors(validationStatuses?: C2paValidationStatus[]): boolean {
-        return validationStatuses?.some(status => {
-            if (status.success === false) {
-                return true;
-            }
-
-            const code = status.code?.toLowerCase() ?? '';
-            return code.includes('failure') || code.includes('error');
-        }) ?? false;
+    private getValidationFailures(results?: C2paValidationResults | null): C2paValidationStatus[] {
+        return [
+            ...(results?.activeManifest?.failure ?? []),
+            ...(results?.ingredientDeltas?.flatMap(ingredient => ingredient.validationDeltas.failure ?? []) ?? [])
+        ];
     }
 }

@@ -1,5 +1,9 @@
 import { ChangeDetectionStrategy, Component, computed, ElementRef, inject, model, OnInit, signal, viewChild } from '@angular/core';
 import { HttpEventType } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
+import { C2paService } from 'src/app/services/common/c2pa.service';
+import { PreserveContentCredentialsDialog } from 'src/app/dialogs/preserve-content-credentials-dialog/preserve-content-credentials.dialog';
+import { PreserveContentCredentialsDialogData } from 'src/app/models/preserve-content-credentials-dialog-data';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { encode } from 'blurhash';
 import * as ExifReader from 'exifreader';
@@ -117,6 +121,7 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
     private loadingService = inject(LoadingService);
     private authorizationService = inject(AuthorizationService);
     private canonExifService = inject(CanonExifService);
+    private c2paService = inject(C2paService);
     private deviceDetectorService = inject(DeviceDetectorService);
     private translateService = inject(TranslateService);
 
@@ -236,8 +241,18 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
         const uploadPhoto = new UploadPhoto(photoUuid);
         uploadPhoto.photoFile = file;
 
+        const hasContentCredentials = await this.c2paService.hasContentCredentials(file);
+        if (hasContentCredentials || this.preferencesService.alwaysAskToUploadOriginalImage) {
+            const dialogRef = this.dialog.open<PreserveContentCredentialsDialog, PreserveContentCredentialsDialogData, boolean>(PreserveContentCredentialsDialog, {
+                width: '560px',
+                data: { fileName: file.name, hasContentCredentials },
+                autoFocus: '[data-decline]'
+            });
+            uploadPhoto.useOriginalImage = await firstValueFrom(dialogRef.afterClosed()) === true;
+        }
+
         if (file.size > this.maxFileSize) {
-            if (this.deviceDetectorService.deviceType() !== DeviceType.Mobile) {
+            if (uploadPhoto.useOriginalImage || this.deviceDetectorService.deviceType() !== DeviceType.Mobile) {
                 this.messageService.showError(this.translateService.instant('pages.upload.messages.fileTooLarge', { maxFileSize: this.maxFileSizeString() }));
                 return;
             }
@@ -563,10 +578,13 @@ export class UploadPage extends ResponsiveComponent implements OnInit {
             this.photos.update(photos => [...photos, uploadPhoto]);
 
             const formData = new FormData();
-            const fileToUpload = uploadPhoto.photoResizedFile ?? uploadPhoto.photoFile;
+            const fileToUpload = uploadPhoto.useOriginalImage ? uploadPhoto.photoFile : uploadPhoto.photoResizedFile ?? uploadPhoto.photoFile;
 
             if (fileToUpload) {
                 formData.append('file', fileToUpload);
+            }
+            if (uploadPhoto.useOriginalImage) {
+                formData.append('useOriginalImage', 'true');
             }
 
             // Reset file form (in case if we want to send the same file once again).

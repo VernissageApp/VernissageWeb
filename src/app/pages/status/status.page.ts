@@ -955,9 +955,12 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
 
     private async loadContentCredentialsForCurrentImage(): Promise<void> {
         const requestId = ++this.contentCredentialsRequestId;
-        const imageUrl = this.mainStatus()?.attachments?.at(this.currentIndex())?.originalFile?.url;
+        const attachment = this.mainStatus()?.attachments?.at(this.currentIndex());
 
         this.contentCredentials.set(undefined);
+        const imageUrl = attachment?.originalHdrFile?.url && !this.preferencesService.alwaysShowSdrPhoto && this.browserSupportsHdr()
+            ? attachment.originalHdrFile.url
+            : attachment?.originalFile?.url;
         const internalContentCredentials = await this.c2paService.getContentCredentials(imageUrl);
 
         if (requestId !== this.contentCredentialsRequestId) {

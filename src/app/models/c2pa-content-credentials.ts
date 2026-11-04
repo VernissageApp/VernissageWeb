@@ -15,6 +15,8 @@ export interface C2paContentCredentials {
     ingredientsCount: number;
     actionsCount: number;
     validationStatuses: C2paValidationStatus[];
+    verificationStatus: 'verified' | 'untrusted' | 'invalid' | 'unknown';
+    validationErrors: C2paValidationStatus[];
     validationState?: string;
     verifyUrl: string;
     manifest: unknown;
