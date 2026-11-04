@@ -18,13 +18,14 @@ import { MatIcon } from '@angular/material/icon';
 import { BlurhashImageComponent } from '../blurhash-image/blurhash-image.component';
 import { ImageComponent } from '../image/image.component';
 import { TranslatePipe } from '@ngx-translate/core';
+import { ScrollToTopComponent } from '../scroll-to-top/scroll-to-top.component';
 
 @Component({
     selector: 'app-gallery',
     templateUrl: './gallery.component.html',
     styleUrls: ['./gallery.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [InfiniteScrollDirective, ViewportObserverDirective, RouterLink, MatIcon, BlurhashImageComponent, ImageComponent, TranslatePipe]
+    imports: [InfiniteScrollDirective, ViewportObserverDirective, RouterLink, MatIcon, BlurhashImageComponent, ImageComponent, TranslatePipe, ScrollToTopComponent]
 })
 export class GalleryComponent extends ResponsiveComponent implements OnInit, OnDestroy {
     public statuses = input.required<LinkableResult<Status>>();

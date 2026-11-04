@@ -13,13 +13,21 @@
                         <div class="text-muted fs-90 margin-left-10 margin-top-5">
                             {{ 'pages.search.hint' | translate }}
                         </div>
+
+                        @if (showStatusFilter()) {
+                            <div class="margin-top-20 margin-left-10">
+                                <mat-slide-toggle name="onlyCurrentUser" [ngModel]="onlyCurrentUser()" (ngModelChange)="onOnlyCurrentUserChange($event)">
+                                    {{ 'pages.search.showOnlyMyStatuses' | translate }}
+                                </mat-slide-toggle>
+                            </div>
+                        }
                     </mat-card-content>
                 </mat-card>
 
-                @if (searchExecuted(); as wasSearchExecuted) {
+                @if (searchExecuted()) {
                     <mat-card appearance="outlined">
                         <mat-card-content>
-                            
+
                             <mat-tab-group mat-stretch-tabs animationDuration="0ms" [selectedIndex]="selectedIndex()" (selectedTabChange)="onSelectedTabChange($event)">
                                 <mat-tab [label]="'pages.search.tabs.users' | translate">
                                     @if (users().length > 0) {
@@ -28,7 +36,7 @@
                                         </div>
                                     }
 
-                                    @if (wasSearchExecuted && users().length === 0) {
+                                    @if (users().length === 0) {
                                         <div class="text-center text-muted margin-top-20 margin-bottom-20">
                                             {{ 'pages.search.empty.users' | translate }}
                                         </div>
@@ -43,7 +51,7 @@
                                         </div>
                                     }
 
-                                    @if (wasSearchExecuted && hashtags().length === 0) {
+                                    @if (hashtags().length === 0) {
                                         <div class="text-center text-muted margin-top-20 margin-bottom-20">
                                             {{ 'pages.search.empty.hashtags' | translate }}
                                         </div>
@@ -58,7 +66,7 @@
                                         </div>
                                     }
 
-                                    @if (wasSearchExecuted && statuses().length === 0) {
+                                    @if (statuses().length === 0) {
                                         <div class="text-center text-muted margin-top-20 margin-bottom-20">
                                             {{ 'pages.search.empty.statuses' | translate }}
                                         </div>

@@ -49,7 +49,8 @@
       "unfollow": "Sluta följa",
       "unsuppress": "Ta bort tystning",
       "update": "Uppdatering",
-      "upload": "Ladda upp"
+      "upload": "Ladda upp",
+      "toTheTop": "Till toppen"
     },
     "articleVisibility": {
       "homeSignIn": "Hem - logga in",
@@ -1540,6 +1541,7 @@
   },
   "pages": {
     "directMessages": {
+      "emailVerificationRequired": "Verifiera din e-postadress innan du skickar ett meddelande.",
       "like": "Gilla meddelande",
       "unlike": "Ta bort gilla-markering från meddelandet",
       "liked": "Gillat meddelande",
@@ -1570,8 +1572,7 @@
       "writeMessage": "Skriv ett meddelande...",
       "addImage": "Lägg till bild",
       "selectConversation": "Välj ett samtal eller börja på ett nytt meddelande.",
-      "invalidImage": "Välj en bild i ett format som stöds och som inte överskrider serverns filstorleksgräns.",
-      "emailVerificationRequired": "Verifiera din e-postadress innan du skickar ett meddelande."
+      "invalidImage": "Välj en bild i ett format som stöds och som inte överskrider serverns filstorleksgräns."
     },
     "account": {
       "avatar": {
@@ -2190,11 +2191,11 @@
       },
       "title": "Aviseringar",
       "types": {
-        "directMessage": "skickade ett privat meddelande till dig",
-        "favouriteConversationComment": "gillade din kommentar i ett samtal",
         "adminReport": "har rapporterats",
         "adminSignUp": "är en ny användare",
+        "directMessage": "skickade ett privat meddelande till dig",
         "favouriteComment": "favoriserade din kommentar",
+        "favouriteConversationComment": "gillade din kommentar i ett samtal",
         "favouriteStatus": "favoritmarkerade ditt foto",
         "follow": "följde dig",
         "followRequest": "vill följa dig",
@@ -2448,6 +2449,7 @@
         "users": "Inga användare hittades."
       },
       "hint": "Sök efter en användare, status eller hashtag, eller klistra in enURLi en status eller användarprofil.",
+      "showOnlyMyStatuses": "Visa endast mina statusar",
       "tabs": {
         "hashtags": "Hashtags",
         "statuses": "Statuser",

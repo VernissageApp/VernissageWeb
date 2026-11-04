@@ -49,7 +49,8 @@
       "unfollow": "Nie obserwuj",
       "unsuppress": "Cofnij wyciszenie",
       "update": "Aktualizuj",
-      "upload": "Wyślij"
+      "upload": "Wyślij",
+      "toTheTop": "Na górę"
     },
     "articleVisibility": {
       "homeSignIn": "Strona główna - zalogowany",
@@ -2448,6 +2449,7 @@
         "users": "Nie znaleziono użytkowników."
       },
       "hint": "Szukaj użytkownika, statusu lub hashtagu, albo wklej URL statusu lub profilu użytkownika.",
+      "showOnlyMyStatuses": "Pokaż tylko moje statusy",
       "tabs": {
         "hashtags": "Hashtagi",
         "statuses": "Statusy",

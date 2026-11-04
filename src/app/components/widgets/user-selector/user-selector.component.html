@@ -8,7 +8,6 @@
         [id]="name() + '-input'"
         matInput
         [placeholder]="showLabel() ? '' : (label() || ('common.labels.user' | translate))"
-        (change)="onChange()"
         [ngModel]="selectedUserValue()"
         (ngModelChange)="onModelChange($event)"
         #userSelector="ngModel"

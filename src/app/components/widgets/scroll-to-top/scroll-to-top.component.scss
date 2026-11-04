@@ -1,0 +1,52 @@
+:host {
+    display: block;
+    height: 1px;
+    margin-bottom: -1px;
+    outline: none;
+}
+
+.scroll-to-top {
+    position: fixed;
+    right: calc(12px + env(safe-area-inset-right, 0px));
+    bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+    z-index: 109;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.8);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    color: var(--mat-sys-on-surface);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.9);
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--mat-sys-primary);
+        outline-offset: 2px;
+    }
+
+    mat-icon {
+        width: 20px;
+        height: 20px;
+        font-size: 20px;
+    }
+}
+
+:host-context(.dark-theme) {
+    .scroll-to-top {
+        background-color: rgba(43, 43, 43, 0.9);
+
+        &:hover {
+            background-color: rgba(43, 43, 43, 0.95);
+        }
+    }
+}

@@ -117,13 +117,20 @@
                         <button matButton (click)="loadMessages(true)">{{ 'common.actions.reload' | translate }}</button></div>
                 }
                 @for (message of messages(); track message.id) {
+                    @let author = messageAuthor(message);
                     <article class="message" [class.own]="messageAuthor(message)?.id === currentUser?.id"
                         appViewportObserver (viewportChange)="onVisible(message, $event)">
-                        <app-avatar [user]="messageAuthor(message)" [size]="avatarSize.huge" shape="circle" />
+                        @if (author) {
+                            <a class="message-avatar" [routerLink]="[profileLink(author)]" [attr.aria-label]="display.displayName(author)">
+                                <app-avatar [user]="author" [size]="avatarSize.huge" shape="circle" />
+                            </a>
+                        } @else {
+                            <app-avatar [user]="author" [size]="avatarSize.huge" shape="circle" />
+                        }
                         <div class="message-content">
                             <div class="message-meta">
-                                @if (messageAuthor(message)?.id !== currentUser?.id) {
-                                    <span>{{ display.displayName(messageAuthor(message)) }}</span>
+                                @if (author && author.id !== currentUser?.id) {
+                                    <a class="message-author" [routerLink]="[profileLink(author)]">{{ display.displayName(author) }}</a>
                                 }
                                 <time>{{ (message.publishedAt || message.status?.publishedAt || message.status?.createdAt) | localizedDate:'short' }}</time>
                                 @if (!message.deletedAt && (message.status?.favouritesCount || message.status?.favourited)) {

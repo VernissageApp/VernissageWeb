@@ -172,7 +172,7 @@
                             <div class="flex-row flex-space-between">
                                 <div>
                                     <button class="margin-right-10" matButton="text" matStepperPrevious>{{ 'common.actions.back' | translate }}</button>
-                                    <button matButton="filled" [disabled]="!allPhotosUploaded() || photos().length === 0 || f.form.invalid" matStepperNext>
+                                    <button matButton="filled" [disabled]="isSubmitting() || !allPhotosUploaded() || photos().length === 0 || f.form.invalid" matStepperNext>
                                         {{ isEditMode() ? ('common.actions.update' | translate) : ('common.actions.upload' | translate) }}
                                     </button>
                                 </div>
