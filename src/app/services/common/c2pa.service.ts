@@ -409,7 +409,7 @@ export class C2paService {
     }
 
     private getVerifyUrl(imageUrl: string): string {
-        return `https://contentauthenticity.adobe.com/inspect?source=${encodeURIComponent(imageUrl)}`;
+        return `https://c2paviewer.com/?url=${encodeURIComponent(imageUrl)}`;
     }
 
     private getStringValue(value: unknown, propertyName: string): string | undefined {
