@@ -958,6 +958,10 @@ export class StatusPage extends ResponsiveComponent implements OnInit, OnDestroy
         const attachment = this.mainStatus()?.attachments?.at(this.currentIndex());
 
         this.contentCredentials.set(undefined);
+        if (attachment?.originalImagePreserved !== true) {
+            return;
+        }
+
         const imageUrl = attachment?.originalHdrFile?.url && !this.preferencesService.alwaysShowSdrPhoto && this.browserSupportsHdr()
             ? attachment.originalHdrFile.url
             : attachment?.originalFile?.url;
