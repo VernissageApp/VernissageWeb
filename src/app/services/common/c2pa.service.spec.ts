@@ -158,7 +158,7 @@ describe('C2PA verification', () => {
         expect(result.validationErrors).toEqual([]);
     });
 
-    it.each([['Valid', 'untrusted'], ['Trusted', 'verified'], ['Invalid', 'invalid']])(
+    it.each([['Valid', 'untrusted'], ['Trusted', 'verified'], ['Invalid', 'unknown']])(
         'reports a DID resolution warning separately for validation state %s',
         async (validation_state, expected) => {
             const warning = { code: 'cawg.ica.did_unavailable', explanation: 'Unable to resolve issuer DID' };
