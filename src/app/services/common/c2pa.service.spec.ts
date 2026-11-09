@@ -158,11 +158,26 @@ describe('C2PA verification', () => {
         expect(result.validationErrors).toEqual([]);
     });
 
-    it('marks as invalid: a hash mismatch even when untrusted certificates are also reported', async () => {
+    it.each([['Valid', 'untrusted'], ['Trusted', 'verified'], ['Invalid', 'invalid']])(
+        'reports a DID resolution warning separately for validation state %s',
+        async (validation_state, expected) => {
+            const warning = { code: 'cawg.ica.did_unavailable', explanation: 'Unable to resolve issuer DID' };
+            const result = await readCredentials({
+                validation_state,
+                validation_results: { activeManifest: { failure: [warning] } }
+            });
+            expect(result.verificationStatus).toBe(expected);
+            expect(result.identityVerificationWarning).toEqual(warning);
+            expect(result.validationErrors).toEqual([]);
+        }
+    );
+
+    it('marks a hash mismatch as invalid even when certificate trust and identity checks also fail', async () => {
         expect((await readCredentials({
             validation_results: {
                 activeManifest: { failure: [
                     { code: 'signingCredential.untrusted' },
+                    { code: 'cawg.ica.did_unavailable' },
                     { code: 'assertion.dataHash.mismatch' }
                 ] }
             }

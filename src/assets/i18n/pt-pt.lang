@@ -759,6 +759,7 @@
         "signedBy": "Signed by",
         "title": "Title",
         "identity": "Identity",
+        "unverifiedIdentity": "Identidade não verificada",
         "actionsCount": "Actions count",
         "verify": "Verify",
         "appOrDeviceUsed": "App or device used"
@@ -766,6 +767,7 @@
       "texts": {
         "verifiedSummary": "The image contains a valid C2PA manifest and passed client-side validation.",
         "validationCaution": "This does not necessarily mean the image was forged. Re-exporting or processing the image on another server can also break validation.",
+        "identityDidUnavailable": "Não foi possível resolver o documento DID do emissor da credencial de identidade.",
         "validationErrors": "Validation error details",
         "signatureMismatch": "The C2PA signature is invalid.",
         "hashMismatch": "The hash of the image or an ingredient does not match the C2PA manifest."
@@ -2576,6 +2578,7 @@
         "validation": {
           "verified": "C2PA integrity and signature trust verified",
           "untrusted": "Integrity verified. Certificate issuer not verified",
+          "identityUnavailable": "Não foi possível verificar a identidade.",
           "invalid": "C2PA integrity verification failed",
           "unknown": "C2PA verification result is unavailable"
         },

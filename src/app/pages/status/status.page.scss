@@ -191,6 +191,10 @@
     border-color: var(--mat-sys-outline);
 }
 
+.content-credentials-warning {
+    border: 2px solid #c28a00;
+}
+
 .content-credentials-validation {
     display: flex;
     align-items: center;

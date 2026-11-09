@@ -759,6 +759,7 @@
         "signedBy": "Podpis",
         "title": "Tytuł",
         "identity": "Tożsamość",
+        "unverifiedIdentity": "Niezweryfikowana tożsamość",
         "actionsCount": "Liczba akcji",
         "verify": "Weryfikacja",
         "appOrDeviceUsed": "App or device used"
@@ -766,6 +767,7 @@
       "texts": {
         "verifiedSummary": "Zdjęcie zawiera prawidłowy manifest C2PA i przeszło walidację po stronie klienta.",
         "validationCaution": "Nie oznacza to automatycznie fałszerstwa. Ponowny eksport lub przetworzenie zdjęcia przez inny serwer również mogą naruszyć zgodność danych.",
+        "identityDidUnavailable": "Nie udało się odczytać dokumentu DID wystawcy poświadczenia tożsamości.",
         "validationErrors": "Szczegóły błędów walidacji",
         "signatureMismatch": "Podpis C2PA jest nieprawidłowy.",
         "hashMismatch": "Hash danych zdjęcia lub składnika nie zgadza się z manifestem C2PA."
@@ -2576,6 +2578,7 @@
         "validation": {
           "verified": "Integralność i zaufanie do podpisu C2PA potwierdzone",
           "untrusted": "Integralność potwierdzona. Wystawca certyfikatu niezweryfikowany",
+          "identityUnavailable": "Nie udało się zweryfikować tożsamości.",
           "invalid": "Nie udało się potwierdzić integralności danych C2PA",
           "unknown": "Nie udało się ustalić wyniku weryfikacji C2PA"
         },
