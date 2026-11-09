@@ -188,7 +188,9 @@ export class C2paService {
                 ...this.getValidationFailures(manifestStore?.validation_results),
                 ...this.getValidationFailures(activeManifest.validation_results)
             ].filter(status => status.code !== 'signingCredential.untrusted');
+            const identityVerificationWarning = failures.find(status => status.code === 'cawg.ica.did_unavailable');
             const validationErrors = failures.filter((status, index) =>
+                status.code !== 'cawg.ica.did_unavailable' &&
                 failures.findIndex(other => other.code === status.code && other.explanation === status.explanation) === index);
             const verificationStatus = validationState === 'Invalid' || validationErrors.length > 0
                 ? 'invalid'
@@ -212,6 +214,7 @@ export class C2paService {
                 actionsCount: this.getActionsCount(activeManifest),
                 validationStatuses,
                 verificationStatus,
+                identityVerificationWarning,
                 validationErrors,
                 validationState: manifestStore?.validation_state ?? undefined,
                 verifyUrl: this.getVerifyUrl(imageUrl),

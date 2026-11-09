@@ -40,7 +40,13 @@ export function app(): express.Express {
                     directives: {
                         baseUri: ["'self'"],
                         defaultSrc: ["'none'"],
-                        connectSrc: ["'self'", "https://fonts.gstatic.com", cspImg],
+                        connectSrc: [
+                            "'self'",
+                            "https://fonts.gstatic.com",
+                            cspImg,
+                            // Adobe's CAWG identity credentials resolve the issuer through this DID document.
+                            "https://connected-identities.identity.adobe.com/.well-known/did.json",
+                        ],
                         formAction: ["'self'"],
                         objectSrc: ["'none'"],
                         frameAncestors: ["'none'"],

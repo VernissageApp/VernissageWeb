@@ -438,6 +438,7 @@
                     @if (contentCredentials(); as contentCredentialsInternal) {
                         <mat-card class="content-credentials-card margin-bottom-20" appearance="outlined"
                             [class.content-credentials-invalid]="contentCredentialsInternal.verificationStatus === 'invalid'"
+                            [class.content-credentials-warning]="contentCredentialsInternal.identityVerificationWarning && contentCredentialsInternal.verificationStatus !== 'invalid'"
                             [class.content-credentials-neutral]="contentCredentialsInternal.verificationStatus === 'unknown'">
                             <mat-card-header class="content-credentials-card-header">
                                 <mat-card-title class="status-panel-card-title content-credentials-card-title">
@@ -461,6 +462,12 @@
                                 }
                                 @if (contentCredentialsInternal.verificationStatus === 'invalid' || contentCredentialsInternal.verificationStatus === 'unknown') {
                                     <p class="text-muted">{{ 'pages.status.contentCredentials.unverifiedMetadata' | translate }}</p>
+                                }
+                                @if (contentCredentialsInternal.identityVerificationWarning) {
+                                    <div class="content-credentials-validation margin-bottom-10">
+                                        <mat-icon aria-hidden="true">warning</mat-icon>
+                                        <span>{{ 'pages.status.contentCredentials.validation.identityUnavailable' | translate }}</span>
+                                    </div>
                                 }
                                 <div class="flex-col gap-8">
                                     @if (contentCredentialsInternal.author || contentCredentialsInternal.signatureIssuer) {
