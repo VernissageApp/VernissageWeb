@@ -192,7 +192,8 @@ export class C2paService {
             const validationErrors = failures.filter((status, index) =>
                 status.code !== 'cawg.ica.did_unavailable' &&
                 failures.findIndex(other => other.code === status.code && other.explanation === status.explanation) === index);
-            const verificationStatus = validationState === 'Invalid' || validationErrors.length > 0
+            // The SDK can report Invalid when the only reported failure is DID resolution.
+            const verificationStatus = validationErrors.length > 0 || (validationState === 'Invalid' && !identityVerificationWarning)
                 ? 'invalid'
                 : validationState === 'Trusted'
                     ? 'verified'
