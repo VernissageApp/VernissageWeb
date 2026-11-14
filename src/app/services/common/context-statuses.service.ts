@@ -110,12 +110,16 @@ export class ContextStatusesService {
     }
 
     private async loadNextStatuses(): Promise<LinkableResult<Status> | null> {
-        const older = await this.downloadStatuses(undefined, this.statuses?.maxId);
+        const context = this.statuses;
+        const older = await this.downloadStatuses(undefined, context?.maxId);
+        if (context !== this.statuses) {
+            return null;
+        }
 
-        if (this.statuses && older && older.data.length > 0) {
+        if (context && older && older.data.length > 0) {
             older.data = this.filterUniqueStatusesToAppend(older.data);
-            this.statuses.data.push(...older.data);
-            this.statuses.maxId = older.maxId;
+            context.data.push(...older.data);
+            context.maxId = older.maxId;
 
             return older;
         }
@@ -137,10 +141,15 @@ export class ContextStatusesService {
     }
 
     private async loadPreviousStatuses(): Promise<LinkableResult<Status> | null> {
-        const newer = await this.downloadStatuses(this.statuses?.minId, undefined);
-        if (this.statuses && newer && newer.data.length > 0) {
-            this.statuses.data.unshift(...newer.data);
-            this.statuses.minId = newer.minId;
+        const context = this.statuses;
+        const newer = await this.downloadStatuses(context?.minId, undefined);
+        if (context !== this.statuses) {
+            return null;
+        }
+
+        if (context && newer && newer.data.length > 0) {
+            context.data.unshift(...newer.data);
+            context.minId = newer.minId;
 
             return newer;
         }
