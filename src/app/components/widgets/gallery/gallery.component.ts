@@ -1,10 +1,9 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { ChangeDetectionStrategy, Component, computed, effect, inject, input, OnDestroy, OnInit, PLATFORM_ID, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, ElementRef, inject, input, OnDestroy, OnInit, PLATFORM_ID, signal } from '@angular/core';
 import { Subscription, filter } from 'rxjs';
 import { LinkableResult } from 'src/app/models/linkable-result';
 import { Status } from 'src/app/models/status';
 import { ContextStatusesService } from 'src/app/services/common/context-statuses.service';
-import { Attachment } from 'src/app/models/attachment';
 import { LoadingService } from 'src/app/services/common/loading.service';
 import { ResponsiveComponent } from 'src/app/common/responsive';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
@@ -25,6 +24,7 @@ import { ScrollToTopComponent } from '../scroll-to-top/scroll-to-top.component';
     templateUrl: './gallery.component.html',
     styleUrls: ['./gallery.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    host: { '[style.--gallery-gap]': 'galleryGap + "px"' },
     imports: [InfiniteScrollDirective, ViewportObserverDirective, RouterLink, MatIcon, BlurhashImageComponent, ImageComponent, TranslatePipe, ScrollToTopComponent]
 })
 export class GalleryComponent extends ResponsiveComponent implements OnInit, OnDestroy {
@@ -34,6 +34,7 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
     public hideAvatars = input(false);
     public highlightPinnedStatuses = input(false);
 
+    protected readonly galleryGap = 6;
     protected galleryColumns = signal<GalleryColumn[]>([]);
     protected alwaysShowNSFW = signal(false);
     protected avatarVisible = signal(true);
@@ -50,12 +51,12 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
     private galleryBreakpointSubscription?: Subscription;
     private routeNavigationStartSubscription?: Subscription;
     private readonly amountOfPriorityImages = 8;
-    private readonly minimalFileSize = 1;
     private isReadyTimeout?: NodeJS.Timeout;
     private currentUrl?: string;
 
     private routeNavigationEndSubscription?: Subscription;
 
+    private element = inject<ElementRef<HTMLElement>>(ElementRef);
     private platformId = inject(PLATFORM_ID);
     private loadingService = inject(LoadingService);
     private preferencesService = inject(PreferencesService);
@@ -144,11 +145,24 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
 
             this.loadingService.showLoader();
 
-            const olderStatuses = await this.contextStatusesService.loadOlder();
-            this.appendToGallery(olderStatuses);
+            try {
+                const context = this.contextStatusesService.statuses;
+                let previousMaxId: string | undefined;
+                let olderStatuses: LinkableResult<Status> | null;
+                do {
+                    previousMaxId = context?.maxId;
+                    olderStatuses = await this.contextStatusesService.loadOlder();
+                    if (context !== this.contextStatusesService.statuses) {
+                        return;
+                    }
+                } while (olderStatuses?.maxId && olderStatuses.maxId !== previousMaxId
+                    && !olderStatuses.data.some(status => this.getGalleryPreview(status)));
 
-            this.loadingService.hideLoader();
-            this.isDuringLoadingMode = false;
+                this.appendToGallery(olderStatuses);
+            } finally {
+                this.loadingService.hideLoader();
+                this.isDuringLoadingMode = false;
+            }
         }
     }
 
@@ -176,20 +190,7 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
             return;
         }
 
-        for (const [index, status] of statusesArray.data.entries()) {
-            const mainStatusAttachment = this.getMainAttachment(status);
-            if (!mainStatusAttachment) {
-                continue;
-            }
-
-            const imageHeight = this.getImageConstraintHeight(status);
-            const smallerColumnIndex = this.getSmallerColumnIndex(columns, imageHeight);
-            const aspectRatio = this.getSmallAttachmentAspectRatio(status);
-            const contextIndex = index;
-
-            columns[smallerColumnIndex].size = columns[smallerColumnIndex].size + imageHeight;
-            columns[smallerColumnIndex].statuses.push(new GalleryStatus(status, contextIndex, index < this.amountOfPriorityImages, aspectRatio));
-        }
+        this.distributeStatuses(columns, statusesArray.data, 0, true);
 
         this.galleryColumns.set(columns);
     }
@@ -213,24 +214,13 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
         const fullContextLength = this.contextStatusesService.statuses?.data.length ?? 0;
         const startIndex = Math.max(fullContextLength - statusesArray.data.length, 0);
 
-        // Append new statuses to temporary array.
-        for (const [index, status] of statusesArray.data.entries()) {
-            const mainStatusAttachment = this.getMainAttachment(status);
-            if (!mainStatusAttachment) {
-                continue;
-            }
+        this.distributeStatuses(internalColumns, statusesArray.data, startIndex, false, columns.map(column => column.statuses.length));
 
-            const imageHeight = this.getImageConstraintHeight(status);
-            const smallerColumnIndex = this.getSmallerColumnIndex(internalColumns, imageHeight);
-            const aspectRatio = this.getSmallAttachmentAspectRatio(status);
-            const contextIndex = startIndex + index;
-
-            internalColumns[smallerColumnIndex].size = internalColumns[smallerColumnIndex].size + imageHeight;
-            internalColumns[smallerColumnIndex].statuses.push(new GalleryStatus(status, contextIndex, false, aspectRatio));
+        // Keep the fetched pages when rebuilding the gallery after a breakpoint change.
+        const contextStatuses = this.contextStatusesService.statuses;
+        if (contextStatuses) {
+            this.internalStatuses.set(LinkableResult.copy(contextStatuses));
         }
-
-        // Update internal list of statuses (used to rebuild when size of screen is changed).
-        this.internalStatuses.update((value) => LinkableResult.copy(value));
 
         // Update in one step columns signal (to reduce DOM manipulations).
         this.galleryColumns.update(columns => {
@@ -242,52 +232,41 @@ export class GalleryComponent extends ResponsiveComponent implements OnInit, OnD
         });        
     }
 
-    private getSmallerColumnIndex(galleryColumns: GalleryColumn[], currentImageHeight: number): number {
-        let index = 0;
-        let minSize = 999999999;
+    private getGalleryPreview(status: Status) {
+        const preview = this.getMainStatus(status).attachments?.[0]?.smallFile;
+        return preview?.url ? preview : undefined;
+    }
 
-        for(let i = galleryColumns.length - 1; i >= 0; i--) {
-            if ((galleryColumns[i].size + currentImageHeight) <= minSize) {
-                minSize = galleryColumns[i].size + currentImageHeight;
-                index = i;
+    private distributeStatuses(
+        columns: GalleryColumn[],
+        statuses: Status[],
+        startIndex: number,
+        prioritize: boolean,
+        existingCounts = columns.map(() => 0)
+    ): void {
+        const galleryWidth = this.element.nativeElement.clientWidth;
+        const columnWidth = (galleryWidth - (columns.length - 1) * this.galleryGap) / columns.length;
+        const columnHeight = (column: GalleryColumn, index: number) => {
+            const gapCount = Math.max(existingCounts[index] + column.statuses.length - 1, 0);
+            return columnWidth > 0 ? column.size * columnWidth + gapCount * this.galleryGap : column.size;
+        };
+
+        for (const [index, status] of statuses.entries()) {
+            const preview = this.getGalleryPreview(status);
+            if (!preview) {
+                continue;
             }
+
+            const width = Math.max(preview.width ?? 1, 1);
+            const height = Math.max(preview.height ?? 1, 1);
+            const imageHeight = this.squareImages() ? 1 : height / width;
+            const columnIndex = columns.reduce((shortestIndex, candidate, index) =>
+                columnHeight(candidate, index) < columnHeight(columns[shortestIndex], shortestIndex) ? index : shortestIndex, 0);
+            const column = columns[columnIndex];
+
+            column.size += imageHeight;
+            column.statuses.push(new GalleryStatus(status, startIndex + index,
+                prioritize && index < this.amountOfPriorityImages, `${width} / ${height}`));
         }
-
-        return index;
-    }
-
-    private getMainAttachment(status: Status): Attachment | null {
-        const mainStatus = status.reblog ?? status;
-
-        if (!mainStatus.attachments) {
-            return null;
-        }
-    
-        if (mainStatus.attachments?.length === 0) {
-            return null;
-        }
-    
-        return mainStatus.attachments[0];
-    }
-
-    private getSmallAttachmentAspectRatio(status: Status): string {
-        const mainAttachment = this.getMainAttachment(status);
-        const width = Math.max(mainAttachment?.smallFile?.width ?? this.minimalFileSize, this.minimalFileSize);
-        const height = Math.max(mainAttachment?.smallFile?.height ?? this.minimalFileSize, this.minimalFileSize);
-
-        return `${width} / ${height}`;
-    }
-
-    private getImageConstraintHeight(status: Status): number {
-        if (this.squareImages()) {
-            return this.minimalFileSize;
-        }
-
-        const mainAttachment = this.getMainAttachment(status);
-
-        const height = mainAttachment?.originalFile?.height ?? this.minimalFileSize;
-        const width = mainAttachment?.originalFile?.width ?? this.minimalFileSize;
-
-        return height / width;
     }
 }

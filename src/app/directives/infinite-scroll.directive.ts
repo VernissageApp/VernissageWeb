@@ -9,12 +9,13 @@ export class InfiniteScrollDirective implements OnInit, OnDestroy {
   
     public infiniteScrollDistance = input(120);
     public infiniteScrollThrottle = input(120);
+    public infiniteScrollEndSelector = input('');
     public infiniteScrollDisabled = input(false);
   
     private window!: Window;
     private eventSub?: Subscription;
   
-    private el = inject(ElementRef);
+    private el = inject<ElementRef<HTMLElement>>(ElementRef);
     private windowService = inject(WindowService);
     private dialog = inject(MatDialog);
   
@@ -23,8 +24,8 @@ export class InfiniteScrollDirective implements OnInit, OnDestroy {
         // Save window object for type safety.
         this.window = this.windowService.nativeWindow;
 
-        this.eventSub = fromEvent(window, 'scroll').pipe(
-            throttleTime(this.infiniteScrollThrottle()),
+        this.eventSub = fromEvent(this.window, 'scroll').pipe(
+            throttleTime(this.infiniteScrollThrottle(), undefined, { leading: true, trailing: true }),
             tap(event => this.windowScrollEvent(event))
         ).subscribe();
     }
@@ -44,28 +45,13 @@ export class InfiniteScrollDirective implements OnInit, OnDestroy {
             return;
         }
 
-        // height of whole window page
-        const heightOfWholePage = this.window.document.documentElement.scrollHeight;
-  
-        // how big in pixels the element is
-        const heightOfElement = this.el.nativeElement.scrollHeight;
-  
-        // currently scrolled Y position
-        const currentScrolledY = this.window.scrollY;
-  
-        // height of opened window - shrinks if console is opened
-        const innerHeight = this.window.innerHeight;
-  
-        /**
-         * the area between the start of the page and when this element is visible
-         * in the parent component
-         */
-        const spaceOfElementAndPage = heightOfWholePage - heightOfElement;
-  
-        // calculated whether we are near the end
-        const scrollToBottom = heightOfElement - innerHeight - currentScrolledY + spaceOfElementAndPage;
-  
-        // if the user is near end
+        const selector = this.infiniteScrollEndSelector();
+        const ends = selector ? this.el.nativeElement.querySelectorAll(selector) : [];
+        const bottom = ends.length
+            ? Math.min(...Array.from(ends, end => end.getBoundingClientRect().bottom))
+            : this.window.document.documentElement.scrollHeight - this.window.scrollY;
+        const scrollToBottom = bottom - this.window.innerHeight;
+
         if (scrollToBottom < this.infiniteScrollDistance()) {
             this.scrolled.emit();
         }
