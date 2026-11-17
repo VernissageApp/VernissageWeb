@@ -738,43 +738,43 @@
   },
   "dialogs": {
     "preserveContentCredentials": {
-      "originalTitle": "Upload the original photo?",
-      "originalPrompt": "Would you like to upload “{fileName}” in its original form? All metadata will be preserved, including EXIF location data if present.",
-      "originalBenefits": "The original file preserves the exact image data, color profile and detail, which can matter for photography such as astrophotography.",
-      "standardProcessing": "Choose No to remove metadata and re-export the photo as JPEG. C2PA Content Credentials, if present, will not be preserved.",
-      "title": "Preserve C2PA Content Credentials?",
-      "detected": "The file “{fileName}” contains C2PA Content Credentials.",
-      "metadata": "To preserve these credentials, the original file must be stored and distributed with all of its embedded metadata, including location data if present.",
-      "privacy": "Continue only if you are sure the file contains no information you wish to keep private or that could put your privacy at risk. This original file, including all metadata, will be sent to your followers’ servers.",
+      "originalTitle": "¿Subir la foto original?",
+      "originalPrompt": "¿Quieres subir «{fileName}» en su formato original? Se conservarán todos los metadatos, incluidos los datos de ubicación EXIF, si los hay.",
+      "originalBenefits": "El archivo original conserva intactos los datos de imagen, el perfil de color y los detalles, algo que puede ser importante, por ejemplo, en astrofotografía.",
+      "standardProcessing": "Selecciona «No» para eliminar los metadatos y volver a exportar la foto como JPEG. Si hay credenciales de contenido C2PA, se perderán.",
+      "title": "¿Conservar las credenciales de contenido C2PA?",
+      "detected": "El archivo «{fileName}» contiene credenciales de contenido C2PA.",
+      "metadata": "Para conservar estas credenciales, el archivo original debe almacenarse y distribuirse con todos los metadatos incrustados, incluidos los datos de ubicación, si los hay.",
+      "privacy": "Continúa solo si tienes la certeza de que el archivo no contiene información que quieras mantener en privado o que pueda poner en riesgo tu privacidad. El archivo original, con todos sus metadatos, se enviará a los servidores de tus seguidores.",
       "no": "No",
-      "yes": "Yes, I’m sure"
+      "yes": "Sí, continuar"
     },
     "contentCredentials": {
       "labels": {
-        "actions": "Actions",
-        "format": "Format",
-        "ingredients": "Ingredients",
-        "producedWith": "Produced with",
-        "signedAt": "Signed at",
-        "signedBy": "Signed by",
-        "title": "Title",
-        "identity": "Identity",
+        "actions": "Acciones",
+        "format": "Formato",
+        "ingredients": "Componentes",
+        "producedWith": "Creado con",
+        "signedAt": "Fecha de firma",
+        "signedBy": "Firmado por",
+        "title": "Título",
+        "identity": "Identidad",
         "unverifiedIdentity": "Identidad no verificada",
-        "actionsCount": "Actions count",
-        "verify": "Verify",
-        "appOrDeviceUsed": "App or device used"
+        "actionsCount": "Número de acciones",
+        "verify": "Verificar",
+        "appOrDeviceUsed": "Aplicación o dispositivo utilizado"
       },
       "texts": {
-        "verifiedSummary": "The image contains a valid C2PA manifest and passed client-side validation.",
-        "validationCaution": "This does not necessarily mean the image was forged. Re-exporting or processing the image on another server can also break validation.",
+        "verifiedSummary": "La imagen contiene un manifiesto C2PA válido y ha superado la validación en el cliente.",
+        "validationCaution": "Esto no implica necesariamente que la imagen se haya falsificado. Si se vuelve a exportar o se procesa en otro servidor, también puede fallar la validación.",
         "identityDidUnavailable": "No se pudo resolver el documento DID del emisor de la credencial de identidad.",
-        "validationErrors": "Validation error details",
-        "signatureMismatch": "The C2PA signature is invalid.",
-        "hashMismatch": "The hash of the image or an ingredient does not match the C2PA manifest."
+        "validationErrors": "Detalles de los errores de validación",
+        "signatureMismatch": "La firma C2PA no es válida.",
+        "hashMismatch": "El hash de la imagen o de uno de sus componentes no coincide con el manifiesto C2PA."
       },
-      "title": "Content Credentials",
+      "title": "Credenciales de contenido",
       "actions": {
-        "openOnVerifySite": "Open on Verify Site"
+        "openOnVerifySite": "Abrir en el sitio de verificación"
       }
     },
     "category": {
@@ -2239,8 +2239,8 @@
       },
       "media": {
         "alwaysAskToUploadOriginalImage": {
-          "title": "Always ask about uploading the original photo",
-          "description": "Before each upload, choose whether to remove metadata and re-export the photo as JPEG, or preserve the original file with all metadata, including EXIF location data if present."
+          "title": "Preguntar siempre si se quiere subir la foto original",
+          "description": "Antes de cada subida, elige si quieres eliminar los metadatos y volver a exportar la foto como JPEG o conservar el archivo original con todos sus metadatos, incluidos los datos de ubicación EXIF, si los hay."
         },
         "alwaysShowNsfw": {
           "description": "Fuerza la visualización de todos los medios NSFW (sensibles) sin advertencias.",
@@ -2567,22 +2567,22 @@
         "changeStatusWithEnteredComment": "Has introducido un comentario. ¿Quieres cambiar el estado de todos modos?"
       },
       "contentCredentials": {
-        "label": "Content Credentials",
-        "verified": "Content Credentials verified",
-        "title": "Content Credentials",
-        "author": "Author",
-        "equipmentOrApplication": "Equipment/Application",
-        "details": "Details",
-        "appOrDeviceUsed": "App or device used",
-        "aiGenerated": "AI Generated",
+        "label": "Credenciales de contenido",
+        "verified": "Credenciales de contenido verificadas",
+        "title": "Credenciales de contenido",
+        "author": "Autor",
+        "equipmentOrApplication": "Equipo o aplicación",
+        "details": "Detalles",
+        "appOrDeviceUsed": "Aplicación o dispositivo utilizado",
+        "aiGenerated": "Generada por IA",
         "validation": {
-          "verified": "C2PA integrity and signature trust verified",
-          "untrusted": "Integrity verified. Certificate issuer not verified",
+          "verified": "Integridad C2PA y confianza en la firma verificadas",
+          "untrusted": "Integridad verificada. No se ha verificado el emisor del certificado",
           "identityUnavailable": "No se pudo verificar la identidad.",
-          "invalid": "C2PA integrity verification failed",
-          "unknown": "C2PA verification result is unavailable"
+          "invalid": "No se ha podido verificar la integridad C2PA",
+          "unknown": "El resultado de la verificación C2PA no está disponible"
         },
-        "unverifiedMetadata": "The author, device and image history shown below are unverified."
+        "unverifiedMetadata": "La información sobre el autor, el dispositivo y el historial de la imagen que se muestra a continuación no se ha verificado."
       },
       "followedTagsInThisStatus": "Etiquetas seguidas en este estado",
       "hashtagsAriaLabel": "Etiquetas",
