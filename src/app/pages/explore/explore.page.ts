@@ -79,9 +79,21 @@ export class ExplorePage extends ReusableGalleryPageComponent implements OnInit,
                 return;
             }
 
-            this.loadingService.showLoader();
             const requestedType = params['type'] as string | undefined ?? this.preferencesService.exploreTab;
             const exploreType = this.resolveExploreType(requestedType);
+
+            // Resolve the preference once and retain that selection in history.
+            if (params['type'] !== exploreType) {
+                await this.router.navigate([], {
+                    relativeTo: this.activatedRoute,
+                    queryParams: { type: exploreType },
+                    queryParamsHandling: 'merge',
+                    replaceUrl: true
+                });
+                return;
+            }
+
+            this.loadingService.showLoader();
             this.explore.set(exploreType);
             this.selectedExplore.set(exploreType);
             await this.loadExploreType(exploreType);

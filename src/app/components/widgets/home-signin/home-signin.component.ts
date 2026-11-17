@@ -67,9 +67,22 @@ export class HomeSigninComponent extends ReusableGalleryPageComponent implements
                 return;
             }
 
-            this.loadingService.showLoader();
+            this.isLoggedIn.set(await this.authorizationService.isLoggedIn());
+            const requestedPageType = params['t'] as string | undefined ?? this.preferencesService.homeTab;
+            const pageType = this.resolveTimeline(requestedPageType);
 
-            const pageType = params['t'] as string | undefined ?? this.preferencesService.homeTab;
+            // Preserve the original timeline even after the stored preference changes.
+            if (params['t'] !== pageType) {
+                await this.router.navigate([], {
+                    relativeTo: this.activatedRoute,
+                    queryParams: { t: pageType },
+                    queryParamsHandling: 'merge',
+                    replaceUrl: true
+                });
+                return;
+            }
+
+            this.loadingService.showLoader();
             await Promise.all([
                 this.loadData(pageType),
                 this.loadArticles()

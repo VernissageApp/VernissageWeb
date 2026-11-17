@@ -1,4 +1,8 @@
 .notifications-container {
+    .icon.direct-message {
+        color: var(--mat-sys-primary);
+    }
+
     max-width: 640px;
     width: 100%;
 

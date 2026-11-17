@@ -36,6 +36,7 @@ export class PreferencesPage extends ResponsiveComponent implements OnInit {
     protected alwaysShowSdrPhoto = model(false);
     protected autoScrollGalleryImages = model(false);
     protected hideAiFeatures = model(false);
+    protected alwaysAskToUploadOriginalImage = model(false);
 
     private preferencesService = inject(PreferencesService);
     private settingsService = inject(SettingsService);
@@ -59,6 +60,7 @@ export class PreferencesPage extends ResponsiveComponent implements OnInit {
         this.alwaysShowSdrPhoto.set(this.preferencesService.alwaysShowSdrPhoto);
         this.autoScrollGalleryImages.set(this.preferencesService.autoScrollGalleryImages);
         this.hideAiFeatures.set(this.preferencesService.hideAiFeatures);
+        this.alwaysAskToUploadOriginalImage.set(this.preferencesService.alwaysAskToUploadOriginalImage);
 
         this.isReady.set(true);
     }
@@ -120,6 +122,10 @@ export class PreferencesPage extends ResponsiveComponent implements OnInit {
 
     protected onHideAiFeaturesChange(): void {
         this.preferencesService.hideAiFeatures = this.hideAiFeatures();
+    }
+
+    protected onAlwaysAskToUploadOriginalImageChange(): void {
+        this.preferencesService.alwaysAskToUploadOriginalImage = this.alwaysAskToUploadOriginalImage();
     }
 
     private clearReuseStrategyState(): void {

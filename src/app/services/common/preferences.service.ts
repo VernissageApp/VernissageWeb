@@ -121,6 +121,14 @@ export class PreferencesService {
         this.cookieService.set('hideAiFeatures', hideAiFeatures ? 'true' : 'false', { expires: this.longFuture, path: '/' });
     }
 
+    public get alwaysAskToUploadOriginalImage(): boolean {
+        return (this.cookieService.get('alwaysAskToUploadOriginalImage') ?? 'false') === 'true';
+    }
+
+    public set alwaysAskToUploadOriginalImage(value: boolean) {
+        this.cookieService.set('alwaysAskToUploadOriginalImage', value ? 'true' : 'false', { expires: this.longFuture, path: '/' });
+    }
+
     public get language(): string | null {
         return this.cookieService.get('language') || null;
     }

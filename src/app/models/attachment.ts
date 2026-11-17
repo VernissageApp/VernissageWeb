@@ -8,6 +8,7 @@ export class Attachment {
     public originalFile?: FileInfo;
     public smallFile?: FileInfo;
     public originalHdrFile?: FileInfo;
+    public originalImagePreserved?: boolean;
     public description?: string;
     public blurhash?: string;
     public metadata?: Metadata;

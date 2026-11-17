@@ -239,3 +239,107 @@ describe('photo upload errors', () => {
         expect(photo.isDeleting()).toBe(false);
     });
 });
+
+describe('C2PA upload consent', () => {
+    function createPage(hasCredentials: boolean, consent?: boolean): any {
+        const page = Object.create(UploadPage.prototype) as any;
+        page.maxFileSize = 100;
+        page.maxFileSizeString = signal('100 B');
+        page.randomGeneratorService = { generateString: () => 'photo-1' };
+        page.c2paService = { hasContentCredentials: vi.fn().mockResolvedValue(hasCredentials) };
+        page.preferencesService = { alwaysAskToUploadOriginalImage: false };
+        page.dialog = { open: vi.fn(() => ({ afterClosed: () => of(consent) })) };
+        page.deviceDetectorService = { deviceType: () => 'mobile' };
+        page.setPhotoData = vi.fn();
+        page.readExifMetadataAndUpload = vi.fn();
+        page.resizeImageToJpeg = vi.fn().mockResolvedValue(new Blob(['resized']));
+        page.messageService = { showError: vi.fn() };
+        page.translateService = { instant: (key: string) => key };
+        return page;
+    }
+
+    it('uploads photos without C2PA without asking or preserving metadata', async () => {
+        const page = createPage(false);
+        await page.processSelectedPhoto(new File(['image'], 'photo.jpg', { type: 'image/jpeg' }));
+        expect(page.dialog.open).not.toHaveBeenCalled();
+        expect(page.readExifMetadataAndUpload.mock.calls[0][0].useOriginalImage).toBe(false);
+    });
+
+    it.each([true, false, undefined])('preserves the original only for explicit consent: %s', async consent => {
+        const page = createPage(true, consent);
+        const file = new File(['image'], 'photo.jpg', { type: 'image/jpeg' });
+        await page.processSelectedPhoto(file);
+        expect(page.dialog.open).toHaveBeenCalledOnce();
+        const photo = page.readExifMetadataAndUpload.mock.calls[0][0] as UploadPhoto;
+        expect(photo.useOriginalImage).toBe(consent === true);
+        expect(photo.photoFile).toBe(file);
+    });
+
+    it.each([true, false, undefined])('asks for photos without C2PA when enabled and respects the decision: %s', async consent => {
+        const page = createPage(false, consent);
+        page.preferencesService.alwaysAskToUploadOriginalImage = true;
+        const file = new File(['image'], 'photo.jpg', { type: 'image/jpeg' });
+
+        await page.processSelectedPhoto(file);
+
+        expect(page.dialog.open).toHaveBeenCalledOnce();
+        expect(page.dialog.open.mock.calls[0][1].data).toEqual({ fileName: 'photo.jpg', hasContentCredentials: false });
+        const photo = page.readExifMetadataAndUpload.mock.calls[0][0] as UploadPhoto;
+        expect(photo.useOriginalImage).toBe(consent === true);
+        expect(photo.photoFile).toBe(file);
+    });
+
+    it('shows a single C2PA warning when the preference is also enabled', async () => {
+        const page = createPage(true, true);
+        page.preferencesService.alwaysAskToUploadOriginalImage = true;
+
+        await page.processSelectedPhoto(new File(['image'], 'photo.jpg'));
+
+        expect(page.dialog.open).toHaveBeenCalledOnce();
+        expect(page.dialog.open.mock.calls[0][1].data.hasContentCredentials).toBe(true);
+    });
+
+    it('waits for consent before starting the upload', async () => {
+        const page = createPage(true);
+        const { Subject } = await import('rxjs');
+        const decision = new Subject<boolean>();
+        page.dialog.open.mockReturnValue({ afterClosed: () => decision });
+        const processing = page.processSelectedPhoto(new File(['image'], 'photo.jpg'));
+        await Promise.resolve();
+        expect(page.readExifMetadataAndUpload).not.toHaveBeenCalled();
+        decision.next(true);
+        decision.complete();
+        await processing;
+        expect(page.readExifMetadataAndUpload).toHaveBeenCalledOnce();
+    });
+
+    it('rejects oversized originals rather than resizing away C2PA after consent', async () => {
+        const page = createPage(true, true);
+        await page.processSelectedPhoto(new File(['x'.repeat(101)], 'photo.jpg'));
+        expect(page.resizeImageToJpeg).not.toHaveBeenCalled();
+        expect(page.readExifMetadataAndUpload).not.toHaveBeenCalled();
+        expect(page.messageService.showError).toHaveBeenCalledWith('pages.upload.messages.fileTooLarge');
+    });
+
+    it('still permits standard resizing after declining preservation', async () => {
+        const page = createPage(true, false);
+        await page.processSelectedPhoto(new File(['x'.repeat(101)], 'photo.jpg'));
+        expect(page.resizeImageToJpeg).toHaveBeenCalledOnce();
+        expect(page.readExifMetadataAndUpload.mock.calls[0][0].useOriginalImage).toBe(false);
+    });
+
+    it.each([true, false])('sends the preservation flag only when approved: %s', preserve => {
+        const page = createPage(true, preserve);
+        page.photos = signal<UploadPhoto[]>([]);
+        page.resetPhotoFileUpload = vi.fn();
+        page.attachmentsService = { uploadAttachmentWithProgress: vi.fn(() => of({ type: HttpEventType.Response, body: { id: 'attachment-1' } })) };
+        const photo = new UploadPhoto('photo-1');
+        photo.photoFile = new Blob(['original'], { type: 'image/jpeg' });
+        photo.photoResizedFile = new Blob(['resized'], { type: 'image/jpeg' });
+        photo.useOriginalImage = preserve;
+        page.uploadPhoto(photo);
+        const data = page.attachmentsService.uploadAttachmentWithProgress.mock.calls[0][0] as FormData;
+        expect(data.get('useOriginalImage')).toBe(preserve ? 'true' : null);
+        expect((data.get('file') as Blob).size).toBe(preserve ? photo.photoFile.size : photo.photoResizedFile.size);
+    });
+});

@@ -5,6 +5,7 @@ import { Subject, Subscription } from 'rxjs';
 import { debounceTime, switchMap } from 'rxjs/operators';
 import { User } from 'src/app/models/user';
 import { UsersService } from 'src/app/services/http/users.service';
+import { SearchService } from 'src/app/services/http/search.service';
 import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
 import { InputActivityDirective } from '../../../directives/input-activity.directive';
 import { MatInput } from '@angular/material/input';
@@ -27,8 +28,10 @@ import { TranslatePipe } from '@ngx-translate/core';
 export class UserSelectorComponent implements OnInit, OnDestroy {
     public name = input.required<string>();
     public label = input('');
+    public showLabel = input(true);
     public isRequired = input(false);
     public isReadOnly = input(false);
+    public useSearchApi = input(false);
 
     public selectedUser = input<User>();
     public selectedUserValue = linkedSignal(this.selectedUser);
@@ -38,9 +41,10 @@ export class UserSelectorComponent implements OnInit, OnDestroy {
     protected isUsersLoading = signal(false);
 
     private usersSubscription?: Subscription;
-    private textChanged = new Subject<string>();
+    private textChanged = new Subject<string | User>();
 
     private usersService = inject(UsersService);
+    private searchService = inject(SearchService);
 
     ngOnInit(): void {
         this.usersSubscription = this.textChanged.pipe(
@@ -69,7 +73,13 @@ export class UserSelectorComponent implements OnInit, OnDestroy {
         this.selectedUserChange.emit(undefined);
     }
 
-    protected onModelChange(value: string): void {
+    protected onModelChange(value: string | User): void {
+        // Only text edits invalidate the selection. Native change events can also
+        // fire when Enter commits an autocomplete value or submits its form.
+        if (typeof value === 'string') {
+            this.onChange();
+        }
+
         this.textChanged.next(value);
     }
 
@@ -85,14 +95,23 @@ export class UserSelectorComponent implements OnInit, OnDestroy {
         return `@${user.userName}`;
     };
 
-    private async filterUsers(value: string): Promise<User[] | undefined> {
+    private async filterUsers(value: string | User): Promise<User[] | undefined> {
 
         if (typeof value !== 'string') {
             return [];
         }
 
-        this.selectedUserValue.set(undefined);
-        this.selectedUserChange.emit(undefined);
+        if (this.useSearchApi()) {
+            const query = value.trim().replace(/^@/, '');
+
+            if (!query) {
+                return [];
+            }
+
+            const result = await this.searchService.search(query, 'users');
+
+            return result.users ?? [];
+        }
 
         const result = await this.usersService.get(0, 40, value);
         return result.data;

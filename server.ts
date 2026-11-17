@@ -40,7 +40,13 @@ export function app(): express.Express {
                     directives: {
                         baseUri: ["'self'"],
                         defaultSrc: ["'none'"],
-                        connectSrc: ["'self'", "https://fonts.gstatic.com", cspImg],
+                        connectSrc: [
+                            "'self'",
+                            "https://fonts.gstatic.com",
+                            cspImg,
+                            // Adobe's CAWG identity credentials resolve the issuer through this DID document.
+                            "https://connected-identities.identity.adobe.com/.well-known/did.json",
+                        ],
                         formAction: ["'self'"],
                         objectSrc: ["'none'"],
                         frameAncestors: ["'none'"],
@@ -48,6 +54,7 @@ export function app(): express.Express {
                         imgSrc: ["'self'","data:", "blob:", cspImg],
                         scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
                         scriptSrcAttr: ["'self'", "'unsafe-inline'"],
+                        workerSrc: ["'self'", "blob:"],
                         styleSrc: ["'self'", "'unsafe-inline'"],
                         manifestSrc: ["'self'"],
                         blockAllMixedContent: [],

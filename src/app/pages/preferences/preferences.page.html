@@ -109,6 +109,12 @@
                         </div>
 
                         <div class="margin-bottom-20">
+                            <mat-slide-toggle name="alwaysAskToUploadOriginalImage" [(ngModel)]="alwaysAskToUploadOriginalImage" (ngModelChange)="onAlwaysAskToUploadOriginalImageChange()">
+                                {{ 'pages.preferences.media.alwaysAskToUploadOriginalImage.title' | translate }} <div class="text-muted fs-90">{{ 'pages.preferences.media.alwaysAskToUploadOriginalImage.description' | translate }}</div>
+                            </mat-slide-toggle>
+                        </div>
+
+                        <div class="margin-bottom-20">
                             <mat-slide-toggle name="autoScrollGalleryImages" [(ngModel)]="autoScrollGalleryImages" (ngModelChange)="onAutoScrollGalleryImagesChange()">
                                 {{ 'pages.preferences.media.autoScrollGalleryImages.title' | translate }} <div class="text-muted fs-90">{{ 'pages.preferences.media.autoScrollGalleryImages.description' | translate }}</div>
                             </mat-slide-toggle>

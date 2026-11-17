@@ -175,7 +175,13 @@
             @if (isLoggedIn()) {
                 @if (deviceResolution() !== resolution.handsetPortrait) {
                     <mat-divider class="menu-divider" [vertical]="true" />
+                }
 
+                <a matIconButton [routerLink]="['/direct-messages']" [attr.aria-label]="'components.header.navigation.directMessages' | translate">
+                    <mat-icon>forum</mat-icon>
+                </a>
+
+                @if (deviceResolution() !== resolution.handsetPortrait) {
                     <a matIconButton [routerLink]="['/search']" [attr.aria-label]="'common.actions.search' | translate">
                         <mat-icon>search</mat-icon>
                     </a>

@@ -72,7 +72,8 @@
 
                     @if (relationship(); as relationshipInternal) {
                         <div class="padding-top-10">
-                            <app-follow-buttons-section [user]="userInternal" [relationship]="relationshipInternal" (relationChanged)="onMainRelationChanged()" />
+                            <app-follow-buttons-section [user]="userInternal" [relationship]="relationshipInternal"
+                                [showDirectMessage]="!!signedInUser() && signedInUser()?.id !== userInternal.id" (relationChanged)="onMainRelationChanged()" />
                         </div>
                     }
 

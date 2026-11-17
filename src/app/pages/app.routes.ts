@@ -23,6 +23,7 @@ export const routes: Routes = [
     { path: 'upload', loadComponent: () => import('./upload/upload.page').then(m => m.UploadPage), canActivate: [ authorizationGuard ], title: 'common.pageTitles.uploadImages' },
     { path: 'search', loadComponent: () => import('./search/search.page').then(m => m.SearchPage), canActivate: [ authorizationGuard ], title: 'common.pageTitles.search' },
     { path: 'notifications', loadComponent: () => import('./notifications/notifications.page').then(m => m.NotificationsPage), canActivate: [ authorizationGuard ], title: 'common.pageTitles.notifications' },
+    { path: 'direct-messages', loadComponent: () => import('./direct-messages/direct-messages.page').then(m => m.DirectMessagesPage), canActivate: [ authorizationGuard ], title: 'common.pageTitles.directMessages' },
     { path: 'invitations', loadComponent: () => import('./invitations/invitations.page').then(m => m.InvitationsPage), canActivate: [ authorizationGuard ], title: 'common.pageTitles.invitations' },
     { path: 'settings', loadComponent: () => import('./settings/settings.page').then(m => m.SettingsPage), canActivate: [ administratorGuard ], title: 'common.pageTitles.settings' },
     { path: 'trending', loadComponent: () => import('./trending/trending.page').then(m => m.TrendingPage), data: { reuse: true }, title: 'common.pageTitles.trending' },

@@ -1,13 +1,18 @@
+:host {
+    display: block;
+}
+
 .gallery-container {
     .image-gallery {
         display: flex;
         flex-direction: row;
-        gap: 6px;
+        align-items: flex-start;
+        gap: var(--gallery-gap);
 
         .column {
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: var(--gallery-gap);
             flex: 1 1 0;
             min-width: 0;
         }
@@ -27,7 +32,7 @@
         .column {
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: var(--gallery-gap);
         }
     }
 

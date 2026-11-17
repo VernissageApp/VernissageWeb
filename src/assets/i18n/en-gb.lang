@@ -49,7 +49,8 @@
       "unfollow": "Unfollow",
       "unsuppress": "Unsuppress",
       "update": "Update",
-      "upload": "Upload"
+      "upload": "Upload",
+      "toTheTop": "To the top"
     },
     "articleVisibility": {
       "homeSignIn": "Home - sign in",
@@ -152,6 +153,7 @@
       "unrecoverableState": "An error occurred and the application state cannot be recovered. Please reload the page."
     },
     "pageTitles": {
+      "directMessages": "Direct messages",
       "accessForbidden": "Vernissage - Access forbidden",
       "account": "Vernissage - Account",
       "activityPubEventRecipients": "Vernissage - ActivityPub event recipients",
@@ -294,6 +296,7 @@
     },
     "followButtons": {
       "actions": {
+        "directMessage": "Direct message",
         "approveFollow": "Approve follow",
         "blockDomain": "Block domain",
         "blockUser": "Block user",
@@ -529,6 +532,7 @@
       "applicationLogo": "Application logo",
       "menuWithActions": "Menu with actions",
       "navigation": {
+        "directMessages": "Direct messages",
         "account": "Account",
         "articles": "Articles",
         "explore": "Explore",
@@ -733,6 +737,46 @@
     }
   },
   "dialogs": {
+    "preserveContentCredentials": {
+      "originalTitle": "Upload the original photo?",
+      "originalPrompt": "Would you like to upload “{fileName}” in its original form? All metadata will be preserved, including EXIF location data if present.",
+      "originalBenefits": "The original file preserves the exact image data, color profile and detail, which can matter for photography such as astrophotography.",
+      "standardProcessing": "Choose No to remove metadata and re-export the photo as JPEG. C2PA Content Credentials, if present, will not be preserved.",
+      "title": "Preserve C2PA Content Credentials?",
+      "detected": "The file “{fileName}” contains C2PA Content Credentials.",
+      "metadata": "To preserve these credentials, the original file must be stored and distributed with all of its embedded metadata, including location data if present.",
+      "privacy": "Continue only if you are sure the file contains no information you wish to keep private or that could put your privacy at risk. This original file, including all metadata, will be sent to your followers’ servers.",
+      "no": "No",
+      "yes": "Yes, I’m sure"
+    },
+    "contentCredentials": {
+      "labels": {
+        "actions": "Actions",
+        "format": "Format",
+        "ingredients": "Ingredients",
+        "producedWith": "Produced with",
+        "signedAt": "Signed at",
+        "signedBy": "Signed by",
+        "title": "Title",
+        "identity": "Identity",
+        "unverifiedIdentity": "Unverified identity",
+        "actionsCount": "Actions count",
+        "verify": "Verify",
+        "appOrDeviceUsed": "App or device used"
+      },
+      "texts": {
+        "verifiedSummary": "The image contains a valid C2PA manifest and passed client-side validation.",
+        "validationCaution": "This does not necessarily mean the image was forged. Re-exporting or processing the image on another server can also break validation.",
+        "identityDidUnavailable": "The identity credential issuer’s DID document could not be resolved.",
+        "validationErrors": "Validation error details",
+        "signatureMismatch": "The C2PA signature is invalid.",
+        "hashMismatch": "The hash of the image or an ingredient does not match the C2PA manifest."
+      },
+      "title": "Content Credentials",
+      "actions": {
+        "openOnVerifySite": "Open on Verify Site"
+      }
+    },
     "category": {
       "attrs": {
         "categoryName": "Category name",
@@ -990,6 +1034,7 @@
         "webPushPublicKeyIsNotSet": "Web push public key is not set."
       },
       "texts": {
+        "newDirectMessage": "New direct message",
         "boostedStatus": "Boosted status",
         "newCommentAdded": "New comment added",
         "newFollowRequest": "New follow request",
@@ -1513,6 +1558,40 @@
     }
   },
   "pages": {
+    "directMessages": {
+      "emailVerificationRequired": "Verify your email address before sending a message.",
+      "like": "Like message",
+      "unlike": "Unlike message",
+      "liked": "Liked message",
+      "deleteMessage": "Delete message",
+      "confirmDelete": "Are you sure you want to delete this message?",
+      "deletedMessage": "This message was deleted by the user.",
+      "privacyNotice": "Direct messages are not end-to-end encrypted. Do not share sensitive information.",
+      "title": "Direct messages",
+      "subtitle": "Private conversations across the fediverse.",
+      "newMessage": "New message",
+      "conversations": "Conversations",
+      "searchConversations": "Search conversations",
+      "image": "Image",
+      "unread": "Unread messages",
+      "loadError": "Could not load messages. Please try again.",
+      "noResults": "No matching conversations.",
+      "noConversations": "No conversations yet.",
+      "removeRecipient": "Remove recipient",
+      "participants": "{count, plural, one {# participant} other {# participants}}",
+      "searchUser": "Search for a recipient",
+      "add": "Add",
+      "mute": "Mute conversation",
+      "unmute": "Unmute conversation",
+      "history": "Message history",
+      "olderMessages": "Load older messages",
+      "chooseRecipients": "Search for a user and click Add to start a conversation.",
+      "removeImage": "Remove image",
+      "writeMessage": "Write a message...",
+      "addImage": "Add image",
+      "selectConversation": "Select a conversation or start a new message.",
+      "invalidImage": "Choose a supported image within the server file size limit."
+    },
     "account": {
       "avatar": {
         "removeAriaLabel": "Remove avatar",
@@ -2121,6 +2200,7 @@
     },
     "notifications": {
       "actions": {
+        "openConversation": "Open conversation",
         "openUserProfileAriaLabel": "Open user profile",
         "refreshCurrentTimelineAriaLabel": "Refresh current timeline"
       },
@@ -2131,7 +2211,9 @@
       "types": {
         "adminReport": "has been reported",
         "adminSignUp": "is a new user",
+        "directMessage": "sent you a direct message",
         "favouriteComment": "favourited your comment",
+        "favouriteConversationComment": "favourited your comment in a conversation",
         "favouriteStatus": "favourited your photo",
         "follow": "followed you",
         "followRequest": "wants to follow you",
@@ -2156,6 +2238,10 @@
         "title": "User's profile gallery"
       },
       "media": {
+        "alwaysAskToUploadOriginalImage": {
+          "title": "Always ask about uploading the original photo",
+          "description": "Before each upload, choose whether to remove metadata and re-export the photo as JPEG, or preserve the original file with all metadata, including EXIF location data if present."
+        },
         "alwaysShowNsfw": {
           "description": "Force show all NSFW (sensitive) media without warnings.",
           "title": "Always show NSFW"
@@ -2269,6 +2355,7 @@
         "emailRequired": "Enter email.",
         "emailTaken": "Choose another email address. This one is already connected to a different account.",
         "invalidCaptchaCode": "Captcha code is invalid. Please try again.",
+        "registrationIsDisabled": "Registration without an invitation code or a reason for joining is disabled.",
         "invitationCodeRequired": "Enter invitation code.",
         "invitationCodeTooLong": "Invitation code is too long.",
         "invitationTokenInvalid": "Invitation token is invalid.",
@@ -2384,6 +2471,7 @@
         "users": "No users found."
       },
       "hint": "Search for a user, status, or hashtag, or paste a URL to a status or user profile.",
+      "showOnlyMyStatuses": "Show only my statuses",
       "tabs": {
         "hashtags": "Hashtags",
         "statuses": "Statuses",
@@ -2477,6 +2565,24 @@
       },
       "confirmations": {
         "changeStatusWithEnteredComment": "You have entered a comment. Do you want to change status anyway?"
+      },
+      "contentCredentials": {
+        "label": "Content Credentials",
+        "verified": "Content Credentials verified",
+        "title": "Content Credentials",
+        "author": "Author",
+        "equipmentOrApplication": "Equipment/Application",
+        "details": "Details",
+        "appOrDeviceUsed": "App or device used",
+        "aiGenerated": "AI Generated",
+        "validation": {
+          "verified": "C2PA integrity and signature trust verified",
+          "untrusted": "Integrity verified. Certificate issuer not verified",
+          "identityUnavailable": "Identity could not be verified.",
+          "invalid": "C2PA integrity verification failed",
+          "unknown": "C2PA verification result is unavailable"
+        },
+        "unverifiedMetadata": "The author, device and image history shown below are unverified."
       },
       "followedTagsInThisStatus": "Followed tags in this status",
       "hashtagsAriaLabel": "Hashtags",

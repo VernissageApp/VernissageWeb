@@ -1,3 +1,14 @@
+const networkOnlyUrls = [
+    "https://connected-identities.identity.adobe.com/.well-known/did.json",
+];
+
+// Register before Angular's fetch listener so the browser fetches these URLs directly.
+self.addEventListener("fetch", (event) => {
+    if (networkOnlyUrls.includes(event.request.url)) {
+        event.stopImmediatePropagation();
+    }
+});
+
 // Import angular service worker.
 importScripts("./ngsw-worker.js");
 

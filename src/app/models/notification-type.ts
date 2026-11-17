@@ -27,5 +27,8 @@ export enum NotificationType {
     AdminReport = 'adminReport',
 
     /// A new comment to status has been added.
-    NewComment = 'newComment'
+    NewComment = 'newComment',
+
+    /// Someone sent you a direct message.
+    DirectMessage = 'directMessage'
 }

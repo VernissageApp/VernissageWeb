@@ -1,0 +1,7 @@
+@if (visible()) {
+    <button type="button" class="scroll-to-top" (click)="scrollToTop()"
+        [attr.aria-label]="'common.actions.toTheTop' | translate"
+        [matTooltip]="'common.actions.toTheTop' | translate">
+        <mat-icon aria-hidden="true">arrow_upward</mat-icon>
+    </button>
+}

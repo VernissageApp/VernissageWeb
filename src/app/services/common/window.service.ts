@@ -86,11 +86,11 @@ export class WindowService {
         this.nativeWindow.location.href = url;
     }
 
-    scrollToTop(): void {
+    scrollToTop(behavior: ScrollBehavior = 'smooth'): void {
         this.nativeWindow.scroll({ 
             top: 0, 
             left: 0, 
-            behavior: 'smooth' 
+            behavior
         });
     }
 }

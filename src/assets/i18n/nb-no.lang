@@ -49,7 +49,8 @@
       "unfollow": "Slutt å følge",
       "unsuppress": "Opphev demping",
       "update": "Oppdater",
-      "upload": "Last opp"
+      "upload": "Last opp",
+      "toTheTop": "Til toppen"
     },
     "articleVisibility": {
       "homeSignIn": "Hjem - logg på",
@@ -152,6 +153,7 @@
       "unrecoverableState": "Det oppstod en feil og applikasjonstilstanden kan ikke gjenopprettes. Last inn siden på nytt."
     },
     "pageTitles": {
+      "directMessages": "Private meldinger",
       "accessForbidden": "Vernissage - Access forbidden",
       "account": "Vernissage - Konto",
       "activityPubEventRecipients": "Vernissage - ActivityPubevent recipients",
@@ -294,6 +296,7 @@
     },
     "followButtons": {
       "actions": {
+        "directMessage": "Privat melding",
         "approveFollow": "Godkjenne følg",
         "blockDomain": "Blokker domene",
         "blockUser": "Blokker bruker",
@@ -529,6 +532,7 @@
       "applicationLogo": "Applikasjonslogo",
       "menuWithActions": "Meny med handlinger",
       "navigation": {
+        "directMessages": "Private meldinger",
         "account": "Konto",
         "articles": "Artikler",
         "explore": "Utforsk",
@@ -733,6 +737,46 @@
     }
   },
   "dialogs": {
+    "preserveContentCredentials": {
+      "originalTitle": "Upload the original photo?",
+      "originalPrompt": "Would you like to upload “{fileName}” in its original form? All metadata will be preserved, including EXIF location data if present.",
+      "originalBenefits": "The original file preserves the exact image data, color profile and detail, which can matter for photography such as astrophotography.",
+      "standardProcessing": "Choose No to remove metadata and re-export the photo as JPEG. C2PA Content Credentials, if present, will not be preserved.",
+      "title": "Preserve C2PA Content Credentials?",
+      "detected": "The file “{fileName}” contains C2PA Content Credentials.",
+      "metadata": "To preserve these credentials, the original file must be stored and distributed with all of its embedded metadata, including location data if present.",
+      "privacy": "Continue only if you are sure the file contains no information you wish to keep private or that could put your privacy at risk. This original file, including all metadata, will be sent to your followers’ servers.",
+      "no": "No",
+      "yes": "Yes, I’m sure"
+    },
+    "contentCredentials": {
+      "labels": {
+        "actions": "Actions",
+        "format": "Format",
+        "ingredients": "Ingredients",
+        "producedWith": "Produced with",
+        "signedAt": "Signed at",
+        "signedBy": "Signed by",
+        "title": "Title",
+        "identity": "Identity",
+        "unverifiedIdentity": "Ubekreftet identitet",
+        "actionsCount": "Actions count",
+        "verify": "Verify",
+        "appOrDeviceUsed": "App or device used"
+      },
+      "texts": {
+        "verifiedSummary": "The image contains a valid C2PA manifest and passed client-side validation.",
+        "validationCaution": "This does not necessarily mean the image was forged. Re-exporting or processing the image on another server can also break validation.",
+        "identityDidUnavailable": "Kunne ikke hente DID-dokumentet til utstederen av identitetsbeviset.",
+        "validationErrors": "Validation error details",
+        "signatureMismatch": "The C2PA signature is invalid.",
+        "hashMismatch": "The hash of the image or an ingredient does not match the C2PA manifest."
+      },
+      "title": "Content Credentials",
+      "actions": {
+        "openOnVerifySite": "Open on Verify Site"
+      }
+    },
     "category": {
       "attrs": {
         "categoryName": "Kategorinavn",
@@ -990,6 +1034,7 @@
         "webPushPublicKeyIsNotSet": "Web-push offentlig nøkkel er ikke angitt."
       },
       "texts": {
+        "newDirectMessage": "Ny privat melding",
         "boostedStatus": "Forsterket status",
         "newCommentAdded": "Ny kommentar lagt til",
         "newFollowRequest": "Ny følgeforespørsel",
@@ -1513,6 +1558,40 @@
     }
   },
   "pages": {
+    "directMessages": {
+      "emailVerificationRequired": "Bekreft e-postadressen din før du sender en melding.",
+      "like": "Lik melding",
+      "unlike": "Fjern likerklikk fra meldingen",
+      "liked": "Melding som er likt",
+      "deleteMessage": "Slett melding",
+      "confirmDelete": "Er du sikker på at du vil slette denne meldingen?",
+      "deletedMessage": "Denne meldingen ble slettet av brukeren.",
+      "privacyNotice": "Private meldinger er ikke ende-til-ende-kryptert. Ikke del sensitive opplysninger.",
+      "title": "Private meldinger",
+      "subtitle": "Private samtaler i fødiverset.",
+      "newMessage": "Ny melding",
+      "conversations": "Samtaler",
+      "searchConversations": "Søk i samtaler",
+      "image": "Bilde",
+      "unread": "Uleste meldinger",
+      "loadError": "Kunne ikke laste inn meldingene. Prøv igjen.",
+      "noResults": "Ingen samsvarende samtaler.",
+      "noConversations": "Ingen samtaler ennå.",
+      "removeRecipient": "Fjern mottaker",
+      "participants": "{count, plural, one {# deltaker} other {# deltakere}}",
+      "searchUser": "Søk etter en mottaker",
+      "add": "Legg til",
+      "mute": "Demp samtale",
+      "unmute": "Slå på varsler for samtalen",
+      "history": "Meldingshistorikk",
+      "olderMessages": "Last inn eldre meldinger",
+      "chooseRecipients": "Søk etter en bruker og klikk på Legg til for å starte en samtale.",
+      "removeImage": "Fjern bilde",
+      "writeMessage": "Skriv en melding...",
+      "addImage": "Legg til bilde",
+      "selectConversation": "Velg en samtale eller start en ny melding.",
+      "invalidImage": "Velg et bilde i et støttet format som ikke overskrider serverens grense for filstørrelse."
+    },
     "account": {
       "avatar": {
         "removeAriaLabel": "Fjern avatar",
@@ -2121,6 +2200,7 @@
     },
     "notifications": {
       "actions": {
+        "openConversation": "Åpne samtale",
         "openUserProfileAriaLabel": "Åpne brukerprofil",
         "refreshCurrentTimelineAriaLabel": "Oppdater gjeldende tidslinje"
       },
@@ -2131,7 +2211,9 @@
       "types": {
         "adminReport": "har blitt rapportert",
         "adminSignUp": "er en ny bruker",
+        "directMessage": "sendte deg en privat melding",
         "favouriteComment": "merket kommentaren din som favoritt",
+        "favouriteConversationComment": "likte kommentaren din i en samtale",
         "favouriteStatus": "merket bildet ditt som favoritt",
         "follow": "fulgte deg",
         "followRequest": "ønsker å følge deg",
@@ -2156,6 +2238,10 @@
         "title": "Brukerens profilgalleri"
       },
       "media": {
+        "alwaysAskToUploadOriginalImage": {
+          "title": "Always ask about uploading the original photo",
+          "description": "Before each upload, choose whether to remove metadata and re-export the photo as JPEG, or preserve the original file with all metadata, including EXIF location data if present."
+        },
         "alwaysShowNsfw": {
           "description": "Tving frem alle NSFW (sensitive) medier uten advarsler.",
           "title": "Vis alltid NSFW"
@@ -2269,6 +2355,7 @@
         "emailRequired": "Skriv inn e-post.",
         "emailTaken": "Velg en annen e-postadresse, denne er allerede koblet til en annen konto.",
         "invalidCaptchaCode": "Captcha-koden er ugyldig. Vennligst prøv igjen.",
+        "registrationIsDisabled": "Registrering uten invitasjonskode eller en begrunnelse for å bli med er deaktivert.",
         "invitationCodeRequired": "Skriv inn invitasjonskoden.",
         "invitationCodeTooLong": "Invitasjonskoden er for lang.",
         "invitationTokenInvalid": "Invitasjonstoken er ugyldig.",
@@ -2384,6 +2471,7 @@
         "users": "Ingen brukere funnet."
       },
       "hint": "Søk etter en bruker, status eller hashtag, eller lim inn enURLtil en status eller brukerprofil.",
+      "showOnlyMyStatuses": "Vis bare mine statuser",
       "tabs": {
         "hashtags": "Hashtags",
         "statuses": "Statuser",
@@ -2477,6 +2565,24 @@
       },
       "confirmations": {
         "changeStatusWithEnteredComment": "Du har skrevet inn en kommentar. Vil du endre status likevel?"
+      },
+      "contentCredentials": {
+        "label": "Content Credentials",
+        "verified": "Content Credentials verified",
+        "title": "Content Credentials",
+        "author": "Author",
+        "equipmentOrApplication": "Equipment/Application",
+        "details": "Details",
+        "appOrDeviceUsed": "App or device used",
+        "aiGenerated": "AI Generated",
+        "validation": {
+          "verified": "C2PA integrity and signature trust verified",
+          "untrusted": "Integrity verified. Certificate issuer not verified",
+          "identityUnavailable": "Identiteten kunne ikke bekreftes.",
+          "invalid": "C2PA integrity verification failed",
+          "unknown": "C2PA verification result is unavailable"
+        },
+        "unverifiedMetadata": "The author, device and image history shown below are unverified."
       },
       "followedTagsInThisStatus": "Følgte tagger i denne statusen",
       "hashtagsAriaLabel": "Hashtags",

@@ -21,6 +21,12 @@
                 </mat-checkbox>
             </div>
 
+            <div>
+                <mat-checkbox name="webPushDirectMessageEnabled" [disabled]="switchDisabled() || !notificationsEnabled()" [disableRipple]="true" [(ngModel)]="webPushDirectMessageEnabled">
+                    {{ 'dialogs.notificationSettings.texts.newDirectMessage' | translate }}
+                </mat-checkbox>
+            </div>
+
             <!-- Not supported yet.
             <div>
                 <mat-checkbox name="webPushStatusEnabled" [disabled]="switchDisabled() || !notificationsEnabled()" [disableRipple]="true" [(ngModel)]="webPushStatusEnabled">

@@ -1,11 +1,13 @@
 <mat-form-field class="width-100" appearance="outline">
-    <mat-label>{{ label() || ('common.labels.user' | translate) }}</mat-label>
+    @if (showLabel()) {
+        <mat-label>{{ label() || ('common.labels.user' | translate) }}</mat-label>
+    }
     <input
         type="text"
         [name]="name() + '-input'"
         [id]="name() + '-input'"
         matInput
-        (change)="onChange()"
+        [placeholder]="showLabel() ? '' : (label() || ('common.labels.user' | translate))"
         [ngModel]="selectedUserValue()"
         (ngModelChange)="onModelChange($event)"
         #userSelector="ngModel"

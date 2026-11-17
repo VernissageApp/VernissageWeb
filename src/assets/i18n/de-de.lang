@@ -41,7 +41,7 @@
       "settings": "Einstellungen",
       "show": "Zeigen",
       "signOut": "Abmelden",
-      "signUp": "Anmelden",
+      "signUp": "Registrieren",
       "suppress": "Stummschalten",
       "suppressed": "Stummgeschaltet",
       "tryAgain": "Noch einmal",
@@ -49,7 +49,8 @@
       "unfollow": "Entfolgen",
       "unsuppress": "Stummschaltung aufheben",
       "update": "Aktualisieren",
-      "upload": "Hochladen"
+      "upload": "Hochladen",
+      "toTheTop": "Nach oben"
     },
     "articleVisibility": {
       "homeSignIn": "Startseite – Anmelden",
@@ -152,6 +153,7 @@
       "unrecoverableState": "Es ist ein Fehler aufgetreten und der Anwendungsstatus kann nicht wiederhergestellt werden. Bitte laden Sie die Seite neu."
     },
     "pageTitles": {
+      "directMessages": "Direktnachrichten",
       "accessForbidden": "Vernissage - Zugriff verboten",
       "account": "Vernissage - Konto",
       "activityPubEventRecipients": "Vernissage - ActivityPub-Ereignisempfänger",
@@ -294,6 +296,7 @@
     },
     "followButtons": {
       "actions": {
+        "directMessage": "Direktnachricht",
         "approveFollow": "Bestätigen Sie das Folgen",
         "blockDomain": "Domain blockieren",
         "blockUser": "Benutzer blockieren",
@@ -529,6 +532,7 @@
       "applicationLogo": "Anwendungslogo",
       "menuWithActions": "Menü mit Aktionen",
       "navigation": {
+        "directMessages": "Direktnachrichten",
         "account": "Konto",
         "articles": "Artikel",
         "explore": "Entdecken",
@@ -733,6 +737,46 @@
     }
   },
   "dialogs": {
+    "preserveContentCredentials": {
+      "originalTitle": "Upload the original photo?",
+      "originalPrompt": "Would you like to upload “{fileName}” in its original form? All metadata will be preserved, including EXIF location data if present.",
+      "originalBenefits": "The original file preserves the exact image data, color profile and detail, which can matter for photography such as astrophotography.",
+      "standardProcessing": "Choose No to remove metadata and re-export the photo as JPEG. C2PA Content Credentials, if present, will not be preserved.",
+      "title": "Preserve C2PA Content Credentials?",
+      "detected": "The file “{fileName}” contains C2PA Content Credentials.",
+      "metadata": "To preserve these credentials, the original file must be stored and distributed with all of its embedded metadata, including location data if present.",
+      "privacy": "Continue only if you are sure the file contains no information you wish to keep private or that could put your privacy at risk. This original file, including all metadata, will be sent to your followers’ servers.",
+      "no": "No",
+      "yes": "Yes, I’m sure"
+    },
+    "contentCredentials": {
+      "labels": {
+        "actions": "Actions",
+        "format": "Format",
+        "ingredients": "Ingredients",
+        "producedWith": "Produced with",
+        "signedAt": "Signed at",
+        "signedBy": "Signed by",
+        "title": "Title",
+        "identity": "Identity",
+        "unverifiedIdentity": "Nicht verifizierte Identität",
+        "actionsCount": "Actions count",
+        "verify": "Verify",
+        "appOrDeviceUsed": "App or device used"
+      },
+      "texts": {
+        "verifiedSummary": "The image contains a valid C2PA manifest and passed client-side validation.",
+        "validationCaution": "This does not necessarily mean the image was forged. Re-exporting or processing the image on another server can also break validation.",
+        "identityDidUnavailable": "Das DID-Dokument des Ausstellers des Identitätsnachweises konnte nicht aufgelöst werden.",
+        "validationErrors": "Validation error details",
+        "signatureMismatch": "The C2PA signature is invalid.",
+        "hashMismatch": "The hash of the image or an ingredient does not match the C2PA manifest."
+      },
+      "title": "Content Credentials",
+      "actions": {
+        "openOnVerifySite": "Open on Verify Site"
+      }
+    },
     "category": {
       "attrs": {
         "categoryName": "Name der Kategorie",
@@ -990,6 +1034,7 @@
         "webPushPublicKeyIsNotSet": "Der Public Key für den WebPush-Dienst ist nicht hinterlegt."
       },
       "texts": {
+        "newDirectMessage": "Neue Direktnachricht",
         "boostedStatus": "Geboosteter Status",
         "newCommentAdded": "Neuer Kommentar hinzugefügt",
         "newFollowRequest": "Neue Folgeanfrage",
@@ -1513,6 +1558,40 @@
     }
   },
   "pages": {
+    "directMessages": {
+      "emailVerificationRequired": "Bestätige deine E-Mail-Adresse, bevor du eine Nachricht sendest.",
+      "like": "Nachricht mit „Gefällt mir“ markieren",
+      "unlike": "„Gefällt mir“ zurücknehmen",
+      "liked": "Mit „Gefällt mir“ markierte Nachricht",
+      "deleteMessage": "Nachricht löschen",
+      "confirmDelete": "Möchten Sie diese Nachricht wirklich löschen?",
+      "deletedMessage": "Diese Nachricht wurde vom Benutzer gelöscht.",
+      "privacyNotice": "Direktnachrichten sind nicht Ende-zu-Ende-verschlüsselt. Teilen Sie keine vertraulichen Informationen.",
+      "title": "Direktnachrichten",
+      "subtitle": "Private Unterhaltungen im Fediverse.",
+      "newMessage": "Neue Nachricht",
+      "conversations": "Unterhaltungen",
+      "searchConversations": "Unterhaltungen suchen",
+      "image": "Bild",
+      "unread": "Ungelesene Nachrichten",
+      "loadError": "Nachrichten konnten nicht geladen werden. Bitte versuchen Sie es erneut.",
+      "noResults": "Keine passenden Unterhaltungen.",
+      "noConversations": "Noch keine Unterhaltungen.",
+      "removeRecipient": "Empfänger entfernen",
+      "participants": "{count, plural, one {# Teilnehmer} other {# Teilnehmer}}",
+      "searchUser": "Empfänger suchen",
+      "add": "Hinzufügen",
+      "mute": "Unterhaltung stummschalten",
+      "unmute": "Stummschaltung der Unterhaltung aufheben",
+      "history": "Nachrichtenverlauf",
+      "olderMessages": "Ältere Nachrichten laden",
+      "chooseRecipients": "Suchen Sie einen Benutzer und klicken Sie auf Hinzufügen, um eine Unterhaltung zu beginnen.",
+      "removeImage": "Bild entfernen",
+      "writeMessage": "Nachricht schreiben...",
+      "addImage": "Bild hinzufügen",
+      "selectConversation": "Wählen Sie eine Unterhaltung aus oder beginnen Sie eine neue Nachricht.",
+      "invalidImage": "Wählen Sie ein unterstütztes Bild, das die Dateigrößenbeschränkung des Servers einhält."
+    },
     "account": {
       "avatar": {
         "removeAriaLabel": "Avatar entfernen",
@@ -2121,6 +2200,7 @@
     },
     "notifications": {
       "actions": {
+        "openConversation": "Unterhaltung öffnen",
         "openUserProfileAriaLabel": "Benutzerprofil öffnen",
         "refreshCurrentTimelineAriaLabel": "Aktuelle Timeline aktualisieren"
       },
@@ -2131,7 +2211,9 @@
       "types": {
         "adminReport": "wurde gemeldet",
         "adminSignUp": "ist ein neuer Benutzer",
+        "directMessage": "hat Ihnen eine Direktnachricht gesendet",
         "favouriteComment": "hat Ihren Kommentar favorisiert",
+        "favouriteConversationComment": "hat Ihren Kommentar in einer Unterhaltung mit „Gefällt mir“ markiert",
         "favouriteStatus": "hat Ihr Foto zu Favoriten hinzugefügt",
         "follow": "ist Ihnen gefolgt",
         "followRequest": "möchte Ihnen folgen",
@@ -2156,6 +2238,10 @@
         "title": "Profilgalerie des Benutzers"
       },
       "media": {
+        "alwaysAskToUploadOriginalImage": {
+          "title": "Always ask about uploading the original photo",
+          "description": "Before each upload, choose whether to remove metadata and re-export the photo as JPEG, or preserve the original file with all metadata, including EXIF location data if present."
+        },
         "alwaysShowNsfw": {
           "description": "Erzwinge die Anzeige aller (sensiblen) NSFW-Inhalte ohne Warnungen.",
           "title": "Zeige NSFW-Inhalte immer an"
@@ -2269,6 +2355,7 @@
         "emailRequired": "Geben Sie Ihre E-Mail-Adresse ein.",
         "emailTaken": "Wählen Sie eine andere E-Mail-Adresse. Diese ist bereits mit einem anderen Konto verknüpft.",
         "invalidCaptchaCode": "Der CAPTCHA-Code ist ungültig. Bitte versuchen Sie es erneut.",
+        "registrationIsDisabled": "Die Registrierung ohne Einladungscode oder Angabe eines Registrierungsgrundes ist deaktiviert.",
         "invitationCodeRequired": "Geben Sie den Einladungscode ein.",
         "invitationCodeTooLong": "Der Einladungs-Code ist zu lang.",
         "invitationTokenInvalid": "Das Einladungs-Token ist ungültig.",
@@ -2384,6 +2471,7 @@
         "users": "Keine Benutzer gefunden."
       },
       "hint": "Suchen Sie nach einem Benutzer, Status oder Hashtag oder fügen Sie eine URL in einen Status oder ein Benutzerprofil ein.",
+      "showOnlyMyStatuses": "Nur meine Statusmeldungen anzeigen",
       "tabs": {
         "hashtags": "Hashtags",
         "statuses": "Status",
@@ -2477,6 +2565,24 @@
       },
       "confirmations": {
         "changeStatusWithEnteredComment": "Sie haben einen Kommentar eingegeben. Möchten Sie den Status trotzdem ändern?"
+      },
+      "contentCredentials": {
+        "label": "Content Credentials",
+        "verified": "Content Credentials verified",
+        "title": "Content Credentials",
+        "author": "Author",
+        "equipmentOrApplication": "Equipment/Application",
+        "details": "Details",
+        "appOrDeviceUsed": "App or device used",
+        "aiGenerated": "AI Generated",
+        "validation": {
+          "verified": "C2PA integrity and signature trust verified",
+          "untrusted": "Integrity verified. Certificate issuer not verified",
+          "identityUnavailable": "Die Identität konnte nicht verifiziert werden.",
+          "invalid": "C2PA integrity verification failed",
+          "unknown": "C2PA verification result is unavailable"
+        },
+        "unverifiedMetadata": "The author, device and image history shown below are unverified."
       },
       "followedTagsInThisStatus": "Gefolgte Tags in diesem Status",
       "hashtagsAriaLabel": "Hashtags",

@@ -2,7 +2,8 @@
     <div></div>
 }
 @else if (statusesExists()) {
-    <div class="gallery-container" appInfiniteScroll [infiniteScrollDistance]="500" [infiniteScrollThrottle]="200" (scrolled)="onNearEndScroll()">
+    <app-scroll-to-top />
+    <div class="gallery-container" appInfiniteScroll [infiniteScrollDistance]="500" infiniteScrollEndSelector=".column" [infiniteScrollThrottle]="200" (scrolled)="onNearEndScroll()">
         <div [class]="{ 'image-gallery': !isHandsetPortrait() || squareImages(), 'image-column': isHandsetPortrait() && !squareImages(), 'square': squareImages() }">
             @for (column of galleryColumns(); track column.columnId) {
                 <div class="column">
