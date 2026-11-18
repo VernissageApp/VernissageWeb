@@ -762,7 +762,7 @@
         "unverifiedIdentity": "Niezweryfikowana tożsamość",
         "actionsCount": "Liczba akcji",
         "verify": "Weryfikacja",
-        "appOrDeviceUsed": "App or device used"
+        "appOrDeviceUsed": "Użyta aplikacja lub urządzenie"
       },
       "texts": {
         "verifiedSummary": "Zdjęcie zawiera prawidłowy manifest C2PA i przeszło walidację po stronie klienta.",
@@ -772,7 +772,7 @@
         "signatureMismatch": "Podpis C2PA jest nieprawidłowy.",
         "hashMismatch": "Hash danych zdjęcia lub składnika nie zgadza się z manifestem C2PA."
       },
-      "title": "Content Credentials",
+      "title": "Dane uwierzytelniające treść",
       "actions": {
         "openOnVerifySite": "Otwórz w Verify Site"
       }
@@ -2567,14 +2567,14 @@
         "changeStatusWithEnteredComment": "Wpisałeś komentarz. Czy mimo to chcesz zmienić status?"
       },
       "contentCredentials": {
-        "label": "Content Credentials",
-        "verified": "Content Credentials verified",
-        "title": "Content Credentials",
+        "label": "Dane uwierzytelniające treść",
+        "verified": "Zweryfikowano dane uwierzytelniające treść",
+        "title": "Dane uwierzytelniające treść",
         "author": "Autor",
         "equipmentOrApplication": "Sprzęt/Aplikacja",
         "details": "Szczegóły",
-        "appOrDeviceUsed": "App or device used",
-        "aiGenerated": "AI Generated",
+        "appOrDeviceUsed": "Użyta aplikacja lub urządzenie",
+        "aiGenerated": "Wygenerowano przez AI",
         "validation": {
           "verified": "Integralność i zaufanie do podpisu C2PA potwierdzone",
           "untrusted": "Integralność potwierdzona. Wystawca certyfikatu niezweryfikowany",
